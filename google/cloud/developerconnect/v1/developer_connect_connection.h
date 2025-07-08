@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_DEVELOPER_CONNECT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_DEVELOPER_CONNECT_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/developerconnect/v1/developer_connect_connection_idempotency_policy.h"
 #include "google/cloud/developerconnect/v1/internal/developer_connect_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class DeveloperConnectRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DeveloperConnectLimitedErrorCountRetryPolicy : public DeveloperConnectRetryPolicy {
+class DeveloperConnectLimitedErrorCountRetryPolicy
+    : public DeveloperConnectRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class DeveloperConnectLimitedErrorCountRetryPolicy : public DeveloperConnectRetr
    *     @p maximum_failures == 0.
    */
   explicit DeveloperConnectLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DeveloperConnectLimitedErrorCountRetryPolicy(
       DeveloperConnectLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DeveloperConnectLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DeveloperConnectLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DeveloperConnectLimitedErrorCountRetryPolicy(
       DeveloperConnectLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DeveloperConnectLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DeveloperConnectLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class DeveloperConnectLimitedErrorCountRetryPolicy : public DeveloperConnectRetr
   using BaseType = DeveloperConnectRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<developerconnect_v1_internal::DeveloperConnectRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      developerconnect_v1_internal::DeveloperConnectRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class DeveloperConnectLimitedErrorCountRetryPolicy : public DeveloperConnectRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DeveloperConnectLimitedTimeRetryPolicy : public DeveloperConnectRetryPolicy {
+class DeveloperConnectLimitedTimeRetryPolicy
+    : public DeveloperConnectRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class DeveloperConnectLimitedTimeRetryPolicy : public DeveloperConnectRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit DeveloperConnectLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DeveloperConnectLimitedTimeRetryPolicy(DeveloperConnectLimitedTimeRetryPolicy&& rhs) noexcept
-    : DeveloperConnectLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DeveloperConnectLimitedTimeRetryPolicy(DeveloperConnectLimitedTimeRetryPolicy const& rhs) noexcept
-    : DeveloperConnectLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DeveloperConnectLimitedTimeRetryPolicy(
+      DeveloperConnectLimitedTimeRetryPolicy&& rhs) noexcept
+      : DeveloperConnectLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DeveloperConnectLimitedTimeRetryPolicy(
+      DeveloperConnectLimitedTimeRetryPolicy const& rhs) noexcept
+      : DeveloperConnectLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +164,9 @@ class DeveloperConnectLimitedTimeRetryPolicy : public DeveloperConnectRetryPolic
   using BaseType = DeveloperConnectRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<developerconnect_v1_internal::DeveloperConnectRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      developerconnect_v1_internal::DeveloperConnectRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,165 +188,241 @@ class DeveloperConnectConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::developerconnect::v1::Connection>
-  ListConnections(google::cloud::developerconnect::v1::ListConnectionsRequest request);
+  ListConnections(
+      google::cloud::developerconnect::v1::ListConnectionsRequest request);
 
   virtual StatusOr<google::cloud::developerconnect::v1::Connection>
-  GetConnection(google::cloud::developerconnect::v1::GetConnectionRequest const& request);
+  GetConnection(
+      google::cloud::developerconnect::v1::GetConnectionRequest const& request);
 
   virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  CreateConnection(google::cloud::developerconnect::v1::CreateConnectionRequest const& request);
+  CreateConnection(
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateConnection(NoAwaitTag, google::cloud::developerconnect::v1::CreateConnectionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  CreateConnection( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  UpdateConnection(google::cloud::developerconnect::v1::UpdateConnectionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateConnection(NoAwaitTag, google::cloud::developerconnect::v1::UpdateConnectionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  UpdateConnection( google::longrunning::Operation const& operation);
+  CreateConnection(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteConnection(google::cloud::developerconnect::v1::DeleteConnectionRequest const& request);
+  virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  UpdateConnection(
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteConnection(NoAwaitTag, google::cloud::developerconnect::v1::DeleteConnectionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteConnection( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  UpdateConnection(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-  CreateGitRepositoryLink(google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteConnection(
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateGitRepositoryLink(NoAwaitTag, google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-  CreateGitRepositoryLink( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteConnection(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteGitRepositoryLink(google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
+  CreateGitRepositoryLink(
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteGitRepositoryLink(NoAwaitTag, google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteGitRepositoryLink( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
+  CreateGitRepositoryLink(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteGitRepositoryLink(
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteGitRepositoryLink(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
-  ListGitRepositoryLinks(google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest request);
+  ListGitRepositoryLinks(
+      google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest
+          request);
 
   virtual StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
-  GetGitRepositoryLink(google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request);
+  GetGitRepositoryLink(
+      google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-  FetchReadWriteToken(google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request);
+  virtual StatusOr<
+      google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
+  FetchReadWriteToken(
+      google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
+          request);
 
   virtual StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
-  FetchReadToken(google::cloud::developerconnect::v1::FetchReadTokenRequest const& request);
+  FetchReadToken(
+      google::cloud::developerconnect::v1::FetchReadTokenRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
-  FetchLinkableGitRepositories(google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest request);
+  virtual StreamRange<
+      google::cloud::developerconnect::v1::LinkableGitRepository>
+  FetchLinkableGitRepositories(
+      google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
+          request);
 
-  virtual StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
-  FetchGitHubInstallations(google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request);
+  virtual StatusOr<
+      google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
+  FetchGitHubInstallations(google::cloud::developerconnect::v1::
+                               FetchGitHubInstallationsRequest const& request);
 
-  virtual StreamRange<std::string>
-  FetchGitRefs(google::cloud::developerconnect::v1::FetchGitRefsRequest request);
+  virtual StreamRange<std::string> FetchGitRefs(
+      google::cloud::developerconnect::v1::FetchGitRefsRequest request);
 
   virtual StreamRange<google::cloud::developerconnect::v1::AccountConnector>
-  ListAccountConnectors(google::cloud::developerconnect::v1::ListAccountConnectorsRequest request);
+  ListAccountConnectors(
+      google::cloud::developerconnect::v1::ListAccountConnectorsRequest
+          request);
 
   virtual StatusOr<google::cloud::developerconnect::v1::AccountConnector>
-  GetAccountConnector(google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request);
+  GetAccountConnector(
+      google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  CreateAccountConnector(google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  CreateAccountConnector(
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAccountConnector(NoAwaitTag, google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  CreateAccountConnector( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  CreateAccountConnector(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  UpdateAccountConnector(google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  UpdateAccountConnector(
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAccountConnector(NoAwaitTag, google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  UpdateAccountConnector( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
+  UpdateAccountConnector(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteAccountConnector(google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteAccountConnector(
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAccountConnector(NoAwaitTag, google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteAccountConnector( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteAccountConnector(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
-  FetchAccessToken(google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request);
+  virtual StatusOr<
+      google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+  FetchAccessToken(
+      google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::developerconnect::v1::User>
-  ListUsers(google::cloud::developerconnect::v1::ListUsersRequest request);
+  virtual StreamRange<google::cloud::developerconnect::v1::User> ListUsers(
+      google::cloud::developerconnect::v1::ListUsersRequest request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteUser(google::cloud::developerconnect::v1::DeleteUserRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteUser(
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteUser(NoAwaitTag, google::cloud::developerconnect::v1::DeleteUserRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteUser(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteUser( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteUser(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::developerconnect::v1::User>
-  FetchSelf(google::cloud::developerconnect::v1::FetchSelfRequest const& request);
+  virtual StatusOr<google::cloud::developerconnect::v1::User> FetchSelf(
+      google::cloud::developerconnect::v1::FetchSelfRequest const& request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteSelf(google::cloud::developerconnect::v1::DeleteSelfRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteSelf(NoAwaitTag, google::cloud::developerconnect::v1::DeleteSelfRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteSelf(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request);
 
-  virtual future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteSelf( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `DeveloperConnectConnection`.
+ * A factory function to construct an object of type
+ * `DeveloperConnectConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of DeveloperConnectClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DeveloperConnectConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `DeveloperConnectConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -348,8 +432,8 @@ class DeveloperConnectConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DeveloperConnectConnection` created by
- * this function.
+ * @param options (optional) Configure the `DeveloperConnectConnection` created
+ * by this function.
  */
 std::shared_ptr<DeveloperConnectConnection> MakeDeveloperConnectConnection(
     Options options = {});

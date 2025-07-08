@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_RECOMMENDER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_RECOMMENDER_CLIENT_H
 
+#include "google/cloud/recommender/v1/recommender_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/recommender/v1/recommender_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -65,7 +65,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RecommenderClient {
  public:
-  explicit RecommenderClient(std::shared_ptr<RecommenderConnection> connection, Options opts = {});
+  explicit RecommenderClient(std::shared_ptr<RecommenderConnection> connection,
+                             Options opts = {});
   ~RecommenderClient();
 
   ///@{
@@ -78,10 +79,12 @@ class RecommenderClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RecommenderClient const& a, RecommenderClient const& b) {
+  friend bool operator==(RecommenderClient const& a,
+                         RecommenderClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RecommenderClient const& a, RecommenderClient const& b) {
+  friend bool operator!=(RecommenderClient const& a,
+                         RecommenderClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -134,8 +137,8 @@ class RecommenderClient {
   /// [google.cloud.recommender.v1.ListInsightsRequest]: @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L341}
   ///
   // clang-format on
-  StreamRange<google::cloud::recommender::v1::Insight>
-  ListInsights(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -174,8 +177,9 @@ class RecommenderClient {
   /// [google.cloud.recommender.v1.ListInsightsRequest]: @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L341}
   ///
   // clang-format on
-  StreamRange<google::cloud::recommender::v1::Insight>
-  ListInsights(google::cloud::recommender::v1::ListInsightsRequest request, Options opts = {});
+  StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
+      google::cloud::recommender::v1::ListInsightsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +204,8 @@ class RecommenderClient {
   /// [google.cloud.recommender.v1.Insight]: @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::cloud::recommender::v1::Insight>
-  GetInsight(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::recommender::v1::Insight> GetInsight(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -231,8 +235,9 @@ class RecommenderClient {
   /// [google.cloud.recommender.v1.Insight]: @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::cloud::recommender::v1::Insight>
-  GetInsight(google::cloud::recommender::v1::GetInsightRequest const& request, Options opts = {});
+  StatusOr<google::cloud::recommender::v1::Insight> GetInsight(
+      google::cloud::recommender::v1::GetInsightRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -264,8 +269,10 @@ class RecommenderClient {
   /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]: @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L430}
   ///
   // clang-format on
-  StatusOr<google::cloud::recommender::v1::Insight>
-  MarkInsightAccepted(std::string const& name, std::map<std::string, std::string> const& state_metadata, std::string const& etag, Options opts = {});
+  StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
+      std::string const& name,
+      std::map<std::string, std::string> const& state_metadata,
+      std::string const& etag, Options opts = {});
 
   // clang-format off
   ///
@@ -299,8 +306,9 @@ class RecommenderClient {
   /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]: @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L430}
   ///
   // clang-format on
-  StatusOr<google::cloud::recommender::v1::Insight>
-  MarkInsightAccepted(google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request, Options opts = {});
+  StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
+      google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -406,7 +414,8 @@ class RecommenderClient {
   ///
   // clang-format on
   StreamRange<google::cloud::recommender::v1::Recommendation>
-  ListRecommendations(std::string const& parent, std::string const& filter, Options opts = {});
+  ListRecommendations(std::string const& parent, std::string const& filter,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -446,7 +455,9 @@ class RecommenderClient {
   ///
   // clang-format on
   StreamRange<google::cloud::recommender::v1::Recommendation>
-  ListRecommendations(google::cloud::recommender::v1::ListRecommendationsRequest request, Options opts = {});
+  ListRecommendations(
+      google::cloud::recommender::v1::ListRecommendationsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -471,8 +482,8 @@ class RecommenderClient {
   /// [google.cloud.recommender.v1.Recommendation]: @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  GetRecommendation(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::recommender::v1::Recommendation> GetRecommendation(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -502,8 +513,9 @@ class RecommenderClient {
   /// [google.cloud.recommender.v1.Recommendation]: @googleapis_reference_link{google/cloud/recommender/v1/recommendation.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::cloud::recommender::v1::Recommendation>
-  GetRecommendation(google::cloud::recommender::v1::GetRecommendationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::recommender::v1::Recommendation> GetRecommendation(
+      google::cloud::recommender::v1::GetRecommendationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -541,7 +553,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationDismissed(google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request, Options opts = {});
+  MarkRecommendationDismissed(
+      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -580,7 +595,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationClaimed(std::string const& name, std::map<std::string, std::string> const& state_metadata, std::string const& etag, Options opts = {});
+  MarkRecommendationClaimed(
+      std::string const& name,
+      std::map<std::string, std::string> const& state_metadata,
+      std::string const& etag, Options opts = {});
 
   // clang-format off
   ///
@@ -619,7 +637,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationClaimed(google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request, Options opts = {});
+  MarkRecommendationClaimed(
+      google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -659,7 +680,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationSucceeded(std::string const& name, std::map<std::string, std::string> const& state_metadata, std::string const& etag, Options opts = {});
+  MarkRecommendationSucceeded(
+      std::string const& name,
+      std::map<std::string, std::string> const& state_metadata,
+      std::string const& etag, Options opts = {});
 
   // clang-format off
   ///
@@ -699,7 +723,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationSucceeded(google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request, Options opts = {});
+  MarkRecommendationSucceeded(
+      google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -739,7 +766,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationFailed(std::string const& name, std::map<std::string, std::string> const& state_metadata, std::string const& etag, Options opts = {});
+  MarkRecommendationFailed(
+      std::string const& name,
+      std::map<std::string, std::string> const& state_metadata,
+      std::string const& etag, Options opts = {});
 
   // clang-format off
   ///
@@ -779,7 +809,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationFailed(google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request, Options opts = {});
+  MarkRecommendationFailed(
+      google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -846,7 +879,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  GetRecommenderConfig(google::cloud::recommender::v1::GetRecommenderConfigRequest const& request, Options opts = {});
+  GetRecommenderConfig(
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -873,7 +909,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  UpdateRecommenderConfig(google::cloud::recommender::v1::RecommenderConfig const& recommender_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateRecommenderConfig(
+      google::cloud::recommender::v1::RecommenderConfig const&
+          recommender_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -904,7 +943,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  UpdateRecommenderConfig(google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request, Options opts = {});
+  UpdateRecommenderConfig(
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -971,7 +1013,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  GetInsightTypeConfig(google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request, Options opts = {});
+  GetInsightTypeConfig(
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -998,7 +1043,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  UpdateInsightTypeConfig(google::cloud::recommender::v1::InsightTypeConfig const& insight_type_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::InsightTypeConfig const&
+          insight_type_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1029,7 +1077,10 @@ class RecommenderClient {
   ///
   // clang-format on
   StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  UpdateInsightTypeConfig(google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request, Options opts = {});
+  UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RecommenderConnection> connection_;

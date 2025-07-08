@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/security_settings.proto
 
 #include "google/cloud/dialogflow_cx/security_settings_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/security_settings_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -36,7 +36,8 @@ namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SecuritySettingsServiceConnection::~SecuritySettingsServiceConnection() = default;
+SecuritySettingsServiceConnection::~SecuritySettingsServiceConnection() =
+    default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceConnection::CreateSecuritySettings(
@@ -56,20 +57,23 @@ SecuritySettingsServiceConnection::UpdateSecuritySettings(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings> SecuritySettingsServiceConnection::ListSecuritySettings(
-    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
+SecuritySettingsServiceConnection::ListSecuritySettings(
+    google::cloud::dialogflow::cx::v3::
+        ListSecuritySettingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>>();
 }
 
-Status
-SecuritySettingsServiceConnection::DeleteSecuritySettings(
+Status SecuritySettingsServiceConnection::DeleteSecuritySettings(
     google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> SecuritySettingsServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+SecuritySettingsServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -80,8 +84,10 @@ SecuritySettingsServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> SecuritySettingsServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+SecuritySettingsServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -92,31 +98,34 @@ SecuritySettingsServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-SecuritySettingsServiceConnection::CancelOperation(
+Status SecuritySettingsServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<SecuritySettingsServiceConnection> MakeSecuritySettingsServiceConnection(
-    std::string const& location, Options options) {
+std::shared_ptr<SecuritySettingsServiceConnection>
+MakeSecuritySettingsServiceConnection(std::string const& location,
+                                      Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      SecuritySettingsServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 SecuritySettingsServicePolicyOptionList>(
+      options, __func__);
   options = dialogflow_cx_internal::SecuritySettingsServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_cx_internal::CreateDefaultSecuritySettingsServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dialogflow_cx_internal::MakeSecuritySettingsServiceTracingConnection(
-      std::make_shared<dialogflow_cx_internal::SecuritySettingsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          dialogflow_cx_internal::SecuritySettingsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<SecuritySettingsServiceConnection> MakeSecuritySettingsServiceConnection(
-    Options options) {
-  return MakeSecuritySettingsServiceConnection(std::string{}, std::move(options));
+std::shared_ptr<SecuritySettingsServiceConnection>
+MakeSecuritySettingsServiceConnection(Options options) {
+  return MakeSecuritySettingsServiceConnection(std::string{},
+                                               std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

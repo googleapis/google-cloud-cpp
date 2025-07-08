@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_STUB_FACTORY_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/monitoring/v3/internal/query_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

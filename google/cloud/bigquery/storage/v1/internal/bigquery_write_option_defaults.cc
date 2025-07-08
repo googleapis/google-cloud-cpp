@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options BigQueryWriteDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_AUTHORITY",
       "bigquerystorage.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>()) {
     options.set<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>(
         bigquery_storage_v1::BigQueryWriteLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<bigquery_storage_v1::BigQueryWriteBackoffPolicyOption>()) {
     options.set<bigquery_storage_v1::BigQueryWriteBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicyOption>(
-        bigquery_storage_v1::MakeDefaultBigQueryWriteConnectionIdempotencyPolicy());
+  if (!options.has<bigquery_storage_v1::
+                       BigQueryWriteConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicyOption>(
+        bigquery_storage_v1::
+            MakeDefaultBigQueryWriteConnectionIdempotencyPolicy());
   }
 
   return options;

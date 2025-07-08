@@ -26,11 +26,17 @@ namespace cloud {
 namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use privateca_v1::MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::privateca_v1::MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// privateca_v1::MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::privateca_v1::
+    MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::privateca_v1::
+    CertificateAuthorityServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca

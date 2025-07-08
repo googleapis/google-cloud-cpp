@@ -26,43 +26,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AddressesConnectionIdempotencyPolicy::~AddressesConnectionIdempotencyPolicy() = default;
+AddressesConnectionIdempotencyPolicy::~AddressesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<AddressesConnectionIdempotencyPolicy>
 AddressesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AddressesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest) {  // NOLINT
+Idempotency AddressesConnectionIdempotencyPolicy::AggregatedListAddresses(
+    google::cloud::cpp::compute::addresses::v1::
+        AggregatedListAddressesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::DeleteAddress(google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&) {
+Idempotency AddressesConnectionIdempotencyPolicy::DeleteAddress(
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::GetAddress(google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&) {
+Idempotency AddressesConnectionIdempotencyPolicy::GetAddress(
+    google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::InsertAddress(google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&) {
+Idempotency AddressesConnectionIdempotencyPolicy::InsertAddress(
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest) {  // NOLINT
+Idempotency AddressesConnectionIdempotencyPolicy::ListAddresses(
+    google::cloud::cpp::compute::addresses::v1::
+        ListAddressesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::Move(google::cloud::cpp::compute::addresses::v1::MoveRequest const&) {
+Idempotency AddressesConnectionIdempotencyPolicy::Move(
+    google::cloud::cpp::compute::addresses::v1::MoveRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AddressesConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&) {
+Idempotency AddressesConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AddressesConnectionIdempotencyPolicy>
-    MakeDefaultAddressesConnectionIdempotencyPolicy() {
+MakeDefaultAddressesConnectionIdempotencyPolicy() {
   return std::make_unique<AddressesConnectionIdempotencyPolicy>();
 }
 

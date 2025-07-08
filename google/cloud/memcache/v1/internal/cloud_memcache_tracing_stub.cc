@@ -32,22 +32,24 @@ CloudMemcacheTracingStub::CloudMemcacheTracingStub(
     std::shared_ptr<CloudMemcacheStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::memcache::v1::ListInstancesResponse> CloudMemcacheTracingStub::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memcache::v1::ListInstancesResponse>
+CloudMemcacheTracingStub::ListInstances(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memcache::v1::ListInstancesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "ListInstances");
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInstances(context, options, request));
 }
 
-StatusOr<google::cloud::memcache::v1::Instance> CloudMemcacheTracingStub::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memcache::v1::Instance>
+CloudMemcacheTracingStub::GetInstance(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memcache::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "GetInstance");
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +58,25 @@ StatusOr<google::cloud::memcache::v1::Instance> CloudMemcacheTracingStub::GetIns
 
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "CreateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "CreateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingStub::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "CreateInstance");
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "CreateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +85,25 @@ CloudMemcacheTracingStub::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "UpdateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "UpdateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "UpdateInstance");
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "UpdateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,23 +112,25 @@ CloudMemcacheTracingStub::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncUpdateParameters(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "UpdateParameters");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "UpdateParameters");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateParameters(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateParameters(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingStub::UpdateParameters(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "UpdateParameters");
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "UpdateParameters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -131,23 +139,25 @@ CloudMemcacheTracingStub::UpdateParameters(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "DeleteInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "DeleteInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "DeleteInstance");
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "DeleteInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -156,23 +166,25 @@ CloudMemcacheTracingStub::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncApplyParameters(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "ApplyParameters");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "ApplyParameters");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncApplyParameters(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncApplyParameters(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingStub::ApplyParameters(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "ApplyParameters");
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "ApplyParameters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -181,56 +193,61 @@ CloudMemcacheTracingStub::ApplyParameters(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncRescheduleMaintenance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "RescheduleMaintenance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "RescheduleMaintenance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRescheduleMaintenance(cq, context, std::move(options), request);
+  auto f = child_->AsyncRescheduleMaintenance(cq, context, std::move(options),
+                                              request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingStub::RescheduleMaintenance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "RescheduleMaintenance");
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "RescheduleMaintenance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RescheduleMaintenance(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->RescheduleMaintenance(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> CloudMemcacheTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+CloudMemcacheTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> CloudMemcacheTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+CloudMemcacheTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> CloudMemcacheTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+CloudMemcacheTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -238,10 +255,10 @@ StatusOr<google::longrunning::ListOperationsResponse> CloudMemcacheTracingStub::
 }
 
 StatusOr<google::longrunning::Operation> CloudMemcacheTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -249,10 +266,10 @@ StatusOr<google::longrunning::Operation> CloudMemcacheTracingStub::GetOperation(
 }
 
 Status CloudMemcacheTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -260,10 +277,10 @@ Status CloudMemcacheTracingStub::DeleteOperation(
 }
 
 Status CloudMemcacheTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -280,8 +297,7 @@ CloudMemcacheTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -294,8 +310,8 @@ future<Status> CloudMemcacheTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

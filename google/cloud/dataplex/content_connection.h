@@ -33,7 +33,8 @@ using ::google::cloud::dataplex_v1::MakeContentServiceConnection;
 /// @deprecated Use dataplex_v1::ContentServiceConnection directly.
 using ::google::cloud::dataplex_v1::ContentServiceConnection;
 
-/// @deprecated Use dataplex_v1::ContentServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use dataplex_v1::ContentServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::dataplex_v1::ContentServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use dataplex_v1::ContentServiceLimitedTimeRetryPolicy directly.

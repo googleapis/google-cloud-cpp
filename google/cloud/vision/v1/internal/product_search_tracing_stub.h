@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_PRODUCT_SEARCH_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_PRODUCT_SEARCH_TRACING_STUB_H
 
+#include "google/cloud/vision/v1/internal/product_search_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vision/v1/internal/product_search_stub.h"
 #include <memory>
 
 namespace google {
@@ -39,100 +39,97 @@ class ProductSearchTracingStub : public ProductSearchStub {
   explicit ProductSearchTracingStub(std::shared_ptr<ProductSearchStub> child);
 
   StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::CreateProductSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::CreateProductSetRequest const& request)
+      override;
 
   StatusOr<google::cloud::vision::v1::ListProductSetsResponse> ListProductSets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::ListProductSetsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::ListProductSetsRequest const& request)
+      override;
 
   StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::GetProductSetRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::UpdateProductSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::UpdateProductSetRequest const& request)
+      override;
 
   Status DeleteProductSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::DeleteProductSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::DeleteProductSetRequest const& request)
+      override;
 
   StatusOr<google::cloud::vision::v1::Product> CreateProduct(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::CreateProductRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::ListProductsResponse> ListProducts(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListProductsRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::Product> GetProduct(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::GetProductRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::UpdateProductRequest const& request) override;
 
   Status DeleteProduct(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::DeleteProductRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::CreateReferenceImageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::CreateReferenceImageRequest const& request)
+      override;
 
   Status DeleteReferenceImage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::DeleteReferenceImageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::DeleteReferenceImageRequest const& request)
+      override;
 
-  StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse> ListReferenceImages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::ListReferenceImagesRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>
+  ListReferenceImages(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::ListReferenceImagesRequest const& request)
+      override;
 
   StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::GetReferenceImageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::GetReferenceImageRequest const& request)
+      override;
 
   Status AddProductToProductSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::AddProductToProductSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::AddProductToProductSetRequest const& request)
+      override;
 
   Status RemoveProductFromProductSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
+          request) override;
 
-  StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse> ListProductsInProductSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::ListProductsInProductSetRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse>
+  ListProductsInProductSet(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::ListProductsInProductSetRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportProductSets(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::ImportProductSetsRequest const& request) override;
+      google::cloud::vision::v1::ImportProductSetsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ImportProductSets(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::ImportProductSetsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeProducts(
       google::cloud::CompletionQueue& cq,
@@ -141,13 +138,11 @@ class ProductSearchTracingStub : public ProductSearchStub {
       google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -164,7 +159,8 @@ class ProductSearchTracingStub : public ProductSearchStub {
 
  private:
   std::shared_ptr<ProductSearchStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

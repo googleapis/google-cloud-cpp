@@ -17,10 +17,10 @@
 // source: google/cloud/storagebatchoperations/v1/storage_batch_operations.proto
 
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection.h"
 #include "google/cloud/storagebatchoperations/v1/storage_batch_operations_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -39,28 +39,48 @@ Options StorageBatchOperationsDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_STORAGE_BATCH_OPERATIONS_AUTHORITY",
       "storagebatchoperations.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<storagebatchoperations_v1::StorageBatchOperationsRetryPolicyOption>()) {
-    options.set<storagebatchoperations_v1::StorageBatchOperationsRetryPolicyOption>(
+  if (!options.has<storagebatchoperations_v1::
+                       StorageBatchOperationsRetryPolicyOption>()) {
+    options.set<
+        storagebatchoperations_v1::StorageBatchOperationsRetryPolicyOption>(
         storagebatchoperations_v1::StorageBatchOperationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<storagebatchoperations_v1::StorageBatchOperationsBackoffPolicyOption>()) {
-    options.set<storagebatchoperations_v1::StorageBatchOperationsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<storagebatchoperations_v1::
+                       StorageBatchOperationsBackoffPolicyOption>()) {
+    options.set<
+        storagebatchoperations_v1::StorageBatchOperationsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<storagebatchoperations_v1::StorageBatchOperationsPollingPolicyOption>()) {
-    options.set<storagebatchoperations_v1::StorageBatchOperationsPollingPolicyOption>(
+  if (!options.has<storagebatchoperations_v1::
+                       StorageBatchOperationsPollingPolicyOption>()) {
+    options.set<
+        storagebatchoperations_v1::StorageBatchOperationsPollingPolicyOption>(
         GenericPollingPolicy<
-            storagebatchoperations_v1::StorageBatchOperationsRetryPolicyOption::Type,
-            storagebatchoperations_v1::StorageBatchOperationsBackoffPolicyOption::Type>(
-            options.get<storagebatchoperations_v1::StorageBatchOperationsRetryPolicyOption>()->clone(),
+            storagebatchoperations_v1::StorageBatchOperationsRetryPolicyOption::
+                Type,
+            storagebatchoperations_v1::
+                StorageBatchOperationsBackoffPolicyOption::Type>(
+            options
+                .get<storagebatchoperations_v1::
+                         StorageBatchOperationsRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<storagebatchoperations_v1::StorageBatchOperationsConnectionIdempotencyPolicyOption>()) {
-    options.set<storagebatchoperations_v1::StorageBatchOperationsConnectionIdempotencyPolicyOption>(
-        storagebatchoperations_v1::MakeDefaultStorageBatchOperationsConnectionIdempotencyPolicy());
+  if (!options.has<
+          storagebatchoperations_v1::
+              StorageBatchOperationsConnectionIdempotencyPolicyOption>()) {
+    options.set<storagebatchoperations_v1::
+                    StorageBatchOperationsConnectionIdempotencyPolicyOption>(
+        storagebatchoperations_v1::
+            MakeDefaultStorageBatchOperationsConnectionIdempotencyPolicy());
   }
 
   return options;

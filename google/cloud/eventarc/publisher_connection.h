@@ -33,10 +33,13 @@ using ::google::cloud::eventarc_publishing_v1::MakePublisherConnection;
 /// @deprecated Use eventarc_publishing_v1::PublisherConnection directly.
 using ::google::cloud::eventarc_publishing_v1::PublisherConnection;
 
-/// @deprecated Use eventarc_publishing_v1::PublisherLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::eventarc_publishing_v1::PublisherLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// eventarc_publishing_v1::PublisherLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::eventarc_publishing_v1::
+    PublisherLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use eventarc_publishing_v1::PublisherLimitedTimeRetryPolicy directly.
+/// @deprecated Use eventarc_publishing_v1::PublisherLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::eventarc_publishing_v1::PublisherLimitedTimeRetryPolicy;
 
 /// @deprecated Use eventarc_publishing_v1::PublisherRetryPolicy directly.

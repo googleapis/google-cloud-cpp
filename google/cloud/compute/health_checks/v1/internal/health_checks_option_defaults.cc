@@ -35,32 +35,43 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options HealthChecksDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_HEALTH_CHECKS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_HEALTH_CHECKS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_HEALTH_CHECKS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_HEALTH_CHECKS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_health_checks_v1::HealthChecksRetryPolicyOption>()) {
     options.set<compute_health_checks_v1::HealthChecksRetryPolicyOption>(
         compute_health_checks_v1::HealthChecksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_health_checks_v1::HealthChecksBackoffPolicyOption>()) {
+  if (!options
+           .has<compute_health_checks_v1::HealthChecksBackoffPolicyOption>()) {
     options.set<compute_health_checks_v1::HealthChecksBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_health_checks_v1::HealthChecksPollingPolicyOption>()) {
+  if (!options
+           .has<compute_health_checks_v1::HealthChecksPollingPolicyOption>()) {
     options.set<compute_health_checks_v1::HealthChecksPollingPolicyOption>(
         GenericPollingPolicy<
             compute_health_checks_v1::HealthChecksRetryPolicyOption::Type,
             compute_health_checks_v1::HealthChecksBackoffPolicyOption::Type>(
-            options.get<compute_health_checks_v1::HealthChecksRetryPolicyOption>()->clone(),
+            options
+                .get<compute_health_checks_v1::HealthChecksRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_health_checks_v1::HealthChecksConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_health_checks_v1::HealthChecksConnectionIdempotencyPolicyOption>(
-        compute_health_checks_v1::MakeDefaultHealthChecksConnectionIdempotencyPolicy());
+  if (!options.has<compute_health_checks_v1::
+                       HealthChecksConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_health_checks_v1::
+                    HealthChecksConnectionIdempotencyPolicyOption>(
+        compute_health_checks_v1::
+            MakeDefaultHealthChecksConnectionIdempotencyPolicy());
   }
 
   return options;

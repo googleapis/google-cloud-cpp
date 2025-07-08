@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_KEY_TRACKING_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_KEY_TRACKING_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/kms/inventory/v1/key_tracking_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -63,23 +63,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class KeyTrackingServiceClient {
  public:
-  explicit KeyTrackingServiceClient(std::shared_ptr<KeyTrackingServiceConnection> connection, Options opts = {});
+  explicit KeyTrackingServiceClient(
+      std::shared_ptr<KeyTrackingServiceConnection> connection,
+      Options opts = {});
   ~KeyTrackingServiceClient();
 
   ///@{
   /// @name Copy and move support
   KeyTrackingServiceClient(KeyTrackingServiceClient const&) = default;
-  KeyTrackingServiceClient& operator=(KeyTrackingServiceClient const&) = default;
+  KeyTrackingServiceClient& operator=(KeyTrackingServiceClient const&) =
+      default;
   KeyTrackingServiceClient(KeyTrackingServiceClient&&) = default;
   KeyTrackingServiceClient& operator=(KeyTrackingServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(KeyTrackingServiceClient const& a, KeyTrackingServiceClient const& b) {
+  friend bool operator==(KeyTrackingServiceClient const& a,
+                         KeyTrackingServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(KeyTrackingServiceClient const& a, KeyTrackingServiceClient const& b) {
+  friend bool operator!=(KeyTrackingServiceClient const& a,
+                         KeyTrackingServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -146,7 +151,10 @@ class KeyTrackingServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-  GetProtectedResourcesSummary(google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request, Options opts = {});
+  GetProtectedResourcesSummary(
+      google::cloud::kms::inventory::v1::
+          GetProtectedResourcesSummaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -184,7 +192,8 @@ class KeyTrackingServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
-  SearchProtectedResources(std::string const& scope, std::string const& crypto_key, Options opts = {});
+  SearchProtectedResources(std::string const& scope,
+                           std::string const& crypto_key, Options opts = {});
 
   // clang-format off
   ///
@@ -224,7 +233,10 @@ class KeyTrackingServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
-  SearchProtectedResources(google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request, Options opts = {});
+  SearchProtectedResources(
+      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<KeyTrackingServiceConnection> connection_;

@@ -28,11 +28,14 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_storage_v1::BigQueryReadBackoffPolicyOption directly.
+/// @deprecated Use bigquery_storage_v1::BigQueryReadBackoffPolicyOption
+/// directly.
 using ::google::cloud::bigquery_storage_v1::BigQueryReadBackoffPolicyOption;
 
-/// @deprecated Use bigquery_storage_v1::BigQueryReadConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::bigquery_storage_v1::BigQueryReadConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// bigquery_storage_v1::BigQueryReadConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::bigquery_storage_v1::
+    BigQueryReadConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use bigquery_storage_v1::BigQueryReadPolicyOptionList directly.
 using ::google::cloud::bigquery_storage_v1::BigQueryReadPolicyOptionList;

@@ -17,15 +17,15 @@
 // source: google/cloud/sql/v1/cloud_sql_operations.proto
 
 #include "google/cloud/sql/v1/sql_operations_connection.h"
+#include "google/cloud/sql/v1/internal/sql_operations_option_defaults.h"
+#include "google/cloud/sql/v1/internal/sql_operations_tracing_connection.h"
+#include "google/cloud/sql/v1/sql_operations_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/sql/v1/internal/sql_operations_option_defaults.h"
-#include "google/cloud/sql/v1/internal/sql_operations_tracing_connection.h"
-#include "google/cloud/sql/v1/sql_operations_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,20 +36,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlOperationsServiceConnection::~SqlOperationsServiceConnection() = default;
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlOperationsServiceConnection::Get(
+StatusOr<google::cloud::sql::v1::Operation> SqlOperationsServiceConnection::Get(
     google::cloud::sql::v1::SqlOperationsGetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::sql::v1::Operation> SqlOperationsServiceConnection::List(
-    google::cloud::sql::v1::SqlOperationsListRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::sql::v1::Operation>
+SqlOperationsServiceConnection::List(
+    google::cloud::sql::v1::
+        SqlOperationsListRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::sql::v1::Operation>>();
 }
 
-Status
-SqlOperationsServiceConnection::Cancel(
+Status SqlOperationsServiceConnection::Cancel(
     google::cloud::sql::v1::SqlOperationsCancelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

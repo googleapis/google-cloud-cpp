@@ -26,47 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataStoreServiceConnectionIdempotencyPolicy::~DataStoreServiceConnectionIdempotencyPolicy() = default;
+DataStoreServiceConnectionIdempotencyPolicy::
+    ~DataStoreServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataStoreServiceConnectionIdempotencyPolicy>
 DataStoreServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DataStoreServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DataStoreServiceConnectionIdempotencyPolicy::CreateDataStore(google::cloud::discoveryengine::v1::CreateDataStoreRequest const&) {
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::CreateDataStore(
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataStoreServiceConnectionIdempotencyPolicy::GetDataStore(google::cloud::discoveryengine::v1::GetDataStoreRequest const&) {
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::GetDataStore(
+    google::cloud::discoveryengine::v1::GetDataStoreRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataStoreServiceConnectionIdempotencyPolicy::ListDataStores(google::cloud::discoveryengine::v1::ListDataStoresRequest) {  // NOLINT
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::ListDataStores(
+    google::cloud::discoveryengine::v1::ListDataStoresRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataStoreServiceConnectionIdempotencyPolicy::DeleteDataStore(google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&) {
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::DeleteDataStore(
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataStoreServiceConnectionIdempotencyPolicy::UpdateDataStore(google::cloud::discoveryengine::v1::UpdateDataStoreRequest const&) {
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::UpdateDataStore(
+    google::cloud::discoveryengine::v1::UpdateDataStoreRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataStoreServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataStoreServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataStoreServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataStoreServiceConnectionIdempotencyPolicy>
-    MakeDefaultDataStoreServiceConnectionIdempotencyPolicy() {
+MakeDefaultDataStoreServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataStoreServiceConnectionIdempotencyPolicy>();
 }
 

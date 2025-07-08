@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_users.proto
 
 #include "google/cloud/sql/v1/internal/sql_users_rest_connection_impl.h"
+#include "google/cloud/sql/v1/internal/sql_users_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_users_rest_stub_factory.h"
 #include <memory>
 #include <utility>
 
@@ -34,71 +34,75 @@ SqlUsersServiceRestConnectionImpl::SqlUsersServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<sql_v1_internal::SqlUsersServiceRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SqlUsersServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      SqlUsersServiceConnection::options())) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceRestConnectionImpl::Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
+SqlUsersServiceRestConnectionImpl::Delete(
+    google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Delete(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
         return stub_->Delete(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::sql::v1::User>
-SqlUsersServiceRestConnectionImpl::Get(google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceRestConnectionImpl::Get(
+    google::cloud::sql::v1::SqlUsersGetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Get(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlUsersGetRequest const& request) {
         return stub_->Get(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceRestConnectionImpl::Insert(google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
+SqlUsersServiceRestConnectionImpl::Insert(
+    google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Insert(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
         return stub_->Insert(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::UsersListResponse>
-SqlUsersServiceRestConnectionImpl::List(google::cloud::sql::v1::SqlUsersListRequest const& request) {
+SqlUsersServiceRestConnectionImpl::List(
+    google::cloud::sql::v1::SqlUsersListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->List(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlUsersListRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlUsersListRequest const& request) {
         return stub_->List(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceRestConnectionImpl::Update(google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
+SqlUsersServiceRestConnectionImpl::Update(
+    google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Update(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
         return stub_->Update(rest_context, options, request);
       },
       *current, request, __func__);

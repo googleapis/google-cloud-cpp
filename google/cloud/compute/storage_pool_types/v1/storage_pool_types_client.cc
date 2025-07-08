@@ -28,28 +28,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StoragePoolTypesClient::StoragePoolTypesClient(
     std::shared_ptr<StoragePoolTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 StoragePoolTypesClient::~StoragePoolTypesClient() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
-StoragePoolTypesClient::AggregatedListStoragePoolTypes(std::string const& project, Options opts) {
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+StoragePoolTypesClient::AggregatedListStoragePoolTypes(
+    std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request;
+  google::cloud::cpp::compute::storage_pool_types::v1::
+      AggregatedListStoragePoolTypesRequest request;
   request.set_project(project);
   return connection_->AggregatedListStoragePoolTypes(request);
 }
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
-StoragePoolTypesClient::AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request, Options opts) {
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+StoragePoolTypesClient::AggregatedListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        AggregatedListStoragePoolTypesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListStoragePoolTypes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
-StoragePoolTypesClient::GetStoragePoolType(std::string const& project, std::string const& zone, std::string const& storage_pool_type, Options opts) {
+StoragePoolTypesClient::GetStoragePoolType(std::string const& project,
+                                           std::string const& zone,
+                                           std::string const& storage_pool_type,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest request;
+  google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest
+      request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_storage_pool_type(storage_pool_type);
@@ -57,22 +68,31 @@ StoragePoolTypesClient::GetStoragePoolType(std::string const& project, std::stri
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
-StoragePoolTypesClient::GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request, Options opts) {
+StoragePoolTypesClient::GetStoragePoolType(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        GetStoragePoolTypeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetStoragePoolType(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-StoragePoolTypesClient::ListStoragePoolTypes(std::string const& project, std::string const& zone, Options opts) {
+StoragePoolTypesClient::ListStoragePoolTypes(std::string const& project,
+                                             std::string const& zone,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request;
+  google::cloud::cpp::compute::storage_pool_types::v1::
+      ListStoragePoolTypesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   return connection_->ListStoragePoolTypes(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-StoragePoolTypesClient::ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request, Options opts) {
+StoragePoolTypesClient::ListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        ListStoragePoolTypesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListStoragePoolTypes(std::move(request));
 }

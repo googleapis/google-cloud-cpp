@@ -17,16 +17,16 @@
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_options.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_connection_impl.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_option_defaults.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub_factory.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
 
@@ -37,14 +37,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AgentEndpointServiceConnection::~AgentEndpointServiceConnection() = default;
 
-StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse> AgentEndpointServiceConnection::ReceiveTaskNotification(
-    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const&) {
+StreamRange<
+    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
+AgentEndpointServiceConnection::ReceiveTaskNotification(
+    google::cloud::osconfig::agentendpoint::v1::
+        ReceiveTaskNotificationRequest const&) {
   return google::cloud::internal::MakeStreamRange<
-      google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>(
-      []() -> absl::variant<Status,
-      google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>{
-        return Status(StatusCode::kUnimplemented, "not implemented");}
-      );
+      google::cloud::osconfig::agentendpoint::v1::
+          ReceiveTaskNotificationResponse>(
+      []() -> absl::variant<Status, google::cloud::osconfig::agentendpoint::v1::
+                                        ReceiveTaskNotificationResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
@@ -55,13 +59,15 @@ AgentEndpointServiceConnection::StartNextTask(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 AgentEndpointServiceConnection::ReportTaskProgress(
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&) {
+    google::cloud::osconfig::agentendpoint::v1::
+        ReportTaskProgressRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 AgentEndpointServiceConnection::ReportTaskComplete(
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&) {
+    google::cloud::osconfig::agentendpoint::v1::
+        ReportTaskCompleteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -77,20 +83,25 @@ AgentEndpointServiceConnection::ReportInventory(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AgentEndpointServiceConnection> MakeAgentEndpointServiceConnection(
-    Options options) {
+std::shared_ptr<AgentEndpointServiceConnection>
+MakeAgentEndpointServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AgentEndpointServicePolicyOptionList>(options, __func__);
-  options = osconfig_agentendpoint_v1_internal::AgentEndpointServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AgentEndpointServicePolicyOptionList>(
+      options, __func__);
+  options =
+      osconfig_agentendpoint_v1_internal::AgentEndpointServiceDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = osconfig_agentendpoint_v1_internal::CreateDefaultAgentEndpointServiceStub(
-    std::move(auth), options);
-  return osconfig_agentendpoint_v1_internal::MakeAgentEndpointServiceTracingConnection(
-      std::make_shared<osconfig_agentendpoint_v1_internal::AgentEndpointServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      osconfig_agentendpoint_v1_internal::CreateDefaultAgentEndpointServiceStub(
+          std::move(auth), options);
+  return osconfig_agentendpoint_v1_internal::
+      MakeAgentEndpointServiceTracingConnection(
+          std::make_shared<osconfig_agentendpoint_v1_internal::
+                               AgentEndpointServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

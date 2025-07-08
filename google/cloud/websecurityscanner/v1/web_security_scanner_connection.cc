@@ -17,17 +17,17 @@
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_connection_impl.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_option_defaults.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub_factory.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_tracing_connection.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_connection_impl.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_option_defaults.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub_factory.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_tracing_connection.h"
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,8 +44,7 @@ WebSecurityScannerConnection::CreateScanConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-WebSecurityScannerConnection::DeleteScanConfig(
+Status WebSecurityScannerConnection::DeleteScanConfig(
     google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -56,8 +55,10 @@ WebSecurityScannerConnection::GetScanConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::websecurityscanner::v1::ScanConfig> WebSecurityScannerConnection::ListScanConfigs(
-    google::cloud::websecurityscanner::v1::ListScanConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
+WebSecurityScannerConnection::ListScanConfigs(
+    google::cloud::websecurityscanner::v1::
+        ListScanConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>();
 }
@@ -80,8 +81,10 @@ WebSecurityScannerConnection::GetScanRun(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::websecurityscanner::v1::ScanRun> WebSecurityScannerConnection::ListScanRuns(
-    google::cloud::websecurityscanner::v1::ListScanRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
+WebSecurityScannerConnection::ListScanRuns(
+    google::cloud::websecurityscanner::v1::
+        ListScanRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>();
 }
@@ -92,8 +95,10 @@ WebSecurityScannerConnection::StopScanRun(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl> WebSecurityScannerConnection::ListCrawledUrls(
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
+WebSecurityScannerConnection::ListCrawledUrls(
+    google::cloud::websecurityscanner::v1::
+        ListCrawledUrlsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>();
 }
@@ -104,8 +109,10 @@ WebSecurityScannerConnection::GetFinding(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::websecurityscanner::v1::Finding> WebSecurityScannerConnection::ListFindings(
-    google::cloud::websecurityscanner::v1::ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::websecurityscanner::v1::Finding>
+WebSecurityScannerConnection::ListFindings(
+    google::cloud::websecurityscanner::v1::
+        ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::Finding>>();
 }
@@ -119,17 +126,21 @@ WebSecurityScannerConnection::ListFindingTypeStats(
 std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      WebSecurityScannerPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 WebSecurityScannerPolicyOptionList>(options,
+                                                                     __func__);
   options = websecurityscanner_v1_internal::WebSecurityScannerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = websecurityscanner_v1_internal::CreateDefaultWebSecurityScannerStub(
-    std::move(auth), options);
-  return websecurityscanner_v1_internal::MakeWebSecurityScannerTracingConnection(
-      std::make_shared<websecurityscanner_v1_internal::WebSecurityScannerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      websecurityscanner_v1_internal::CreateDefaultWebSecurityScannerStub(
+          std::move(auth), options);
+  return websecurityscanner_v1_internal::
+      MakeWebSecurityScannerTracingConnection(
+          std::make_shared<
+              websecurityscanner_v1_internal::WebSecurityScannerConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

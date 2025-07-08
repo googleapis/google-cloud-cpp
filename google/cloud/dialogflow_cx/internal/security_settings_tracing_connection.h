@@ -36,39 +36,48 @@ class SecuritySettingsServiceTracingConnection
   ~SecuritySettingsServiceTracingConnection() override = default;
 
   explicit SecuritySettingsServiceTracingConnection(
-    std::shared_ptr<dialogflow_cx::SecuritySettingsServiceConnection> child);
+      std::shared_ptr<dialogflow_cx::SecuritySettingsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  CreateSecuritySettings(google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request) override;
+  CreateSecuritySettings(
+      google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
+          request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  GetSecuritySettings(google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request) override;
+  GetSecuritySettings(
+      google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
+          request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request) override;
+  UpdateSecuritySettings(
+      google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
+          request) override;
 
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  ListSecuritySettings(google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request) override;
+  ListSecuritySettings(
+      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request)
+      override;
 
-  Status
-  DeleteSecuritySettings(google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request) override;
+  Status DeleteSecuritySettings(
+      google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
+          request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::SecuritySettingsServiceConnection> child_;

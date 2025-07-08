@@ -46,69 +46,71 @@ CloudQuotasMetadata::CloudQuotasMetadata(
 
 StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse>
 CloudQuotasMetadata::ListQuotaInfos(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListQuotaInfos(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaInfo>
 CloudQuotasMetadata::GetQuotaInfo(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetQuotaInfo(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
 CloudQuotasMetadata::ListQuotaPreferences(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListQuotaPreferences(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasMetadata::GetQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetQuotaPreference(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasMetadata::CreateQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateQuotaPreference(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasMetadata::UpdateQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("quota_preference.name=", internal::UrlEncode(request.quota_preference().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("quota_preference.name=",
+                   internal::UrlEncode(request.quota_preference().name())));
   return child_->UpdateQuotaPreference(context, options, request);
 }
 
 void CloudQuotasMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                      Options const& options,
+                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CloudQuotasMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                      Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

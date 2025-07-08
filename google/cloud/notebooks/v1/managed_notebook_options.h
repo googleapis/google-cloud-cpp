@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V1_MANAGED_NOTEBOOK_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V1_MANAGED_NOTEBOOK_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/notebooks/v1/managed_notebook_connection.h"
 #include "google/cloud/notebooks/v1/managed_notebook_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct ManagedNotebookServiceBackoffPolicyOption {
  * @ingroup google-cloud-notebooks-options
  */
 struct ManagedNotebookServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>;
 };
 
 /**

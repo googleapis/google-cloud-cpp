@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_ALERT_POLICY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_ALERT_POLICY_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/alert_policy_connection.h"
 #include "google/cloud/monitoring/v3/alert_policy_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/v3/alert_policy_options.h"
 #include "google/cloud/monitoring/v3/internal/alert_policy_retry_traits.h"
 #include "google/cloud/monitoring/v3/internal/alert_policy_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,26 +43,26 @@ class AlertPolicyServiceConnectionImpl
   ~AlertPolicyServiceConnectionImpl() override = default;
 
   AlertPolicyServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<monitoring_v3_internal::AlertPolicyServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<monitoring_v3_internal::AlertPolicyServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::monitoring::v3::AlertPolicy>
-  ListAlertPolicies(google::monitoring::v3::ListAlertPoliciesRequest request) override;
+  StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
+      google::monitoring::v3::ListAlertPoliciesRequest request) override;
 
-  StatusOr<google::monitoring::v3::AlertPolicy>
-  GetAlertPolicy(google::monitoring::v3::GetAlertPolicyRequest const& request) override;
+  StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
+      google::monitoring::v3::GetAlertPolicyRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::AlertPolicy>
-  CreateAlertPolicy(google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
+  StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
+      google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
 
-  Status
-  DeleteAlertPolicy(google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
+  Status DeleteAlertPolicy(
+      google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::AlertPolicy>
-  UpdateAlertPolicy(google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
+  StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
+      google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

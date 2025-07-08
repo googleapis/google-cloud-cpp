@@ -34,65 +34,81 @@ CaseServiceTracingConnection::CaseServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::support::v2::Case>
-CaseServiceTracingConnection::GetCase(google::cloud::support::v2::GetCaseRequest const& request) {
+CaseServiceTracingConnection::GetCase(
+    google::cloud::support::v2::GetCaseRequest const& request) {
   auto span = internal::MakeSpan("support_v2::CaseServiceConnection::GetCase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCase(request));
 }
 
 StreamRange<google::cloud::support::v2::Case>
-CaseServiceTracingConnection::ListCases(google::cloud::support::v2::ListCasesRequest request) {
-  auto span = internal::MakeSpan("support_v2::CaseServiceConnection::ListCases");
+CaseServiceTracingConnection::ListCases(
+    google::cloud::support::v2::ListCasesRequest request) {
+  auto span =
+      internal::MakeSpan("support_v2::CaseServiceConnection::ListCases");
   internal::OTelScope scope(span);
   auto sr = child_->ListCases(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::support::v2::Case>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::support::v2::Case>
-CaseServiceTracingConnection::SearchCases(google::cloud::support::v2::SearchCasesRequest request) {
-  auto span = internal::MakeSpan("support_v2::CaseServiceConnection::SearchCases");
+CaseServiceTracingConnection::SearchCases(
+    google::cloud::support::v2::SearchCasesRequest request) {
+  auto span =
+      internal::MakeSpan("support_v2::CaseServiceConnection::SearchCases");
   internal::OTelScope scope(span);
   auto sr = child_->SearchCases(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::support::v2::Case>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::support::v2::Case>
-CaseServiceTracingConnection::CreateCase(google::cloud::support::v2::CreateCaseRequest const& request) {
-  auto span = internal::MakeSpan("support_v2::CaseServiceConnection::CreateCase");
+CaseServiceTracingConnection::CreateCase(
+    google::cloud::support::v2::CreateCaseRequest const& request) {
+  auto span =
+      internal::MakeSpan("support_v2::CaseServiceConnection::CreateCase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCase(request));
 }
 
 StatusOr<google::cloud::support::v2::Case>
-CaseServiceTracingConnection::UpdateCase(google::cloud::support::v2::UpdateCaseRequest const& request) {
-  auto span = internal::MakeSpan("support_v2::CaseServiceConnection::UpdateCase");
+CaseServiceTracingConnection::UpdateCase(
+    google::cloud::support::v2::UpdateCaseRequest const& request) {
+  auto span =
+      internal::MakeSpan("support_v2::CaseServiceConnection::UpdateCase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateCase(request));
 }
 
 StatusOr<google::cloud::support::v2::Case>
-CaseServiceTracingConnection::EscalateCase(google::cloud::support::v2::EscalateCaseRequest const& request) {
-  auto span = internal::MakeSpan("support_v2::CaseServiceConnection::EscalateCase");
+CaseServiceTracingConnection::EscalateCase(
+    google::cloud::support::v2::EscalateCaseRequest const& request) {
+  auto span =
+      internal::MakeSpan("support_v2::CaseServiceConnection::EscalateCase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->EscalateCase(request));
 }
 
 StatusOr<google::cloud::support::v2::Case>
-CaseServiceTracingConnection::CloseCase(google::cloud::support::v2::CloseCaseRequest const& request) {
-  auto span = internal::MakeSpan("support_v2::CaseServiceConnection::CloseCase");
+CaseServiceTracingConnection::CloseCase(
+    google::cloud::support::v2::CloseCaseRequest const& request) {
+  auto span =
+      internal::MakeSpan("support_v2::CaseServiceConnection::CloseCase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CloseCase(request));
 }
 
 StreamRange<google::cloud::support::v2::CaseClassification>
-CaseServiceTracingConnection::SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest request) {
-  auto span = internal::MakeSpan("support_v2::CaseServiceConnection::SearchCaseClassifications");
+CaseServiceTracingConnection::SearchCaseClassifications(
+    google::cloud::support::v2::SearchCaseClassificationsRequest request) {
+  auto span = internal::MakeSpan(
+      "support_v2::CaseServiceConnection::SearchCaseClassifications");
   internal::OTelScope scope(span);
   auto sr = child_->SearchCaseClassifications(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::support::v2::CaseClassification>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::support::v2::CaseClassification>(std::move(span),
+                                                      std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

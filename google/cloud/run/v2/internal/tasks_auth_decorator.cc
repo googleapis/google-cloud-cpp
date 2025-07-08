@@ -32,8 +32,7 @@ TasksAuth::TasksAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::run::v2::Task> TasksAuth::GetTask(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +40,7 @@ StatusOr<google::cloud::run::v2::Task> TasksAuth::GetTask(
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksAuth::ListTasks(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListTasksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +48,7 @@ StatusOr<google::cloud::run::v2::ListTasksResponse> TasksAuth::ListTasks(
 }
 
 StatusOr<google::longrunning::ListOperationsResponse> TasksAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +56,7 @@ StatusOr<google::longrunning::ListOperationsResponse> TasksAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> TasksAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +64,7 @@ StatusOr<google::longrunning::Operation> TasksAuth::GetOperation(
 }
 
 Status TasksAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +72,7 @@ Status TasksAuth::DeleteOperation(
 }
 
 StatusOr<google::longrunning::Operation> TasksAuth::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

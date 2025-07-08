@@ -34,8 +34,10 @@ using ::google::cloud::edgecontainer_v1::EdgeContainerPollingPolicyOption;
 /// @deprecated Use edgecontainer_v1::EdgeContainerBackoffPolicyOption directly.
 using ::google::cloud::edgecontainer_v1::EdgeContainerBackoffPolicyOption;
 
-/// @deprecated Use edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::edgecontainer_v1::
+    EdgeContainerConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use edgecontainer_v1::EdgeContainerPolicyOptionList directly.
 using ::google::cloud::edgecontainer_v1::EdgeContainerPolicyOptionList;

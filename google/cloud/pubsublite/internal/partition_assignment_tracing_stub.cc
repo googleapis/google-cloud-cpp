@@ -39,7 +39,9 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 PartitionAssignmentServiceTracingStub::AsyncAssignPartitions(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PartitionAssignmentService", "AssignPartitions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PartitionAssignmentService",
+      "AssignPartitions");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncAssignPartitions(cq, context, std::move(options));
@@ -49,22 +51,25 @@ PartitionAssignmentServiceTracingStub::AsyncAssignPartitions(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> PartitionAssignmentServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+PartitionAssignmentServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PartitionAssignmentService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PartitionAssignmentService",
+      "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> PartitionAssignmentServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+PartitionAssignmentServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PartitionAssignmentService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PartitionAssignmentService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -72,10 +77,11 @@ StatusOr<google::longrunning::Operation> PartitionAssignmentServiceTracingStub::
 }
 
 Status PartitionAssignmentServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PartitionAssignmentService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PartitionAssignmentService",
+      "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -83,10 +89,11 @@ Status PartitionAssignmentServiceTracingStub::DeleteOperation(
 }
 
 Status PartitionAssignmentServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PartitionAssignmentService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PartitionAssignmentService",
+      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -95,10 +102,12 @@ Status PartitionAssignmentServiceTracingStub::CancelOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<PartitionAssignmentServiceStub> MakePartitionAssignmentServiceTracingStub(
+std::shared_ptr<PartitionAssignmentServiceStub>
+MakePartitionAssignmentServiceTracingStub(
     std::shared_ptr<PartitionAssignmentServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<PartitionAssignmentServiceTracingStub>(std::move(stub));
+  return std::make_shared<PartitionAssignmentServiceTracingStub>(
+      std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

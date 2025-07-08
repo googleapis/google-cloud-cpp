@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/profiler/v2/internal/export_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,10 +38,10 @@ class ExportServiceAuth : public ExportServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<ExportServiceStub> child);
 
-  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse> ListProfiles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) override;
+  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
+  ListProfiles(grpc::ClientContext& context, Options const& options,
+               google::devtools::cloudprofiler::v2::ListProfilesRequest const&
+                   request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

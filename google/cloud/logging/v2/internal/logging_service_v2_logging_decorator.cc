@@ -32,21 +32,17 @@ namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LoggingServiceV2Logging::LoggingServiceV2Logging(
-    std::shared_ptr<LoggingServiceV2Stub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<LoggingServiceV2Stub> child, TracingOptions tracing_options,
     std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
-Status
-LoggingServiceV2Logging::DeleteLog(
-    grpc::ClientContext& context,
-    Options const& options,
+Status LoggingServiceV2Logging::DeleteLog(
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteLogRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::DeleteLogRequest const& request) {
         return child_->DeleteLog(context, options, request);
       },
@@ -55,12 +51,10 @@ LoggingServiceV2Logging::DeleteLog(
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Logging::WriteLogEntries(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::WriteLogEntriesRequest const& request) {
         return child_->WriteLogEntries(context, options, request);
       },
@@ -69,12 +63,10 @@ LoggingServiceV2Logging::WriteLogEntries(
 
 StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Logging::ListLogEntries(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::ListLogEntriesRequest const& request) {
         return child_->ListLogEntries(context, options, request);
       },
@@ -83,26 +75,25 @@ LoggingServiceV2Logging::ListLogEntries(
 
 StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 LoggingServiceV2Logging::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::logging::v2::ListMonitoredResourceDescriptorsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::logging::v2::ListMonitoredResourceDescriptorsRequest const& request) {
-        return child_->ListMonitoredResourceDescriptors(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+                 request) {
+        return child_->ListMonitoredResourceDescriptors(context, options,
+                                                        request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Logging::ListLogs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::ListLogsRequest const& request) {
         return child_->ListLogs(context, options, request);
       },
@@ -117,12 +108,14 @@ LoggingServiceV2Logging::AsyncTailLogEntries(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::logging::v2::TailLogEntriesRequest, google::logging::v2::TailLogEntriesResponse>;
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::logging::v2::TailLogEntriesRequest,
+          google::logging::v2::TailLogEntriesResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncTailLogEntries(
-      cq, std::move(context), std::move(options));
+  auto stream =
+      child_->AsyncTailLogEntries(cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -132,40 +125,32 @@ LoggingServiceV2Logging::AsyncTailLogEntries(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 LoggingServiceV2Logging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-LoggingServiceV2Logging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> LoggingServiceV2Logging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-LoggingServiceV2Logging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status LoggingServiceV2Logging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -174,19 +159,20 @@ LoggingServiceV2Logging::CancelOperation(
 
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2Logging::AsyncWriteLogEntries(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::logging::v2::WriteLogEntriesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::logging::v2::WriteLogEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::logging::v2::WriteLogEntriesRequest const& request) {
-        return child_->AsyncWriteLogEntries(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncWriteLogEntries(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), std::move(options), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

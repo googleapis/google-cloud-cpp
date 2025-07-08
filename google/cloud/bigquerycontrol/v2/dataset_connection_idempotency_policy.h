@@ -34,32 +34,33 @@ class DatasetServiceConnectionIdempotencyPolicy {
   virtual ~DatasetServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  GetDataset(google::cloud::bigquery::v2::GetDatasetRequest const& request);
+  virtual google::cloud::Idempotency GetDataset(
+      google::cloud::bigquery::v2::GetDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertDataset(google::cloud::bigquery::v2::InsertDatasetRequest const& request);
+  virtual google::cloud::Idempotency InsertDataset(
+      google::cloud::bigquery::v2::InsertDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PatchDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request);
+  virtual google::cloud::Idempotency PatchDataset(
+      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request);
+  virtual google::cloud::Idempotency UpdateDataset(
+      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteDataset(google::cloud::bigquery::v2::DeleteDatasetRequest const& request);
+  virtual google::cloud::Idempotency DeleteDataset(
+      google::cloud::bigquery::v2::DeleteDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDatasets(google::cloud::bigquery::v2::ListDatasetsRequest request);
+  virtual google::cloud::Idempotency ListDatasets(
+      google::cloud::bigquery::v2::ListDatasetsRequest request);
 
-  virtual google::cloud::Idempotency
-  UndeleteDataset(google::cloud::bigquery::v2::UndeleteDatasetRequest const& request);
+  virtual google::cloud::Idempotency UndeleteDataset(
+      google::cloud::bigquery::v2::UndeleteDatasetRequest const& request);
 };
 
 std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy>
-    MakeDefaultDatasetServiceConnectionIdempotencyPolicy();
+MakeDefaultDatasetServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2

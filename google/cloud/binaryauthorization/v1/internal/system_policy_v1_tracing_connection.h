@@ -36,12 +36,13 @@ class SystemPolicyV1TracingConnection
   ~SystemPolicyV1TracingConnection() override = default;
 
   explicit SystemPolicyV1TracingConnection(
-    std::shared_ptr<binaryauthorization_v1::SystemPolicyV1Connection> child);
+      std::shared_ptr<binaryauthorization_v1::SystemPolicyV1Connection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::binaryauthorization::v1::Policy>
-  GetSystemPolicy(google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
+      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+          request) override;
 
  private:
   std::shared_ptr<binaryauthorization_v1::SystemPolicyV1Connection> child_;

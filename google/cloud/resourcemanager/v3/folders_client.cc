@@ -17,8 +17,8 @@
 // source: google/cloud/resourcemanager/v3/folders.proto
 
 #include "google/cloud/resourcemanager/v3/folders_client.h"
-#include <memory>
 #include "google/cloud/resourcemanager/v3/folders_options.h"
+#include <memory>
 #include <thread>
 #include <utility>
 
@@ -27,23 +27,24 @@ namespace cloud {
 namespace resourcemanager_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FoldersClient::FoldersClient(
-    std::shared_ptr<FoldersConnection> connection, Options opts)
+FoldersClient::FoldersClient(std::shared_ptr<FoldersConnection> connection,
+                             Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FoldersClient::~FoldersClient() = default;
 
-StatusOr<google::cloud::resourcemanager::v3::Folder>
-FoldersClient::GetFolder(std::string const& name, Options opts) {
+StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersClient::GetFolder(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::GetFolderRequest request;
   request.set_name(name);
   return connection_->GetFolder(request);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::Folder>
-FoldersClient::GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const& request, Options opts) {
+StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersClient::GetFolder(
+    google::cloud::resourcemanager::v3::GetFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFolder(request);
 }
@@ -57,7 +58,9 @@ FoldersClient::ListFolders(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersClient::ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest request, Options opts) {
+FoldersClient::ListFolders(
+    google::cloud::resourcemanager::v3::ListFoldersRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFolders(std::move(request));
 }
@@ -71,21 +74,25 @@ FoldersClient::SearchFolders(std::string const& query, Options opts) {
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersClient::SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest request, Options opts) {
+FoldersClient::SearchFolders(
+    google::cloud::resourcemanager::v3::SearchFoldersRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchFolders(std::move(request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::CreateFolder(google::cloud::resourcemanager::v3::Folder const& folder, Options opts) {
+FoldersClient::CreateFolder(
+    google::cloud::resourcemanager::v3::Folder const& folder, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::CreateFolderRequest request;
   *request.mutable_folder() = folder;
   return connection_->CreateFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::CreateFolder(NoAwaitTag, google::cloud::resourcemanager::v3::Folder const& folder, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::CreateFolder(
+    NoAwaitTag, google::cloud::resourcemanager::v3::Folder const& folder,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::CreateFolderRequest request;
   *request.mutable_folder() = folder;
@@ -93,25 +100,32 @@ FoldersClient::CreateFolder(NoAwaitTag, google::cloud::resourcemanager::v3::Fold
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const& request, Options opts) {
+FoldersClient::CreateFolder(
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::CreateFolder(NoAwaitTag, google::cloud::resourcemanager::v3::CreateFolderRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::CreateFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFolder(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::CreateFolder(google::longrunning::Operation const& operation, Options opts) {
+FoldersClient::CreateFolder(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFolder(operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::UpdateFolder(google::cloud::resourcemanager::v3::Folder const& folder, google::protobuf::FieldMask const& update_mask, Options opts) {
+FoldersClient::UpdateFolder(
+    google::cloud::resourcemanager::v3::Folder const& folder,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::UpdateFolderRequest request;
   *request.mutable_folder() = folder;
@@ -119,8 +133,9 @@ FoldersClient::UpdateFolder(google::cloud::resourcemanager::v3::Folder const& fo
   return connection_->UpdateFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::UpdateFolder(NoAwaitTag, google::cloud::resourcemanager::v3::Folder const& folder, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::UpdateFolder(
+    NoAwaitTag, google::cloud::resourcemanager::v3::Folder const& folder,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::UpdateFolderRequest request;
   *request.mutable_folder() = folder;
@@ -129,25 +144,31 @@ FoldersClient::UpdateFolder(NoAwaitTag, google::cloud::resourcemanager::v3::Fold
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const& request, Options opts) {
+FoldersClient::UpdateFolder(
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::UpdateFolder(NoAwaitTag, google::cloud::resourcemanager::v3::UpdateFolderRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::UpdateFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFolder(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::UpdateFolder(google::longrunning::Operation const& operation, Options opts) {
+FoldersClient::UpdateFolder(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFolder(operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::MoveFolder(std::string const& name, std::string const& destination_parent, Options opts) {
+FoldersClient::MoveFolder(std::string const& name,
+                          std::string const& destination_parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::MoveFolderRequest request;
   request.set_name(name);
@@ -155,8 +176,9 @@ FoldersClient::MoveFolder(std::string const& name, std::string const& destinatio
   return connection_->MoveFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::MoveFolder(NoAwaitTag, std::string const& name, std::string const& destination_parent, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::MoveFolder(
+    NoAwaitTag, std::string const& name, std::string const& destination_parent,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::MoveFolderRequest request;
   request.set_name(name);
@@ -165,19 +187,24 @@ FoldersClient::MoveFolder(NoAwaitTag, std::string const& name, std::string const
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const& request, Options opts) {
+FoldersClient::MoveFolder(
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::MoveFolder(NoAwaitTag, google::cloud::resourcemanager::v3::MoveFolderRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::MoveFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveFolder(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::MoveFolder(google::longrunning::Operation const& operation, Options opts) {
+FoldersClient::MoveFolder(google::longrunning::Operation const& operation,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveFolder(operation);
 }
@@ -190,8 +217,8 @@ FoldersClient::DeleteFolder(std::string const& name, Options opts) {
   return connection_->DeleteFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::DeleteFolder(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::DeleteFolder(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::DeleteFolderRequest request;
   request.set_name(name);
@@ -199,19 +226,24 @@ FoldersClient::DeleteFolder(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const& request, Options opts) {
+FoldersClient::DeleteFolder(
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::DeleteFolder(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteFolderRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::DeleteFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFolder(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::DeleteFolder(google::longrunning::Operation const& operation, Options opts) {
+FoldersClient::DeleteFolder(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFolder(operation);
 }
@@ -224,8 +256,8 @@ FoldersClient::UndeleteFolder(std::string const& name, Options opts) {
   return connection_->UndeleteFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::UndeleteFolder(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::UndeleteFolder(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::UndeleteFolderRequest request;
   request.set_name(name);
@@ -233,39 +265,45 @@ FoldersClient::UndeleteFolder(NoAwaitTag, std::string const& name, Options opts)
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request, Options opts) {
+FoldersClient::UndeleteFolder(
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteFolder(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::UndeleteFolder(NoAwaitTag, google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::UndeleteFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteFolder(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersClient::UndeleteFolder(google::longrunning::Operation const& operation, Options opts) {
+FoldersClient::UndeleteFolder(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteFolder(operation);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::GetIamPolicy(std::string const& resource, Options opts) {
+StatusOr<google::iam::v1::Policy> FoldersClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> FoldersClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts) {
+StatusOr<google::iam::v1::Policy> FoldersClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
@@ -273,15 +311,16 @@ FoldersClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts) {
+StatusOr<google::iam::v1::Policy> FoldersClient::SetIamPolicy(
+    std::string const& resource, IamUpdater const& updater, Options opts) {
   internal::CheckExpectedOptions<FoldersBackoffPolicyOption>(opts, __func__);
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
-  auto backoff_policy = internal::CurrentOptions().get<FoldersBackoffPolicyOption>();
+  auto backoff_policy =
+      internal::CurrentOptions().get<FoldersBackoffPolicyOption>();
   if (backoff_policy != nullptr) {
     backoff_policy = backoff_policy->clone();
   }
@@ -298,8 +337,7 @@ FoldersClient::SetIamPolicy(std::string const& resource, IamUpdater const& updat
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result ||
-        result.status().code() != StatusCode::kAborted ||
+    if (result || result.status().code() != StatusCode::kAborted ||
         backoff_policy == nullptr) {
       return result;
     }
@@ -307,14 +345,16 @@ FoldersClient::SetIamPolicy(std::string const& resource, IamUpdater const& updat
   }
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> FoldersClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FoldersClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts) {
+FoldersClient::TestIamPermissions(std::string const& resource,
+                                  std::vector<std::string> const& permissions,
+                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
@@ -323,21 +363,22 @@ FoldersClient::TestIamPermissions(std::string const& resource, std::vector<std::
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FoldersClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+FoldersClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FoldersClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

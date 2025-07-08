@@ -17,17 +17,17 @@
 // source: google/cloud/scheduler/v1/cloudscheduler.proto
 
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection.h"
+#include "google/cloud/scheduler/v1/cloud_scheduler_options.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_connection_impl.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_option_defaults.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub_factory.h"
+#include "google/cloud/scheduler/v1/internal/cloud_scheduler_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/scheduler/v1/cloud_scheduler_options.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_connection_impl.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_option_defaults.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_stub_factory.h"
-#include "google/cloud/scheduler/v1/internal/cloud_scheduler_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,56 +38,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudSchedulerConnection::~CloudSchedulerConnection() = default;
 
-StreamRange<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::ListJobs(
-    google::cloud::scheduler::v1::ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::scheduler::v1::Job>
+CloudSchedulerConnection::ListJobs(
+    google::cloud::scheduler::v1::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::scheduler::v1::Job>>();
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerConnection::GetJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::GetJob(
     google::cloud::scheduler::v1::GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerConnection::CreateJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::CreateJob(
     google::cloud::scheduler::v1::CreateJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerConnection::UpdateJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::UpdateJob(
     google::cloud::scheduler::v1::UpdateJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-CloudSchedulerConnection::DeleteJob(
+Status CloudSchedulerConnection::DeleteJob(
     google::cloud::scheduler::v1::DeleteJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerConnection::PauseJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::PauseJob(
     google::cloud::scheduler::v1::PauseJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerConnection::ResumeJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::ResumeJob(
     google::cloud::scheduler::v1::ResumeJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerConnection::RunJob(
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::RunJob(
     google::cloud::scheduler::v1::RunJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> CloudSchedulerConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+CloudSchedulerConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -101,17 +98,18 @@ CloudSchedulerConnection::GetLocation(
 std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      CloudSchedulerPolicyOptionList>(options, __func__);
-  options = scheduler_v1_internal::CloudSchedulerDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 CloudSchedulerPolicyOptionList>(options,
+                                                                 __func__);
+  options =
+      scheduler_v1_internal::CloudSchedulerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = scheduler_v1_internal::CreateDefaultCloudSchedulerStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return scheduler_v1_internal::MakeCloudSchedulerTracingConnection(
       std::make_shared<scheduler_v1_internal::CloudSchedulerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

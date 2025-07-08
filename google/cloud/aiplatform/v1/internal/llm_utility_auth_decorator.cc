@@ -31,27 +31,27 @@ LlmUtilityServiceAuth::LlmUtilityServiceAuth(
     std::shared_ptr<LlmUtilityServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> LlmUtilityServiceAuth::CountTokens(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
+LlmUtilityServiceAuth::CountTokens(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CountTokensRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CountTokens(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> LlmUtilityServiceAuth::ComputeTokens(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
+LlmUtilityServiceAuth::ComputeTokens(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ComputeTokens(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> LlmUtilityServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+LlmUtilityServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +59,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> LlmUtilityServiceAuth::
 }
 
 StatusOr<google::cloud::location::Location> LlmUtilityServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +67,7 @@ StatusOr<google::cloud::location::Location> LlmUtilityServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> LlmUtilityServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,26 +75,25 @@ StatusOr<google::iam::v1::Policy> LlmUtilityServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> LlmUtilityServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> LlmUtilityServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+LlmUtilityServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> LlmUtilityServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+LlmUtilityServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,8 +101,7 @@ StatusOr<google::longrunning::ListOperationsResponse> LlmUtilityServiceAuth::Lis
 }
 
 StatusOr<google::longrunning::Operation> LlmUtilityServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -113,8 +109,7 @@ StatusOr<google::longrunning::Operation> LlmUtilityServiceAuth::GetOperation(
 }
 
 Status LlmUtilityServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +117,7 @@ Status LlmUtilityServiceAuth::DeleteOperation(
 }
 
 Status LlmUtilityServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -131,8 +125,7 @@ Status LlmUtilityServiceAuth::CancelOperation(
 }
 
 StatusOr<google::longrunning::Operation> LlmUtilityServiceAuth::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

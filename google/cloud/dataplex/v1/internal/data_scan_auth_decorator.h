@@ -43,108 +43,101 @@ class DataScanServiceAuth : public DataScanServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateDataScanRequest const& request) override;
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateDataScan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::CreateDataScanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDataScan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateDataScanRequest const& request) override;
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateDataScan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::UpdateDataScanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataScan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteDataScanRequest const& request) override;
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteDataScan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::DeleteDataScanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request)
+      override;
 
   StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetDataScanRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListDataScansResponse> ListDataScans(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataplex::v1::ListDataScansRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::ListDataScansRequest const& request)
+      override;
 
   StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> RunDataScan(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::RunDataScanRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataplex::v1::GetDataScanJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetDataScanJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dataplex::v1::ListDataScanJobsResponse> ListDataScanJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataplex::v1::ListDataScanJobsRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::ListDataScanJobsResponse>
+  ListDataScanJobs(grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListDataScanJobsRequest const&
+                       request) override;
 
-  StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse> GenerateDataQualityRules(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
+  GenerateDataQualityRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

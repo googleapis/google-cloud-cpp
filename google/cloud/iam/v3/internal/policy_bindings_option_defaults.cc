@@ -35,28 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PolicyBindingsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_POLICY_BINDINGS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_POLICY_BINDINGS_AUTHORITY",
-      "iam.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_POLICY_BINDINGS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_POLICY_BINDINGS_AUTHORITY", "iam.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iam_v3::PolicyBindingsRetryPolicyOption>()) {
     options.set<iam_v3::PolicyBindingsRetryPolicyOption>(
-        iam_v3::PolicyBindingsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        iam_v3::PolicyBindingsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<iam_v3::PolicyBindingsBackoffPolicyOption>()) {
     options.set<iam_v3::PolicyBindingsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<iam_v3::PolicyBindingsPollingPolicyOption>()) {
     options.set<iam_v3::PolicyBindingsPollingPolicyOption>(
-        GenericPollingPolicy<
-            iam_v3::PolicyBindingsRetryPolicyOption::Type,
-            iam_v3::PolicyBindingsBackoffPolicyOption::Type>(
+        GenericPollingPolicy<iam_v3::PolicyBindingsRetryPolicyOption::Type,
+                             iam_v3::PolicyBindingsBackoffPolicyOption::Type>(
             options.get<iam_v3::PolicyBindingsRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<iam_v3::PolicyBindingsConnectionIdempotencyPolicyOption>()) {
     options.set<iam_v3::PolicyBindingsConnectionIdempotencyPolicyOption>(

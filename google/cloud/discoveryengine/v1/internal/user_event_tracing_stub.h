@@ -36,53 +36,53 @@ class UserEventServiceTracingStub : public UserEventServiceStub {
  public:
   ~UserEventServiceTracingStub() override = default;
 
-  explicit UserEventServiceTracingStub(std::shared_ptr<UserEventServiceStub> child);
+  explicit UserEventServiceTracingStub(
+      std::shared_ptr<UserEventServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::WriteUserEventRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::WriteUserEventRequest const& request)
+      override;
 
   StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::CollectUserEventRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CollectUserEventRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeUserEvents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) override;
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> PurgeUserEvents(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportUserEvents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request) override;
+      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> ImportUserEvents(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -99,7 +99,8 @@ class UserEventServiceTracingStub : public UserEventServiceStub {
 
  private:
   std::shared_ptr<UserEventServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_MODEL_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_MODEL_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/retail/v2/model_connection.h"
 #include "google/cloud/retail/v2/model_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,8 +74,7 @@ struct ModelServicePollingPolicyOption {
  * @ingroup google-cloud-retail-options
  */
 using ModelServicePolicyOptionList =
-    OptionList<ModelServiceRetryPolicyOption,
-               ModelServiceBackoffPolicyOption,
+    OptionList<ModelServiceRetryPolicyOption, ModelServiceBackoffPolicyOption,
                ModelServicePollingPolicyOption,
                ModelServiceConnectionIdempotencyPolicyOption>;
 

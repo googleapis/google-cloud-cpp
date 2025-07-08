@@ -17,17 +17,17 @@
 // source: google/cloud/vision/v1/product_search_service.proto
 
 #include "google/cloud/vision/v1/product_search_connection.h"
+#include "google/cloud/vision/v1/internal/product_search_connection_impl.h"
+#include "google/cloud/vision/v1/internal/product_search_option_defaults.h"
+#include "google/cloud/vision/v1/internal/product_search_stub_factory.h"
+#include "google/cloud/vision/v1/internal/product_search_tracing_connection.h"
+#include "google/cloud/vision/v1/product_search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/vision/v1/internal/product_search_connection_impl.h"
-#include "google/cloud/vision/v1/internal/product_search_option_defaults.h"
-#include "google/cloud/vision/v1/internal/product_search_stub_factory.h"
-#include "google/cloud/vision/v1/internal/product_search_tracing_connection.h"
-#include "google/cloud/vision/v1/product_search_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,8 +44,10 @@ ProductSearchConnection::CreateProductSet(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::vision::v1::ProductSet> ProductSearchConnection::ListProductSets(
-    google::cloud::vision::v1::ListProductSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::vision::v1::ProductSet>
+ProductSearchConnection::ListProductSets(
+    google::cloud::vision::v1::
+        ListProductSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::ProductSet>>();
 }
@@ -62,8 +64,7 @@ ProductSearchConnection::UpdateProductSet(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ProductSearchConnection::DeleteProductSet(
+Status ProductSearchConnection::DeleteProductSet(
     google::cloud::vision::v1::DeleteProductSetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -74,8 +75,10 @@ ProductSearchConnection::CreateProduct(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::vision::v1::Product> ProductSearchConnection::ListProducts(
-    google::cloud::vision::v1::ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::vision::v1::Product>
+ProductSearchConnection::ListProducts(
+    google::cloud::vision::v1::
+        ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::Product>>();
 }
@@ -92,8 +95,7 @@ ProductSearchConnection::UpdateProduct(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ProductSearchConnection::DeleteProduct(
+Status ProductSearchConnection::DeleteProduct(
     google::cloud::vision::v1::DeleteProductRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -104,14 +106,15 @@ ProductSearchConnection::CreateReferenceImage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ProductSearchConnection::DeleteReferenceImage(
+Status ProductSearchConnection::DeleteReferenceImage(
     google::cloud::vision::v1::DeleteReferenceImageRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::vision::v1::ReferenceImage> ProductSearchConnection::ListReferenceImages(
-    google::cloud::vision::v1::ListReferenceImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::vision::v1::ReferenceImage>
+ProductSearchConnection::ListReferenceImages(
+    google::cloud::vision::v1::
+        ListReferenceImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::ReferenceImage>>();
 }
@@ -122,20 +125,20 @@ ProductSearchConnection::GetReferenceImage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ProductSearchConnection::AddProductToProductSet(
+Status ProductSearchConnection::AddProductToProductSet(
     google::cloud::vision::v1::AddProductToProductSetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ProductSearchConnection::RemoveProductFromProductSet(
+Status ProductSearchConnection::RemoveProductFromProductSet(
     google::cloud::vision::v1::RemoveProductFromProductSetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::vision::v1::Product> ProductSearchConnection::ListProductsInProductSet(
-    google::cloud::vision::v1::ListProductsInProductSetRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::vision::v1::Product>
+ProductSearchConnection::ListProductsInProductSet(
+    google::cloud::vision::v1::
+        ListProductsInProductSetRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::Product>>();
 }
@@ -144,52 +147,47 @@ future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchConnection::ImportProductSets(
     google::cloud::vision::v1::ImportProductSetsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ProductSearchConnection::ImportProductSets(
-    NoAwaitTag,
-    google::cloud::vision::v1::ImportProductSetsRequest const&) {
+    NoAwaitTag, google::cloud::vision::v1::ImportProductSetsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchConnection::ImportProductSets(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchConnection::PurgeProducts(
     google::cloud::vision::v1::PurgeProductsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ProductSearchConnection::PurgeProducts(
-    NoAwaitTag,
-    google::cloud::vision::v1::PurgeProductsRequest const&) {
+StatusOr<google::longrunning::Operation> ProductSearchConnection::PurgeProducts(
+    NoAwaitTag, google::cloud::vision::v1::PurgeProductsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-ProductSearchConnection::PurgeProducts(
-    google::longrunning::Operation const&) {
+ProductSearchConnection::PurgeProducts(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ProductSearchConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ProductSearchConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -197,17 +195,17 @@ ProductSearchConnection::GetOperation(
 std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ProductSearchPolicyOptionList>(options, __func__);
-  options = vision_v1_internal::ProductSearchDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ProductSearchPolicyOptionList>(options,
+                                                                __func__);
+  options = vision_v1_internal::ProductSearchDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = vision_v1_internal::CreateDefaultProductSearchStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return vision_v1_internal::MakeProductSearchTracingConnection(
       std::make_shared<vision_v1_internal::ProductSearchConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

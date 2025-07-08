@@ -17,10 +17,10 @@
 // source: google/cloud/retail/v2/product_service.proto
 
 #include "google/cloud/retail/v2/internal/product_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/retail/v2/product_connection.h"
 #include "google/cloud/retail/v2/product_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,19 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ProductServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PRODUCT_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_PRODUCT_SERVICE_AUTHORITY",
-      "retail.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_PRODUCT_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_PRODUCT_SERVICE_AUTHORITY", "retail.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<retail_v2::ProductServiceRetryPolicyOption>()) {
     options.set<retail_v2::ProductServiceRetryPolicyOption>(
         retail_v2::ProductServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<retail_v2::ProductServiceBackoffPolicyOption>()) {
     options.set<retail_v2::ProductServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<retail_v2::ProductServicePollingPolicyOption>()) {
     options.set<retail_v2::ProductServicePollingPolicyOption>(
@@ -56,9 +58,12 @@ Options ProductServiceDefaultOptions(Options options) {
             retail_v2::ProductServiceBackoffPolicyOption::Type>(
             options.get<retail_v2::ProductServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<retail_v2::ProductServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<retail_v2::ProductServiceConnectionIdempotencyPolicyOption>()) {
     options.set<retail_v2::ProductServiceConnectionIdempotencyPolicyOption>(
         retail_v2::MakeDefaultProductServiceConnectionIdempotencyPolicy());
   }

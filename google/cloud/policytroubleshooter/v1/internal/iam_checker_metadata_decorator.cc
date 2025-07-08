@@ -46,24 +46,24 @@ IamCheckerMetadata::IamCheckerMetadata(
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerMetadata::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
+        request) {
   SetMetadata(context, options);
   return child_->TroubleshootIamPolicy(context, options, request);
 }
 
 void IamCheckerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                     Options const& options,
+                                     std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void IamCheckerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                     Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_LANGUAGE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_LANGUAGE_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/language/v2/language_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LanguageServiceClient {
  public:
-  explicit LanguageServiceClient(std::shared_ptr<LanguageServiceConnection> connection, Options opts = {});
+  explicit LanguageServiceClient(
+      std::shared_ptr<LanguageServiceConnection> connection, Options opts = {});
   ~LanguageServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class LanguageServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LanguageServiceClient const& a, LanguageServiceClient const& b) {
+  friend bool operator==(LanguageServiceClient const& a,
+                         LanguageServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LanguageServiceClient const& a, LanguageServiceClient const& b) {
+  friend bool operator!=(LanguageServiceClient const& a,
+                         LanguageServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -107,7 +110,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v2::Document const& document, google::cloud::language::v2::EncodingType encoding_type, Options opts = {});
+  AnalyzeSentiment(google::cloud::language::v2::Document const& document,
+                   google::cloud::language::v2::EncodingType encoding_type,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -132,7 +137,8 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v2::Document const& document, Options opts = {});
+  AnalyzeSentiment(google::cloud::language::v2::Document const& document,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -162,7 +168,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const& request, Options opts = {});
+  AnalyzeSentiment(
+      google::cloud::language::v2::AnalyzeSentimentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -190,7 +198,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v2::Document const& document, google::cloud::language::v2::EncodingType encoding_type, Options opts = {});
+  AnalyzeEntities(google::cloud::language::v2::Document const& document,
+                  google::cloud::language::v2::EncodingType encoding_type,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -217,7 +227,8 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v2::Document const& document, Options opts = {});
+  AnalyzeEntities(google::cloud::language::v2::Document const& document,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -249,7 +260,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const& request, Options opts = {});
+  AnalyzeEntities(
+      google::cloud::language::v2::AnalyzeEntitiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -273,8 +286,8 @@ class LanguageServiceClient {
   /// [google.cloud.language.v2.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L408}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v2::ClassifyTextResponse>
-  ClassifyText(google::cloud::language::v2::Document const& document, Options opts = {});
+  StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
+      google::cloud::language::v2::Document const& document, Options opts = {});
 
   // clang-format off
   ///
@@ -303,8 +316,9 @@ class LanguageServiceClient {
   /// [google.cloud.language.v2.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L408}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v2::ClassifyTextResponse>
-  ClassifyText(google::cloud::language::v2::ClassifyTextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
+      google::cloud::language::v2::ClassifyTextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -328,8 +342,8 @@ class LanguageServiceClient {
   /// [google.cloud.language.v2.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L449}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v2::ModerateTextResponse>
-  ModerateText(google::cloud::language::v2::Document const& document, Options opts = {});
+  StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
+      google::cloud::language::v2::Document const& document, Options opts = {});
 
   // clang-format off
   ///
@@ -358,8 +372,9 @@ class LanguageServiceClient {
   /// [google.cloud.language.v2.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L449}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v2::ModerateTextResponse>
-  ModerateText(google::cloud::language::v2::ModerateTextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
+      google::cloud::language::v2::ModerateTextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -385,8 +400,12 @@ class LanguageServiceClient {
   /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L495}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v2::AnnotateTextResponse>
-  AnnotateText(google::cloud::language::v2::Document const& document, google::cloud::language::v2::AnnotateTextRequest::Features const& features, google::cloud::language::v2::EncodingType encoding_type, Options opts = {});
+  StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
+      google::cloud::language::v2::Document const& document,
+      google::cloud::language::v2::AnnotateTextRequest::Features const&
+          features,
+      google::cloud::language::v2::EncodingType encoding_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -411,8 +430,11 @@ class LanguageServiceClient {
   /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L495}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v2::AnnotateTextResponse>
-  AnnotateText(google::cloud::language::v2::Document const& document, google::cloud::language::v2::AnnotateTextRequest::Features const& features, Options opts = {});
+  StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
+      google::cloud::language::v2::Document const& document,
+      google::cloud::language::v2::AnnotateTextRequest::Features const&
+          features,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +463,9 @@ class LanguageServiceClient {
   /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L495}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v2::AnnotateTextResponse>
-  AnnotateText(google::cloud::language::v2::AnnotateTextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
+      google::cloud::language::v2::AnnotateTextRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<LanguageServiceConnection> connection_;

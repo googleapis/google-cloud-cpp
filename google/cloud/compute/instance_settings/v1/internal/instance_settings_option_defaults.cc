@@ -35,32 +35,50 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options InstanceSettingsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_INSTANCE_SETTINGS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_INSTANCE_SETTINGS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_INSTANCE_SETTINGS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_INSTANCE_SETTINGS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>()) {
-    options.set<compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>(
+  if (!options.has<
+          compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>()) {
+    options.set<
+        compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>(
         compute_instance_settings_v1::InstanceSettingsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_instance_settings_v1::InstanceSettingsBackoffPolicyOption>()) {
-    options.set<compute_instance_settings_v1::InstanceSettingsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<compute_instance_settings_v1::
+                       InstanceSettingsBackoffPolicyOption>()) {
+    options
+        .set<compute_instance_settings_v1::InstanceSettingsBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<compute_instance_settings_v1::InstanceSettingsPollingPolicyOption>()) {
-    options.set<compute_instance_settings_v1::InstanceSettingsPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_instance_settings_v1::InstanceSettingsRetryPolicyOption::Type,
-            compute_instance_settings_v1::InstanceSettingsBackoffPolicyOption::Type>(
-            options.get<compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+  if (!options.has<compute_instance_settings_v1::
+                       InstanceSettingsPollingPolicyOption>()) {
+    options
+        .set<compute_instance_settings_v1::InstanceSettingsPollingPolicyOption>(
+            GenericPollingPolicy<compute_instance_settings_v1::
+                                     InstanceSettingsRetryPolicyOption::Type,
+                                 compute_instance_settings_v1::
+                                     InstanceSettingsBackoffPolicyOption::Type>(
+                options
+                    .get<compute_instance_settings_v1::
+                             InstanceSettingsRetryPolicyOption>()
+                    ->clone(),
+                ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                         std::chrono::minutes(5),
+                                         kBackoffScaling)
+                    .clone())
+                .clone());
   }
-  if (!options.has<compute_instance_settings_v1::InstanceSettingsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_instance_settings_v1::InstanceSettingsConnectionIdempotencyPolicyOption>(
-        compute_instance_settings_v1::MakeDefaultInstanceSettingsConnectionIdempotencyPolicy());
+  if (!options.has<compute_instance_settings_v1::
+                       InstanceSettingsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_instance_settings_v1::
+                    InstanceSettingsConnectionIdempotencyPolicyOption>(
+        compute_instance_settings_v1::
+            MakeDefaultInstanceSettingsConnectionIdempotencyPolicy());
   }
 
   return options;

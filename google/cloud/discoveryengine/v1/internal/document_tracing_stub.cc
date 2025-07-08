@@ -32,44 +32,48 @@ DocumentServiceTracingStub::DocumentServiceTracingStub(
     std::shared_ptr<DocumentServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::discoveryengine::v1::Document> DocumentServiceTracingStub::GetDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Document>
+DocumentServiceTracingStub::GetDocument(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "GetDocument");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDocument(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse> DocumentServiceTracingStub::ListDocuments(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
+DocumentServiceTracingStub::ListDocuments(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "ListDocuments");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "ListDocuments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDocuments(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Document> DocumentServiceTracingStub::CreateDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Document>
+DocumentServiceTracingStub::CreateDocument(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "CreateDocument");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "CreateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDocument(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Document> DocumentServiceTracingStub::UpdateDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Document>
+DocumentServiceTracingStub::UpdateDocument(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "UpdateDocument");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "UpdateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -77,10 +81,10 @@ StatusOr<google::cloud::discoveryengine::v1::Document> DocumentServiceTracingStu
 }
 
 Status DocumentServiceTracingStub::DeleteDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "DeleteDocument");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "DeleteDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -89,23 +93,25 @@ Status DocumentServiceTracingStub::DeleteDocument(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceTracingStub::AsyncImportDocuments(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "ImportDocuments");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "ImportDocuments");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportDocuments(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncImportDocuments(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentServiceTracingStub::ImportDocuments(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "ImportDocuments");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "ImportDocuments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -114,56 +120,64 @@ DocumentServiceTracingStub::ImportDocuments(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceTracingStub::AsyncPurgeDocuments(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "PurgeDocuments");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "PurgeDocuments");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncPurgeDocuments(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncPurgeDocuments(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DocumentServiceTracingStub::PurgeDocuments(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "PurgeDocuments");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "PurgeDocuments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PurgeDocuments(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse> DocumentServiceTracingStub::BatchGetDocumentsMetadata(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "BatchGetDocumentsMetadata");
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DocumentServiceTracingStub::BatchGetDocumentsMetadata(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService",
+                             "BatchGetDocumentsMetadata");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchGetDocumentsMetadata(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchGetDocumentsMetadata(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DocumentServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DocumentServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> DocumentServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+DocumentServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -171,10 +185,10 @@ StatusOr<google::longrunning::Operation> DocumentServiceTracingStub::GetOperatio
 }
 
 Status DocumentServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.DocumentService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -191,8 +205,7 @@ DocumentServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -205,8 +218,8 @@ future<Status> DocumentServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

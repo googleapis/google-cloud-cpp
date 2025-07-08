@@ -33,7 +33,8 @@ using ::google::cloud::osconfig_v1::MakeOsConfigServiceConnection;
 /// @deprecated Use osconfig_v1::OsConfigServiceConnection directly.
 using ::google::cloud::osconfig_v1::OsConfigServiceConnection;
 
-/// @deprecated Use osconfig_v1::OsConfigServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use osconfig_v1::OsConfigServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::osconfig_v1::OsConfigServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use osconfig_v1::OsConfigServiceLimitedTimeRetryPolicy directly.

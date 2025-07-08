@@ -28,11 +28,14 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use resourcemanager_v3::OrganizationsBackoffPolicyOption directly.
+/// @deprecated Use resourcemanager_v3::OrganizationsBackoffPolicyOption
+/// directly.
 using ::google::cloud::resourcemanager_v3::OrganizationsBackoffPolicyOption;
 
-/// @deprecated Use resourcemanager_v3::OrganizationsConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::resourcemanager_v3::OrganizationsConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// resourcemanager_v3::OrganizationsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::resourcemanager_v3::
+    OrganizationsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use resourcemanager_v3::OrganizationsPolicyOptionList directly.
 using ::google::cloud::resourcemanager_v3::OrganizationsPolicyOptionList;

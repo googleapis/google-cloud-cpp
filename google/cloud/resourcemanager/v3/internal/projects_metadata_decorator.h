@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_PROJECTS_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_PROJECTS_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/resourcemanager/v3/internal/projects_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -35,99 +35,100 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProjectsMetadata : public ProjectsStub {
  public:
   ~ProjectsMetadata() override = default;
-  ProjectsMetadata(
-      std::shared_ptr<ProjectsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  ProjectsMetadata(std::shared_ptr<ProjectsStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::GetProjectRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcemanager::v3::GetProjectRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse> ListProjects(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListProjectsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
+  ListProjects(grpc::ClientContext& context, Options const& options,
+               google::cloud::resourcemanager::v3::ListProjectsRequest const&
+                   request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse> SearchProjects(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
+  SearchProjects(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcemanager::v3::SearchProjectsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMoveProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> MoveProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) override;
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UndeleteProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -143,8 +144,7 @@ class ProjectsMetadata : public ProjectsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

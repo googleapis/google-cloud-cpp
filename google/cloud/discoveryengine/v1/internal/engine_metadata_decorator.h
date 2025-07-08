@@ -35,61 +35,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class EngineServiceMetadata : public EngineServiceStub {
  public:
   ~EngineServiceMetadata() override = default;
-  EngineServiceMetadata(
-      std::shared_ptr<EngineServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  EngineServiceMetadata(std::shared_ptr<EngineServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEngine(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request) override;
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateEngine(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEngine(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) override;
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteEngine(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Engine> GetEngine(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetEngineRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetEngineRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListEnginesResponse> ListEngines(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListEnginesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::ListEnginesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -105,8 +103,7 @@ class EngineServiceMetadata : public EngineServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

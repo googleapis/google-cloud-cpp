@@ -50,35 +50,36 @@ SessionControllerMetadata::AsyncCreateSession(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataproc::v1::CreateSessionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateSession(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateSession(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerMetadata::CreateSession(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::dataproc::v1::CreateSessionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSession(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Session>
 SessionControllerMetadata::GetSession(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetSessionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSession(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListSessionsResponse>
 SessionControllerMetadata::ListSessions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListSessionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSessions(context, options, request);
 }
 
@@ -88,17 +89,18 @@ SessionControllerMetadata::AsyncTerminateSession(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncTerminateSession(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncTerminateSession(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerMetadata::TerminateSession(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->TerminateSession(context, options, request);
 }
 
@@ -108,80 +110,80 @@ SessionControllerMetadata::AsyncDeleteSession(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSession(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteSession(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerMetadata::DeleteSession(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSession(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SessionControllerMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> SessionControllerMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SessionControllerMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> SessionControllerMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SessionControllerMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SessionControllerMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-SessionControllerMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SessionControllerMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-SessionControllerMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SessionControllerMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -193,8 +195,8 @@ SessionControllerMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> SessionControllerMetadata::AsyncCancelOperation(
@@ -204,21 +206,21 @@ future<Status> SessionControllerMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void SessionControllerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                            Options const& options,
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void SessionControllerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                            Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

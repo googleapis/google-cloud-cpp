@@ -34,12 +34,14 @@ KeyDashboardServiceTracingConnection::KeyDashboardServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-KeyDashboardServiceTracingConnection::ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest request) {
-  auto span = internal::MakeSpan("kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys");
+KeyDashboardServiceTracingConnection::ListCryptoKeys(
+    google::cloud::kms::inventory::v1::ListCryptoKeysRequest request) {
+  auto span = internal::MakeSpan(
+      "kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys");
   internal::OTelScope scope(span);
   auto sr = child_->ListCryptoKeys(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::CryptoKey>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -49,7 +51,8 @@ MakeKeyDashboardServiceTracingConnection(
     std::shared_ptr<kms_inventory_v1::KeyDashboardServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<KeyDashboardServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<KeyDashboardServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

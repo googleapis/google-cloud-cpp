@@ -17,9 +17,9 @@
 // source: google/cloud/financialservices/v1/service.proto
 
 #include "google/cloud/financialservices/v1/internal/aml_connection_impl.h"
+#include "google/cloud/financialservices/v1/internal/aml_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/financialservices/v1/internal/aml_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,58 +33,65 @@ namespace financialservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<financialservices_v1::AMLRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<financialservices_v1::AMLRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<financialservices_v1::AMLRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<financialservices_v1::AMLBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<financialservices_v1::AMLConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<financialservices_v1::AMLConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<financialservices_v1::AMLConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<financialservices_v1::AMLPollingPolicyOption>()->clone();
 }
 
-} // namespace
+}  // namespace
 
 AMLConnectionImpl::AMLConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<financialservices_v1_internal::AMLStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AMLConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      AMLConnection::options())) {}
 
 StreamRange<google::cloud::financialservices::v1::Instance>
-AMLConnectionImpl::ListInstances(google::cloud::financialservices::v1::ListInstancesRequest request) {
+AMLConnectionImpl::ListInstances(
+    google::cloud::financialservices::v1::ListInstancesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListInstances(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::financialservices::v1::Instance>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::financialservices::v1::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::financialservices::v1::ListInstancesRequest const& r) {
+          Options const& options,
+          google::cloud::financialservices::v1::ListInstancesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::financialservices::v1::ListInstancesRequest const& request) {
+                   google::cloud::financialservices::v1::
+                       ListInstancesRequest const& request) {
               return stub->ListInstances(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::financialservices::v1::ListInstancesResponse r) {
-        std::vector<google::cloud::financialservices::v1::Instance> result(r.instances().size());
+        std::vector<google::cloud::financialservices::v1::Instance> result(
+            r.instances().size());
         auto& messages = *r.mutable_instances();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -92,62 +99,72 @@ AMLConnectionImpl::ListInstances(google::cloud::financialservices::v1::ListInsta
 }
 
 StatusOr<google::cloud::financialservices::v1::Instance>
-AMLConnectionImpl::GetInstance(google::cloud::financialservices::v1::GetInstanceRequest const& request) {
+AMLConnectionImpl::GetInstance(
+    google::cloud::financialservices::v1::GetInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstance(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetInstanceRequest const& request) {
+             google::cloud::financialservices::v1::GetInstanceRequest const&
+                 request) {
         return stub_->GetInstance(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLConnectionImpl::CreateInstance(google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+AMLConnectionImpl::CreateInstance(
+    google::cloud::financialservices::v1::CreateInstanceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateInstance(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::Instance>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
-     return stub->AsyncCreateInstance(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Instance>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::Instance>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::CreateInstanceRequest const&
+              request) {
+        return stub->AsyncCreateInstance(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Instance>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::CreateInstance(
-      NoAwaitTag, google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::CreateInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateInstanceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateInstance(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::CreateInstanceRequest const&
+                 request) {
         return stub_->CreateInstance(context, options, request);
       },
       *current, request, __func__);
@@ -155,78 +172,94 @@ AMLConnectionImpl::CreateInstance(
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
 AMLConnectionImpl::CreateInstance(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::Instance>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateInstance",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::Instance>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Instance>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Instance>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLConnectionImpl::UpdateInstance(google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+AMLConnectionImpl::UpdateInstance(
+    google::cloud::financialservices::v1::UpdateInstanceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateInstance(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::Instance>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
-     return stub->AsyncUpdateInstance(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Instance>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::Instance>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::UpdateInstanceRequest const&
+              request) {
+        return stub->AsyncUpdateInstance(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Instance>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::UpdateInstance(
-      NoAwaitTag, google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::UpdateInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateInstanceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateInstance(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::UpdateInstanceRequest const&
+                 request) {
         return stub_->UpdateInstance(context, options, request);
       },
       *current, request, __func__);
@@ -234,78 +267,94 @@ AMLConnectionImpl::UpdateInstance(
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
 AMLConnectionImpl::UpdateInstance(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::Instance>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateInstance",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::Instance>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Instance>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Instance>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnectionImpl::DeleteInstance(google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+AMLConnectionImpl::DeleteInstance(
+    google::cloud::financialservices::v1::DeleteInstanceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteInstance(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
-     return stub->AsyncDeleteInstance(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::DeleteInstanceRequest const&
+              request) {
+        return stub->AsyncDeleteInstance(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::DeleteInstance(
-      NoAwaitTag, google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::DeleteInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteInstanceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteInstance(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::DeleteInstanceRequest const&
+                 request) {
         return stub_->DeleteInstance(context, options, request);
       },
       *current, request, __func__);
@@ -313,214 +362,269 @@ AMLConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnectionImpl::DeleteInstance(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteInstance",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-AMLConnectionImpl::ImportRegisteredParties(google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+AMLConnectionImpl::ImportRegisteredParties(
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ImportRegisteredParties(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
-     return stub->AsyncImportRegisteredParties(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         ImportRegisteredPartiesRequest const& request) {
+        return stub->AsyncImportRegisteredParties(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ImportRegisteredPartiesResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::ImportRegisteredParties(
-      NoAwaitTag, google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportRegisteredParties(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 ImportRegisteredPartiesRequest const& request) {
         return stub_->ImportRegisteredParties(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+future<StatusOr<
+    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
 AMLConnectionImpl::ImportRegisteredParties(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to ImportRegisteredParties",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportRegisteredParties",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ImportRegisteredPartiesResponse>,
+      polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-AMLConnectionImpl::ExportRegisteredParties(google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+AMLConnectionImpl::ExportRegisteredParties(
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ExportRegisteredParties(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
-     return stub->AsyncExportRegisteredParties(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         ExportRegisteredPartiesRequest const& request) {
+        return stub->AsyncExportRegisteredParties(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ExportRegisteredPartiesResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::ExportRegisteredParties(
-      NoAwaitTag, google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportRegisteredParties(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 ExportRegisteredPartiesRequest const& request) {
         return stub_->ExportRegisteredParties(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
 AMLConnectionImpl::ExportRegisteredParties(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to ExportRegisteredParties",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportRegisteredParties",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ExportRegisteredPartiesResponse>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::financialservices::v1::Dataset>
-AMLConnectionImpl::ListDatasets(google::cloud::financialservices::v1::ListDatasetsRequest request) {
+AMLConnectionImpl::ListDatasets(
+    google::cloud::financialservices::v1::ListDatasetsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListDatasets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::financialservices::v1::Dataset>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::financialservices::v1::Dataset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::financialservices::v1::ListDatasetsRequest const& r) {
+          Options const& options,
+          google::cloud::financialservices::v1::ListDatasetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::financialservices::v1::ListDatasetsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::financialservices::v1::ListDatasetsRequest const&
+                    request) {
               return stub->ListDatasets(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::financialservices::v1::ListDatasetsResponse r) {
-        std::vector<google::cloud::financialservices::v1::Dataset> result(r.datasets().size());
+        std::vector<google::cloud::financialservices::v1::Dataset> result(
+            r.datasets().size());
         auto& messages = *r.mutable_datasets();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -528,62 +632,70 @@ AMLConnectionImpl::ListDatasets(google::cloud::financialservices::v1::ListDatase
 }
 
 StatusOr<google::cloud::financialservices::v1::Dataset>
-AMLConnectionImpl::GetDataset(google::cloud::financialservices::v1::GetDatasetRequest const& request) {
+AMLConnectionImpl::GetDataset(
+    google::cloud::financialservices::v1::GetDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataset(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetDatasetRequest const& request) {
+             google::cloud::financialservices::v1::GetDatasetRequest const&
+                 request) {
         return stub_->GetDataset(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLConnectionImpl::CreateDataset(google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+AMLConnectionImpl::CreateDataset(
+    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateDataset(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::Dataset>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
-     return stub->AsyncCreateDataset(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Dataset>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::Dataset>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::CreateDatasetRequest const&
+              request) {
+        return stub->AsyncCreateDataset(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Dataset>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::CreateDataset(
-      NoAwaitTag, google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::CreateDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDataset(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::CreateDatasetRequest const&
+                 request) {
         return stub_->CreateDataset(context, options, request);
       },
       *current, request, __func__);
@@ -591,78 +703,92 @@ AMLConnectionImpl::CreateDataset(
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
 AMLConnectionImpl::CreateDataset(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::Dataset>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateDataset",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::Dataset>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDataset",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::Dataset>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Dataset>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::Dataset>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Dataset>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLConnectionImpl::UpdateDataset(google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+AMLConnectionImpl::UpdateDataset(
+    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateDataset(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::Dataset>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
-     return stub->AsyncUpdateDataset(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Dataset>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::Dataset>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::UpdateDatasetRequest const&
+              request) {
+        return stub->AsyncUpdateDataset(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Dataset>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::UpdateDataset(
-      NoAwaitTag, google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::UpdateDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataset(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::UpdateDatasetRequest const&
+                 request) {
         return stub_->UpdateDataset(context, options, request);
       },
       *current, request, __func__);
@@ -670,78 +796,92 @@ AMLConnectionImpl::UpdateDataset(
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
 AMLConnectionImpl::UpdateDataset(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::Dataset>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateDataset",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::Dataset>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateDataset",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::Dataset>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Dataset>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::Dataset>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Dataset>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnectionImpl::DeleteDataset(google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+AMLConnectionImpl::DeleteDataset(
+    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteDataset(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
-     return stub->AsyncDeleteDataset(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::DeleteDatasetRequest const&
+              request) {
+        return stub->AsyncDeleteDataset(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::DeleteDataset(
-      NoAwaitTag, google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::DeleteDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDataset(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::DeleteDatasetRequest const&
+                 request) {
         return stub_->DeleteDataset(context, options, request);
       },
       *current, request, __func__);
@@ -749,56 +889,71 @@ AMLConnectionImpl::DeleteDataset(
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnectionImpl::DeleteDataset(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteDataset",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDataset",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::financialservices::v1::Model>
-AMLConnectionImpl::ListModels(google::cloud::financialservices::v1::ListModelsRequest request) {
+AMLConnectionImpl::ListModels(
+    google::cloud::financialservices::v1::ListModelsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListModels(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::financialservices::v1::Model>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::financialservices::v1::Model>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::financialservices::v1::ListModelsRequest const& r) {
+          Options const& options,
+          google::cloud::financialservices::v1::ListModelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::financialservices::v1::ListModelsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::financialservices::v1::ListModelsRequest const&
+                    request) {
               return stub->ListModels(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::financialservices::v1::ListModelsResponse r) {
-        std::vector<google::cloud::financialservices::v1::Model> result(r.models().size());
+        std::vector<google::cloud::financialservices::v1::Model> result(
+            r.models().size());
         auto& messages = *r.mutable_models();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -806,62 +961,70 @@ AMLConnectionImpl::ListModels(google::cloud::financialservices::v1::ListModelsRe
 }
 
 StatusOr<google::cloud::financialservices::v1::Model>
-AMLConnectionImpl::GetModel(google::cloud::financialservices::v1::GetModelRequest const& request) {
+AMLConnectionImpl::GetModel(
+    google::cloud::financialservices::v1::GetModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModel(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetModelRequest const& request) {
+             google::cloud::financialservices::v1::GetModelRequest const&
+                 request) {
         return stub_->GetModel(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLConnectionImpl::CreateModel(google::cloud::financialservices::v1::CreateModelRequest const& request) {
+AMLConnectionImpl::CreateModel(
+    google::cloud::financialservices::v1::CreateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateModel(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::Model>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::CreateModelRequest const& request) {
-     return stub->AsyncCreateModel(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Model>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::Model>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::CreateModelRequest const&
+              request) {
+        return stub->AsyncCreateModel(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Model>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::CreateModel(
-      NoAwaitTag, google::cloud::financialservices::v1::CreateModelRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::CreateModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateModel(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::CreateModelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::CreateModelRequest const&
+                 request) {
         return stub_->CreateModel(context, options, request);
       },
       *current, request, __func__);
@@ -869,78 +1032,92 @@ AMLConnectionImpl::CreateModel(
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
 AMLConnectionImpl::CreateModel(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::Model>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateModel",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::Model>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::Model>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Model>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::Model>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Model>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLConnectionImpl::UpdateModel(google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+AMLConnectionImpl::UpdateModel(
+    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateModel(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::Model>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::UpdateModelRequest const& request) {
-     return stub->AsyncUpdateModel(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Model>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::Model>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::UpdateModelRequest const&
+              request) {
+        return stub->AsyncUpdateModel(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Model>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::UpdateModel(
-      NoAwaitTag, google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::UpdateModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateModel(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::UpdateModelRequest const&
+                 request) {
         return stub_->UpdateModel(context, options, request);
       },
       *current, request, __func__);
@@ -948,157 +1125,188 @@ AMLConnectionImpl::UpdateModel(
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
 AMLConnectionImpl::UpdateModel(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::Model>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateModel",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::Model>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::Model>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::Model>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::Model>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::Model>,
+      polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-AMLConnectionImpl::ExportModelMetadata(google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+AMLConnectionImpl::ExportModelMetadata(
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ExportModelMetadata(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::ExportModelMetadataResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
-     return stub->AsyncExportModelMetadata(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportModelMetadataResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::ExportModelMetadataResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         ExportModelMetadataRequest const& request) {
+        return stub->AsyncExportModelMetadata(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::ExportModelMetadataResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::ExportModelMetadata(
-      NoAwaitTag, google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::ExportModelMetadata(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportModelMetadata(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 ExportModelMetadataRequest const& request) {
         return stub_->ExportModelMetadata(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
 AMLConnectionImpl::ExportModelMetadata(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to ExportModelMetadata",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::financialservices::v1::ExportModelMetadataResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportModelMetadata",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::ExportModelMetadataResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportModelMetadataResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::ExportModelMetadataResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::ExportModelMetadataResponse>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnectionImpl::DeleteModel(google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+AMLConnectionImpl::DeleteModel(
+    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteModel(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::DeleteModelRequest const& request) {
-     return stub->AsyncDeleteModel(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::DeleteModelRequest const&
+              request) {
+        return stub->AsyncDeleteModel(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::DeleteModel(
-      NoAwaitTag, google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::DeleteModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteModel(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::DeleteModelRequest const&
+                 request) {
         return stub_->DeleteModel(context, options, request);
       },
       *current, request, __func__);
@@ -1106,56 +1314,71 @@ AMLConnectionImpl::DeleteModel(
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnectionImpl::DeleteModel(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteModel",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::financialservices::v1::EngineConfig>
-AMLConnectionImpl::ListEngineConfigs(google::cloud::financialservices::v1::ListEngineConfigsRequest request) {
+AMLConnectionImpl::ListEngineConfigs(
+    google::cloud::financialservices::v1::ListEngineConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEngineConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::financialservices::v1::EngineConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::financialservices::v1::EngineConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::financialservices::v1::ListEngineConfigsRequest const& r) {
+          Options const& options,
+          google::cloud::financialservices::v1::ListEngineConfigsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::financialservices::v1::ListEngineConfigsRequest const& request) {
+                   google::cloud::financialservices::v1::
+                       ListEngineConfigsRequest const& request) {
               return stub->ListEngineConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::financialservices::v1::ListEngineConfigsResponse r) {
-        std::vector<google::cloud::financialservices::v1::EngineConfig> result(r.engine_configs().size());
+        std::vector<google::cloud::financialservices::v1::EngineConfig> result(
+            r.engine_configs().size());
         auto& messages = *r.mutable_engine_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1163,62 +1386,74 @@ AMLConnectionImpl::ListEngineConfigs(google::cloud::financialservices::v1::ListE
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineConfig>
-AMLConnectionImpl::GetEngineConfig(google::cloud::financialservices::v1::GetEngineConfigRequest const& request) {
+AMLConnectionImpl::GetEngineConfig(
+    google::cloud::financialservices::v1::GetEngineConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEngineConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetEngineConfigRequest const& request) {
+             google::cloud::financialservices::v1::GetEngineConfigRequest const&
+                 request) {
         return stub_->GetEngineConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLConnectionImpl::CreateEngineConfig(google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+AMLConnectionImpl::CreateEngineConfig(
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateEngineConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::EngineConfig>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
-     return stub->AsyncCreateEngineConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::EngineConfig>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::EngineConfig>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+              request) {
+        return stub->AsyncCreateEngineConfig(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::EngineConfig>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::CreateEngineConfig(
-      NoAwaitTag, google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::CreateEngineConfig(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEngineConfig(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+          google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+              request) {
         return stub_->CreateEngineConfig(context, options, request);
       },
       *current, request, __func__);
@@ -1226,78 +1461,95 @@ AMLConnectionImpl::CreateEngineConfig(
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
 AMLConnectionImpl::CreateEngineConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateEngineConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateEngineConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::EngineConfig>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::EngineConfig>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::EngineConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::EngineConfig>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLConnectionImpl::UpdateEngineConfig(google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+AMLConnectionImpl::UpdateEngineConfig(
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateEngineConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::EngineConfig>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
-     return stub->AsyncUpdateEngineConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::EngineConfig>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::EngineConfig>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+              request) {
+        return stub->AsyncUpdateEngineConfig(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::EngineConfig>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::UpdateEngineConfig(
-      NoAwaitTag, google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::UpdateEngineConfig(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEngineConfig(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+          google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+              request) {
         return stub_->UpdateEngineConfig(context, options, request);
       },
       *current, request, __func__);
@@ -1305,157 +1557,193 @@ AMLConnectionImpl::UpdateEngineConfig(
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
 AMLConnectionImpl::UpdateEngineConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateEngineConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::EngineConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateEngineConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::EngineConfig>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::EngineConfig>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::EngineConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::EngineConfig>,
+      polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-AMLConnectionImpl::ExportEngineConfigMetadata(google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+AMLConnectionImpl::ExportEngineConfigMetadata(
+    google::cloud::financialservices::v1::
+        ExportEngineConfigMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ExportEngineConfigMetadata(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
-     return stub->AsyncExportEngineConfigMetadata(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         ExportEngineConfigMetadataRequest const& request) {
+        return stub->AsyncExportEngineConfigMetadata(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ExportEngineConfigMetadataResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::ExportEngineConfigMetadata(
-      NoAwaitTag, google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+    NoAwaitTag, google::cloud::financialservices::v1::
+                    ExportEngineConfigMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportEngineConfigMetadata(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 ExportEngineConfigMetadataRequest const& request) {
         return stub_->ExportEngineConfigMetadata(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
 AMLConnectionImpl::ExportEngineConfigMetadata(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to ExportEngineConfigMetadata",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::financialservices::v1::
+                                          ExportEngineConfigMetadataResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportEngineConfigMetadata",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ExportEngineConfigMetadataResponse>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnectionImpl::DeleteEngineConfig(google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+AMLConnectionImpl::DeleteEngineConfig(
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteEngineConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
-     return stub->AsyncDeleteEngineConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+              request) {
+        return stub->AsyncDeleteEngineConfig(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::DeleteEngineConfig(
-      NoAwaitTag, google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::DeleteEngineConfig(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEngineConfig(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+          google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+              request) {
         return stub_->DeleteEngineConfig(context, options, request);
       },
       *current, request, __func__);
@@ -1463,69 +1751,88 @@ AMLConnectionImpl::DeleteEngineConfig(
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnectionImpl::DeleteEngineConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteEngineConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteEngineConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineVersion>
-AMLConnectionImpl::GetEngineVersion(google::cloud::financialservices::v1::GetEngineVersionRequest const& request) {
+AMLConnectionImpl::GetEngineVersion(
+    google::cloud::financialservices::v1::GetEngineVersionRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEngineVersion(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetEngineVersionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::financialservices::v1::GetEngineVersionRequest const&
+              request) {
         return stub_->GetEngineVersion(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::financialservices::v1::EngineVersion>
-AMLConnectionImpl::ListEngineVersions(google::cloud::financialservices::v1::ListEngineVersionsRequest request) {
+AMLConnectionImpl::ListEngineVersions(
+    google::cloud::financialservices::v1::ListEngineVersionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEngineVersions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::financialservices::v1::EngineVersion>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::financialservices::v1::EngineVersion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::financialservices::v1::ListEngineVersionsRequest const& r) {
+          Options const& options,
+          google::cloud::financialservices::v1::ListEngineVersionsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::financialservices::v1::ListEngineVersionsRequest const& request) {
+                   google::cloud::financialservices::v1::
+                       ListEngineVersionsRequest const& request) {
               return stub->ListEngineVersions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::financialservices::v1::ListEngineVersionsResponse r) {
-        std::vector<google::cloud::financialservices::v1::EngineVersion> result(r.engine_versions().size());
+        std::vector<google::cloud::financialservices::v1::EngineVersion> result(
+            r.engine_versions().size());
         auto& messages = *r.mutable_engine_versions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1533,27 +1840,36 @@ AMLConnectionImpl::ListEngineVersions(google::cloud::financialservices::v1::List
 }
 
 StreamRange<google::cloud::financialservices::v1::PredictionResult>
-AMLConnectionImpl::ListPredictionResults(google::cloud::financialservices::v1::ListPredictionResultsRequest request) {
+AMLConnectionImpl::ListPredictionResults(
+    google::cloud::financialservices::v1::ListPredictionResultsRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListPredictionResults(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListPredictionResults(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::financialservices::v1::PredictionResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::financialservices::v1::PredictionResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::financialservices::v1::ListPredictionResultsRequest const& r) {
+          Options const& options, google::cloud::financialservices::v1::
+                                      ListPredictionResultsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::financialservices::v1::ListPredictionResultsRequest const& request) {
+                   google::cloud::financialservices::v1::
+                       ListPredictionResultsRequest const& request) {
               return stub->ListPredictionResults(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::financialservices::v1::ListPredictionResultsResponse r) {
-        std::vector<google::cloud::financialservices::v1::PredictionResult> result(r.prediction_results().size());
+      [](google::cloud::financialservices::v1::ListPredictionResultsResponse
+             r) {
+        std::vector<google::cloud::financialservices::v1::PredictionResult>
+            result(r.prediction_results().size());
         auto& messages = *r.mutable_prediction_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1561,62 +1877,73 @@ AMLConnectionImpl::ListPredictionResults(google::cloud::financialservices::v1::L
 }
 
 StatusOr<google::cloud::financialservices::v1::PredictionResult>
-AMLConnectionImpl::GetPredictionResult(google::cloud::financialservices::v1::GetPredictionResultRequest const& request) {
+AMLConnectionImpl::GetPredictionResult(
+    google::cloud::financialservices::v1::GetPredictionResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPredictionResult(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetPredictionResultRequest const& request) {
+             google::cloud::financialservices::v1::
+                 GetPredictionResultRequest const& request) {
         return stub_->GetPredictionResult(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLConnectionImpl::CreatePredictionResult(google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+AMLConnectionImpl::CreatePredictionResult(
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreatePredictionResult(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::PredictionResult>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
-     return stub->AsyncCreatePredictionResult(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::PredictionResult>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::PredictionResult>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         CreatePredictionResultRequest const& request) {
+        return stub->AsyncCreatePredictionResult(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::PredictionResult>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::CreatePredictionResult(
-      NoAwaitTag, google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePredictionResult(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 CreatePredictionResultRequest const& request) {
         return stub_->CreatePredictionResult(context, options, request);
       },
       *current, request, __func__);
@@ -1624,78 +1951,94 @@ AMLConnectionImpl::CreatePredictionResult(
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
 AMLConnectionImpl::CreatePredictionResult(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
-        internal::InvalidArgumentError("operation does not correspond to CreatePredictionResult",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePredictionResult",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::PredictionResult>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::PredictionResult>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::PredictionResult>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::PredictionResult>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLConnectionImpl::UpdatePredictionResult(google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+AMLConnectionImpl::UpdatePredictionResult(
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdatePredictionResult(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::PredictionResult>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
-     return stub->AsyncUpdatePredictionResult(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::PredictionResult>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::PredictionResult>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         UpdatePredictionResultRequest const& request) {
+        return stub->AsyncUpdatePredictionResult(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::PredictionResult>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::UpdatePredictionResult(
-      NoAwaitTag, google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdatePredictionResult(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 UpdatePredictionResultRequest const& request) {
         return stub_->UpdatePredictionResult(context, options, request);
       },
       *current, request, __func__);
@@ -1703,157 +2046,196 @@ AMLConnectionImpl::UpdatePredictionResult(
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
 AMLConnectionImpl::UpdatePredictionResult(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdatePredictionResult",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::PredictionResult>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdatePredictionResult",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::PredictionResult>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::PredictionResult>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::PredictionResult>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::PredictionResult>,
+      polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
-AMLConnectionImpl::ExportPredictionResultMetadata(google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+future<StatusOr<google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataResponse>>
+AMLConnectionImpl::ExportPredictionResultMetadata(
+    google::cloud::financialservices::v1::
+        ExportPredictionResultMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
-      idempotency_policy(*current)->ExportPredictionResultMetadata(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
-     return stub->AsyncExportPredictionResultMetadata(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+      idempotency_policy(*current)->ExportPredictionResultMetadata(
+          request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::
+          ExportPredictionResultMetadataResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         ExportPredictionResultMetadataRequest const& request) {
+        return stub->AsyncExportPredictionResultMetadata(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ExportPredictionResultMetadataResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::ExportPredictionResultMetadata(
-      NoAwaitTag, google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+    NoAwaitTag, google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportPredictionResultMetadata(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 ExportPredictionResultMetadataRequest const& request) {
         return stub_->ExportPredictionResultMetadata(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataResponse>>
 AMLConnectionImpl::ExportPredictionResultMetadata(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to ExportPredictionResultMetadata",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::
+                     ExportPredictionResultMetadataResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportPredictionResultMetadata",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::
+          ExportPredictionResultMetadataResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ExportPredictionResultMetadataResponse>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnectionImpl::DeletePredictionResult(google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+AMLConnectionImpl::DeletePredictionResult(
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeletePredictionResult(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
-     return stub->AsyncDeletePredictionResult(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         DeletePredictionResultRequest const& request) {
+        return stub->AsyncDeletePredictionResult(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::DeletePredictionResult(
-      NoAwaitTag, google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePredictionResult(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 DeletePredictionResultRequest const& request) {
         return stub_->DeletePredictionResult(context, options, request);
       },
       *current, request, __func__);
@@ -1861,56 +2243,70 @@ AMLConnectionImpl::DeletePredictionResult(
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnectionImpl::DeletePredictionResult(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeletePredictionResult",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePredictionResult",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::financialservices::v1::BacktestResult>
-AMLConnectionImpl::ListBacktestResults(google::cloud::financialservices::v1::ListBacktestResultsRequest request) {
+AMLConnectionImpl::ListBacktestResults(
+    google::cloud::financialservices::v1::ListBacktestResultsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListBacktestResults(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::financialservices::v1::BacktestResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::financialservices::v1::BacktestResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::financialservices::v1::ListBacktestResultsRequest const& r) {
+          Options const& options, google::cloud::financialservices::v1::
+                                      ListBacktestResultsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::financialservices::v1::ListBacktestResultsRequest const& request) {
+                   google::cloud::financialservices::v1::
+                       ListBacktestResultsRequest const& request) {
               return stub->ListBacktestResults(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::financialservices::v1::ListBacktestResultsResponse r) {
-        std::vector<google::cloud::financialservices::v1::BacktestResult> result(r.backtest_results().size());
+        std::vector<google::cloud::financialservices::v1::BacktestResult>
+            result(r.backtest_results().size());
         auto& messages = *r.mutable_backtest_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1918,62 +2314,74 @@ AMLConnectionImpl::ListBacktestResults(google::cloud::financialservices::v1::Lis
 }
 
 StatusOr<google::cloud::financialservices::v1::BacktestResult>
-AMLConnectionImpl::GetBacktestResult(google::cloud::financialservices::v1::GetBacktestResultRequest const& request) {
+AMLConnectionImpl::GetBacktestResult(
+    google::cloud::financialservices::v1::GetBacktestResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBacktestResult(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::financialservices::v1::GetBacktestResultRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::financialservices::v1::GetBacktestResultRequest const&
+              request) {
         return stub_->GetBacktestResult(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLConnectionImpl::CreateBacktestResult(google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+AMLConnectionImpl::CreateBacktestResult(
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateBacktestResult(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::BacktestResult>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
-     return stub->AsyncCreateBacktestResult(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::BacktestResult>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::BacktestResult>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         CreateBacktestResultRequest const& request) {
+        return stub->AsyncCreateBacktestResult(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::BacktestResult>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::CreateBacktestResult(
-      NoAwaitTag, google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateBacktestResult(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 CreateBacktestResultRequest const& request) {
         return stub_->CreateBacktestResult(context, options, request);
       },
       *current, request, __func__);
@@ -1981,78 +2389,94 @@ AMLConnectionImpl::CreateBacktestResult(
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
 AMLConnectionImpl::CreateBacktestResult(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateBacktestResult",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBacktestResult",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::BacktestResult>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::BacktestResult>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::BacktestResult>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::BacktestResult>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLConnectionImpl::UpdateBacktestResult(google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+AMLConnectionImpl::UpdateBacktestResult(
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateBacktestResult(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::BacktestResult>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
-     return stub->AsyncUpdateBacktestResult(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::BacktestResult>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::BacktestResult>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         UpdateBacktestResultRequest const& request) {
+        return stub->AsyncUpdateBacktestResult(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::BacktestResult>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::UpdateBacktestResult(
-      NoAwaitTag, google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateBacktestResult(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 UpdateBacktestResultRequest const& request) {
         return stub_->UpdateBacktestResult(context, options, request);
       },
       *current, request, __func__);
@@ -2060,157 +2484,195 @@ AMLConnectionImpl::UpdateBacktestResult(
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
 AMLConnectionImpl::UpdateBacktestResult(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateBacktestResult",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::BacktestResult>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateBacktestResult",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::BacktestResult>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::BacktestResult>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::BacktestResult>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::BacktestResult>,
+      polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
-AMLConnectionImpl::ExportBacktestResultMetadata(google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+AMLConnectionImpl::ExportBacktestResultMetadata(
+    google::cloud::financialservices::v1::
+        ExportBacktestResultMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ExportBacktestResultMetadata(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
-     return stub->AsyncExportBacktestResultMetadata(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::
+          ExportBacktestResultMetadataResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         ExportBacktestResultMetadataRequest const& request) {
+        return stub->AsyncExportBacktestResultMetadata(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ExportBacktestResultMetadataResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::ExportBacktestResultMetadata(
-      NoAwaitTag, google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+    NoAwaitTag, google::cloud::financialservices::v1::
+                    ExportBacktestResultMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportBacktestResultMetadata(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 ExportBacktestResultMetadataRequest const& request) {
         return stub_->ExportBacktestResultMetadata(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
 AMLConnectionImpl::ExportBacktestResultMetadata(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to ExportBacktestResultMetadata",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::
+                     ExportBacktestResultMetadataResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportBacktestResultMetadata",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::
+          ExportBacktestResultMetadataResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::financialservices::v1::
+              ExportBacktestResultMetadataResponse>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLConnectionImpl::DeleteBacktestResult(google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+AMLConnectionImpl::DeleteBacktestResult(
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteBacktestResult(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
-     return stub->AsyncDeleteBacktestResult(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::financialservices::v1::
+                         DeleteBacktestResultRequest const& request) {
+        return stub->AsyncDeleteBacktestResult(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AMLConnectionImpl::DeleteBacktestResult(
-      NoAwaitTag, google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBacktestResult(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::
+                 DeleteBacktestResultRequest const& request) {
         return stub_->DeleteBacktestResult(context, options, request);
       },
       *current, request, __func__);
@@ -2218,64 +2680,77 @@ AMLConnectionImpl::DeleteBacktestResult(
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLConnectionImpl::DeleteBacktestResult(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::financialservices::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteBacktestResult",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::financialservices::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::financialservices::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteBacktestResult",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::financialservices::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::financialservices::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::financialservices::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::financialservices::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
-StreamRange<google::cloud::location::Location>
-AMLConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+StreamRange<google::cloud::location::Location> AMLConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::location::Location>
-AMLConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+StatusOr<google::cloud::location::Location> AMLConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2287,18 +2762,21 @@ AMLConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const
       *current, request, __func__);
 }
 
-StreamRange<google::longrunning::Operation>
-AMLConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+StreamRange<google::longrunning::Operation> AMLConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<financialservices_v1::AMLRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -2308,15 +2786,16 @@ AMLConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest req
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2328,8 +2807,8 @@ AMLConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& 
       *current, request, __func__);
 }
 
-Status
-AMLConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status AMLConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2341,8 +2820,8 @@ AMLConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest c
       *current, request, __func__);
 }
 
-Status
-AMLConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status AMLConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

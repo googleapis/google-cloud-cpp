@@ -28,17 +28,26 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption directly.
-using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption;
+/// @deprecated Use
+/// bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceBackoffPolicyOption;
 
-/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServicePolicyOptionList directly.
-using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServicePolicyOptionList;
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServicePolicyOptionList
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServicePolicyOptionList;
 
-/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption directly.
-using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption;
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

@@ -30,22 +30,21 @@ namespace cloud {
 namespace publicca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PublicCertificateAuthorityServiceLogging::PublicCertificateAuthorityServiceLogging(
-    std::shared_ptr<PublicCertificateAuthorityServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+PublicCertificateAuthorityServiceLogging::
+    PublicCertificateAuthorityServiceLogging(
+        std::shared_ptr<PublicCertificateAuthorityServiceStub> child,
+        TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
 PublicCertificateAuthorityServiceLogging::CreateExternalAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::security::publicca::v1::
+        CreateExternalAccountKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::security::publicca::v1::
+                 CreateExternalAccountKeyRequest const& request) {
         return child_->CreateExternalAccountKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

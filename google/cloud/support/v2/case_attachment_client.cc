@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CaseAttachmentServiceClient::CaseAttachmentServiceClient(
     std::shared_ptr<CaseAttachmentServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CaseAttachmentServiceClient::~CaseAttachmentServiceClient() = default;
 
 StreamRange<google::cloud::support::v2::Attachment>
-CaseAttachmentServiceClient::ListAttachments(std::string const& parent, Options opts) {
+CaseAttachmentServiceClient::ListAttachments(std::string const& parent,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::support::v2::ListAttachmentsRequest request;
   request.set_parent(parent);
@@ -41,7 +42,8 @@ CaseAttachmentServiceClient::ListAttachments(std::string const& parent, Options 
 }
 
 StreamRange<google::cloud::support::v2::Attachment>
-CaseAttachmentServiceClient::ListAttachments(google::cloud::support::v2::ListAttachmentsRequest request, Options opts) {
+CaseAttachmentServiceClient::ListAttachments(
+    google::cloud::support::v2::ListAttachmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAttachments(std::move(request));
 }

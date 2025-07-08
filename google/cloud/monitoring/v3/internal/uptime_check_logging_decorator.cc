@@ -32,20 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 UptimeCheckServiceLogging::UptimeCheckServiceLogging(
     std::shared_ptr<UptimeCheckServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
 UptimeCheckServiceLogging::ListUptimeCheckConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::ListUptimeCheckConfigsRequest const&
+                 request) {
         return child_->ListUptimeCheckConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ UptimeCheckServiceLogging::ListUptimeCheckConfigs(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceLogging::GetUptimeCheckConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
         return child_->GetUptimeCheckConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ UptimeCheckServiceLogging::GetUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceLogging::CreateUptimeCheckConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::CreateUptimeCheckConfigRequest const&
+                 request) {
         return child_->CreateUptimeCheckConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +76,24 @@ UptimeCheckServiceLogging::CreateUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceLogging::UpdateUptimeCheckConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::UpdateUptimeCheckConfigRequest const&
+                 request) {
         return child_->UpdateUptimeCheckConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-UptimeCheckServiceLogging::DeleteUptimeCheckConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+Status UptimeCheckServiceLogging::DeleteUptimeCheckConfig(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::DeleteUptimeCheckConfigRequest const&
+                 request) {
         return child_->DeleteUptimeCheckConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,12 +101,10 @@ UptimeCheckServiceLogging::DeleteUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
 UptimeCheckServiceLogging::ListUptimeCheckIps(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
         return child_->ListUptimeCheckIps(context, options, request);
       },

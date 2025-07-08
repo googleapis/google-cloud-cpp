@@ -28,17 +28,26 @@ namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption directly.
-using ::google::cloud::binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption;
+/// @deprecated Use
+/// binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1BackoffPolicyOption;
 
-/// @deprecated Use binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1ConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use binaryauthorization_v1::ValidationHelperV1PolicyOptionList directly.
-using ::google::cloud::binaryauthorization_v1::ValidationHelperV1PolicyOptionList;
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1PolicyOptionList
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1PolicyOptionList;
 
-/// @deprecated Use binaryauthorization_v1::ValidationHelperV1RetryPolicyOption directly.
-using ::google::cloud::binaryauthorization_v1::ValidationHelperV1RetryPolicyOption;
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1RetryPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1RetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

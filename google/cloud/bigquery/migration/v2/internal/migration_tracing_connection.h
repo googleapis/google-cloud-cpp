@@ -36,30 +36,42 @@ class MigrationServiceTracingConnection
   ~MigrationServiceTracingConnection() override = default;
 
   explicit MigrationServiceTracingConnection(
-    std::shared_ptr<bigquery_migration_v2::MigrationServiceConnection> child);
+      std::shared_ptr<bigquery_migration_v2::MigrationServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request) override;
+  CreateMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::
+          CreateMigrationWorkflowRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  GetMigrationWorkflow(google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request) override;
+  GetMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
+          request) override;
 
   StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  ListMigrationWorkflows(google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest request) override;
+  ListMigrationWorkflows(
+      google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
+          request) override;
 
-  Status
-  DeleteMigrationWorkflow(google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request) override;
+  Status DeleteMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::
+          DeleteMigrationWorkflowRequest const& request) override;
 
-  Status
-  StartMigrationWorkflow(google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request) override;
+  Status StartMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::
+          StartMigrationWorkflowRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
-  GetMigrationSubtask(google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request) override;
+  GetMigrationSubtask(
+      google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
+          request) override;
 
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
-  ListMigrationSubtasks(google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest request) override;
+  ListMigrationSubtasks(
+      google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
+          request) override;
 
  private:
   std::shared_ptr<bigquery_migration_v2::MigrationServiceConnection> child_;

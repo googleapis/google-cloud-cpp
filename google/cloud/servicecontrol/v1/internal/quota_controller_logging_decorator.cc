@@ -31,21 +31,18 @@ namespace servicecontrol_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 QuotaControllerLogging::QuotaControllerLogging(
-    std::shared_ptr<QuotaControllerStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<QuotaControllerStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerLogging::AllocateQuota(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::servicecontrol::v1::AllocateQuotaRequest const&
+                 request) {
         return child_->AllocateQuota(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

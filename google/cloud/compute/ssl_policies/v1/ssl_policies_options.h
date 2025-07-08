@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_POLICIES_V1_SSL_POLICIES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_POLICIES_V1_SSL_POLICIES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_connection.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct SslPoliciesPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using SslPoliciesPolicyOptionList =
-    OptionList<SslPoliciesRetryPolicyOption,
-               SslPoliciesBackoffPolicyOption,
+    OptionList<SslPoliciesRetryPolicyOption, SslPoliciesBackoffPolicyOption,
                SslPoliciesPollingPolicyOption,
                SslPoliciesConnectionIdempotencyPolicyOption>;
 

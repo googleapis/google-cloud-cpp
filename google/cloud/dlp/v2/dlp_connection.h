@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_DLP_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_DLP_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dlp/v2/dlp_connection_idempotency_policy.h"
 #include "google/cloud/dlp/v2/internal/dlp_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class DlpServiceLimitedErrorCountRetryPolicy : public DlpServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DlpServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DlpServiceLimitedErrorCountRetryPolicy(
       DlpServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DlpServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DlpServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DlpServiceLimitedErrorCountRetryPolicy(
       DlpServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DlpServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DlpServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +89,9 @@ class DlpServiceLimitedErrorCountRetryPolicy : public DlpServiceRetryPolicy {
   using BaseType = DlpServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dlp_v2_internal::DlpServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dlp_v2_internal::DlpServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +129,14 @@ class DlpServiceLimitedTimeRetryPolicy : public DlpServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DlpServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DlpServiceLimitedTimeRetryPolicy(DlpServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DlpServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DlpServiceLimitedTimeRetryPolicy(DlpServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DlpServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DlpServiceLimitedTimeRetryPolicy(
+      DlpServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DlpServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DlpServiceLimitedTimeRetryPolicy(
+      DlpServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DlpServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +158,9 @@ class DlpServiceLimitedTimeRetryPolicy : public DlpServiceRetryPolicy {
   using BaseType = DlpServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dlp_v2_internal::DlpServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dlp_v2_internal::DlpServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,169 +182,198 @@ class DlpServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::privacy::dlp::v2::InspectContentResponse>
-  InspectContent(google::privacy::dlp::v2::InspectContentRequest const& request);
+  InspectContent(
+      google::privacy::dlp::v2::InspectContentRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::RedactImageResponse>
-  RedactImage(google::privacy::dlp::v2::RedactImageRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::RedactImageResponse> RedactImage(
+      google::privacy::dlp::v2::RedactImageRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
-  DeidentifyContent(google::privacy::dlp::v2::DeidentifyContentRequest const& request);
+  DeidentifyContent(
+      google::privacy::dlp::v2::DeidentifyContentRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
-  ReidentifyContent(google::privacy::dlp::v2::ReidentifyContentRequest const& request);
+  ReidentifyContent(
+      google::privacy::dlp::v2::ReidentifyContentRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
   ListInfoTypes(google::privacy::dlp::v2::ListInfoTypesRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::InspectTemplate>
-  CreateInspectTemplate(google::privacy::dlp::v2::CreateInspectTemplateRequest const& request);
+  CreateInspectTemplate(
+      google::privacy::dlp::v2::CreateInspectTemplateRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::InspectTemplate>
-  UpdateInspectTemplate(google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request);
+  UpdateInspectTemplate(
+      google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::InspectTemplate>
-  GetInspectTemplate(google::privacy::dlp::v2::GetInspectTemplateRequest const& request);
+  GetInspectTemplate(
+      google::privacy::dlp::v2::GetInspectTemplateRequest const& request);
 
   virtual StreamRange<google::privacy::dlp::v2::InspectTemplate>
-  ListInspectTemplates(google::privacy::dlp::v2::ListInspectTemplatesRequest request);
+  ListInspectTemplates(
+      google::privacy::dlp::v2::ListInspectTemplatesRequest request);
 
-  virtual Status
-  DeleteInspectTemplate(google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request);
-
-  virtual StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-  CreateDeidentifyTemplate(google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request);
+  virtual Status DeleteInspectTemplate(
+      google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-  UpdateDeidentifyTemplate(google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request);
+  CreateDeidentifyTemplate(
+      google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-  GetDeidentifyTemplate(google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request);
+  UpdateDeidentifyTemplate(
+      google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
+  GetDeidentifyTemplate(
+      google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request);
 
   virtual StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
-  ListDeidentifyTemplates(google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request);
+  ListDeidentifyTemplates(
+      google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request);
 
-  virtual Status
-  DeleteDeidentifyTemplate(google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request);
+  virtual Status DeleteDeidentifyTemplate(
+      google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::JobTrigger>
-  CreateJobTrigger(google::privacy::dlp::v2::CreateJobTriggerRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
+      google::privacy::dlp::v2::CreateJobTriggerRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::JobTrigger>
-  UpdateJobTrigger(google::privacy::dlp::v2::UpdateJobTriggerRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
+      google::privacy::dlp::v2::UpdateJobTriggerRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-  HybridInspectJobTrigger(google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request);
+  HybridInspectJobTrigger(
+      google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::JobTrigger>
-  GetJobTrigger(google::privacy::dlp::v2::GetJobTriggerRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
+      google::privacy::dlp::v2::GetJobTriggerRequest const& request);
 
-  virtual StreamRange<google::privacy::dlp::v2::JobTrigger>
-  ListJobTriggers(google::privacy::dlp::v2::ListJobTriggersRequest request);
+  virtual StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
+      google::privacy::dlp::v2::ListJobTriggersRequest request);
 
-  virtual Status
-  DeleteJobTrigger(google::privacy::dlp::v2::DeleteJobTriggerRequest const& request);
+  virtual Status DeleteJobTrigger(
+      google::privacy::dlp::v2::DeleteJobTriggerRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::DlpJob>
-  ActivateJobTrigger(google::privacy::dlp::v2::ActivateJobTriggerRequest const& request);
-
-  virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-  CreateDiscoveryConfig(google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
+      google::privacy::dlp::v2::ActivateJobTriggerRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-  UpdateDiscoveryConfig(google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request);
+  CreateDiscoveryConfig(
+      google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-  GetDiscoveryConfig(google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request);
+  UpdateDiscoveryConfig(
+      google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
+  GetDiscoveryConfig(
+      google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request);
 
   virtual StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
-  ListDiscoveryConfigs(google::privacy::dlp::v2::ListDiscoveryConfigsRequest request);
+  ListDiscoveryConfigs(
+      google::privacy::dlp::v2::ListDiscoveryConfigsRequest request);
 
-  virtual Status
-  DeleteDiscoveryConfig(google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request);
+  virtual Status DeleteDiscoveryConfig(
+      google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::DlpJob>
-  CreateDlpJob(google::privacy::dlp::v2::CreateDlpJobRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
+      google::privacy::dlp::v2::CreateDlpJobRequest const& request);
 
-  virtual StreamRange<google::privacy::dlp::v2::DlpJob>
-  ListDlpJobs(google::privacy::dlp::v2::ListDlpJobsRequest request);
+  virtual StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
+      google::privacy::dlp::v2::ListDlpJobsRequest request);
 
-  virtual StatusOr<google::privacy::dlp::v2::DlpJob>
-  GetDlpJob(google::privacy::dlp::v2::GetDlpJobRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(
+      google::privacy::dlp::v2::GetDlpJobRequest const& request);
 
-  virtual Status
-  DeleteDlpJob(google::privacy::dlp::v2::DeleteDlpJobRequest const& request);
+  virtual Status DeleteDlpJob(
+      google::privacy::dlp::v2::DeleteDlpJobRequest const& request);
 
-  virtual Status
-  CancelDlpJob(google::privacy::dlp::v2::CancelDlpJobRequest const& request);
-
-  virtual StatusOr<google::privacy::dlp::v2::StoredInfoType>
-  CreateStoredInfoType(google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request);
+  virtual Status CancelDlpJob(
+      google::privacy::dlp::v2::CancelDlpJobRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::StoredInfoType>
-  UpdateStoredInfoType(google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request);
+  CreateStoredInfoType(
+      google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::StoredInfoType>
-  GetStoredInfoType(google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request);
+  UpdateStoredInfoType(
+      google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request);
+
+  virtual StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
+      google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request);
 
   virtual StreamRange<google::privacy::dlp::v2::StoredInfoType>
-  ListStoredInfoTypes(google::privacy::dlp::v2::ListStoredInfoTypesRequest request);
+  ListStoredInfoTypes(
+      google::privacy::dlp::v2::ListStoredInfoTypesRequest request);
 
-  virtual Status
-  DeleteStoredInfoType(google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request);
+  virtual Status DeleteStoredInfoType(
+      google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request);
 
   virtual StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
-  ListProjectDataProfiles(google::privacy::dlp::v2::ListProjectDataProfilesRequest request);
+  ListProjectDataProfiles(
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest request);
 
   virtual StreamRange<google::privacy::dlp::v2::TableDataProfile>
-  ListTableDataProfiles(google::privacy::dlp::v2::ListTableDataProfilesRequest request);
+  ListTableDataProfiles(
+      google::privacy::dlp::v2::ListTableDataProfilesRequest request);
 
   virtual StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
-  ListColumnDataProfiles(google::privacy::dlp::v2::ListColumnDataProfilesRequest request);
+  ListColumnDataProfiles(
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest request);
 
   virtual StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
-  GetProjectDataProfile(google::privacy::dlp::v2::GetProjectDataProfileRequest const& request);
+  GetProjectDataProfile(
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request);
 
   virtual StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
-  ListFileStoreDataProfiles(google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request);
+  ListFileStoreDataProfiles(
+      google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request);
 
   virtual StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
-  GetFileStoreDataProfile(google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request);
+  GetFileStoreDataProfile(
+      google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request);
 
-  virtual Status
-  DeleteFileStoreDataProfile(google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request);
+  virtual Status DeleteFileStoreDataProfile(
+      google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+          request);
 
   virtual StatusOr<google::privacy::dlp::v2::TableDataProfile>
-  GetTableDataProfile(google::privacy::dlp::v2::GetTableDataProfileRequest const& request);
+  GetTableDataProfile(
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
-  GetColumnDataProfile(google::privacy::dlp::v2::GetColumnDataProfileRequest const& request);
+  GetColumnDataProfile(
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request);
 
-  virtual Status
-  DeleteTableDataProfile(google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request);
+  virtual Status DeleteTableDataProfile(
+      google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request);
 
   virtual StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-  HybridInspectDlpJob(google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request);
+  HybridInspectDlpJob(
+      google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request);
 
-  virtual Status
-  FinishDlpJob(google::privacy::dlp::v2::FinishDlpJobRequest const& request);
+  virtual Status FinishDlpJob(
+      google::privacy::dlp::v2::FinishDlpJobRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::Connection>
-  CreateConnection(google::privacy::dlp::v2::CreateConnectionRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::Connection> CreateConnection(
+      google::privacy::dlp::v2::CreateConnectionRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::Connection>
-  GetConnection(google::privacy::dlp::v2::GetConnectionRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::Connection> GetConnection(
+      google::privacy::dlp::v2::GetConnectionRequest const& request);
 
-  virtual StreamRange<google::privacy::dlp::v2::Connection>
-  ListConnections(google::privacy::dlp::v2::ListConnectionsRequest request);
+  virtual StreamRange<google::privacy::dlp::v2::Connection> ListConnections(
+      google::privacy::dlp::v2::ListConnectionsRequest request);
 
-  virtual StreamRange<google::privacy::dlp::v2::Connection>
-  SearchConnections(google::privacy::dlp::v2::SearchConnectionsRequest request);
+  virtual StreamRange<google::privacy::dlp::v2::Connection> SearchConnections(
+      google::privacy::dlp::v2::SearchConnectionsRequest request);
 
-  virtual Status
-  DeleteConnection(google::privacy::dlp::v2::DeleteConnectionRequest const& request);
+  virtual Status DeleteConnection(
+      google::privacy::dlp::v2::DeleteConnectionRequest const& request);
 
-  virtual StatusOr<google::privacy::dlp::v2::Connection>
-  UpdateConnection(google::privacy::dlp::v2::UpdateConnectionRequest const& request);
+  virtual StatusOr<google::privacy::dlp::v2::Connection> UpdateConnection(
+      google::privacy::dlp::v2::UpdateConnectionRequest const& request);
 };
 
 /**

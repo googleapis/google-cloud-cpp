@@ -36,9 +36,13 @@ class GatewayControlRestStub {
  public:
   virtual ~GatewayControlRestStub() = default;
 
-  virtual StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GenerateCredentials(
+  virtual StatusOr<
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
+  GenerateCredentials(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) = 0;
+      Options const& options,
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
+          request) = 0;
 };
 
 class DefaultGatewayControlRestStub : public GatewayControlRestStub {
@@ -47,12 +51,14 @@ class DefaultGatewayControlRestStub : public GatewayControlRestStub {
 
   explicit DefaultGatewayControlRestStub(Options options);
   DefaultGatewayControlRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GenerateCredentials(
+  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
+  GenerateCredentials(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) override;
+      Options const& options,
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

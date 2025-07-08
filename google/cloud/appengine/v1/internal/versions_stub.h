@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/operation.pb.h>
 #include <google/appengine/v1/appengine.grpc.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -40,13 +40,11 @@ class VersionsStub {
   virtual ~VersionsStub() = 0;
 
   virtual StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListVersionsRequest const& request) = 0;
 
   virtual StatusOr<google::appengine::v1::Version> GetVersion(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetVersionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateVersion(
@@ -56,8 +54,7 @@ class VersionsStub {
       google::appengine::v1::CreateVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateVersion(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::CreateVersionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateVersion(
@@ -67,8 +64,7 @@ class VersionsStub {
       google::appengine::v1::UpdateVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateVersion(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::UpdateVersionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteVersion(
@@ -78,14 +74,13 @@ class VersionsStub {
       google::appengine::v1::DeleteVersionRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteVersion(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::DeleteVersionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -99,18 +94,17 @@ class DefaultVersionsStub : public VersionsStub {
  public:
   DefaultVersionsStub(
       std::unique_ptr<google::appengine::v1::Versions::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListVersionsRequest const& request) override;
 
   StatusOr<google::appengine::v1::Version> GetVersion(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVersion(
@@ -120,8 +114,7 @@ class DefaultVersionsStub : public VersionsStub {
       google::appengine::v1::CreateVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateVersion(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::CreateVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateVersion(
@@ -131,8 +124,7 @@ class DefaultVersionsStub : public VersionsStub {
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateVersion(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteVersion(
@@ -142,8 +134,7 @@ class DefaultVersionsStub : public VersionsStub {
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVersion(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -160,7 +151,8 @@ class DefaultVersionsStub : public VersionsStub {
 
  private:
   std::unique_ptr<google::appengine::v1::Versions::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

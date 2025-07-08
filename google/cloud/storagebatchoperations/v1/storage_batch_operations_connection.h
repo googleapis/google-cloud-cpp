@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_CONNECTION_H
 
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_retry_traits.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -26,8 +28,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_retry_traits.h"
-#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection_idempotency_policy.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/storagebatchoperations/v1/storage_batch_operations.pb.h>
@@ -47,7 +47,8 @@ class StorageBatchOperationsRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `StorageBatchOperationsConnection` based on counting errors.
+ * A retry policy for `StorageBatchOperationsConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -56,7 +57,8 @@ class StorageBatchOperationsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class StorageBatchOperationsLimitedErrorCountRetryPolicy : public StorageBatchOperationsRetryPolicy {
+class StorageBatchOperationsLimitedErrorCountRetryPolicy
+    : public StorageBatchOperationsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,15 +67,18 @@ class StorageBatchOperationsLimitedErrorCountRetryPolicy : public StorageBatchOp
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit StorageBatchOperationsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit StorageBatchOperationsLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   StorageBatchOperationsLimitedErrorCountRetryPolicy(
       StorageBatchOperationsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : StorageBatchOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : StorageBatchOperationsLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   StorageBatchOperationsLimitedErrorCountRetryPolicy(
       StorageBatchOperationsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : StorageBatchOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : StorageBatchOperationsLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +98,9 @@ class StorageBatchOperationsLimitedErrorCountRetryPolicy : public StorageBatchOp
   using BaseType = StorageBatchOperationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<storagebatchoperations_v1_internal::StorageBatchOperationsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      storagebatchoperations_v1_internal::StorageBatchOperationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +113,8 @@ class StorageBatchOperationsLimitedErrorCountRetryPolicy : public StorageBatchOp
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class StorageBatchOperationsLimitedTimeRetryPolicy : public StorageBatchOperationsRetryPolicy {
+class StorageBatchOperationsLimitedTimeRetryPolicy
+    : public StorageBatchOperationsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +139,14 @@ class StorageBatchOperationsLimitedTimeRetryPolicy : public StorageBatchOperatio
   template <typename DurationRep, typename DurationPeriod>
   explicit StorageBatchOperationsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  StorageBatchOperationsLimitedTimeRetryPolicy(StorageBatchOperationsLimitedTimeRetryPolicy&& rhs) noexcept
-    : StorageBatchOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  StorageBatchOperationsLimitedTimeRetryPolicy(StorageBatchOperationsLimitedTimeRetryPolicy const& rhs) noexcept
-    : StorageBatchOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StorageBatchOperationsLimitedTimeRetryPolicy(
+      StorageBatchOperationsLimitedTimeRetryPolicy&& rhs) noexcept
+      : StorageBatchOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StorageBatchOperationsLimitedTimeRetryPolicy(
+      StorageBatchOperationsLimitedTimeRetryPolicy const& rhs) noexcept
+      : StorageBatchOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,20 +168,24 @@ class StorageBatchOperationsLimitedTimeRetryPolicy : public StorageBatchOperatio
   using BaseType = StorageBatchOperationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<storagebatchoperations_v1_internal::StorageBatchOperationsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      storagebatchoperations_v1_internal::StorageBatchOperationsRetryTraits>
+      impl_;
 };
 
 /**
- * The `StorageBatchOperationsConnection` object for `StorageBatchOperationsClient`.
+ * The `StorageBatchOperationsConnection` object for
+ * `StorageBatchOperationsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `StorageBatchOperationsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `StorageBatchOperationsClient`.
+ * sets in `StorageBatchOperationsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `StorageBatchOperationsClient`.
  *
  * To create a concrete instance, see `MakeStorageBatchOperationsConnection()`.
  *
- * For mocking, see `storagebatchoperations_v1_mocks::MockStorageBatchOperationsConnection`.
+ * For mocking, see
+ * `storagebatchoperations_v1_mocks::MockStorageBatchOperationsConnection`.
  */
 class StorageBatchOperationsConnection {
  public:
@@ -179,69 +193,77 @@ class StorageBatchOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::storagebatchoperations::v1::Job>
-  ListJobs(google::cloud::storagebatchoperations::v1::ListJobsRequest request);
+  virtual StreamRange<google::cloud::storagebatchoperations::v1::Job> ListJobs(
+      google::cloud::storagebatchoperations::v1::ListJobsRequest request);
 
-  virtual StatusOr<google::cloud::storagebatchoperations::v1::Job>
-  GetJob(google::cloud::storagebatchoperations::v1::GetJobRequest const& request);
-
-  virtual future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-  CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateJob(NoAwaitTag, google::cloud::storagebatchoperations::v1::CreateJobRequest const& request);
+  virtual StatusOr<google::cloud::storagebatchoperations::v1::Job> GetJob(
+      google::cloud::storagebatchoperations::v1::GetJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-  CreateJob( google::longrunning::Operation const& operation);
+  CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const&
+                request);
 
-  virtual Status
-  DeleteJob(google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateJob(
+      NoAwaitTag,
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
+  CreateJob(google::longrunning::Operation const& operation);
+
+  virtual Status DeleteJob(
+      google::cloud::storagebatchoperations::v1::DeleteJobRequest const&
+          request);
 
   virtual StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
-  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const& request);
+  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const&
+                request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `StorageBatchOperationsConnection`.
+ * A factory function to construct an object of type
+ * `StorageBatchOperationsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of StorageBatchOperationsClient.
+ * should be passed as an argument to the constructor of
+ * StorageBatchOperationsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `StorageBatchOperationsConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `StorageBatchOperationsConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::storagebatchoperations_v1::StorageBatchOperationsPolicyOptionList`
+ * -
+ * `google::cloud::storagebatchoperations_v1::StorageBatchOperationsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `StorageBatchOperationsConnection` created by
- * this function.
+ * @param options (optional) Configure the `StorageBatchOperationsConnection`
+ * created by this function.
  */
-std::shared_ptr<StorageBatchOperationsConnection> MakeStorageBatchOperationsConnection(
-    Options options = {});
+std::shared_ptr<StorageBatchOperationsConnection>
+MakeStorageBatchOperationsConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagebatchoperations_v1

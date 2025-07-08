@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_AUTOSCALERS_V1_INTERNAL_AUTOSCALERS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_AUTOSCALERS_V1_INTERNAL_AUTOSCALERS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/autoscalers/v1/autoscalers_connection.h"
 #include "google/cloud/compute/autoscalers/v1/autoscalers_connection_idempotency_policy.h"
 #include "google/cloud/compute/autoscalers/v1/autoscalers_options.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_rest_stub.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,82 +44,97 @@ class AutoscalersRestConnectionImpl
   ~AutoscalersRestConnectionImpl() override = default;
 
   AutoscalersRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_autoscalers_v1_internal::AutoscalersRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_autoscalers_v1_internal::AutoscalersRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AutoscalersScopedList>>
-  AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest request) override;
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::AutoscalersScopedList>>
+  AggregatedListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          AggregatedListAutoscalersRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAutoscaler(google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::
+          DeleteAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAutoscaler(NoAwaitTag,
-      google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
+      NoAwaitTag, google::cloud::cpp::compute::autoscalers::v1::
+                      DeleteAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetAutoscaler(google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAutoscaler(google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::
+          InsertAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertAutoscaler(NoAwaitTag,
-      google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
+      NoAwaitTag, google::cloud::cpp::compute::autoscalers::v1::
+                      InsertAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Autoscaler> ListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchAutoscaler(google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchAutoscaler(NoAwaitTag,
-      google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
+      NoAwaitTag, google::cloud::cpp::compute::autoscalers::v1::
+                      PatchAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAutoscaler(google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
+      google::cloud::cpp::compute::autoscalers::v1::
+          UpdateAutoscalerRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateAutoscaler(NoAwaitTag,
-      google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
+      NoAwaitTag, google::cloud::cpp::compute::autoscalers::v1::
+                      UpdateAutoscalerRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAutoscaler(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_autoscalers_v1::AutoscalersRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()->clone();
+    return options.get<compute_autoscalers_v1::AutoscalersRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_autoscalers_v1::AutoscalersBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_autoscalers_v1::AutoscalersConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_autoscalers_v1::
+                 AutoscalersConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()->clone();
+    return options
+        .get<compute_autoscalers_v1::AutoscalersPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

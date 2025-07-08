@@ -26,158 +26,200 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ArtifactRegistryConnectionIdempotencyPolicy::~ArtifactRegistryConnectionIdempotencyPolicy() = default;
+ArtifactRegistryConnectionIdempotencyPolicy::
+    ~ArtifactRegistryConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
 ArtifactRegistryConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListDockerImages(google::devtools::artifactregistry::v1::ListDockerImagesRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListDockerImages(
+    google::devtools::artifactregistry::v1::
+        ListDockerImagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetDockerImage(google::devtools::artifactregistry::v1::GetDockerImageRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetDockerImage(
+    google::devtools::artifactregistry::v1::GetDockerImageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListMavenArtifacts(google::devtools::artifactregistry::v1::ListMavenArtifactsRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListMavenArtifacts(
+    google::devtools::artifactregistry::v1::
+        ListMavenArtifactsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetMavenArtifact(google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetMavenArtifact(
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListNpmPackages(google::devtools::artifactregistry::v1::ListNpmPackagesRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListNpmPackages(
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetNpmPackage(google::devtools::artifactregistry::v1::GetNpmPackageRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetNpmPackage(
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListPythonPackages(google::devtools::artifactregistry::v1::ListPythonPackagesRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListPythonPackages(
+    google::devtools::artifactregistry::v1::
+        ListPythonPackagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetPythonPackage(google::devtools::artifactregistry::v1::GetPythonPackageRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetPythonPackage(
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ImportAptArtifacts(google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ImportAptArtifacts(
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ImportYumArtifacts(google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ImportYumArtifacts(
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListRepositories(google::devtools::artifactregistry::v1::ListRepositoriesRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListRepositories(
+    google::devtools::artifactregistry::v1::
+        ListRepositoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetRepository(google::devtools::artifactregistry::v1::GetRepositoryRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetRepository(
+    google::devtools::artifactregistry::v1::GetRepositoryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateRepository(google::devtools::artifactregistry::v1::CreateRepositoryRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateRepository(
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateRepository(google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateRepository(
+    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteRepository(google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteRepository(
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListPackages(google::devtools::artifactregistry::v1::ListPackagesRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListPackages(
+    google::devtools::artifactregistry::v1::ListPackagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetPackage(google::devtools::artifactregistry::v1::GetPackageRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetPackage(
+    google::devtools::artifactregistry::v1::GetPackageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeletePackage(google::devtools::artifactregistry::v1::DeletePackageRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeletePackage(
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListVersions(google::devtools::artifactregistry::v1::ListVersionsRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListVersions(
+    google::devtools::artifactregistry::v1::ListVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetVersion(google::devtools::artifactregistry::v1::GetVersionRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetVersion(
+    google::devtools::artifactregistry::v1::GetVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteVersion(google::devtools::artifactregistry::v1::DeleteVersionRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteVersion(
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::BatchDeleteVersions(google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::BatchDeleteVersions(
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVersion(google::devtools::artifactregistry::v1::UpdateVersionRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVersion(
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListFiles(google::devtools::artifactregistry::v1::ListFilesRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListFiles(
+    google::devtools::artifactregistry::v1::ListFilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetFile(google::devtools::artifactregistry::v1::GetFileRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetFile(
+    google::devtools::artifactregistry::v1::GetFileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteFile(google::devtools::artifactregistry::v1::DeleteFileRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteFile(
+    google::devtools::artifactregistry::v1::DeleteFileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateFile(google::devtools::artifactregistry::v1::UpdateFileRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateFile(
+    google::devtools::artifactregistry::v1::UpdateFileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListTags(google::devtools::artifactregistry::v1::ListTagsRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListTags(
+    google::devtools::artifactregistry::v1::ListTagsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetTag(google::devtools::artifactregistry::v1::GetTagRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetTag(
+    google::devtools::artifactregistry::v1::GetTagRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateTag(google::devtools::artifactregistry::v1::CreateTagRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateTag(
+    google::devtools::artifactregistry::v1::CreateTagRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateTag(google::devtools::artifactregistry::v1::UpdateTagRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateTag(
+    google::devtools::artifactregistry::v1::UpdateTagRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteTag(google::devtools::artifactregistry::v1::DeleteTagRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteTag(
+    google::devtools::artifactregistry::v1::DeleteTagRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateRule(google::devtools::artifactregistry::v1::CreateRuleRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateRule(
+    google::devtools::artifactregistry::v1::CreateRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListRules(google::devtools::artifactregistry::v1::ListRulesRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListRules(
+    google::devtools::artifactregistry::v1::ListRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetRule(google::devtools::artifactregistry::v1::GetRuleRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetRule(
+    google::devtools::artifactregistry::v1::GetRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateRule(google::devtools::artifactregistry::v1::UpdateRuleRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateRule(
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteRule(google::devtools::artifactregistry::v1::DeleteRuleRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteRule(
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -187,64 +229,79 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetProjectSettings(google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetProjectSettings(
+    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateProjectSettings(google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateProjectSettings(
+    google::devtools::artifactregistry::v1::
+        UpdateProjectSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetVPCSCConfig(google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetVPCSCConfig(
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVPCSCConfig(google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVPCSCConfig(
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdatePackage(google::devtools::artifactregistry::v1::UpdatePackageRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdatePackage(
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListAttachments(google::devtools::artifactregistry::v1::ListAttachmentsRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListAttachments(
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetAttachment(google::devtools::artifactregistry::v1::GetAttachmentRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetAttachment(
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateAttachment(google::devtools::artifactregistry::v1::CreateAttachmentRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateAttachment(
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteAttachment(google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteAttachment(
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
-    MakeDefaultArtifactRegistryConnectionIdempotencyPolicy() {
+MakeDefaultArtifactRegistryConnectionIdempotencyPolicy() {
   return std::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>();
 }
 

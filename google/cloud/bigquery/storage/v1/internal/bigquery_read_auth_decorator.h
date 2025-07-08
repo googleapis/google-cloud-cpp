@@ -39,20 +39,21 @@ class BigQueryReadAuth : public BigQueryReadStub {
       std::shared_ptr<BigQueryReadStub> child);
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+          request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::bigquery::storage::v1::ReadRowsResponse>>
-  ReadRows(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) override;
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+  ReadRows(std::shared_ptr<grpc::ClientContext> context, Options const& options,
+           google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse> SplitReadStream(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+  SplitReadStream(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+          request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
@@ -60,7 +61,7 @@ class BigQueryReadAuth : public BigQueryReadStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1_internal
 }  // namespace cloud
 }  // namespace google

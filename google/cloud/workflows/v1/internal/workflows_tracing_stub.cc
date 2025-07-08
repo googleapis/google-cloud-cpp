@@ -28,26 +28,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-WorkflowsTracingStub::WorkflowsTracingStub(
-    std::shared_ptr<WorkflowsStub> child)
+WorkflowsTracingStub::WorkflowsTracingStub(std::shared_ptr<WorkflowsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> WorkflowsTracingStub::ListWorkflows(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
+WorkflowsTracingStub::ListWorkflows(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "ListWorkflows");
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "ListWorkflows");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListWorkflows(context, options, request));
 }
 
-StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsTracingStub::GetWorkflow(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::workflows::v1::Workflow>
+WorkflowsTracingStub::GetWorkflow(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "GetWorkflow");
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "GetWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +57,24 @@ StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsTracingStub::GetWorkfl
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsTracingStub::AsyncCreateWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "CreateWorkflow");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "CreateWorkflow");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateWorkflow(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateWorkflow(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsTracingStub::CreateWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "CreateWorkflow");
+StatusOr<google::longrunning::Operation> WorkflowsTracingStub::CreateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "CreateWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +83,24 @@ WorkflowsTracingStub::CreateWorkflow(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsTracingStub::AsyncDeleteWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "DeleteWorkflow");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "DeleteWorkflow");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteWorkflow(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteWorkflow(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsTracingStub::DeleteWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "DeleteWorkflow");
+StatusOr<google::longrunning::Operation> WorkflowsTracingStub::DeleteWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "DeleteWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,45 +109,48 @@ WorkflowsTracingStub::DeleteWorkflow(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsTracingStub::AsyncUpdateWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "UpdateWorkflow");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "UpdateWorkflow");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateWorkflow(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateWorkflow(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsTracingStub::UpdateWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "UpdateWorkflow");
+StatusOr<google::longrunning::Operation> WorkflowsTracingStub::UpdateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "UpdateWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateWorkflow(context, options, request));
 }
 
-StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse> WorkflowsTracingStub::ListWorkflowRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+WorkflowsTracingStub::ListWorkflowRevisions(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "ListWorkflowRevisions");
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "ListWorkflowRevisions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListWorkflowRevisions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListWorkflowRevisions(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> WorkflowsTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+WorkflowsTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -152,21 +158,22 @@ StatusOr<google::cloud::location::ListLocationsResponse> WorkflowsTracingStub::L
 }
 
 StatusOr<google::cloud::location::Location> WorkflowsTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> WorkflowsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+WorkflowsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -174,10 +181,10 @@ StatusOr<google::longrunning::ListOperationsResponse> WorkflowsTracingStub::List
 }
 
 StatusOr<google::longrunning::Operation> WorkflowsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -185,10 +192,10 @@ StatusOr<google::longrunning::Operation> WorkflowsTracingStub::GetOperation(
 }
 
 Status WorkflowsTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -205,8 +212,7 @@ WorkflowsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -219,8 +225,8 @@ future<Status> WorkflowsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

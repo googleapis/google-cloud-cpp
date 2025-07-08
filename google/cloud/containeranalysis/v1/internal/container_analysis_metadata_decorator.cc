@@ -44,62 +44,65 @@ ContainerAnalysisMetadata::ContainerAnalysisMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::iam::v1::Policy>
-ContainerAnalysisMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ContainerAnalysisMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ContainerAnalysisMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ContainerAnalysisMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContainerAnalysisMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+StatusOr<
+    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
 ContainerAnalysisMetadata::GetVulnerabilityOccurrencesSummary(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::containeranalysis::v1::
+        GetVulnerabilityOccurrencesSummaryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GetVulnerabilityOccurrencesSummary(context, options, request);
 }
 
 StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
 ContainerAnalysisMetadata::ExportSBOM(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ExportSBOM(context, options, request);
 }
 
 void ContainerAnalysisMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                            Options const& options,
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ContainerAnalysisMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                            Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

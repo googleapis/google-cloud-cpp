@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DocumentLinkServiceClient::DocumentLinkServiceClient(
     std::shared_ptr<DocumentLinkServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DocumentLinkServiceClient::~DocumentLinkServiceClient() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-DocumentLinkServiceClient::ListLinkedTargets(std::string const& parent, Options opts) {
+DocumentLinkServiceClient::ListLinkedTargets(std::string const& parent,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest request;
   request.set_parent(parent);
@@ -41,13 +42,17 @@ DocumentLinkServiceClient::ListLinkedTargets(std::string const& parent, Options 
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-DocumentLinkServiceClient::ListLinkedTargets(google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request, Options opts) {
+DocumentLinkServiceClient::ListLinkedTargets(
+    google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLinkedTargets(request);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
-DocumentLinkServiceClient::ListLinkedSources(std::string const& parent, Options opts) {
+DocumentLinkServiceClient::ListLinkedSources(std::string const& parent,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request;
   request.set_parent(parent);
@@ -55,13 +60,18 @@ DocumentLinkServiceClient::ListLinkedSources(std::string const& parent, Options 
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
-DocumentLinkServiceClient::ListLinkedSources(google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request, Options opts) {
+DocumentLinkServiceClient::ListLinkedSources(
+    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLinkedSources(std::move(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-DocumentLinkServiceClient::CreateDocumentLink(std::string const& parent, google::cloud::contentwarehouse::v1::DocumentLink const& document_link, Options opts) {
+DocumentLinkServiceClient::CreateDocumentLink(
+    std::string const& parent,
+    google::cloud::contentwarehouse::v1::DocumentLink const& document_link,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest request;
   request.set_parent(parent);
@@ -70,21 +80,26 @@ DocumentLinkServiceClient::CreateDocumentLink(std::string const& parent, google:
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-DocumentLinkServiceClient::CreateDocumentLink(google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request, Options opts) {
+DocumentLinkServiceClient::CreateDocumentLink(
+    google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDocumentLink(request);
 }
 
-Status
-DocumentLinkServiceClient::DeleteDocumentLink(std::string const& name, Options opts) {
+Status DocumentLinkServiceClient::DeleteDocumentLink(std::string const& name,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest request;
   request.set_name(name);
   return connection_->DeleteDocumentLink(request);
 }
 
-Status
-DocumentLinkServiceClient::DeleteDocumentLink(google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request, Options opts) {
+Status DocumentLinkServiceClient::DeleteDocumentLink(
+    google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDocumentLink(request);
 }
@@ -98,7 +113,8 @@ DocumentLinkServiceClient::GetOperation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentLinkServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+DocumentLinkServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

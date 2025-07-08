@@ -33,28 +33,26 @@ TextToSpeechStub::~TextToSpeechStub() = default;
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 DefaultTextToSpeechStub::ListVoices(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-    google::cloud::texttospeech::v1::ListVoicesResponse response;
-    auto status =
-        grpc_stub_->ListVoices(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
+  google::cloud::texttospeech::v1::ListVoicesResponse response;
+  auto status = grpc_stub_->ListVoices(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 DefaultTextToSpeechStub::SynthesizeSpeech(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-    google::cloud::texttospeech::v1::SynthesizeSpeechResponse response;
-    auto status =
-        grpc_stub_->SynthesizeSpeech(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
+  google::cloud::texttospeech::v1::SynthesizeSpeechResponse response;
+  auto status = grpc_stub_->SynthesizeSpeech(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -64,7 +62,9 @@ DefaultTextToSpeechStub::AsyncStreamingSynthesize(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingReadWriteRpc<google::cloud::texttospeech::v1::StreamingSynthesizeRequest, google::cloud::texttospeech::v1::StreamingSynthesizeResponse>(
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamingSynthesize(context, cq);
@@ -73,28 +73,25 @@ DefaultTextToSpeechStub::AsyncStreamingSynthesize(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultTextToSpeechStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultTextToSpeechStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultTextToSpeechStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,21 +36,24 @@ class IAMCredentialsTracingConnection
   ~IAMCredentialsTracingConnection() override = default;
 
   explicit IAMCredentialsTracingConnection(
-    std::shared_ptr<iam_credentials_v1::IAMCredentialsConnection> child);
+      std::shared_ptr<iam_credentials_v1::IAMCredentialsConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const& request) override;
+  GenerateAccessToken(
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
+      override;
 
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const& request) override;
+  GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const&
+                      request) override;
 
-  StatusOr<google::iam::credentials::v1::SignBlobResponse>
-  SignBlob(google::iam::credentials::v1::SignBlobRequest const& request) override;
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      google::iam::credentials::v1::SignBlobRequest const& request) override;
 
-  StatusOr<google::iam::credentials::v1::SignJwtResponse>
-  SignJwt(google::iam::credentials::v1::SignJwtRequest const& request) override;
+  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
+      google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:
   std::shared_ptr<iam_credentials_v1::IAMCredentialsConnection> child_;
@@ -69,7 +72,7 @@ MakeIAMCredentialsTracingConnection(
     std::shared_ptr<iam_credentials_v1::IAMCredentialsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1_internal
 }  // namespace cloud
 }  // namespace google

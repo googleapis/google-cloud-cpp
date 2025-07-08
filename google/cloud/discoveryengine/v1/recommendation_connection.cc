@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/recommendation_service.proto
 
 #include "google/cloud/discoveryengine/v1/recommendation_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_tracing_connection.h"
 #include "google/cloud/discoveryengine/v1/recommendation_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,8 +44,10 @@ RecommendationServiceConnection::Recommend(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> RecommendationServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+RecommendationServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -56,26 +58,29 @@ RecommendationServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-RecommendationServiceConnection::CancelOperation(
+Status RecommendationServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<RecommendationServiceConnection> MakeRecommendationServiceConnection(
-    Options options) {
+std::shared_ptr<RecommendationServiceConnection>
+MakeRecommendationServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      RecommendationServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 RecommendationServicePolicyOptionList>(
+      options, __func__);
   options = discoveryengine_v1_internal::RecommendationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = discoveryengine_v1_internal::CreateDefaultRecommendationServiceStub(
-    std::move(auth), options);
-  return discoveryengine_v1_internal::MakeRecommendationServiceTracingConnection(
-      std::make_shared<discoveryengine_v1_internal::RecommendationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      discoveryengine_v1_internal::CreateDefaultRecommendationServiceStub(
+          std::move(auth), options);
+  return discoveryengine_v1_internal::
+      MakeRecommendationServiceTracingConnection(
+          std::make_shared<
+              discoveryengine_v1_internal::RecommendationServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

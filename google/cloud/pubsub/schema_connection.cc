@@ -17,17 +17,17 @@
 // source: google/pubsub/v1/schema.proto
 
 #include "google/cloud/pubsub/schema_connection.h"
+#include "google/cloud/pubsub/internal/schema_connection_impl.h"
+#include "google/cloud/pubsub/internal/schema_option_defaults.h"
+#include "google/cloud/pubsub/internal/schema_stub_factory.h"
+#include "google/cloud/pubsub/internal/schema_tracing_connection.h"
+#include "google/cloud/pubsub/schema_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/pubsub/internal/schema_connection_impl.h"
-#include "google/cloud/pubsub/internal/schema_option_defaults.h"
-#include "google/cloud/pubsub/internal/schema_stub_factory.h"
-#include "google/cloud/pubsub/internal/schema_tracing_connection.h"
-#include "google/cloud/pubsub/schema_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,38 +38,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SchemaServiceConnection::~SchemaServiceConnection() = default;
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceConnection::CreateSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceConnection::CreateSchema(
     google::pubsub::v1::CreateSchemaRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceConnection::GetSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceConnection::GetSchema(
     google::pubsub::v1::GetSchemaRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::pubsub::v1::Schema> SchemaServiceConnection::ListSchemas(
-    google::pubsub::v1::ListSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::pubsub::v1::
+        ListSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::pubsub::v1::Schema>>();
 }
 
-StreamRange<google::pubsub::v1::Schema> SchemaServiceConnection::ListSchemaRevisions(
-    google::pubsub::v1::ListSchemaRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::pubsub::v1::Schema>
+SchemaServiceConnection::ListSchemaRevisions(
+    google::pubsub::v1::
+        ListSchemaRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::pubsub::v1::Schema>>();
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceConnection::CommitSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceConnection::CommitSchema(
     google::pubsub::v1::CommitSchemaRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceConnection::RollbackSchema(
+StatusOr<google::pubsub::v1::Schema> SchemaServiceConnection::RollbackSchema(
     google::pubsub::v1::RollbackSchemaRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -80,8 +79,7 @@ SchemaServiceConnection::DeleteSchemaRevision(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-SchemaServiceConnection::DeleteSchema(
+Status SchemaServiceConnection::DeleteSchema(
     google::pubsub::v1::DeleteSchemaRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -98,14 +96,12 @@ SchemaServiceConnection::ValidateMessage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-SchemaServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> SchemaServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-SchemaServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> SchemaServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -119,17 +115,18 @@ SchemaServiceConnection::TestIamPermissions(
 std::shared_ptr<SchemaServiceConnection> MakeSchemaServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      SchemaServicePolicyOptionList>(options, __func__);
-  options = pubsub_internal::SchemaServiceDefaultOptions(
-      location, std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 SchemaServicePolicyOptionList>(options,
+                                                                __func__);
+  options = pubsub_internal::SchemaServiceDefaultOptions(location,
+                                                         std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = pubsub_internal::CreateDefaultSchemaServiceStub(
-    std::move(auth), options);
+  auto stub =
+      pubsub_internal::CreateDefaultSchemaServiceStub(std::move(auth), options);
   return pubsub_internal::MakeSchemaServiceTracingConnection(
       std::make_shared<pubsub_internal::SchemaServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<SchemaServiceConnection> MakeSchemaServiceConnection(

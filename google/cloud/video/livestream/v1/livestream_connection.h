@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CONNECTION_H
 
+#include "google/cloud/video/livestream/v1/internal/livestream_retry_traits.h"
+#include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -28,8 +30,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_retry_traits.h"
-#include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
 #include <google/cloud/video/livestream/v1/service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -56,7 +56,8 @@ class LivestreamServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LivestreamServiceLimitedErrorCountRetryPolicy : public LivestreamServiceRetryPolicy {
+class LivestreamServiceLimitedErrorCountRetryPolicy
+    : public LivestreamServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class LivestreamServiceLimitedErrorCountRetryPolicy : public LivestreamServiceRe
    *     @p maximum_failures == 0.
    */
   explicit LivestreamServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   LivestreamServiceLimitedErrorCountRetryPolicy(
       LivestreamServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : LivestreamServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : LivestreamServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LivestreamServiceLimitedErrorCountRetryPolicy(
       LivestreamServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : LivestreamServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : LivestreamServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class LivestreamServiceLimitedErrorCountRetryPolicy : public LivestreamServiceRe
   using BaseType = LivestreamServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<video_livestream_v1_internal::LivestreamServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      video_livestream_v1_internal::LivestreamServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class LivestreamServiceLimitedErrorCountRetryPolicy : public LivestreamServiceRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LivestreamServiceLimitedTimeRetryPolicy : public LivestreamServiceRetryPolicy {
+class LivestreamServiceLimitedTimeRetryPolicy
+    : public LivestreamServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class LivestreamServiceLimitedTimeRetryPolicy : public LivestreamServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit LivestreamServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  LivestreamServiceLimitedTimeRetryPolicy(LivestreamServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : LivestreamServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LivestreamServiceLimitedTimeRetryPolicy(LivestreamServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : LivestreamServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LivestreamServiceLimitedTimeRetryPolicy(
+      LivestreamServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : LivestreamServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LivestreamServiceLimitedTimeRetryPolicy(
+      LivestreamServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : LivestreamServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,20 +164,23 @@ class LivestreamServiceLimitedTimeRetryPolicy : public LivestreamServiceRetryPol
   using BaseType = LivestreamServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<video_livestream_v1_internal::LivestreamServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      video_livestream_v1_internal::LivestreamServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `LivestreamServiceConnection` object for `LivestreamServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `LivestreamServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `LivestreamServiceClient`.
+ * sets in `LivestreamServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `LivestreamServiceClient`.
  *
  * To create a concrete instance, see `MakeLivestreamServiceConnection()`.
  *
- * For mocking, see `video_livestream_v1_mocks::MockLivestreamServiceConnection`.
+ * For mocking, see
+ * `video_livestream_v1_mocks::MockLivestreamServiceConnection`.
  */
 class LivestreamServiceConnection {
  public:
@@ -180,222 +189,286 @@ class LivestreamServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  CreateChannel(google::cloud::video::livestream::v1::CreateChannelRequest const& request);
+  CreateChannel(
+      google::cloud::video::livestream::v1::CreateChannelRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateChannel(NoAwaitTag, google::cloud::video::livestream::v1::CreateChannelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateChannelRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  CreateChannel( google::longrunning::Operation const& operation);
+  CreateChannel(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::video::livestream::v1::Channel>
-  ListChannels(google::cloud::video::livestream::v1::ListChannelsRequest request);
+  ListChannels(
+      google::cloud::video::livestream::v1::ListChannelsRequest request);
 
-  virtual StatusOr<google::cloud::video::livestream::v1::Channel>
-  GetChannel(google::cloud::video::livestream::v1::GetChannelRequest const& request);
+  virtual StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
+      google::cloud::video::livestream::v1::GetChannelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteChannel(google::cloud::video::livestream::v1::DeleteChannelRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteChannel(
+      google::cloud::video::livestream::v1::DeleteChannelRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteChannel(NoAwaitTag, google::cloud::video::livestream::v1::DeleteChannelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteChannelRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteChannel( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteChannel(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  UpdateChannel(google::cloud::video::livestream::v1::UpdateChannelRequest const& request);
+  UpdateChannel(
+      google::cloud::video::livestream::v1::UpdateChannelRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateChannel(NoAwaitTag, google::cloud::video::livestream::v1::UpdateChannelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateChannelRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  UpdateChannel( google::longrunning::Operation const& operation);
+  UpdateChannel(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StartChannel(google::cloud::video::livestream::v1::StartChannelRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartChannel(
+      google::cloud::video::livestream::v1::StartChannelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  StartChannel(NoAwaitTag, google::cloud::video::livestream::v1::StartChannelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> StartChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::StartChannelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StartChannel( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartChannel(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StopChannel(google::cloud::video::livestream::v1::StopChannelRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopChannel(
+      google::cloud::video::livestream::v1::StopChannelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  StopChannel(NoAwaitTag, google::cloud::video::livestream::v1::StopChannelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> StopChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::StopChannelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StopChannel( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  CreateInput(google::cloud::video::livestream::v1::CreateInputRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateInput(NoAwaitTag, google::cloud::video::livestream::v1::CreateInputRequest const& request);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  CreateInput( google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::video::livestream::v1::Input>
-  ListInputs(google::cloud::video::livestream::v1::ListInputsRequest request);
-
-  virtual StatusOr<google::cloud::video::livestream::v1::Input>
-  GetInput(google::cloud::video::livestream::v1::GetInputRequest const& request);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteInput(google::cloud::video::livestream::v1::DeleteInputRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteInput(NoAwaitTag, google::cloud::video::livestream::v1::DeleteInputRequest const& request);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteInput( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopChannel(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  UpdateInput(google::cloud::video::livestream::v1::UpdateInputRequest const& request);
+  CreateInput(
+      google::cloud::video::livestream::v1::CreateInputRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateInput(NoAwaitTag, google::cloud::video::livestream::v1::UpdateInputRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateInput(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateInputRequest const& request);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  UpdateInput( google::longrunning::Operation const& operation);
+  CreateInput(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::video::livestream::v1::Event>
-  CreateEvent(google::cloud::video::livestream::v1::CreateEventRequest const& request);
+  virtual StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
+      google::cloud::video::livestream::v1::ListInputsRequest request);
 
-  virtual StreamRange<google::cloud::video::livestream::v1::Event>
-  ListEvents(google::cloud::video::livestream::v1::ListEventsRequest request);
+  virtual StatusOr<google::cloud::video::livestream::v1::Input> GetInput(
+      google::cloud::video::livestream::v1::GetInputRequest const& request);
 
-  virtual StatusOr<google::cloud::video::livestream::v1::Event>
-  GetEvent(google::cloud::video::livestream::v1::GetEventRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteInput(
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request);
 
-  virtual Status
-  DeleteEvent(google::cloud::video::livestream::v1::DeleteEventRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteInput(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request);
 
-  virtual StreamRange<google::cloud::video::livestream::v1::Clip>
-  ListClips(google::cloud::video::livestream::v1::ListClipsRequest request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteInput(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::video::livestream::v1::Clip>
-  GetClip(google::cloud::video::livestream::v1::GetClipRequest const& request);
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
+  UpdateInput(
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInput(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
+  UpdateInput(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
+      google::cloud::video::livestream::v1::CreateEventRequest const& request);
+
+  virtual StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
+      google::cloud::video::livestream::v1::ListEventsRequest request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
+      google::cloud::video::livestream::v1::GetEventRequest const& request);
+
+  virtual Status DeleteEvent(
+      google::cloud::video::livestream::v1::DeleteEventRequest const& request);
+
+  virtual StreamRange<google::cloud::video::livestream::v1::Clip> ListClips(
+      google::cloud::video::livestream::v1::ListClipsRequest request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
+      google::cloud::video::livestream::v1::GetClipRequest const& request);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Clip>>
-  CreateClip(google::cloud::video::livestream::v1::CreateClipRequest const& request);
+  CreateClip(
+      google::cloud::video::livestream::v1::CreateClipRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateClip(NoAwaitTag, google::cloud::video::livestream::v1::CreateClipRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateClip(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Clip>>
-  CreateClip( google::longrunning::Operation const& operation);
+  CreateClip(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteClip(google::cloud::video::livestream::v1::DeleteClipRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteClip(
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteClip(NoAwaitTag, google::cloud::video::livestream::v1::DeleteClipRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteClip(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteClip( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
-  CreateDvrSession(google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateDvrSession(NoAwaitTag, google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteClip(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
-  CreateDvrSession( google::longrunning::Operation const& operation);
+  CreateDvrSession(
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::video::livestream::v1::DvrSession>
-  ListDvrSessions(google::cloud::video::livestream::v1::ListDvrSessionsRequest request);
+  ListDvrSessions(
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest request);
 
   virtual StatusOr<google::cloud::video::livestream::v1::DvrSession>
-  GetDvrSession(google::cloud::video::livestream::v1::GetDvrSessionRequest const& request);
+  GetDvrSession(
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteDvrSession(google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteDvrSession(NoAwaitTag, google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteDvrSession( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
-  UpdateDvrSession(google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request);
+  UpdateDvrSession(
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateDvrSession(NoAwaitTag, google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
-  UpdateDvrSession( google::longrunning::Operation const& operation);
+  UpdateDvrSession(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Asset>>
-  CreateAsset(google::cloud::video::livestream::v1::CreateAssetRequest const& request);
+  CreateAsset(
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAsset(NoAwaitTag, google::cloud::video::livestream::v1::CreateAssetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAsset(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Asset>>
-  CreateAsset( google::longrunning::Operation const& operation);
+  CreateAsset(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteAsset(google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteAsset(
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAsset(NoAwaitTag, google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAsset(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
 
-  virtual future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteAsset( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteAsset(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::video::livestream::v1::Asset>
-  GetAsset(google::cloud::video::livestream::v1::GetAssetRequest const& request);
+  virtual StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
+      google::cloud::video::livestream::v1::GetAssetRequest const& request);
 
-  virtual StreamRange<google::cloud::video::livestream::v1::Asset>
-  ListAssets(google::cloud::video::livestream::v1::ListAssetsRequest request);
+  virtual StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
+      google::cloud::video::livestream::v1::ListAssetsRequest request);
 
-  virtual StatusOr<google::cloud::video::livestream::v1::Pool>
-  GetPool(google::cloud::video::livestream::v1::GetPoolRequest const& request);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::Pool>>
-  UpdatePool(google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdatePool(NoAwaitTag, google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
+  virtual StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
+      google::cloud::video::livestream::v1::GetPoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::video::livestream::v1::Pool>>
-  UpdatePool( google::longrunning::Operation const& operation);
+  UpdatePool(
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation> UpdatePool(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+  UpdatePool(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `LivestreamServiceConnection`.
+ * A factory function to construct an object of type
+ * `LivestreamServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of LivestreamServiceClient.
+ * should be passed as an argument to the constructor of
+ * LivestreamServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `LivestreamServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `LivestreamServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -405,8 +478,8 @@ class LivestreamServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `LivestreamServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `LivestreamServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<LivestreamServiceConnection> MakeLivestreamServiceConnection(
     Options options = {});

@@ -36,27 +36,27 @@ class CompanyServiceTracingConnection
   ~CompanyServiceTracingConnection() override = default;
 
   explicit CompanyServiceTracingConnection(
-    std::shared_ptr<talent_v4::CompanyServiceConnection> child);
+      std::shared_ptr<talent_v4::CompanyServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::talent::v4::Company>
-  CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> CreateCompany(
+      google::cloud::talent::v4::CreateCompanyRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Company>
-  GetCompany(google::cloud::talent::v4::GetCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> GetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Company>
-  UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
+      google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
 
-  Status
-  DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
+  Status DeleteCompany(
+      google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
 
-  StreamRange<google::cloud::talent::v4::Company>
-  ListCompanies(google::cloud::talent::v4::ListCompaniesRequest request) override;
+  StreamRange<google::cloud::talent::v4::Company> ListCompanies(
+      google::cloud::talent::v4::ListCompaniesRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<talent_v4::CompanyServiceConnection> child_;

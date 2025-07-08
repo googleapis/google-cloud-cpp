@@ -45,8 +45,8 @@ SubscriberServiceMetadata::SubscriberServiceMetadata(
               : std::move(api_client_header)) {}
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::cloud::pubsublite::v1::SubscribeRequest,
-      google::cloud::pubsublite::v1::SubscribeResponse>>
+    google::cloud::pubsublite::v1::SubscribeRequest,
+    google::cloud::pubsublite::v1::SubscribeResponse>>
 SubscriberServiceMetadata::AsyncSubscribe(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -57,51 +57,49 @@ SubscriberServiceMetadata::AsyncSubscribe(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SubscriberServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 SubscriberServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-SubscriberServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SubscriberServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-SubscriberServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SubscriberServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
 void SubscriberServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                            Options const& options,
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void SubscriberServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                            Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

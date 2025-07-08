@@ -36,21 +36,21 @@ class SqlSslCertsServiceTracingConnection
   ~SqlSslCertsServiceTracingConnection() override = default;
 
   explicit SqlSslCertsServiceTracingConnection(
-    std::shared_ptr<sql_v1::SqlSslCertsServiceConnection> child);
+      std::shared_ptr<sql_v1::SqlSslCertsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Delete(
+      google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::SslCert>
-  Get(google::cloud::sql::v1::SqlSslCertsGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::SslCert> Get(
+      google::cloud::sql::v1::SqlSslCertsGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
-  Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::SslCertsInsertResponse> Insert(
+      google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::SslCertsListResponse>
-  List(google::cloud::sql::v1::SqlSslCertsListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::SslCertsListResponse> List(
+      google::cloud::sql::v1::SqlSslCertsListRequest const& request) override;
 
  private:
   std::shared_ptr<sql_v1::SqlSslCertsServiceConnection> child_;

@@ -26,26 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BatchControllerConnectionIdempotencyPolicy::~BatchControllerConnectionIdempotencyPolicy() = default;
+BatchControllerConnectionIdempotencyPolicy::
+    ~BatchControllerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>
 BatchControllerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BatchControllerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::CreateBatch(google::cloud::dataproc::v1::CreateBatchRequest const&) {
+Idempotency BatchControllerConnectionIdempotencyPolicy::CreateBatch(
+    google::cloud::dataproc::v1::CreateBatchRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::GetBatch(google::cloud::dataproc::v1::GetBatchRequest const&) {
+Idempotency BatchControllerConnectionIdempotencyPolicy::GetBatch(
+    google::cloud::dataproc::v1::GetBatchRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::ListBatches(google::cloud::dataproc::v1::ListBatchesRequest) {  // NOLINT
+Idempotency BatchControllerConnectionIdempotencyPolicy::ListBatches(
+    google::cloud::dataproc::v1::ListBatchesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::DeleteBatch(google::cloud::dataproc::v1::DeleteBatchRequest const&) {
+Idempotency BatchControllerConnectionIdempotencyPolicy::DeleteBatch(
+    google::cloud::dataproc::v1::DeleteBatchRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -55,32 +60,38 @@ Idempotency BatchControllerConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency BatchControllerConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency BatchControllerConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency BatchControllerConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency BatchControllerConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency BatchControllerConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BatchControllerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency BatchControllerConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>
-    MakeDefaultBatchControllerConnectionIdempotencyPolicy() {
+MakeDefaultBatchControllerConnectionIdempotencyPolicy() {
   return std::make_unique<BatchControllerConnectionIdempotencyPolicy>();
 }
 

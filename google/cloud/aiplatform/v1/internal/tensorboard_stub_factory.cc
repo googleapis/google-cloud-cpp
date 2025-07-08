@@ -40,32 +40,32 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TensorboardServiceStub>
-CreateDefaultTensorboardServiceStub(
+std::shared_ptr<TensorboardServiceStub> CreateDefaultTensorboardServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::aiplatform::v1::TensorboardService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::aiplatform::v1::TensorboardService::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<TensorboardServiceStub> stub =
-    std::make_shared<DefaultTensorboardServiceStub>(
-      std::move(service_grpc_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultTensorboardServiceStub>(
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+          std::move(service_locations_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<TensorboardServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<TensorboardServiceAuth>(std::move(auth),
+                                                    std::move(stub));
   }
   stub = std::make_shared<TensorboardServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<TensorboardServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

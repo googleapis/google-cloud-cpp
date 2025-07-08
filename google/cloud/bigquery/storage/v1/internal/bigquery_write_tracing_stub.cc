@@ -33,15 +33,17 @@ BigQueryWriteTracingStub::BigQueryWriteTracingStub(
     std::shared_ptr<BigQueryWriteStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::bigquery::storage::v1::WriteStream> BigQueryWriteTracingStub::CreateWriteStream(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryWrite", "CreateWriteStream");
+StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
+BigQueryWriteTracingStub::CreateWriteStream(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryWrite", "CreateWriteStream");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateWriteStream(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateWriteStream(context, options, request));
 }
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<
@@ -50,7 +52,8 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 BigQueryWriteTracingStub::AsyncAppendRows(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryWrite", "AppendRows");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryWrite", "AppendRows");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncAppendRows(cq, context, std::move(options));
@@ -60,44 +63,53 @@ BigQueryWriteTracingStub::AsyncAppendRows(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::cloud::bigquery::storage::v1::WriteStream> BigQueryWriteTracingStub::GetWriteStream(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryWrite", "GetWriteStream");
+StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
+BigQueryWriteTracingStub::GetWriteStream(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryWrite", "GetWriteStream");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetWriteStream(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse> BigQueryWriteTracingStub::FinalizeWriteStream(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryWrite", "FinalizeWriteStream");
+StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
+BigQueryWriteTracingStub::FinalizeWriteStream(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryWrite", "FinalizeWriteStream");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FinalizeWriteStream(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->FinalizeWriteStream(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse> BigQueryWriteTracingStub::BatchCommitWriteStreams(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryWrite", "BatchCommitWriteStreams");
+StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
+BigQueryWriteTracingStub::BatchCommitWriteStreams(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryWrite",
+                             "BatchCommitWriteStreams");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchCommitWriteStreams(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchCommitWriteStreams(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> BigQueryWriteTracingStub::FlushRows(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
+BigQueryWriteTracingStub::FlushRows(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryWrite", "FlushRows");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryWrite", "FlushRows");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

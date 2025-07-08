@@ -32,8 +32,7 @@ CompanyServiceAuth::CompanyServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::CreateCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +40,7 @@ StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::CreateCompany(
 }
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::GetCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +48,7 @@ StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::GetCompany(
 }
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::UpdateCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,17 +56,16 @@ StatusOr<google::cloud::talent::v4::Company> CompanyServiceAuth::UpdateCompany(
 }
 
 Status CompanyServiceAuth::DeleteCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCompany(context, options, request);
 }
 
-StatusOr<google::cloud::talent::v4::ListCompaniesResponse> CompanyServiceAuth::ListCompanies(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
+CompanyServiceAuth::ListCompanies(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +73,7 @@ StatusOr<google::cloud::talent::v4::ListCompaniesResponse> CompanyServiceAuth::L
 }
 
 StatusOr<google::longrunning::Operation> CompanyServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

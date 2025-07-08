@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/asset/v1/asset_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -45,135 +45,130 @@ class AssetServiceStub {
       google::cloud::asset::v1::ExportAssetsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportAssets(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::asset::v1::ExportAssetsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::ListAssetsResponse> ListAssets(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::ListAssetsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse> BatchGetAssetsHistory(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) = 0;
+  virtual StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
+  BatchGetAssetsHistory(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::Feed> CreateFeed(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::CreateFeedRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::Feed> GetFeed(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::GetFeedRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::ListFeedsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::UpdateFeedRequest const& request) = 0;
 
   virtual Status DeleteFeed(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::DeleteFeedRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse> SearchAllResources(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
+  SearchAllResources(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::SearchAllResourcesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse> SearchAllIamPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
+  SearchAllIamPolicies(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse> AnalyzeIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
+  AnalyzeIamPolicy(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncAnalyzeIamPolicyLongrunning(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncAnalyzeIamPolicyLongrunning(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request) = 0;
+      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::QueryAssetsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::CreateSavedQueryRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::GetSavedQueryRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse> ListSavedQueries(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
+  ListSavedQueries(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::ListSavedQueriesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::UpdateSavedQueryRequest const& request) = 0;
 
   virtual Status DeleteSavedQuery(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::DeleteSavedQueryRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse> BatchGetEffectiveIamPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+  BatchGetEffectiveIamPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse> AnalyzeOrgPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+  AnalyzeOrgPolicies(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse> AnalyzeOrgPolicyGovernedContainers(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+  AnalyzeOrgPolicyGovernedContainers(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse> AnalyzeOrgPolicyGovernedAssets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+  AnalyzeOrgPolicyGovernedAssets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -186,8 +181,10 @@ class AssetServiceStub {
 class DefaultAssetServiceStub : public AssetServiceStub {
  public:
   DefaultAssetServiceStub(
-      std::unique_ptr<google::cloud::asset::v1::AssetService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::asset::v1::AssetService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -198,129 +195,125 @@ class DefaultAssetServiceStub : public AssetServiceStub {
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportAssets(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::ListAssetsResponse> ListAssets(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::ListAssetsRequest const& request) override;
 
-  StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse> BatchGetAssetsHistory(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) override;
+  StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
+  BatchGetAssetsHistory(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request)
+      override;
 
   StatusOr<google::cloud::asset::v1::Feed> CreateFeed(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::CreateFeedRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::Feed> GetFeed(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::GetFeedRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::ListFeedsRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::UpdateFeedRequest const& request) override;
 
   Status DeleteFeed(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::DeleteFeedRequest const& request) override;
 
-  StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse> SearchAllResources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::SearchAllResourcesRequest const& request) override;
+  StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
+  SearchAllResources(grpc::ClientContext& context, Options const& options,
+                     google::cloud::asset::v1::SearchAllResourcesRequest const&
+                         request) override;
 
-  StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse> SearchAllIamPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) override;
+  StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
+  SearchAllIamPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request)
+      override;
 
   StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse> AnalyzeIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request)
+      override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncAnalyzeIamPolicyLongrunning(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncAnalyzeIamPolicyLongrunning(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request) override;
+      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+          request) override;
 
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::AnalyzeMoveRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::QueryAssetsRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::CreateSavedQueryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::CreateSavedQueryRequest const& request)
+      override;
 
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::GetSavedQueryRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse> ListSavedQueries(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::ListSavedQueriesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::ListSavedQueriesRequest const& request)
+      override;
 
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::UpdateSavedQueryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::UpdateSavedQueryRequest const& request)
+      override;
 
   Status DeleteSavedQuery(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::DeleteSavedQueryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::DeleteSavedQueryRequest const& request)
+      override;
 
-  StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse> BatchGetEffectiveIamPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const& request) override;
+  StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+  BatchGetEffectiveIamPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse> AnalyzeOrgPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) override;
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+  AnalyzeOrgPolicies(grpc::ClientContext& context, Options const& options,
+                     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const&
+                         request) override;
 
-  StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse> AnalyzeOrgPolicyGovernedContainers(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const& request) override;
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+  AnalyzeOrgPolicyGovernedContainers(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+          request) override;
 
-  StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse> AnalyzeOrgPolicyGovernedAssets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const& request) override;
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+  AnalyzeOrgPolicyGovernedAssets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -336,8 +329,10 @@ class DefaultAssetServiceStub : public AssetServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::asset::v1::AssetService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::asset::v1::AssetService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

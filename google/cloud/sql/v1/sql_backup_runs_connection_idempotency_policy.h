@@ -34,23 +34,24 @@ class SqlBackupRunsServiceConnectionIdempotencyPolicy {
   virtual ~SqlBackupRunsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlBackupRunsServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SqlBackupRunsServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  Delete(google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request);
+  virtual google::cloud::Idempotency Delete(
+      google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Get(google::cloud::sql::v1::SqlBackupRunsGetRequest const& request);
+  virtual google::cloud::Idempotency Get(
+      google::cloud::sql::v1::SqlBackupRunsGetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Insert(google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request);
+  virtual google::cloud::Idempotency Insert(
+      google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request);
 
-  virtual google::cloud::Idempotency
-  List(google::cloud::sql::v1::SqlBackupRunsListRequest const& request);
+  virtual google::cloud::Idempotency List(
+      google::cloud::sql::v1::SqlBackupRunsListRequest const& request);
 };
 
 std::unique_ptr<SqlBackupRunsServiceConnectionIdempotencyPolicy>
-    MakeDefaultSqlBackupRunsServiceConnectionIdempotencyPolicy();
+MakeDefaultSqlBackupRunsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

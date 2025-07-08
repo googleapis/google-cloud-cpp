@@ -60,11 +60,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
+/// [google.cloud.dialogflow.v2.Participant]:
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
 ///
 class ParticipantsClient {
  public:
-  explicit ParticipantsClient(std::shared_ptr<ParticipantsConnection> connection, Options opts = {});
+  explicit ParticipantsClient(
+      std::shared_ptr<ParticipantsConnection> connection, Options opts = {});
   ~ParticipantsClient();
 
   ///@{
@@ -77,10 +79,12 @@ class ParticipantsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ParticipantsClient const& a, ParticipantsClient const& b) {
+  friend bool operator==(ParticipantsClient const& a,
+                         ParticipantsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ParticipantsClient const& a, ParticipantsClient const& b) {
+  friend bool operator!=(ParticipantsClient const& a,
+                         ParticipantsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +113,10 @@ class ParticipantsClient {
   /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Participant>
-  CreateParticipant(std::string const& parent, google::cloud::dialogflow::v2::Participant const& participant, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
+      std::string const& parent,
+      google::cloud::dialogflow::v2::Participant const& participant,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -139,8 +145,9 @@ class ParticipantsClient {
   /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Participant>
-  CreateParticipant(google::cloud::dialogflow::v2::CreateParticipantRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Participant> CreateParticipant(
+      google::cloud::dialogflow::v2::CreateParticipantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -165,8 +172,8 @@ class ParticipantsClient {
   /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Participant>
-  GetParticipant(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -195,8 +202,9 @@ class ParticipantsClient {
   /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Participant>
-  GetParticipant(google::cloud::dialogflow::v2::GetParticipantRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
+      google::cloud::dialogflow::v2::GetParticipantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -230,8 +238,8 @@ class ParticipantsClient {
   /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Participant>
-  ListParticipants(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Participant> ListParticipants(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -269,8 +277,9 @@ class ParticipantsClient {
   /// [google.cloud.dialogflow.v2.Participant]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L192}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Participant>
-  ListParticipants(google::cloud::dialogflow::v2::ListParticipantsRequest request, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Participant> ListParticipants(
+      google::cloud::dialogflow::v2::ListParticipantsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -295,8 +304,9 @@ class ParticipantsClient {
   /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L398}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Participant>
-  UpdateParticipant(google::cloud::dialogflow::v2::Participant const& participant, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
+      google::cloud::dialogflow::v2::Participant const& participant,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -325,8 +335,9 @@ class ParticipantsClient {
   /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L398}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Participant>
-  UpdateParticipant(google::cloud::dialogflow::v2::UpdateParticipantRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
+      google::cloud::dialogflow::v2::UpdateParticipantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -358,7 +369,9 @@ class ParticipantsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(std::string const& participant, google::cloud::dialogflow::v2::TextInput const& text_input, Options opts = {});
+  AnalyzeContent(std::string const& participant,
+                 google::cloud::dialogflow::v2::TextInput const& text_input,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -390,7 +403,9 @@ class ParticipantsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(std::string const& participant, google::cloud::dialogflow::v2::EventInput const& event_input, Options opts = {});
+  AnalyzeContent(std::string const& participant,
+                 google::cloud::dialogflow::v2::EventInput const& event_input,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -422,7 +437,9 @@ class ParticipantsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(std::string const& participant, google::cloud::dialogflow::v2::AudioInput const& audio_input, Options opts = {});
+  AnalyzeContent(std::string const& participant,
+                 google::cloud::dialogflow::v2::AudioInput const& audio_input,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -457,7 +474,9 @@ class ParticipantsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(google::cloud::dialogflow::v2::AnalyzeContentRequest const& request, Options opts = {});
+  AnalyzeContent(
+      google::cloud::dialogflow::v2::AnalyzeContentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -559,7 +578,9 @@ class ParticipantsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
-  SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const& request, Options opts = {});
+  SuggestArticles(
+      google::cloud::dialogflow::v2::SuggestArticlesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -617,7 +638,9 @@ class ParticipantsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
-  SuggestFaqAnswers(google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request, Options opts = {});
+  SuggestFaqAnswers(
+      google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -675,7 +698,9 @@ class ParticipantsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
-  SuggestSmartReplies(google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request, Options opts = {});
+  SuggestSmartReplies(
+      google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -705,7 +730,10 @@ class ParticipantsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
-  SuggestKnowledgeAssist(google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const& request, Options opts = {});
+  SuggestKnowledgeAssist(
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -743,8 +771,8 @@ class ParticipantsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -773,8 +801,9 @@ class ParticipantsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -809,8 +838,8 @@ class ParticipantsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -849,8 +878,8 @@ class ParticipantsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -876,8 +905,8 @@ class ParticipantsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -908,8 +937,9 @@ class ParticipantsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -943,8 +973,7 @@ class ParticipantsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -983,8 +1012,9 @@ class ParticipantsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ParticipantsConnection> connection_;

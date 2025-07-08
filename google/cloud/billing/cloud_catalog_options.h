@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use billing_v1::CloudCatalogBackoffPolicyOption directly.
 using ::google::cloud::billing_v1::CloudCatalogBackoffPolicyOption;
 
-/// @deprecated Use billing_v1::CloudCatalogConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::billing_v1::CloudCatalogConnectionIdempotencyPolicyOption;
+/// @deprecated Use billing_v1::CloudCatalogConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::billing_v1::
+    CloudCatalogConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use billing_v1::CloudCatalogPolicyOptionList directly.
 using ::google::cloud::billing_v1::CloudCatalogPolicyOptionList;

@@ -28,20 +28,31 @@ namespace cloud {
 namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption directly.
-using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption;
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServicePollingPolicyOption;
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption directly.
-using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption;
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServiceBackoffPolicyOption;
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServicePolicyOptionList directly.
-using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServicePolicyOptionList;
+/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServicePolicyOptionList
+/// directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServicePolicyOptionList;
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption directly.
-using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption;
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads

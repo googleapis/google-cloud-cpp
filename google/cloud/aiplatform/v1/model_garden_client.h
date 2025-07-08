@@ -64,23 +64,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ModelGardenServiceClient {
  public:
-  explicit ModelGardenServiceClient(std::shared_ptr<ModelGardenServiceConnection> connection, Options opts = {});
+  explicit ModelGardenServiceClient(
+      std::shared_ptr<ModelGardenServiceConnection> connection,
+      Options opts = {});
   ~ModelGardenServiceClient();
 
   ///@{
   /// @name Copy and move support
   ModelGardenServiceClient(ModelGardenServiceClient const&) = default;
-  ModelGardenServiceClient& operator=(ModelGardenServiceClient const&) = default;
+  ModelGardenServiceClient& operator=(ModelGardenServiceClient const&) =
+      default;
   ModelGardenServiceClient(ModelGardenServiceClient&&) = default;
   ModelGardenServiceClient& operator=(ModelGardenServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ModelGardenServiceClient const& a, ModelGardenServiceClient const& b) {
+  friend bool operator==(ModelGardenServiceClient const& a,
+                         ModelGardenServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ModelGardenServiceClient const& a, ModelGardenServiceClient const& b) {
+  friend bool operator!=(ModelGardenServiceClient const& a,
+                         ModelGardenServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +114,8 @@ class ModelGardenServiceClient {
   /// [google.cloud.aiplatform.v1.PublisherModel]: @googleapis_reference_link{google/cloud/aiplatform/v1/publisher_model.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-  GetPublisherModel(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -139,8 +144,9 @@ class ModelGardenServiceClient {
   /// [google.cloud.aiplatform.v1.PublisherModel]: @googleapis_reference_link{google/cloud/aiplatform/v1/publisher_model.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-  GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
+      google::cloud::aiplatform::v1::GetPublisherModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +182,9 @@ class ModelGardenServiceClient {
   /// [google.cloud.aiplatform.v1.DeployResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_garden_service.proto#L210}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
-  Deploy(google::cloud::aiplatform::v1::DeployRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(
+      google::cloud::aiplatform::v1::DeployRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +197,9 @@ class ModelGardenServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  Deploy(NoAwaitTag, google::cloud::aiplatform::v1::DeployRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> Deploy(
+      NoAwaitTag, google::cloud::aiplatform::v1::DeployRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -202,8 +210,8 @@ class ModelGardenServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>>
-  Deploy(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::DeployResponse>> Deploy(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +249,8 @@ class ModelGardenServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -271,8 +279,9 @@ class ModelGardenServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +313,8 @@ class ModelGardenServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -336,8 +345,8 @@ class ModelGardenServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -372,8 +381,9 @@ class ModelGardenServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -408,8 +418,8 @@ class ModelGardenServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -448,8 +458,8 @@ class ModelGardenServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -475,8 +485,8 @@ class ModelGardenServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -507,8 +517,9 @@ class ModelGardenServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -532,8 +543,7 @@ class ModelGardenServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -562,8 +572,9 @@ class ModelGardenServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -597,8 +608,7 @@ class ModelGardenServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -637,8 +647,9 @@ class ModelGardenServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -675,8 +686,9 @@ class ModelGardenServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ModelGardenServiceConnection> connection_;

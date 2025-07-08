@@ -26,39 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TenantServiceConnectionIdempotencyPolicy::~TenantServiceConnectionIdempotencyPolicy() = default;
+TenantServiceConnectionIdempotencyPolicy::
+    ~TenantServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
 TenantServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TenantServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TenantServiceConnectionIdempotencyPolicy::CreateTenant(google::cloud::talent::v4::CreateTenantRequest const&) {
+Idempotency TenantServiceConnectionIdempotencyPolicy::CreateTenant(
+    google::cloud::talent::v4::CreateTenantRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TenantServiceConnectionIdempotencyPolicy::GetTenant(google::cloud::talent::v4::GetTenantRequest const&) {
+Idempotency TenantServiceConnectionIdempotencyPolicy::GetTenant(
+    google::cloud::talent::v4::GetTenantRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TenantServiceConnectionIdempotencyPolicy::UpdateTenant(google::cloud::talent::v4::UpdateTenantRequest const&) {
+Idempotency TenantServiceConnectionIdempotencyPolicy::UpdateTenant(
+    google::cloud::talent::v4::UpdateTenantRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TenantServiceConnectionIdempotencyPolicy::DeleteTenant(google::cloud::talent::v4::DeleteTenantRequest const&) {
+Idempotency TenantServiceConnectionIdempotencyPolicy::DeleteTenant(
+    google::cloud::talent::v4::DeleteTenantRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TenantServiceConnectionIdempotencyPolicy::ListTenants(google::cloud::talent::v4::ListTenantsRequest) {  // NOLINT
+Idempotency TenantServiceConnectionIdempotencyPolicy::ListTenants(
+    google::cloud::talent::v4::ListTenantsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TenantServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TenantServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
-    MakeDefaultTenantServiceConnectionIdempotencyPolicy() {
+MakeDefaultTenantServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TenantServiceConnectionIdempotencyPolicy>();
 }
 

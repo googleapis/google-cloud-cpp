@@ -36,33 +36,33 @@ class CaseServiceConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<CaseServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  GetCase(google::cloud::support::v2::GetCaseRequest const& request);
+  virtual google::cloud::Idempotency GetCase(
+      google::cloud::support::v2::GetCaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListCases(google::cloud::support::v2::ListCasesRequest request);
+  virtual google::cloud::Idempotency ListCases(
+      google::cloud::support::v2::ListCasesRequest request);
 
-  virtual google::cloud::Idempotency
-  SearchCases(google::cloud::support::v2::SearchCasesRequest request);
+  virtual google::cloud::Idempotency SearchCases(
+      google::cloud::support::v2::SearchCasesRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateCase(google::cloud::support::v2::CreateCaseRequest const& request);
+  virtual google::cloud::Idempotency CreateCase(
+      google::cloud::support::v2::CreateCaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateCase(google::cloud::support::v2::UpdateCaseRequest const& request);
+  virtual google::cloud::Idempotency UpdateCase(
+      google::cloud::support::v2::UpdateCaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  EscalateCase(google::cloud::support::v2::EscalateCaseRequest const& request);
+  virtual google::cloud::Idempotency EscalateCase(
+      google::cloud::support::v2::EscalateCaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CloseCase(google::cloud::support::v2::CloseCaseRequest const& request);
+  virtual google::cloud::Idempotency CloseCase(
+      google::cloud::support::v2::CloseCaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest request);
+  virtual google::cloud::Idempotency SearchCaseClassifications(
+      google::cloud::support::v2::SearchCaseClassificationsRequest request);
 };
 
 std::unique_ptr<CaseServiceConnectionIdempotencyPolicy>
-    MakeDefaultCaseServiceConnectionIdempotencyPolicy();
+MakeDefaultCaseServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2

@@ -36,62 +36,68 @@ class GlobalAddressesTracingConnection
   ~GlobalAddressesTracingConnection() override = default;
 
   explicit GlobalAddressesTracingConnection(
-    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection> child);
+      std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress(google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
+      google::cloud::cpp::compute::global_addresses::v1::
+          DeleteAddressRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAddress(NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
+      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                      DeleteAddressRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetAddress(google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
+      google::cloud::cpp::compute::global_addresses::v1::
+          GetAddressRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress(google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
+      google::cloud::cpp::compute::global_addresses::v1::
+          InsertAddressRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertAddress(NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
+      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                      InsertAddressRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
+      google::cloud::cpp::compute::global_addresses::v1::
+          ListGlobalAddressesRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move(google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Move(NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection> child_;
+  std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -104,7 +110,8 @@ class GlobalAddressesTracingConnection
  */
 std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
 MakeGlobalAddressesTracingConnection(
-    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection> conn);
+    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_addresses_v1_internal

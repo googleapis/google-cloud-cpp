@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_PROFILER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_PROFILER_CLIENT_H
 
+#include "google/cloud/profiler/v2/profiler_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/profiler/v2/profiler_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -66,7 +66,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ProfilerServiceClient {
  public:
-  explicit ProfilerServiceClient(std::shared_ptr<ProfilerServiceConnection> connection, Options opts = {});
+  explicit ProfilerServiceClient(
+      std::shared_ptr<ProfilerServiceConnection> connection, Options opts = {});
   ~ProfilerServiceClient();
 
   ///@{
@@ -79,10 +80,12 @@ class ProfilerServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ProfilerServiceClient const& a, ProfilerServiceClient const& b) {
+  friend bool operator==(ProfilerServiceClient const& a,
+                         ProfilerServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ProfilerServiceClient const& a, ProfilerServiceClient const& b) {
+  friend bool operator!=(ProfilerServiceClient const& a,
+                         ProfilerServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -132,8 +135,9 @@ class ProfilerServiceClient {
   /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudprofiler::v2::Profile>
-  CreateProfile(google::devtools::cloudprofiler::v2::CreateProfileRequest const& request, Options opts = {});
+  StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
+      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -165,8 +169,10 @@ class ProfilerServiceClient {
   /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudprofiler::v2::Profile>
-  CreateOfflineProfile(std::string const& parent, google::devtools::cloudprofiler::v2::Profile const& profile, Options opts = {});
+  StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
+      std::string const& parent,
+      google::devtools::cloudprofiler::v2::Profile const& profile,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -202,8 +208,10 @@ class ProfilerServiceClient {
   /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudprofiler::v2::Profile>
-  CreateOfflineProfile(google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request, Options opts = {});
+  StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
+      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -239,8 +247,9 @@ class ProfilerServiceClient {
   /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L157}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudprofiler::v2::Profile>
-  UpdateProfile(google::devtools::cloudprofiler::v2::Profile const& profile, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
+      google::devtools::cloudprofiler::v2::Profile const& profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -277,8 +286,9 @@ class ProfilerServiceClient {
   /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L157}
   ///
   // clang-format on
-  StatusOr<google::devtools::cloudprofiler::v2::Profile>
-  UpdateProfile(google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request, Options opts = {});
+  StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
+      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ProfilerServiceConnection> connection_;

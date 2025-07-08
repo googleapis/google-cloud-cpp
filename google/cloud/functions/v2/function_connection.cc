@@ -17,14 +17,14 @@
 // source: google/cloud/functions/v2/functions.proto
 
 #include "google/cloud/functions/v2/function_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/functions/v2/function_options.h"
 #include "google/cloud/functions/v2/internal/function_connection_impl.h"
 #include "google/cloud/functions/v2/internal/function_option_defaults.h"
 #include "google/cloud/functions/v2/internal/function_stub_factory.h"
 #include "google/cloud/functions/v2/internal/function_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,8 +44,10 @@ FunctionServiceConnection::GetFunction(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::functions::v2::Function> FunctionServiceConnection::ListFunctions(
-    google::cloud::functions::v2::ListFunctionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::functions::v2::Function>
+FunctionServiceConnection::ListFunctions(
+    google::cloud::functions::v2::
+        ListFunctionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::functions::v2::Function>>();
 }
@@ -54,72 +56,69 @@ future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceConnection::CreateFunction(
     google::cloud::functions::v2::CreateFunctionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::functions::v2::Function>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::functions::v2::Function>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 FunctionServiceConnection::CreateFunction(
-    NoAwaitTag,
-    google::cloud::functions::v2::CreateFunctionRequest const&) {
+    NoAwaitTag, google::cloud::functions::v2::CreateFunctionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceConnection::CreateFunction(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::functions::v2::Function>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::functions::v2::Function>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceConnection::UpdateFunction(
     google::cloud::functions::v2::UpdateFunctionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::functions::v2::Function>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::functions::v2::Function>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 FunctionServiceConnection::UpdateFunction(
-    NoAwaitTag,
-    google::cloud::functions::v2::UpdateFunctionRequest const&) {
+    NoAwaitTag, google::cloud::functions::v2::UpdateFunctionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceConnection::UpdateFunction(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::functions::v2::Function>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::functions::v2::Function>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
 FunctionServiceConnection::DeleteFunction(
     google::cloud::functions::v2::DeleteFunctionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::functions::v2::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::functions::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 FunctionServiceConnection::DeleteFunction(
-    NoAwaitTag,
-    google::cloud::functions::v2::DeleteFunctionRequest const&) {
+    NoAwaitTag, google::cloud::functions::v2::DeleteFunctionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
 FunctionServiceConnection::DeleteFunction(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::functions::v2::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::functions::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
@@ -140,20 +139,20 @@ FunctionServiceConnection::ListRuntimes(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> FunctionServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+FunctionServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::iam::v1::Policy>
-FunctionServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> FunctionServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-FunctionServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> FunctionServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -164,8 +163,10 @@ FunctionServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> FunctionServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+FunctionServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -179,17 +180,18 @@ FunctionServiceConnection::GetOperation(
 std::shared_ptr<FunctionServiceConnection> MakeFunctionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      FunctionServicePolicyOptionList>(options, __func__);
-  options = functions_v2_internal::FunctionServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 FunctionServicePolicyOptionList>(options,
+                                                                  __func__);
+  options =
+      functions_v2_internal::FunctionServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = functions_v2_internal::CreateDefaultFunctionServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return functions_v2_internal::MakeFunctionServiceTracingConnection(
       std::make_shared<functions_v2_internal::FunctionServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

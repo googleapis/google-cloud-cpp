@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KeyDashboardServiceClient::KeyDashboardServiceClient(
     std::shared_ptr<KeyDashboardServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 KeyDashboardServiceClient::~KeyDashboardServiceClient() = default;
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-KeyDashboardServiceClient::ListCryptoKeys(std::string const& parent, Options opts) {
+KeyDashboardServiceClient::ListCryptoKeys(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::inventory::v1::ListCryptoKeysRequest request;
   request.set_parent(parent);
@@ -41,7 +42,9 @@ KeyDashboardServiceClient::ListCryptoKeys(std::string const& parent, Options opt
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-KeyDashboardServiceClient::ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest request, Options opts) {
+KeyDashboardServiceClient::ListCryptoKeys(
+    google::cloud::kms::inventory::v1::ListCryptoKeysRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCryptoKeys(std::move(request));
 }

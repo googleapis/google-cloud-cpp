@@ -34,21 +34,25 @@ namespace cloud {
 namespace bigquerycontrol_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RowAccessPolicyServiceConnection> MakeRowAccessPolicyServiceConnectionRest(
-    Options options) {
+std::shared_ptr<RowAccessPolicyServiceConnection>
+MakeRowAccessPolicyServiceConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      RowAccessPolicyServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 rest_internal::TargetApiVersionOption,
+                                 RowAccessPolicyServicePolicyOptionList>(
+      options, __func__);
   options = bigquerycontrol_v2_internal::RowAccessPolicyServiceDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = bigquerycontrol_v2_internal::CreateDefaultRowAccessPolicyServiceRestStub(
-      options);
-  return bigquerycontrol_v2_internal::MakeRowAccessPolicyServiceTracingConnection(
-      std::make_shared<
-          bigquerycontrol_v2_internal::RowAccessPolicyServiceRestConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      bigquerycontrol_v2_internal::CreateDefaultRowAccessPolicyServiceRestStub(
+          options);
+  return bigquerycontrol_v2_internal::
+      MakeRowAccessPolicyServiceTracingConnection(
+          std::make_shared<bigquerycontrol_v2_internal::
+                               RowAccessPolicyServiceRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

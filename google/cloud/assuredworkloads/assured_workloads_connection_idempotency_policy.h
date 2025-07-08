@@ -26,11 +26,17 @@ namespace cloud {
 namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use assuredworkloads_v1::MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::assuredworkloads_v1::MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// assuredworkloads_v1::MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::assuredworkloads_v1::
+    MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads

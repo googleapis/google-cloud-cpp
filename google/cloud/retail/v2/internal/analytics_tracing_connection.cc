@@ -34,21 +34,24 @@ AnalyticsServiceTracingConnection::AnalyticsServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
-AnalyticsServiceTracingConnection::ExportAnalyticsMetrics(google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+AnalyticsServiceTracingConnection::ExportAnalyticsMetrics(
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::AnalyticsServiceConnection::ExportAnalyticsMetrics");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportAnalyticsMetrics(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportAnalyticsMetrics(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsServiceTracingConnection::ExportAnalyticsMetrics(
-    NoAwaitTag, google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+    NoAwaitTag,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::AnalyticsServiceConnection::ExportAnalyticsMetrics");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportAnalyticsMetrics(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ExportAnalyticsMetrics(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
@@ -58,21 +61,25 @@ AnalyticsServiceTracingConnection::ExportAnalyticsMetrics(
       "retail_v2::AnalyticsServiceConnection::ExportAnalyticsMetrics");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ExportAnalyticsMetrics(operation));
+                           child_->ExportAnalyticsMetrics(operation));
 }
 
 StreamRange<google::longrunning::Operation>
-AnalyticsServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("retail_v2::AnalyticsServiceConnection::ListOperations");
+AnalyticsServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::AnalyticsServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AnalyticsServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::AnalyticsServiceConnection::GetOperation");
+AnalyticsServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::AnalyticsServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

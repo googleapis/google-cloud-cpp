@@ -37,128 +37,148 @@ class TensorboardServiceConnectionIdempotencyPolicy {
   virtual ~TensorboardServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TensorboardServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<TensorboardServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateTensorboard(google::cloud::aiplatform::v1::CreateTensorboardRequest const& request);
+  virtual google::cloud::Idempotency CreateTensorboard(
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTensorboard(google::cloud::aiplatform::v1::GetTensorboardRequest const& request);
+  virtual google::cloud::Idempotency GetTensorboard(
+      google::cloud::aiplatform::v1::GetTensorboardRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTensorboard(google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
+  virtual google::cloud::Idempotency UpdateTensorboard(
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTensorboards(google::cloud::aiplatform::v1::ListTensorboardsRequest request);
+  virtual google::cloud::Idempotency ListTensorboards(
+      google::cloud::aiplatform::v1::ListTensorboardsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteTensorboard(google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
+  virtual google::cloud::Idempotency DeleteTensorboard(
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ReadTensorboardUsage(google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request);
+  virtual google::cloud::Idempotency ReadTensorboardUsage(
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ReadTensorboardSize(google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request);
+  virtual google::cloud::Idempotency ReadTensorboardSize(
+      google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateTensorboardExperiment(google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const& request);
+  virtual google::cloud::Idempotency CreateTensorboardExperiment(
+      google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetTensorboardExperiment(google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const& request);
+  virtual google::cloud::Idempotency GetTensorboardExperiment(
+      google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateTensorboardExperiment(google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const& request);
+  virtual google::cloud::Idempotency UpdateTensorboardExperiment(
+      google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListTensorboardExperiments(google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request);
+  virtual google::cloud::Idempotency ListTensorboardExperiments(
+      google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteTensorboardExperiment(google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request);
+  virtual google::cloud::Idempotency DeleteTensorboardExperiment(
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateTensorboardRun(google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request);
+  virtual google::cloud::Idempotency CreateTensorboardRun(
+      google::cloud::aiplatform::v1::CreateTensorboardRunRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  BatchCreateTensorboardRuns(google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const& request);
+  virtual google::cloud::Idempotency BatchCreateTensorboardRuns(
+      google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetTensorboardRun(google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request);
+  virtual google::cloud::Idempotency GetTensorboardRun(
+      google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTensorboardRun(google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request);
+  virtual google::cloud::Idempotency UpdateTensorboardRun(
+      google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListTensorboardRuns(google::cloud::aiplatform::v1::ListTensorboardRunsRequest request);
+  virtual google::cloud::Idempotency ListTensorboardRuns(
+      google::cloud::aiplatform::v1::ListTensorboardRunsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteTensorboardRun(google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request);
+  virtual google::cloud::Idempotency DeleteTensorboardRun(
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  BatchCreateTensorboardTimeSeries(google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const& request);
+  virtual google::cloud::Idempotency BatchCreateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::
+          BatchCreateTensorboardTimeSeriesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateTensorboardTimeSeries(google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const& request);
+  virtual google::cloud::Idempotency CreateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetTensorboardTimeSeries(google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const& request);
+  virtual google::cloud::Idempotency GetTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateTensorboardTimeSeries(google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const& request);
+  virtual google::cloud::Idempotency UpdateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListTensorboardTimeSeries(google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request);
+  virtual google::cloud::Idempotency ListTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteTensorboardTimeSeries(google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request);
+  virtual google::cloud::Idempotency DeleteTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  BatchReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const& request);
+  virtual google::cloud::Idempotency BatchReadTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::
+          BatchReadTensorboardTimeSeriesDataRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const& request);
+  virtual google::cloud::Idempotency ReadTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  WriteTensorboardExperimentData(google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const& request);
+  virtual google::cloud::Idempotency WriteTensorboardExperimentData(
+      google::cloud::aiplatform::v1::
+          WriteTensorboardExperimentDataRequest const& request);
 
-  virtual google::cloud::Idempotency
-  WriteTensorboardRunData(google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const& request);
+  virtual google::cloud::Idempotency WriteTensorboardRunData(
+      google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ExportTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest request);
+  virtual google::cloud::Idempotency ExportTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<TensorboardServiceConnectionIdempotencyPolicy>
-    MakeDefaultTensorboardServiceConnectionIdempotencyPolicy();
+MakeDefaultTensorboardServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

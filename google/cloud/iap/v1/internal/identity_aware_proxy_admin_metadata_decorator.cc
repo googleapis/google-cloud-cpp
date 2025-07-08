@@ -46,114 +46,120 @@ IdentityAwareProxyAdminServiceMetadata::IdentityAwareProxyAdminServiceMetadata(
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IdentityAwareProxyAdminServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceMetadata::GetIapSettings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::GetIapSettingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetIapSettings(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceMetadata::UpdateIapSettings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("iap_settings.name=", internal::UrlEncode(request.iap_settings().name())));
+  SetMetadata(context, options,
+              absl::StrCat("iap_settings.name=",
+                           internal::UrlEncode(request.iap_settings().name())));
   return child_->UpdateIapSettings(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
 IdentityAwareProxyAdminServiceMetadata::ValidateIapAttributeExpression(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ValidateIapAttributeExpression(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 IdentityAwareProxyAdminServiceMetadata::ListTunnelDestGroups(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTunnelDestGroups(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceMetadata::CreateTunnelDestGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTunnelDestGroup(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceMetadata::GetTunnelDestGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTunnelDestGroup(context, options, request);
 }
 
-Status
-IdentityAwareProxyAdminServiceMetadata::DeleteTunnelDestGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+Status IdentityAwareProxyAdminServiceMetadata::DeleteTunnelDestGroup(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTunnelDestGroup(context, options, request);
 }
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceMetadata::UpdateTunnelDestGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("tunnel_dest_group.name=", internal::UrlEncode(request.tunnel_dest_group().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("tunnel_dest_group.name=",
+                   internal::UrlEncode(request.tunnel_dest_group().name())));
   return child_->UpdateTunnelDestGroup(context, options, request);
 }
 
-void IdentityAwareProxyAdminServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void IdentityAwareProxyAdminServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void IdentityAwareProxyAdminServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+void IdentityAwareProxyAdminServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

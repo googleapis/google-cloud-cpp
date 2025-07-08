@@ -32,11 +32,12 @@ FleetRoutingTracingStub::FleetRoutingTracingStub(
     std::shared_ptr<FleetRoutingStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::optimization::v1::OptimizeToursResponse> FleetRoutingTracingStub::OptimizeTours(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
+FleetRoutingTracingStub::OptimizeTours(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.optimization.v1.FleetRouting", "OptimizeTours");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.optimization.v1.FleetRouting", "OptimizeTours");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -45,34 +46,36 @@ StatusOr<google::cloud::optimization::v1::OptimizeToursResponse> FleetRoutingTra
 
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingTracingStub::AsyncBatchOptimizeTours(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.optimization.v1.FleetRouting", "BatchOptimizeTours");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.optimization.v1.FleetRouting", "BatchOptimizeTours");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchOptimizeTours(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncBatchOptimizeTours(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 FleetRoutingTracingStub::BatchOptimizeTours(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.optimization.v1.FleetRouting", "BatchOptimizeTours");
+    grpc::ClientContext& context, Options options,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.optimization.v1.FleetRouting", "BatchOptimizeTours");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchOptimizeTours(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchOptimizeTours(context, options, request));
 }
 
 StatusOr<google::longrunning::Operation> FleetRoutingTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.optimization.v1.FleetRouting", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.optimization.v1.FleetRouting", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -89,8 +92,7 @@ FleetRoutingTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -103,8 +105,8 @@ future<Status> FleetRoutingTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

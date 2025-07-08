@@ -17,11 +17,11 @@
 // source: google/cloud/compute/health_checks/v1/health_checks.proto
 
 #include "google/cloud/compute/health_checks/v1/health_checks_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/health_checks/v1/health_checks_options.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_option_defaults.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,118 +36,129 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 HealthChecksConnection::~HealthChecksConnection() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>> HealthChecksConnection::AggregatedListHealthChecks(
-    google::cloud::cpp::compute::health_checks::v1::AggregatedListHealthChecksRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>>();
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::HealthChecksScopedList>>
+HealthChecksConnection::AggregatedListHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::
+        AggregatedListHealthChecksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::HealthChecksScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::DeleteHealthCheck(
-    google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest const&) {
+    google::cloud::cpp::compute::health_checks::v1::
+        DeleteHealthCheckRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HealthChecksConnection::DeleteHealthCheck(
-    NoAwaitTag,
-    google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                    DeleteHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::DeleteHealthCheck(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
 HealthChecksConnection::GetHealthCheck(
-    google::cloud::cpp::compute::health_checks::v1::GetHealthCheckRequest const&) {
+    google::cloud::cpp::compute::health_checks::v1::
+        GetHealthCheckRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::InsertHealthCheck(
-    google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest const&) {
+    google::cloud::cpp::compute::health_checks::v1::
+        InsertHealthCheckRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HealthChecksConnection::InsertHealthCheck(
-    NoAwaitTag,
-    google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                    InsertHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::InsertHealthCheck(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::HealthCheck> HealthChecksConnection::ListHealthChecks(
-    google::cloud::cpp::compute::health_checks::v1::ListHealthChecksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
+HealthChecksConnection::ListHealthChecks(
+    google::cloud::cpp::compute::health_checks::v1::
+        ListHealthChecksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::HealthCheck>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::PatchHealthCheck(
-    google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest const&) {
+    google::cloud::cpp::compute::health_checks::v1::
+        PatchHealthCheckRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HealthChecksConnection::PatchHealthCheck(
-    NoAwaitTag,
-    google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                    PatchHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::PatchHealthCheck(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::UpdateHealthCheck(
-    google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest const&) {
+    google::cloud::cpp::compute::health_checks::v1::
+        UpdateHealthCheckRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HealthChecksConnection::UpdateHealthCheck(
-    NoAwaitTag,
-    google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                    UpdateHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksConnection::UpdateHealthCheck(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

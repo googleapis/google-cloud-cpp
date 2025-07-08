@@ -30,86 +30,80 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class JobsTracingConnection
-    : public run_v2::JobsConnection {
+class JobsTracingConnection : public run_v2::JobsConnection {
  public:
   ~JobsTracingConnection() override = default;
 
-  explicit JobsTracingConnection(
-    std::shared_ptr<run_v2::JobsConnection> child);
+  explicit JobsTracingConnection(std::shared_ptr<run_v2::JobsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  CreateJob(google::cloud::run::v2::CreateJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateJob(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  CreateJob(
+  StatusOr<google::longrunning::Operation> CreateJob(
+      NoAwaitTag,
+      google::cloud::run::v2::CreateJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::run::v2::Job>
-  GetJob(google::cloud::run::v2::GetJobRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Job> GetJob(
+      google::cloud::run::v2::GetJobRequest const& request) override;
 
-  StreamRange<google::cloud::run::v2::Job>
-  ListJobs(google::cloud::run::v2::ListJobsRequest request) override;
+  StreamRange<google::cloud::run::v2::Job> ListJobs(
+      google::cloud::run::v2::ListJobsRequest request) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  UpdateJob(google::cloud::run::v2::UpdateJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateJob(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       google::cloud::run::v2::UpdateJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  UpdateJob(
+  StatusOr<google::longrunning::Operation> UpdateJob(
+      NoAwaitTag,
+      google::cloud::run::v2::UpdateJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  DeleteJob(google::cloud::run::v2::DeleteJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteJob(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       google::cloud::run::v2::DeleteJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  DeleteJob(
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      NoAwaitTag,
+      google::cloud::run::v2::DeleteJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  RunJob(google::cloud::run::v2::RunJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  RunJob(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  RunJob(
+  StatusOr<google::longrunning::Operation> RunJob(
+      NoAwaitTag,
+      google::cloud::run::v2::RunJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<run_v2::JobsConnection> child_;
@@ -123,8 +117,7 @@ class JobsTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<run_v2::JobsConnection>
-MakeJobsTracingConnection(
+std::shared_ptr<run_v2::JobsConnection> MakeJobsTracingConnection(
     std::shared_ptr<run_v2::JobsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

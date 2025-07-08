@@ -42,57 +42,83 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockStorageInsightsConnection : public storageinsights_v1::StorageInsightsConnection {
+class MockStorageInsightsConnection
+    : public storageinsights_v1::StorageInsightsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::storageinsights::v1::ReportConfig>),
-  ListReportConfigs,
-  (google::cloud::storageinsights::v1::ListReportConfigsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::storageinsights::v1::ReportConfig>),
+      ListReportConfigs,
+      (google::cloud::storageinsights::v1::ListReportConfigsRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::storageinsights::v1::ReportConfig>,
-  GetReportConfig,
-  (google::cloud::storageinsights::v1::GetReportConfigRequest const& request), (override));
+              GetReportConfig,
+              (google::cloud::storageinsights::v1::GetReportConfigRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::storageinsights::v1::ReportConfig>,
-  CreateReportConfig,
-  (google::cloud::storageinsights::v1::CreateReportConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::storageinsights::v1::ReportConfig>,
+      CreateReportConfig,
+      (google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::storageinsights::v1::ReportConfig>,
-  UpdateReportConfig,
-  (google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::storageinsights::v1::ReportConfig>,
+      UpdateReportConfig,
+      (google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteReportConfig,
-  (google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteReportConfig,
+      (google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::storageinsights::v1::ReportDetail>),
-  ListReportDetails,
-  (google::cloud::storageinsights::v1::ListReportDetailsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::storageinsights::v1::ReportDetail>),
+      ListReportDetails,
+      (google::cloud::storageinsights::v1::ListReportDetailsRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::storageinsights::v1::ReportDetail>,
-  GetReportDetail,
-  (google::cloud::storageinsights::v1::GetReportDetailRequest const& request), (override));
+              GetReportDetail,
+              (google::cloud::storageinsights::v1::GetReportDetailRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::storageinsights::v1::DatasetConfig>),
-  ListDatasetConfigs,
-  (google::cloud::storageinsights::v1::ListDatasetConfigsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::storageinsights::v1::DatasetConfig>),
+      ListDatasetConfigs,
+      (google::cloud::storageinsights::v1::ListDatasetConfigsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::storageinsights::v1::DatasetConfig>,
-  GetDatasetConfig,
-  (google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::storageinsights::v1::DatasetConfig>,
+      GetDatasetConfig,
+      (google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDatasetConfig(Matcher<google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateDatasetConfig(Matcher<google::cloud::storageinsights::v1::CreateDatasetConfigRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>,
-  CreateDatasetConfig,
-  (google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>,
+      CreateDatasetConfig,
+      (google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -100,33 +126,41 @@ class MockStorageInsightsConnection : public storageinsights_v1::StorageInsights
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateDatasetConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateDatasetConfig, (NoAwaitTag,
-    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDatasetConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>,
-  CreateDatasetConfig, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDatasetConfig,
+      (NoAwaitTag,
+       google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDatasetConfig(Matcher<google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateDatasetConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>,
-  UpdateDatasetConfig,
-  (google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>,
+      CreateDatasetConfig, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDatasetConfig(Matcher<google::cloud::storageinsights::v1::UpdateDatasetConfigRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>,
+      UpdateDatasetConfig,
+      (google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -134,33 +168,41 @@ class MockStorageInsightsConnection : public storageinsights_v1::StorageInsights
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateDatasetConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateDatasetConfig, (NoAwaitTag,
-    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDatasetConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>,
-  UpdateDatasetConfig, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDatasetConfig,
+      (NoAwaitTag,
+       google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDatasetConfig(Matcher<google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateDatasetConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>,
-  DeleteDatasetConfig,
-  (google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::DatasetConfig>>,
+      UpdateDatasetConfig, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDatasetConfig(Matcher<google::cloud::storageinsights::v1::DeleteDatasetConfigRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>,
+      DeleteDatasetConfig,
+      (google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -168,33 +210,40 @@ class MockStorageInsightsConnection : public storageinsights_v1::StorageInsights
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteDatasetConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteDatasetConfig, (NoAwaitTag,
-    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDatasetConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>,
-  DeleteDatasetConfig, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDatasetConfig,
+      (NoAwaitTag,
+       google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, LinkDataset(Matcher<google::cloud::storageinsights::v1::LinkDatasetRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteDatasetConfig(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>,
-  LinkDataset,
-  (google::cloud::storageinsights::v1::LinkDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>,
+      DeleteDatasetConfig, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// LinkDataset(Matcher<google::cloud::storageinsights::v1::LinkDatasetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>,
+      LinkDataset,
+      (google::cloud::storageinsights::v1::LinkDatasetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -202,33 +251,39 @@ class MockStorageInsightsConnection : public storageinsights_v1::StorageInsights
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, LinkDataset(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  LinkDataset, (NoAwaitTag,
-    google::cloud::storageinsights::v1::LinkDatasetRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, LinkDataset(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>,
-  LinkDataset, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, LinkDataset,
+      (NoAwaitTag,
+       google::cloud::storageinsights::v1::LinkDatasetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UnlinkDataset(Matcher<google::cloud::storageinsights::v1::UnlinkDatasetRequest const&>(_)))
+  /// EXPECT_CALL(*mock, LinkDataset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>,
-  UnlinkDataset,
-  (google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::LinkDatasetResponse>>,
+      LinkDataset, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UnlinkDataset(Matcher<google::cloud::storageinsights::v1::UnlinkDatasetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>,
+      UnlinkDataset,
+      (google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -236,45 +291,47 @@ class MockStorageInsightsConnection : public storageinsights_v1::StorageInsights
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UnlinkDataset(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UnlinkDataset, (NoAwaitTag,
-    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UnlinkDataset,
+      (NoAwaitTag,
+       google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UnlinkDataset(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UnlinkDataset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>,
-  UnlinkDataset, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::storageinsights::v1::OperationMetadata>>,
+      UnlinkDataset, (google::longrunning::Operation const& operation),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,30 +36,32 @@ class DatastoreAdminLogging : public DatastoreAdminStub {
  public:
   ~DatastoreAdminLogging() override = default;
   DatastoreAdminLogging(std::shared_ptr<DatastoreAdminStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                        TracingOptions tracing_options,
+                        std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportEntities(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::datastore::admin::v1::ExportEntitiesRequest const& request) override;
+      google::datastore::admin::v1::ExportEntitiesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ExportEntities(
-      grpc::ClientContext& context,
-      Options options,
-      google::datastore::admin::v1::ExportEntitiesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportEntities(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::datastore::admin::v1::ImportEntitiesRequest const& request) override;
+      google::datastore::admin::v1::ImportEntitiesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ImportEntities(
-      grpc::ClientContext& context,
-      Options options,
-      google::datastore::admin::v1::ImportEntitiesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateIndex(
       google::cloud::CompletionQueue& cq,
@@ -68,8 +70,7 @@ class DatastoreAdminLogging : public DatastoreAdminStub {
       google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateIndex(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteIndex(
@@ -79,38 +80,31 @@ class DatastoreAdminLogging : public DatastoreAdminStub {
       google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteIndex(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
   StatusOr<google::datastore::admin::v1::Index> GetIndex(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::admin::v1::GetIndexRequest const& request) override;
 
   StatusOr<google::datastore::admin::v1::ListIndexesResponse> ListIndexes(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::admin::v1::ListIndexesRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

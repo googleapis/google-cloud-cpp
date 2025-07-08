@@ -27,19 +27,28 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_reservation_v1::MakeReservationServiceConnection directly.
-using ::google::cloud::bigquery_reservation_v1::MakeReservationServiceConnection;
+/// @deprecated Use bigquery_reservation_v1::MakeReservationServiceConnection
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::
+    MakeReservationServiceConnection;
 
-/// @deprecated Use bigquery_reservation_v1::ReservationServiceConnection directly.
+/// @deprecated Use bigquery_reservation_v1::ReservationServiceConnection
+/// directly.
 using ::google::cloud::bigquery_reservation_v1::ReservationServiceConnection;
 
-/// @deprecated Use bigquery_reservation_v1::ReservationServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::bigquery_reservation_v1::ReservationServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// bigquery_reservation_v1::ReservationServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::
+    ReservationServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use bigquery_reservation_v1::ReservationServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::bigquery_reservation_v1::ReservationServiceLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// bigquery_reservation_v1::ReservationServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::bigquery_reservation_v1::
+    ReservationServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use bigquery_reservation_v1::ReservationServiceRetryPolicy directly.
+/// @deprecated Use bigquery_reservation_v1::ReservationServiceRetryPolicy
+/// directly.
 using ::google::cloud::bigquery_reservation_v1::ReservationServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,12 +28,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConversationDatasetsClient::ConversationDatasetsClient(
     std::shared_ptr<ConversationDatasetsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ConversationDatasetsClient::~ConversationDatasetsClient() = default;
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-ConversationDatasetsClient::CreateConversationDataset(std::string const& parent, google::cloud::dialogflow::v2::ConversationDataset const& conversation_dataset, Options opts) {
+ConversationDatasetsClient::CreateConversationDataset(
+    std::string const& parent,
+    google::cloud::dialogflow::v2::ConversationDataset const&
+        conversation_dataset,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateConversationDatasetRequest request;
   request.set_parent(parent);
@@ -42,7 +46,11 @@ ConversationDatasetsClient::CreateConversationDataset(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationDatasetsClient::CreateConversationDataset(NoAwaitTag, std::string const& parent, google::cloud::dialogflow::v2::ConversationDataset const& conversation_dataset, Options opts) {
+ConversationDatasetsClient::CreateConversationDataset(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dialogflow::v2::ConversationDataset const&
+        conversation_dataset,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateConversationDatasetRequest request;
   request.set_parent(parent);
@@ -51,25 +59,34 @@ ConversationDatasetsClient::CreateConversationDataset(NoAwaitTag, std::string co
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-ConversationDatasetsClient::CreateConversationDataset(google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request, Options opts) {
+ConversationDatasetsClient::CreateConversationDataset(
+    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversationDataset(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationDatasetsClient::CreateConversationDataset(NoAwaitTag, google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request, Options opts) {
+ConversationDatasetsClient::CreateConversationDataset(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversationDataset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-ConversationDatasetsClient::CreateConversationDataset(google::longrunning::Operation const& operation, Options opts) {
+ConversationDatasetsClient::CreateConversationDataset(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversationDataset(operation);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
-ConversationDatasetsClient::GetConversationDataset(std::string const& name, Options opts) {
+ConversationDatasetsClient::GetConversationDataset(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetConversationDatasetRequest request;
   request.set_name(name);
@@ -77,13 +94,16 @@ ConversationDatasetsClient::GetConversationDataset(std::string const& name, Opti
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
-ConversationDatasetsClient::GetConversationDataset(google::cloud::dialogflow::v2::GetConversationDatasetRequest const& request, Options opts) {
+ConversationDatasetsClient::GetConversationDataset(
+    google::cloud::dialogflow::v2::GetConversationDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConversationDataset(request);
 }
 
 StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
-ConversationDatasetsClient::ListConversationDatasets(std::string const& parent, Options opts) {
+ConversationDatasetsClient::ListConversationDatasets(std::string const& parent,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ListConversationDatasetsRequest request;
   request.set_parent(parent);
@@ -91,13 +111,17 @@ ConversationDatasetsClient::ListConversationDatasets(std::string const& parent, 
 }
 
 StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
-ConversationDatasetsClient::ListConversationDatasets(google::cloud::dialogflow::v2::ListConversationDatasetsRequest request, Options opts) {
+ConversationDatasetsClient::ListConversationDatasets(
+    google::cloud::dialogflow::v2::ListConversationDatasetsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConversationDatasets(std::move(request));
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
-ConversationDatasetsClient::DeleteConversationDataset(std::string const& name, Options opts) {
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+ConversationDatasetsClient::DeleteConversationDataset(std::string const& name,
+                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteConversationDatasetRequest request;
   request.set_name(name);
@@ -105,63 +129,87 @@ ConversationDatasetsClient::DeleteConversationDataset(std::string const& name, O
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationDatasetsClient::DeleteConversationDataset(NoAwaitTag, std::string const& name, Options opts) {
+ConversationDatasetsClient::DeleteConversationDataset(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteConversationDatasetRequest request;
   request.set_name(name);
   return connection_->DeleteConversationDataset(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
-ConversationDatasetsClient::DeleteConversationDataset(google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+ConversationDatasetsClient::DeleteConversationDataset(
+    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversationDataset(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationDatasetsClient::DeleteConversationDataset(NoAwaitTag, google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request, Options opts) {
+ConversationDatasetsClient::DeleteConversationDataset(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversationDataset(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
-ConversationDatasetsClient::DeleteConversationDataset(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+ConversationDatasetsClient::DeleteConversationDataset(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversationDataset(operation);
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-ConversationDatasetsClient::ImportConversationData(google::cloud::dialogflow::v2::ImportConversationDataRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+ConversationDatasetsClient::ImportConversationData(
+    google::cloud::dialogflow::v2::ImportConversationDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportConversationData(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationDatasetsClient::ImportConversationData(NoAwaitTag, google::cloud::dialogflow::v2::ImportConversationDataRequest const& request, Options opts) {
+ConversationDatasetsClient::ImportConversationData(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::ImportConversationDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportConversationData(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-ConversationDatasetsClient::ImportConversationData(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+ConversationDatasetsClient::ImportConversationData(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportConversationData(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-ConversationDatasetsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+ConversationDatasetsClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-ConversationDatasetsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+ConversationDatasetsClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationDatasetsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+ConversationDatasetsClient::ListOperations(std::string const& name,
+                                           std::string const& filter,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -170,13 +218,15 @@ ConversationDatasetsClient::ListOperations(std::string const& name, std::string 
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationDatasetsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+ConversationDatasetsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationDatasetsClient::GetOperation(std::string const& name, Options opts) {
+ConversationDatasetsClient::GetOperation(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -184,21 +234,22 @@ ConversationDatasetsClient::GetOperation(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationDatasetsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+ConversationDatasetsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-ConversationDatasetsClient::CancelOperation(std::string const& name, Options opts) {
+Status ConversationDatasetsClient::CancelOperation(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-ConversationDatasetsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status ConversationDatasetsClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

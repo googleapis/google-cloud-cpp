@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_FLAGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_FLAGS_CONNECTION_H
 
+#include "google/cloud/sql/v1/internal/sql_flags_retry_traits.h"
+#include "google/cloud/sql/v1/sql_flags_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/sql/v1/internal/sql_flags_retry_traits.h"
-#include "google/cloud/sql/v1/sql_flags_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_flags.pb.h>
@@ -51,7 +51,8 @@ class SqlFlagsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlFlagsServiceLimitedErrorCountRetryPolicy : public SqlFlagsServiceRetryPolicy {
+class SqlFlagsServiceLimitedErrorCountRetryPolicy
+    : public SqlFlagsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class SqlFlagsServiceLimitedErrorCountRetryPolicy : public SqlFlagsServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit SqlFlagsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SqlFlagsServiceLimitedErrorCountRetryPolicy(
       SqlFlagsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SqlFlagsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlFlagsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SqlFlagsServiceLimitedErrorCountRetryPolicy(
       SqlFlagsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SqlFlagsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlFlagsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class SqlFlagsServiceLimitedErrorCountRetryPolicy : public SqlFlagsServiceRetryP
   using BaseType = SqlFlagsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlFlagsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      sql_v1_internal::SqlFlagsServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -101,7 +104,8 @@ class SqlFlagsServiceLimitedErrorCountRetryPolicy : public SqlFlagsServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlFlagsServiceLimitedTimeRetryPolicy : public SqlFlagsServiceRetryPolicy {
+class SqlFlagsServiceLimitedTimeRetryPolicy
+    : public SqlFlagsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +130,14 @@ class SqlFlagsServiceLimitedTimeRetryPolicy : public SqlFlagsServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlFlagsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SqlFlagsServiceLimitedTimeRetryPolicy(SqlFlagsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SqlFlagsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlFlagsServiceLimitedTimeRetryPolicy(SqlFlagsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SqlFlagsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlFlagsServiceLimitedTimeRetryPolicy(
+      SqlFlagsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SqlFlagsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlFlagsServiceLimitedTimeRetryPolicy(
+      SqlFlagsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SqlFlagsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +159,9 @@ class SqlFlagsServiceLimitedTimeRetryPolicy : public SqlFlagsServiceRetryPolicy 
   using BaseType = SqlFlagsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlFlagsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      sql_v1_internal::SqlFlagsServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -174,8 +182,8 @@ class SqlFlagsServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::sql::v1::FlagsListResponse>
-  List(google::cloud::sql::v1::SqlFlagsListRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
+      google::cloud::sql::v1::SqlFlagsListRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

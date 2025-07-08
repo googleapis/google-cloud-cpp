@@ -39,154 +39,167 @@ class SiteSearchEngineServiceAuth : public SiteSearchEngineServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<SiteSearchEngineServiceStub> child);
 
-  StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine> GetSiteSearchEngine(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
+  GetSiteSearchEngine(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTargetSite(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) override;
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateTargetSite(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateTargetSites(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) override;
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+          request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::TargetSite> GetTargetSite(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTargetSite(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) override;
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTargetSite(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) override;
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+          request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse> ListTargetSites(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListTargetSitesRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
+  ListTargetSites(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::ListTargetSitesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSitemap(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) override;
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateSitemap(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSitemap(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) override;
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteSitemap(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse> FetchSitemaps(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+  FetchSitemaps(grpc::ClientContext& context, Options const& options,
+                google::cloud::discoveryengine::v1::FetchSitemapsRequest const&
+                    request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncEnableAdvancedSiteSearch(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncEnableAdvancedSiteSearch(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) override;
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDisableAdvancedSiteSearch(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDisableAdvancedSiteSearch(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) override;
+      google::cloud::discoveryengine::v1::
+          DisableAdvancedSiteSearchRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::
+          DisableAdvancedSiteSearchRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRecrawlUris(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) override;
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RecrawlUris(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchVerifyTargetSites(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) override;
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse> FetchDomainVerificationStatus(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest const& request) override;
+  StatusOr<
+      google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse>
+  FetchDomainVerificationStatus(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          FetchDomainVerificationStatusRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

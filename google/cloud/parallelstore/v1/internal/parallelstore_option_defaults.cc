@@ -17,10 +17,10 @@
 // source: google/cloud/parallelstore/v1/parallelstore.proto
 
 #include "google/cloud/parallelstore/v1/internal/parallelstore_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/parallelstore/v1/parallelstore_connection.h"
 #include "google/cloud/parallelstore/v1/parallelstore_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ParallelstoreDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PARALLELSTORE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_PARALLELSTORE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_PARALLELSTORE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_PARALLELSTORE_AUTHORITY",
       "parallelstore.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<parallelstore_v1::ParallelstoreRetryPolicyOption>()) {
     options.set<parallelstore_v1::ParallelstoreRetryPolicyOption>(
         parallelstore_v1::ParallelstoreLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<parallelstore_v1::ParallelstoreBackoffPolicyOption>()) {
     options.set<parallelstore_v1::ParallelstoreBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<parallelstore_v1::ParallelstorePollingPolicyOption>()) {
     options.set<parallelstore_v1::ParallelstorePollingPolicyOption>(
         GenericPollingPolicy<
             parallelstore_v1::ParallelstoreRetryPolicyOption::Type,
             parallelstore_v1::ParallelstoreBackoffPolicyOption::Type>(
-            options.get<parallelstore_v1::ParallelstoreRetryPolicyOption>()->clone(),
+            options.get<parallelstore_v1::ParallelstoreRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<parallelstore_v1::ParallelstoreConnectionIdempotencyPolicyOption>()) {
-    options.set<parallelstore_v1::ParallelstoreConnectionIdempotencyPolicyOption>(
-        parallelstore_v1::MakeDefaultParallelstoreConnectionIdempotencyPolicy());
+  if (!options.has<
+          parallelstore_v1::ParallelstoreConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<parallelstore_v1::ParallelstoreConnectionIdempotencyPolicyOption>(
+            parallelstore_v1::
+                MakeDefaultParallelstoreConnectionIdempotencyPolicy());
   }
 
   return options;

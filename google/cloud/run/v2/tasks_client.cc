@@ -25,43 +25,43 @@ namespace cloud {
 namespace run_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TasksClient::TasksClient(
-    std::shared_ptr<TasksConnection> connection, Options opts)
+TasksClient::TasksClient(std::shared_ptr<TasksConnection> connection,
+                         Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TasksClient::~TasksClient() = default;
 
-StatusOr<google::cloud::run::v2::Task>
-TasksClient::GetTask(std::string const& name, Options opts) {
+StatusOr<google::cloud::run::v2::Task> TasksClient::GetTask(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::GetTaskRequest request;
   request.set_name(name);
   return connection_->GetTask(request);
 }
 
-StatusOr<google::cloud::run::v2::Task>
-TasksClient::GetTask(google::cloud::run::v2::GetTaskRequest const& request, Options opts) {
+StatusOr<google::cloud::run::v2::Task> TasksClient::GetTask(
+    google::cloud::run::v2::GetTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTask(request);
 }
 
-StreamRange<google::cloud::run::v2::Task>
-TasksClient::ListTasks(std::string const& parent, Options opts) {
+StreamRange<google::cloud::run::v2::Task> TasksClient::ListTasks(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::ListTasksRequest request;
   request.set_parent(parent);
   return connection_->ListTasks(request);
 }
 
-StreamRange<google::cloud::run::v2::Task>
-TasksClient::ListTasks(google::cloud::run::v2::ListTasksRequest request, Options opts) {
+StreamRange<google::cloud::run::v2::Task> TasksClient::ListTasks(
+    google::cloud::run::v2::ListTasksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTasks(std::move(request));
 }
 
-StreamRange<google::longrunning::Operation>
-TasksClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> TasksClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -69,42 +69,41 @@ TasksClient::ListOperations(std::string const& name, std::string const& filter, 
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-TasksClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> TasksClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-TasksClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> TasksClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TasksClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TasksClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-TasksClient::DeleteOperation(std::string const& name, Options opts) {
+Status TasksClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-TasksClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status TasksClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TasksClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TasksClient::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

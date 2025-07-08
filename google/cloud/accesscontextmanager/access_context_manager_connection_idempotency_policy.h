@@ -26,11 +26,17 @@ namespace cloud {
 namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use accesscontextmanager_v1::MakeDefaultAccessContextManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::accesscontextmanager_v1::MakeDefaultAccessContextManagerConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// accesscontextmanager_v1::MakeDefaultAccessContextManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    MakeDefaultAccessContextManagerConnectionIdempotencyPolicy;
 
-/// @deprecated Use accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager

@@ -35,32 +35,33 @@ class UserEventServiceConnectionIdempotencyPolicy {
   virtual ~UserEventServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  WriteUserEvent(google::cloud::retail::v2::WriteUserEventRequest const& request);
+  virtual google::cloud::Idempotency WriteUserEvent(
+      google::cloud::retail::v2::WriteUserEventRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CollectUserEvent(google::cloud::retail::v2::CollectUserEventRequest const& request);
+  virtual google::cloud::Idempotency CollectUserEvent(
+      google::cloud::retail::v2::CollectUserEventRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PurgeUserEvents(google::cloud::retail::v2::PurgeUserEventsRequest const& request);
+  virtual google::cloud::Idempotency PurgeUserEvents(
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportUserEvents(google::cloud::retail::v2::ImportUserEventsRequest const& request);
+  virtual google::cloud::Idempotency ImportUserEvents(
+      google::cloud::retail::v2::ImportUserEventsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RejoinUserEvents(google::cloud::retail::v2::RejoinUserEventsRequest const& request);
+  virtual google::cloud::Idempotency RejoinUserEvents(
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
-    MakeDefaultUserEventServiceConnectionIdempotencyPolicy();
+MakeDefaultUserEventServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2

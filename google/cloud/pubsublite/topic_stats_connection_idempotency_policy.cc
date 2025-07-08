@@ -26,43 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TopicStatsServiceConnectionIdempotencyPolicy::~TopicStatsServiceConnectionIdempotencyPolicy() = default;
+TopicStatsServiceConnectionIdempotencyPolicy::
+    ~TopicStatsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
 TopicStatsServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeMessageStats(google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&) {
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeMessageStats(
+    google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeHeadCursor(google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&) {
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeHeadCursor(
+    google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeTimeCursor(google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&) {
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeTimeCursor(
+    google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TopicStatsServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TopicStatsServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TopicStatsServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency TopicStatsServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
-    MakeDefaultTopicStatsServiceConnectionIdempotencyPolicy() {
+MakeDefaultTopicStatsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>();
 }
 

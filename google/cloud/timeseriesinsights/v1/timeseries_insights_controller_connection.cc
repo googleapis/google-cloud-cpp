@@ -17,17 +17,17 @@
 // source: google/cloud/timeseriesinsights/v1/timeseries_insights.proto
 
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_connection_impl.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_option_defaults.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub_factory.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_tracing_connection.h"
+#include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_connection_impl.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_option_defaults.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub_factory.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_tracing_connection.h"
-#include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,10 +36,13 @@ namespace cloud {
 namespace timeseriesinsights_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TimeseriesInsightsControllerConnection::~TimeseriesInsightsControllerConnection() = default;
+TimeseriesInsightsControllerConnection::
+    ~TimeseriesInsightsControllerConnection() = default;
 
-StreamRange<google::cloud::timeseriesinsights::v1::DataSet> TimeseriesInsightsControllerConnection::ListDataSets(
-    google::cloud::timeseriesinsights::v1::ListDataSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
+TimeseriesInsightsControllerConnection::ListDataSets(
+    google::cloud::timeseriesinsights::v1::
+        ListDataSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::timeseriesinsights::v1::DataSet>>();
 }
@@ -50,8 +53,7 @@ TimeseriesInsightsControllerConnection::CreateDataSet(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TimeseriesInsightsControllerConnection::DeleteDataSet(
+Status TimeseriesInsightsControllerConnection::DeleteDataSet(
     google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -80,20 +82,23 @@ TimeseriesInsightsControllerConnection::EvaluateTimeseries(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<TimeseriesInsightsControllerConnection> MakeTimeseriesInsightsControllerConnection(
-    Options options) {
+std::shared_ptr<TimeseriesInsightsControllerConnection>
+MakeTimeseriesInsightsControllerConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TimeseriesInsightsControllerPolicyOptionList>(options, __func__);
-  options = timeseriesinsights_v1_internal::TimeseriesInsightsControllerDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TimeseriesInsightsControllerPolicyOptionList>(
+      options, __func__);
+  options = timeseriesinsights_v1_internal::
+      TimeseriesInsightsControllerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = timeseriesinsights_v1_internal::CreateDefaultTimeseriesInsightsControllerStub(
-    std::move(auth), options);
-  return timeseriesinsights_v1_internal::MakeTimeseriesInsightsControllerTracingConnection(
-      std::make_shared<timeseriesinsights_v1_internal::TimeseriesInsightsControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub = timeseriesinsights_v1_internal::
+      CreateDefaultTimeseriesInsightsControllerStub(std::move(auth), options);
+  return timeseriesinsights_v1_internal::
+      MakeTimeseriesInsightsControllerTracingConnection(
+          std::make_shared<timeseriesinsights_v1_internal::
+                               TimeseriesInsightsControllerConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

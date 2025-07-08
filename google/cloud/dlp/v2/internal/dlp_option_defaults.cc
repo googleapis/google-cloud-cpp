@@ -35,19 +35,20 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DlpServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DLP_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DLP_SERVICE_AUTHORITY",
-      "dlp.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_DLP_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DLP_SERVICE_AUTHORITY", "dlp.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dlp_v2::DlpServiceRetryPolicyOption>()) {
     options.set<dlp_v2::DlpServiceRetryPolicyOption>(
-        dlp_v2::DlpServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        dlp_v2::DlpServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dlp_v2::DlpServiceBackoffPolicyOption>()) {
     options.set<dlp_v2::DlpServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<dlp_v2::DlpServiceConnectionIdempotencyPolicyOption>()) {
     options.set<dlp_v2::DlpServiceConnectionIdempotencyPolicyOption>(

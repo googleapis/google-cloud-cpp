@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/v2/encryption_spec.proto
 
 #include "google/cloud/dialogflow_es/internal/encryption_spec_connection_impl.h"
+#include "google/cloud/dialogflow_es/internal/encryption_spec_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/dialogflow_es/internal/encryption_spec_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,150 +33,183 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_es::EncryptionSpecServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<dialogflow_es::EncryptionSpecServiceRetryPolicyOption>()->clone();
+std::unique_ptr<dialogflow_es::EncryptionSpecServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dialogflow_es::EncryptionSpecServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<dialogflow_es::EncryptionSpecServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dialogflow_es::EncryptionSpecServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<dialogflow_es::EncryptionSpecServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<dialogflow_es::EncryptionSpecServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<dialogflow_es::
+               EncryptionSpecServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<dialogflow_es::EncryptionSpecServicePollingPolicyOption>()->clone();
+  return options.get<dialogflow_es::EncryptionSpecServicePollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 EncryptionSpecServiceConnectionImpl::EncryptionSpecServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dialogflow_es_internal::EncryptionSpecServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        EncryptionSpecServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), EncryptionSpecServiceConnection::options())) {}
 
 StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
-EncryptionSpecServiceConnectionImpl::GetEncryptionSpec(google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
+EncryptionSpecServiceConnectionImpl::GetEncryptionSpec(
+    google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEncryptionSpec(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
+             google::cloud::dialogflow::v2::GetEncryptionSpecRequest const&
+                 request) {
         return stub_->GetEncryptionSpec(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-EncryptionSpecServiceConnectionImpl::InitializeEncryptionSpec(google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
+future<
+    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+EncryptionSpecServiceConnectionImpl::InitializeEncryptionSpec(
+    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->InitializeEncryptionSpec(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
-     return stub->AsyncInitializeEncryptionSpec(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+              request) {
+        return stub->AsyncInitializeEncryptionSpec(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 EncryptionSpecServiceConnectionImpl::InitializeEncryptionSpec(
-      NoAwaitTag, google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InitializeEncryptionSpec(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
+          google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+              request) {
         return stub_->InitializeEncryptionSpec(context, options, request);
       },
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+future<
+    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
 EncryptionSpecServiceConnectionImpl::InitializeEncryptionSpec(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::dialogflow::v2::InitializeEncryptionSpecMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to InitializeEncryptionSpec",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::dialogflow::v2::
+                   InitializeEncryptionSpecMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to InitializeEncryptionSpec",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-EncryptionSpecServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+EncryptionSpecServiceConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::EncryptionSpecServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::EncryptionSpecServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -184,7 +217,8 @@ EncryptionSpecServiceConnectionImpl::ListLocations(google::cloud::location::List
 }
 
 StatusOr<google::cloud::location::Location>
-EncryptionSpecServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+EncryptionSpecServiceConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -197,17 +231,21 @@ EncryptionSpecServiceConnectionImpl::GetLocation(google::cloud::location::GetLoc
 }
 
 StreamRange<google::longrunning::Operation>
-EncryptionSpecServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+EncryptionSpecServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::EncryptionSpecServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::EncryptionSpecServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -217,7 +255,8 @@ EncryptionSpecServiceConnectionImpl::ListOperations(google::longrunning::ListOpe
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -225,7 +264,8 @@ EncryptionSpecServiceConnectionImpl::ListOperations(google::longrunning::ListOpe
 }
 
 StatusOr<google::longrunning::Operation>
-EncryptionSpecServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+EncryptionSpecServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -237,8 +277,8 @@ EncryptionSpecServiceConnectionImpl::GetOperation(google::longrunning::GetOperat
       *current, request, __func__);
 }
 
-Status
-EncryptionSpecServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status EncryptionSpecServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

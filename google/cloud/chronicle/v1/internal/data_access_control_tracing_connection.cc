@@ -29,110 +29,143 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-DataAccessControlServiceTracingConnection::DataAccessControlServiceTracingConnection(
-    std::shared_ptr<chronicle_v1::DataAccessControlServiceConnection> child)
+DataAccessControlServiceTracingConnection::
+    DataAccessControlServiceTracingConnection(
+        std::shared_ptr<chronicle_v1::DataAccessControlServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceTracingConnection::CreateDataAccessLabel(google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::CreateDataAccessLabel");
+DataAccessControlServiceTracingConnection::CreateDataAccessLabel(
+    google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::"
+      "CreateDataAccessLabel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDataAccessLabel(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceTracingConnection::GetDataAccessLabel(google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::GetDataAccessLabel");
+DataAccessControlServiceTracingConnection::GetDataAccessLabel(
+    google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::GetDataAccessLabel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataAccessLabel(request));
 }
 
 StreamRange<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceTracingConnection::ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::ListDataAccessLabels");
+DataAccessControlServiceTracingConnection::ListDataAccessLabels(
+    google::cloud::chronicle::v1::ListDataAccessLabelsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::ListDataAccessLabels");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataAccessLabels(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::chronicle::v1::DataAccessLabel>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::chronicle::v1::DataAccessLabel>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-DataAccessControlServiceTracingConnection::UpdateDataAccessLabel(google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::UpdateDataAccessLabel");
+DataAccessControlServiceTracingConnection::UpdateDataAccessLabel(
+    google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::"
+      "UpdateDataAccessLabel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDataAccessLabel(request));
 }
 
-Status
-DataAccessControlServiceTracingConnection::DeleteDataAccessLabel(google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::DeleteDataAccessLabel");
+Status DataAccessControlServiceTracingConnection::DeleteDataAccessLabel(
+    google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::"
+      "DeleteDataAccessLabel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDataAccessLabel(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceTracingConnection::CreateDataAccessScope(google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::CreateDataAccessScope");
+DataAccessControlServiceTracingConnection::CreateDataAccessScope(
+    google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::"
+      "CreateDataAccessScope");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDataAccessScope(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceTracingConnection::GetDataAccessScope(google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::GetDataAccessScope");
+DataAccessControlServiceTracingConnection::GetDataAccessScope(
+    google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::GetDataAccessScope");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataAccessScope(request));
 }
 
 StreamRange<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceTracingConnection::ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::ListDataAccessScopes");
+DataAccessControlServiceTracingConnection::ListDataAccessScopes(
+    google::cloud::chronicle::v1::ListDataAccessScopesRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::ListDataAccessScopes");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataAccessScopes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::chronicle::v1::DataAccessScope>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::chronicle::v1::DataAccessScope>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-DataAccessControlServiceTracingConnection::UpdateDataAccessScope(google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::UpdateDataAccessScope");
+DataAccessControlServiceTracingConnection::UpdateDataAccessScope(
+    google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::"
+      "UpdateDataAccessScope");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDataAccessScope(request));
 }
 
-Status
-DataAccessControlServiceTracingConnection::DeleteDataAccessScope(google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::DeleteDataAccessScope");
+Status DataAccessControlServiceTracingConnection::DeleteDataAccessScope(
+    google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::"
+      "DeleteDataAccessScope");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDataAccessScope(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DataAccessControlServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::ListOperations");
+DataAccessControlServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DataAccessControlServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::GetOperation");
+DataAccessControlServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-DataAccessControlServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::DeleteOperation");
+Status DataAccessControlServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-DataAccessControlServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::DataAccessControlServiceConnection::CancelOperation");
+Status DataAccessControlServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::DataAccessControlServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -144,7 +177,8 @@ MakeDataAccessControlServiceTracingConnection(
     std::shared_ptr<chronicle_v1::DataAccessControlServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<DataAccessControlServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<DataAccessControlServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

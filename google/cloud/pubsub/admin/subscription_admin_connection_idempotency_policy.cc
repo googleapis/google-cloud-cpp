@@ -26,58 +26,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SubscriptionAdminConnectionIdempotencyPolicy::~SubscriptionAdminConnectionIdempotencyPolicy() = default;
+SubscriptionAdminConnectionIdempotencyPolicy::
+    ~SubscriptionAdminConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SubscriptionAdminConnectionIdempotencyPolicy>
 SubscriptionAdminConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SubscriptionAdminConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::CreateSubscription(google::pubsub::v1::Subscription const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::CreateSubscription(
+    google::pubsub::v1::Subscription const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::GetSubscription(google::pubsub::v1::GetSubscriptionRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::GetSubscription(
+    google::pubsub::v1::GetSubscriptionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::UpdateSubscription(google::pubsub::v1::UpdateSubscriptionRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::UpdateSubscription(
+    google::pubsub::v1::UpdateSubscriptionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::ListSubscriptions(google::pubsub::v1::ListSubscriptionsRequest) {  // NOLINT
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::ListSubscriptions(
+    google::pubsub::v1::ListSubscriptionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::DeleteSubscription(google::pubsub::v1::DeleteSubscriptionRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::DeleteSubscription(
+    google::pubsub::v1::DeleteSubscriptionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::ModifyPushConfig(google::pubsub::v1::ModifyPushConfigRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::ModifyPushConfig(
+    google::pubsub::v1::ModifyPushConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::GetSnapshot(google::pubsub::v1::GetSnapshotRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::GetSnapshot(
+    google::pubsub::v1::GetSnapshotRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::ListSnapshots(google::pubsub::v1::ListSnapshotsRequest) {  // NOLINT
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::ListSnapshots(
+    google::pubsub::v1::ListSnapshotsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::CreateSnapshot(google::pubsub::v1::CreateSnapshotRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::CreateSnapshot(
+    google::pubsub::v1::CreateSnapshotRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::UpdateSnapshot(google::pubsub::v1::UpdateSnapshotRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::UpdateSnapshot(
+    google::pubsub::v1::UpdateSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::DeleteSnapshot(google::pubsub::v1::DeleteSnapshotRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::DeleteSnapshot(
+    google::pubsub::v1::DeleteSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::Seek(google::pubsub::v1::SeekRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::Seek(
+    google::pubsub::v1::SeekRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -87,16 +100,18 @@ Idempotency SubscriptionAdminConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubscriptionAdminConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency SubscriptionAdminConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SubscriptionAdminConnectionIdempotencyPolicy>
-    MakeDefaultSubscriptionAdminConnectionIdempotencyPolicy() {
+MakeDefaultSubscriptionAdminConnectionIdempotencyPolicy() {
   return std::make_unique<SubscriptionAdminConnectionIdempotencyPolicy>();
 }
 

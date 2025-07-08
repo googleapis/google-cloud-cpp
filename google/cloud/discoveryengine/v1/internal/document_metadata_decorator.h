@@ -41,70 +41,71 @@ class DocumentServiceMetadata : public DocumentServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetDocumentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetDocumentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse> ListDocuments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
+  ListDocuments(grpc::ClientContext& context, Options const& options,
+                google::cloud::discoveryengine::v1::ListDocumentsRequest const&
+                    request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CreateDocumentRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request)
+      override;
 
   Status DeleteDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportDocuments(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) override;
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ImportDocuments(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeDocuments(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) override;
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> PurgeDocuments(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse> BatchGetDocumentsMetadata(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request) override;
+  StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -120,8 +121,7 @@ class DocumentServiceMetadata : public DocumentServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

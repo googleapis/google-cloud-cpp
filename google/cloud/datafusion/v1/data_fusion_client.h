@@ -66,7 +66,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataFusionClient {
  public:
-  explicit DataFusionClient(std::shared_ptr<DataFusionConnection> connection, Options opts = {});
+  explicit DataFusionClient(std::shared_ptr<DataFusionConnection> connection,
+                            Options opts = {});
   ~DataFusionClient();
 
   ///@{
@@ -120,8 +121,8 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.Version]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L141}
   ///
   // clang-format on
-  StreamRange<google::cloud::datafusion::v1::Version>
-  ListAvailableVersions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datafusion::v1::Version> ListAvailableVersions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -160,8 +161,9 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.Version]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L141}
   ///
   // clang-format on
-  StreamRange<google::cloud::datafusion::v1::Version>
-  ListAvailableVersions(google::cloud::datafusion::v1::ListAvailableVersionsRequest request, Options opts = {});
+  StreamRange<google::cloud::datafusion::v1::Version> ListAvailableVersions(
+      google::cloud::datafusion::v1::ListAvailableVersionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -199,8 +201,9 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L408}
   ///
   // clang-format on
-  StreamRange<google::cloud::datafusion::v1::Instance>
-  ListInstances(google::cloud::datafusion::v1::ListInstancesRequest request, Options opts = {});
+  StreamRange<google::cloud::datafusion::v1::Instance> ListInstances(
+      google::cloud::datafusion::v1::ListInstancesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -229,8 +232,9 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.Instance]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L223}
   ///
   // clang-format on
-  StatusOr<google::cloud::datafusion::v1::Instance>
-  GetInstance(google::cloud::datafusion::v1::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
+      google::cloud::datafusion::v1::GetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -264,8 +268,10 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.Instance]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L223}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance(std::string const& parent, google::cloud::datafusion::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
+      std::string const& parent,
+      google::cloud::datafusion::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -278,8 +284,10 @@ class DataFusionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::datafusion::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::datafusion::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -315,8 +323,9 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.Instance]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L223}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance(google::cloud::datafusion::v1::CreateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -329,8 +338,10 @@ class DataFusionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, google::cloud::datafusion::v1::CreateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -341,8 +352,8 @@ class DataFusionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -388,8 +399,8 @@ class DataFusionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -426,7 +437,9 @@ class DataFusionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const& request, Options opts = {});
+  DeleteInstance(
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +452,10 @@ class DataFusionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, google::cloud::datafusion::v1::DeleteInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -452,7 +467,8 @@ class DataFusionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteInstance(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -491,8 +507,9 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L526}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance(google::cloud::datafusion::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
+      google::cloud::datafusion::v1::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -505,8 +522,9 @@ class DataFusionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::datafusion::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag, google::cloud::datafusion::v1::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -542,8 +560,9 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L526}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance(google::cloud::datafusion::v1::UpdateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -556,8 +575,10 @@ class DataFusionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::datafusion::v1::UpdateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -568,8 +589,8 @@ class DataFusionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -606,8 +627,9 @@ class DataFusionClient {
   /// [google.cloud.datafusion.v1.RestartInstanceRequest]: @googleapis_reference_link{google/cloud/datafusion/v1/datafusion.proto#L542}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  RestartInstance(google::cloud::datafusion::v1::RestartInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -620,8 +642,10 @@ class DataFusionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RestartInstance(NoAwaitTag, google::cloud::datafusion::v1::RestartInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RestartInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -632,8 +656,8 @@ class DataFusionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  RestartInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<DataFusionConnection> connection_;

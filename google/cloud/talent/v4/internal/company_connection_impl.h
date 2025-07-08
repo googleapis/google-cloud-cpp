@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPANY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPANY_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
 #include "google/cloud/talent/v4/company_connection.h"
 #include "google/cloud/talent/v4/company_connection_idempotency_policy.h"
 #include "google/cloud/talent/v4/company_options.h"
 #include "google/cloud/talent/v4/internal/company_retry_traits.h"
 #include "google/cloud/talent/v4/internal/company_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -43,29 +43,29 @@ class CompanyServiceConnectionImpl
   ~CompanyServiceConnectionImpl() override = default;
 
   CompanyServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_v4_internal::CompanyServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<talent_v4_internal::CompanyServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::talent::v4::Company>
-  CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> CreateCompany(
+      google::cloud::talent::v4::CreateCompanyRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Company>
-  GetCompany(google::cloud::talent::v4::GetCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> GetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Company>
-  UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
+      google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
 
-  Status
-  DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
+  Status DeleteCompany(
+      google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
 
-  StreamRange<google::cloud::talent::v4::Company>
-  ListCompanies(google::cloud::talent::v4::ListCompaniesRequest request) override;
+  StreamRange<google::cloud::talent::v4::Company> ListCompanies(
+      google::cloud::talent::v4::ListCompaniesRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

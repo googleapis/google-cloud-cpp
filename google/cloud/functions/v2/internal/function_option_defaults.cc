@@ -35,30 +35,37 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options FunctionServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FUNCTION_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FUNCTION_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_FUNCTION_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FUNCTION_SERVICE_AUTHORITY",
       "cloudfunctions.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<functions_v2::FunctionServiceRetryPolicyOption>()) {
     options.set<functions_v2::FunctionServiceRetryPolicyOption>(
         functions_v2::FunctionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<functions_v2::FunctionServiceBackoffPolicyOption>()) {
     options.set<functions_v2::FunctionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<functions_v2::FunctionServicePollingPolicyOption>()) {
     options.set<functions_v2::FunctionServicePollingPolicyOption>(
         GenericPollingPolicy<
             functions_v2::FunctionServiceRetryPolicyOption::Type,
             functions_v2::FunctionServiceBackoffPolicyOption::Type>(
-            options.get<functions_v2::FunctionServiceRetryPolicyOption>()->clone(),
+            options.get<functions_v2::FunctionServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<functions_v2::FunctionServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          functions_v2::FunctionServiceConnectionIdempotencyPolicyOption>()) {
     options.set<functions_v2::FunctionServiceConnectionIdempotencyPolicyOption>(
         functions_v2::MakeDefaultFunctionServiceConnectionIdempotencyPolicy());
   }

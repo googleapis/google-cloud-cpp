@@ -36,17 +36,15 @@ class LustreLogging : public LustreStub {
  public:
   ~LustreLogging() override = default;
   LustreLogging(std::shared_ptr<LustreStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                TracingOptions tracing_options,
+                std::set<std::string> const& components);
 
   StatusOr<google::cloud::lustre::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::lustre::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::lustre::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::lustre::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -56,8 +54,7 @@ class LustreLogging : public LustreStub {
       google::cloud::lustre::v1::CreateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::CreateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
@@ -67,8 +64,7 @@ class LustreLogging : public LustreStub {
       google::cloud::lustre::v1::UpdateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::UpdateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
@@ -78,8 +74,7 @@ class LustreLogging : public LustreStub {
       google::cloud::lustre::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportData(
@@ -89,8 +84,7 @@ class LustreLogging : public LustreStub {
       google::cloud::lustre::v1::ImportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportData(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::ImportDataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportData(
@@ -100,38 +94,31 @@ class LustreLogging : public LustreStub {
       google::cloud::lustre::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportData(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

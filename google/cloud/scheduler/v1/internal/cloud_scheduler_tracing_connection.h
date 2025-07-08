@@ -36,39 +36,39 @@ class CloudSchedulerTracingConnection
   ~CloudSchedulerTracingConnection() override = default;
 
   explicit CloudSchedulerTracingConnection(
-    std::shared_ptr<scheduler_v1::CloudSchedulerConnection> child);
+      std::shared_ptr<scheduler_v1::CloudSchedulerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::scheduler::v1::Job>
-  ListJobs(google::cloud::scheduler::v1::ListJobsRequest request) override;
+  StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
+      google::cloud::scheduler::v1::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  GetJob(google::cloud::scheduler::v1::GetJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> GetJob(
+      google::cloud::scheduler::v1::GetJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  CreateJob(google::cloud::scheduler::v1::CreateJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
+      google::cloud::scheduler::v1::CreateJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
+      google::cloud::scheduler::v1::UpdateJobRequest const& request) override;
 
-  Status
-  DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const& request) override;
+  Status DeleteJob(
+      google::cloud::scheduler::v1::DeleteJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  PauseJob(google::cloud::scheduler::v1::PauseJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
+      google::cloud::scheduler::v1::PauseJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
+      google::cloud::scheduler::v1::ResumeJobRequest const& request) override;
 
-  StatusOr<google::cloud::scheduler::v1::Job>
-  RunJob(google::cloud::scheduler::v1::RunJobRequest const& request) override;
+  StatusOr<google::cloud::scheduler::v1::Job> RunJob(
+      google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::shared_ptr<scheduler_v1::CloudSchedulerConnection> child_;

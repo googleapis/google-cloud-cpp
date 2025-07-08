@@ -28,42 +28,52 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RoutineServiceClient::RoutineServiceClient(
     std::shared_ptr<RoutineServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RoutineServiceClient::~RoutineServiceClient() = default;
 
-StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceClient::GetRoutine(google::cloud::bigquery::v2::GetRoutineRequest const& request, Options opts) {
+StatusOr<google::cloud::bigquery::v2::Routine> RoutineServiceClient::GetRoutine(
+    google::cloud::bigquery::v2::GetRoutineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRoutine(request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceClient::InsertRoutine(google::cloud::bigquery::v2::InsertRoutineRequest const& request, Options opts) {
+RoutineServiceClient::InsertRoutine(
+    google::cloud::bigquery::v2::InsertRoutineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertRoutine(request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceClient::UpdateRoutine(google::cloud::bigquery::v2::UpdateRoutineRequest const& request, Options opts) {
+RoutineServiceClient::UpdateRoutine(
+    google::cloud::bigquery::v2::UpdateRoutineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRoutine(request);
 }
 
 StatusOr<google::cloud::bigquery::v2::Routine>
-RoutineServiceClient::PatchRoutine(google::cloud::bigquery::v2::PatchRoutineRequest const& request, Options opts) {
+RoutineServiceClient::PatchRoutine(
+    google::cloud::bigquery::v2::PatchRoutineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRoutine(request);
 }
 
-Status
-RoutineServiceClient::DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const& request, Options opts) {
+Status RoutineServiceClient::DeleteRoutine(
+    google::cloud::bigquery::v2::DeleteRoutineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRoutine(request);
 }
 
 StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse>
-RoutineServiceClient::ListRoutines(google::cloud::bigquery::v2::ListRoutinesRequest const& request, Options opts) {
+RoutineServiceClient::ListRoutines(
+    google::cloud::bigquery::v2::ListRoutinesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRoutines(request);
 }

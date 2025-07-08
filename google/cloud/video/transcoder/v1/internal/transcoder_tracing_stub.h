@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_INTERNAL_TRANSCODER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_INTERNAL_TRANSCODER_TRACING_STUB_H
 
+#include "google/cloud/video/transcoder/v1/internal/transcoder_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/video/transcoder/v1/internal/transcoder_stub.h"
 #include <memory>
 
 namespace google {
@@ -36,51 +36,53 @@ class TranscoderServiceTracingStub : public TranscoderServiceStub {
  public:
   ~TranscoderServiceTracingStub() override = default;
 
-  explicit TranscoderServiceTracingStub(std::shared_ptr<TranscoderServiceStub> child);
+  explicit TranscoderServiceTracingStub(
+      std::shared_ptr<TranscoderServiceStub> child);
 
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::CreateJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::CreateJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::ListJobsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::ListJobsRequest const& request)
+      override;
 
   StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::GetJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::GetJobRequest const& request)
+      override;
 
-  Status DeleteJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::DeleteJobRequest const& request) override;
+  Status DeleteJob(grpc::ClientContext& context, Options const& options,
+                   google::cloud::video::transcoder::v1::DeleteJobRequest const&
+                       request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
+          request) override;
 
-  StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse> ListJobTemplates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) override;
+  StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
+  ListJobTemplates(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
+          request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
+          request) override;
 
   Status DeleteJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
+          request) override;
 
  private:
   std::shared_ptr<TranscoderServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

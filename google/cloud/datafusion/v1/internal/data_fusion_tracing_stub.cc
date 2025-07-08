@@ -32,33 +32,37 @@ DataFusionTracingStub::DataFusionTracingStub(
     std::shared_ptr<DataFusionStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse> DataFusionTracingStub::ListAvailableVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datafusion::v1::ListAvailableVersionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "ListAvailableVersions");
+StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
+DataFusionTracingStub::ListAvailableVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "ListAvailableVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAvailableVersions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAvailableVersions(context, options, request));
 }
 
-StatusOr<google::cloud::datafusion::v1::ListInstancesResponse> DataFusionTracingStub::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
+DataFusionTracingStub::ListInstances(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datafusion::v1::ListInstancesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "ListInstances");
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInstances(context, options, request));
 }
 
-StatusOr<google::cloud::datafusion::v1::Instance> DataFusionTracingStub::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datafusion::v1::Instance>
+DataFusionTracingStub::GetInstance(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datafusion::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "GetInstance");
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -67,23 +71,24 @@ StatusOr<google::cloud::datafusion::v1::Instance> DataFusionTracingStub::GetInst
 
 future<StatusOr<google::longrunning::Operation>>
 DataFusionTracingStub::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "CreateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "CreateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DataFusionTracingStub::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "CreateInstance");
+StatusOr<google::longrunning::Operation> DataFusionTracingStub::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "CreateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -92,23 +97,24 @@ DataFusionTracingStub::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 DataFusionTracingStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "DeleteInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "DeleteInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DataFusionTracingStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "DeleteInstance");
+StatusOr<google::longrunning::Operation> DataFusionTracingStub::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "DeleteInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -117,23 +123,24 @@ DataFusionTracingStub::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 DataFusionTracingStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "UpdateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "UpdateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DataFusionTracingStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "UpdateInstance");
+StatusOr<google::longrunning::Operation> DataFusionTracingStub::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "UpdateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -142,23 +149,24 @@ DataFusionTracingStub::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 DataFusionTracingStub::AsyncRestartInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "RestartInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "RestartInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRestartInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncRestartInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DataFusionTracingStub::RestartInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion", "RestartInstance");
+StatusOr<google::longrunning::Operation> DataFusionTracingStub::RestartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
+                                     "RestartInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -175,8 +183,7 @@ DataFusionTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -189,8 +196,8 @@ future<Status> DataFusionTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

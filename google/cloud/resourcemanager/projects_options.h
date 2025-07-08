@@ -34,8 +34,10 @@ using ::google::cloud::resourcemanager_v3::ProjectsPollingPolicyOption;
 /// @deprecated Use resourcemanager_v3::ProjectsBackoffPolicyOption directly.
 using ::google::cloud::resourcemanager_v3::ProjectsBackoffPolicyOption;
 
-/// @deprecated Use resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// resourcemanager_v3::ProjectsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::resourcemanager_v3::
+    ProjectsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use resourcemanager_v3::ProjectsPolicyOptionList directly.
 using ::google::cloud::resourcemanager_v3::ProjectsPolicyOptionList;

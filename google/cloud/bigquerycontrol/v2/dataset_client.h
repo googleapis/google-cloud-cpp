@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DatasetServiceClient {
  public:
-  explicit DatasetServiceClient(std::shared_ptr<DatasetServiceConnection> connection, Options opts = {});
+  explicit DatasetServiceClient(
+      std::shared_ptr<DatasetServiceConnection> connection, Options opts = {});
   ~DatasetServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class DatasetServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DatasetServiceClient const& a, DatasetServiceClient const& b) {
+  friend bool operator==(DatasetServiceClient const& a,
+                         DatasetServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DatasetServiceClient const& a, DatasetServiceClient const& b) {
+  friend bool operator!=(DatasetServiceClient const& a,
+                         DatasetServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,8 +113,9 @@ class DatasetServiceClient {
   /// [google.cloud.bigquery.v2.GetDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L469}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  GetDataset(google::cloud::bigquery::v2::GetDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Dataset> GetDataset(
+      google::cloud::bigquery::v2::GetDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -140,8 +144,9 @@ class DatasetServiceClient {
   /// [google.cloud.bigquery.v2.InsertDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L528}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  InsertDataset(google::cloud::bigquery::v2::InsertDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Dataset> InsertDataset(
+      google::cloud::bigquery::v2::InsertDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -173,8 +178,9 @@ class DatasetServiceClient {
   /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L558}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  PatchDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Dataset> PatchDataset(
+      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -205,8 +211,9 @@ class DatasetServiceClient {
   /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L558}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  UpdateDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Dataset> UpdateDataset(
+      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -235,8 +242,9 @@ class DatasetServiceClient {
   /// [google.cloud.bigquery.v2.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L617}
   ///
   // clang-format on
-  Status
-  DeleteDataset(google::cloud::bigquery::v2::DeleteDatasetRequest const& request, Options opts = {});
+  Status DeleteDataset(
+      google::cloud::bigquery::v2::DeleteDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -275,8 +283,9 @@ class DatasetServiceClient {
   /// [google.cloud.bigquery.v2.ListFormatDataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L657}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::v2::ListFormatDataset>
-  ListDatasets(google::cloud::bigquery::v2::ListDatasetsRequest request, Options opts = {});
+  StreamRange<google::cloud::bigquery::v2::ListFormatDataset> ListDatasets(
+      google::cloud::bigquery::v2::ListDatasetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -307,8 +316,9 @@ class DatasetServiceClient {
   /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L715}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  UndeleteDataset(google::cloud::bigquery::v2::UndeleteDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Dataset> UndeleteDataset(
+      google::cloud::bigquery::v2::UndeleteDatasetRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DatasetServiceConnection> connection_;

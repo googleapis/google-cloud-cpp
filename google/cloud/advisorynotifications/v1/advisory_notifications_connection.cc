@@ -36,10 +36,13 @@ namespace cloud {
 namespace advisorynotifications_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AdvisoryNotificationsServiceConnection::~AdvisoryNotificationsServiceConnection() = default;
+AdvisoryNotificationsServiceConnection::
+    ~AdvisoryNotificationsServiceConnection() = default;
 
-StreamRange<google::cloud::advisorynotifications::v1::Notification> AdvisoryNotificationsServiceConnection::ListNotifications(
-    google::cloud::advisorynotifications::v1::ListNotificationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::advisorynotifications::v1::Notification>
+AdvisoryNotificationsServiceConnection::ListNotifications(
+    google::cloud::advisorynotifications::v1::
+        ListNotificationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::advisorynotifications::v1::Notification>>();
 }
@@ -62,20 +65,23 @@ AdvisoryNotificationsServiceConnection::UpdateSettings(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AdvisoryNotificationsServiceConnection> MakeAdvisoryNotificationsServiceConnection(
-    Options options) {
+std::shared_ptr<AdvisoryNotificationsServiceConnection>
+MakeAdvisoryNotificationsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AdvisoryNotificationsServicePolicyOptionList>(options, __func__);
-  options = advisorynotifications_v1_internal::AdvisoryNotificationsServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AdvisoryNotificationsServicePolicyOptionList>(
+      options, __func__);
+  options = advisorynotifications_v1_internal::
+      AdvisoryNotificationsServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = advisorynotifications_v1_internal::CreateDefaultAdvisoryNotificationsServiceStub(
-    std::move(auth), options);
-  return advisorynotifications_v1_internal::MakeAdvisoryNotificationsServiceTracingConnection(
-      std::make_shared<advisorynotifications_v1_internal::AdvisoryNotificationsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub = advisorynotifications_v1_internal::
+      CreateDefaultAdvisoryNotificationsServiceStub(std::move(auth), options);
+  return advisorynotifications_v1_internal::
+      MakeAdvisoryNotificationsServiceTracingConnection(
+          std::make_shared<advisorynotifications_v1_internal::
+                               AdvisoryNotificationsServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

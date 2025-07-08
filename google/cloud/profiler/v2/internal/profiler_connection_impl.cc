@@ -17,11 +17,11 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/v2/internal/profiler_connection_impl.h"
+#include "google/cloud/profiler/v2/internal/profiler_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/profiler/v2/internal/profiler_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -31,66 +31,75 @@ namespace profiler_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<profiler_v2::ProfilerServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<profiler_v2::ProfilerServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<profiler_v2::ProfilerServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<profiler_v2::ProfilerServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<profiler_v2::ProfilerServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<profiler_v2::ProfilerServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 ProfilerServiceConnectionImpl::ProfilerServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<profiler_v2_internal::ProfilerServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ProfilerServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ProfilerServiceConnection::options())) {}
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceConnectionImpl::CreateProfile(google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
+ProfilerServiceConnectionImpl::CreateProfile(
+    google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateProfile(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
+             google::devtools::cloudprofiler::v2::CreateProfileRequest const&
+                 request) {
         return stub_->CreateProfile(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceConnectionImpl::CreateOfflineProfile(google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) {
+ProfilerServiceConnectionImpl::CreateOfflineProfile(
+    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateOfflineProfile(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) {
+             google::devtools::cloudprofiler::v2::
+                 CreateOfflineProfileRequest const& request) {
         return stub_->CreateOfflineProfile(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceConnectionImpl::UpdateProfile(google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
+ProfilerServiceConnectionImpl::UpdateProfile(
+    google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateProfile(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
+             google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
+                 request) {
         return stub_->UpdateProfile(context, options, request);
       },
       *current, request, __func__);

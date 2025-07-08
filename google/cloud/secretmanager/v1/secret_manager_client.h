@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_V1_SECRET_MANAGER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_V1_SECRET_MANAGER_CLIENT_H
 
+#include "google/cloud/secretmanager/v1/secret_manager_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/secretmanager/v1/secret_manager_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -66,28 +66,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
-/// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L181}
+/// [google.cloud.secretmanager.v1.Secret]:
+/// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+/// [google.cloud.secretmanager.v1.SecretVersion]:
+/// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L181}
 ///
 class SecretManagerServiceClient {
  public:
-  explicit SecretManagerServiceClient(std::shared_ptr<SecretManagerServiceConnection> connection, Options opts = {});
+  explicit SecretManagerServiceClient(
+      std::shared_ptr<SecretManagerServiceConnection> connection,
+      Options opts = {});
   ~SecretManagerServiceClient();
 
   ///@{
   /// @name Copy and move support
   SecretManagerServiceClient(SecretManagerServiceClient const&) = default;
-  SecretManagerServiceClient& operator=(SecretManagerServiceClient const&) = default;
+  SecretManagerServiceClient& operator=(SecretManagerServiceClient const&) =
+      default;
   SecretManagerServiceClient(SecretManagerServiceClient&&) = default;
   SecretManagerServiceClient& operator=(SecretManagerServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SecretManagerServiceClient const& a, SecretManagerServiceClient const& b) {
+  friend bool operator==(SecretManagerServiceClient const& a,
+                         SecretManagerServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SecretManagerServiceClient const& a, SecretManagerServiceClient const& b) {
+  friend bool operator!=(SecretManagerServiceClient const& a,
+                         SecretManagerServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,8 +132,8 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
   ///
   // clang-format on
-  StreamRange<google::cloud::secretmanager::v1::Secret>
-  ListSecrets(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -164,8 +171,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
   ///
   // clang-format on
-  StreamRange<google::cloud::secretmanager::v1::Secret>
-  ListSecrets(google::cloud::secretmanager::v1::ListSecretsRequest request, Options opts = {});
+  StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
+      google::cloud::secretmanager::v1::ListSecretsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +208,10 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  CreateSecret(std::string const& parent, std::string const& secret_id, google::cloud::secretmanager::v1::Secret const& secret, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
+      std::string const& parent, std::string const& secret_id,
+      google::cloud::secretmanager::v1::Secret const& secret,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -232,8 +242,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  CreateSecret(google::cloud::secretmanager::v1::CreateSecretRequest const& request, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
+      google::cloud::secretmanager::v1::CreateSecretRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -265,8 +276,10 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  AddSecretVersion(std::string const& parent, google::cloud::secretmanager::v1::SecretPayload const& payload, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
+      std::string const& parent,
+      google::cloud::secretmanager::v1::SecretPayload const& payload,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -298,8 +311,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  AddSecretVersion(google::cloud::secretmanager::v1::AddSecretVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
+      google::cloud::secretmanager::v1::AddSecretVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -325,8 +339,8 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  GetSecret(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -355,8 +369,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  GetSecret(google::cloud::secretmanager::v1::GetSecretRequest const& request, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
+      google::cloud::secretmanager::v1::GetSecretRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -383,8 +398,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L451}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  UpdateSecret(google::cloud::secretmanager::v1::Secret const& secret, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
+      google::cloud::secretmanager::v1::Secret const& secret,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -414,8 +430,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.UpdateSecretRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L451}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::Secret>
-  UpdateSecret(google::cloud::secretmanager::v1::UpdateSecretRequest const& request, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
+      google::cloud::secretmanager::v1::UpdateSecretRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +456,7 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
   ///
   // clang-format on
-  Status
-  DeleteSecret(std::string const& name, Options opts = {});
+  Status DeleteSecret(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -467,8 +483,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.Secret]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
   ///
   // clang-format on
-  Status
-  DeleteSecret(google::cloud::secretmanager::v1::DeleteSecretRequest const& request, Options opts = {});
+  Status DeleteSecret(
+      google::cloud::secretmanager::v1::DeleteSecretRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -547,7 +564,9 @@ class SecretManagerServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-  ListSecretVersions(google::cloud::secretmanager::v1::ListSecretVersionsRequest request, Options opts = {});
+  ListSecretVersions(
+      google::cloud::secretmanager::v1::ListSecretVersionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -583,8 +602,8 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  GetSecretVersion(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -617,8 +636,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L181}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  GetSecretVersion(google::cloud::secretmanager::v1::GetSecretVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
+      google::cloud::secretmanager::v1::GetSecretVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -691,7 +711,10 @@ class SecretManagerServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-  AccessSecretVersion(google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request, Options opts = {});
+  AccessSecretVersion(
+      google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -761,7 +784,10 @@ class SecretManagerServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DisableSecretVersion(google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request, Options opts = {});
+  DisableSecretVersion(
+      google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -794,8 +820,8 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L238}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  EnableSecretVersion(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -830,8 +856,10 @@ class SecretManagerServiceClient {
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L238}
   ///
   // clang-format on
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  EnableSecretVersion(google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
+      google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -903,7 +931,10 @@ class SecretManagerServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DestroySecretVersion(google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request, Options opts = {});
+  DestroySecretVersion(
+      google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -940,8 +971,8 @@ class SecretManagerServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -971,8 +1002,8 @@ class SecretManagerServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1007,8 +1038,9 @@ class SecretManagerServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1046,8 +1078,8 @@ class SecretManagerServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1076,8 +1108,9 @@ class SecretManagerServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SecretManagerServiceConnection> connection_;

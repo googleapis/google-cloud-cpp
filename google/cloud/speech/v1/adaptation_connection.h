@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_ADAPTATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_ADAPTATION_CONNECTION_H
 
+#include "google/cloud/speech/v1/adaptation_connection_idempotency_policy.h"
+#include "google/cloud/speech/v1/internal/adaptation_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/speech/v1/adaptation_connection_idempotency_policy.h"
-#include "google/cloud/speech/v1/internal/adaptation_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -62,14 +62,14 @@ class AdaptationLimitedErrorCountRetryPolicy : public AdaptationRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit AdaptationLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   AdaptationLimitedErrorCountRetryPolicy(
       AdaptationLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AdaptationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AdaptationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AdaptationLimitedErrorCountRetryPolicy(
       AdaptationLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AdaptationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AdaptationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +89,9 @@ class AdaptationLimitedErrorCountRetryPolicy : public AdaptationRetryPolicy {
   using BaseType = AdaptationRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<speech_v1_internal::AdaptationRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      speech_v1_internal::AdaptationRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +129,14 @@ class AdaptationLimitedTimeRetryPolicy : public AdaptationRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AdaptationLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AdaptationLimitedTimeRetryPolicy(AdaptationLimitedTimeRetryPolicy&& rhs) noexcept
-    : AdaptationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AdaptationLimitedTimeRetryPolicy(AdaptationLimitedTimeRetryPolicy const& rhs) noexcept
-    : AdaptationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AdaptationLimitedTimeRetryPolicy(
+      AdaptationLimitedTimeRetryPolicy&& rhs) noexcept
+      : AdaptationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AdaptationLimitedTimeRetryPolicy(
+      AdaptationLimitedTimeRetryPolicy const& rhs) noexcept
+      : AdaptationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +158,9 @@ class AdaptationLimitedTimeRetryPolicy : public AdaptationRetryPolicy {
   using BaseType = AdaptationRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<speech_v1_internal::AdaptationRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      speech_v1_internal::AdaptationRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,41 +181,41 @@ class AdaptationConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::speech::v1::PhraseSet>
-  CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const& request);
+  virtual StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
+      google::cloud::speech::v1::CreatePhraseSetRequest const& request);
 
-  virtual StatusOr<google::cloud::speech::v1::PhraseSet>
-  GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const& request);
+  virtual StatusOr<google::cloud::speech::v1::PhraseSet> GetPhraseSet(
+      google::cloud::speech::v1::GetPhraseSetRequest const& request);
 
-  virtual StreamRange<google::cloud::speech::v1::PhraseSet>
-  ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest request);
+  virtual StreamRange<google::cloud::speech::v1::PhraseSet> ListPhraseSet(
+      google::cloud::speech::v1::ListPhraseSetRequest request);
 
-  virtual StatusOr<google::cloud::speech::v1::PhraseSet>
-  UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const& request);
+  virtual StatusOr<google::cloud::speech::v1::PhraseSet> UpdatePhraseSet(
+      google::cloud::speech::v1::UpdatePhraseSetRequest const& request);
 
-  virtual Status
-  DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const& request);
+  virtual Status DeletePhraseSet(
+      google::cloud::speech::v1::DeletePhraseSetRequest const& request);
 
-  virtual StatusOr<google::cloud::speech::v1::CustomClass>
-  CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const& request);
+  virtual StatusOr<google::cloud::speech::v1::CustomClass> CreateCustomClass(
+      google::cloud::speech::v1::CreateCustomClassRequest const& request);
 
-  virtual StatusOr<google::cloud::speech::v1::CustomClass>
-  GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const& request);
+  virtual StatusOr<google::cloud::speech::v1::CustomClass> GetCustomClass(
+      google::cloud::speech::v1::GetCustomClassRequest const& request);
 
-  virtual StreamRange<google::cloud::speech::v1::CustomClass>
-  ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest request);
+  virtual StreamRange<google::cloud::speech::v1::CustomClass> ListCustomClasses(
+      google::cloud::speech::v1::ListCustomClassesRequest request);
 
-  virtual StatusOr<google::cloud::speech::v1::CustomClass>
-  UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const& request);
+  virtual StatusOr<google::cloud::speech::v1::CustomClass> UpdateCustomClass(
+      google::cloud::speech::v1::UpdateCustomClassRequest const& request);
 
-  virtual Status
-  DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const& request);
+  virtual Status DeleteCustomClass(
+      google::cloud::speech::v1::DeleteCustomClassRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

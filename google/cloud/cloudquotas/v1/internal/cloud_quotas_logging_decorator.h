@@ -35,38 +35,39 @@ class CloudQuotasLogging : public CloudQuotasStub {
  public:
   ~CloudQuotasLogging() override = default;
   CloudQuotasLogging(std::shared_ptr<CloudQuotasStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                     TracingOptions tracing_options,
+                     std::set<std::string> const& components);
 
   StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse> ListQuotaInfos(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::cloudquotas::v1::ListQuotaInfosRequest const& request)
+      override;
 
   StatusOr<google::api::cloudquotas::v1::QuotaInfo> GetQuotaInfo(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::cloudquotas::v1::GetQuotaInfoRequest const& request)
+      override;
 
-  StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse> ListQuotaPreferences(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) override;
+  StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
+  ListQuotaPreferences(
+      grpc::ClientContext& context, Options const& options,
+      google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request)
+      override;
 
   StatusOr<google::api::cloudquotas::v1::QuotaPreference> GetQuotaPreference(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request)
+      override;
 
   StatusOr<google::api::cloudquotas::v1::QuotaPreference> CreateQuotaPreference(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request)
+      override;
 
   StatusOr<google::api::cloudquotas::v1::QuotaPreference> UpdateQuotaPreference(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request)
+      override;
 
  private:
   std::shared_ptr<CloudQuotasStub> child_;

@@ -26,95 +26,118 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AwsClustersConnectionIdempotencyPolicy::~AwsClustersConnectionIdempotencyPolicy() = default;
+AwsClustersConnectionIdempotencyPolicy::
+    ~AwsClustersConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AwsClustersConnectionIdempotencyPolicy>
 AwsClustersConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AwsClustersConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::CreateAwsCluster(google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::CreateAwsCluster(
+    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::UpdateAwsCluster(google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::UpdateAwsCluster(
+    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsCluster(google::cloud::gkemulticloud::v1::GetAwsClusterRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsCluster(
+    google::cloud::gkemulticloud::v1::GetAwsClusterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::ListAwsClusters(google::cloud::gkemulticloud::v1::ListAwsClustersRequest) {  // NOLINT
+Idempotency AwsClustersConnectionIdempotencyPolicy::ListAwsClusters(
+    google::cloud::gkemulticloud::v1::ListAwsClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteAwsCluster(google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteAwsCluster(
+    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::GenerateAwsClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&) {
+Idempotency
+AwsClustersConnectionIdempotencyPolicy::GenerateAwsClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAwsClusterAgentTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::GenerateAwsAccessToken(google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::GenerateAwsAccessToken(
+    google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::CreateAwsNodePool(google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::CreateAwsNodePool(
+    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::UpdateAwsNodePool(google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::UpdateAwsNodePool(
+    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::RollbackAwsNodePoolUpdate(google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::RollbackAwsNodePoolUpdate(
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsNodePool(google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsNodePool(
+    google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::ListAwsNodePools(google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest) {  // NOLINT
+Idempotency AwsClustersConnectionIdempotencyPolicy::ListAwsNodePools(
+    google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteAwsNodePool(google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteAwsNodePool(
+    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsOpenIdConfig(google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsJsonWebKeys(google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsServerConfig(google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsServerConfig(
+    google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AwsClustersConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AwsClustersConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency AwsClustersConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AwsClustersConnectionIdempotencyPolicy>
-    MakeDefaultAwsClustersConnectionIdempotencyPolicy() {
+MakeDefaultAwsClustersConnectionIdempotencyPolicy() {
   return std::make_unique<AwsClustersConnectionIdempotencyPolicy>();
 }
 

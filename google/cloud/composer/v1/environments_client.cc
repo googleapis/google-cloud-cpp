@@ -28,42 +28,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EnvironmentsClient::EnvironmentsClient(
     std::shared_ptr<EnvironmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EnvironmentsClient::~EnvironmentsClient() = default;
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-EnvironmentsClient::CreateEnvironment(std::string const& parent, google::cloud::orchestration::airflow::service::v1::Environment const& environment, Options opts) {
+future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsClient::CreateEnvironment(
+    std::string const& parent,
+    google::cloud::orchestration::airflow::service::v1::Environment const&
+        environment,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest request;
+  google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest
+      request;
   request.set_parent(parent);
   *request.mutable_environment() = environment;
   return connection_->CreateEnvironment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::CreateEnvironment(NoAwaitTag, std::string const& parent, google::cloud::orchestration::airflow::service::v1::Environment const& environment, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::CreateEnvironment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::orchestration::airflow::service::v1::Environment const&
+        environment,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest request;
+  google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest
+      request;
   request.set_parent(parent);
   *request.mutable_environment() = environment;
   return connection_->CreateEnvironment(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-EnvironmentsClient::CreateEnvironment(google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request, Options opts) {
+future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsClient::CreateEnvironment(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnvironment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::CreateEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::CreateEnvironment(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnvironment(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-EnvironmentsClient::CreateEnvironment(google::longrunning::Operation const& operation, Options opts) {
+future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsClient::CreateEnvironment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnvironment(operation);
 }
@@ -71,13 +90,17 @@ EnvironmentsClient::CreateEnvironment(google::longrunning::Operation const& oper
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsClient::GetEnvironment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest request;
+  google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest
+      request;
   request.set_name(name);
   return connection_->GetEnvironment(request);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsClient::GetEnvironment(google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const& request, Options opts) {
+EnvironmentsClient::GetEnvironment(
+    google::cloud::orchestration::airflow::service::v1::
+        GetEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEnvironment(request);
 }
@@ -85,343 +108,508 @@ EnvironmentsClient::GetEnvironment(google::cloud::orchestration::airflow::servic
 StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsClient::ListEnvironments(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest request;
+  google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
+      request;
   request.set_parent(parent);
   return connection_->ListEnvironments(request);
 }
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-EnvironmentsClient::ListEnvironments(google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest request, Options opts) {
+EnvironmentsClient::ListEnvironments(
+    google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEnvironments(std::move(request));
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-EnvironmentsClient::UpdateEnvironment(std::string const& name, google::cloud::orchestration::airflow::service::v1::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts) {
+future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsClient::UpdateEnvironment(
+    std::string const& name,
+    google::cloud::orchestration::airflow::service::v1::Environment const&
+        environment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest request;
+  google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest
+      request;
   request.set_name(name);
   *request.mutable_environment() = environment;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateEnvironment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::UpdateEnvironment(NoAwaitTag, std::string const& name, google::cloud::orchestration::airflow::service::v1::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::UpdateEnvironment(
+    NoAwaitTag, std::string const& name,
+    google::cloud::orchestration::airflow::service::v1::Environment const&
+        environment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest request;
+  google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest
+      request;
   request.set_name(name);
   *request.mutable_environment() = environment;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateEnvironment(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-EnvironmentsClient::UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request, Options opts) {
+future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsClient::UpdateEnvironment(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnvironment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::UpdateEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::UpdateEnvironment(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnvironment(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-EnvironmentsClient::UpdateEnvironment(google::longrunning::Operation const& operation, Options opts) {
+future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsClient::UpdateEnvironment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnvironment(operation);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsClient::DeleteEnvironment(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest request;
+  google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest
+      request;
   request.set_name(name);
   return connection_->DeleteEnvironment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::DeleteEnvironment(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::DeleteEnvironment(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest request;
+  google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest
+      request;
   request.set_name(name);
   return connection_->DeleteEnvironment(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-EnvironmentsClient::DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+EnvironmentsClient::DeleteEnvironment(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnvironment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::DeleteEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::DeleteEnvironment(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnvironment(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-EnvironmentsClient::DeleteEnvironment(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+EnvironmentsClient::DeleteEnvironment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnvironment(operation);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandResponse>
-EnvironmentsClient::ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandRequest const& request, Options opts) {
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ExecuteAirflowCommandResponse>
+EnvironmentsClient::ExecuteAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        ExecuteAirflowCommandRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExecuteAirflowCommand(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse>
-EnvironmentsClient::StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::StopAirflowCommandRequest const& request, Options opts) {
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             StopAirflowCommandResponse>
+EnvironmentsClient::StopAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        StopAirflowCommandRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopAirflowCommand(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse>
-EnvironmentsClient::PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::PollAirflowCommandRequest const& request, Options opts) {
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             PollAirflowCommandResponse>
+EnvironmentsClient::PollAirflowCommand(
+    google::cloud::orchestration::airflow::service::v1::
+        PollAirflowCommandRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PollAirflowCommand(request);
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>
+StreamRange<google::cloud::orchestration::airflow::service::v1::
+                ListWorkloadsResponse::ComposerWorkload>
 EnvironmentsClient::ListWorkloads(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest request;
+  google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+      request;
   request.set_parent(parent);
   return connection_->ListWorkloads(request);
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>
-EnvironmentsClient::ListWorkloads(google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest request, Options opts) {
+StreamRange<google::cloud::orchestration::airflow::service::v1::
+                ListWorkloadsResponse::ComposerWorkload>
+EnvironmentsClient::ListWorkloads(
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkloads(std::move(request));
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-EnvironmentsClient::CheckUpgrade(google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsClient::CheckUpgrade(
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckUpgrade(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::CheckUpgrade(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::CheckUpgrade(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckUpgrade(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-EnvironmentsClient::CheckUpgrade(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsClient::CheckUpgrade(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CheckUpgrade(operation);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsClient::CreateUserWorkloadsSecret(std::string const& parent, google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret const& user_workloads_secret, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::CreateUserWorkloadsSecret(
+    std::string const& parent,
+    google::cloud::orchestration::airflow::service::v1::
+        UserWorkloadsSecret const& user_workloads_secret,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      CreateUserWorkloadsSecretRequest request;
   request.set_parent(parent);
   *request.mutable_user_workloads_secret() = user_workloads_secret;
   return connection_->CreateUserWorkloadsSecret(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsClient::CreateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::CreateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateUserWorkloadsSecret(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsClient::GetUserWorkloadsSecret(std::string const& name, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::GetUserWorkloadsSecret(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      GetUserWorkloadsSecretRequest request;
   request.set_name(name);
   return connection_->GetUserWorkloadsSecret(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsClient::GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::GetUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetUserWorkloadsSecret(request);
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsClient::ListUserWorkloadsSecrets(std::string const& parent, Options opts) {
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::ListUserWorkloadsSecrets(std::string const& parent,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      ListUserWorkloadsSecretsRequest request;
   request.set_parent(parent);
   return connection_->ListUserWorkloadsSecrets(request);
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsClient::ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest request, Options opts) {
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::ListUserWorkloadsSecrets(
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListUserWorkloadsSecrets(std::move(request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsClient::UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret const& user_workloads_secret, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::UpdateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        UserWorkloadsSecret const& user_workloads_secret,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      UpdateUserWorkloadsSecretRequest request;
   *request.mutable_user_workloads_secret() = user_workloads_secret;
   return connection_->UpdateUserWorkloadsSecret(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-EnvironmentsClient::UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsClient::UpdateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateUserWorkloadsSecret(request);
 }
 
-Status
-EnvironmentsClient::DeleteUserWorkloadsSecret(std::string const& name, Options opts) {
+Status EnvironmentsClient::DeleteUserWorkloadsSecret(std::string const& name,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      DeleteUserWorkloadsSecretRequest request;
   request.set_name(name);
   return connection_->DeleteUserWorkloadsSecret(request);
 }
 
-Status
-EnvironmentsClient::DeleteUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest const& request, Options opts) {
+Status EnvironmentsClient::DeleteUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUserWorkloadsSecret(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsClient::CreateUserWorkloadsConfigMap(std::string const& parent, google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap const& user_workloads_config_map, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::CreateUserWorkloadsConfigMap(
+    std::string const& parent,
+    google::cloud::orchestration::airflow::service::v1::
+        UserWorkloadsConfigMap const& user_workloads_config_map,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      CreateUserWorkloadsConfigMapRequest request;
   request.set_parent(parent);
   *request.mutable_user_workloads_config_map() = user_workloads_config_map;
   return connection_->CreateUserWorkloadsConfigMap(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsClient::CreateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::CreateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateUserWorkloadsConfigMap(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsClient::GetUserWorkloadsConfigMap(std::string const& name, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::GetUserWorkloadsConfigMap(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      GetUserWorkloadsConfigMapRequest request;
   request.set_name(name);
   return connection_->GetUserWorkloadsConfigMap(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsClient::GetUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::GetUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetUserWorkloadsConfigMap(request);
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsClient::ListUserWorkloadsConfigMaps(std::string const& parent, Options opts) {
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::ListUserWorkloadsConfigMaps(std::string const& parent,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      ListUserWorkloadsConfigMapsRequest request;
   request.set_parent(parent);
   return connection_->ListUserWorkloadsConfigMaps(request);
 }
 
-StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsClient::ListUserWorkloadsConfigMaps(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest request, Options opts) {
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::ListUserWorkloadsConfigMaps(
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListUserWorkloadsConfigMaps(std::move(request));
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsClient::UpdateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap const& user_workloads_config_map, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::UpdateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        UserWorkloadsConfigMap const& user_workloads_config_map,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      UpdateUserWorkloadsConfigMapRequest request;
   *request.mutable_user_workloads_config_map() = user_workloads_config_map;
   return connection_->UpdateUserWorkloadsConfigMap(request);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-EnvironmentsClient::UpdateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsClient::UpdateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateUserWorkloadsConfigMap(request);
 }
 
-Status
-EnvironmentsClient::DeleteUserWorkloadsConfigMap(std::string const& name, Options opts) {
+Status EnvironmentsClient::DeleteUserWorkloadsConfigMap(std::string const& name,
+                                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest request;
+  google::cloud::orchestration::airflow::service::v1::
+      DeleteUserWorkloadsConfigMapRequest request;
   request.set_name(name);
   return connection_->DeleteUserWorkloadsConfigMap(request);
 }
 
-Status
-EnvironmentsClient::DeleteUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest const& request, Options opts) {
+Status EnvironmentsClient::DeleteUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUserWorkloadsConfigMap(request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-EnvironmentsClient::SaveSnapshot(google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsClient::SaveSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SaveSnapshot(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::SaveSnapshot(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::SaveSnapshot(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SaveSnapshot(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-EnvironmentsClient::SaveSnapshot(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsClient::SaveSnapshot(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SaveSnapshot(operation);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-EnvironmentsClient::LoadSnapshot(google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsClient::LoadSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LoadSnapshot(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::LoadSnapshot(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::LoadSnapshot(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LoadSnapshot(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-EnvironmentsClient::LoadSnapshot(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsClient::LoadSnapshot(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LoadSnapshot(operation);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
-EnvironmentsClient::DatabaseFailover(google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request, Options opts) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                    DatabaseFailoverResponse>>
+EnvironmentsClient::DatabaseFailover(
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DatabaseFailover(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::DatabaseFailover(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::DatabaseFailover(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DatabaseFailover(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
-EnvironmentsClient::DatabaseFailover(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                    DatabaseFailoverResponse>>
+EnvironmentsClient::DatabaseFailover(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DatabaseFailover(operation);
 }
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesResponse>
-EnvironmentsClient::FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesRequest const& request, Options opts) {
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             FetchDatabasePropertiesResponse>
+EnvironmentsClient::FetchDatabaseProperties(
+    google::cloud::orchestration::airflow::service::v1::
+        FetchDatabasePropertiesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchDatabaseProperties(request);
 }
 
-StreamRange<google::longrunning::Operation>
-EnvironmentsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> EnvironmentsClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -429,36 +617,36 @@ EnvironmentsClient::ListOperations(std::string const& name, std::string const& f
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-EnvironmentsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> EnvironmentsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EnvironmentsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-EnvironmentsClient::DeleteOperation(std::string const& name, Options opts) {
+Status EnvironmentsClient::DeleteOperation(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-EnvironmentsClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status EnvironmentsClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }

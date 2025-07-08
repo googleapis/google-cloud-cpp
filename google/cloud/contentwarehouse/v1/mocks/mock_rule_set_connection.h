@@ -42,33 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockRuleSetServiceConnection : public contentwarehouse_v1::RuleSetServiceConnection {
+class MockRuleSetServiceConnection
+    : public contentwarehouse_v1::RuleSetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::RuleSet>,
-  CreateRuleSet,
-  (google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request), (override));
+              CreateRuleSet,
+              (google::cloud::contentwarehouse::v1::CreateRuleSetRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contentwarehouse::v1::RuleSet>, GetRuleSet,
+      (google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::RuleSet>,
-  GetRuleSet,
-  (google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request), (override));
+              UpdateRuleSet,
+              (google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::RuleSet>,
-  UpdateRuleSet,
-  (google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteRuleSet,
+              (google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteRuleSet,
-  (google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::contentwarehouse::v1::RuleSet>), ListRuleSets,
+      (google::cloud::contentwarehouse::v1::ListRuleSetsRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::contentwarehouse::v1::RuleSet>),
-  ListRuleSets,
-  (google::cloud::contentwarehouse::v1::ListRuleSetsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

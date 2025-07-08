@@ -34,26 +34,32 @@ class AgentEndpointServiceConnectionIdempotencyPolicy {
   virtual ~AgentEndpointServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  StartNextTask(google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request);
+  virtual google::cloud::Idempotency StartNextTask(
+      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request);
+  virtual google::cloud::Idempotency ReportTaskProgress(
+      google::cloud::osconfig::agentendpoint::v1::
+          ReportTaskProgressRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request);
+  virtual google::cloud::Idempotency ReportTaskComplete(
+      google::cloud::osconfig::agentendpoint::v1::
+          ReportTaskCompleteRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RegisterAgent(google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request);
+  virtual google::cloud::Idempotency RegisterAgent(
+      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ReportInventory(google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request);
+  virtual google::cloud::Idempotency ReportInventory(
+      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
+          request);
 };
 
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
-    MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy();
+MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_agentendpoint_v1

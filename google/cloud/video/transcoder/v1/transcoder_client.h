@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_TRANSCODER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_TRANSCODER_CLIENT_H
 
+#include "google/cloud/video/transcoder/v1/transcoder_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/video/transcoder/v1/transcoder_connection.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -39,8 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// media into various output formats. Output formats may include different
 /// streaming standards such as HTTP Live Streaming (HLS) and Dynamic Adaptive
 /// Streaming over HTTP (DASH). You can also customize jobs using advanced
-/// features such as Digital Rights Management (DRM), audio equalization, content
-/// concatenation, and digital ad-stitch ready content generation.
+/// features such as Digital Rights Management (DRM), audio equalization,
+/// content concatenation, and digital ad-stitch ready content generation.
 ///
 /// @par Equality
 ///
@@ -67,7 +67,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TranscoderServiceClient {
  public:
-  explicit TranscoderServiceClient(std::shared_ptr<TranscoderServiceConnection> connection, Options opts = {});
+  explicit TranscoderServiceClient(
+      std::shared_ptr<TranscoderServiceConnection> connection,
+      Options opts = {});
   ~TranscoderServiceClient();
 
   ///@{
@@ -80,10 +82,12 @@ class TranscoderServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TranscoderServiceClient const& a, TranscoderServiceClient const& b) {
+  friend bool operator==(TranscoderServiceClient const& a,
+                         TranscoderServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TranscoderServiceClient const& a, TranscoderServiceClient const& b) {
+  friend bool operator!=(TranscoderServiceClient const& a,
+                         TranscoderServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,8 +116,9 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::transcoder::v1::Job>
-  CreateJob(std::string const& parent, google::cloud::video::transcoder::v1::Job const& job, Options opts = {});
+  StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
+      std::string const& parent,
+      google::cloud::video::transcoder::v1::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -142,8 +147,9 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::transcoder::v1::Job>
-  CreateJob(google::cloud::video::transcoder::v1::CreateJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
+      google::cloud::video::transcoder::v1::CreateJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +182,8 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L132}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::transcoder::v1::Job>
-  ListJobs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -215,8 +221,9 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L132}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::transcoder::v1::Job>
-  ListJobs(google::cloud::video::transcoder::v1::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
+      google::cloud::video::transcoder::v1::ListJobsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +248,8 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::transcoder::v1::Job>
-  GetJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -271,8 +278,9 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.Job]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::transcoder::v1::Job>
-  GetJob(google::cloud::video::transcoder::v1::GetJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
+      google::cloud::video::transcoder::v1::GetJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -294,8 +302,7 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L168}
   ///
   // clang-format on
-  Status
-  DeleteJob(std::string const& name, Options opts = {});
+  Status DeleteJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -321,8 +328,9 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L168}
   ///
   // clang-format on
-  Status
-  DeleteJob(google::cloud::video::transcoder::v1::DeleteJobRequest const& request, Options opts = {});
+  Status DeleteJob(
+      google::cloud::video::transcoder::v1::DeleteJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -353,8 +361,10 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-  CreateJobTemplate(std::string const& parent, google::cloud::video::transcoder::v1::JobTemplate const& job_template, std::string const& job_template_id, Options opts = {});
+  StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
+      std::string const& parent,
+      google::cloud::video::transcoder::v1::JobTemplate const& job_template,
+      std::string const& job_template_id, Options opts = {});
 
   // clang-format off
   ///
@@ -383,8 +393,10 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-  CreateJobTemplate(google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
+      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -458,7 +470,9 @@ class TranscoderServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
-  ListJobTemplates(google::cloud::video::transcoder::v1::ListJobTemplatesRequest request, Options opts = {});
+  ListJobTemplates(
+      google::cloud::video::transcoder::v1::ListJobTemplatesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -484,8 +498,8 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-  GetJobTemplate(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -514,8 +528,10 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.JobTemplate]: @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L162}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-  GetJobTemplate(google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
+      google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -537,8 +553,7 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.DeleteJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L256}
   ///
   // clang-format on
-  Status
-  DeleteJobTemplate(std::string const& name, Options opts = {});
+  Status DeleteJobTemplate(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -564,8 +579,10 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.DeleteJobTemplateRequest]: @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L256}
   ///
   // clang-format on
-  Status
-  DeleteJobTemplate(google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request, Options opts = {});
+  Status DeleteJobTemplate(
+      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TranscoderServiceConnection> connection_;

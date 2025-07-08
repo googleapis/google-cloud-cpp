@@ -32,50 +32,54 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class EssentialContactsServiceTracingStub : public EssentialContactsServiceStub {
+class EssentialContactsServiceTracingStub
+    : public EssentialContactsServiceStub {
  public:
   ~EssentialContactsServiceTracingStub() override = default;
 
-  explicit EssentialContactsServiceTracingStub(std::shared_ptr<EssentialContactsServiceStub> child);
+  explicit EssentialContactsServiceTracingStub(
+      std::shared_ptr<EssentialContactsServiceStub> child);
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::essentialcontacts::v1::CreateContactRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::essentialcontacts::v1::CreateContactRequest const& request)
+      override;
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::essentialcontacts::v1::UpdateContactRequest const& request)
+      override;
 
-  StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse> ListContacts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::essentialcontacts::v1::ListContactsRequest const& request) override;
+  StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
+  ListContacts(grpc::ClientContext& context, Options const& options,
+               google::cloud::essentialcontacts::v1::ListContactsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::essentialcontacts::v1::GetContactRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::essentialcontacts::v1::GetContactRequest const& request)
+      override;
 
   Status DeleteContact(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::essentialcontacts::v1::DeleteContactRequest const& request)
+      override;
 
-  StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse> ComputeContacts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::essentialcontacts::v1::ComputeContactsRequest const& request) override;
+  StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
+  ComputeContacts(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
+          request) override;
 
   Status SendTestMessage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
+          request) override;
 
  private:
   std::shared_ptr<EssentialContactsServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -86,7 +90,8 @@ class EssentialContactsServiceTracingStub : public EssentialContactsServiceStub 
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<EssentialContactsServiceStub> MakeEssentialContactsServiceTracingStub(
+std::shared_ptr<EssentialContactsServiceStub>
+MakeEssentialContactsServiceTracingStub(
     std::shared_ptr<EssentialContactsServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

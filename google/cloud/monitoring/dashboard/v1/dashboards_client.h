@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_DASHBOARDS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_DASHBOARDS_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/monitoring/dashboard/v1/dashboards_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -35,8 +35,8 @@ namespace monitoring_dashboard_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Manages Stackdriver dashboards. A dashboard is an arrangement of data display
-/// widgets in a specific layout.
+/// Manages Stackdriver dashboards. A dashboard is an arrangement of data
+/// display widgets in a specific layout.
 ///
 /// @par Equality
 ///
@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DashboardsServiceClient {
  public:
-  explicit DashboardsServiceClient(std::shared_ptr<DashboardsServiceConnection> connection, Options opts = {});
+  explicit DashboardsServiceClient(
+      std::shared_ptr<DashboardsServiceConnection> connection,
+      Options opts = {});
   ~DashboardsServiceClient();
 
   ///@{
@@ -76,10 +78,12 @@ class DashboardsServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DashboardsServiceClient const& a, DashboardsServiceClient const& b) {
+  friend bool operator==(DashboardsServiceClient const& a,
+                         DashboardsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DashboardsServiceClient const& a, DashboardsServiceClient const& b) {
+  friend bool operator!=(DashboardsServiceClient const& a,
+                         DashboardsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +120,10 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.Dashboard]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  CreateDashboard(std::string const& parent, google::monitoring::dashboard::v1::Dashboard const& dashboard, Options opts = {});
+  StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
+      std::string const& parent,
+      google::monitoring::dashboard::v1::Dashboard const& dashboard,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -151,8 +157,9 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.Dashboard]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  CreateDashboard(google::monitoring::dashboard::v1::CreateDashboardRequest const& request, Options opts = {});
+  StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
+      google::monitoring::dashboard::v1::CreateDashboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -191,8 +198,8 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.ListDashboardsRequest]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L130}
   ///
   // clang-format on
-  StreamRange<google::monitoring::dashboard::v1::Dashboard>
-  ListDashboards(std::string const& parent, Options opts = {});
+  StreamRange<google::monitoring::dashboard::v1::Dashboard> ListDashboards(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -234,8 +241,9 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.ListDashboardsRequest]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L130}
   ///
   // clang-format on
-  StreamRange<google::monitoring::dashboard::v1::Dashboard>
-  ListDashboards(google::monitoring::dashboard::v1::ListDashboardsRequest request, Options opts = {});
+  StreamRange<google::monitoring::dashboard::v1::Dashboard> ListDashboards(
+      google::monitoring::dashboard::v1::ListDashboardsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -267,8 +275,8 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.GetDashboardRequest]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L164}
   ///
   // clang-format on
-  StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  GetDashboard(std::string const& name, Options opts = {});
+  StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -301,8 +309,9 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.GetDashboardRequest]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L164}
   ///
   // clang-format on
-  StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  GetDashboard(google::monitoring::dashboard::v1::GetDashboardRequest const& request, Options opts = {});
+  StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
+      google::monitoring::dashboard::v1::GetDashboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -329,8 +338,7 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.DeleteDashboardRequest]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L179}
   ///
   // clang-format on
-  Status
-  DeleteDashboard(std::string const& name, Options opts = {});
+  Status DeleteDashboard(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -360,8 +368,9 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.DeleteDashboardRequest]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L179}
   ///
   // clang-format on
-  Status
-  DeleteDashboard(google::monitoring::dashboard::v1::DeleteDashboardRequest const& request, Options opts = {});
+  Status DeleteDashboard(
+      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -394,8 +403,9 @@ class DashboardsServiceClient {
   /// [google.monitoring.dashboard.v1.UpdateDashboardRequest]: @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L192}
   ///
   // clang-format on
-  StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  UpdateDashboard(google::monitoring::dashboard::v1::UpdateDashboardRequest const& request, Options opts = {});
+  StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
+      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DashboardsServiceConnection> connection_;

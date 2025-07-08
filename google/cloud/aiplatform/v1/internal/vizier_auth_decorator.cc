@@ -32,8 +32,7 @@ VizierServiceAuth::VizierServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceAuth::CreateStudy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,17 +40,16 @@ StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceAuth::CreateStudy(
 }
 
 StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceAuth::GetStudy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetStudyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetStudy(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse> VizierServiceAuth::ListStudies(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse>
+VizierServiceAuth::ListStudies(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListStudiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +57,7 @@ StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse> VizierServiceAuth::
 }
 
 Status VizierServiceAuth::DeleteStudy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +65,7 @@ Status VizierServiceAuth::DeleteStudy(
 }
 
 StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceAuth::LookupStudy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -78,36 +74,34 @@ StatusOr<google::cloud::aiplatform::v1::Study> VizierServiceAuth::LookupStudy(
 
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceAuth::AsyncSuggestTrials(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncSuggestTrials(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncSuggestTrials(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-VizierServiceAuth::SuggestTrials(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+StatusOr<google::longrunning::Operation> VizierServiceAuth::SuggestTrials(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SuggestTrials(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::CreateTrial(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -115,26 +109,25 @@ StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::CreateTrial(
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::GetTrial(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTrialRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTrial(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse> VizierServiceAuth::ListTrials(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse>
+VizierServiceAuth::ListTrials(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTrialsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTrials(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::AddTrialMeasurement(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Trial>
+VizierServiceAuth::AddTrialMeasurement(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -142,8 +135,7 @@ StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::AddTrialMeasur
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::CompleteTrial(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -151,8 +143,7 @@ StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::CompleteTrial(
 }
 
 Status VizierServiceAuth::DeleteTrial(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -161,14 +152,16 @@ Status VizierServiceAuth::DeleteTrial(
 
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceAuth::AsyncCheckTrialEarlyStoppingState(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -180,35 +173,34 @@ VizierServiceAuth::AsyncCheckTrialEarlyStoppingState(
 
 StatusOr<google::longrunning::Operation>
 VizierServiceAuth::CheckTrialEarlyStoppingState(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CheckTrialEarlyStoppingState(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceAuth::StopTrial(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::StopTrialRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StopTrial(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse> VizierServiceAuth::ListOptimalTrials(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
+VizierServiceAuth::ListOptimalTrials(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOptimalTrials(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> VizierServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+VizierServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -216,8 +208,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> VizierServiceAuth::List
 }
 
 StatusOr<google::cloud::location::Location> VizierServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -225,8 +216,7 @@ StatusOr<google::cloud::location::Location> VizierServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> VizierServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -234,26 +224,25 @@ StatusOr<google::iam::v1::Policy> VizierServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> VizierServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> VizierServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+VizierServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> VizierServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+VizierServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -261,8 +250,7 @@ StatusOr<google::longrunning::ListOperationsResponse> VizierServiceAuth::ListOpe
 }
 
 StatusOr<google::longrunning::Operation> VizierServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -270,8 +258,7 @@ StatusOr<google::longrunning::Operation> VizierServiceAuth::GetOperation(
 }
 
 Status VizierServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -279,8 +266,7 @@ Status VizierServiceAuth::DeleteOperation(
 }
 
 Status VizierServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -288,8 +274,7 @@ Status VizierServiceAuth::CancelOperation(
 }
 
 StatusOr<google::longrunning::Operation> VizierServiceAuth::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -303,15 +288,16 @@ VizierServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -320,13 +306,14 @@ future<Status> VizierServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

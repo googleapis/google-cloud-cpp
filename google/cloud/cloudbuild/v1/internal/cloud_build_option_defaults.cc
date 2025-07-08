@@ -35,19 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudBuildDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_BUILD_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CLOUD_BUILD_AUTHORITY",
-      "cloudbuild.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_BUILD_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_BUILD_AUTHORITY", "cloudbuild.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<cloudbuild_v1::CloudBuildRetryPolicyOption>()) {
     options.set<cloudbuild_v1::CloudBuildRetryPolicyOption>(
         cloudbuild_v1::CloudBuildLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<cloudbuild_v1::CloudBuildBackoffPolicyOption>()) {
     options.set<cloudbuild_v1::CloudBuildBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<cloudbuild_v1::CloudBuildPollingPolicyOption>()) {
     options.set<cloudbuild_v1::CloudBuildPollingPolicyOption>(
@@ -56,9 +58,12 @@ Options CloudBuildDefaultOptions(Options options) {
             cloudbuild_v1::CloudBuildBackoffPolicyOption::Type>(
             options.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()) {
     options.set<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>(
         cloudbuild_v1::MakeDefaultCloudBuildConnectionIdempotencyPolicy());
   }

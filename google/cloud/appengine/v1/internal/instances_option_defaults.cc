@@ -35,30 +35,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options InstancesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_INSTANCES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_INSTANCES_AUTHORITY",
-      "appengine.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_INSTANCES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_INSTANCES_AUTHORITY", "appengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::InstancesRetryPolicyOption>()) {
     options.set<appengine_v1::InstancesRetryPolicyOption>(
-        appengine_v1::InstancesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        appengine_v1::InstancesLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<appengine_v1::InstancesBackoffPolicyOption>()) {
     options.set<appengine_v1::InstancesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<appengine_v1::InstancesPollingPolicyOption>()) {
     options.set<appengine_v1::InstancesPollingPolicyOption>(
-        GenericPollingPolicy<
-            appengine_v1::InstancesRetryPolicyOption::Type,
-            appengine_v1::InstancesBackoffPolicyOption::Type>(
+        GenericPollingPolicy<appengine_v1::InstancesRetryPolicyOption::Type,
+                             appengine_v1::InstancesBackoffPolicyOption::Type>(
             options.get<appengine_v1::InstancesRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<appengine_v1::InstancesConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<appengine_v1::InstancesConnectionIdempotencyPolicyOption>()) {
     options.set<appengine_v1::InstancesConnectionIdempotencyPolicyOption>(
         appengine_v1::MakeDefaultInstancesConnectionIdempotencyPolicy());
   }

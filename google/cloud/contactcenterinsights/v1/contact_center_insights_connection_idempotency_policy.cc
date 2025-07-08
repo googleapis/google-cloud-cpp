@@ -26,323 +26,470 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ContactCenterInsightsConnectionIdempotencyPolicy::~ContactCenterInsightsConnectionIdempotencyPolicy() = default;
+ContactCenterInsightsConnectionIdempotencyPolicy::
+    ~ContactCenterInsightsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
 ContactCenterInsightsConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateConversation(google::cloud::contactcenterinsights::v1::CreateConversationRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::CreateConversation(
+    google::cloud::contactcenterinsights::v1::
+        CreateConversationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UploadConversation(google::cloud::contactcenterinsights::v1::UploadConversationRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::UploadConversation(
+    google::cloud::contactcenterinsights::v1::
+        UploadConversationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateConversation(google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::UpdateConversation(
+    google::cloud::contactcenterinsights::v1::
+        UpdateConversationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetConversation(google::cloud::contactcenterinsights::v1::GetConversationRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetConversation(
+    google::cloud::contactcenterinsights::v1::GetConversationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListConversations(google::cloud::contactcenterinsights::v1::ListConversationsRequest) {  // NOLINT
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListConversations(
+    google::cloud::contactcenterinsights::v1::
+        ListConversationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteConversation(google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::DeleteConversation(
+    google::cloud::contactcenterinsights::v1::
+        DeleteConversationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateAnalysis(google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateAnalysis(
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetAnalysis(google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetAnalysis(
+    google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListAnalyses(google::cloud::contactcenterinsights::v1::ListAnalysesRequest) {  // NOLINT
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListAnalyses(
+    google::cloud::contactcenterinsights::v1::ListAnalysesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteAnalysis(google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteAnalysis(
+    google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::BulkAnalyzeConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::BulkDeleteConversations(google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::BulkDeleteConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::IngestConversations(google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::IngestConversations(
+    google::cloud::contactcenterinsights::v1::
+        IngestConversationsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ExportInsightsData(google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::ExportInsightsData(
+    google::cloud::contactcenterinsights::v1::
+        ExportInsightsDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateIssueModel(google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateIssueModel(
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateIssueModel(google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateIssueModel(
+    google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetIssueModel(google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetIssueModel(
+    google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListIssueModels(google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListIssueModels(
+    google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteIssueModel(google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteIssueModel(
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeployIssueModel(google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeployIssueModel(
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UndeployIssueModel(google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::UndeployIssueModel(
+    google::cloud::contactcenterinsights::v1::
+        UndeployIssueModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ExportIssueModel(google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ExportIssueModel(
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ImportIssueModel(google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ImportIssueModel(
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetIssue(google::cloud::contactcenterinsights::v1::GetIssueRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetIssue(
+    google::cloud::contactcenterinsights::v1::GetIssueRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListIssues(google::cloud::contactcenterinsights::v1::ListIssuesRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListIssues(
+    google::cloud::contactcenterinsights::v1::ListIssuesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateIssue(google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateIssue(
+    google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteIssue(google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteIssue(
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CalculateIssueModelStats(google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::CalculateIssueModelStats(
+    google::cloud::contactcenterinsights::v1::
+        CalculateIssueModelStatsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreatePhraseMatcher(google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::CreatePhraseMatcher(
+    google::cloud::contactcenterinsights::v1::
+        CreatePhraseMatcherRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetPhraseMatcher(google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetPhraseMatcher(
+    google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListPhraseMatchers(google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest) {  // NOLINT
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::ListPhraseMatchers(
+    google::cloud::contactcenterinsights::v1::
+        ListPhraseMatchersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeletePhraseMatcher(google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::DeletePhraseMatcher(
+    google::cloud::contactcenterinsights::v1::
+        DeletePhraseMatcherRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::UpdatePhraseMatcher(
+    google::cloud::contactcenterinsights::v1::
+        UpdatePhraseMatcherRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CalculateStats(google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CalculateStats(
+    google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetSettings(google::cloud::contactcenterinsights::v1::GetSettingsRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetSettings(
+    google::cloud::contactcenterinsights::v1::GetSettingsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateSettings(google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateSettings(
+    google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateAnalysisRule(google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::CreateAnalysisRule(
+    google::cloud::contactcenterinsights::v1::
+        CreateAnalysisRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetAnalysisRule(google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetAnalysisRule(
+    google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListAnalysisRules(google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest) {  // NOLINT
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListAnalysisRules(
+    google::cloud::contactcenterinsights::v1::
+        ListAnalysisRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateAnalysisRule(google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::UpdateAnalysisRule(
+    google::cloud::contactcenterinsights::v1::
+        UpdateAnalysisRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteAnalysisRule(google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::DeleteAnalysisRule(
+    google::cloud::contactcenterinsights::v1::
+        DeleteAnalysisRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetEncryptionSpec(google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::InitializeEncryptionSpec(google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::InitializeEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateView(google::cloud::contactcenterinsights::v1::CreateViewRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateView(
+    google::cloud::contactcenterinsights::v1::CreateViewRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetView(google::cloud::contactcenterinsights::v1::GetViewRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetView(
+    google::cloud::contactcenterinsights::v1::GetViewRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListViews(google::cloud::contactcenterinsights::v1::ListViewsRequest) {  // NOLINT
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListViews(
+    google::cloud::contactcenterinsights::v1::ListViewsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateView(google::cloud::contactcenterinsights::v1::UpdateViewRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateView(
+    google::cloud::contactcenterinsights::v1::UpdateViewRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteView(google::cloud::contactcenterinsights::v1::DeleteViewRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteView(
+    google::cloud::contactcenterinsights::v1::DeleteViewRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::QueryMetrics(google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::QueryMetrics(
+    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateQaQuestion(google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateQaQuestion(
+    google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetQaQuestion(google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetQaQuestion(
+    google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateQaQuestion(google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateQaQuestion(
+    google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteQaQuestion(google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteQaQuestion(
+    google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListQaQuestions(google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest) {  // NOLINT
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListQaQuestions(
+    google::cloud::contactcenterinsights::v1::
+        ListQaQuestionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateQaScorecard(google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateQaScorecard(
+    google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetQaScorecard(google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetQaScorecard(
+    google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateQaScorecard(google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateQaScorecard(
+    google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteQaScorecard(google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteQaScorecard(
+    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListQaScorecards(google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest) {  // NOLINT
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListQaScorecards(
+    google::cloud::contactcenterinsights::v1::
+        ListQaScorecardsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateQaScorecardRevision(google::cloud::contactcenterinsights::v1::CreateQaScorecardRevisionRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::CreateQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        CreateQaScorecardRevisionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetQaScorecardRevision(google::cloud::contactcenterinsights::v1::GetQaScorecardRevisionRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::GetQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        GetQaScorecardRevisionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::TuneQaScorecardRevision(google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::TuneQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        TuneQaScorecardRevisionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::DeployQaScorecardRevisionRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::DeployQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        DeployQaScorecardRevisionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UndeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::UndeployQaScorecardRevisionRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::UndeployQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        UndeployQaScorecardRevisionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteQaScorecardRevision(google::cloud::contactcenterinsights::v1::DeleteQaScorecardRevisionRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::DeleteQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        DeleteQaScorecardRevisionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListQaScorecardRevisions(google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest) {  // NOLINT
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::ListQaScorecardRevisions(
+    google::cloud::contactcenterinsights::v1::
+        ListQaScorecardRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CreateFeedbackLabel(google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::CreateFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::
+        CreateFeedbackLabelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListFeedbackLabels(google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest) {  // NOLINT
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::ListFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::
+        ListFeedbackLabelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetFeedbackLabel(google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::UpdateFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::
+        UpdateFeedbackLabelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteFeedbackLabel(google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::DeleteFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::
+        DeleteFeedbackLabelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListAllFeedbackLabels(google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest) {  // NOLINT
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::ListAllFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::
+        ListAllFeedbackLabelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::BulkUploadFeedbackLabels(google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::BulkUploadFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::
+        BulkUploadFeedbackLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::BulkDownloadFeedbackLabels(google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const&) {
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::BulkDownloadFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::
+        BulkDownloadFeedbackLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
-    MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy() {
+MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy() {
   return std::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>();
 }
 

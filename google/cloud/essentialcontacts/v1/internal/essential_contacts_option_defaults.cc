@@ -35,23 +35,35 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options EssentialContactsServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ESSENTIAL_CONTACTS_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ESSENTIAL_CONTACTS_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_ESSENTIAL_CONTACTS_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ESSENTIAL_CONTACTS_SERVICE_AUTHORITY",
       "essentialcontacts.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>()) {
-    options.set<essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>(
+  if (!options.has<
+          essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>()) {
+    options.set<
+        essentialcontacts_v1::EssentialContactsServiceRetryPolicyOption>(
         essentialcontacts_v1::EssentialContactsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<essentialcontacts_v1::EssentialContactsServiceBackoffPolicyOption>()) {
-    options.set<essentialcontacts_v1::EssentialContactsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<essentialcontacts_v1::
+                       EssentialContactsServiceBackoffPolicyOption>()) {
+    options
+        .set<essentialcontacts_v1::EssentialContactsServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<essentialcontacts_v1::EssentialContactsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<essentialcontacts_v1::EssentialContactsServiceConnectionIdempotencyPolicyOption>(
-        essentialcontacts_v1::MakeDefaultEssentialContactsServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          essentialcontacts_v1::
+              EssentialContactsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<essentialcontacts_v1::
+                    EssentialContactsServiceConnectionIdempotencyPolicyOption>(
+        essentialcontacts_v1::
+            MakeDefaultEssentialContactsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

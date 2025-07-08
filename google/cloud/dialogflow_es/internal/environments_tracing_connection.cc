@@ -34,86 +34,108 @@ EnvironmentsTracingConnection::EnvironmentsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::v2::Environment>
-EnvironmentsTracingConnection::ListEnvironments(google::cloud::dialogflow::v2::ListEnvironmentsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::ListEnvironments");
+EnvironmentsTracingConnection::ListEnvironments(
+    google::cloud::dialogflow::v2::ListEnvironmentsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::ListEnvironments");
   internal::OTelScope scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::Environment>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::Environment>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
-EnvironmentsTracingConnection::GetEnvironment(google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::GetEnvironment");
+EnvironmentsTracingConnection::GetEnvironment(
+    google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
-EnvironmentsTracingConnection::CreateEnvironment(google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::CreateEnvironment");
+EnvironmentsTracingConnection::CreateEnvironment(
+    google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::CreateEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateEnvironment(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
-EnvironmentsTracingConnection::UpdateEnvironment(google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::UpdateEnvironment");
+EnvironmentsTracingConnection::UpdateEnvironment(
+    google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::UpdateEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateEnvironment(request));
 }
 
-Status
-EnvironmentsTracingConnection::DeleteEnvironment(google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::DeleteEnvironment");
+Status EnvironmentsTracingConnection::DeleteEnvironment(
+    google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::DeleteEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteEnvironment(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
-EnvironmentsTracingConnection::GetEnvironmentHistory(google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::GetEnvironmentHistory");
+EnvironmentsTracingConnection::GetEnvironmentHistory(
+    google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::GetEnvironmentHistory");
   internal::OTelScope scope(span);
   auto sr = child_->GetEnvironmentHistory(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::EnvironmentHistory::Entry>(std::move(span),
+                                                                std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>
-EnvironmentsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::ListLocations");
+EnvironmentsTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-EnvironmentsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::GetLocation");
+EnvironmentsTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::EnvironmentsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-EnvironmentsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::ListOperations");
+EnvironmentsTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-EnvironmentsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::GetOperation");
+EnvironmentsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::EnvironmentsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-EnvironmentsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EnvironmentsConnection::CancelOperation");
+Status EnvironmentsTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

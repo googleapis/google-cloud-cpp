@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPLETION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPLETION_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/talent/v4/completion_connection.h"
 #include "google/cloud/talent/v4/completion_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,8 +64,7 @@ struct CompletionConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-talent-options
  */
 using CompletionPolicyOptionList =
-    OptionList<CompletionRetryPolicyOption,
-               CompletionBackoffPolicyOption,
+    OptionList<CompletionRetryPolicyOption, CompletionBackoffPolicyOption,
                CompletionConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

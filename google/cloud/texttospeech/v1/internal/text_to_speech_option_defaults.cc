@@ -17,10 +17,10 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_connection.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,21 +35,25 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TextToSpeechDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TEXT_TO_SPEECH_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TEXT_TO_SPEECH_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TEXT_TO_SPEECH_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TEXT_TO_SPEECH_AUTHORITY",
       "texttospeech.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<texttospeech_v1::TextToSpeechRetryPolicyOption>()) {
     options.set<texttospeech_v1::TextToSpeechRetryPolicyOption>(
         texttospeech_v1::TextToSpeechLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<texttospeech_v1::TextToSpeechBackoffPolicyOption>()) {
     options.set<texttospeech_v1::TextToSpeechBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption>()) {
     options.set<texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption>(
         texttospeech_v1::MakeDefaultTextToSpeechConnectionIdempotencyPolicy());
   }

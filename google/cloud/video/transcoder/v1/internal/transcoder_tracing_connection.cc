@@ -34,61 +34,80 @@ TranscoderServiceTracingConnection::TranscoderServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceTracingConnection::CreateJob(google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
-  auto span = internal::MakeSpan("video_transcoder_v1::TranscoderServiceConnection::CreateJob");
+TranscoderServiceTracingConnection::CreateJob(
+    google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_transcoder_v1::TranscoderServiceConnection::CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateJob(request));
 }
 
 StreamRange<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceTracingConnection::ListJobs(google::cloud::video::transcoder::v1::ListJobsRequest request) {
-  auto span = internal::MakeSpan("video_transcoder_v1::TranscoderServiceConnection::ListJobs");
+TranscoderServiceTracingConnection::ListJobs(
+    google::cloud::video::transcoder::v1::ListJobsRequest request) {
+  auto span = internal::MakeSpan(
+      "video_transcoder_v1::TranscoderServiceConnection::ListJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::video::transcoder::v1::Job>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::video::transcoder::v1::Job>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
-TranscoderServiceTracingConnection::GetJob(google::cloud::video::transcoder::v1::GetJobRequest const& request) {
-  auto span = internal::MakeSpan("video_transcoder_v1::TranscoderServiceConnection::GetJob");
+TranscoderServiceTracingConnection::GetJob(
+    google::cloud::video::transcoder::v1::GetJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_transcoder_v1::TranscoderServiceConnection::GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJob(request));
 }
 
-Status
-TranscoderServiceTracingConnection::DeleteJob(google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
-  auto span = internal::MakeSpan("video_transcoder_v1::TranscoderServiceConnection::DeleteJob");
+Status TranscoderServiceTracingConnection::DeleteJob(
+    google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_transcoder_v1::TranscoderServiceConnection::DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteJob(request));
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceTracingConnection::CreateJobTemplate(google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) {
-  auto span = internal::MakeSpan("video_transcoder_v1::TranscoderServiceConnection::CreateJobTemplate");
+TranscoderServiceTracingConnection::CreateJobTemplate(
+    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_transcoder_v1::TranscoderServiceConnection::CreateJobTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateJobTemplate(request));
 }
 
 StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceTracingConnection::ListJobTemplates(google::cloud::video::transcoder::v1::ListJobTemplatesRequest request) {
-  auto span = internal::MakeSpan("video_transcoder_v1::TranscoderServiceConnection::ListJobTemplates");
+TranscoderServiceTracingConnection::ListJobTemplates(
+    google::cloud::video::transcoder::v1::ListJobTemplatesRequest request) {
+  auto span = internal::MakeSpan(
+      "video_transcoder_v1::TranscoderServiceConnection::ListJobTemplates");
   internal::OTelScope scope(span);
   auto sr = child_->ListJobTemplates(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::video::transcoder::v1::JobTemplate>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::video::transcoder::v1::JobTemplate>(std::move(span),
+                                                         std::move(sr));
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-TranscoderServiceTracingConnection::GetJobTemplate(google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) {
-  auto span = internal::MakeSpan("video_transcoder_v1::TranscoderServiceConnection::GetJobTemplate");
+TranscoderServiceTracingConnection::GetJobTemplate(
+    google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_transcoder_v1::TranscoderServiceConnection::GetJobTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJobTemplate(request));
 }
 
-Status
-TranscoderServiceTracingConnection::DeleteJobTemplate(google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) {
-  auto span = internal::MakeSpan("video_transcoder_v1::TranscoderServiceConnection::DeleteJobTemplate");
+Status TranscoderServiceTracingConnection::DeleteJobTemplate(
+    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_transcoder_v1::TranscoderServiceConnection::DeleteJobTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteJobTemplate(request));
 }
@@ -100,7 +119,8 @@ MakeTranscoderServiceTracingConnection(
     std::shared_ptr<video_transcoder_v1::TranscoderServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<TranscoderServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<TranscoderServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

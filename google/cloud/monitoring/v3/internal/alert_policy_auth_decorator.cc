@@ -31,27 +31,27 @@ AlertPolicyServiceAuth::AlertPolicyServiceAuth(
     std::shared_ptr<AlertPolicyServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> AlertPolicyServiceAuth::ListAlertPolicies(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
+AlertPolicyServiceAuth::ListAlertPolicies(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAlertPolicies(context, options, request);
 }
 
-StatusOr<google::monitoring::v3::AlertPolicy> AlertPolicyServiceAuth::GetAlertPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::AlertPolicy>
+AlertPolicyServiceAuth::GetAlertPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAlertPolicy(context, options, request);
 }
 
-StatusOr<google::monitoring::v3::AlertPolicy> AlertPolicyServiceAuth::CreateAlertPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::AlertPolicy>
+AlertPolicyServiceAuth::CreateAlertPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,17 +59,16 @@ StatusOr<google::monitoring::v3::AlertPolicy> AlertPolicyServiceAuth::CreateAler
 }
 
 Status AlertPolicyServiceAuth::DeleteAlertPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAlertPolicy(context, options, request);
 }
 
-StatusOr<google::monitoring::v3::AlertPolicy> AlertPolicyServiceAuth::UpdateAlertPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::AlertPolicy>
+AlertPolicyServiceAuth::UpdateAlertPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

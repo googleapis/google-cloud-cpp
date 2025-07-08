@@ -25,13 +25,16 @@
 namespace google {
 namespace cloud {
 /// @deprecated This namespace exists for backwards compatibility. Use the
-///     types defined in beyondcorp_appconnectors_v1_mocks instead of the aliases
-///     defined in this namespace.
+///     types defined in beyondcorp_appconnectors_v1_mocks instead of the
+///     aliases defined in this namespace.
 namespace beyondcorp_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use beyondcorp_appconnectors_v1_mocks::MockAppConnectorsServiceConnection directly.
-using ::google::cloud::beyondcorp_appconnectors_v1_mocks::MockAppConnectorsServiceConnection;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1_mocks::MockAppConnectorsServiceConnection
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1_mocks::
+    MockAppConnectorsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_mocks

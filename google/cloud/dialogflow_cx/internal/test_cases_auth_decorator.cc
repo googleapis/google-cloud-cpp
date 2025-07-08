@@ -31,9 +31,9 @@ TestCasesAuth::TestCasesAuth(
     std::shared_ptr<TestCasesStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse> TestCasesAuth::ListTestCases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
+TestCasesAuth::ListTestCases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,35 +41,35 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse> TestCasesAuth
 }
 
 Status TestCasesAuth::BatchDeleteTestCases(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchDeleteTestCases(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TestCase> TestCasesAuth::GetTestCase(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+TestCasesAuth::GetTestCase(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTestCase(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TestCase> TestCasesAuth::CreateTestCase(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+TestCasesAuth::CreateTestCase(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTestCase(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TestCase> TestCasesAuth::UpdateTestCase(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
+TestCasesAuth::UpdateTestCase(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -78,28 +78,27 @@ StatusOr<google::cloud::dialogflow::cx::v3::TestCase> TestCasesAuth::UpdateTestC
 
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncRunTestCase(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRunTestCase(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRunTestCase(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesAuth::RunTestCase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
+StatusOr<google::longrunning::Operation> TestCasesAuth::RunTestCase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RunTestCase(context, options, request);
@@ -107,37 +106,39 @@ TestCasesAuth::RunTestCase(
 
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncBatchRunTestCases(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchRunTestCases(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncBatchRunTestCases(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesAuth::BatchRunTestCases(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request) {
+StatusOr<google::longrunning::Operation> TestCasesAuth::BatchRunTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchRunTestCases(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse> TestCasesAuth::CalculateCoverage(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
+TestCasesAuth::CalculateCoverage(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CalculateCoverage(context, options, request);
@@ -145,28 +146,27 @@ StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse> TestCases
 
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncImportTestCases(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportTestCases(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncImportTestCases(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesAuth::ImportTestCases(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
+StatusOr<google::longrunning::Operation> TestCasesAuth::ImportTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportTestCases(context, options, request);
@@ -174,54 +174,55 @@ TestCasesAuth::ImportTestCases(
 
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncExportTestCases(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportTestCases(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncExportTestCases(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesAuth::ExportTestCases(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
+StatusOr<google::longrunning::Operation> TestCasesAuth::ExportTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportTestCases(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse> TestCasesAuth::ListTestCaseResults(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
+TestCasesAuth::ListTestCaseResults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTestCaseResults(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> TestCasesAuth::GetTestCaseResult(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
+TestCasesAuth::GetTestCaseResult(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTestCaseResult(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> TestCasesAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+TestCasesAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -229,17 +230,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> TestCasesAuth::ListLoca
 }
 
 StatusOr<google::cloud::location::Location> TestCasesAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> TestCasesAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+TestCasesAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -247,8 +247,7 @@ StatusOr<google::longrunning::ListOperationsResponse> TestCasesAuth::ListOperati
 }
 
 StatusOr<google::longrunning::Operation> TestCasesAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -256,8 +255,7 @@ StatusOr<google::longrunning::Operation> TestCasesAuth::GetOperation(
 }
 
 Status TestCasesAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -271,15 +269,16 @@ TestCasesAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -288,13 +287,14 @@ future<Status> TestCasesAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

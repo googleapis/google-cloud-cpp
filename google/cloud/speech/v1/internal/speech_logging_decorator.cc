@@ -31,22 +31,18 @@ namespace cloud {
 namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SpeechLogging::SpeechLogging(
-    std::shared_ptr<SpeechStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
+SpeechLogging::SpeechLogging(std::shared_ptr<SpeechStub> child,
+                             TracingOptions tracing_options,
+                             std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
-StatusOr<google::cloud::speech::v1::RecognizeResponse>
-SpeechLogging::Recognize(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::speech::v1::RecognizeResponse> SpeechLogging::Recognize(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::RecognizeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::RecognizeRequest const& request) {
         return child_->Recognize(context, options, request);
       },
@@ -55,31 +51,30 @@ SpeechLogging::Recognize(
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechLogging::AsyncLongRunningRecognize(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
-        return child_->AsyncLongRunningRecognize(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::speech::v1::LongRunningRecognizeRequest const&
+                 request) {
+        return child_->AsyncLongRunningRecognize(cq, std::move(context),
+                                                 std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechLogging::LongRunningRecognize(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+StatusOr<google::longrunning::Operation> SpeechLogging::LongRunningRecognize(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::speech::v1::LongRunningRecognizeRequest const&
+                 request) {
         return child_->LongRunningRecognize(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -93,12 +88,14 @@ SpeechLogging::AsyncStreamingRecognize(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::cloud::speech::v1::StreamingRecognizeRequest, google::cloud::speech::v1::StreamingRecognizeResponse>;
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::speech::v1::StreamingRecognizeRequest,
+          google::cloud::speech::v1::StreamingRecognizeResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamingRecognize(
-      cq, std::move(context), std::move(options));
+  auto stream = child_->AsyncStreamingRecognize(cq, std::move(context),
+                                                std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -108,26 +105,21 @@ SpeechLogging::AsyncStreamingRecognize(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SpeechLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> SpeechLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -145,8 +137,8 @@ SpeechLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -162,8 +154,8 @@ future<Status> SpeechLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

@@ -17,17 +17,17 @@
 // source: google/cloud/timeseriesinsights/v1/timeseries_insights.proto
 
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub_factory.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_auth_decorator.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_logging_decorator.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_metadata_decorator.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub.h"
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_auth_decorator.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_logging_decorator.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_metadata_decorator.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_tracing_stub.h"
 #include <google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -41,24 +41,24 @@ std::shared_ptr<TimeseriesInsightsControllerStub>
 CreateDefaultTimeseriesInsightsControllerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::timeseriesinsights::v1::TimeseriesInsightsController::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::timeseriesinsights::v1::
+      TimeseriesInsightsController::NewStub(channel);
   std::shared_ptr<TimeseriesInsightsControllerStub> stub =
-    std::make_shared<DefaultTimeseriesInsightsControllerStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultTimeseriesInsightsControllerStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<TimeseriesInsightsControllerAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<TimeseriesInsightsControllerAuth>(std::move(auth),
+                                                              std::move(stub));
   }
   stub = std::make_shared<TimeseriesInsightsControllerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<TimeseriesInsightsControllerLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

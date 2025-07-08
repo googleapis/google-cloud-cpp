@@ -26,10 +26,13 @@ namespace cloud {
 namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use dataplex_v1::MakeDefaultMetadataServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::dataplex_v1::MakeDefaultMetadataServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// dataplex_v1::MakeDefaultMetadataServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataplex_v1::
+    MakeDefaultMetadataServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use dataplex_v1::MetadataServiceConnectionIdempotencyPolicy directly.
+/// @deprecated Use dataplex_v1::MetadataServiceConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::dataplex_v1::MetadataServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

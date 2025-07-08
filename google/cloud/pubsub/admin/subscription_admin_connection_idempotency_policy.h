@@ -35,56 +35,57 @@ class SubscriptionAdminConnectionIdempotencyPolicy {
   virtual ~SubscriptionAdminConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SubscriptionAdminConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SubscriptionAdminConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateSubscription(google::pubsub::v1::Subscription const& request);
+  virtual google::cloud::Idempotency CreateSubscription(
+      google::pubsub::v1::Subscription const& request);
 
-  virtual google::cloud::Idempotency
-  GetSubscription(google::pubsub::v1::GetSubscriptionRequest const& request);
+  virtual google::cloud::Idempotency GetSubscription(
+      google::pubsub::v1::GetSubscriptionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateSubscription(google::pubsub::v1::UpdateSubscriptionRequest const& request);
+  virtual google::cloud::Idempotency UpdateSubscription(
+      google::pubsub::v1::UpdateSubscriptionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSubscriptions(google::pubsub::v1::ListSubscriptionsRequest request);
+  virtual google::cloud::Idempotency ListSubscriptions(
+      google::pubsub::v1::ListSubscriptionsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteSubscription(google::pubsub::v1::DeleteSubscriptionRequest const& request);
+  virtual google::cloud::Idempotency DeleteSubscription(
+      google::pubsub::v1::DeleteSubscriptionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ModifyPushConfig(google::pubsub::v1::ModifyPushConfigRequest const& request);
+  virtual google::cloud::Idempotency ModifyPushConfig(
+      google::pubsub::v1::ModifyPushConfigRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetSnapshot(google::pubsub::v1::GetSnapshotRequest const& request);
+  virtual google::cloud::Idempotency GetSnapshot(
+      google::pubsub::v1::GetSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSnapshots(google::pubsub::v1::ListSnapshotsRequest request);
+  virtual google::cloud::Idempotency ListSnapshots(
+      google::pubsub::v1::ListSnapshotsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateSnapshot(google::pubsub::v1::CreateSnapshotRequest const& request);
+  virtual google::cloud::Idempotency CreateSnapshot(
+      google::pubsub::v1::CreateSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateSnapshot(google::pubsub::v1::UpdateSnapshotRequest const& request);
+  virtual google::cloud::Idempotency UpdateSnapshot(
+      google::pubsub::v1::UpdateSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSnapshot(google::pubsub::v1::DeleteSnapshotRequest const& request);
+  virtual google::cloud::Idempotency DeleteSnapshot(
+      google::pubsub::v1::DeleteSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Seek(google::pubsub::v1::SeekRequest const& request);
+  virtual google::cloud::Idempotency Seek(
+      google::pubsub::v1::SeekRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<SubscriptionAdminConnectionIdempotencyPolicy>
-    MakeDefaultSubscriptionAdminConnectionIdempotencyPolicy();
+MakeDefaultSubscriptionAdminConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_admin

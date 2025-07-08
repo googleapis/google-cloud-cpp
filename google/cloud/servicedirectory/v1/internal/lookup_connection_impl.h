@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/servicedirectory/v1/internal/lookup_retry_traits.h"
 #include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/servicedirectory/v1/lookup_connection.h"
 #include "google/cloud/servicedirectory/v1/lookup_connection_idempotency_policy.h"
 #include "google/cloud/servicedirectory/v1/lookup_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,20 +43,22 @@ class LookupServiceConnectionImpl
   ~LookupServiceConnectionImpl() override = default;
 
   LookupServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<servicedirectory_v1_internal::LookupServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<servicedirectory_v1_internal::LookupServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-  ResolveService(google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) override;
+  ResolveService(
+      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

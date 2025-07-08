@@ -65,11 +65,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.datacatalog.lineage.v1.LineageEvent]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
+/// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
+/// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L320}
 ///
 class LineageClient {
  public:
-  explicit LineageClient(std::shared_ptr<LineageConnection> connection, Options opts = {});
+  explicit LineageClient(std::shared_ptr<LineageConnection> connection,
+                         Options opts = {});
   ~LineageClient();
 
   ///@{
@@ -118,8 +120,11 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventResponse]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L443}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
-  ProcessOpenLineageRunEvent(std::string const& parent, google::protobuf::Struct const& open_lineage, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(std::string const& parent,
+                             google::protobuf::Struct const& open_lineage,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -151,8 +156,12 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.ProcessOpenLineageRunEventResponse]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L443}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
-  ProcessOpenLineageRunEvent(google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::
+               ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -178,8 +187,10 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  CreateProcess(std::string const& parent, google::cloud::datacatalog::lineage::v1::Process const& process, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
+      std::string const& parent,
+      google::cloud::datacatalog::lineage::v1::Process const& process,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -208,8 +219,10 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  CreateProcess(google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
+      google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -237,8 +250,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L488}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  UpdateProcess(google::cloud::datacatalog::lineage::v1::Process const& process, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
+      google::cloud::datacatalog::lineage::v1::Process const& process,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -267,8 +281,10 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.UpdateProcessRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L488}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  UpdateProcess(google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
+      google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -292,8 +308,8 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  GetProcess(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -322,8 +338,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  GetProcess(google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
+      google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -358,8 +375,8 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::lineage::v1::Process>
-  ListProcesses(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datacatalog::lineage::v1::Process> ListProcesses(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -398,8 +415,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Process]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L230}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::lineage::v1::Process>
-  ListProcesses(google::cloud::datacatalog::lineage::v1::ListProcessesRequest request, Options opts = {});
+  StreamRange<google::cloud::datacatalog::lineage::v1::Process> ListProcesses(
+      google::cloud::datacatalog::lineage::v1::ListProcessesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +462,8 @@ class LineageClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteProcess(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteProcess(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -482,7 +500,10 @@ class LineageClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteProcess(google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request, Options opts = {});
+  DeleteProcess(
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -495,8 +516,11 @@ class LineageClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteProcess(NoAwaitTag, google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteProcess(
+      NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -508,7 +532,8 @@ class LineageClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteProcess(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteProcess(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -533,8 +558,10 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  CreateRun(std::string const& parent, google::cloud::datacatalog::lineage::v1::Run const& run, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
+      std::string const& parent,
+      google::cloud::datacatalog::lineage::v1::Run const& run,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -563,8 +590,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  CreateRun(google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
+      google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -595,8 +623,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L589}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  UpdateRun(google::cloud::datacatalog::lineage::v1::Run const& run, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
+      google::cloud::datacatalog::lineage::v1::Run const& run,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -625,8 +654,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.UpdateRunRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L589}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  UpdateRun(google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
+      google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -650,8 +680,8 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  GetRun(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -680,8 +710,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  GetRun(google::cloud::datacatalog::lineage::v1::GetRunRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
+      google::cloud::datacatalog::lineage::v1::GetRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -715,8 +746,8 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::lineage::v1::Run>
-  ListRuns(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datacatalog::lineage::v1::Run> ListRuns(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -755,8 +786,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.Run]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L262}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::lineage::v1::Run>
-  ListRuns(google::cloud::datacatalog::lineage::v1::ListRunsRequest request, Options opts = {});
+  StreamRange<google::cloud::datacatalog::lineage::v1::Run> ListRuns(
+      google::cloud::datacatalog::lineage::v1::ListRunsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -801,8 +833,9 @@ class LineageClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRun(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRun(NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -839,7 +872,9 @@ class LineageClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteRun(google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request, Options opts = {});
+  DeleteRun(
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -852,8 +887,10 @@ class LineageClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRun(NoAwaitTag, google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRun(
+      NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -891,7 +928,11 @@ class LineageClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  CreateLineageEvent(std::string const& parent, google::cloud::datacatalog::lineage::v1::LineageEvent const& lineage_event, Options opts = {});
+  CreateLineageEvent(
+      std::string const& parent,
+      google::cloud::datacatalog::lineage::v1::LineageEvent const&
+          lineage_event,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -921,7 +962,10 @@ class LineageClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  CreateLineageEvent(google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request, Options opts = {});
+  CreateLineageEvent(
+      google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -976,7 +1020,10 @@ class LineageClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  GetLineageEvent(google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request, Options opts = {});
+  GetLineageEvent(
+      google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1052,7 +1099,9 @@ class LineageClient {
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  ListLineageEvents(google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request, Options opts = {});
+  ListLineageEvents(
+      google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1073,8 +1122,7 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L738}
   ///
   // clang-format on
-  Status
-  DeleteLineageEvent(std::string const& name, Options opts = {});
+  Status DeleteLineageEvent(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1100,8 +1148,10 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.DeleteLineageEventRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L738}
   ///
   // clang-format on
-  Status
-  DeleteLineageEvent(google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request, Options opts = {});
+  Status DeleteLineageEvent(
+      google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1147,8 +1197,9 @@ class LineageClient {
   /// [google.cloud.datacatalog.lineage.v1.SearchLinksRequest]: @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L754}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::lineage::v1::Link>
-  SearchLinks(google::cloud::datacatalog::lineage::v1::SearchLinksRequest request, Options opts = {});
+  StreamRange<google::cloud::datacatalog::lineage::v1::Link> SearchLinks(
+      google::cloud::datacatalog::lineage::v1::SearchLinksRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1201,7 +1252,10 @@ class LineageClient {
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>
-  BatchSearchLinkProcesses(google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest request, Options opts = {});
+  BatchSearchLinkProcesses(
+      google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1236,8 +1290,8 @@ class LineageClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1276,8 +1330,8 @@ class LineageClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1303,8 +1357,8 @@ class LineageClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1335,8 +1389,9 @@ class LineageClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1360,8 +1415,7 @@ class LineageClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1390,8 +1444,9 @@ class LineageClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1425,8 +1480,7 @@ class LineageClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1465,8 +1519,9 @@ class LineageClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<LineageConnection> connection_;

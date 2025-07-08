@@ -46,247 +46,316 @@ class ArtifactRegistryConnectionImpl
   ~ArtifactRegistryConnectionImpl() override = default;
 
   ArtifactRegistryConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<artifactregistry_v1_internal::ArtifactRegistryStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<artifactregistry_v1_internal::ArtifactRegistryStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
-  ListDockerImages(google::devtools::artifactregistry::v1::ListDockerImagesRequest request) override;
+  ListDockerImages(
+      google::devtools::artifactregistry::v1::ListDockerImagesRequest request)
+      override;
 
-  StatusOr<google::devtools::artifactregistry::v1::DockerImage>
-  GetDockerImage(google::devtools::artifactregistry::v1::GetDockerImageRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
+      google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+          request) override;
 
   StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
-  ListMavenArtifacts(google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request) override;
+  ListMavenArtifacts(
+      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
-  GetMavenArtifact(google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request) override;
+  GetMavenArtifact(
+      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+          request) override;
 
   StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
-  ListNpmPackages(google::devtools::artifactregistry::v1::ListNpmPackagesRequest request) override;
+  ListNpmPackages(google::devtools::artifactregistry::v1::ListNpmPackagesRequest
+                      request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
-  GetNpmPackage(google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
+      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+          request) override;
 
   StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
-  ListPythonPackages(google::devtools::artifactregistry::v1::ListPythonPackagesRequest request) override;
+  ListPythonPackages(
+      google::devtools::artifactregistry::v1::ListPythonPackagesRequest request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
-  GetPythonPackage(google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request) override;
+  GetPythonPackage(
+      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+          request) override;
 
-  future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
-  ImportAptArtifacts(google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ImportAptArtifacts(NoAwaitTag,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) override;
-
-  future<StatusOr<google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
   ImportAptArtifacts(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) override;
 
-  future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
-  ImportYumArtifacts(google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportAptArtifacts(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportYumArtifacts(NoAwaitTag,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) override;
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
   ImportYumArtifacts(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportYumArtifacts(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::devtools::artifactregistry::v1::Repository>
-  ListRepositories(google::devtools::artifactregistry::v1::ListRepositoriesRequest request) override;
+  ListRepositories(
+      google::devtools::artifactregistry::v1::ListRepositoriesRequest request)
+      override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Repository>
-  GetRepository(google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) override;
-
-  future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
-  CreateRepository(google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateRepository(NoAwaitTag,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
+      google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+          request) override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
   CreateRepository(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Repository>
-  UpdateRepository(google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) override;
 
-  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteRepository(google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) override;
+  future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+  CreateRepository(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteRepository(NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
+      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+          request) override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteRepository(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) override;
 
-  StreamRange<google::devtools::artifactregistry::v1::Package>
-  ListPackages(google::devtools::artifactregistry::v1::ListPackagesRequest request) override;
-
-  StatusOr<google::devtools::artifactregistry::v1::Package>
-  GetPackage(google::devtools::artifactregistry::v1::GetPackageRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeletePackage(google::devtools::artifactregistry::v1::DeletePackageRequest const& request) override;
+  DeleteRepository(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeletePackage(NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) override;
+  StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
+      google::devtools::artifactregistry::v1::ListPackagesRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
+      google::devtools::artifactregistry::v1::GetPackageRequest const& request)
+      override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeletePackage(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) override;
 
-  StreamRange<google::devtools::artifactregistry::v1::Version>
-  ListVersions(google::devtools::artifactregistry::v1::ListVersionsRequest request) override;
-
-  StatusOr<google::devtools::artifactregistry::v1::Version>
-  GetVersion(google::devtools::artifactregistry::v1::GetVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeletePackage(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteVersion(google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) override;
+  DeletePackage(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteVersion(NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) override;
+  StreamRange<google::devtools::artifactregistry::v1::Version> ListVersions(
+      google::devtools::artifactregistry::v1::ListVersionsRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
+      google::devtools::artifactregistry::v1::GetVersionRequest const& request)
+      override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteVersion(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) override;
 
-  future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
-  BatchDeleteVersions(google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteVersion(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  BatchDeleteVersions(NoAwaitTag,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) override;
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteVersion(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
   BatchDeleteVersions(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Version>
-  UpdateVersion(google::devtools::artifactregistry::v1::UpdateVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> BatchDeleteVersions(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) override;
 
-  StreamRange<google::devtools::artifactregistry::v1::File>
-  ListFiles(google::devtools::artifactregistry::v1::ListFilesRequest request) override;
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::File>
-  GetFile(google::devtools::artifactregistry::v1::GetFileRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
+      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+          request) override;
+
+  StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
+      google::devtools::artifactregistry::v1::ListFilesRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
+      google::devtools::artifactregistry::v1::GetFileRequest const& request)
+      override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteFile(google::devtools::artifactregistry::v1::DeleteFileRequest const& request) override;
+  DeleteFile(google::devtools::artifactregistry::v1::DeleteFileRequest const&
+                 request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteFile(NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteFile(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request)
+      override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteFile(
-      google::longrunning::Operation const& operation) override;
+  DeleteFile(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::File>
-  UpdateFile(google::devtools::artifactregistry::v1::UpdateFileRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
+      google::devtools::artifactregistry::v1::UpdateFileRequest const& request)
+      override;
 
-  StreamRange<google::devtools::artifactregistry::v1::Tag>
-  ListTags(google::devtools::artifactregistry::v1::ListTagsRequest request) override;
+  StreamRange<google::devtools::artifactregistry::v1::Tag> ListTags(
+      google::devtools::artifactregistry::v1::ListTagsRequest request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Tag>
-  GetTag(google::devtools::artifactregistry::v1::GetTagRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
+      google::devtools::artifactregistry::v1::GetTagRequest const& request)
+      override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Tag>
-  CreateTag(google::devtools::artifactregistry::v1::CreateTagRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
+      google::devtools::artifactregistry::v1::CreateTagRequest const& request)
+      override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Tag>
-  UpdateTag(google::devtools::artifactregistry::v1::UpdateTagRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
+      google::devtools::artifactregistry::v1::UpdateTagRequest const& request)
+      override;
 
-  Status
-  DeleteTag(google::devtools::artifactregistry::v1::DeleteTagRequest const& request) override;
+  Status DeleteTag(
+      google::devtools::artifactregistry::v1::DeleteTagRequest const& request)
+      override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Rule>
-  CreateRule(google::devtools::artifactregistry::v1::CreateRuleRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
+      google::devtools::artifactregistry::v1::CreateRuleRequest const& request)
+      override;
 
-  StreamRange<google::devtools::artifactregistry::v1::Rule>
-  ListRules(google::devtools::artifactregistry::v1::ListRulesRequest request) override;
+  StreamRange<google::devtools::artifactregistry::v1::Rule> ListRules(
+      google::devtools::artifactregistry::v1::ListRulesRequest request)
+      override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Rule>
-  GetRule(google::devtools::artifactregistry::v1::GetRuleRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
+      google::devtools::artifactregistry::v1::GetRuleRequest const& request)
+      override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Rule>
-  UpdateRule(google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
+      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request)
+      override;
 
-  Status
-  DeleteRule(google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) override;
+  Status DeleteRule(
+      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-  GetProjectSettings(google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request) override;
+  GetProjectSettings(
+      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-  UpdateProjectSettings(google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request) override;
+  UpdateProjectSettings(
+      google::devtools::artifactregistry::v1::
+          UpdateProjectSettingsRequest const& request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> GetVPCSCConfig(
+      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-  GetVPCSCConfig(google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request) override;
+  UpdateVPCSCConfig(
+      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-  UpdateVPCSCConfig(google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request) override;
-
-  StatusOr<google::devtools::artifactregistry::v1::Package>
-  UpdatePackage(google::devtools::artifactregistry::v1::UpdatePackageRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
+      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+          request) override;
 
   StreamRange<google::devtools::artifactregistry::v1::Attachment>
-  ListAttachments(google::devtools::artifactregistry::v1::ListAttachmentsRequest request) override;
+  ListAttachments(google::devtools::artifactregistry::v1::ListAttachmentsRequest
+                      request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::Attachment>
-  GetAttachment(google::devtools::artifactregistry::v1::GetAttachmentRequest const& request) override;
-
-  future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
-  CreateAttachment(google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateAttachment(NoAwaitTag,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
+      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+          request) override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
   CreateAttachment(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) override;
 
-  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
-  DeleteAttachment(google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateAttachment(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteAttachment(NoAwaitTag,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) override;
+  future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+  CreateAttachment(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteAttachment(
-      google::longrunning::Operation const& operation) override;
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::longrunning::Operation> DeleteAttachment(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteAttachment(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -35,28 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AppHubDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_APP_HUB_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_APP_HUB_AUTHORITY",
-      "apphub.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_APP_HUB_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_APP_HUB_AUTHORITY", "apphub.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<apphub_v1::AppHubRetryPolicyOption>()) {
     options.set<apphub_v1::AppHubRetryPolicyOption>(
-        apphub_v1::AppHubLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        apphub_v1::AppHubLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<apphub_v1::AppHubBackoffPolicyOption>()) {
     options.set<apphub_v1::AppHubBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<apphub_v1::AppHubPollingPolicyOption>()) {
     options.set<apphub_v1::AppHubPollingPolicyOption>(
-        GenericPollingPolicy<
-            apphub_v1::AppHubRetryPolicyOption::Type,
-            apphub_v1::AppHubBackoffPolicyOption::Type>(
+        GenericPollingPolicy<apphub_v1::AppHubRetryPolicyOption::Type,
+                             apphub_v1::AppHubBackoffPolicyOption::Type>(
             options.get<apphub_v1::AppHubRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<apphub_v1::AppHubConnectionIdempotencyPolicyOption>()) {
     options.set<apphub_v1::AppHubConnectionIdempotencyPolicyOption>(

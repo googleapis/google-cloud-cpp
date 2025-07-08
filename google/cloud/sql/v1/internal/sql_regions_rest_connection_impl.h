@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_REGIONS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_REGIONS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_regions_rest_stub.h"
 #include "google/cloud/sql/v1/internal/sql_regions_retry_traits.h"
 #include "google/cloud/sql/v1/sql_regions_connection.h"
 #include "google/cloud/sql/v1/sql_regions_connection_idempotency_policy.h"
 #include "google/cloud/sql/v1/sql_regions_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,15 +42,15 @@ class SqlRegionsServiceRestConnectionImpl
   ~SqlRegionsServiceRestConnectionImpl() override = default;
 
   SqlRegionsServiceRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<sql_v1_internal::SqlRegionsServiceRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<sql_v1_internal::SqlRegionsServiceRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
  private:
-  static std::unique_ptr<sql_v1::SqlRegionsServiceRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<sql_v1::SqlRegionsServiceRetryPolicy> retry_policy(
+      Options const& options) {
     return options.get<sql_v1::SqlRegionsServiceRetryPolicyOption>()->clone();
   }
 
@@ -60,7 +60,9 @@ class SqlRegionsServiceRestConnectionImpl
 
   static std::unique_ptr<sql_v1::SqlRegionsServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<sql_v1::SqlRegionsServiceConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<sql_v1::SqlRegionsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -31,37 +31,41 @@ AdvisoryNotificationsServiceAuth::AdvisoryNotificationsServiceAuth(
     std::shared_ptr<AdvisoryNotificationsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse> AdvisoryNotificationsServiceAuth::ListNotifications(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) {
+StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
+AdvisoryNotificationsServiceAuth::ListNotifications(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListNotifications(context, options, request);
 }
 
-StatusOr<google::cloud::advisorynotifications::v1::Notification> AdvisoryNotificationsServiceAuth::GetNotification(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) {
+StatusOr<google::cloud::advisorynotifications::v1::Notification>
+AdvisoryNotificationsServiceAuth::GetNotification(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetNotification(context, options, request);
 }
 
-StatusOr<google::cloud::advisorynotifications::v1::Settings> AdvisoryNotificationsServiceAuth::GetSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) {
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceAuth::GetSettings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSettings(context, options, request);
 }
 
-StatusOr<google::cloud::advisorynotifications::v1::Settings> AdvisoryNotificationsServiceAuth::UpdateSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) {
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceAuth::UpdateSettings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSettings(context, options, request);

@@ -28,19 +28,25 @@ namespace cloud {
 namespace networkconnectivity {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use networkconnectivity_v1::HubServicePollingPolicyOption directly.
+/// @deprecated Use networkconnectivity_v1::HubServicePollingPolicyOption
+/// directly.
 using ::google::cloud::networkconnectivity_v1::HubServicePollingPolicyOption;
 
-/// @deprecated Use networkconnectivity_v1::HubServiceBackoffPolicyOption directly.
+/// @deprecated Use networkconnectivity_v1::HubServiceBackoffPolicyOption
+/// directly.
 using ::google::cloud::networkconnectivity_v1::HubServiceBackoffPolicyOption;
 
-/// @deprecated Use networkconnectivity_v1::HubServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::networkconnectivity_v1::HubServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// networkconnectivity_v1::HubServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::networkconnectivity_v1::
+    HubServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use networkconnectivity_v1::HubServicePolicyOptionList directly.
 using ::google::cloud::networkconnectivity_v1::HubServicePolicyOptionList;
 
-/// @deprecated Use networkconnectivity_v1::HubServiceRetryPolicyOption directly.
+/// @deprecated Use networkconnectivity_v1::HubServiceRetryPolicyOption
+/// directly.
 using ::google::cloud::networkconnectivity_v1::HubServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

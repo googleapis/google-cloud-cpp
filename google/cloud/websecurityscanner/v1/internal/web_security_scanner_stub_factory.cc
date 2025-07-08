@@ -17,17 +17,17 @@
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub_factory.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_auth_decorator.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_logging_decorator.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_metadata_decorator.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_auth_decorator.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_logging_decorator.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_metadata_decorator.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_tracing_stub.h"
 #include <google/cloud/websecurityscanner/v1/web_security_scanner.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -37,28 +37,28 @@ namespace cloud {
 namespace websecurityscanner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<WebSecurityScannerStub>
-CreateDefaultWebSecurityScannerStub(
+std::shared_ptr<WebSecurityScannerStub> CreateDefaultWebSecurityScannerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::websecurityscanner::v1::WebSecurityScanner::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::websecurityscanner::v1::WebSecurityScanner::NewStub(
+          channel);
   std::shared_ptr<WebSecurityScannerStub> stub =
-    std::make_shared<DefaultWebSecurityScannerStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultWebSecurityScannerStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<WebSecurityScannerAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<WebSecurityScannerAuth>(std::move(auth),
+                                                    std::move(stub));
   }
   stub = std::make_shared<WebSecurityScannerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<WebSecurityScannerLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

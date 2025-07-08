@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_OS_LOGIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_OS_LOGIN_CLIENT_H
 
+#include "google/cloud/oslogin/v1/os_login_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
-#include "google/cloud/oslogin/v1/os_login_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -65,7 +65,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class OsLoginServiceClient {
  public:
-  explicit OsLoginServiceClient(std::shared_ptr<OsLoginServiceConnection> connection, Options opts = {});
+  explicit OsLoginServiceClient(
+      std::shared_ptr<OsLoginServiceConnection> connection, Options opts = {});
   ~OsLoginServiceClient();
 
   ///@{
@@ -78,10 +79,12 @@ class OsLoginServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(OsLoginServiceClient const& a, OsLoginServiceClient const& b) {
+  friend bool operator==(OsLoginServiceClient const& a,
+                         OsLoginServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(OsLoginServiceClient const& a, OsLoginServiceClient const& b) {
+  friend bool operator!=(OsLoginServiceClient const& a,
+                         OsLoginServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +112,10 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  CreateSshPublicKey(std::string const& parent, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, Options opts = {});
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      std::string const& parent,
+      google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -139,8 +144,9 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  CreateSshPublicKey(google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -163,8 +169,7 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.DeletePosixAccountRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L148}
   ///
   // clang-format on
-  Status
-  DeletePosixAccount(std::string const& name, Options opts = {});
+  Status DeletePosixAccount(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +195,9 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.DeletePosixAccountRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L148}
   ///
   // clang-format on
-  Status
-  DeletePosixAccount(google::cloud::oslogin::v1::DeletePosixAccountRequest const& request, Options opts = {});
+  Status DeletePosixAccount(
+      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +220,7 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L161}
   ///
   // clang-format on
-  Status
-  DeleteSshPublicKey(std::string const& name, Options opts = {});
+  Status DeleteSshPublicKey(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +246,9 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L161}
   ///
   // clang-format on
-  Status
-  DeleteSshPublicKey(google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request, Options opts = {});
+  Status DeleteSshPublicKey(
+      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -267,8 +273,8 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.LoginProfile]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::v1::LoginProfile>
-  GetLoginProfile(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -298,8 +304,9 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.LoginProfile]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::v1::LoginProfile>
-  GetLoginProfile(google::cloud::oslogin::v1::GetLoginProfileRequest const& request, Options opts = {});
+  StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
+      google::cloud::oslogin::v1::GetLoginProfileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -325,8 +332,8 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  GetSshPublicKey(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -355,8 +362,9 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  GetSshPublicKey(google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
+      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -384,7 +392,10 @@ class OsLoginServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-  ImportSshPublicKey(std::string const& parent, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, Options opts = {});
+  ImportSshPublicKey(
+      std::string const& parent,
+      google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -413,7 +424,10 @@ class OsLoginServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-  ImportSshPublicKey(std::string const& parent, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, std::string const& project_id, Options opts = {});
+  ImportSshPublicKey(
+      std::string const& parent,
+      google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+      std::string const& project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -445,7 +459,9 @@ class OsLoginServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-  ImportSshPublicKey(google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request, Options opts = {});
+  ImportSshPublicKey(
+      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -473,8 +489,10 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L236}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  UpdateSshPublicKey(std::string const& name, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, Options opts = {});
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
+      std::string const& name,
+      google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -503,8 +521,10 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L236}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  UpdateSshPublicKey(std::string const& name, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
+      std::string const& name,
+      google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -534,8 +554,9 @@ class OsLoginServiceClient {
   /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L236}
   ///
   // clang-format on
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  UpdateSshPublicKey(google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
+      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<OsLoginServiceConnection> connection_;

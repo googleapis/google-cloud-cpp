@@ -33,41 +33,41 @@ UserEventServiceStub::~UserEventServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::UserEvent>
 DefaultUserEventServiceStub::WriteUserEvent(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::WriteUserEventRequest const& request) {
-    google::cloud::discoveryengine::v1::UserEvent response;
-    auto status =
-        grpc_stub_->WriteUserEvent(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::WriteUserEventRequest const& request) {
+  google::cloud::discoveryengine::v1::UserEvent response;
+  auto status = grpc_stub_->WriteUserEvent(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::api::HttpBody>
-DefaultUserEventServiceStub::CollectUserEvent(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::CollectUserEventRequest const& request) {
-    google::api::HttpBody response;
-    auto status =
-        grpc_stub_->CollectUserEvent(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::api::HttpBody> DefaultUserEventServiceStub::CollectUserEvent(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::CollectUserEventRequest const&
+        request) {
+  google::api::HttpBody response;
+  auto status = grpc_stub_->CollectUserEvent(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultUserEventServiceStub::AsyncPurgeUserEvents(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::PurgeUserEventsRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request,
+             google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncPurgeUserEvents(context, request, cq);
       },
@@ -76,29 +76,30 @@ DefaultUserEventServiceStub::AsyncPurgeUserEvents(
 
 StatusOr<google::longrunning::Operation>
 DefaultUserEventServiceStub::PurgeUserEvents(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->PurgeUserEvents(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PurgeUserEvents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultUserEventServiceStub::AsyncImportUserEvents(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::ImportUserEventsRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::ImportUserEventsRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request,
+             google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncImportUserEvents(context, request, cq);
       },
@@ -107,55 +108,50 @@ DefaultUserEventServiceStub::AsyncImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 DefaultUserEventServiceStub::ImportUserEvents(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ImportUserEvents(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportUserEvents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultUserEventServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultUserEventServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultUserEventServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultUserEventServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -184,13 +180,14 @@ future<Status> DefaultUserEventServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

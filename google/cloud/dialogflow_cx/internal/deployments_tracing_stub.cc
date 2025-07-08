@@ -32,33 +32,36 @@ DeploymentsTracingStub::DeploymentsTracingStub(
     std::shared_ptr<DeploymentsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse> DeploymentsTracingStub::ListDeployments(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
+DeploymentsTracingStub::ListDeployments(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Deployments", "ListDeployments");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Deployments", "ListDeployments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDeployments(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Deployment> DeploymentsTracingStub::GetDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
+DeploymentsTracingStub::GetDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Deployments", "GetDeployment");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Deployments", "GetDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDeployment(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> DeploymentsTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DeploymentsTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Deployments", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Deployments", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -66,21 +69,22 @@ StatusOr<google::cloud::location::ListLocationsResponse> DeploymentsTracingStub:
 }
 
 StatusOr<google::cloud::location::Location> DeploymentsTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Deployments", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Deployments", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DeploymentsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DeploymentsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Deployments", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Deployments", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -88,10 +92,10 @@ StatusOr<google::longrunning::ListOperationsResponse> DeploymentsTracingStub::Li
 }
 
 StatusOr<google::longrunning::Operation> DeploymentsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Deployments", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Deployments", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -99,10 +103,10 @@ StatusOr<google::longrunning::Operation> DeploymentsTracingStub::GetOperation(
 }
 
 Status DeploymentsTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Deployments", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Deployments", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

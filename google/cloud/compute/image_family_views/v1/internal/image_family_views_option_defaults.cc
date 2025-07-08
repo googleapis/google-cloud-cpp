@@ -35,23 +35,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ImageFamilyViewsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_IMAGE_FAMILY_VIEWS_AUTHORITY",
       "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>()) {
-    options.set<compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>(
+  if (!options.has<
+          compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>()) {
+    options.set<
+        compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>(
         compute_image_family_views_v1::ImageFamilyViewsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_image_family_views_v1::ImageFamilyViewsBackoffPolicyOption>()) {
-    options.set<compute_image_family_views_v1::ImageFamilyViewsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<compute_image_family_views_v1::
+                       ImageFamilyViewsBackoffPolicyOption>()) {
+    options.set<
+        compute_image_family_views_v1::ImageFamilyViewsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_image_family_views_v1::ImageFamilyViewsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_image_family_views_v1::ImageFamilyViewsConnectionIdempotencyPolicyOption>(
-        compute_image_family_views_v1::MakeDefaultImageFamilyViewsConnectionIdempotencyPolicy());
+  if (!options.has<compute_image_family_views_v1::
+                       ImageFamilyViewsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_image_family_views_v1::
+                    ImageFamilyViewsConnectionIdempotencyPolicyOption>(
+        compute_image_family_views_v1::
+            MakeDefaultImageFamilyViewsConnectionIdempotencyPolicy());
   }
 
   return options;

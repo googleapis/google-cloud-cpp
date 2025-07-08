@@ -46,28 +46,28 @@ SearchServiceMetadata::SearchServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::SearchResponse>
 SearchServiceMetadata::Search(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::SearchRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("placement=", internal::UrlEncode(request.placement())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("placement=", internal::UrlEncode(request.placement())));
   return child_->Search(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SearchServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-SearchServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> SearchServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -80,8 +80,8 @@ void SearchServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void SearchServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

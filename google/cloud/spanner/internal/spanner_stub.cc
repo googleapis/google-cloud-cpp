@@ -30,167 +30,151 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SpannerStub::~SpannerStub() = default;
 
-StatusOr<google::spanner::v1::Session>
-DefaultSpannerStub::CreateSession(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::CreateSessionRequest const& request) {
-    google::spanner::v1::Session response;
-    auto status =
-        grpc_stub_->CreateSession(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::CreateSessionRequest const& request) {
+  google::spanner::v1::Session response;
+  auto status = grpc_stub_->CreateSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 DefaultSpannerStub::BatchCreateSessions(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::BatchCreateSessionsRequest const& request) {
-    google::spanner::v1::BatchCreateSessionsResponse response;
-    auto status =
-        grpc_stub_->BatchCreateSessions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::BatchCreateSessionsRequest const& request) {
+  google::spanner::v1::BatchCreateSessionsResponse response;
+  auto status = grpc_stub_->BatchCreateSessions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultSpannerStub::DeleteSession(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::DeleteSessionRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteSession(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultSpannerStub::DeleteSession(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::DeleteSessionRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-StatusOr<google::spanner::v1::ResultSet>
-DefaultSpannerStub::ExecuteSql(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::ExecuteSqlRequest const& request) {
-    google::spanner::v1::ResultSet response;
-    auto status =
-        grpc_stub_->ExecuteSql(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::spanner::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::ExecuteSqlRequest const& request) {
+  google::spanner::v1::ResultSet response;
+  auto status = grpc_stub_->ExecuteSql(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::ExecuteStreamingSql(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   auto stream = grpc_stub_->ExecuteStreamingSql(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::spanner::v1::PartialResultSet>>(
-      std::move(context), std::move(stream));
+      google::spanner::v1::PartialResultSet>>(std::move(context),
+                                              std::move(stream));
 }
 
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 DefaultSpannerStub::ExecuteBatchDml(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::ExecuteBatchDmlRequest const& request) {
-    google::spanner::v1::ExecuteBatchDmlResponse response;
-    auto status =
-        grpc_stub_->ExecuteBatchDml(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::ExecuteBatchDmlRequest const& request) {
+  google::spanner::v1::ExecuteBatchDmlResponse response;
+  auto status = grpc_stub_->ExecuteBatchDml(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::spanner::v1::PartialResultSet>>
 DefaultSpannerStub::StreamingRead(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::spanner::v1::ReadRequest const& request) {
   auto stream = grpc_stub_->StreamingRead(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::spanner::v1::PartialResultSet>>(
-      std::move(context), std::move(stream));
+      google::spanner::v1::PartialResultSet>>(std::move(context),
+                                              std::move(stream));
 }
 
-StatusOr<google::spanner::v1::Transaction>
-DefaultSpannerStub::BeginTransaction(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::BeginTransactionRequest const& request) {
-    google::spanner::v1::Transaction response;
-    auto status =
-        grpc_stub_->BeginTransaction(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::spanner::v1::Transaction> DefaultSpannerStub::BeginTransaction(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::BeginTransactionRequest const& request) {
+  google::spanner::v1::Transaction response;
+  auto status = grpc_stub_->BeginTransaction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::spanner::v1::CommitResponse>
-DefaultSpannerStub::Commit(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::CommitRequest const& request) {
-    google::spanner::v1::CommitResponse response;
-    auto status =
-        grpc_stub_->Commit(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::spanner::v1::CommitResponse> DefaultSpannerStub::Commit(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::CommitRequest const& request) {
+  google::spanner::v1::CommitResponse response;
+  auto status = grpc_stub_->Commit(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultSpannerStub::Rollback(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::RollbackRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->Rollback(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultSpannerStub::Rollback(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::RollbackRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->Rollback(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionQuery(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::PartitionQueryRequest const& request) {
-    google::spanner::v1::PartitionResponse response;
-    auto status =
-        grpc_stub_->PartitionQuery(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::PartitionQueryRequest const& request) {
+  google::spanner::v1::PartitionResponse response;
+  auto status = grpc_stub_->PartitionQuery(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionRead(
-  grpc::ClientContext& context, Options const&,
-  google::spanner::v1::PartitionReadRequest const& request) {
-    google::spanner::v1::PartitionResponse response;
-    auto status =
-        grpc_stub_->PartitionRead(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::spanner::v1::PartitionReadRequest const& request) {
+  google::spanner::v1::PartitionResponse response;
+  auto status = grpc_stub_->PartitionRead(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::spanner::v1::BatchWriteResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::spanner::v1::BatchWriteResponse>>
 DefaultSpannerStub::BatchWrite(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::spanner::v1::BatchWriteRequest const& request) {
   auto stream = grpc_stub_->BatchWrite(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::spanner::v1::BatchWriteResponse>>(
-      std::move(context), std::move(stream));
+      google::spanner::v1::BatchWriteResponse>>(std::move(context),
+                                                std::move(stream));
 }
 
 future<StatusOr<google::spanner::v1::Session>>
@@ -218,8 +202,9 @@ DefaultSpannerStub::AsyncBatchCreateSessions(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::spanner::v1::BatchCreateSessionsRequest,
-                                    google::spanner::v1::BatchCreateSessionsResponse>(
+  return internal::MakeUnaryRpcImpl<
+      google::spanner::v1::BatchCreateSessionsRequest,
+      google::spanner::v1::BatchCreateSessionsResponse>(
       cq,
       [this](grpc::ClientContext* context,
              google::spanner::v1::BatchCreateSessionsRequest const& request,
@@ -229,8 +214,7 @@ DefaultSpannerStub::AsyncBatchCreateSessions(
       request, std::move(context));
 }
 
-future<Status>
-DefaultSpannerStub::AsyncDeleteSession(
+future<Status> DefaultSpannerStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
@@ -238,16 +222,16 @@ DefaultSpannerStub::AsyncDeleteSession(
     google::spanner::v1::DeleteSessionRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::spanner::v1::DeleteSessionRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::spanner::v1::DeleteSessionRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteSession(context, request, cq);
-      },
-      request, std::move(context))
-          .then([](future<StatusOr<google::protobuf::Empty>> f) {
-            return f.get().status();
-          });
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::spanner::v1::DeleteSessionRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return grpc_stub_->AsyncDeleteSession(context, request, cq);
+             },
+             request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
 }
 
 future<StatusOr<google::spanner::v1::ResultSet>>

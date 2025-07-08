@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/environments_option_defaults.h"
 #include "google/cloud/dialogflow_es/environments_connection.h"
 #include "google/cloud/dialogflow_es/environments_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,23 +34,29 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options EnvironmentsDefaultOptions(std::string const& location, Options options) {
+Options EnvironmentsDefaultOptions(std::string const& location,
+                                   Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENTS_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENTS_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::EnvironmentsRetryPolicyOption>()) {
     options.set<dialogflow_es::EnvironmentsRetryPolicyOption>(
         dialogflow_es::EnvironmentsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dialogflow_es::EnvironmentsBackoffPolicyOption>()) {
     options.set<dialogflow_es::EnvironmentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<dialogflow_es::EnvironmentsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          dialogflow_es::EnvironmentsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_es::EnvironmentsConnectionIdempotencyPolicyOption>(
         dialogflow_es::MakeDefaultEnvironmentsConnectionIdempotencyPolicy());
   }

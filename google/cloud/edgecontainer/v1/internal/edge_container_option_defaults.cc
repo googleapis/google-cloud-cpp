@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options EdgeContainerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EDGE_CONTAINER_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_EDGE_CONTAINER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_EDGE_CONTAINER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_EDGE_CONTAINER_AUTHORITY",
       "edgecontainer.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<edgecontainer_v1::EdgeContainerRetryPolicyOption>()) {
     options.set<edgecontainer_v1::EdgeContainerRetryPolicyOption>(
         edgecontainer_v1::EdgeContainerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()) {
     options.set<edgecontainer_v1::EdgeContainerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<edgecontainer_v1::EdgeContainerPollingPolicyOption>()) {
     options.set<edgecontainer_v1::EdgeContainerPollingPolicyOption>(
         GenericPollingPolicy<
             edgecontainer_v1::EdgeContainerRetryPolicyOption::Type,
             edgecontainer_v1::EdgeContainerBackoffPolicyOption::Type>(
-            options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()->clone(),
+            options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()) {
-    options.set<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>(
-        edgecontainer_v1::MakeDefaultEdgeContainerConnectionIdempotencyPolicy());
+  if (!options.has<
+          edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>(
+            edgecontainer_v1::
+                MakeDefaultEdgeContainerConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -17,10 +17,10 @@
 // source: google/cloud/securitycenter/v2/securitycenter_service.proto
 
 #include "google/cloud/securitycenter/v2/internal/security_center_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/securitycenter/v2/security_center_connection.h"
 #include "google/cloud/securitycenter/v2/security_center_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SecurityCenterDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SECURITY_CENTER_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SECURITY_CENTER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SECURITY_CENTER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SECURITY_CENTER_AUTHORITY",
       "securitycenter.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<securitycenter_v2::SecurityCenterRetryPolicyOption>()) {
     options.set<securitycenter_v2::SecurityCenterRetryPolicyOption>(
         securitycenter_v2::SecurityCenterLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<securitycenter_v2::SecurityCenterBackoffPolicyOption>()) {
     options.set<securitycenter_v2::SecurityCenterBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<securitycenter_v2::SecurityCenterPollingPolicyOption>()) {
     options.set<securitycenter_v2::SecurityCenterPollingPolicyOption>(
         GenericPollingPolicy<
             securitycenter_v2::SecurityCenterRetryPolicyOption::Type,
             securitycenter_v2::SecurityCenterBackoffPolicyOption::Type>(
-            options.get<securitycenter_v2::SecurityCenterRetryPolicyOption>()->clone(),
+            options.get<securitycenter_v2::SecurityCenterRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<securitycenter_v2::SecurityCenterConnectionIdempotencyPolicyOption>()) {
-    options.set<securitycenter_v2::SecurityCenterConnectionIdempotencyPolicyOption>(
-        securitycenter_v2::MakeDefaultSecurityCenterConnectionIdempotencyPolicy());
+  if (!options.has<securitycenter_v2::
+                       SecurityCenterConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        securitycenter_v2::SecurityCenterConnectionIdempotencyPolicyOption>(
+        securitycenter_v2::
+            MakeDefaultSecurityCenterConnectionIdempotencyPolicy());
   }
 
   return options;

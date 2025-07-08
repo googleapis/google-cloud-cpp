@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ZonesClient {
  public:
-  explicit ZonesClient(std::shared_ptr<ZonesConnection> connection, Options opts = {});
+  explicit ZonesClient(std::shared_ptr<ZonesConnection> connection,
+                       Options opts = {});
   ~ZonesClient();
 
   ///@{
@@ -107,8 +108,8 @@ class ZonesClient {
   /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Zone>
-  GetZone(std::string const& project, std::string const& zone, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
+      std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +139,9 @@ class ZonesClient {
   /// [google.cloud.cpp.compute.zones.v1.GetZoneRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L59}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Zone>
-  GetZone(google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -173,8 +175,8 @@ class ZonesClient {
   /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L69}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListZones(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +215,9 @@ class ZonesClient {
   /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/zones/v1/zones.proto#L69}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ZonesConnection> connection_;

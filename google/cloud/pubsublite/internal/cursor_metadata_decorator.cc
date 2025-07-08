@@ -45,67 +45,66 @@ CursorServiceMetadata::CursorServiceMetadata(
               : std::move(api_client_header)) {}
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
-      google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
+    google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
+    google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
 CursorServiceMetadata::AsyncStreamingCommitCursor(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   SetMetadata(*context, *options);
-  return child_->AsyncStreamingCommitCursor(cq, std::move(context), std::move(options));
+  return child_->AsyncStreamingCommitCursor(cq, std::move(context),
+                                            std::move(options));
 }
 
 StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 CursorServiceMetadata::CommitCursor(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("subscription=", internal::UrlEncode(request.subscription())));
+  SetMetadata(context, options,
+              absl::StrCat("subscription=",
+                           internal::UrlEncode(request.subscription())));
   return child_->CommitCursor(context, options, request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 CursorServiceMetadata::ListPartitionCursors(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPartitionCursors(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CursorServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-CursorServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> CursorServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-CursorServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CursorServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-CursorServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CursorServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -118,8 +117,8 @@ void CursorServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void CursorServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

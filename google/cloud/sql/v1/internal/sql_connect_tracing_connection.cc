@@ -33,15 +33,19 @@ SqlConnectServiceTracingConnection::SqlConnectServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::sql::v1::ConnectSettings>
-SqlConnectServiceTracingConnection::GetConnectSettings(google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlConnectServiceConnection::GetConnectSettings");
+SqlConnectServiceTracingConnection::GetConnectSettings(
+    google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlConnectServiceConnection::GetConnectSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnectSettings(request));
 }
 
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-SqlConnectServiceTracingConnection::GenerateEphemeralCert(google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlConnectServiceConnection::GenerateEphemeralCert");
+SqlConnectServiceTracingConnection::GenerateEphemeralCert(
+    google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlConnectServiceConnection::GenerateEphemeralCert");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GenerateEphemeralCert(request));
 }
@@ -53,7 +57,8 @@ MakeSqlConnectServiceTracingConnection(
     std::shared_ptr<sql_v1::SqlConnectServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SqlConnectServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<SqlConnectServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

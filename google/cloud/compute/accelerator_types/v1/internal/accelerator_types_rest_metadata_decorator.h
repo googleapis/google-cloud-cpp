@@ -39,17 +39,24 @@ class AcceleratorTypesRestMetadata : public AcceleratorTypesRestStub {
       std::shared_ptr<AcceleratorTypesRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList> AggregatedListAcceleratorTypes(
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+  AggregatedListAcceleratorTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::accelerator_types::v1::
+          AggregatedListAcceleratorTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::accelerator_types::v1::
+          GetAcceleratorTypeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList> ListAcceleratorTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
+  ListAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::accelerator_types::v1::
+                           ListAcceleratorTypesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

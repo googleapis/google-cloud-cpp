@@ -17,14 +17,14 @@
 // source: google/cloud/essentialcontacts/v1/service.proto
 
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_options.h"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_connection_impl.h"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_option_defaults.h"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_stub_factory.h"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -36,7 +36,8 @@ namespace cloud {
 namespace essentialcontacts_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-EssentialContactsServiceConnection::~EssentialContactsServiceConnection() = default;
+EssentialContactsServiceConnection::~EssentialContactsServiceConnection() =
+    default;
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceConnection::CreateContact(
@@ -50,8 +51,10 @@ EssentialContactsServiceConnection::UpdateContact(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::essentialcontacts::v1::Contact> EssentialContactsServiceConnection::ListContacts(
-    google::cloud::essentialcontacts::v1::ListContactsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::essentialcontacts::v1::Contact>
+EssentialContactsServiceConnection::ListContacts(
+    google::cloud::essentialcontacts::v1::
+        ListContactsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::essentialcontacts::v1::Contact>>();
 }
@@ -62,38 +65,43 @@ EssentialContactsServiceConnection::GetContact(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-EssentialContactsServiceConnection::DeleteContact(
+Status EssentialContactsServiceConnection::DeleteContact(
     google::cloud::essentialcontacts::v1::DeleteContactRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::essentialcontacts::v1::Contact> EssentialContactsServiceConnection::ComputeContacts(
-    google::cloud::essentialcontacts::v1::ComputeContactsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::essentialcontacts::v1::Contact>
+EssentialContactsServiceConnection::ComputeContacts(
+    google::cloud::essentialcontacts::v1::
+        ComputeContactsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::essentialcontacts::v1::Contact>>();
 }
 
-Status
-EssentialContactsServiceConnection::SendTestMessage(
+Status EssentialContactsServiceConnection::SendTestMessage(
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<EssentialContactsServiceConnection> MakeEssentialContactsServiceConnection(
-    Options options) {
+std::shared_ptr<EssentialContactsServiceConnection>
+MakeEssentialContactsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      EssentialContactsServicePolicyOptionList>(options, __func__);
-  options = essentialcontacts_v1_internal::EssentialContactsServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 EssentialContactsServicePolicyOptionList>(
+      options, __func__);
+  options =
+      essentialcontacts_v1_internal::EssentialContactsServiceDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = essentialcontacts_v1_internal::CreateDefaultEssentialContactsServiceStub(
-    std::move(auth), options);
-  return essentialcontacts_v1_internal::MakeEssentialContactsServiceTracingConnection(
-      std::make_shared<essentialcontacts_v1_internal::EssentialContactsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      essentialcontacts_v1_internal::CreateDefaultEssentialContactsServiceStub(
+          std::move(auth), options);
+  return essentialcontacts_v1_internal::
+      MakeEssentialContactsServiceTracingConnection(
+          std::make_shared<essentialcontacts_v1_internal::
+                               EssentialContactsServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

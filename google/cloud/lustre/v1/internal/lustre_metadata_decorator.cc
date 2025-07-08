@@ -46,19 +46,18 @@ LustreMetadata::LustreMetadata(
 
 StatusOr<google::cloud::lustre::v1::ListInstancesResponse>
 LustreMetadata::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::lustre::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, options, request);
 }
 
-StatusOr<google::cloud::lustre::v1::Instance>
-LustreMetadata::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::lustre::v1::Instance> LustreMetadata::GetInstance(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::lustre::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, options, request);
 }
 
@@ -68,17 +67,17 @@ LustreMetadata::AsyncCreateInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::lustre::v1::CreateInstanceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateInstance(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateInstance(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreMetadata::CreateInstance(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> LustreMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
     google::cloud::lustre::v1::CreateInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateInstance(context, options, request);
 }
 
@@ -88,17 +87,19 @@ LustreMetadata::AsyncUpdateInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::lustre::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("instance.name=", internal::UrlEncode(request.instance().name())));
-  return child_->AsyncUpdateInstance(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->AsyncUpdateInstance(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreMetadata::UpdateInstance(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> LustreMetadata::UpdateInstance(
+    grpc::ClientContext& context, Options options,
     google::cloud::lustre::v1::UpdateInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("instance.name=", internal::UrlEncode(request.instance().name())));
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
   return child_->UpdateInstance(context, options, request);
 }
 
@@ -108,17 +109,17 @@ LustreMetadata::AsyncDeleteInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::lustre::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteInstance(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteInstance(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreMetadata::DeleteInstance(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> LustreMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
     google::cloud::lustre::v1::DeleteInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteInstance(context, options, request);
 }
 
@@ -128,17 +129,17 @@ LustreMetadata::AsyncImportData(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::lustre::v1::ImportDataRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncImportData(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncImportData(cq, std::move(context), std::move(options),
+                                 request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreMetadata::ImportData(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> LustreMetadata::ImportData(
+    grpc::ClientContext& context, Options options,
     google::cloud::lustre::v1::ImportDataRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ImportData(context, options, request);
 }
 
@@ -148,71 +149,67 @@ LustreMetadata::AsyncExportData(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::lustre::v1::ExportDataRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportData(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportData(cq, std::move(context), std::move(options),
+                                 request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreMetadata::ExportData(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> LustreMetadata::ExportData(
+    grpc::ClientContext& context, Options options,
     google::cloud::lustre::v1::ExportDataRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ExportData(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 LustreMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-LustreMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> LustreMetadata::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 LustreMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> LustreMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-LustreMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status LustreMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-LustreMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status LustreMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -224,8 +221,8 @@ LustreMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> LustreMetadata::AsyncCancelOperation(
@@ -235,21 +232,21 @@ future<Status> LustreMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void LustreMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                 Options const& options,
+                                 std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void LustreMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                 Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

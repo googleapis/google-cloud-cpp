@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_DATABASE_ADMIN_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_DATABASE_ADMIN_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/spanner/admin/internal/database_admin_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/spanner/admin/internal/database_admin_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.pb.h>
 #include <google/spanner/admin/database/v1/spanner_database_admin.pb.h>
@@ -40,163 +40,239 @@ class DatabaseAdminRestMetadata : public DatabaseAdminRestStub {
       std::shared_ptr<DatabaseAdminRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse> ListDatabases(
+  StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
+  ListDatabases(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::ListDatabasesRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::ListDatabasesRequest const& request)
+      override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+  google::cloud::future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::CreateDatabaseRequest const& request) override;
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::CreateDatabaseRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request) override;
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::GetDatabaseRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::GetDatabaseRequest const& request)
+      override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabase(
+  google::cloud::future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::UpdateDatabaseRequest const& request) override;
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::UpdateDatabaseRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
+  google::cloud::future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) override;
 
   Status DropDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::DropDatabaseRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::DropDatabaseRequest const& request)
+      override;
 
-  StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
+  StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
+  GetDatabaseDdl(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+          request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::iam::v1::SetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::iam::v1::GetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::iam::v1::TestIamPermissionsRequest const& request) override;
+      Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+  google::cloud::future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::CreateBackupRequest const& request) override;
+      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::CreateBackupRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+      override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
+  google::cloud::future<StatusOr<google::longrunning::Operation>>
+  AsyncCopyBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::CopyBackupRequest const& request) override;
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CopyBackup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::CopyBackupRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::GetBackupRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::GetBackupRequest const& request)
+      override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::UpdateBackupRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::UpdateBackupRequest const& request)
+      override;
 
   Status DeleteBackup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::DeleteBackupRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::DeleteBackupRequest const& request)
+      override;
 
-  StatusOr<google::spanner::admin::database::v1::ListBackupsResponse> ListBackups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::ListBackupsRequest const& request) override;
+  StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
+  ListBackups(google::cloud::rest_internal::RestContext& rest_context,
+              Options const& options,
+              google::spanner::admin::database::v1::ListBackupsRequest const&
+                  request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+  google::cloud::future<StatusOr<google::longrunning::Operation>>
+  AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) override;
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> RestoreDatabase(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
+  StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
+  ListDatabaseOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::ListDatabaseOperationsRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
+  StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
+  ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::ListBackupOperationsRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::ListBackupOperationsRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse> ListDatabaseRoles(
+  StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+  ListDatabaseRoles(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::ListDatabaseRolesRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse> AddSplitPoints(
+  StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+  AddSplitPoints(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::AddSplitPointsRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::database::v1::BackupSchedule> CreateBackupSchedule(
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  CreateBackupSchedule(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::CreateBackupScheduleRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::database::v1::BackupSchedule> GetBackupSchedule(
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  GetBackupSchedule(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::GetBackupScheduleRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::database::v1::BackupSchedule> UpdateBackupSchedule(
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  UpdateBackupSchedule(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::UpdateBackupScheduleRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+          request) override;
 
   Status DeleteBackupSchedule(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::DeleteBackupScheduleRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+          request) override;
 
-  StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse> ListBackupSchedules(
+  StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+  ListBackupSchedules(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::spanner::admin::database::v1::ListBackupSchedulesRequest const& request) override;
+      Options const& options,
+      google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::longrunning::ListOperationsRequest const& request) override;
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::longrunning::GetOperationRequest const& request) override;
+      Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::longrunning::DeleteOperationRequest const& request) override;
+      Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::longrunning::CancelOperationRequest const& request) override;
+      Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::longrunning::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,

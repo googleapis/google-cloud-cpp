@@ -38,48 +38,48 @@ class LustreConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<LustreConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListInstances(google::cloud::lustre::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency ListInstances(
+      google::cloud::lustre::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetInstance(google::cloud::lustre::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency GetInstance(
+      google::cloud::lustre::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateInstance(google::cloud::lustre::v1::CreateInstanceRequest const& request);
+  virtual google::cloud::Idempotency CreateInstance(
+      google::cloud::lustre::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateInstance(google::cloud::lustre::v1::UpdateInstanceRequest const& request);
+  virtual google::cloud::Idempotency UpdateInstance(
+      google::cloud::lustre::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteInstance(google::cloud::lustre::v1::DeleteInstanceRequest const& request);
+  virtual google::cloud::Idempotency DeleteInstance(
+      google::cloud::lustre::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportData(google::cloud::lustre::v1::ImportDataRequest const& request);
+  virtual google::cloud::Idempotency ImportData(
+      google::cloud::lustre::v1::ImportDataRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportData(google::cloud::lustre::v1::ExportDataRequest const& request);
+  virtual google::cloud::Idempotency ExportData(
+      google::cloud::lustre::v1::ExportDataRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<LustreConnectionIdempotencyPolicy>
-    MakeDefaultLustreConnectionIdempotencyPolicy();
+MakeDefaultLustreConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace lustre_v1

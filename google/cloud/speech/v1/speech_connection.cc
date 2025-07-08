@@ -17,17 +17,17 @@
 // source: google/cloud/speech/v1/cloud_speech.proto
 
 #include "google/cloud/speech/v1/speech_connection.h"
+#include "google/cloud/speech/v1/internal/speech_connection_impl.h"
+#include "google/cloud/speech/v1/internal/speech_option_defaults.h"
+#include "google/cloud/speech/v1/internal/speech_stub_factory.h"
+#include "google/cloud/speech/v1/internal/speech_tracing_connection.h"
+#include "google/cloud/speech/v1/speech_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/speech/v1/internal/speech_connection_impl.h"
-#include "google/cloud/speech/v1/internal/speech_option_defaults.h"
-#include "google/cloud/speech/v1/internal/speech_stub_factory.h"
-#include "google/cloud/speech/v1/internal/speech_tracing_connection.h"
-#include "google/cloud/speech/v1/speech_options.h"
 #include <memory>
 #include <utility>
 
@@ -48,24 +48,21 @@ future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
 SpeechConnection::LongRunningRecognize(
     google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechConnection::LongRunningRecognize(
-    NoAwaitTag,
-    google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
+StatusOr<google::longrunning::Operation> SpeechConnection::LongRunningRecognize(
+    NoAwaitTag, google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-SpeechConnection::LongRunningRecognize(
-    google::longrunning::Operation const&) {
+SpeechConnection::LongRunningRecognize(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -80,31 +77,29 @@ SpeechConnection::AsyncStreamingRecognize() {
 }
 
 StreamRange<google::longrunning::Operation> SpeechConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechConnection::GetOperation(
+StatusOr<google::longrunning::Operation> SpeechConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<SpeechConnection> MakeSpeechConnection(
-    Options options) {
+std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      SpeechPolicyOptionList>(options, __func__);
-  options = speech_v1_internal::SpeechDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 SpeechPolicyOptionList>(options, __func__);
+  options = speech_v1_internal::SpeechDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = speech_v1_internal::CreateDefaultSpeechStub(
-    std::move(auth), options);
+  auto stub =
+      speech_v1_internal::CreateDefaultSpeechStub(std::move(auth), options);
   return speech_v1_internal::MakeSpeechTracingConnection(
       std::make_shared<speech_v1_internal::SpeechConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

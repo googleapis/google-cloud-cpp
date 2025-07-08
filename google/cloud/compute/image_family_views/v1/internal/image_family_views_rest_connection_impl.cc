@@ -17,8 +17,8 @@
 // source: google/cloud/compute/image_family_views/v1/image_family_views.proto
 
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
@@ -32,21 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageFamilyViewsRestConnectionImpl::ImageFamilyViewsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_image_family_views_v1_internal::ImageFamilyViewsRestStub> stub,
+    std::shared_ptr<
+        compute_image_family_views_v1_internal::ImageFamilyViewsRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ImageFamilyViewsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ImageFamilyViewsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsRestConnectionImpl::GetImageFamilyView(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request) {
+ImageFamilyViewsRestConnectionImpl::GetImageFamilyView(
+    google::cloud::cpp::compute::image_family_views::v1::
+        GetImageFamilyViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetImageFamilyView(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::image_family_views::v1::
+                 GetImageFamilyViewRequest const& request) {
         return stub_->GetImageFamilyView(rest_context, options, request);
       },
       *current, request, __func__);

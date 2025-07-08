@@ -17,12 +17,12 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_auth_decorator.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_logging_decorator.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_metadata_decorator.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_stub.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -37,28 +37,25 @@ namespace cloud {
 namespace eventarc_publishing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<PublisherStub>
-CreateDefaultPublisherStub(
+std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::eventarc::publishing::v1::Publisher::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::eventarc::publishing::v1::Publisher::NewStub(channel);
   std::shared_ptr<PublisherStub> stub =
-    std::make_shared<DefaultPublisherStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultPublisherStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<PublisherAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<PublisherAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<PublisherMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<PublisherLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

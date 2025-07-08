@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_ZONAL_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_ZONAL_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_retry_traits.h"
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_stub.h"
 #include "google/cloud/osconfig/v1/os_config_zonal_connection.h"
 #include "google/cloud/osconfig/v1/os_config_zonal_connection_idempotency_policy.h"
 #include "google/cloud/osconfig/v1/os_config_zonal_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -46,71 +46,96 @@ class OsConfigZonalServiceConnectionImpl
   ~OsConfigZonalServiceConnectionImpl() override = default;
 
   OsConfigZonalServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<osconfig_v1_internal::OsConfigZonalServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<osconfig_v1_internal::OsConfigZonalServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  CreateOSPolicyAssignment(google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request) override;
+  CreateOSPolicyAssignment(
+      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateOSPolicyAssignment(NoAwaitTag,
-      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
+      NoAwaitTag,
+      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
   CreateOSPolicyAssignment(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  UpdateOSPolicyAssignment(google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request) override;
+  UpdateOSPolicyAssignment(
+      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateOSPolicyAssignment(NoAwaitTag,
-      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
+      NoAwaitTag,
+      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
   UpdateOSPolicyAssignment(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
-  GetOSPolicyAssignment(google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) override;
+  GetOSPolicyAssignment(
+      google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request)
+      override;
 
   StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-  ListOSPolicyAssignments(google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request) override;
+  ListOSPolicyAssignments(
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request)
+      override;
 
   StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-  ListOSPolicyAssignmentRevisions(google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest request) override;
+  ListOSPolicyAssignmentRevisions(
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest
+          request) override;
 
-  future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-  DeleteOSPolicyAssignment(google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request) override;
+  future<StatusOr<
+      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+  DeleteOSPolicyAssignment(
+      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteOSPolicyAssignment(NoAwaitTag,
-      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
+      NoAwaitTag,
+      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+  future<StatusOr<
+      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
   DeleteOSPolicyAssignment(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-  GetOSPolicyAssignmentReport(google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const& request) override;
+  GetOSPolicyAssignmentReport(
+      google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
+          request) override;
 
   StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-  ListOSPolicyAssignmentReports(google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request) override;
+  ListOSPolicyAssignmentReports(
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::Inventory>
-  GetInventory(google::cloud::osconfig::v1::GetInventoryRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::Inventory> GetInventory(
+      google::cloud::osconfig::v1::GetInventoryRequest const& request) override;
 
-  StreamRange<google::cloud::osconfig::v1::Inventory>
-  ListInventories(google::cloud::osconfig::v1::ListInventoriesRequest request) override;
+  StreamRange<google::cloud::osconfig::v1::Inventory> ListInventories(
+      google::cloud::osconfig::v1::ListInventoriesRequest request) override;
 
   StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
-  GetVulnerabilityReport(google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) override;
+  GetVulnerabilityReport(
+      google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request)
+      override;
 
   StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>
-  ListVulnerabilityReports(google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request) override;
+  ListVulnerabilityReports(
+      google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

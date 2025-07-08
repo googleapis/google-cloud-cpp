@@ -36,22 +36,23 @@ class PipelineServiceTracingStub : public PipelineServiceStub {
  public:
   ~PipelineServiceTracingStub() override = default;
 
-  explicit PipelineServiceTracingStub(std::shared_ptr<PipelineServiceStub> child);
+  explicit PipelineServiceTracingStub(
+      std::shared_ptr<PipelineServiceStub> child);
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunPipeline(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RunPipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -68,7 +69,8 @@ class PipelineServiceTracingStub : public PipelineServiceStub {
 
  private:
   std::shared_ptr<PipelineServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

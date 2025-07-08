@@ -46,46 +46,46 @@ EntityTypesMetadata::EntityTypesMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
 EntityTypesMetadata::ListEntityTypes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListEntityTypesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEntityTypes(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesMetadata::GetEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesMetadata::CreateEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesMetadata::UpdateEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("entity_type.name=", internal::UrlEncode(request.entity_type().name())));
+  SetMetadata(context, options,
+              absl::StrCat("entity_type.name=",
+                           internal::UrlEncode(request.entity_type().name())));
   return child_->UpdateEntityType(context, options, request);
 }
 
-Status
-EntityTypesMetadata::DeleteEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EntityTypesMetadata::DeleteEntityType(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEntityType(context, options, request);
 }
 
@@ -94,18 +94,21 @@ EntityTypesMetadata::AsyncBatchUpdateEntityTypes(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchUpdateEntityTypes(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchUpdateEntityTypes(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EntityTypesMetadata::BatchUpdateEntityTypes(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchUpdateEntityTypes(context, options, request);
 }
 
@@ -114,18 +117,21 @@ EntityTypesMetadata::AsyncBatchDeleteEntityTypes(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchDeleteEntityTypes(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchDeleteEntityTypes(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EntityTypesMetadata::BatchDeleteEntityTypes(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchDeleteEntityTypes(context, options, request);
 }
 
@@ -135,17 +141,18 @@ EntityTypesMetadata::AsyncBatchCreateEntities(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchCreateEntities(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchCreateEntities(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EntityTypesMetadata::BatchCreateEntities(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCreateEntities(context, options, request);
 }
 
@@ -155,17 +162,18 @@ EntityTypesMetadata::AsyncBatchUpdateEntities(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchUpdateEntities(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchUpdateEntities(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EntityTypesMetadata::BatchUpdateEntities(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchUpdateEntities(context, options, request);
 }
 
@@ -175,62 +183,60 @@ EntityTypesMetadata::AsyncBatchDeleteEntities(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchDeleteEntities(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchDeleteEntities(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EntityTypesMetadata::BatchDeleteEntities(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchDeleteEntities(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 EntityTypesMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-EntityTypesMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> EntityTypesMetadata::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EntityTypesMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-EntityTypesMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> EntityTypesMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-EntityTypesMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EntityTypesMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -242,8 +248,8 @@ EntityTypesMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> EntityTypesMetadata::AsyncCancelOperation(
@@ -253,21 +259,21 @@ future<Status> EntityTypesMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void EntityTypesMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                      Options const& options,
+                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void EntityTypesMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                      Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

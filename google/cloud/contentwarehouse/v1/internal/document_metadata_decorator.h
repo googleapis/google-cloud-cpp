@@ -39,54 +39,55 @@ class DocumentServiceMetadata : public DocumentServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse> CreateDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
+  CreateDocument(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request)
+      override;
 
   StatusOr<google::cloud::contentwarehouse::v1::Document> GetDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::GetDocumentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse> UpdateDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
+  UpdateDocument(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request)
+      override;
 
   Status DeleteDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse> SearchDocuments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::SearchDocumentsRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
+  SearchDocuments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
+          request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::Document> LockDocument(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::LockDocumentRequest const& request)
+      override;
 
   StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> FetchAcl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::FetchAclRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::FetchAclRequest const& request)
+      override;
 
   StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::SetAclRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::SetAclRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

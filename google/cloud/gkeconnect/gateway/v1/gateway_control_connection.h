@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_GATEWAY_CONTROL_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_GATEWAY_CONTROL_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection_idempotency_policy.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -51,7 +51,8 @@ class GatewayControlRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GatewayControlLimitedErrorCountRetryPolicy : public GatewayControlRetryPolicy {
+class GatewayControlLimitedErrorCountRetryPolicy
+    : public GatewayControlRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class GatewayControlLimitedErrorCountRetryPolicy : public GatewayControlRetryPol
    *     @p maximum_failures == 0.
    */
   explicit GatewayControlLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   GatewayControlLimitedErrorCountRetryPolicy(
       GatewayControlLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : GatewayControlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : GatewayControlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GatewayControlLimitedErrorCountRetryPolicy(
       GatewayControlLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : GatewayControlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : GatewayControlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class GatewayControlLimitedErrorCountRetryPolicy : public GatewayControlRetryPol
   using BaseType = GatewayControlRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<gkeconnect_gateway_v1_internal::GatewayControlRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      gkeconnect_gateway_v1_internal::GatewayControlRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +129,14 @@ class GatewayControlLimitedTimeRetryPolicy : public GatewayControlRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit GatewayControlLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  GatewayControlLimitedTimeRetryPolicy(GatewayControlLimitedTimeRetryPolicy&& rhs) noexcept
-    : GatewayControlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  GatewayControlLimitedTimeRetryPolicy(GatewayControlLimitedTimeRetryPolicy const& rhs) noexcept
-    : GatewayControlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GatewayControlLimitedTimeRetryPolicy(
+      GatewayControlLimitedTimeRetryPolicy&& rhs) noexcept
+      : GatewayControlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GatewayControlLimitedTimeRetryPolicy(
+      GatewayControlLimitedTimeRetryPolicy const& rhs) noexcept
+      : GatewayControlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +158,9 @@ class GatewayControlLimitedTimeRetryPolicy : public GatewayControlRetryPolicy {
   using BaseType = GatewayControlRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<gkeconnect_gateway_v1_internal::GatewayControlRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      gkeconnect_gateway_v1_internal::GatewayControlRetryTraits>
+      impl_;
 };
 
 /**
@@ -174,8 +181,11 @@ class GatewayControlConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-  GenerateCredentials(google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request);
+  virtual StatusOr<
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
+  GenerateCredentials(
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

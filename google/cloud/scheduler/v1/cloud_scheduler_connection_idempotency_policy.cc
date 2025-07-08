@@ -26,55 +26,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudSchedulerConnectionIdempotencyPolicy::~CloudSchedulerConnectionIdempotencyPolicy() = default;
+CloudSchedulerConnectionIdempotencyPolicy::
+    ~CloudSchedulerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
 CloudSchedulerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudSchedulerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::ListJobs(google::cloud::scheduler::v1::ListJobsRequest) {  // NOLINT
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::ListJobs(
+    google::cloud::scheduler::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::GetJob(google::cloud::scheduler::v1::GetJobRequest const&) {
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::GetJob(
+    google::cloud::scheduler::v1::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::CreateJob(google::cloud::scheduler::v1::CreateJobRequest const&) {
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::CreateJob(
+    google::cloud::scheduler::v1::CreateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const&) {
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::UpdateJob(
+    google::cloud::scheduler::v1::UpdateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const&) {
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::DeleteJob(
+    google::cloud::scheduler::v1::DeleteJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::PauseJob(google::cloud::scheduler::v1::PauseJobRequest const&) {
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::PauseJob(
+    google::cloud::scheduler::v1::PauseJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const&) {
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::ResumeJob(
+    google::cloud::scheduler::v1::ResumeJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::RunJob(google::cloud::scheduler::v1::RunJobRequest const&) {
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::RunJob(
+    google::cloud::scheduler::v1::RunJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudSchedulerConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
-    MakeDefaultCloudSchedulerConnectionIdempotencyPolicy() {
+MakeDefaultCloudSchedulerConnectionIdempotencyPolicy() {
   return std::make_unique<CloudSchedulerConnectionIdempotencyPolicy>();
 }
 

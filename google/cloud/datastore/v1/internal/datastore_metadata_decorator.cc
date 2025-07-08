@@ -46,20 +46,20 @@ DatastoreMetadata::DatastoreMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::datastore::v1::LookupResponse>
-DatastoreMetadata::Lookup(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::LookupResponse> DatastoreMetadata::Lookup(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::LookupRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back(absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back(absl::StrCat("database_id=", internal::UrlEncode(request.database_id())));
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -70,20 +70,20 @@ DatastoreMetadata::Lookup(
   return child_->Lookup(context, options, request);
 }
 
-StatusOr<google::datastore::v1::RunQueryResponse>
-DatastoreMetadata::RunQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::RunQueryResponse> DatastoreMetadata::RunQuery(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunQueryRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back(absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back(absl::StrCat("database_id=", internal::UrlEncode(request.database_id())));
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -96,18 +96,19 @@ DatastoreMetadata::RunQuery(
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
 DatastoreMetadata::RunAggregationQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunAggregationQueryRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back(absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back(absl::StrCat("database_id=", internal::UrlEncode(request.database_id())));
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -120,18 +121,19 @@ DatastoreMetadata::RunAggregationQuery(
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
 DatastoreMetadata::BeginTransaction(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::BeginTransactionRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back(absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back(absl::StrCat("database_id=", internal::UrlEncode(request.database_id())));
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -142,20 +144,20 @@ DatastoreMetadata::BeginTransaction(
   return child_->BeginTransaction(context, options, request);
 }
 
-StatusOr<google::datastore::v1::CommitResponse>
-DatastoreMetadata::Commit(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::CommitResponse> DatastoreMetadata::Commit(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::CommitRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back(absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back(absl::StrCat("database_id=", internal::UrlEncode(request.database_id())));
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -166,20 +168,20 @@ DatastoreMetadata::Commit(
   return child_->Commit(context, options, request);
 }
 
-StatusOr<google::datastore::v1::RollbackResponse>
-DatastoreMetadata::Rollback(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::RollbackResponse> DatastoreMetadata::Rollback(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RollbackRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back(absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back(absl::StrCat("database_id=", internal::UrlEncode(request.database_id())));
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -192,18 +194,19 @@ DatastoreMetadata::Rollback(
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
 DatastoreMetadata::AllocateIds(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::AllocateIdsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back(absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back(absl::StrCat("database_id=", internal::UrlEncode(request.database_id())));
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -216,18 +219,19 @@ DatastoreMetadata::AllocateIds(
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
 DatastoreMetadata::ReserveIds(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::ReserveIdsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
 
   if (!request.project_id().empty()) {
-    params.push_back(absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+    params.push_back(
+        absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   }
 
   if (!request.database_id().empty()) {
-    params.push_back(absl::StrCat("database_id=", internal::UrlEncode(request.database_id())));
+    params.push_back(absl::StrCat("database_id=",
+                                  internal::UrlEncode(request.database_id())));
   }
 
   if (params.empty()) {
@@ -240,51 +244,48 @@ DatastoreMetadata::ReserveIds(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DatastoreMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-DatastoreMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> DatastoreMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-DatastoreMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DatastoreMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-DatastoreMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DatastoreMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
 void DatastoreMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                    Options const& options,
+                                    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DatastoreMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                    Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

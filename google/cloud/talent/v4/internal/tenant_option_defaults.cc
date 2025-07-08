@@ -17,10 +17,10 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/v4/internal/tenant_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/talent/v4/tenant_connection.h"
 #include "google/cloud/talent/v4/tenant_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,21 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TenantServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TENANT_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TENANT_SERVICE_AUTHORITY",
-      "jobs.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_TENANT_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TENANT_SERVICE_AUTHORITY", "jobs.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<talent_v4::TenantServiceRetryPolicyOption>()) {
     options.set<talent_v4::TenantServiceRetryPolicyOption>(
-        talent_v4::TenantServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        talent_v4::TenantServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<talent_v4::TenantServiceBackoffPolicyOption>()) {
     options.set<talent_v4::TenantServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<talent_v4::TenantServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<talent_v4::TenantServiceConnectionIdempotencyPolicyOption>()) {
     options.set<talent_v4::TenantServiceConnectionIdempotencyPolicyOption>(
         talent_v4::MakeDefaultTenantServiceConnectionIdempotencyPolicy());
   }

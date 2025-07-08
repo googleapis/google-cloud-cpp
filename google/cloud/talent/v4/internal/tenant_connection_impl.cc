@@ -17,12 +17,12 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/v4/internal/tenant_connection_impl.h"
+#include "google/cloud/talent/v4/internal/tenant_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/talent/v4/internal/tenant_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,34 +32,36 @@ namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<talent_v4::TenantServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<talent_v4::TenantServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<talent_v4::TenantServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<talent_v4::TenantServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<talent_v4::TenantServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<talent_v4::TenantServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<talent_v4::TenantServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 TenantServiceConnectionImpl::TenantServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<talent_v4_internal::TenantServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        TenantServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      TenantServiceConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::Tenant>
-TenantServiceConnectionImpl::CreateTenant(google::cloud::talent::v4::CreateTenantRequest const& request) {
+TenantServiceConnectionImpl::CreateTenant(
+    google::cloud::talent::v4::CreateTenantRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -72,7 +74,8 @@ TenantServiceConnectionImpl::CreateTenant(google::cloud::talent::v4::CreateTenan
 }
 
 StatusOr<google::cloud::talent::v4::Tenant>
-TenantServiceConnectionImpl::GetTenant(google::cloud::talent::v4::GetTenantRequest const& request) {
+TenantServiceConnectionImpl::GetTenant(
+    google::cloud::talent::v4::GetTenantRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -85,7 +88,8 @@ TenantServiceConnectionImpl::GetTenant(google::cloud::talent::v4::GetTenantReque
 }
 
 StatusOr<google::cloud::talent::v4::Tenant>
-TenantServiceConnectionImpl::UpdateTenant(google::cloud::talent::v4::UpdateTenantRequest const& request) {
+TenantServiceConnectionImpl::UpdateTenant(
+    google::cloud::talent::v4::UpdateTenantRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -97,8 +101,8 @@ TenantServiceConnectionImpl::UpdateTenant(google::cloud::talent::v4::UpdateTenan
       *current, request, __func__);
 }
 
-Status
-TenantServiceConnectionImpl::DeleteTenant(google::cloud::talent::v4::DeleteTenantRequest const& request) {
+Status TenantServiceConnectionImpl::DeleteTenant(
+    google::cloud::talent::v4::DeleteTenantRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -111,27 +115,33 @@ TenantServiceConnectionImpl::DeleteTenant(google::cloud::talent::v4::DeleteTenan
 }
 
 StreamRange<google::cloud::talent::v4::Tenant>
-TenantServiceConnectionImpl::ListTenants(google::cloud::talent::v4::ListTenantsRequest request) {
+TenantServiceConnectionImpl::ListTenants(
+    google::cloud::talent::v4::ListTenantsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTenants(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::talent::v4::Tenant>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::talent::v4::Tenant>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<talent_v4::TenantServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<talent_v4::TenantServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::talent::v4::ListTenantsRequest const& r) {
+          Options const& options,
+          google::cloud::talent::v4::ListTenantsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::talent::v4::ListTenantsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::talent::v4::ListTenantsRequest const& request) {
               return stub->ListTenants(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::talent::v4::ListTenantsResponse r) {
-        std::vector<google::cloud::talent::v4::Tenant> result(r.tenants().size());
+        std::vector<google::cloud::talent::v4::Tenant> result(
+            r.tenants().size());
         auto& messages = *r.mutable_tenants();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -139,7 +149,8 @@ TenantServiceConnectionImpl::ListTenants(google::cloud::talent::v4::ListTenantsR
 }
 
 StatusOr<google::longrunning::Operation>
-TenantServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+TenantServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

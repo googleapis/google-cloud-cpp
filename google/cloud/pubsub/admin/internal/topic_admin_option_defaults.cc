@@ -17,11 +17,11 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/admin/internal/topic_admin_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/pubsub/admin/topic_admin_connection.h"
 #include "google/cloud/pubsub/admin/topic_admin_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -39,19 +39,23 @@ Options TopicAdminDefaultOptions(std::string const& location, Options options) {
       std::move(options), "GOOGLE_CLOUD_CPP_PUBLISHER_ENDPOINT",
       "PUBSUB_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_PUBLISHER_AUTHORITY",
       // optional location tag for generating docs
-      absl::StrCat(location, location.empty() ? "" : "-", "pubsub.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "pubsub.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<pubsub_admin::TopicAdminRetryPolicyOption>()) {
     options.set<pubsub_admin::TopicAdminRetryPolicyOption>(
-        pubsub_admin::TopicAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        pubsub_admin::TopicAdminLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<pubsub_admin::TopicAdminBackoffPolicyOption>()) {
     options.set<pubsub_admin::TopicAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<pubsub_admin::TopicAdminConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<pubsub_admin::TopicAdminConnectionIdempotencyPolicyOption>()) {
     options.set<pubsub_admin::TopicAdminConnectionIdempotencyPolicyOption>(
         pubsub_admin::MakeDefaultTopicAdminConnectionIdempotencyPolicy());
   }

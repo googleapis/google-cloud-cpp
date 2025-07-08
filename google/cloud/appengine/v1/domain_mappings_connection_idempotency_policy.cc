@@ -26,35 +26,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DomainMappingsConnectionIdempotencyPolicy::~DomainMappingsConnectionIdempotencyPolicy() = default;
+DomainMappingsConnectionIdempotencyPolicy::
+    ~DomainMappingsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
 DomainMappingsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DomainMappingsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DomainMappingsConnectionIdempotencyPolicy::ListDomainMappings(google::appengine::v1::ListDomainMappingsRequest) {  // NOLINT
+Idempotency DomainMappingsConnectionIdempotencyPolicy::ListDomainMappings(
+    google::appengine::v1::ListDomainMappingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DomainMappingsConnectionIdempotencyPolicy::GetDomainMapping(google::appengine::v1::GetDomainMappingRequest const&) {
+Idempotency DomainMappingsConnectionIdempotencyPolicy::GetDomainMapping(
+    google::appengine::v1::GetDomainMappingRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DomainMappingsConnectionIdempotencyPolicy::CreateDomainMapping(google::appengine::v1::CreateDomainMappingRequest const&) {
+Idempotency DomainMappingsConnectionIdempotencyPolicy::CreateDomainMapping(
+    google::appengine::v1::CreateDomainMappingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainMappingsConnectionIdempotencyPolicy::UpdateDomainMapping(google::appengine::v1::UpdateDomainMappingRequest const&) {
+Idempotency DomainMappingsConnectionIdempotencyPolicy::UpdateDomainMapping(
+    google::appengine::v1::UpdateDomainMappingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainMappingsConnectionIdempotencyPolicy::DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const&) {
+Idempotency DomainMappingsConnectionIdempotencyPolicy::DeleteDomainMapping(
+    google::appengine::v1::DeleteDomainMappingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
-    MakeDefaultDomainMappingsConnectionIdempotencyPolicy() {
+MakeDefaultDomainMappingsConnectionIdempotencyPolicy() {
   return std::make_unique<DomainMappingsConnectionIdempotencyPolicy>();
 }
 

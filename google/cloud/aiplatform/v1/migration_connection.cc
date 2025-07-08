@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MigrationServiceConnection::~MigrationServiceConnection() = default;
 
-StreamRange<google::cloud::aiplatform::v1::MigratableResource> MigrationServiceConnection::SearchMigratableResources(
-    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::MigratableResource>
+MigrationServiceConnection::SearchMigratableResources(
+    google::cloud::aiplatform::v1::
+        SearchMigratableResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::MigratableResource>>();
 }
@@ -48,8 +50,8 @@ future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
 MigrationServiceConnection::BatchMigrateResources(
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -57,19 +59,21 @@ MigrationServiceConnection::BatchMigrateResources(
     NoAwaitTag,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
 MigrationServiceConnection::BatchMigrateResources(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> MigrationServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+MigrationServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -80,14 +84,12 @@ MigrationServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-MigrationServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> MigrationServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-MigrationServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> MigrationServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -98,8 +100,10 @@ MigrationServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> MigrationServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+MigrationServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -110,14 +114,12 @@ MigrationServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MigrationServiceConnection::DeleteOperation(
+Status MigrationServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MigrationServiceConnection::CancelOperation(
+Status MigrationServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -131,17 +133,18 @@ MigrationServiceConnection::WaitOperation(
 std::shared_ptr<MigrationServiceConnection> MakeMigrationServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      MigrationServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 MigrationServicePolicyOptionList>(options,
+                                                                   __func__);
   options = aiplatform_v1_internal::MigrationServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultMigrationServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeMigrationServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::MigrationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

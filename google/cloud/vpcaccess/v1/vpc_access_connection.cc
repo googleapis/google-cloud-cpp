@@ -17,17 +17,17 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
+#include "google/cloud/vpcaccess/v1/internal/vpc_access_connection_impl.h"
+#include "google/cloud/vpcaccess/v1/internal/vpc_access_option_defaults.h"
+#include "google/cloud/vpcaccess/v1/internal/vpc_access_stub_factory.h"
+#include "google/cloud/vpcaccess/v1/internal/vpc_access_tracing_connection.h"
+#include "google/cloud/vpcaccess/v1/vpc_access_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/vpcaccess/v1/internal/vpc_access_connection_impl.h"
-#include "google/cloud/vpcaccess/v1/internal/vpc_access_option_defaults.h"
-#include "google/cloud/vpcaccess/v1/internal/vpc_access_stub_factory.h"
-#include "google/cloud/vpcaccess/v1/internal/vpc_access_tracing_connection.h"
-#include "google/cloud/vpcaccess/v1/vpc_access_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,24 +42,23 @@ future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceConnection::CreateConnector(
     google::cloud::vpcaccess::v1::CreateConnectorRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vpcaccess::v1::Connector>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vpcaccess::v1::Connector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceConnection::CreateConnector(
-    NoAwaitTag,
-    google::cloud::vpcaccess::v1::CreateConnectorRequest const&) {
+    NoAwaitTag, google::cloud::vpcaccess::v1::CreateConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceConnection::CreateConnector(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vpcaccess::v1::Connector>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vpcaccess::v1::Connector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
@@ -68,8 +67,10 @@ VpcAccessServiceConnection::GetConnector(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::vpcaccess::v1::Connector> VpcAccessServiceConnection::ListConnectors(
-    google::cloud::vpcaccess::v1::ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::vpcaccess::v1::Connector>
+VpcAccessServiceConnection::ListConnectors(
+    google::cloud::vpcaccess::v1::
+        ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vpcaccess::v1::Connector>>();
 }
@@ -78,34 +79,37 @@ future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceConnection::DeleteConnector(
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceConnection::DeleteConnector(
-    NoAwaitTag,
-    google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) {
+    NoAwaitTag, google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceConnection::DeleteConnector(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> VpcAccessServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+VpcAccessServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StreamRange<google::longrunning::Operation> VpcAccessServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+VpcAccessServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -119,17 +123,18 @@ VpcAccessServiceConnection::GetOperation(
 std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      VpcAccessServicePolicyOptionList>(options, __func__);
-  options = vpcaccess_v1_internal::VpcAccessServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 VpcAccessServicePolicyOptionList>(options,
+                                                                   __func__);
+  options =
+      vpcaccess_v1_internal::VpcAccessServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = vpcaccess_v1_internal::CreateDefaultVpcAccessServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return vpcaccess_v1_internal::MakeVpcAccessServiceTracingConnection(
       std::make_shared<vpcaccess_v1_internal::VpcAccessServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

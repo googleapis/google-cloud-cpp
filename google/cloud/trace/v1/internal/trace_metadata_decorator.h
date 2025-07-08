@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V1_INTERNAL_TRACE_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V1_INTERNAL_TRACE_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/trace/v1/internal/trace_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,29 +34,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TraceServiceMetadata : public TraceServiceStub {
  public:
   ~TraceServiceMetadata() override = default;
-  TraceServiceMetadata(
-      std::shared_ptr<TraceServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  TraceServiceMetadata(std::shared_ptr<TraceServiceStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::ListTracesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudtrace::v1::ListTracesRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::GetTraceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudtrace::v1::GetTraceRequest const& request)
+      override;
 
-  Status PatchTraces(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::PatchTracesRequest const& request) override;
+  Status PatchTraces(grpc::ClientContext& context, Options const& options,
+                     google::devtools::cloudtrace::v1::PatchTracesRequest const&
+                         request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

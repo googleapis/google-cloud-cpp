@@ -17,10 +17,10 @@
 // source: google/storage/control/v2/storage_control.proto
 
 #include "google/cloud/storagecontrol/v2/internal/storage_control_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/storagecontrol/v2/storage_control_connection.h"
 #include "google/cloud/storagecontrol/v2/storage_control_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,40 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options StorageControlDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_CONTROL_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_STORAGE_CONTROL_AUTHORITY",
-      "storage.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_CONTROL_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_STORAGE_CONTROL_AUTHORITY", "storage.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<storagecontrol_v2::StorageControlRetryPolicyOption>()) {
     options.set<storagecontrol_v2::StorageControlRetryPolicyOption>(
         storagecontrol_v2::StorageControlLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<storagecontrol_v2::StorageControlBackoffPolicyOption>()) {
     options.set<storagecontrol_v2::StorageControlBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<storagecontrol_v2::StorageControlPollingPolicyOption>()) {
     options.set<storagecontrol_v2::StorageControlPollingPolicyOption>(
         GenericPollingPolicy<
             storagecontrol_v2::StorageControlRetryPolicyOption::Type,
             storagecontrol_v2::StorageControlBackoffPolicyOption::Type>(
-            options.get<storagecontrol_v2::StorageControlRetryPolicyOption>()->clone(),
+            options.get<storagecontrol_v2::StorageControlRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<storagecontrol_v2::StorageControlConnectionIdempotencyPolicyOption>()) {
-    options.set<storagecontrol_v2::StorageControlConnectionIdempotencyPolicyOption>(
-        storagecontrol_v2::MakeDefaultStorageControlConnectionIdempotencyPolicy());
+  if (!options.has<storagecontrol_v2::
+                       StorageControlConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        storagecontrol_v2::StorageControlConnectionIdempotencyPolicyOption>(
+        storagecontrol_v2::
+            MakeDefaultStorageControlConnectionIdempotencyPolicy());
   }
 
   return options;

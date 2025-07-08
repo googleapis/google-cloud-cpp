@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_PUBLIC_CERTIFICATE_AUTHORITY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_PUBLIC_CERTIFICATE_AUTHORITY_CONNECTION_H
 
+#include "google/cloud/publicca/v1/internal/public_certificate_authority_retry_traits.h"
+#include "google/cloud/publicca/v1/public_certificate_authority_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/publicca/v1/internal/public_certificate_authority_retry_traits.h"
-#include "google/cloud/publicca/v1/public_certificate_authority_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/security/publicca/v1/service.pb.h>
@@ -35,14 +35,17 @@ namespace publicca_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PublicCertificateAuthorityServiceConnection`.
-class PublicCertificateAuthorityServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class PublicCertificateAuthorityServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `PublicCertificateAuthorityServiceConnection` based on counting errors.
+ * A retry policy for `PublicCertificateAuthorityServiceConnection` based on
+ * counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -51,7 +54,8 @@ class PublicCertificateAuthorityServiceRetryPolicy : public ::google::cloud::Ret
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy : public PublicCertificateAuthorityServiceRetryPolicy {
+class PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy
+    : public PublicCertificateAuthorityServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -60,15 +64,20 @@ class PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy : public Pub
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy(
-      PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy&&
+          rhs) noexcept
+      : PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy(
-      PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -79,8 +88,10 @@ class PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy : public Pub
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone() const override {
-    return std::make_unique<PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -88,11 +99,14 @@ class PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy : public Pub
   using BaseType = PublicCertificateAuthorityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<publicca_v1_internal::PublicCertificateAuthorityServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      publicca_v1_internal::PublicCertificateAuthorityServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `PublicCertificateAuthorityServiceConnection` based on elapsed time.
+ * A retry policy for `PublicCertificateAuthorityServiceConnection` based on
+ * elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -101,7 +115,8 @@ class PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy : public Pub
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PublicCertificateAuthorityServiceLimitedTimeRetryPolicy : public PublicCertificateAuthorityServiceRetryPolicy {
+class PublicCertificateAuthorityServiceLimitedTimeRetryPolicy
+    : public PublicCertificateAuthorityServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +141,17 @@ class PublicCertificateAuthorityServiceLimitedTimeRetryPolicy : public PublicCer
   template <typename DurationRep, typename DurationPeriod>
   explicit PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(PublicCertificateAuthorityServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(PublicCertificateAuthorityServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(
+      PublicCertificateAuthorityServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(
+      PublicCertificateAuthorityServiceLimitedTimeRetryPolicy const&
+          rhs) noexcept
+      : PublicCertificateAuthorityServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -144,8 +164,10 @@ class PublicCertificateAuthorityServiceLimitedTimeRetryPolicy : public PublicCer
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone() const override {
-    return std::make_unique<PublicCertificateAuthorityServiceLimitedTimeRetryPolicy>(
+  std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        PublicCertificateAuthorityServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
 
@@ -153,20 +175,25 @@ class PublicCertificateAuthorityServiceLimitedTimeRetryPolicy : public PublicCer
   using BaseType = PublicCertificateAuthorityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<publicca_v1_internal::PublicCertificateAuthorityServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      publicca_v1_internal::PublicCertificateAuthorityServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `PublicCertificateAuthorityServiceConnection` object for `PublicCertificateAuthorityServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `PublicCertificateAuthorityServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `PublicCertificateAuthorityServiceConnection` object for
  * `PublicCertificateAuthorityServiceClient`.
  *
- * To create a concrete instance, see `MakePublicCertificateAuthorityServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `PublicCertificateAuthorityServiceClient`. This allows users to
+ * inject custom behavior (e.g., with a Google Mock object) when writing tests
+ * that use objects of type `PublicCertificateAuthorityServiceClient`.
  *
- * For mocking, see `publicca_v1_mocks::MockPublicCertificateAuthorityServiceConnection`.
+ * To create a concrete instance, see
+ * `MakePublicCertificateAuthorityServiceConnection()`.
+ *
+ * For mocking, see
+ * `publicca_v1_mocks::MockPublicCertificateAuthorityServiceConnection`.
  */
 class PublicCertificateAuthorityServiceConnection {
  public:
@@ -175,32 +202,36 @@ class PublicCertificateAuthorityServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-  CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request);
+  CreateExternalAccountKey(google::cloud::security::publicca::v1::
+                               CreateExternalAccountKeyRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `PublicCertificateAuthorityServiceConnection`.
+ * A factory function to construct an object of type
+ * `PublicCertificateAuthorityServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of PublicCertificateAuthorityServiceClient.
+ * should be passed as an argument to the constructor of
+ * PublicCertificateAuthorityServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PublicCertificateAuthorityServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `PublicCertificateAuthorityServiceConnection`. Expected options are
+ * any of the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::publicca_v1::PublicCertificateAuthorityServicePolicyOptionList`
+ * -
+ * `google::cloud::publicca_v1::PublicCertificateAuthorityServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `PublicCertificateAuthorityServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the
+ * `PublicCertificateAuthorityServiceConnection` created by this function.
  */
-std::shared_ptr<PublicCertificateAuthorityServiceConnection> MakePublicCertificateAuthorityServiceConnection(
-    Options options = {});
+std::shared_ptr<PublicCertificateAuthorityServiceConnection>
+MakePublicCertificateAuthorityServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace publicca_v1

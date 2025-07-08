@@ -34,28 +34,33 @@ CompletionServiceTracingConnection::CompletionServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
-CompletionServiceTracingConnection::CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::CompletionServiceConnection::CompleteQuery");
+CompletionServiceTracingConnection::CompleteQuery(
+    google::cloud::retail::v2::CompleteQueryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::CompletionServiceConnection::CompleteQuery");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CompleteQuery(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-CompletionServiceTracingConnection::ImportCompletionData(google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+CompletionServiceTracingConnection::ImportCompletionData(
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::CompletionServiceConnection::ImportCompletionData");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ImportCompletionData(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ImportCompletionData(request));
 }
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceTracingConnection::ImportCompletionData(
-    NoAwaitTag, google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+    NoAwaitTag,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::CompletionServiceConnection::ImportCompletionData");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ImportCompletionData(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ImportCompletionData(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
@@ -65,21 +70,25 @@ CompletionServiceTracingConnection::ImportCompletionData(
       "retail_v2::CompletionServiceConnection::ImportCompletionData");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ImportCompletionData(operation));
+                           child_->ImportCompletionData(operation));
 }
 
 StreamRange<google::longrunning::Operation>
-CompletionServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("retail_v2::CompletionServiceConnection::ListOperations");
+CompletionServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::CompletionServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-CompletionServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::CompletionServiceConnection::GetOperation");
+CompletionServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::CompletionServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
@@ -91,7 +100,8 @@ MakeCompletionServiceTracingConnection(
     std::shared_ptr<retail_v2::CompletionServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<CompletionServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<CompletionServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

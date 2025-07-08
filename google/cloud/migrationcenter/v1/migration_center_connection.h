@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MIGRATIONCENTER_V1_MIGRATION_CENTER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MIGRATIONCENTER_V1_MIGRATION_CENTER_CONNECTION_H
 
+#include "google/cloud/migrationcenter/v1/internal/migration_center_retry_traits.h"
+#include "google/cloud/migrationcenter/v1/migration_center_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
-#include "google/cloud/migrationcenter/v1/internal/migration_center_retry_traits.h"
-#include "google/cloud/migrationcenter/v1/migration_center_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -56,7 +56,8 @@ class MigrationCenterRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MigrationCenterLimitedErrorCountRetryPolicy : public MigrationCenterRetryPolicy {
+class MigrationCenterLimitedErrorCountRetryPolicy
+    : public MigrationCenterRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class MigrationCenterLimitedErrorCountRetryPolicy : public MigrationCenterRetryP
    *     @p maximum_failures == 0.
    */
   explicit MigrationCenterLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   MigrationCenterLimitedErrorCountRetryPolicy(
       MigrationCenterLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : MigrationCenterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MigrationCenterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MigrationCenterLimitedErrorCountRetryPolicy(
       MigrationCenterLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : MigrationCenterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MigrationCenterLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class MigrationCenterLimitedErrorCountRetryPolicy : public MigrationCenterRetryP
   using BaseType = MigrationCenterRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<migrationcenter_v1_internal::MigrationCenterRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      migrationcenter_v1_internal::MigrationCenterRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class MigrationCenterLimitedErrorCountRetryPolicy : public MigrationCenterRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MigrationCenterLimitedTimeRetryPolicy : public MigrationCenterRetryPolicy {
+class MigrationCenterLimitedTimeRetryPolicy
+    : public MigrationCenterRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class MigrationCenterLimitedTimeRetryPolicy : public MigrationCenterRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit MigrationCenterLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  MigrationCenterLimitedTimeRetryPolicy(MigrationCenterLimitedTimeRetryPolicy&& rhs) noexcept
-    : MigrationCenterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MigrationCenterLimitedTimeRetryPolicy(MigrationCenterLimitedTimeRetryPolicy const& rhs) noexcept
-    : MigrationCenterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MigrationCenterLimitedTimeRetryPolicy(
+      MigrationCenterLimitedTimeRetryPolicy&& rhs) noexcept
+      : MigrationCenterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MigrationCenterLimitedTimeRetryPolicy(
+      MigrationCenterLimitedTimeRetryPolicy const& rhs) noexcept
+      : MigrationCenterLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +164,9 @@ class MigrationCenterLimitedTimeRetryPolicy : public MigrationCenterRetryPolicy 
   using BaseType = MigrationCenterRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<migrationcenter_v1_internal::MigrationCenterRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      migrationcenter_v1_internal::MigrationCenterRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,316 +187,429 @@ class MigrationCenterConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::migrationcenter::v1::Asset>
-  ListAssets(google::cloud::migrationcenter::v1::ListAssetsRequest request);
+  virtual StreamRange<google::cloud::migrationcenter::v1::Asset> ListAssets(
+      google::cloud::migrationcenter::v1::ListAssetsRequest request);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::Asset>
-  GetAsset(google::cloud::migrationcenter::v1::GetAssetRequest const& request);
+  virtual StatusOr<google::cloud::migrationcenter::v1::Asset> GetAsset(
+      google::cloud::migrationcenter::v1::GetAssetRequest const& request);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::Asset>
-  UpdateAsset(google::cloud::migrationcenter::v1::UpdateAssetRequest const& request);
+  virtual StatusOr<google::cloud::migrationcenter::v1::Asset> UpdateAsset(
+      google::cloud::migrationcenter::v1::UpdateAssetRequest const& request);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>
-  BatchUpdateAssets(google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const& request);
+  virtual StatusOr<
+      google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>
+  BatchUpdateAssets(
+      google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const&
+          request);
 
-  virtual Status
-  DeleteAsset(google::cloud::migrationcenter::v1::DeleteAssetRequest const& request);
+  virtual Status DeleteAsset(
+      google::cloud::migrationcenter::v1::DeleteAssetRequest const& request);
 
-  virtual Status
-  BatchDeleteAssets(google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const& request);
+  virtual Status BatchDeleteAssets(
+      google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::ReportAssetFramesResponse>
-  ReportAssetFrames(google::cloud::migrationcenter::v1::ReportAssetFramesRequest const& request);
+  virtual StatusOr<
+      google::cloud::migrationcenter::v1::ReportAssetFramesResponse>
+  ReportAssetFrames(
+      google::cloud::migrationcenter::v1::ReportAssetFramesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>
-  AggregateAssetsValues(google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const& request);
+  virtual StatusOr<
+      google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>
+  AggregateAssetsValues(
+      google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
-  CreateImportJob(google::cloud::migrationcenter::v1::CreateImportJobRequest const& request);
+  CreateImportJob(
+      google::cloud::migrationcenter::v1::CreateImportJobRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateImportJob(NoAwaitTag, google::cloud::migrationcenter::v1::CreateImportJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateImportJob(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::CreateImportJobRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
-  CreateImportJob( google::longrunning::Operation const& operation);
+  CreateImportJob(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::migrationcenter::v1::ImportJob>
-  ListImportJobs(google::cloud::migrationcenter::v1::ListImportJobsRequest request);
+  ListImportJobs(
+      google::cloud::migrationcenter::v1::ListImportJobsRequest request);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::ImportJob>
-  GetImportJob(google::cloud::migrationcenter::v1::GetImportJobRequest const& request);
+  virtual StatusOr<google::cloud::migrationcenter::v1::ImportJob> GetImportJob(
+      google::cloud::migrationcenter::v1::GetImportJobRequest const& request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteImportJob(google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteImportJob(
+      google::cloud::migrationcenter::v1::DeleteImportJobRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteImportJob(NoAwaitTag, google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteImportJob(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::DeleteImportJobRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteImportJob( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteImportJob(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
-  UpdateImportJob(google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request);
+  UpdateImportJob(
+      google::cloud::migrationcenter::v1::UpdateImportJobRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateImportJob(NoAwaitTag, google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateImportJob(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::UpdateImportJobRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
-  UpdateImportJob( google::longrunning::Operation const& operation);
+  UpdateImportJob(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  ValidateImportJob(google::cloud::migrationcenter::v1::ValidateImportJobRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  ValidateImportJob(
+      google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ValidateImportJob(NoAwaitTag, google::cloud::migrationcenter::v1::ValidateImportJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ValidateImportJob(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  ValidateImportJob( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  ValidateImportJob(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  RunImportJob(google::cloud::migrationcenter::v1::RunImportJobRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  RunImportJob(
+      google::cloud::migrationcenter::v1::RunImportJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RunImportJob(NoAwaitTag, google::cloud::migrationcenter::v1::RunImportJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> RunImportJob(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::RunImportJobRequest const& request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  RunImportJob( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  RunImportJob(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
-  GetImportDataFile(google::cloud::migrationcenter::v1::GetImportDataFileRequest const& request);
+  GetImportDataFile(
+      google::cloud::migrationcenter::v1::GetImportDataFileRequest const&
+          request);
 
   virtual StreamRange<google::cloud::migrationcenter::v1::ImportDataFile>
-  ListImportDataFiles(google::cloud::migrationcenter::v1::ListImportDataFilesRequest request);
+  ListImportDataFiles(
+      google::cloud::migrationcenter::v1::ListImportDataFilesRequest request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>
-  CreateImportDataFile(google::cloud::migrationcenter::v1::CreateImportDataFileRequest const& request);
+  CreateImportDataFile(
+      google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateImportDataFile(NoAwaitTag, google::cloud::migrationcenter::v1::CreateImportDataFileRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateImportDataFile(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>
-  CreateImportDataFile( google::longrunning::Operation const& operation);
+  CreateImportDataFile(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteImportDataFile(google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteImportDataFile(
+      google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteImportDataFile(NoAwaitTag, google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteImportDataFile(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteImportDataFile( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteImportDataFile(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::migrationcenter::v1::Group>
-  ListGroups(google::cloud::migrationcenter::v1::ListGroupsRequest request);
+  virtual StreamRange<google::cloud::migrationcenter::v1::Group> ListGroups(
+      google::cloud::migrationcenter::v1::ListGroupsRequest request);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::Group>
-  GetGroup(google::cloud::migrationcenter::v1::GetGroupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  CreateGroup(google::cloud::migrationcenter::v1::CreateGroupRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateGroup(NoAwaitTag, google::cloud::migrationcenter::v1::CreateGroupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  CreateGroup( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::cloud::migrationcenter::v1::Group> GetGroup(
+      google::cloud::migrationcenter::v1::GetGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  UpdateGroup(google::cloud::migrationcenter::v1::UpdateGroupRequest const& request);
+  CreateGroup(
+      google::cloud::migrationcenter::v1::CreateGroupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateGroup(NoAwaitTag, google::cloud::migrationcenter::v1::UpdateGroupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  UpdateGroup( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteGroup(google::cloud::migrationcenter::v1::DeleteGroupRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteGroup(NoAwaitTag, google::cloud::migrationcenter::v1::DeleteGroupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteGroup( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> CreateGroup(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::CreateGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  AddAssetsToGroup(google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  AddAssetsToGroup(NoAwaitTag, google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const& request);
+  CreateGroup(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  AddAssetsToGroup( google::longrunning::Operation const& operation);
+  UpdateGroup(
+      google::cloud::migrationcenter::v1::UpdateGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateGroup(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::UpdateGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  RemoveAssetsFromGroup(google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const& request);
+  UpdateGroup(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RemoveAssetsFromGroup(NoAwaitTag, google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteGroup(
+      google::cloud::migrationcenter::v1::DeleteGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteGroup(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::DeleteGroupRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteGroup(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  RemoveAssetsFromGroup( google::longrunning::Operation const& operation);
+  AddAssetsToGroup(
+      google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> AddAssetsToGroup(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+  AddAssetsToGroup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+  RemoveAssetsFromGroup(
+      google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> RemoveAssetsFromGroup(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+  RemoveAssetsFromGroup(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::migrationcenter::v1::ErrorFrame>
-  ListErrorFrames(google::cloud::migrationcenter::v1::ListErrorFramesRequest request);
+  ListErrorFrames(
+      google::cloud::migrationcenter::v1::ListErrorFramesRequest request);
 
   virtual StatusOr<google::cloud::migrationcenter::v1::ErrorFrame>
-  GetErrorFrame(google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request);
+  GetErrorFrame(
+      google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request);
 
-  virtual StreamRange<google::cloud::migrationcenter::v1::Source>
-  ListSources(google::cloud::migrationcenter::v1::ListSourcesRequest request);
+  virtual StreamRange<google::cloud::migrationcenter::v1::Source> ListSources(
+      google::cloud::migrationcenter::v1::ListSourcesRequest request);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::Source>
-  GetSource(google::cloud::migrationcenter::v1::GetSourceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::Source>>
-  CreateSource(google::cloud::migrationcenter::v1::CreateSourceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateSource(NoAwaitTag, google::cloud::migrationcenter::v1::CreateSourceRequest const& request);
+  virtual StatusOr<google::cloud::migrationcenter::v1::Source> GetSource(
+      google::cloud::migrationcenter::v1::GetSourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Source>>
-  CreateSource( google::longrunning::Operation const& operation);
+  CreateSource(
+      google::cloud::migrationcenter::v1::CreateSourceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateSource(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::CreateSourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Source>>
-  UpdateSource(google::cloud::migrationcenter::v1::UpdateSourceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateSource(NoAwaitTag, google::cloud::migrationcenter::v1::UpdateSourceRequest const& request);
+  CreateSource(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Source>>
-  UpdateSource( google::longrunning::Operation const& operation);
+  UpdateSource(
+      google::cloud::migrationcenter::v1::UpdateSourceRequest const& request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteSource(google::cloud::migrationcenter::v1::DeleteSourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateSource(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::UpdateSourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteSource(NoAwaitTag, google::cloud::migrationcenter::v1::DeleteSourceRequest const& request);
+  virtual future<StatusOr<google::cloud::migrationcenter::v1::Source>>
+  UpdateSource(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteSource( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteSource(
+      google::cloud::migrationcenter::v1::DeleteSourceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSource(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::DeleteSourceRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteSource(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::migrationcenter::v1::PreferenceSet>
-  ListPreferenceSets(google::cloud::migrationcenter::v1::ListPreferenceSetsRequest request);
+  ListPreferenceSets(
+      google::cloud::migrationcenter::v1::ListPreferenceSetsRequest request);
 
   virtual StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>
-  GetPreferenceSet(google::cloud::migrationcenter::v1::GetPreferenceSetRequest const& request);
+  GetPreferenceSet(
+      google::cloud::migrationcenter::v1::GetPreferenceSetRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
-  CreatePreferenceSet(google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const& request);
+  CreatePreferenceSet(
+      google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreatePreferenceSet(NoAwaitTag, google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const& request);
-
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
-  CreatePreferenceSet( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
-  UpdatePreferenceSet(google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdatePreferenceSet(NoAwaitTag, google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreatePreferenceSet(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
-  UpdatePreferenceSet( google::longrunning::Operation const& operation);
+  CreatePreferenceSet(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeletePreferenceSet(google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const& request);
+  virtual future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
+  UpdatePreferenceSet(
+      google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeletePreferenceSet(NoAwaitTag, google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdatePreferenceSet(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeletePreferenceSet( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
+  UpdatePreferenceSet(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::Settings>
-  GetSettings(google::cloud::migrationcenter::v1::GetSettingsRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeletePreferenceSet(
+      google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeletePreferenceSet(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeletePreferenceSet(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::migrationcenter::v1::Settings> GetSettings(
+      google::cloud::migrationcenter::v1::GetSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Settings>>
-  UpdateSettings(google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request);
+  UpdateSettings(
+      google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateSettings(NoAwaitTag, google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateSettings(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Settings>>
-  UpdateSettings( google::longrunning::Operation const& operation);
+  UpdateSettings(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
-  CreateReportConfig(google::cloud::migrationcenter::v1::CreateReportConfigRequest const& request);
+  CreateReportConfig(
+      google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateReportConfig(NoAwaitTag, google::cloud::migrationcenter::v1::CreateReportConfigRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateReportConfig(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
-  CreateReportConfig( google::longrunning::Operation const& operation);
+  CreateReportConfig(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
-  GetReportConfig(google::cloud::migrationcenter::v1::GetReportConfigRequest const& request);
+  GetReportConfig(
+      google::cloud::migrationcenter::v1::GetReportConfigRequest const&
+          request);
 
   virtual StreamRange<google::cloud::migrationcenter::v1::ReportConfig>
-  ListReportConfigs(google::cloud::migrationcenter::v1::ListReportConfigsRequest request);
+  ListReportConfigs(
+      google::cloud::migrationcenter::v1::ListReportConfigsRequest request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteReportConfig(google::cloud::migrationcenter::v1::DeleteReportConfigRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteReportConfig(
+      google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteReportConfig(NoAwaitTag, google::cloud::migrationcenter::v1::DeleteReportConfigRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteReportConfig(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteReportConfig( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteReportConfig(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Report>>
-  CreateReport(google::cloud::migrationcenter::v1::CreateReportRequest const& request);
+  CreateReport(
+      google::cloud::migrationcenter::v1::CreateReportRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateReport(NoAwaitTag, google::cloud::migrationcenter::v1::CreateReportRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateReport(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::CreateReportRequest const& request);
 
   virtual future<StatusOr<google::cloud::migrationcenter::v1::Report>>
-  CreateReport( google::longrunning::Operation const& operation);
+  CreateReport(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::migrationcenter::v1::Report>
-  GetReport(google::cloud::migrationcenter::v1::GetReportRequest const& request);
+  virtual StatusOr<google::cloud::migrationcenter::v1::Report> GetReport(
+      google::cloud::migrationcenter::v1::GetReportRequest const& request);
 
-  virtual StreamRange<google::cloud::migrationcenter::v1::Report>
-  ListReports(google::cloud::migrationcenter::v1::ListReportsRequest request);
+  virtual StreamRange<google::cloud::migrationcenter::v1::Report> ListReports(
+      google::cloud::migrationcenter::v1::ListReportsRequest request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteReport(google::cloud::migrationcenter::v1::DeleteReportRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteReport(
+      google::cloud::migrationcenter::v1::DeleteReportRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteReport(NoAwaitTag, google::cloud::migrationcenter::v1::DeleteReportRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteReport(
+      NoAwaitTag,
+      google::cloud::migrationcenter::v1::DeleteReportRequest const& request);
 
-  virtual future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteReport( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+  DeleteReport(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `MigrationCenterConnection`.
+ * A factory function to construct an object of type
+ * `MigrationCenterConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of MigrationCenterClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `MigrationCenterConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `MigrationCenterConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -498,8 +619,8 @@ class MigrationCenterConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `MigrationCenterConnection` created by
- * this function.
+ * @param options (optional) Configure the `MigrationCenterConnection` created
+ * by this function.
  */
 std::shared_ptr<MigrationCenterConnection> MakeMigrationCenterConnection(
     Options options = {});

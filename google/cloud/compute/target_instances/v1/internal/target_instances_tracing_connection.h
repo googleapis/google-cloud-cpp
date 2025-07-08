@@ -36,54 +36,64 @@ class TargetInstancesTracingConnection
   ~TargetInstancesTracingConnection() override = default;
 
   explicit TargetInstancesTracingConnection(
-    std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection> child);
+      std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
-  AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
+  AggregatedListTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          AggregatedListTargetInstancesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request) override;
+  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           DeleteTargetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetInstance(NoAwaitTag,
-      google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
+      NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                      DeleteTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetInstance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstance(google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
+      google::cloud::cpp::compute::target_instances::v1::
+          GetTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request) override;
+  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           InsertTargetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetInstance(NoAwaitTag,
-      google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
+      NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                      InsertTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetInstance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request) override;
+  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                          ListTargetInstancesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request) override;
+  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::
+                        SetSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag,
-      google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                      SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection> child_;
+  std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -96,7 +106,8 @@ class TargetInstancesTracingConnection
  */
 std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
 MakeTargetInstancesTracingConnection(
-    std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection> conn);
+    std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_instances_v1_internal

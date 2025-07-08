@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_CLOUD_FUNCTIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_CLOUD_FUNCTIONS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/functions/v1/cloud_functions_connection.h"
 #include "google/cloud/functions/v1/cloud_functions_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct CloudFunctionsServiceBackoffPolicyOption {
  * @ingroup google-cloud-functions-options
  */
 struct CloudFunctionsServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>;
 };
 
 /**

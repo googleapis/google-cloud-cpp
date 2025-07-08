@@ -33,165 +33,159 @@ DataFusionStub::~DataFusionStub() = default;
 
 StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
 DefaultDataFusionStub::ListAvailableVersions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::datafusion::v1::ListAvailableVersionsRequest const& request) {
-    google::cloud::datafusion::v1::ListAvailableVersionsResponse response;
-    auto status =
-        grpc_stub_->ListAvailableVersions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
+        request) {
+  google::cloud::datafusion::v1::ListAvailableVersionsResponse response;
+  auto status = grpc_stub_->ListAvailableVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
 DefaultDataFusionStub::ListInstances(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::datafusion::v1::ListInstancesRequest const& request) {
-    google::cloud::datafusion::v1::ListInstancesResponse response;
-    auto status =
-        grpc_stub_->ListInstances(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datafusion::v1::ListInstancesRequest const& request) {
+  google::cloud::datafusion::v1::ListInstancesResponse response;
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::datafusion::v1::Instance>
 DefaultDataFusionStub::GetInstance(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::datafusion::v1::GetInstanceRequest const& request) {
-    google::cloud::datafusion::v1::Instance response;
-    auto status =
-        grpc_stub_->GetInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datafusion::v1::GetInstanceRequest const& request) {
+  google::cloud::datafusion::v1::Instance response;
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::datafusion::v1::CreateInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::datafusion::v1::CreateInstanceRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::datafusion::v1::CreateInstanceRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::datafusion::v1::CreateInstanceRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateInstance(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataFusionStub::CreateInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataFusionStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::datafusion::v1::DeleteInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::datafusion::v1::DeleteInstanceRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteInstance(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataFusionStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataFusionStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::datafusion::v1::UpdateInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::datafusion::v1::UpdateInstanceRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateInstance(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataFusionStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataFusionStub::UpdateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncRestartInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::datafusion::v1::RestartInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::datafusion::v1::RestartInstanceRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::datafusion::v1::RestartInstanceRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::datafusion::v1::RestartInstanceRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRestartInstance(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataFusionStub::RestartInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RestartInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataFusionStub::RestartInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestartInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -220,13 +214,14 @@ future<Status> DefaultDataFusionStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

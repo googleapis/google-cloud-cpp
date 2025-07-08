@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPANY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPANY_CLIENT_H
 
+#include "google/cloud/talent/v4/company_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/talent/v4/company_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CompanyServiceClient {
  public:
-  explicit CompanyServiceClient(std::shared_ptr<CompanyServiceConnection> connection, Options opts = {});
+  explicit CompanyServiceClient(
+      std::shared_ptr<CompanyServiceConnection> connection, Options opts = {});
   ~CompanyServiceClient();
 
   ///@{
@@ -74,10 +75,12 @@ class CompanyServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CompanyServiceClient const& a, CompanyServiceClient const& b) {
+  friend bool operator==(CompanyServiceClient const& a,
+                         CompanyServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CompanyServiceClient const& a, CompanyServiceClient const& b) {
+  friend bool operator!=(CompanyServiceClient const& a,
+                         CompanyServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -108,8 +111,9 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.CreateCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Company>
-  CreateCompany(std::string const& parent, google::cloud::talent::v4::Company const& company, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Company> CreateCompany(
+      std::string const& parent,
+      google::cloud::talent::v4::Company const& company, Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +142,9 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.CreateCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Company>
-  CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Company> CreateCompany(
+      google::cloud::talent::v4::CreateCompanyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -167,8 +172,8 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.GetCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Company>
-  GetCompany(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Company> GetCompany(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -197,8 +202,9 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.GetCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Company>
-  GetCompany(google::cloud::talent::v4::GetCompanyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Company> GetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -235,8 +241,9 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.UpdateCompanyRequest.update_mask]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L129}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Company>
-  UpdateCompany(google::cloud::talent::v4::Company const& company, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
+      google::cloud::talent::v4::Company const& company,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -265,8 +272,9 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.UpdateCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Company>
-  UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
+      google::cloud::talent::v4::UpdateCompanyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -292,8 +300,7 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.DeleteCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L133}
   ///
   // clang-format on
-  Status
-  DeleteCompany(std::string const& name, Options opts = {});
+  Status DeleteCompany(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -320,8 +327,9 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.DeleteCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L133}
   ///
   // clang-format on
-  Status
-  DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const& request, Options opts = {});
+  Status DeleteCompany(
+      google::cloud::talent::v4::DeleteCompanyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -357,8 +365,8 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.ListCompaniesRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   ///
   // clang-format on
-  StreamRange<google::cloud::talent::v4::Company>
-  ListCompanies(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::talent::v4::Company> ListCompanies(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -396,8 +404,9 @@ class CompanyServiceClient {
   /// [google.cloud.talent.v4.ListCompaniesRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   ///
   // clang-format on
-  StreamRange<google::cloud::talent::v4::Company>
-  ListCompanies(google::cloud::talent::v4::ListCompaniesRequest request, Options opts = {});
+  StreamRange<google::cloud::talent::v4::Company> ListCompanies(
+      google::cloud::talent::v4::ListCompaniesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -423,8 +432,8 @@ class CompanyServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -455,8 +464,9 @@ class CompanyServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CompanyServiceConnection> connection_;

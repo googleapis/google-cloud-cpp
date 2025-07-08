@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SCHEMA_STUB_FACTORY_H
 
+#include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

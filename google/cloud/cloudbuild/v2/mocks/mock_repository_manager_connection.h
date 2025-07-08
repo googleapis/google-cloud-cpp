@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `RepositoryManagerClient`. To do so,
- * construct an object of type `RepositoryManagerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `RepositoryManagerClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockRepositoryManagerConnection : public cloudbuild_v2::RepositoryManagerConnection {
+class MockRepositoryManagerConnection
+    : public cloudbuild_v2::RepositoryManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockRepositoryManagerConnection : public cloudbuild_v2::RepositoryManagerC
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateConnection(Matcher<google::devtools::cloudbuild::v2::CreateConnectionRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateConnection(Matcher<google::devtools::cloudbuild::v2::CreateConnectionRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
-  CreateConnection,
-  (google::devtools::cloudbuild::v2::CreateConnectionRequest const& request), (override));
-
+              CreateConnection,
+              (google::devtools::cloudbuild::v2::CreateConnectionRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,41 +68,49 @@ class MockRepositoryManagerConnection : public cloudbuild_v2::RepositoryManagerC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateConnection(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateConnection, (NoAwaitTag,
-    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateConnection(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
-  CreateConnection, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::devtools::cloudbuild::v2::Connection>,
-  GetConnection,
-  (google::devtools::cloudbuild::v2::GetConnectionRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::devtools::cloudbuild::v2::Connection>),
-  ListConnections,
-  (google::devtools::cloudbuild::v2::ListConnectionsRequest request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateConnection,
+              (NoAwaitTag,
+               google::devtools::cloudbuild::v2::CreateConnectionRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateConnection(Matcher<google::devtools::cloudbuild::v2::UpdateConnectionRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
-  UpdateConnection,
-  (google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request), (override));
+              CreateConnection,
+              (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudbuild::v2::Connection>, GetConnection,
+      (google::devtools::cloudbuild::v2::GetConnectionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::devtools::cloudbuild::v2::Connection>),
+      ListConnections,
+      (google::devtools::cloudbuild::v2::ListConnectionsRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateConnection(Matcher<google::devtools::cloudbuild::v2::UpdateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
+              UpdateConnection,
+              (google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +118,39 @@ class MockRepositoryManagerConnection : public cloudbuild_v2::RepositoryManagerC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateConnection(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateConnection, (NoAwaitTag,
-    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateConnection,
+              (NoAwaitTag,
+               google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateConnection(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
-  UpdateConnection, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateConnection,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteConnection(Matcher<google::devtools::cloudbuild::v2::DeleteConnectionRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteConnection(Matcher<google::devtools::cloudbuild::v2::DeleteConnectionRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
-  DeleteConnection,
-  (google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      DeleteConnection,
+      (google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,33 +158,39 @@ class MockRepositoryManagerConnection : public cloudbuild_v2::RepositoryManagerC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteConnection(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteConnection, (NoAwaitTag,
-    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteConnection,
+              (NoAwaitTag,
+               google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteConnection(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
-  DeleteConnection, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      DeleteConnection, (google::longrunning::Operation const& operation),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateRepository(Matcher<google::devtools::cloudbuild::v2::CreateRepositoryRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateRepository(Matcher<google::devtools::cloudbuild::v2::CreateRepositoryRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
-  CreateRepository,
-  (google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request), (override));
-
+              CreateRepository,
+              (google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -174,33 +198,40 @@ class MockRepositoryManagerConnection : public cloudbuild_v2::RepositoryManagerC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateRepository(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateRepository, (NoAwaitTag,
-    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateRepository,
+              (NoAwaitTag,
+               google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateRepository(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
-  CreateRepository, (
-    google::longrunning::Operation const& operation), (override));
+              CreateRepository,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchCreateRepositories(Matcher<google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateRepositories(Matcher<google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
-  BatchCreateRepositories,
-  (google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
+      BatchCreateRepositories,
+      (google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -208,41 +239,54 @@ class MockRepositoryManagerConnection : public cloudbuild_v2::RepositoryManagerC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchCreateRepositories(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  BatchCreateRepositories, (NoAwaitTag,
-    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchCreateRepositories(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
-  BatchCreateRepositories, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::devtools::cloudbuild::v2::Repository>,
-  GetRepository,
-  (google::devtools::cloudbuild::v2::GetRepositoryRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::devtools::cloudbuild::v2::Repository>),
-  ListRepositories,
-  (google::devtools::cloudbuild::v2::ListRepositoriesRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchCreateRepositories,
+      (NoAwaitTag,
+       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteRepository(Matcher<google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateRepositories(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
-  DeleteRepository,
-  (google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
+      BatchCreateRepositories,
+      (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudbuild::v2::Repository>, GetRepository,
+      (google::devtools::cloudbuild::v2::GetRepositoryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::devtools::cloudbuild::v2::Repository>),
+      ListRepositories,
+      (google::devtools::cloudbuild::v2::ListRepositoriesRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteRepository(Matcher<google::devtools::cloudbuild::v2::DeleteRepositoryRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      DeleteRepository,
+      (google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -250,57 +294,71 @@ class MockRepositoryManagerConnection : public cloudbuild_v2::RepositoryManagerC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteRepository(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteRepository, (NoAwaitTag,
-    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteRepository,
+              (NoAwaitTag,
+               google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteRepository(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
-  DeleteRepository, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      DeleteRepository, (google::longrunning::Operation const& operation),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>,
-  FetchReadWriteToken,
-  (google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>,
+      FetchReadWriteToken,
+      (google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>,
-  FetchReadToken,
-  (google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>,
+      FetchReadToken,
+      (google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::devtools::cloudbuild::v2::Repository>),
-  FetchLinkableRepositories,
-  (google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::devtools::cloudbuild::v2::Repository>),
+      FetchLinkableRepositories,
+      (google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>,
-  FetchGitRefs,
-  (google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>,
+      FetchGitRefs,
+      (google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

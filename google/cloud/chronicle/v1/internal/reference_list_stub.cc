@@ -32,106 +32,96 @@ ReferenceListServiceStub::~ReferenceListServiceStub() = default;
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 DefaultReferenceListServiceStub::GetReferenceList(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
-    google::cloud::chronicle::v1::ReferenceList response;
-    auto status =
-        grpc_stub_->GetReferenceList(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
+  google::cloud::chronicle::v1::ReferenceList response;
+  auto status = grpc_stub_->GetReferenceList(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse>
 DefaultReferenceListServiceStub::ListReferenceLists(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::chronicle::v1::ListReferenceListsRequest const& request) {
-    google::cloud::chronicle::v1::ListReferenceListsResponse response;
-    auto status =
-        grpc_stub_->ListReferenceLists(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::chronicle::v1::ListReferenceListsRequest const& request) {
+  google::cloud::chronicle::v1::ListReferenceListsResponse response;
+  auto status = grpc_stub_->ListReferenceLists(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 DefaultReferenceListServiceStub::CreateReferenceList(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
-    google::cloud::chronicle::v1::ReferenceList response;
-    auto status =
-        grpc_stub_->CreateReferenceList(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
+  google::cloud::chronicle::v1::ReferenceList response;
+  auto status = grpc_stub_->CreateReferenceList(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
 DefaultReferenceListServiceStub::UpdateReferenceList(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
-    google::cloud::chronicle::v1::ReferenceList response;
-    auto status =
-        grpc_stub_->UpdateReferenceList(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
+  google::cloud::chronicle::v1::ReferenceList response;
+  auto status = grpc_stub_->UpdateReferenceList(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultReferenceListServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultReferenceListServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultReferenceListServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultReferenceListServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultReferenceListServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultReferenceListServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

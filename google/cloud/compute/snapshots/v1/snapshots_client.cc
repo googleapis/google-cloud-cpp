@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SnapshotsClient::SnapshotsClient(
     std::shared_ptr<SnapshotsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SnapshotsClient::~SnapshotsClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::DeleteSnapshot(std::string const& project, std::string const& snapshot, Options opts) {
+SnapshotsClient::DeleteSnapshot(std::string const& project,
+                                std::string const& snapshot, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest request;
   request.set_project(project);
@@ -42,7 +43,8 @@ SnapshotsClient::DeleteSnapshot(std::string const& project, std::string const& s
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsClient::DeleteSnapshot(NoAwaitTag, std::string const& project, std::string const& snapshot, Options opts) {
+SnapshotsClient::DeleteSnapshot(NoAwaitTag, std::string const& project,
+                                std::string const& snapshot, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest request;
   request.set_project(project);
@@ -51,25 +53,34 @@ SnapshotsClient::DeleteSnapshot(NoAwaitTag, std::string const& project, std::str
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::DeleteSnapshot(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request, Options opts) {
+SnapshotsClient::DeleteSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSnapshot(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsClient::DeleteSnapshot(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request, Options opts) {
+SnapshotsClient::DeleteSnapshot(
+    NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSnapshot(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::DeleteSnapshot(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SnapshotsClient::DeleteSnapshot(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSnapshot(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsClient::GetSnapshot(std::string const& project, std::string const& snapshot, Options opts) {
+SnapshotsClient::GetSnapshot(std::string const& project,
+                             std::string const& snapshot, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest request;
   request.set_project(project);
@@ -78,13 +89,16 @@ SnapshotsClient::GetSnapshot(std::string const& project, std::string const& snap
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsClient::GetSnapshot(google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const& request, Options opts) {
+SnapshotsClient::GetSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSnapshot(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-SnapshotsClient::GetIamPolicy(std::string const& project, std::string const& resource, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Policy> SnapshotsClient::GetIamPolicy(
+    std::string const& project, std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest request;
   request.set_project(project);
@@ -92,14 +106,19 @@ SnapshotsClient::GetIamPolicy(std::string const& project, std::string const& res
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-SnapshotsClient::GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Policy> SnapshotsClient::GetIamPolicy(
+    google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::InsertSnapshot(std::string const& project, google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource, Options opts) {
+SnapshotsClient::InsertSnapshot(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest request;
   request.set_project(project);
@@ -108,7 +127,10 @@ SnapshotsClient::InsertSnapshot(std::string const& project, google::cloud::cpp::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsClient::InsertSnapshot(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource, Options opts) {
+SnapshotsClient::InsertSnapshot(
+    NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest request;
   request.set_project(project);
@@ -117,19 +139,27 @@ SnapshotsClient::InsertSnapshot(NoAwaitTag, std::string const& project, google::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::InsertSnapshot(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request, Options opts) {
+SnapshotsClient::InsertSnapshot(
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSnapshot(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsClient::InsertSnapshot(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request, Options opts) {
+SnapshotsClient::InsertSnapshot(
+    NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSnapshot(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::InsertSnapshot(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SnapshotsClient::InsertSnapshot(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSnapshot(operation);
 }
@@ -143,77 +173,107 @@ SnapshotsClient::ListSnapshots(std::string const& project, Options opts) {
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsClient::ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request, Options opts) {
+SnapshotsClient::ListSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSnapshots(std::move(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-SnapshotsClient::SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Policy> SnapshotsClient::SetIamPolicy(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+        global_set_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_policy_request_resource() = global_set_policy_request_resource;
+  *request.mutable_global_set_policy_request_resource() =
+      global_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-SnapshotsClient::SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Policy> SnapshotsClient::SetIamPolicy(
+    google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts) {
+SnapshotsClient::SetLabels(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+        global_set_labels_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_labels_request_resource() = global_set_labels_request_resource;
+  *request.mutable_global_set_labels_request_resource() =
+      global_set_labels_request_resource;
   return connection_->SetLabels(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsClient::SetLabels(NoAwaitTag, std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation> SnapshotsClient::SetLabels(
+    NoAwaitTag, std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+        global_set_labels_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_labels_request_resource() = global_set_labels_request_resource;
+  *request.mutable_global_set_labels_request_resource() =
+      global_set_labels_request_resource;
   return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request, Options opts) {
+SnapshotsClient::SetLabels(
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsClient::SetLabels(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation> SnapshotsClient::SetLabels(
+    NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotsClient::SetLabels(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+SnapshotsClient::SetLabels(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-SnapshotsClient::TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
+SnapshotsClient::TestIamPermissions(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-SnapshotsClient::TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request, Options opts) {
+SnapshotsClient::TestIamPermissions(
+    google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

@@ -27,19 +27,27 @@ namespace cloud {
 namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use privateca_v1::MakeCertificateAuthorityServiceConnection directly.
+/// @deprecated Use privateca_v1::MakeCertificateAuthorityServiceConnection
+/// directly.
 using ::google::cloud::privateca_v1::MakeCertificateAuthorityServiceConnection;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServiceConnection directly.
+/// @deprecated Use privateca_v1::CertificateAuthorityServiceConnection
+/// directly.
 using ::google::cloud::privateca_v1::CertificateAuthorityServiceConnection;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::privateca_v1::CertificateAuthorityServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// privateca_v1::CertificateAuthorityServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::privateca_v1::
+    CertificateAuthorityServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::privateca_v1::CertificateAuthorityServiceLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// privateca_v1::CertificateAuthorityServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::privateca_v1::
+    CertificateAuthorityServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServiceRetryPolicy directly.
+/// @deprecated Use privateca_v1::CertificateAuthorityServiceRetryPolicy
+/// directly.
 using ::google::cloud::privateca_v1::CertificateAuthorityServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

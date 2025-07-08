@@ -17,12 +17,12 @@
 // source: google/cloud/dataproc/v1/jobs.proto
 
 #include "google/cloud/dataproc/v1/internal/job_controller_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_auth_decorator.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_logging_decorator.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_metadata_decorator.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_stub.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -39,31 +39,29 @@ namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<JobControllerStub>
-CreateDefaultJobControllerStub(
+std::shared_ptr<JobControllerStub> CreateDefaultJobControllerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::dataproc::v1::JobController::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::dataproc::v1::JobController::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<JobControllerStub> stub =
-    std::make_shared<DefaultJobControllerStub>(
-      std::move(service_grpc_stub), std::move(service_iampolicy_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultJobControllerStub>(
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<JobControllerAuth>(
-        std::move(auth), std::move(stub));
+    stub =
+        std::make_shared<JobControllerAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<JobControllerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<JobControllerLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

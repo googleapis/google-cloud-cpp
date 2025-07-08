@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FunctionServiceClient::FunctionServiceClient(
     std::shared_ptr<FunctionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FunctionServiceClient::~FunctionServiceClient() = default;
 
 StatusOr<google::cloud::functions::v2::Function>
@@ -41,7 +41,9 @@ FunctionServiceClient::GetFunction(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::functions::v2::Function>
-FunctionServiceClient::GetFunction(google::cloud::functions::v2::GetFunctionRequest const& request, Options opts) {
+FunctionServiceClient::GetFunction(
+    google::cloud::functions::v2::GetFunctionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFunction(request);
 }
@@ -55,13 +57,17 @@ FunctionServiceClient::ListFunctions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::functions::v2::Function>
-FunctionServiceClient::ListFunctions(google::cloud::functions::v2::ListFunctionsRequest request, Options opts) {
+FunctionServiceClient::ListFunctions(
+    google::cloud::functions::v2::ListFunctionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFunctions(std::move(request));
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
-FunctionServiceClient::CreateFunction(std::string const& parent, google::cloud::functions::v2::Function const& function, std::string const& function_id, Options opts) {
+FunctionServiceClient::CreateFunction(
+    std::string const& parent,
+    google::cloud::functions::v2::Function const& function,
+    std::string const& function_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v2::CreateFunctionRequest request;
   request.set_parent(parent);
@@ -70,8 +76,10 @@ FunctionServiceClient::CreateFunction(std::string const& parent, google::cloud::
   return connection_->CreateFunction(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FunctionServiceClient::CreateFunction(NoAwaitTag, std::string const& parent, google::cloud::functions::v2::Function const& function, std::string const& function_id, Options opts) {
+StatusOr<google::longrunning::Operation> FunctionServiceClient::CreateFunction(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::functions::v2::Function const& function,
+    std::string const& function_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v2::CreateFunctionRequest request;
   request.set_parent(parent);
@@ -81,25 +89,32 @@ FunctionServiceClient::CreateFunction(NoAwaitTag, std::string const& parent, goo
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
-FunctionServiceClient::CreateFunction(google::cloud::functions::v2::CreateFunctionRequest const& request, Options opts) {
+FunctionServiceClient::CreateFunction(
+    google::cloud::functions::v2::CreateFunctionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFunction(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FunctionServiceClient::CreateFunction(NoAwaitTag, google::cloud::functions::v2::CreateFunctionRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FunctionServiceClient::CreateFunction(
+    NoAwaitTag,
+    google::cloud::functions::v2::CreateFunctionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFunction(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
-FunctionServiceClient::CreateFunction(google::longrunning::Operation const& operation, Options opts) {
+FunctionServiceClient::CreateFunction(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFunction(operation);
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
-FunctionServiceClient::UpdateFunction(google::cloud::functions::v2::Function const& function, google::protobuf::FieldMask const& update_mask, Options opts) {
+FunctionServiceClient::UpdateFunction(
+    google::cloud::functions::v2::Function const& function,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v2::UpdateFunctionRequest request;
   *request.mutable_function() = function;
@@ -107,8 +122,9 @@ FunctionServiceClient::UpdateFunction(google::cloud::functions::v2::Function con
   return connection_->UpdateFunction(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FunctionServiceClient::UpdateFunction(NoAwaitTag, google::cloud::functions::v2::Function const& function, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> FunctionServiceClient::UpdateFunction(
+    NoAwaitTag, google::cloud::functions::v2::Function const& function,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v2::UpdateFunctionRequest request;
   *request.mutable_function() = function;
@@ -117,19 +133,24 @@ FunctionServiceClient::UpdateFunction(NoAwaitTag, google::cloud::functions::v2::
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
-FunctionServiceClient::UpdateFunction(google::cloud::functions::v2::UpdateFunctionRequest const& request, Options opts) {
+FunctionServiceClient::UpdateFunction(
+    google::cloud::functions::v2::UpdateFunctionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFunction(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FunctionServiceClient::UpdateFunction(NoAwaitTag, google::cloud::functions::v2::UpdateFunctionRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FunctionServiceClient::UpdateFunction(
+    NoAwaitTag,
+    google::cloud::functions::v2::UpdateFunctionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFunction(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
-FunctionServiceClient::UpdateFunction(google::longrunning::Operation const& operation, Options opts) {
+FunctionServiceClient::UpdateFunction(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFunction(operation);
 }
@@ -142,8 +163,8 @@ FunctionServiceClient::DeleteFunction(std::string const& name, Options opts) {
   return connection_->DeleteFunction(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FunctionServiceClient::DeleteFunction(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FunctionServiceClient::DeleteFunction(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v2::DeleteFunctionRequest request;
   request.set_name(name);
@@ -151,31 +172,40 @@ FunctionServiceClient::DeleteFunction(NoAwaitTag, std::string const& name, Optio
 }
 
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
-FunctionServiceClient::DeleteFunction(google::cloud::functions::v2::DeleteFunctionRequest const& request, Options opts) {
+FunctionServiceClient::DeleteFunction(
+    google::cloud::functions::v2::DeleteFunctionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFunction(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FunctionServiceClient::DeleteFunction(NoAwaitTag, google::cloud::functions::v2::DeleteFunctionRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FunctionServiceClient::DeleteFunction(
+    NoAwaitTag,
+    google::cloud::functions::v2::DeleteFunctionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFunction(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
-FunctionServiceClient::DeleteFunction(google::longrunning::Operation const& operation, Options opts) {
+FunctionServiceClient::DeleteFunction(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFunction(operation);
 }
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
-FunctionServiceClient::GenerateUploadUrl(google::cloud::functions::v2::GenerateUploadUrlRequest const& request, Options opts) {
+FunctionServiceClient::GenerateUploadUrl(
+    google::cloud::functions::v2::GenerateUploadUrlRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateUploadUrl(request);
 }
 
 StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
-FunctionServiceClient::GenerateDownloadUrl(google::cloud::functions::v2::GenerateDownloadUrlRequest const& request, Options opts) {
+FunctionServiceClient::GenerateDownloadUrl(
+    google::cloud::functions::v2::GenerateDownloadUrlRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateDownloadUrl(request);
 }
@@ -189,37 +219,42 @@ FunctionServiceClient::ListRuntimes(std::string const& parent, Options opts) {
 }
 
 StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
-FunctionServiceClient::ListRuntimes(google::cloud::functions::v2::ListRuntimesRequest const& request, Options opts) {
+FunctionServiceClient::ListRuntimes(
+    google::cloud::functions::v2::ListRuntimesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRuntimes(request);
 }
 
 StreamRange<google::cloud::location::Location>
-FunctionServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+FunctionServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-FunctionServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> FunctionServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-FunctionServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> FunctionServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FunctionServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+FunctionServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-FunctionServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+FunctionServiceClient::ListOperations(std::string const& name,
+                                      std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -228,21 +263,22 @@ FunctionServiceClient::ListOperations(std::string const& name, std::string const
 }
 
 StreamRange<google::longrunning::Operation>
-FunctionServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+FunctionServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-FunctionServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FunctionServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FunctionServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FunctionServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

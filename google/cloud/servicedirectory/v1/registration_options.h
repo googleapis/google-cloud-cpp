@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_REGISTRATION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_REGISTRATION_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/servicedirectory/v1/registration_connection.h"
 #include "google/cloud/servicedirectory/v1/registration_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 

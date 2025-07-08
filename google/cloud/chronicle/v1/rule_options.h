@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_RULE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_RULE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/rule_connection.h"
 #include "google/cloud/chronicle/v1/rule_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct RuleServicePollingPolicyOption {
  * @ingroup google-cloud-chronicle-options
  */
 using RuleServicePolicyOptionList =
-    OptionList<RuleServiceRetryPolicyOption,
-               RuleServiceBackoffPolicyOption,
+    OptionList<RuleServiceRetryPolicyOption, RuleServiceBackoffPolicyOption,
                RuleServicePollingPolicyOption,
                RuleServiceConnectionIdempotencyPolicyOption>;
 

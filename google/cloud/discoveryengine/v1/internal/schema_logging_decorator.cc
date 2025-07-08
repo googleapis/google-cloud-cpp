@@ -31,21 +31,18 @@ namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SchemaServiceLogging::SchemaServiceLogging(
-    std::shared_ptr<SchemaServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<SchemaServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceLogging::GetSchema(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
         return child_->GetSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ SchemaServiceLogging::GetSchema(
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 SchemaServiceLogging::ListSchemas(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ListSchemasRequest const&
+                 request) {
         return child_->ListSchemas(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,31 +63,30 @@ SchemaServiceLogging::ListSchemas(
 
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceLogging::AsyncCreateSchema(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
-        return child_->AsyncCreateSchema(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::discoveryengine::v1::CreateSchemaRequest const&
+                 request) {
+        return child_->AsyncCreateSchema(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SchemaServiceLogging::CreateSchema(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+StatusOr<google::longrunning::Operation> SchemaServiceLogging::CreateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateSchemaRequest const&
+                 request) {
         return child_->CreateSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,31 +94,30 @@ SchemaServiceLogging::CreateSchema(
 
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceLogging::AsyncUpdateSchema(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
-        return child_->AsyncUpdateSchema(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::discoveryengine::v1::UpdateSchemaRequest const&
+                 request) {
+        return child_->AsyncUpdateSchema(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SchemaServiceLogging::UpdateSchema(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+StatusOr<google::longrunning::Operation> SchemaServiceLogging::UpdateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateSchemaRequest const&
+                 request) {
         return child_->UpdateSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,31 +125,30 @@ SchemaServiceLogging::UpdateSchema(
 
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceLogging::AsyncDeleteSchema(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
-        return child_->AsyncDeleteSchema(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
+                 request) {
+        return child_->AsyncDeleteSchema(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SchemaServiceLogging::DeleteSchema(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+StatusOr<google::longrunning::Operation> SchemaServiceLogging::DeleteSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
+                 request) {
         return child_->DeleteSchema(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,40 +156,32 @@ SchemaServiceLogging::DeleteSchema(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SchemaServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SchemaServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> SchemaServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SchemaServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SchemaServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -214,8 +199,8 @@ SchemaServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -231,8 +216,8 @@ future<Status> SchemaServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

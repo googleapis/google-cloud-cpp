@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use scheduler_v1::CloudSchedulerBackoffPolicyOption directly.
 using ::google::cloud::scheduler_v1::CloudSchedulerBackoffPolicyOption;
 
-/// @deprecated Use scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::scheduler_v1::
+    CloudSchedulerConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use scheduler_v1::CloudSchedulerPolicyOptionList directly.
 using ::google::cloud::scheduler_v1::CloudSchedulerPolicyOptionList;

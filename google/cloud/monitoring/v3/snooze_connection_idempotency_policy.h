@@ -34,23 +34,24 @@ class SnoozeServiceConnectionIdempotencyPolicy {
   virtual ~SnoozeServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SnoozeServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SnoozeServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateSnooze(google::monitoring::v3::CreateSnoozeRequest const& request);
+  virtual google::cloud::Idempotency CreateSnooze(
+      google::monitoring::v3::CreateSnoozeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSnoozes(google::monitoring::v3::ListSnoozesRequest request);
+  virtual google::cloud::Idempotency ListSnoozes(
+      google::monitoring::v3::ListSnoozesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetSnooze(google::monitoring::v3::GetSnoozeRequest const& request);
+  virtual google::cloud::Idempotency GetSnooze(
+      google::monitoring::v3::GetSnoozeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateSnooze(google::monitoring::v3::UpdateSnoozeRequest const& request);
+  virtual google::cloud::Idempotency UpdateSnooze(
+      google::monitoring::v3::UpdateSnoozeRequest const& request);
 };
 
 std::unique_ptr<SnoozeServiceConnectionIdempotencyPolicy>
-    MakeDefaultSnoozeServiceConnectionIdempotencyPolicy();
+MakeDefaultSnoozeServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3

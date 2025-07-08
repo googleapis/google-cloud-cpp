@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExportServiceClient::ExportServiceClient(
     std::shared_ptr<ExportServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ExportServiceClient::~ExportServiceClient() = default;
 
 StreamRange<google::devtools::cloudprofiler::v2::Profile>
@@ -41,7 +41,9 @@ ExportServiceClient::ListProfiles(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::devtools::cloudprofiler::v2::Profile>
-ExportServiceClient::ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest request, Options opts) {
+ExportServiceClient::ListProfiles(
+    google::devtools::cloudprofiler::v2::ListProfilesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProfiles(std::move(request));
 }

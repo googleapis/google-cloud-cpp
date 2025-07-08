@@ -35,13 +35,15 @@ class ValidationHelperV1Logging : public ValidationHelperV1Stub {
  public:
   ~ValidationHelperV1Logging() override = default;
   ValidationHelperV1Logging(std::shared_ptr<ValidationHelperV1Stub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                            TracingOptions tracing_options,
+                            std::set<std::string> const& components);
 
-  StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse> ValidateAttestationOccurrence(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::
+               ValidateAttestationOccurrenceResponse>
+  ValidateAttestationOccurrence(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::
+          ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
   std::shared_ptr<ValidationHelperV1Stub> child_;

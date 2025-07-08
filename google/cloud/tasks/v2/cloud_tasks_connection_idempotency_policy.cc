@@ -26,46 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudTasksConnectionIdempotencyPolicy::~CloudTasksConnectionIdempotencyPolicy() = default;
+CloudTasksConnectionIdempotencyPolicy::
+    ~CloudTasksConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
 CloudTasksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudTasksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::ListQueues(google::cloud::tasks::v2::ListQueuesRequest) {  // NOLINT
+Idempotency CloudTasksConnectionIdempotencyPolicy::ListQueues(
+    google::cloud::tasks::v2::ListQueuesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::GetQueue(google::cloud::tasks::v2::GetQueueRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetQueue(
+    google::cloud::tasks::v2::GetQueueRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::CreateQueue(
+    google::cloud::tasks::v2::CreateQueueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::UpdateQueue(
+    google::cloud::tasks::v2::UpdateQueueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::DeleteQueue(
+    google::cloud::tasks::v2::DeleteQueueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::PurgeQueue(
+    google::cloud::tasks::v2::PurgeQueueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::PauseQueue(
+    google::cloud::tasks::v2::PauseQueueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::ResumeQueue(
+    google::cloud::tasks::v2::ResumeQueueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -75,40 +85,48 @@ Idempotency CloudTasksConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::ListTasks(google::cloud::tasks::v2::ListTasksRequest) {  // NOLINT
+Idempotency CloudTasksConnectionIdempotencyPolicy::ListTasks(
+    google::cloud::tasks::v2::ListTasksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::GetTask(google::cloud::tasks::v2::GetTaskRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetTask(
+    google::cloud::tasks::v2::GetTaskRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::CreateTask(google::cloud::tasks::v2::CreateTaskRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::CreateTask(
+    google::cloud::tasks::v2::CreateTaskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::DeleteTask(
+    google::cloud::tasks::v2::DeleteTaskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::RunTask(google::cloud::tasks::v2::RunTaskRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::RunTask(
+    google::cloud::tasks::v2::RunTaskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency CloudTasksConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudTasksConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
-    MakeDefaultCloudTasksConnectionIdempotencyPolicy() {
+MakeDefaultCloudTasksConnectionIdempotencyPolicy() {
   return std::make_unique<CloudTasksConnectionIdempotencyPolicy>();
 }
 

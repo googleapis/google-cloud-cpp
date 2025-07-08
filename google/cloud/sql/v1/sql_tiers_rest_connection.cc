@@ -17,15 +17,15 @@
 // source: google/cloud/sql/v1/cloud_sql_tiers.proto
 
 #include "google/cloud/sql/v1/sql_tiers_rest_connection.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/rest_background_threads_impl.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/sql/v1/internal/sql_tiers_option_defaults.h"
 #include "google/cloud/sql/v1/internal/sql_tiers_rest_connection_impl.h"
 #include "google/cloud/sql/v1/internal/sql_tiers_rest_stub_factory.h"
 #include "google/cloud/sql/v1/internal/sql_tiers_tracing_connection.h"
 #include "google/cloud/sql/v1/sql_tiers_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,18 +36,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SqlTiersServiceConnection> MakeSqlTiersServiceConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      SqlTiersServicePolicyOptionList>(options, __func__);
-  options = sql_v1_internal::SqlTiersServiceDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, SqlTiersServicePolicyOptionList>(
+      options, __func__);
+  options = sql_v1_internal::SqlTiersServiceDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = sql_v1_internal::CreateDefaultSqlTiersServiceRestStub(
-      options);
+  auto stub = sql_v1_internal::CreateDefaultSqlTiersServiceRestStub(options);
   return sql_v1_internal::MakeSqlTiersServiceTracingConnection(
-      std::make_shared<
-          sql_v1_internal::SqlTiersServiceRestConnectionImpl>(
+      std::make_shared<sql_v1_internal::SqlTiersServiceRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

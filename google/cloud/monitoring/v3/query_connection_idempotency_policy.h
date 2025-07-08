@@ -34,14 +34,15 @@ class QueryServiceConnectionIdempotencyPolicy {
   virtual ~QueryServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<QueryServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<QueryServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  QueryTimeSeries(google::monitoring::v3::QueryTimeSeriesRequest request);
+  virtual google::cloud::Idempotency QueryTimeSeries(
+      google::monitoring::v3::QueryTimeSeriesRequest request);
 };
 
 std::unique_ptr<QueryServiceConnectionIdempotencyPolicy>
-    MakeDefaultQueryServiceConnectionIdempotencyPolicy();
+MakeDefaultQueryServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3

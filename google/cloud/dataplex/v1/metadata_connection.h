@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_METADATA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_METADATA_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/internal/metadata_retry_traits.h"
 #include "google/cloud/dataplex/v1/metadata_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class MetadataServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetadataServiceLimitedErrorCountRetryPolicy : public MetadataServiceRetryPolicy {
+class MetadataServiceLimitedErrorCountRetryPolicy
+    : public MetadataServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class MetadataServiceLimitedErrorCountRetryPolicy : public MetadataServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit MetadataServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   MetadataServiceLimitedErrorCountRetryPolicy(
       MetadataServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : MetadataServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MetadataServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MetadataServiceLimitedErrorCountRetryPolicy(
       MetadataServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : MetadataServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MetadataServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class MetadataServiceLimitedErrorCountRetryPolicy : public MetadataServiceRetryP
   using BaseType = MetadataServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dataplex_v1_internal::MetadataServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dataplex_v1_internal::MetadataServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class MetadataServiceLimitedErrorCountRetryPolicy : public MetadataServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetadataServiceLimitedTimeRetryPolicy : public MetadataServiceRetryPolicy {
+class MetadataServiceLimitedTimeRetryPolicy
+    : public MetadataServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class MetadataServiceLimitedTimeRetryPolicy : public MetadataServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit MetadataServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  MetadataServiceLimitedTimeRetryPolicy(MetadataServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : MetadataServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MetadataServiceLimitedTimeRetryPolicy(MetadataServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : MetadataServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetadataServiceLimitedTimeRetryPolicy(
+      MetadataServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : MetadataServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetadataServiceLimitedTimeRetryPolicy(
+      MetadataServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : MetadataServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class MetadataServiceLimitedTimeRetryPolicy : public MetadataServiceRetryPolicy 
   using BaseType = MetadataServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dataplex_v1_internal::MetadataServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dataplex_v1_internal::MetadataServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,70 +183,71 @@ class MetadataServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::dataplex::v1::Entity>
-  CreateEntity(google::cloud::dataplex::v1::CreateEntityRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
+      google::cloud::dataplex::v1::CreateEntityRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Entity>
-  UpdateEntity(google::cloud::dataplex::v1::UpdateEntityRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Entity> UpdateEntity(
+      google::cloud::dataplex::v1::UpdateEntityRequest const& request);
 
-  virtual Status
-  DeleteEntity(google::cloud::dataplex::v1::DeleteEntityRequest const& request);
+  virtual Status DeleteEntity(
+      google::cloud::dataplex::v1::DeleteEntityRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Entity>
-  GetEntity(google::cloud::dataplex::v1::GetEntityRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
+      google::cloud::dataplex::v1::GetEntityRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Entity>
-  ListEntities(google::cloud::dataplex::v1::ListEntitiesRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
+      google::cloud::dataplex::v1::ListEntitiesRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Partition>
-  CreatePartition(google::cloud::dataplex::v1::CreatePartitionRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
+      google::cloud::dataplex::v1::CreatePartitionRequest const& request);
 
-  virtual Status
-  DeletePartition(google::cloud::dataplex::v1::DeletePartitionRequest const& request);
+  virtual Status DeletePartition(
+      google::cloud::dataplex::v1::DeletePartitionRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Partition>
-  GetPartition(google::cloud::dataplex::v1::GetPartitionRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
+      google::cloud::dataplex::v1::GetPartitionRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Partition>
-  ListPartitions(google::cloud::dataplex::v1::ListPartitionsRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
+      google::cloud::dataplex::v1::ListPartitionsRequest request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `MetadataServiceConnection`.
+ * A factory function to construct an object of type
+ * `MetadataServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of MetadataServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `MetadataServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `MetadataServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -248,8 +257,8 @@ class MetadataServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `MetadataServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `MetadataServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
     Options options = {});

@@ -42,46 +42,48 @@ future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
 ModelServiceConnection::UploadModel(
     google::cloud::aiplatform::v1::UploadModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceConnection::UploadModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::UploadModelRequest const&) {
+StatusOr<google::longrunning::Operation> ModelServiceConnection::UploadModel(
+    NoAwaitTag, google::cloud::aiplatform::v1::UploadModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-ModelServiceConnection::UploadModel(
-    google::longrunning::Operation const&) {
+ModelServiceConnection::UploadModel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::aiplatform::v1::Model>
-ModelServiceConnection::GetModel(
+StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceConnection::GetModel(
     google::cloud::aiplatform::v1::GetModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Model> ModelServiceConnection::ListModels(
-    google::cloud::aiplatform::v1::ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Model>
+ModelServiceConnection::ListModels(
+    google::cloud::aiplatform::v1::
+        ListModelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Model>>();
 }
 
-StreamRange<google::cloud::aiplatform::v1::Model> ModelServiceConnection::ListModelVersions(
-    google::cloud::aiplatform::v1::ListModelVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Model>
+ModelServiceConnection::ListModelVersions(
+    google::cloud::aiplatform::v1::
+        ListModelVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Model>>();
 }
 
-StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint> ModelServiceConnection::ListModelVersionCheckpoints(
-    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+ModelServiceConnection::ListModelVersionCheckpoints(
+    google::cloud::aiplatform::v1::
+        ListModelVersionCheckpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>>();
 }
@@ -92,12 +94,13 @@ ModelServiceConnection::UpdateModel(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
 ModelServiceConnection::UpdateExplanationDataset(
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -105,47 +108,45 @@ ModelServiceConnection::UpdateExplanationDataset(
     NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
 ModelServiceConnection::UpdateExplanationDataset(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnection::DeleteModel(
     google::cloud::aiplatform::v1::DeleteModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceConnection::DeleteModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteModelRequest const&) {
+StatusOr<google::longrunning::Operation> ModelServiceConnection::DeleteModel(
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-ModelServiceConnection::DeleteModel(
-    google::longrunning::Operation const&) {
+ModelServiceConnection::DeleteModel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnection::DeleteModelVersion(
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -153,15 +154,15 @@ ModelServiceConnection::DeleteModelVersion(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnection::DeleteModelVersion(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
@@ -174,48 +175,42 @@ future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
 ModelServiceConnection::ExportModel(
     google::cloud::aiplatform::v1::ExportModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceConnection::ExportModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::ExportModelRequest const&) {
+StatusOr<google::longrunning::Operation> ModelServiceConnection::ExportModel(
+    NoAwaitTag, google::cloud::aiplatform::v1::ExportModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-ModelServiceConnection::ExportModel(
-    google::longrunning::Operation const&) {
+ModelServiceConnection::ExportModel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
 ModelServiceConnection::CopyModel(
     google::cloud::aiplatform::v1::CopyModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceConnection::CopyModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::CopyModelRequest const&) {
+StatusOr<google::longrunning::Operation> ModelServiceConnection::CopyModel(
+    NoAwaitTag, google::cloud::aiplatform::v1::CopyModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-ModelServiceConnection::CopyModel(
-    google::longrunning::Operation const&) {
+ModelServiceConnection::CopyModel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
@@ -224,15 +219,18 @@ ModelServiceConnection::ImportModelEvaluation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+StatusOr<
+    google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
 ModelServiceConnection::BatchImportModelEvaluationSlices(
-    google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const&) {
+    google::cloud::aiplatform::v1::
+        BatchImportModelEvaluationSlicesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
 ModelServiceConnection::BatchImportEvaluatedAnnotations(
-    google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&) {
+    google::cloud::aiplatform::v1::
+        BatchImportEvaluatedAnnotationsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -242,8 +240,10 @@ ModelServiceConnection::GetModelEvaluation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::ModelEvaluation> ModelServiceConnection::ListModelEvaluations(
-    google::cloud::aiplatform::v1::ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
+ModelServiceConnection::ListModelEvaluations(
+    google::cloud::aiplatform::v1::
+        ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>>();
 }
@@ -254,32 +254,33 @@ ModelServiceConnection::GetModelEvaluationSlice(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice> ModelServiceConnection::ListModelEvaluationSlices(
-    google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
+ModelServiceConnection::ListModelEvaluationSlices(
+    google::cloud::aiplatform::v1::
+        ListModelEvaluationSlicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>>();
 }
 
-StreamRange<google::cloud::location::Location> ModelServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ModelServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-ModelServiceConnection::GetLocation(
+StatusOr<google::cloud::location::Location> ModelServiceConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ModelServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> ModelServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ModelServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> ModelServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -290,32 +291,30 @@ ModelServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> ModelServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ModelServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ModelServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ModelServiceConnection::DeleteOperation(
+Status ModelServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ModelServiceConnection::CancelOperation(
+Status ModelServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceConnection::WaitOperation(
+StatusOr<google::longrunning::Operation> ModelServiceConnection::WaitOperation(
     google::longrunning::WaitOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -323,17 +322,18 @@ ModelServiceConnection::WaitOperation(
 std::shared_ptr<ModelServiceConnection> MakeModelServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ModelServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ModelServicePolicyOptionList>(options,
+                                                               __func__);
   options = aiplatform_v1_internal::ModelServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultModelServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeModelServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::ModelServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

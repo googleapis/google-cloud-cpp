@@ -33,7 +33,8 @@ using ::google::cloud::talent_v4::MakeEventServiceConnection;
 /// @deprecated Use talent_v4::EventServiceConnection directly.
 using ::google::cloud::talent_v4::EventServiceConnection;
 
-/// @deprecated Use talent_v4::EventServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use talent_v4::EventServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::talent_v4::EventServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use talent_v4::EventServiceLimitedTimeRetryPolicy directly.

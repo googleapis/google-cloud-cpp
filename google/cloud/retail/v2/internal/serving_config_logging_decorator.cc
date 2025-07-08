@@ -32,34 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServingConfigServiceLogging::ServingConfigServiceLogging(
     std::shared_ptr<ServingConfigServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceLogging::CreateServingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::CreateServingConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::CreateServingConfigRequest const&
+                 request) {
         return child_->CreateServingConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ServingConfigServiceLogging::DeleteServingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ServingConfigServiceLogging::DeleteServingConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::DeleteServingConfigRequest const&
+                 request) {
         return child_->DeleteServingConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +62,12 @@ ServingConfigServiceLogging::DeleteServingConfig(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceLogging::UpdateServingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::UpdateServingConfigRequest const&
+                 request) {
         return child_->UpdateServingConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +75,12 @@ ServingConfigServiceLogging::UpdateServingConfig(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceLogging::GetServingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::GetServingConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::retail::v2::GetServingConfigRequest const& request) {
         return child_->GetServingConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +88,12 @@ ServingConfigServiceLogging::GetServingConfig(
 
 StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 ServingConfigServiceLogging::ListServingConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::ListServingConfigsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::retail::v2::ListServingConfigsRequest const& request) {
         return child_->ListServingConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,12 +101,10 @@ ServingConfigServiceLogging::ListServingConfigs(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceLogging::AddControl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::AddControlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::AddControlRequest const& request) {
         return child_->AddControl(context, options, request);
       },
@@ -123,12 +113,10 @@ ServingConfigServiceLogging::AddControl(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceLogging::RemoveControl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::RemoveControlRequest const& request) {
         return child_->RemoveControl(context, options, request);
       },
@@ -137,12 +125,10 @@ ServingConfigServiceLogging::RemoveControl(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ServingConfigServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -151,12 +137,10 @@ ServingConfigServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 ServingConfigServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },

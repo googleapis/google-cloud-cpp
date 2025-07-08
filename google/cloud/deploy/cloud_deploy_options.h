@@ -34,7 +34,8 @@ using ::google::cloud::deploy_v1::CloudDeployPollingPolicyOption;
 /// @deprecated Use deploy_v1::CloudDeployBackoffPolicyOption directly.
 using ::google::cloud::deploy_v1::CloudDeployBackoffPolicyOption;
 
-/// @deprecated Use deploy_v1::CloudDeployConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use deploy_v1::CloudDeployConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::deploy_v1::CloudDeployConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use deploy_v1::CloudDeployPolicyOptionList directly.

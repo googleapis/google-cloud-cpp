@@ -39,36 +39,36 @@ class AutokeyConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AutokeyConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateKeyHandle(google::cloud::kms::v1::CreateKeyHandleRequest const& request);
+  virtual google::cloud::Idempotency CreateKeyHandle(
+      google::cloud::kms::v1::CreateKeyHandleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetKeyHandle(google::cloud::kms::v1::GetKeyHandleRequest const& request);
+  virtual google::cloud::Idempotency GetKeyHandle(
+      google::cloud::kms::v1::GetKeyHandleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListKeyHandles(google::cloud::kms::v1::ListKeyHandlesRequest request);
+  virtual google::cloud::Idempotency ListKeyHandles(
+      google::cloud::kms::v1::ListKeyHandlesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<AutokeyConnectionIdempotencyPolicy>
-    MakeDefaultAutokeyConnectionIdempotencyPolicy();
+MakeDefaultAutokeyConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1

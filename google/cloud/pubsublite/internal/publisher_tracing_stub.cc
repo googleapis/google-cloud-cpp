@@ -33,13 +33,14 @@ PublisherServiceTracingStub::PublisherServiceTracingStub(
     std::shared_ptr<PublisherServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-std::unique_ptr<AsyncStreamingReadWriteRpc<
-    google::cloud::pubsublite::v1::PublishRequest,
-    google::cloud::pubsublite::v1::PublishResponse>>
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::cloud::pubsublite::v1::PublishRequest,
+                               google::cloud::pubsublite::v1::PublishResponse>>
 PublisherServiceTracingStub::AsyncPublish(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PublisherService", "Publish");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PublisherService", "Publish");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncPublish(cq, context, std::move(options));
@@ -49,22 +50,24 @@ PublisherServiceTracingStub::AsyncPublish(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> PublisherServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+PublisherServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PublisherService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PublisherService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> PublisherServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+PublisherServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PublisherService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PublisherService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -72,10 +75,10 @@ StatusOr<google::longrunning::Operation> PublisherServiceTracingStub::GetOperati
 }
 
 Status PublisherServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PublisherService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PublisherService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -83,10 +86,10 @@ Status PublisherServiceTracingStub::DeleteOperation(
 }
 
 Status PublisherServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.PublisherService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.PublisherService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

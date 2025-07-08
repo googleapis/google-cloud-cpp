@@ -26,35 +26,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BigQueryWriteConnectionIdempotencyPolicy::~BigQueryWriteConnectionIdempotencyPolicy() = default;
+BigQueryWriteConnectionIdempotencyPolicy::
+    ~BigQueryWriteConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>
 BigQueryWriteConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BigQueryWriteConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BigQueryWriteConnectionIdempotencyPolicy::CreateWriteStream(google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&) {
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::CreateWriteStream(
+    google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BigQueryWriteConnectionIdempotencyPolicy::GetWriteStream(google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&) {
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::GetWriteStream(
+    google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BigQueryWriteConnectionIdempotencyPolicy::FinalizeWriteStream(google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&) {
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::FinalizeWriteStream(
+    google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BigQueryWriteConnectionIdempotencyPolicy::BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&) {
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::BatchCommitWriteStreams(
+    google::cloud::bigquery::storage::v1::
+        BatchCommitWriteStreamsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BigQueryWriteConnectionIdempotencyPolicy::FlushRows(google::cloud::bigquery::storage::v1::FlushRowsRequest const&) {
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::FlushRows(
+    google::cloud::bigquery::storage::v1::FlushRowsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>
-    MakeDefaultBigQueryWriteConnectionIdempotencyPolicy() {
+MakeDefaultBigQueryWriteConnectionIdempotencyPolicy() {
   return std::make_unique<BigQueryWriteConnectionIdempotencyPolicy>();
 }
 

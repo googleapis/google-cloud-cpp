@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `TopicStatsServiceClient`. To do so,
- * construct an object of type `TopicStatsServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `TopicStatsServiceClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,37 +42,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTopicStatsServiceConnection : public pubsublite::TopicStatsServiceConnection {
+class MockTopicStatsServiceConnection
+    : public pubsublite::TopicStatsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>,
-  ComputeMessageStats,
-  (google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>,
+      ComputeMessageStats,
+      (google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>,
-  ComputeHeadCursor,
-  (google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>,
+      ComputeHeadCursor,
+      (google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>,
-  ComputeTimeCursor,
-  (google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>,
+      ComputeTimeCursor,
+      (google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

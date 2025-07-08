@@ -30,35 +30,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ConfidentialComputingTracingConnection::ConfidentialComputingTracingConnection(
-    std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection> child)
+    std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
-ConfidentialComputingTracingConnection::CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
-  auto span = internal::MakeSpan("confidentialcomputing_v1::ConfidentialComputingConnection::CreateChallenge");
+ConfidentialComputingTracingConnection::CreateChallenge(
+    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "confidentialcomputing_v1::ConfidentialComputingConnection::"
+      "CreateChallenge");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateChallenge(request));
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-ConfidentialComputingTracingConnection::VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
-  auto span = internal::MakeSpan("confidentialcomputing_v1::ConfidentialComputingConnection::VerifyAttestation");
+ConfidentialComputingTracingConnection::VerifyAttestation(
+    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "confidentialcomputing_v1::ConfidentialComputingConnection::"
+      "VerifyAttestation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->VerifyAttestation(request));
 }
 
 StreamRange<google::cloud::location::Location>
-ConfidentialComputingTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("confidentialcomputing_v1::ConfidentialComputingConnection::ListLocations");
+ConfidentialComputingTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "confidentialcomputing_v1::ConfidentialComputingConnection::"
+      "ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ConfidentialComputingTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("confidentialcomputing_v1::ConfidentialComputingConnection::GetLocation");
+ConfidentialComputingTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "confidentialcomputing_v1::ConfidentialComputingConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
@@ -67,10 +81,12 @@ ConfidentialComputingTracingConnection::GetLocation(google::cloud::location::Get
 
 std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
 MakeConfidentialComputingTracingConnection(
-    std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection> conn) {
+    std::shared_ptr<confidentialcomputing_v1::ConfidentialComputingConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ConfidentialComputingTracingConnection>(std::move(conn));
+    conn = std::make_shared<ConfidentialComputingTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

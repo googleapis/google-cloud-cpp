@@ -31,18 +31,20 @@ ImageVersionsAuth::ImageVersionsAuth(
     std::shared_ptr<ImageVersionsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::ListImageVersionsResponse> ImageVersionsAuth::ListImageVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest const& request) {
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListImageVersionsResponse>
+ImageVersionsAuth::ListImageVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        ListImageVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListImageVersions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ImageVersionsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ImageVersionsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +52,7 @@ StatusOr<google::longrunning::ListOperationsResponse> ImageVersionsAuth::ListOpe
 }
 
 StatusOr<google::longrunning::Operation> ImageVersionsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +60,7 @@ StatusOr<google::longrunning::Operation> ImageVersionsAuth::GetOperation(
 }
 
 Status ImageVersionsAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

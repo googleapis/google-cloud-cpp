@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_CLOUD_REDIS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_CLOUD_REDIS_CLIENT_H
 
+#include "google/cloud/redis/v1/cloud_redis_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/redis/v1/cloud_redis_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -44,8 +44,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// The `redis.googleapis.com` service implements the Google Cloud Memorystore
 /// for Redis API and defines the following resource model for managing Redis
 /// instances:
-/// * The service works with a collection of cloud projects, named: `/projects/*`
-/// * Each project has a collection of available locations, named: `/locations/*`
+/// * The service works with a collection of cloud projects, named:
+/// `/projects/*`
+/// * Each project has a collection of available locations, named:
+/// `/locations/*`
 /// * Each location has a collection of Redis instances, named: `/instances/*`
 /// * As such, Redis instances are resources of the form:
 ///   `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
@@ -78,7 +80,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudRedisClient {
  public:
-  explicit CloudRedisClient(std::shared_ptr<CloudRedisConnection> connection, Options opts = {});
+  explicit CloudRedisClient(std::shared_ptr<CloudRedisConnection> connection,
+                            Options opts = {});
   ~CloudRedisClient();
 
   ///@{
@@ -140,8 +143,8 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L700}
   ///
   // clang-format on
-  StreamRange<google::cloud::redis::v1::Instance>
-  ListInstances(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::redis::v1::Instance> ListInstances(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -187,8 +190,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L700}
   ///
   // clang-format on
-  StreamRange<google::cloud::redis::v1::Instance>
-  ListInstances(google::cloud::redis::v1::ListInstancesRequest request, Options opts = {});
+  StreamRange<google::cloud::redis::v1::Instance> ListInstances(
+      google::cloud::redis::v1::ListInstancesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +218,8 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  StatusOr<google::cloud::redis::v1::Instance>
-  GetInstance(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::redis::v1::Instance> GetInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -244,8 +248,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  StatusOr<google::cloud::redis::v1::Instance>
-  GetInstance(google::cloud::redis::v1::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::redis::v1::Instance> GetInstance(
+      google::cloud::redis::v1::GetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -273,8 +278,8 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.InstanceAuthString]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L773}
   ///
   // clang-format on
-  StatusOr<google::cloud::redis::v1::InstanceAuthString>
-  GetInstanceAuthString(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -305,8 +310,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.InstanceAuthString]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L773}
   ///
   // clang-format on
-  StatusOr<google::cloud::redis::v1::InstanceAuthString>
-  GetInstanceAuthString(google::cloud::redis::v1::GetInstanceAuthStringRequest const& request, Options opts = {});
+  StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +365,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  CreateInstance(std::string const& parent, std::string const& instance_id, google::cloud::redis::v1::Instance const& instance, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
+      std::string const& parent, std::string const& instance_id,
+      google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +380,9 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, std::string const& parent, std::string const& instance_id, google::cloud::redis::v1::Instance const& instance, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag, std::string const& parent, std::string const& instance_id,
+      google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -421,8 +429,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  CreateInstance(google::cloud::redis::v1::CreateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
+      google::cloud::redis::v1::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -435,8 +444,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, google::cloud::redis::v1::CreateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::redis::v1::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -447,8 +458,8 @@ class CloudRedisClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -493,8 +504,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L807}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  UpdateInstance(google::protobuf::FieldMask const& update_mask, google::cloud::redis::v1::Instance const& instance, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
+      google::protobuf::FieldMask const& update_mask,
+      google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -507,8 +519,9 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::protobuf::FieldMask const& update_mask, google::cloud::redis::v1::Instance const& instance, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag, google::protobuf::FieldMask const& update_mask,
+      google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -548,8 +561,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L807}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  UpdateInstance(google::cloud::redis::v1::UpdateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
+      google::cloud::redis::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -562,8 +576,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::redis::v1::UpdateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::redis::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -574,8 +590,8 @@ class CloudRedisClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -610,8 +626,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.UpgradeInstanceRequest]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L827}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  UpgradeInstance(std::string const& name, std::string const& redis_version, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
+      std::string const& name, std::string const& redis_version,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -624,8 +641,9 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpgradeInstance(NoAwaitTag, std::string const& name, std::string const& redis_version, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpgradeInstance(
+      NoAwaitTag, std::string const& name, std::string const& redis_version,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -662,8 +680,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.UpgradeInstanceRequest]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L827}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  UpgradeInstance(google::cloud::redis::v1::UpgradeInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
+      google::cloud::redis::v1::UpgradeInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -676,8 +695,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpgradeInstance(NoAwaitTag, google::cloud::redis::v1::UpgradeInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpgradeInstance(
+      NoAwaitTag,
+      google::cloud::redis::v1::UpgradeInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -688,8 +709,8 @@ class CloudRedisClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  UpgradeInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -730,8 +751,10 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  ImportInstance(std::string const& name, google::cloud::redis::v1::InputConfig const& input_config, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
+      std::string const& name,
+      google::cloud::redis::v1::InputConfig const& input_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -744,8 +767,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportInstance(NoAwaitTag, std::string const& name, google::cloud::redis::v1::InputConfig const& input_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportInstance(
+      NoAwaitTag, std::string const& name,
+      google::cloud::redis::v1::InputConfig const& input_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -788,8 +813,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  ImportInstance(google::cloud::redis::v1::ImportInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
+      google::cloud::redis::v1::ImportInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -802,8 +828,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportInstance(NoAwaitTag, google::cloud::redis::v1::ImportInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportInstance(
+      NoAwaitTag,
+      google::cloud::redis::v1::ImportInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -814,8 +842,8 @@ class CloudRedisClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  ImportInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -854,8 +882,10 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  ExportInstance(std::string const& name, google::cloud::redis::v1::OutputConfig const& output_config, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
+      std::string const& name,
+      google::cloud::redis::v1::OutputConfig const& output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -868,8 +898,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportInstance(NoAwaitTag, std::string const& name, google::cloud::redis::v1::OutputConfig const& output_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportInstance(
+      NoAwaitTag, std::string const& name,
+      google::cloud::redis::v1::OutputConfig const& output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -910,8 +942,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  ExportInstance(google::cloud::redis::v1::ExportInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
+      google::cloud::redis::v1::ExportInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -924,8 +957,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportInstance(NoAwaitTag, google::cloud::redis::v1::ExportInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportInstance(
+      NoAwaitTag,
+      google::cloud::redis::v1::ExportInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -936,8 +971,8 @@ class CloudRedisClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  ExportInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -973,8 +1008,11 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  FailoverInstance(std::string const& name, google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode data_protection_mode, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
+      std::string const& name,
+      google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode
+          data_protection_mode,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -987,8 +1025,11 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  FailoverInstance(NoAwaitTag, std::string const& name, google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode data_protection_mode, Options opts = {});
+  StatusOr<google::longrunning::Operation> FailoverInstance(
+      NoAwaitTag, std::string const& name,
+      google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode
+          data_protection_mode,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1025,8 +1066,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.Instance]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L245}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  FailoverInstance(google::cloud::redis::v1::FailoverInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
+      google::cloud::redis::v1::FailoverInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1039,8 +1081,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  FailoverInstance(NoAwaitTag, google::cloud::redis::v1::FailoverInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> FailoverInstance(
+      NoAwaitTag,
+      google::cloud::redis::v1::FailoverInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1051,8 +1095,8 @@ class CloudRedisClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  FailoverInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1086,8 +1130,8 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L938}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-  DeleteInstance(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1100,8 +1144,8 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1138,8 +1182,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L938}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::redis::v1::DeleteInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
+      google::cloud::redis::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1152,8 +1197,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, google::cloud::redis::v1::DeleteInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::redis::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1164,8 +1211,8 @@ class CloudRedisClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1204,8 +1251,11 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L605}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  RescheduleMaintenance(std::string const& name, google::cloud::redis::v1::RescheduleMaintenanceRequest::RescheduleType reschedule_type, google::protobuf::Timestamp const& schedule_time, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
+      std::string const& name,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest::RescheduleType
+          reschedule_type,
+      google::protobuf::Timestamp const& schedule_time, Options opts = {});
 
   // clang-format off
   ///
@@ -1218,8 +1268,11 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RescheduleMaintenance(NoAwaitTag, std::string const& name, google::cloud::redis::v1::RescheduleMaintenanceRequest::RescheduleType reschedule_type, google::protobuf::Timestamp const& schedule_time, Options opts = {});
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      NoAwaitTag, std::string const& name,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest::RescheduleType
+          reschedule_type,
+      google::protobuf::Timestamp const& schedule_time, Options opts = {});
 
   // clang-format off
   ///
@@ -1256,8 +1309,9 @@ class CloudRedisClient {
   /// [google.cloud.redis.v1.RescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L605}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  RescheduleMaintenance(google::cloud::redis::v1::RescheduleMaintenanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1270,8 +1324,10 @@ class CloudRedisClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RescheduleMaintenance(NoAwaitTag, google::cloud::redis::v1::RescheduleMaintenanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      NoAwaitTag,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1282,8 +1338,8 @@ class CloudRedisClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::v1::Instance>>
-  RescheduleMaintenance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1321,8 +1377,8 @@ class CloudRedisClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1351,8 +1407,9 @@ class CloudRedisClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1387,8 +1444,8 @@ class CloudRedisClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1427,8 +1484,8 @@ class CloudRedisClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1454,8 +1511,8 @@ class CloudRedisClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1486,8 +1543,9 @@ class CloudRedisClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1511,8 +1569,7 @@ class CloudRedisClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1541,8 +1598,9 @@ class CloudRedisClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1576,8 +1634,7 @@ class CloudRedisClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1616,8 +1673,9 @@ class CloudRedisClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudRedisConnection> connection_;

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ACCELERATOR_TYPES_V1_ACCELERATOR_TYPES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ACCELERATOR_TYPES_V1_ACCELERATOR_TYPES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_connection.h"
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

@@ -30,8 +30,10 @@ namespace cloud {
 namespace datamigration_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datamigration_v1_mocks::MockDataMigrationServiceConnection directly.
-using ::google::cloud::datamigration_v1_mocks::MockDataMigrationServiceConnection;
+/// @deprecated Use datamigration_v1_mocks::MockDataMigrationServiceConnection
+/// directly.
+using ::google::cloud::datamigration_v1_mocks::
+    MockDataMigrationServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_mocks

@@ -33,8 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PartitionAssignmentServiceLogging::PartitionAssignmentServiceLogging(
     std::shared_ptr<PartitionAssignmentServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
@@ -47,12 +46,14 @@ PartitionAssignmentServiceLogging::AsyncAssignPartitions(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::cloud::pubsublite::v1::PartitionAssignmentRequest, google::cloud::pubsublite::v1::PartitionAssignment>;
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::pubsublite::v1::PartitionAssignmentRequest,
+          google::cloud::pubsublite::v1::PartitionAssignment>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncAssignPartitions(
-      cq, std::move(context), std::move(options));
+  auto stream =
+      child_->AsyncAssignPartitions(cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -62,12 +63,10 @@ PartitionAssignmentServiceLogging::AsyncAssignPartitions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 PartitionAssignmentServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -76,40 +75,32 @@ PartitionAssignmentServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 PartitionAssignmentServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-PartitionAssignmentServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status PartitionAssignmentServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-PartitionAssignmentServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status PartitionAssignmentServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

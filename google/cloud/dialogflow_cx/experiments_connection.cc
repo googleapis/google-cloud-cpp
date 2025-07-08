@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/experiment.proto
 
 #include "google/cloud/dialogflow_cx/experiments_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/experiments_options.h"
 #include "google/cloud/dialogflow_cx/internal/experiments_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/experiments_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/experiments_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/experiments_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ExperimentsConnection::~ExperimentsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::Experiment> ExperimentsConnection::ListExperiments(
-    google::cloud::dialogflow::cx::v3::ListExperimentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
+ExperimentsConnection::ListExperiments(
+    google::cloud::dialogflow::cx::v3::
+        ListExperimentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Experiment>>();
 }
@@ -62,8 +64,7 @@ ExperimentsConnection::UpdateExperiment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ExperimentsConnection::DeleteExperiment(
+Status ExperimentsConnection::DeleteExperiment(
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -80,32 +81,33 @@ ExperimentsConnection::StopExperiment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> ExperimentsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ExperimentsConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-ExperimentsConnection::GetLocation(
+StatusOr<google::cloud::location::Location> ExperimentsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> ExperimentsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ExperimentsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ExperimentsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ExperimentsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ExperimentsConnection::CancelOperation(
+Status ExperimentsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -113,17 +115,18 @@ ExperimentsConnection::CancelOperation(
 std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ExperimentsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ExperimentsPolicyOptionList>(options,
+                                                              __func__);
   options = dialogflow_cx_internal::ExperimentsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_cx_internal::CreateDefaultExperimentsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dialogflow_cx_internal::MakeExperimentsTracingConnection(
       std::make_shared<dialogflow_cx_internal::ExperimentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(

@@ -31,82 +31,88 @@ StorageInsightsAuth::StorageInsightsAuth(
     std::shared_ptr<StorageInsightsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse> StorageInsightsAuth::ListReportConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
+StorageInsightsAuth::ListReportConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListReportConfigsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListReportConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsAuth::GetReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+StorageInsightsAuth::GetReportConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetReportConfig(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsAuth::CreateReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+StorageInsightsAuth::CreateReportConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateReportConfig(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsAuth::UpdateReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+StorageInsightsAuth::UpdateReportConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateReportConfig(context, options, request);
 }
 
 Status StorageInsightsAuth::DeleteReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteReportConfig(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse> StorageInsightsAuth::ListReportDetails(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
+StorageInsightsAuth::ListReportDetails(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListReportDetailsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListReportDetails(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportDetail> StorageInsightsAuth::GetReportDetail(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::storageinsights::v1::ReportDetail>
+StorageInsightsAuth::GetReportDetail(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetReportDetail(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ListDatasetConfigsResponse> StorageInsightsAuth::ListDatasetConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::ListDatasetConfigsRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ListDatasetConfigsResponse>
+StorageInsightsAuth::ListDatasetConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDatasetConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::DatasetConfig> StorageInsightsAuth::GetDatasetConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
+StorageInsightsAuth::GetDatasetConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDatasetConfig(context, options, request);
@@ -114,28 +120,30 @@ StatusOr<google::cloud::storageinsights::v1::DatasetConfig> StorageInsightsAuth:
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsAuth::AsyncCreateDatasetConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDatasetConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDatasetConfig(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsAuth::CreateDatasetConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDatasetConfig(context, options, request);
@@ -143,28 +151,30 @@ StorageInsightsAuth::CreateDatasetConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsAuth::AsyncUpdateDatasetConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDatasetConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateDatasetConfig(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsAuth::UpdateDatasetConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDatasetConfig(context, options, request);
@@ -172,28 +182,30 @@ StorageInsightsAuth::UpdateDatasetConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsAuth::AsyncDeleteDatasetConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDatasetConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDatasetConfig(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsAuth::DeleteDatasetConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDatasetConfig(context, options, request);
@@ -201,28 +213,27 @@ StorageInsightsAuth::DeleteDatasetConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsAuth::AsyncLinkDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncLinkDataset(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncLinkDataset(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-StorageInsightsAuth::LinkDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> StorageInsightsAuth::LinkDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->LinkDataset(context, options, request);
@@ -230,36 +241,35 @@ StorageInsightsAuth::LinkDataset(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsAuth::AsyncUnlinkDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUnlinkDataset(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUnlinkDataset(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-StorageInsightsAuth::UnlinkDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> StorageInsightsAuth::UnlinkDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UnlinkDataset(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> StorageInsightsAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+StorageInsightsAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -267,17 +277,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> StorageInsightsAuth::Li
 }
 
 StatusOr<google::cloud::location::Location> StorageInsightsAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> StorageInsightsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+StorageInsightsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -285,8 +294,7 @@ StatusOr<google::longrunning::ListOperationsResponse> StorageInsightsAuth::ListO
 }
 
 StatusOr<google::longrunning::Operation> StorageInsightsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -294,8 +302,7 @@ StatusOr<google::longrunning::Operation> StorageInsightsAuth::GetOperation(
 }
 
 Status StorageInsightsAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -303,8 +310,7 @@ Status StorageInsightsAuth::DeleteOperation(
 }
 
 Status StorageInsightsAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -318,15 +324,16 @@ StorageInsightsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -335,13 +342,14 @@ future<Status> StorageInsightsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

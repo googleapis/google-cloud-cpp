@@ -17,11 +17,11 @@
 // source: google/cloud/resourcemanager/v3/organizations.proto
 
 #include "google/cloud/resourcemanager/v3/internal/organizations_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/resourcemanager/v3/organizations_connection.h"
 #include "google/cloud/resourcemanager/v3/organizations_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -34,26 +34,34 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options OrganizationsDefaultOptions(std::string const& location, Options options) {
+Options OrganizationsDefaultOptions(std::string const& location,
+                                    Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ORGANIZATIONS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ORGANIZATIONS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_ORGANIZATIONS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ORGANIZATIONS_AUTHORITY",
       // optional location tag for generating docs
-      absl::StrCat(location, location.empty() ? "" : "-", "cloudresourcemanager.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "cloudresourcemanager.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<resourcemanager_v3::OrganizationsRetryPolicyOption>()) {
     options.set<resourcemanager_v3::OrganizationsRetryPolicyOption>(
         resourcemanager_v3::OrganizationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<resourcemanager_v3::OrganizationsBackoffPolicyOption>()) {
     options.set<resourcemanager_v3::OrganizationsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<resourcemanager_v3::OrganizationsConnectionIdempotencyPolicyOption>()) {
-    options.set<resourcemanager_v3::OrganizationsConnectionIdempotencyPolicyOption>(
-        resourcemanager_v3::MakeDefaultOrganizationsConnectionIdempotencyPolicy());
+  if (!options.has<resourcemanager_v3::
+                       OrganizationsConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        resourcemanager_v3::OrganizationsConnectionIdempotencyPolicyOption>(
+        resourcemanager_v3::
+            MakeDefaultOrganizationsConnectionIdempotencyPolicy());
   }
 
   return options;

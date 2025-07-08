@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProductServiceClient::ProductServiceClient(
     std::shared_ptr<ProductServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProductServiceClient::~ProductServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::Product>
-ProductServiceClient::CreateProduct(std::string const& parent, google::cloud::retail::v2::Product const& product, std::string const& product_id, Options opts) {
+ProductServiceClient::CreateProduct(
+    std::string const& parent,
+    google::cloud::retail::v2::Product const& product,
+    std::string const& product_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::CreateProductRequest request;
   request.set_parent(parent);
@@ -43,21 +46,23 @@ ProductServiceClient::CreateProduct(std::string const& parent, google::cloud::re
 }
 
 StatusOr<google::cloud::retail::v2::Product>
-ProductServiceClient::CreateProduct(google::cloud::retail::v2::CreateProductRequest const& request, Options opts) {
+ProductServiceClient::CreateProduct(
+    google::cloud::retail::v2::CreateProductRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProduct(request);
 }
 
-StatusOr<google::cloud::retail::v2::Product>
-ProductServiceClient::GetProduct(std::string const& name, Options opts) {
+StatusOr<google::cloud::retail::v2::Product> ProductServiceClient::GetProduct(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetProductRequest request;
   request.set_name(name);
   return connection_->GetProduct(request);
 }
 
-StatusOr<google::cloud::retail::v2::Product>
-ProductServiceClient::GetProduct(google::cloud::retail::v2::GetProductRequest const& request, Options opts) {
+StatusOr<google::cloud::retail::v2::Product> ProductServiceClient::GetProduct(
+    google::cloud::retail::v2::GetProductRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProduct(request);
 }
@@ -71,13 +76,16 @@ ProductServiceClient::ListProducts(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::retail::v2::Product>
-ProductServiceClient::ListProducts(google::cloud::retail::v2::ListProductsRequest request, Options opts) {
+ProductServiceClient::ListProducts(
+    google::cloud::retail::v2::ListProductsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProducts(std::move(request));
 }
 
 StatusOr<google::cloud::retail::v2::Product>
-ProductServiceClient::UpdateProduct(google::cloud::retail::v2::Product const& product, google::protobuf::FieldMask const& update_mask, Options opts) {
+ProductServiceClient::UpdateProduct(
+    google::cloud::retail::v2::Product const& product,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateProductRequest request;
   *request.mutable_product() = product;
@@ -86,63 +94,76 @@ ProductServiceClient::UpdateProduct(google::cloud::retail::v2::Product const& pr
 }
 
 StatusOr<google::cloud::retail::v2::Product>
-ProductServiceClient::UpdateProduct(google::cloud::retail::v2::UpdateProductRequest const& request, Options opts) {
+ProductServiceClient::UpdateProduct(
+    google::cloud::retail::v2::UpdateProductRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProduct(request);
 }
 
-Status
-ProductServiceClient::DeleteProduct(std::string const& name, Options opts) {
+Status ProductServiceClient::DeleteProduct(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::DeleteProductRequest request;
   request.set_name(name);
   return connection_->DeleteProduct(request);
 }
 
-Status
-ProductServiceClient::DeleteProduct(google::cloud::retail::v2::DeleteProductRequest const& request, Options opts) {
+Status ProductServiceClient::DeleteProduct(
+    google::cloud::retail::v2::DeleteProductRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProduct(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-ProductServiceClient::PurgeProducts(google::cloud::retail::v2::PurgeProductsRequest const& request, Options opts) {
+ProductServiceClient::PurgeProducts(
+    google::cloud::retail::v2::PurgeProductsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeProducts(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductServiceClient::PurgeProducts(NoAwaitTag, google::cloud::retail::v2::PurgeProductsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProductServiceClient::PurgeProducts(
+    NoAwaitTag, google::cloud::retail::v2::PurgeProductsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeProducts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-ProductServiceClient::PurgeProducts(google::longrunning::Operation const& operation, Options opts) {
+ProductServiceClient::PurgeProducts(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeProducts(operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-ProductServiceClient::ImportProducts(google::cloud::retail::v2::ImportProductsRequest const& request, Options opts) {
+ProductServiceClient::ImportProducts(
+    google::cloud::retail::v2::ImportProductsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportProducts(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductServiceClient::ImportProducts(NoAwaitTag, google::cloud::retail::v2::ImportProductsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProductServiceClient::ImportProducts(
+    NoAwaitTag, google::cloud::retail::v2::ImportProductsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportProducts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-ProductServiceClient::ImportProducts(google::longrunning::Operation const& operation, Options opts) {
+ProductServiceClient::ImportProducts(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportProducts(operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-ProductServiceClient::SetInventory(google::cloud::retail::v2::Product const& inventory, google::protobuf::FieldMask const& set_mask, Options opts) {
+ProductServiceClient::SetInventory(
+    google::cloud::retail::v2::Product const& inventory,
+    google::protobuf::FieldMask const& set_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::SetInventoryRequest request;
   *request.mutable_inventory() = inventory;
@@ -150,8 +171,9 @@ ProductServiceClient::SetInventory(google::cloud::retail::v2::Product const& inv
   return connection_->SetInventory(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductServiceClient::SetInventory(NoAwaitTag, google::cloud::retail::v2::Product const& inventory, google::protobuf::FieldMask const& set_mask, Options opts) {
+StatusOr<google::longrunning::Operation> ProductServiceClient::SetInventory(
+    NoAwaitTag, google::cloud::retail::v2::Product const& inventory,
+    google::protobuf::FieldMask const& set_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::SetInventoryRequest request;
   *request.mutable_inventory() = inventory;
@@ -160,25 +182,30 @@ ProductServiceClient::SetInventory(NoAwaitTag, google::cloud::retail::v2::Produc
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-ProductServiceClient::SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request, Options opts) {
+ProductServiceClient::SetInventory(
+    google::cloud::retail::v2::SetInventoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetInventory(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductServiceClient::SetInventory(NoAwaitTag, google::cloud::retail::v2::SetInventoryRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProductServiceClient::SetInventory(
+    NoAwaitTag, google::cloud::retail::v2::SetInventoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetInventory(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-ProductServiceClient::SetInventory(google::longrunning::Operation const& operation, Options opts) {
+ProductServiceClient::SetInventory(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetInventory(operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-ProductServiceClient::AddFulfillmentPlaces(std::string const& product, Options opts) {
+ProductServiceClient::AddFulfillmentPlaces(std::string const& product,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::AddFulfillmentPlacesRequest request;
   request.set_product(product);
@@ -186,7 +213,9 @@ ProductServiceClient::AddFulfillmentPlaces(std::string const& product, Options o
 }
 
 StatusOr<google::longrunning::Operation>
-ProductServiceClient::AddFulfillmentPlaces(NoAwaitTag, std::string const& product, Options opts) {
+ProductServiceClient::AddFulfillmentPlaces(NoAwaitTag,
+                                           std::string const& product,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::AddFulfillmentPlacesRequest request;
   request.set_product(product);
@@ -194,25 +223,32 @@ ProductServiceClient::AddFulfillmentPlaces(NoAwaitTag, std::string const& produc
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-ProductServiceClient::AddFulfillmentPlaces(google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request, Options opts) {
+ProductServiceClient::AddFulfillmentPlaces(
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddFulfillmentPlaces(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ProductServiceClient::AddFulfillmentPlaces(NoAwaitTag, google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request, Options opts) {
+ProductServiceClient::AddFulfillmentPlaces(
+    NoAwaitTag,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddFulfillmentPlaces(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-ProductServiceClient::AddFulfillmentPlaces(google::longrunning::Operation const& operation, Options opts) {
+ProductServiceClient::AddFulfillmentPlaces(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddFulfillmentPlaces(operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-ProductServiceClient::RemoveFulfillmentPlaces(std::string const& product, Options opts) {
+ProductServiceClient::RemoveFulfillmentPlaces(std::string const& product,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::RemoveFulfillmentPlacesRequest request;
   request.set_product(product);
@@ -220,7 +256,9 @@ ProductServiceClient::RemoveFulfillmentPlaces(std::string const& product, Option
 }
 
 StatusOr<google::longrunning::Operation>
-ProductServiceClient::RemoveFulfillmentPlaces(NoAwaitTag, std::string const& product, Options opts) {
+ProductServiceClient::RemoveFulfillmentPlaces(NoAwaitTag,
+                                              std::string const& product,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::RemoveFulfillmentPlacesRequest request;
   request.set_product(product);
@@ -228,25 +266,32 @@ ProductServiceClient::RemoveFulfillmentPlaces(NoAwaitTag, std::string const& pro
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-ProductServiceClient::RemoveFulfillmentPlaces(google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request, Options opts) {
+ProductServiceClient::RemoveFulfillmentPlaces(
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveFulfillmentPlaces(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ProductServiceClient::RemoveFulfillmentPlaces(NoAwaitTag, google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request, Options opts) {
+ProductServiceClient::RemoveFulfillmentPlaces(
+    NoAwaitTag,
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveFulfillmentPlaces(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-ProductServiceClient::RemoveFulfillmentPlaces(google::longrunning::Operation const& operation, Options opts) {
+ProductServiceClient::RemoveFulfillmentPlaces(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveFulfillmentPlaces(operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-ProductServiceClient::AddLocalInventories(std::string const& product, Options opts) {
+ProductServiceClient::AddLocalInventories(std::string const& product,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::AddLocalInventoriesRequest request;
   request.set_product(product);
@@ -254,7 +299,9 @@ ProductServiceClient::AddLocalInventories(std::string const& product, Options op
 }
 
 StatusOr<google::longrunning::Operation>
-ProductServiceClient::AddLocalInventories(NoAwaitTag, std::string const& product, Options opts) {
+ProductServiceClient::AddLocalInventories(NoAwaitTag,
+                                          std::string const& product,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::AddLocalInventoriesRequest request;
   request.set_product(product);
@@ -262,25 +309,32 @@ ProductServiceClient::AddLocalInventories(NoAwaitTag, std::string const& product
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-ProductServiceClient::AddLocalInventories(google::cloud::retail::v2::AddLocalInventoriesRequest const& request, Options opts) {
+ProductServiceClient::AddLocalInventories(
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddLocalInventories(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ProductServiceClient::AddLocalInventories(NoAwaitTag, google::cloud::retail::v2::AddLocalInventoriesRequest const& request, Options opts) {
+ProductServiceClient::AddLocalInventories(
+    NoAwaitTag,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddLocalInventories(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-ProductServiceClient::AddLocalInventories(google::longrunning::Operation const& operation, Options opts) {
+ProductServiceClient::AddLocalInventories(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddLocalInventories(operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-ProductServiceClient::RemoveLocalInventories(std::string const& product, Options opts) {
+ProductServiceClient::RemoveLocalInventories(std::string const& product,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::RemoveLocalInventoriesRequest request;
   request.set_product(product);
@@ -288,7 +342,9 @@ ProductServiceClient::RemoveLocalInventories(std::string const& product, Options
 }
 
 StatusOr<google::longrunning::Operation>
-ProductServiceClient::RemoveLocalInventories(NoAwaitTag, std::string const& product, Options opts) {
+ProductServiceClient::RemoveLocalInventories(NoAwaitTag,
+                                             std::string const& product,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::RemoveLocalInventoriesRequest request;
   request.set_product(product);
@@ -296,25 +352,32 @@ ProductServiceClient::RemoveLocalInventories(NoAwaitTag, std::string const& prod
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-ProductServiceClient::RemoveLocalInventories(google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request, Options opts) {
+ProductServiceClient::RemoveLocalInventories(
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveLocalInventories(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ProductServiceClient::RemoveLocalInventories(NoAwaitTag, google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request, Options opts) {
+ProductServiceClient::RemoveLocalInventories(
+    NoAwaitTag,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveLocalInventories(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-ProductServiceClient::RemoveLocalInventories(google::longrunning::Operation const& operation, Options opts) {
+ProductServiceClient::RemoveLocalInventories(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveLocalInventories(operation);
 }
 
 StreamRange<google::longrunning::Operation>
-ProductServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+ProductServiceClient::ListOperations(std::string const& name,
+                                     std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -323,21 +386,22 @@ ProductServiceClient::ListOperations(std::string const& name, std::string const&
 }
 
 StreamRange<google::longrunning::Operation>
-ProductServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+ProductServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-ProductServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ProductServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProductServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

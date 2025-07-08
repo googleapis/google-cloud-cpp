@@ -34,20 +34,24 @@ class ReservationBlocksConnectionIdempotencyPolicy {
   virtual ~ReservationBlocksConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ReservationBlocksConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ReservationBlocksConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  GetReservationBlocksGetResponse(google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request);
+  virtual google::cloud::Idempotency GetReservationBlocksGetResponse(
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          GetReservationBlocksGetResponseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request);
+  virtual google::cloud::Idempotency ListReservationBlocks(
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          ListReservationBlocksRequest request);
 
-  virtual google::cloud::Idempotency
-  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request);
+  virtual google::cloud::Idempotency PerformMaintenance(
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          PerformMaintenanceRequest const& request);
 };
 
 std::unique_ptr<ReservationBlocksConnectionIdempotencyPolicy>
-    MakeDefaultReservationBlocksConnectionIdempotencyPolicy();
+MakeDefaultReservationBlocksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_reservation_blocks_v1

@@ -31,18 +31,19 @@ DeveloperConnectAuth::DeveloperConnectAuth(
     std::shared_ptr<DeveloperConnectStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::developerconnect::v1::ListConnectionsResponse> DeveloperConnectAuth::ListConnections(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::ListConnectionsRequest const& request) {
+StatusOr<google::cloud::developerconnect::v1::ListConnectionsResponse>
+DeveloperConnectAuth::ListConnections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListConnectionsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConnections(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::Connection> DeveloperConnectAuth::GetConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::developerconnect::v1::Connection>
+DeveloperConnectAuth::GetConnection(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::GetConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +52,29 @@ StatusOr<google::cloud::developerconnect::v1::Connection> DeveloperConnectAuth::
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncCreateConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateConnection(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateConnection(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectAuth::CreateConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
+StatusOr<google::longrunning::Operation> DeveloperConnectAuth::CreateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConnection(context, options, request);
@@ -80,28 +82,29 @@ DeveloperConnectAuth::CreateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncUpdateConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateConnection(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateConnection(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectAuth::UpdateConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
+StatusOr<google::longrunning::Operation> DeveloperConnectAuth::UpdateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConnection(context, options, request);
@@ -109,28 +112,29 @@ DeveloperConnectAuth::UpdateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncDeleteConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteConnection(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteConnection(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectAuth::DeleteConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
+StatusOr<google::longrunning::Operation> DeveloperConnectAuth::DeleteConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConnection(context, options, request);
@@ -138,28 +142,30 @@ DeveloperConnectAuth::DeleteConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncCreateGitRepositoryLink(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateGitRepositoryLink(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateGitRepositoryLink(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectAuth::CreateGitRepositoryLink(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateGitRepositoryLink(context, options, request);
@@ -167,109 +173,119 @@ DeveloperConnectAuth::CreateGitRepositoryLink(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncDeleteGitRepositoryLink(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteGitRepositoryLink(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteGitRepositoryLink(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectAuth::DeleteGitRepositoryLink(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteGitRepositoryLink(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse> DeveloperConnectAuth::ListGitRepositoryLinks(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest const& request) {
+StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse>
+DeveloperConnectAuth::ListGitRepositoryLinks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListGitRepositoryLinks(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink> DeveloperConnectAuth::GetGitRepositoryLink(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request) {
+StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
+DeveloperConnectAuth::GetGitRepositoryLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetGitRepositoryLink(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse> DeveloperConnectAuth::FetchReadWriteToken(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request) {
+StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
+DeveloperConnectAuth::FetchReadWriteToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchReadWriteToken(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse> DeveloperConnectAuth::FetchReadToken(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
+DeveloperConnectAuth::FetchReadToken(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchReadToken(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse> DeveloperConnectAuth::FetchLinkableGitRepositories(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest const& request) {
+StatusOr<
+    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
+DeveloperConnectAuth::FetchLinkableGitRepositories(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchLinkableGitRepositoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchLinkableGitRepositories(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse> DeveloperConnectAuth::FetchGitHubInstallations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request) {
+StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
+DeveloperConnectAuth::FetchGitHubInstallations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchGitHubInstallations(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchGitRefsResponse> DeveloperConnectAuth::FetchGitRefs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::developerconnect::v1::FetchGitRefsResponse>
+DeveloperConnectAuth::FetchGitRefs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::FetchGitRefsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchGitRefs(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse> DeveloperConnectAuth::ListAccountConnectors(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const& request) {
+StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>
+DeveloperConnectAuth::ListAccountConnectors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAccountConnectors(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::AccountConnector> DeveloperConnectAuth::GetAccountConnector(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request) {
+StatusOr<google::cloud::developerconnect::v1::AccountConnector>
+DeveloperConnectAuth::GetAccountConnector(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAccountConnector(context, options, request);
@@ -277,28 +293,30 @@ StatusOr<google::cloud::developerconnect::v1::AccountConnector> DeveloperConnect
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncCreateAccountConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAccountConnector(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateAccountConnector(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectAuth::CreateAccountConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAccountConnector(context, options, request);
@@ -306,28 +324,30 @@ DeveloperConnectAuth::CreateAccountConnector(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncUpdateAccountConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAccountConnector(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateAccountConnector(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectAuth::UpdateAccountConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAccountConnector(context, options, request);
@@ -335,45 +355,48 @@ DeveloperConnectAuth::UpdateAccountConnector(
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncDeleteAccountConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAccountConnector(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteAccountConnector(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectAuth::DeleteAccountConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAccountConnector(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse> DeveloperConnectAuth::FetchAccessToken(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request) {
+StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
+DeveloperConnectAuth::FetchAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchAccessToken(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::ListUsersResponse> DeveloperConnectAuth::ListUsers(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::developerconnect::v1::ListUsersResponse>
+DeveloperConnectAuth::ListUsers(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::ListUsersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -382,36 +405,35 @@ StatusOr<google::cloud::developerconnect::v1::ListUsersResponse> DeveloperConnec
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncDeleteUser(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteUser(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteUser(cq, *std::move(context),
+                                      std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectAuth::DeleteUser(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
+StatusOr<google::longrunning::Operation> DeveloperConnectAuth::DeleteUser(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteUser(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::User> DeveloperConnectAuth::FetchSelf(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::developerconnect::v1::User>
+DeveloperConnectAuth::FetchSelf(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -420,36 +442,35 @@ StatusOr<google::cloud::developerconnect::v1::User> DeveloperConnectAuth::FetchS
 
 future<StatusOr<google::longrunning::Operation>>
 DeveloperConnectAuth::AsyncDeleteSelf(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteSelf(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteSelf(cq, *std::move(context),
+                                      std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectAuth::DeleteSelf(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
+StatusOr<google::longrunning::Operation> DeveloperConnectAuth::DeleteSelf(
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSelf(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> DeveloperConnectAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DeveloperConnectAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -457,17 +478,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> DeveloperConnectAuth::L
 }
 
 StatusOr<google::cloud::location::Location> DeveloperConnectAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DeveloperConnectAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DeveloperConnectAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -475,8 +495,7 @@ StatusOr<google::longrunning::ListOperationsResponse> DeveloperConnectAuth::List
 }
 
 StatusOr<google::longrunning::Operation> DeveloperConnectAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -484,8 +503,7 @@ StatusOr<google::longrunning::Operation> DeveloperConnectAuth::GetOperation(
 }
 
 Status DeveloperConnectAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -493,8 +511,7 @@ Status DeveloperConnectAuth::DeleteOperation(
 }
 
 Status DeveloperConnectAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -508,15 +525,16 @@ DeveloperConnectAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -525,13 +543,14 @@ future<Status> DeveloperConnectAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

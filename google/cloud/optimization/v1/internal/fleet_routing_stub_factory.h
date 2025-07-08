@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_STUB_FACTORY_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/optimization/v1/internal/fleet_routing_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

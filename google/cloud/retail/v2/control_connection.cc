@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/control_service.proto
 
 #include "google/cloud/retail/v2/control_connection.h"
+#include "google/cloud/retail/v2/control_options.h"
+#include "google/cloud/retail/v2/internal/control_connection_impl.h"
+#include "google/cloud/retail/v2/internal/control_option_defaults.h"
+#include "google/cloud/retail/v2/internal/control_stub_factory.h"
+#include "google/cloud/retail/v2/internal/control_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/retail/v2/control_options.h"
-#include "google/cloud/retail/v2/internal/control_connection_impl.h"
-#include "google/cloud/retail/v2/internal/control_option_defaults.h"
-#include "google/cloud/retail/v2/internal/control_stub_factory.h"
-#include "google/cloud/retail/v2/internal/control_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -44,8 +44,7 @@ ControlServiceConnection::CreateControl(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ControlServiceConnection::DeleteControl(
+Status ControlServiceConnection::DeleteControl(
     google::cloud::retail::v2::DeleteControlRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -62,20 +61,23 @@ ControlServiceConnection::GetControl(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::retail::v2::Control> ControlServiceConnection::ListControls(
-    google::cloud::retail::v2::ListControlsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::retail::v2::Control>
+ControlServiceConnection::ListControls(
+    google::cloud::retail::v2::
+        ListControlsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Control>>();
 }
 
-StreamRange<google::longrunning::Operation> ControlServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ControlServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ControlServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ControlServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -83,17 +85,18 @@ ControlServiceConnection::GetOperation(
 std::shared_ptr<ControlServiceConnection> MakeControlServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ControlServicePolicyOptionList>(options, __func__);
-  options = retail_v2_internal::ControlServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ControlServicePolicyOptionList>(options,
+                                                                 __func__);
+  options =
+      retail_v2_internal::ControlServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = retail_v2_internal::CreateDefaultControlServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return retail_v2_internal::MakeControlServiceTracingConnection(
       std::make_shared<retail_v2_internal::ControlServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

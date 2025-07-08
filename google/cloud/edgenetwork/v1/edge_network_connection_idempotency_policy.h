@@ -38,105 +38,110 @@ class EdgeNetworkConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<EdgeNetworkConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  InitializeZone(google::cloud::edgenetwork::v1::InitializeZoneRequest const& request);
+  virtual google::cloud::Idempotency InitializeZone(
+      google::cloud::edgenetwork::v1::InitializeZoneRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListZones(google::cloud::edgenetwork::v1::ListZonesRequest request);
+  virtual google::cloud::Idempotency ListZones(
+      google::cloud::edgenetwork::v1::ListZonesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetZone(google::cloud::edgenetwork::v1::GetZoneRequest const& request);
+  virtual google::cloud::Idempotency GetZone(
+      google::cloud::edgenetwork::v1::GetZoneRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListNetworks(google::cloud::edgenetwork::v1::ListNetworksRequest request);
+  virtual google::cloud::Idempotency ListNetworks(
+      google::cloud::edgenetwork::v1::ListNetworksRequest request);
 
-  virtual google::cloud::Idempotency
-  GetNetwork(google::cloud::edgenetwork::v1::GetNetworkRequest const& request);
+  virtual google::cloud::Idempotency GetNetwork(
+      google::cloud::edgenetwork::v1::GetNetworkRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DiagnoseNetwork(google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request);
+  virtual google::cloud::Idempotency DiagnoseNetwork(
+      google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateNetwork(google::cloud::edgenetwork::v1::CreateNetworkRequest const& request);
+  virtual google::cloud::Idempotency CreateNetwork(
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request);
+  virtual google::cloud::Idempotency DeleteNetwork(
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSubnets(google::cloud::edgenetwork::v1::ListSubnetsRequest request);
+  virtual google::cloud::Idempotency ListSubnets(
+      google::cloud::edgenetwork::v1::ListSubnetsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetSubnet(google::cloud::edgenetwork::v1::GetSubnetRequest const& request);
+  virtual google::cloud::Idempotency GetSubnet(
+      google::cloud::edgenetwork::v1::GetSubnetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateSubnet(google::cloud::edgenetwork::v1::CreateSubnetRequest const& request);
+  virtual google::cloud::Idempotency CreateSubnet(
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateSubnet(google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request);
+  virtual google::cloud::Idempotency UpdateSubnet(
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request);
+  virtual google::cloud::Idempotency DeleteSubnet(
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListInterconnects(google::cloud::edgenetwork::v1::ListInterconnectsRequest request);
+  virtual google::cloud::Idempotency ListInterconnects(
+      google::cloud::edgenetwork::v1::ListInterconnectsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetInterconnect(google::cloud::edgenetwork::v1::GetInterconnectRequest const& request);
+  virtual google::cloud::Idempotency GetInterconnect(
+      google::cloud::edgenetwork::v1::GetInterconnectRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DiagnoseInterconnect(google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request);
+  virtual google::cloud::Idempotency DiagnoseInterconnect(
+      google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListInterconnectAttachments(google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request);
+  virtual google::cloud::Idempotency ListInterconnectAttachments(
+      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  GetInterconnectAttachment(google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request);
+  virtual google::cloud::Idempotency GetInterconnectAttachment(
+      google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateInterconnectAttachment(google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request);
+  virtual google::cloud::Idempotency CreateInterconnectAttachment(
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteInterconnectAttachment(google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request);
+  virtual google::cloud::Idempotency DeleteInterconnectAttachment(
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListRouters(google::cloud::edgenetwork::v1::ListRoutersRequest request);
+  virtual google::cloud::Idempotency ListRouters(
+      google::cloud::edgenetwork::v1::ListRoutersRequest request);
 
-  virtual google::cloud::Idempotency
-  GetRouter(google::cloud::edgenetwork::v1::GetRouterRequest const& request);
+  virtual google::cloud::Idempotency GetRouter(
+      google::cloud::edgenetwork::v1::GetRouterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DiagnoseRouter(google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request);
+  virtual google::cloud::Idempotency DiagnoseRouter(
+      google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateRouter(google::cloud::edgenetwork::v1::CreateRouterRequest const& request);
+  virtual google::cloud::Idempotency CreateRouter(
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateRouter(google::cloud::edgenetwork::v1::UpdateRouterRequest const& request);
+  virtual google::cloud::Idempotency UpdateRouter(
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const& request);
+  virtual google::cloud::Idempotency DeleteRouter(
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<EdgeNetworkConnectionIdempotencyPolicy>
-    MakeDefaultEdgeNetworkConnectionIdempotencyPolicy();
+MakeDefaultEdgeNetworkConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgenetwork_v1

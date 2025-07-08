@@ -28,20 +28,33 @@ namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServicePollingPolicyOption directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServicePollingPolicyOption;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::AppConnectorsServicePollingPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServicePollingPolicyOption;
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceBackoffPolicyOption directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceBackoffPolicyOption;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::AppConnectorsServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServiceBackoffPolicyOption;
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::AppConnectorsServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServicePolicyOptionList directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServicePolicyOptionList;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::AppConnectorsServicePolicyOptionList directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServicePolicyOptionList;
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicyOption directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicyOption;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicyOption directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

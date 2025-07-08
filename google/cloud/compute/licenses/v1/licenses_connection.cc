@@ -17,11 +17,11 @@
 // source: google/cloud/compute/licenses/v1/licenses.proto
 
 #include "google/cloud/compute/licenses/v1/licenses_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_option_defaults.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_tracing_connection.h"
 #include "google/cloud/compute/licenses/v1/licenses_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -40,8 +40,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::DeleteLicense(
     google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -49,15 +49,15 @@ LicensesConnection::DeleteLicense(
     NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::DeleteLicense(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
@@ -76,8 +76,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::InsertLicense(
     google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -85,19 +85,21 @@ LicensesConnection::InsertLicense(
     NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::InsertLicense(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::License> LicensesConnection::ListLicenses(
-    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::License>
+LicensesConnection::ListLicenses(
+    google::cloud::cpp::compute::licenses::v1::
+        ListLicensesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::License>>();
 }
@@ -110,7 +112,8 @@ LicensesConnection::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicensesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::licenses::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -118,8 +121,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::UpdateLicense(
     google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -127,15 +130,15 @@ LicensesConnection::UpdateLicense(
     NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::UpdateLicense(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

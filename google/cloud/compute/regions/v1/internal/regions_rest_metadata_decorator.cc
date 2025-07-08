@@ -17,11 +17,11 @@
 // source: google/cloud/compute/regions/v1/regions.proto
 
 #include "google/cloud/compute/regions/v1/internal/regions_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -30,9 +30,8 @@ namespace cloud {
 namespace compute_regions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RegionsRestMetadata::RegionsRestMetadata(
-    std::shared_ptr<RegionsRestStub> child,
-    std::string api_client_header)
+RegionsRestMetadata::RegionsRestMetadata(std::shared_ptr<RegionsRestStub> child,
+                                         std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -41,25 +40,26 @@ RegionsRestMetadata::RegionsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
 RegionsRestMetadata::GetRegion(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetRegion(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionList>
 RegionsRestMetadata::ListRegions(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::regions::v1::ListRegionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ListRegions(rest_context, options, request);
 }
 
-void RegionsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+void RegionsRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                      Options const& options,
+                                      std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_COMPLETION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_COMPLETION_CONNECTION_H
 
+#include "google/cloud/retail/v2/completion_connection_idempotency_policy.h"
+#include "google/cloud/retail/v2/internal/completion_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/retail/v2/completion_connection_idempotency_policy.h"
-#include "google/cloud/retail/v2/internal/completion_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -56,7 +56,8 @@ class CompletionServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CompletionServiceLimitedErrorCountRetryPolicy : public CompletionServiceRetryPolicy {
+class CompletionServiceLimitedErrorCountRetryPolicy
+    : public CompletionServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class CompletionServiceLimitedErrorCountRetryPolicy : public CompletionServiceRe
    *     @p maximum_failures == 0.
    */
   explicit CompletionServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   CompletionServiceLimitedErrorCountRetryPolicy(
       CompletionServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : CompletionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CompletionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CompletionServiceLimitedErrorCountRetryPolicy(
       CompletionServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : CompletionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CompletionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class CompletionServiceLimitedErrorCountRetryPolicy : public CompletionServiceRe
   using BaseType = CompletionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<retail_v2_internal::CompletionServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      retail_v2_internal::CompletionServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class CompletionServiceLimitedErrorCountRetryPolicy : public CompletionServiceRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CompletionServiceLimitedTimeRetryPolicy : public CompletionServiceRetryPolicy {
+class CompletionServiceLimitedTimeRetryPolicy
+    : public CompletionServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class CompletionServiceLimitedTimeRetryPolicy : public CompletionServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit CompletionServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  CompletionServiceLimitedTimeRetryPolicy(CompletionServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : CompletionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CompletionServiceLimitedTimeRetryPolicy(CompletionServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : CompletionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CompletionServiceLimitedTimeRetryPolicy(
+      CompletionServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : CompletionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CompletionServiceLimitedTimeRetryPolicy(
+      CompletionServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : CompletionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,16 +164,18 @@ class CompletionServiceLimitedTimeRetryPolicy : public CompletionServiceRetryPol
   using BaseType = CompletionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<retail_v2_internal::CompletionServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      retail_v2_internal::CompletionServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `CompletionServiceConnection` object for `CompletionServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `CompletionServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CompletionServiceClient`.
+ * sets in `CompletionServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CompletionServiceClient`.
  *
  * To create a concrete instance, see `MakeCompletionServiceConnection()`.
  *
@@ -182,31 +190,37 @@ class CompletionServiceConnection {
   virtual StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
   CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request);
 
-  virtual future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-  ImportCompletionData(google::cloud::retail::v2::ImportCompletionDataRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
+  ImportCompletionData(
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportCompletionData(NoAwaitTag, google::cloud::retail::v2::ImportCompletionDataRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ImportCompletionData(
+      NoAwaitTag,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request);
 
-  virtual future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-  ImportCompletionData( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
+  ImportCompletionData(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `CompletionServiceConnection`.
+ * A factory function to construct an object of type
+ * `CompletionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CompletionServiceClient.
+ * should be passed as an argument to the constructor of
+ * CompletionServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `CompletionServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `CompletionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -216,8 +230,8 @@ class CompletionServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `CompletionServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `CompletionServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
     Options options = {});

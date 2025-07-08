@@ -34,7 +34,8 @@ using ::google::cloud::appengine_v1::VersionsPollingPolicyOption;
 /// @deprecated Use appengine_v1::VersionsBackoffPolicyOption directly.
 using ::google::cloud::appengine_v1::VersionsBackoffPolicyOption;
 
-/// @deprecated Use appengine_v1::VersionsConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use appengine_v1::VersionsConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::appengine_v1::VersionsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use appengine_v1::VersionsPolicyOptionList directly.

@@ -31,25 +31,24 @@ namespace vpcaccess_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VpcAccessServiceLogging::VpcAccessServiceLogging(
-    std::shared_ptr<VpcAccessServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<VpcAccessServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceLogging::AsyncCreateConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
-        return child_->AsyncCreateConnector(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+        return child_->AsyncCreateConnector(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -57,13 +56,12 @@ VpcAccessServiceLogging::AsyncCreateConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceLogging::CreateConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
         return child_->CreateConnector(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -71,12 +69,10 @@ VpcAccessServiceLogging::CreateConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceLogging::GetConnector(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
         return child_->GetConnector(context, options, request);
       },
@@ -85,13 +81,12 @@ VpcAccessServiceLogging::GetConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 VpcAccessServiceLogging::ListConnectors(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
         return child_->ListConnectors(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,17 +94,18 @@ VpcAccessServiceLogging::ListConnectors(
 
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceLogging::AsyncDeleteConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
-        return child_->AsyncDeleteConnector(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+        return child_->AsyncDeleteConnector(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -117,13 +113,12 @@ VpcAccessServiceLogging::AsyncDeleteConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceLogging::DeleteConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
         return child_->DeleteConnector(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,12 +126,10 @@ VpcAccessServiceLogging::DeleteConnector(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 VpcAccessServiceLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -145,26 +138,21 @@ VpcAccessServiceLogging::ListLocations(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 VpcAccessServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-VpcAccessServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> VpcAccessServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -182,8 +170,8 @@ VpcAccessServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -199,8 +187,8 @@ future<Status> VpcAccessServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

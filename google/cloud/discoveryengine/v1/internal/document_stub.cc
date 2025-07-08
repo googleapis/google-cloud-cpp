@@ -33,80 +33,76 @@ DocumentServiceStub::~DocumentServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::GetDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
-    google::cloud::discoveryengine::v1::Document response;
-    auto status =
-        grpc_stub_->GetDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
+  google::cloud::discoveryengine::v1::Document response;
+  auto status = grpc_stub_->GetDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
 DefaultDocumentServiceStub::ListDocuments(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
-    google::cloud::discoveryengine::v1::ListDocumentsResponse response;
-    auto status =
-        grpc_stub_->ListDocuments(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
+  google::cloud::discoveryengine::v1::ListDocumentsResponse response;
+  auto status = grpc_stub_->ListDocuments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::CreateDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
-    google::cloud::discoveryengine::v1::Document response;
-    auto status =
-        grpc_stub_->CreateDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
+  google::cloud::discoveryengine::v1::Document response;
+  auto status = grpc_stub_->CreateDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::UpdateDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
-    google::cloud::discoveryengine::v1::Document response;
-    auto status =
-        grpc_stub_->UpdateDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
+  google::cloud::discoveryengine::v1::Document response;
+  auto status = grpc_stub_->UpdateDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDocumentServiceStub::DeleteDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDocumentServiceStub::DeleteDocument(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentServiceStub::AsyncImportDocuments(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::ImportDocumentsRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
+             google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncImportDocuments(context, request, cq);
       },
@@ -115,29 +111,29 @@ DefaultDocumentServiceStub::AsyncImportDocuments(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentServiceStub::ImportDocuments(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ImportDocuments(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportDocuments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentServiceStub::AsyncPurgeDocuments(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::PurgeDocumentsRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
+             google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncPurgeDocuments(context, request, cq);
       },
@@ -146,68 +142,64 @@ DefaultDocumentServiceStub::AsyncPurgeDocuments(
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentServiceStub::PurgeDocuments(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->PurgeDocuments(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PurgeDocuments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
 DefaultDocumentServiceStub::BatchGetDocumentsMetadata(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request) {
-    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse response;
-    auto status =
-        grpc_stub_->BatchGetDocumentsMetadata(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
+  google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse
+      response;
+  auto status =
+      grpc_stub_->BatchGetDocumentsMetadata(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDocumentServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDocumentServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDocumentServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -236,13 +228,14 @@ future<Status> DefaultDocumentServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

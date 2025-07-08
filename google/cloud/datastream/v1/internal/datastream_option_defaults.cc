@@ -35,19 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DatastreamDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATASTREAM_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DATASTREAM_AUTHORITY",
-      "datastream.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_DATASTREAM_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DATASTREAM_AUTHORITY", "datastream.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datastream_v1::DatastreamRetryPolicyOption>()) {
     options.set<datastream_v1::DatastreamRetryPolicyOption>(
         datastream_v1::DatastreamLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<datastream_v1::DatastreamBackoffPolicyOption>()) {
     options.set<datastream_v1::DatastreamBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<datastream_v1::DatastreamPollingPolicyOption>()) {
     options.set<datastream_v1::DatastreamPollingPolicyOption>(
@@ -56,9 +58,12 @@ Options DatastreamDefaultOptions(Options options) {
             datastream_v1::DatastreamBackoffPolicyOption::Type>(
             options.get<datastream_v1::DatastreamRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<datastream_v1::DatastreamConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<datastream_v1::DatastreamConnectionIdempotencyPolicyOption>()) {
     options.set<datastream_v1::DatastreamConnectionIdempotencyPolicyOption>(
         datastream_v1::MakeDefaultDatastreamConnectionIdempotencyPolicy());
   }

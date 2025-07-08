@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_GLOBAL_ADDRESSES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_GLOBAL_ADDRESSES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class GlobalAddressesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GlobalAddressesLimitedErrorCountRetryPolicy : public GlobalAddressesRetryPolicy {
+class GlobalAddressesLimitedErrorCountRetryPolicy
+    : public GlobalAddressesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class GlobalAddressesLimitedErrorCountRetryPolicy : public GlobalAddressesRetryP
    *     @p maximum_failures == 0.
    */
   explicit GlobalAddressesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   GlobalAddressesLimitedErrorCountRetryPolicy(
       GlobalAddressesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : GlobalAddressesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : GlobalAddressesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GlobalAddressesLimitedErrorCountRetryPolicy(
       GlobalAddressesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : GlobalAddressesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : GlobalAddressesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class GlobalAddressesLimitedErrorCountRetryPolicy : public GlobalAddressesRetryP
   using BaseType = GlobalAddressesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_global_addresses_v1_internal::GlobalAddressesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_global_addresses_v1_internal::GlobalAddressesRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class GlobalAddressesLimitedErrorCountRetryPolicy : public GlobalAddressesRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GlobalAddressesLimitedTimeRetryPolicy : public GlobalAddressesRetryPolicy {
+class GlobalAddressesLimitedTimeRetryPolicy
+    : public GlobalAddressesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class GlobalAddressesLimitedTimeRetryPolicy : public GlobalAddressesRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit GlobalAddressesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  GlobalAddressesLimitedTimeRetryPolicy(GlobalAddressesLimitedTimeRetryPolicy&& rhs) noexcept
-    : GlobalAddressesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  GlobalAddressesLimitedTimeRetryPolicy(GlobalAddressesLimitedTimeRetryPolicy const& rhs) noexcept
-    : GlobalAddressesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GlobalAddressesLimitedTimeRetryPolicy(
+      GlobalAddressesLimitedTimeRetryPolicy&& rhs) noexcept
+      : GlobalAddressesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GlobalAddressesLimitedTimeRetryPolicy(
+      GlobalAddressesLimitedTimeRetryPolicy const& rhs) noexcept
+      : GlobalAddressesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +163,9 @@ class GlobalAddressesLimitedTimeRetryPolicy : public GlobalAddressesRetryPolicy 
   using BaseType = GlobalAddressesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_global_addresses_v1_internal::GlobalAddressesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_global_addresses_v1_internal::GlobalAddressesRetryTraits>
+      impl_;
 };
 
 /**
@@ -170,7 +178,8 @@ class GlobalAddressesLimitedTimeRetryPolicy : public GlobalAddressesRetryPolicy 
  *
  * To create a concrete instance, see `MakeGlobalAddressesConnection()`.
  *
- * For mocking, see `compute_global_addresses_v1_mocks::MockGlobalAddressesConnection`.
+ * For mocking, see
+ * `compute_global_addresses_v1_mocks::MockGlobalAddressesConnection`.
  */
 class GlobalAddressesConnection {
  public:
@@ -179,46 +188,59 @@ class GlobalAddressesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress(google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request);
+  DeleteAddress(google::cloud::cpp::compute::global_addresses::v1::
+                    DeleteAddressRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAddress(NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetAddress(google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
+      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                      DeleteAddressRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress(google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request);
+  DeleteAddress(google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertAddress(NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
+      google::cloud::cpp::compute::global_addresses::v1::
+          GetAddressRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertAddress(google::cloud::cpp::compute::global_addresses::v1::
+                    InsertAddressRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
+      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                      InsertAddressRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAddress(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest request);
+  ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
+                          ListGlobalAddressesRequest request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move(google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request);
+  SetLabels(
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Move(NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels( google::cloud::cpp::compute::v1::Operation const& operation);
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

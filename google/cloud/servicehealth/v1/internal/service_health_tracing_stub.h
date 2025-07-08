@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_INTERNAL_SERVICE_HEALTH_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_INTERNAL_SERVICE_HEALTH_TRACING_STUB_H
 
+#include "google/cloud/servicehealth/v1/internal/service_health_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/servicehealth/v1/internal/service_health_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,48 +39,51 @@ class ServiceHealthTracingStub : public ServiceHealthStub {
   explicit ServiceHealthTracingStub(std::shared_ptr<ServiceHealthStub> child);
 
   StatusOr<google::cloud::servicehealth::v1::ListEventsResponse> ListEvents(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::ListEventsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::ListEventsRequest const& request)
+      override;
 
   StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::GetEventRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::GetEventRequest const& request)
+      override;
 
-  StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse> ListOrganizationEvents(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::ListOrganizationEventsRequest const& request) override;
+  StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
+  ListOrganizationEvents(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::servicehealth::v1::OrganizationEvent> GetOrganizationEvent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request) override;
+  StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
+  GetOrganizationEvent(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
+          request) override;
 
-  StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse> ListOrganizationImpacts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const& request) override;
+  StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
+  ListOrganizationImpacts(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::servicehealth::v1::OrganizationImpact> GetOrganizationImpact(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request) override;
+  StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
+  GetOrganizationImpact(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::shared_ptr<ServiceHealthStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -36,99 +36,105 @@ class CloudMemcacheTracingConnection
   ~CloudMemcacheTracingConnection() override = default;
 
   explicit CloudMemcacheTracingConnection(
-    std::shared_ptr<memcache_v1::CloudMemcacheConnection> child);
+      std::shared_ptr<memcache_v1::CloudMemcacheConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::memcache::v1::Instance>
-  ListInstances(google::cloud::memcache::v1::ListInstancesRequest request) override;
+  StreamRange<google::cloud::memcache::v1::Instance> ListInstances(
+      google::cloud::memcache::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::memcache::v1::Instance>
-  GetInstance(google::cloud::memcache::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::memcache::v1::Instance> GetInstance(
+      google::cloud::memcache::v1::GetInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  CreateInstance(google::cloud::memcache::v1::CreateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::memcache::v1::Instance>> CreateInstance(
+      google::cloud::memcache::v1::CreateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag,
-      google::cloud::memcache::v1::CreateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::memcache::v1::CreateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  CreateInstance(
+  future<StatusOr<google::cloud::memcache::v1::Instance>> CreateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  UpdateInstance(google::cloud::memcache::v1::UpdateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
+      google::cloud::memcache::v1::UpdateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag,
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::memcache::v1::UpdateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  UpdateInstance(
+  future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  UpdateParameters(google::cloud::memcache::v1::UpdateParametersRequest const& request) override;
+  future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
+      google::cloud::memcache::v1::UpdateParametersRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateParameters(NoAwaitTag,
-      google::cloud::memcache::v1::UpdateParametersRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateParameters(
+      NoAwaitTag,
+      google::cloud::memcache::v1::UpdateParametersRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  UpdateParameters(
+  future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::memcache::v1::DeleteInstanceRequest const& request) override;
+  DeleteInstance(google::cloud::memcache::v1::DeleteInstanceRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag,
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::memcache::v1::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
-  DeleteInstance(
+  DeleteInstance(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::memcache::v1::Instance>> ApplyParameters(
+      google::cloud::memcache::v1::ApplyParametersRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ApplyParameters(
+      NoAwaitTag,
+      google::cloud::memcache::v1::ApplyParametersRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memcache::v1::Instance>> ApplyParameters(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  ApplyParameters(google::cloud::memcache::v1::ApplyParametersRequest const& request) override;
+  future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ApplyParameters(NoAwaitTag,
-      google::cloud::memcache::v1::ApplyParametersRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      NoAwaitTag,
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  ApplyParameters(
+  future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  RescheduleMaintenance(google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RescheduleMaintenance(NoAwaitTag,
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  future<StatusOr<google::cloud::memcache::v1::Instance>>
-  RescheduleMaintenance(
-      google::longrunning::Operation const& operation) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
-
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<memcache_v1::CloudMemcacheConnection> child_;

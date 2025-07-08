@@ -64,23 +64,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DeploymentResourcePoolServiceClient {
  public:
-  explicit DeploymentResourcePoolServiceClient(std::shared_ptr<DeploymentResourcePoolServiceConnection> connection, Options opts = {});
+  explicit DeploymentResourcePoolServiceClient(
+      std::shared_ptr<DeploymentResourcePoolServiceConnection> connection,
+      Options opts = {});
   ~DeploymentResourcePoolServiceClient();
 
   ///@{
   /// @name Copy and move support
-  DeploymentResourcePoolServiceClient(DeploymentResourcePoolServiceClient const&) = default;
-  DeploymentResourcePoolServiceClient& operator=(DeploymentResourcePoolServiceClient const&) = default;
-  DeploymentResourcePoolServiceClient(DeploymentResourcePoolServiceClient&&) = default;
-  DeploymentResourcePoolServiceClient& operator=(DeploymentResourcePoolServiceClient&&) = default;
+  DeploymentResourcePoolServiceClient(
+      DeploymentResourcePoolServiceClient const&) = default;
+  DeploymentResourcePoolServiceClient& operator=(
+      DeploymentResourcePoolServiceClient const&) = default;
+  DeploymentResourcePoolServiceClient(DeploymentResourcePoolServiceClient&&) =
+      default;
+  DeploymentResourcePoolServiceClient& operator=(
+      DeploymentResourcePoolServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DeploymentResourcePoolServiceClient const& a, DeploymentResourcePoolServiceClient const& b) {
+  friend bool operator==(DeploymentResourcePoolServiceClient const& a,
+                         DeploymentResourcePoolServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DeploymentResourcePoolServiceClient const& a, DeploymentResourcePoolServiceClient const& b) {
+  friend bool operator!=(DeploymentResourcePoolServiceClient const& a,
+                         DeploymentResourcePoolServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,7 +131,11 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(std::string const& parent, google::cloud::aiplatform::v1::DeploymentResourcePool const& deployment_resource_pool, std::string const& deployment_resource_pool_id, Options opts = {});
+  CreateDeploymentResourcePool(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::DeploymentResourcePool const&
+          deployment_resource_pool,
+      std::string const& deployment_resource_pool_id, Options opts = {});
 
   // clang-format off
   ///
@@ -136,8 +148,11 @@ class DeploymentResourcePoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDeploymentResourcePool(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::DeploymentResourcePool const& deployment_resource_pool, std::string const& deployment_resource_pool_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::DeploymentResourcePool const&
+          deployment_resource_pool,
+      std::string const& deployment_resource_pool_id, Options opts = {});
 
   // clang-format off
   ///
@@ -174,7 +189,10 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request, Options opts = {});
+  CreateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -187,8 +205,11 @@ class DeploymentResourcePoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDeploymentResourcePool(NoAwaitTag, google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -200,7 +221,8 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(google::longrunning::Operation const& operation, Options opts = {});
+  CreateDeploymentResourcePool(google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -257,7 +279,10 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request, Options opts = {});
+  GetDeploymentResourcePool(
+      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -331,7 +356,9 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
-  ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request, Options opts = {});
+  ListDeploymentResourcePools(
+      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -369,7 +396,10 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  UpdateDeploymentResourcePool(google::cloud::aiplatform::v1::DeploymentResourcePool const& deployment_resource_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::DeploymentResourcePool const&
+          deployment_resource_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -382,8 +412,11 @@ class DeploymentResourcePoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDeploymentResourcePool(NoAwaitTag, google::cloud::aiplatform::v1::DeploymentResourcePool const& deployment_resource_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDeploymentResourcePool(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeploymentResourcePool const&
+          deployment_resource_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -420,7 +453,10 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  UpdateDeploymentResourcePool(google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const& request, Options opts = {});
+  UpdateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -433,8 +469,11 @@ class DeploymentResourcePoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDeploymentResourcePool(NoAwaitTag, google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDeploymentResourcePool(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -446,7 +485,8 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  UpdateDeploymentResourcePool(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateDeploymentResourcePool(google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -493,8 +533,8 @@ class DeploymentResourcePoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDeploymentResourcePool(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -531,7 +571,10 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request, Options opts = {});
+  DeleteDeploymentResourcePool(
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -544,8 +587,11 @@ class DeploymentResourcePoolServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDeploymentResourcePool(NoAwaitTag, google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -557,7 +603,8 @@ class DeploymentResourcePoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDeploymentResourcePool(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteDeploymentResourcePool(google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -595,8 +642,8 @@ class DeploymentResourcePoolServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -625,8 +672,9 @@ class DeploymentResourcePoolServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -658,8 +706,8 @@ class DeploymentResourcePoolServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -690,8 +738,8 @@ class DeploymentResourcePoolServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -726,8 +774,9 @@ class DeploymentResourcePoolServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -762,8 +811,8 @@ class DeploymentResourcePoolServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -802,8 +851,8 @@ class DeploymentResourcePoolServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -829,8 +878,8 @@ class DeploymentResourcePoolServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -861,8 +910,9 @@ class DeploymentResourcePoolServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -886,8 +936,7 @@ class DeploymentResourcePoolServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -916,8 +965,9 @@ class DeploymentResourcePoolServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -951,8 +1001,7 @@ class DeploymentResourcePoolServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -991,8 +1040,9 @@ class DeploymentResourcePoolServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1029,8 +1079,9 @@ class DeploymentResourcePoolServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DeploymentResourcePoolServiceConnection> connection_;

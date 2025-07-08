@@ -36,49 +36,53 @@ class EngineServiceTracingConnection
   ~EngineServiceTracingConnection() override = default;
 
   explicit EngineServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::EngineServiceConnection> child);
+      std::shared_ptr<discoveryengine_v1::EngineServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-  CreateEngine(google::cloud::discoveryengine::v1::CreateEngineRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateEngine(NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateEngine(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-  CreateEngine(
+  future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine(google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) override;
+  DeleteEngine(google::cloud::discoveryengine::v1::DeleteEngineRequest const&
+                   request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteEngine(NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteEngine(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine(
-      google::longrunning::Operation const& operation) override;
+  DeleteEngine(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Engine>
-  UpdateEngine(google::cloud::discoveryengine::v1::UpdateEngineRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(
+      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Engine>
-  GetEngine(google::cloud::discoveryengine::v1::GetEngineRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Engine> GetEngine(
+      google::cloud::discoveryengine::v1::GetEngineRequest const& request)
+      override;
 
-  StreamRange<google::cloud::discoveryengine::v1::Engine>
-  ListEngines(google::cloud::discoveryengine::v1::ListEnginesRequest request) override;
+  StreamRange<google::cloud::discoveryengine::v1::Engine> ListEngines(
+      google::cloud::discoveryengine::v1::ListEnginesRequest request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::EngineServiceConnection> child_;

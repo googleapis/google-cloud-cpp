@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NotebookServiceClient {
  public:
-  explicit NotebookServiceClient(std::shared_ptr<NotebookServiceConnection> connection, Options opts = {});
+  explicit NotebookServiceClient(
+      std::shared_ptr<NotebookServiceConnection> connection, Options opts = {});
   ~NotebookServiceClient();
 
   ///@{
@@ -77,10 +78,12 @@ class NotebookServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(NotebookServiceClient const& a, NotebookServiceClient const& b) {
+  friend bool operator==(NotebookServiceClient const& a,
+                         NotebookServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NotebookServiceClient const& a, NotebookServiceClient const& b) {
+  friend bool operator!=(NotebookServiceClient const& a,
+                         NotebookServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,7 +121,11 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
-  CreateNotebookRuntimeTemplate(std::string const& parent, google::cloud::aiplatform::v1::NotebookRuntimeTemplate const& notebook_runtime_template, std::string const& notebook_runtime_template_id, Options opts = {});
+  CreateNotebookRuntimeTemplate(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::NotebookRuntimeTemplate const&
+          notebook_runtime_template,
+      std::string const& notebook_runtime_template_id, Options opts = {});
 
   // clang-format off
   ///
@@ -131,8 +138,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateNotebookRuntimeTemplate(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::NotebookRuntimeTemplate const& notebook_runtime_template, std::string const& notebook_runtime_template_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::NotebookRuntimeTemplate const&
+          notebook_runtime_template,
+      std::string const& notebook_runtime_template_id, Options opts = {});
 
   // clang-format off
   ///
@@ -169,7 +179,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
-  CreateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  CreateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -182,8 +195,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateNotebookRuntimeTemplate(NoAwaitTag, google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -195,7 +211,8 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
-  CreateNotebookRuntimeTemplate(google::longrunning::Operation const& operation, Options opts = {});
+  CreateNotebookRuntimeTemplate(google::longrunning::Operation const& operation,
+                                Options opts = {});
 
   // clang-format off
   ///
@@ -252,7 +269,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-  GetNotebookRuntimeTemplate(google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  GetNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -327,7 +347,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-  ListNotebookRuntimeTemplates(google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest request, Options opts = {});
+  ListNotebookRuntimeTemplates(
+      google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -374,8 +397,8 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNotebookRuntimeTemplate(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -412,7 +435,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntimeTemplate(google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  DeleteNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +451,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNotebookRuntimeTemplate(NoAwaitTag, google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -438,7 +467,8 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntimeTemplate(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteNotebookRuntimeTemplate(google::longrunning::Operation const& operation,
+                                Options opts = {});
 
   // clang-format off
   ///
@@ -470,7 +500,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-  UpdateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::NotebookRuntimeTemplate const& notebook_runtime_template, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::NotebookRuntimeTemplate const&
+          notebook_runtime_template,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -500,7 +533,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
-  UpdateNotebookRuntimeTemplate(google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request, Options opts = {});
+  UpdateNotebookRuntimeTemplate(
+      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -539,7 +575,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
-  AssignNotebookRuntime(std::string const& parent, std::string const& notebook_runtime_template, google::cloud::aiplatform::v1::NotebookRuntime const& notebook_runtime, std::string const& notebook_runtime_id, Options opts = {});
+  AssignNotebookRuntime(
+      std::string const& parent, std::string const& notebook_runtime_template,
+      google::cloud::aiplatform::v1::NotebookRuntime const& notebook_runtime,
+      std::string const& notebook_runtime_id, Options opts = {});
 
   // clang-format off
   ///
@@ -552,8 +591,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  AssignNotebookRuntime(NoAwaitTag, std::string const& parent, std::string const& notebook_runtime_template, google::cloud::aiplatform::v1::NotebookRuntime const& notebook_runtime, std::string const& notebook_runtime_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
+      NoAwaitTag, std::string const& parent,
+      std::string const& notebook_runtime_template,
+      google::cloud::aiplatform::v1::NotebookRuntime const& notebook_runtime,
+      std::string const& notebook_runtime_id, Options opts = {});
 
   // clang-format off
   ///
@@ -591,7 +633,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
-  AssignNotebookRuntime(google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request, Options opts = {});
+  AssignNotebookRuntime(
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -604,8 +649,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  AssignNotebookRuntime(NoAwaitTag, google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -617,7 +665,8 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
-  AssignNotebookRuntime(google::longrunning::Operation const& operation, Options opts = {});
+  AssignNotebookRuntime(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -644,8 +693,8 @@ class NotebookServiceClient {
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L170}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
-  GetNotebookRuntime(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -674,8 +723,9 @@ class NotebookServiceClient {
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L170}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
-  GetNotebookRuntime(google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
+      google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -750,7 +800,9 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookRuntime>
-  ListNotebookRuntimes(google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request, Options opts = {});
+  ListNotebookRuntimes(
+      google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -798,8 +850,8 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNotebookRuntime(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -836,7 +888,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntime(google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request, Options opts = {});
+  DeleteNotebookRuntime(
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -849,8 +904,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNotebookRuntime(NoAwaitTag, google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -862,7 +920,8 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntime(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteNotebookRuntime(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -896,7 +955,8 @@ class NotebookServiceClient {
   /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L591}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
   UpgradeNotebookRuntime(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -910,8 +970,8 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpgradeNotebookRuntime(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -947,8 +1007,12 @@ class NotebookServiceClient {
   /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L591}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
-  UpgradeNotebookRuntime(google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request, Options opts = {});
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
+  UpgradeNotebookRuntime(
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -961,8 +1025,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpgradeNotebookRuntime(NoAwaitTag, google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -973,8 +1040,10 @@ class NotebookServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
-  UpgradeNotebookRuntime(google::longrunning::Operation const& operation, Options opts = {});
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
+  UpgradeNotebookRuntime(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1022,8 +1091,8 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StartNotebookRuntime(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> StartNotebookRuntime(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1060,7 +1129,9 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
-  StartNotebookRuntime(google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request, Options opts = {});
+  StartNotebookRuntime(
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1073,8 +1144,10 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StartNotebookRuntime(NoAwaitTag, google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> StartNotebookRuntime(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1086,7 +1159,8 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
-  StartNotebookRuntime(google::longrunning::Operation const& operation, Options opts = {});
+  StartNotebookRuntime(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -1134,8 +1208,8 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StopNotebookRuntime(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1172,7 +1246,9 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
-  StopNotebookRuntime(google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request, Options opts = {});
+  StopNotebookRuntime(
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1185,8 +1261,10 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StopNotebookRuntime(NoAwaitTag, google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1198,7 +1276,8 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
-  StopNotebookRuntime(google::longrunning::Operation const& operation, Options opts = {});
+  StopNotebookRuntime(google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1233,7 +1312,11 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
-  CreateNotebookExecutionJob(std::string const& parent, google::cloud::aiplatform::v1::NotebookExecutionJob const& notebook_execution_job, std::string const& notebook_execution_job_id, Options opts = {});
+  CreateNotebookExecutionJob(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::NotebookExecutionJob const&
+          notebook_execution_job,
+      std::string const& notebook_execution_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1246,8 +1329,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateNotebookExecutionJob(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::NotebookExecutionJob const& notebook_execution_job, std::string const& notebook_execution_job_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateNotebookExecutionJob(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::NotebookExecutionJob const&
+          notebook_execution_job,
+      std::string const& notebook_execution_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1284,7 +1370,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
-  CreateNotebookExecutionJob(google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request, Options opts = {});
+  CreateNotebookExecutionJob(
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1297,8 +1386,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateNotebookExecutionJob(NoAwaitTag, google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateNotebookExecutionJob(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1310,7 +1402,8 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
-  CreateNotebookExecutionJob(google::longrunning::Operation const& operation, Options opts = {});
+  CreateNotebookExecutionJob(google::longrunning::Operation const& operation,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -1365,7 +1458,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
-  GetNotebookExecutionJob(google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const& request, Options opts = {});
+  GetNotebookExecutionJob(
+      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1440,7 +1536,9 @@ class NotebookServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
-  ListNotebookExecutionJobs(google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request, Options opts = {});
+  ListNotebookExecutionJobs(
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1485,8 +1583,8 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNotebookExecutionJob(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNotebookExecutionJob(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1523,7 +1621,10 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookExecutionJob(google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request, Options opts = {});
+  DeleteNotebookExecutionJob(
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1536,8 +1637,11 @@ class NotebookServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNotebookExecutionJob(NoAwaitTag, google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNotebookExecutionJob(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1549,7 +1653,8 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookExecutionJob(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteNotebookExecutionJob(google::longrunning::Operation const& operation,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -1587,8 +1692,8 @@ class NotebookServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1617,8 +1722,9 @@ class NotebookServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1650,8 +1756,8 @@ class NotebookServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1682,8 +1788,8 @@ class NotebookServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1718,8 +1824,9 @@ class NotebookServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1754,8 +1861,8 @@ class NotebookServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1794,8 +1901,8 @@ class NotebookServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1821,8 +1928,8 @@ class NotebookServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1853,8 +1960,9 @@ class NotebookServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1878,8 +1986,7 @@ class NotebookServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1908,8 +2015,9 @@ class NotebookServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1943,8 +2051,7 @@ class NotebookServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1983,8 +2090,9 @@ class NotebookServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2021,8 +2129,9 @@ class NotebookServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<NotebookServiceConnection> connection_;

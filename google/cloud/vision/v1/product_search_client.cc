@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProductSearchClient::ProductSearchClient(
     std::shared_ptr<ProductSearchConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProductSearchClient::~ProductSearchClient() = default;
 
 StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchClient::CreateProductSet(std::string const& parent, google::cloud::vision::v1::ProductSet const& product_set, std::string const& product_set_id, Options opts) {
+ProductSearchClient::CreateProductSet(
+    std::string const& parent,
+    google::cloud::vision::v1::ProductSet const& product_set,
+    std::string const& product_set_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::CreateProductSetRequest request;
   request.set_parent(parent);
@@ -43,7 +46,9 @@ ProductSearchClient::CreateProductSet(std::string const& parent, google::cloud::
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchClient::CreateProductSet(google::cloud::vision::v1::CreateProductSetRequest const& request, Options opts) {
+ProductSearchClient::CreateProductSet(
+    google::cloud::vision::v1::CreateProductSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProductSet(request);
 }
@@ -57,7 +62,8 @@ ProductSearchClient::ListProductSets(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::vision::v1::ProductSet>
-ProductSearchClient::ListProductSets(google::cloud::vision::v1::ListProductSetsRequest request, Options opts) {
+ProductSearchClient::ListProductSets(
+    google::cloud::vision::v1::ListProductSetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProductSets(std::move(request));
 }
@@ -71,13 +77,17 @@ ProductSearchClient::GetProductSet(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchClient::GetProductSet(google::cloud::vision::v1::GetProductSetRequest const& request, Options opts) {
+ProductSearchClient::GetProductSet(
+    google::cloud::vision::v1::GetProductSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProductSet(request);
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchClient::UpdateProductSet(google::cloud::vision::v1::ProductSet const& product_set, google::protobuf::FieldMask const& update_mask, Options opts) {
+ProductSearchClient::UpdateProductSet(
+    google::cloud::vision::v1::ProductSet const& product_set,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::UpdateProductSetRequest request;
   *request.mutable_product_set() = product_set;
@@ -86,27 +96,32 @@ ProductSearchClient::UpdateProductSet(google::cloud::vision::v1::ProductSet cons
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
-ProductSearchClient::UpdateProductSet(google::cloud::vision::v1::UpdateProductSetRequest const& request, Options opts) {
+ProductSearchClient::UpdateProductSet(
+    google::cloud::vision::v1::UpdateProductSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProductSet(request);
 }
 
-Status
-ProductSearchClient::DeleteProductSet(std::string const& name, Options opts) {
+Status ProductSearchClient::DeleteProductSet(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::DeleteProductSetRequest request;
   request.set_name(name);
   return connection_->DeleteProductSet(request);
 }
 
-Status
-ProductSearchClient::DeleteProductSet(google::cloud::vision::v1::DeleteProductSetRequest const& request, Options opts) {
+Status ProductSearchClient::DeleteProductSet(
+    google::cloud::vision::v1::DeleteProductSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProductSet(request);
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchClient::CreateProduct(std::string const& parent, google::cloud::vision::v1::Product const& product, std::string const& product_id, Options opts) {
+StatusOr<google::cloud::vision::v1::Product> ProductSearchClient::CreateProduct(
+    std::string const& parent,
+    google::cloud::vision::v1::Product const& product,
+    std::string const& product_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::CreateProductRequest request;
   request.set_parent(parent);
@@ -115,8 +130,9 @@ ProductSearchClient::CreateProduct(std::string const& parent, google::cloud::vis
   return connection_->CreateProduct(request);
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchClient::CreateProduct(google::cloud::vision::v1::CreateProductRequest const& request, Options opts) {
+StatusOr<google::cloud::vision::v1::Product> ProductSearchClient::CreateProduct(
+    google::cloud::vision::v1::CreateProductRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProduct(request);
 }
@@ -130,27 +146,29 @@ ProductSearchClient::ListProducts(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchClient::ListProducts(google::cloud::vision::v1::ListProductsRequest request, Options opts) {
+ProductSearchClient::ListProducts(
+    google::cloud::vision::v1::ListProductsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProducts(std::move(request));
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchClient::GetProduct(std::string const& name, Options opts) {
+StatusOr<google::cloud::vision::v1::Product> ProductSearchClient::GetProduct(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::GetProductRequest request;
   request.set_name(name);
   return connection_->GetProduct(request);
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchClient::GetProduct(google::cloud::vision::v1::GetProductRequest const& request, Options opts) {
+StatusOr<google::cloud::vision::v1::Product> ProductSearchClient::GetProduct(
+    google::cloud::vision::v1::GetProductRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProduct(request);
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchClient::UpdateProduct(google::cloud::vision::v1::Product const& product, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::vision::v1::Product> ProductSearchClient::UpdateProduct(
+    google::cloud::vision::v1::Product const& product,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::UpdateProductRequest request;
   *request.mutable_product() = product;
@@ -158,28 +176,33 @@ ProductSearchClient::UpdateProduct(google::cloud::vision::v1::Product const& pro
   return connection_->UpdateProduct(request);
 }
 
-StatusOr<google::cloud::vision::v1::Product>
-ProductSearchClient::UpdateProduct(google::cloud::vision::v1::UpdateProductRequest const& request, Options opts) {
+StatusOr<google::cloud::vision::v1::Product> ProductSearchClient::UpdateProduct(
+    google::cloud::vision::v1::UpdateProductRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProduct(request);
 }
 
-Status
-ProductSearchClient::DeleteProduct(std::string const& name, Options opts) {
+Status ProductSearchClient::DeleteProduct(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::DeleteProductRequest request;
   request.set_name(name);
   return connection_->DeleteProduct(request);
 }
 
-Status
-ProductSearchClient::DeleteProduct(google::cloud::vision::v1::DeleteProductRequest const& request, Options opts) {
+Status ProductSearchClient::DeleteProduct(
+    google::cloud::vision::v1::DeleteProductRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProduct(request);
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
-ProductSearchClient::CreateReferenceImage(std::string const& parent, google::cloud::vision::v1::ReferenceImage const& reference_image, std::string const& reference_image_id, Options opts) {
+ProductSearchClient::CreateReferenceImage(
+    std::string const& parent,
+    google::cloud::vision::v1::ReferenceImage const& reference_image,
+    std::string const& reference_image_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::CreateReferenceImageRequest request;
   request.set_parent(parent);
@@ -189,27 +212,31 @@ ProductSearchClient::CreateReferenceImage(std::string const& parent, google::clo
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
-ProductSearchClient::CreateReferenceImage(google::cloud::vision::v1::CreateReferenceImageRequest const& request, Options opts) {
+ProductSearchClient::CreateReferenceImage(
+    google::cloud::vision::v1::CreateReferenceImageRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReferenceImage(request);
 }
 
-Status
-ProductSearchClient::DeleteReferenceImage(std::string const& name, Options opts) {
+Status ProductSearchClient::DeleteReferenceImage(std::string const& name,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::DeleteReferenceImageRequest request;
   request.set_name(name);
   return connection_->DeleteReferenceImage(request);
 }
 
-Status
-ProductSearchClient::DeleteReferenceImage(google::cloud::vision::v1::DeleteReferenceImageRequest const& request, Options opts) {
+Status ProductSearchClient::DeleteReferenceImage(
+    google::cloud::vision::v1::DeleteReferenceImageRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReferenceImage(request);
 }
 
 StreamRange<google::cloud::vision::v1::ReferenceImage>
-ProductSearchClient::ListReferenceImages(std::string const& parent, Options opts) {
+ProductSearchClient::ListReferenceImages(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::ListReferenceImagesRequest request;
   request.set_parent(parent);
@@ -217,7 +244,9 @@ ProductSearchClient::ListReferenceImages(std::string const& parent, Options opts
 }
 
 StreamRange<google::cloud::vision::v1::ReferenceImage>
-ProductSearchClient::ListReferenceImages(google::cloud::vision::v1::ListReferenceImagesRequest request, Options opts) {
+ProductSearchClient::ListReferenceImages(
+    google::cloud::vision::v1::ListReferenceImagesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReferenceImages(std::move(request));
 }
@@ -231,13 +260,16 @@ ProductSearchClient::GetReferenceImage(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
-ProductSearchClient::GetReferenceImage(google::cloud::vision::v1::GetReferenceImageRequest const& request, Options opts) {
+ProductSearchClient::GetReferenceImage(
+    google::cloud::vision::v1::GetReferenceImageRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReferenceImage(request);
 }
 
-Status
-ProductSearchClient::AddProductToProductSet(std::string const& name, std::string const& product, Options opts) {
+Status ProductSearchClient::AddProductToProductSet(std::string const& name,
+                                                   std::string const& product,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::AddProductToProductSetRequest request;
   request.set_name(name);
@@ -245,14 +277,15 @@ ProductSearchClient::AddProductToProductSet(std::string const& name, std::string
   return connection_->AddProductToProductSet(request);
 }
 
-Status
-ProductSearchClient::AddProductToProductSet(google::cloud::vision::v1::AddProductToProductSetRequest const& request, Options opts) {
+Status ProductSearchClient::AddProductToProductSet(
+    google::cloud::vision::v1::AddProductToProductSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddProductToProductSet(request);
 }
 
-Status
-ProductSearchClient::RemoveProductFromProductSet(std::string const& name, std::string const& product, Options opts) {
+Status ProductSearchClient::RemoveProductFromProductSet(
+    std::string const& name, std::string const& product, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::RemoveProductFromProductSetRequest request;
   request.set_name(name);
@@ -260,14 +293,17 @@ ProductSearchClient::RemoveProductFromProductSet(std::string const& name, std::s
   return connection_->RemoveProductFromProductSet(request);
 }
 
-Status
-ProductSearchClient::RemoveProductFromProductSet(google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request, Options opts) {
+Status ProductSearchClient::RemoveProductFromProductSet(
+    google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveProductFromProductSet(request);
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchClient::ListProductsInProductSet(std::string const& name, Options opts) {
+ProductSearchClient::ListProductsInProductSet(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::ListProductsInProductSetRequest request;
   request.set_name(name);
@@ -275,13 +311,18 @@ ProductSearchClient::ListProductsInProductSet(std::string const& name, Options o
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-ProductSearchClient::ListProductsInProductSet(google::cloud::vision::v1::ListProductsInProductSetRequest request, Options opts) {
+ProductSearchClient::ListProductsInProductSet(
+    google::cloud::vision::v1::ListProductsInProductSetRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProductsInProductSet(std::move(request));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-ProductSearchClient::ImportProductSets(std::string const& parent, google::cloud::vision::v1::ImportProductSetsInputConfig const& input_config, Options opts) {
+ProductSearchClient::ImportProductSets(
+    std::string const& parent,
+    google::cloud::vision::v1::ImportProductSetsInputConfig const& input_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::ImportProductSetsRequest request;
   request.set_parent(parent);
@@ -289,8 +330,10 @@ ProductSearchClient::ImportProductSets(std::string const& parent, google::cloud:
   return connection_->ImportProductSets(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductSearchClient::ImportProductSets(NoAwaitTag, std::string const& parent, google::cloud::vision::v1::ImportProductSetsInputConfig const& input_config, Options opts) {
+StatusOr<google::longrunning::Operation> ProductSearchClient::ImportProductSets(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vision::v1::ImportProductSetsInputConfig const& input_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::ImportProductSetsRequest request;
   request.set_parent(parent);
@@ -299,19 +342,24 @@ ProductSearchClient::ImportProductSets(NoAwaitTag, std::string const& parent, go
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-ProductSearchClient::ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const& request, Options opts) {
+ProductSearchClient::ImportProductSets(
+    google::cloud::vision::v1::ImportProductSetsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportProductSets(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductSearchClient::ImportProductSets(NoAwaitTag, google::cloud::vision::v1::ImportProductSetsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProductSearchClient::ImportProductSets(
+    NoAwaitTag,
+    google::cloud::vision::v1::ImportProductSetsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportProductSets(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-ProductSearchClient::ImportProductSets(google::longrunning::Operation const& operation, Options opts) {
+ProductSearchClient::ImportProductSets(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportProductSets(operation);
 }
@@ -324,8 +372,8 @@ ProductSearchClient::PurgeProducts(std::string const& parent, Options opts) {
   return connection_->PurgeProducts(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductSearchClient::PurgeProducts(NoAwaitTag, std::string const& parent, Options opts) {
+StatusOr<google::longrunning::Operation> ProductSearchClient::PurgeProducts(
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::PurgeProductsRequest request;
   request.set_parent(parent);
@@ -333,33 +381,37 @@ ProductSearchClient::PurgeProducts(NoAwaitTag, std::string const& parent, Option
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-ProductSearchClient::PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request, Options opts) {
+ProductSearchClient::PurgeProducts(
+    google::cloud::vision::v1::PurgeProductsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeProducts(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductSearchClient::PurgeProducts(NoAwaitTag, google::cloud::vision::v1::PurgeProductsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProductSearchClient::PurgeProducts(
+    NoAwaitTag, google::cloud::vision::v1::PurgeProductsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeProducts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-ProductSearchClient::PurgeProducts(google::longrunning::Operation const& operation, Options opts) {
+ProductSearchClient::PurgeProducts(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeProducts(operation);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductSearchClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ProductSearchClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProductSearchClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProductSearchClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

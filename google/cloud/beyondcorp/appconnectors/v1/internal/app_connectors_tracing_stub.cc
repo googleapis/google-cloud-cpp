@@ -32,22 +32,29 @@ AppConnectorsServiceTracingStub::AppConnectorsServiceTracingStub(
     std::shared_ptr<AppConnectorsServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse> AppConnectorsServiceTracingStub::ListAppConnectors(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "ListAppConnectors");
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
+AppConnectorsServiceTracingStub::ListAppConnectors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ListAppConnectorsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "ListAppConnectors");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAppConnectors(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAppConnectors(context, options, request));
 }
 
-StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector> AppConnectorsServiceTracingStub::GetAppConnector(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "GetAppConnector");
+StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
+AppConnectorsServiceTracingStub::GetAppConnector(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "GetAppConnector");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,86 +63,107 @@ StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector> AppConnecto
 
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncCreateAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "CreateAppConnector");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "CreateAppConnector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAppConnector(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateAppConnector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceTracingStub::CreateAppConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "CreateAppConnector");
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "CreateAppConnector");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateAppConnector(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateAppConnector(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncUpdateAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "UpdateAppConnector");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "UpdateAppConnector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateAppConnector(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateAppConnector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceTracingStub::UpdateAppConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "UpdateAppConnector");
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "UpdateAppConnector");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateAppConnector(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateAppConnector(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncDeleteAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "DeleteAppConnector");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "DeleteAppConnector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAppConnector(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteAppConnector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceTracingStub::DeleteAppConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "DeleteAppConnector");
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "DeleteAppConnector");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteAppConnector(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteAppConnector(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncReportStatus(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "ReportStatus");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "ReportStatus");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncReportStatus(cq, context, std::move(options), request);
@@ -144,32 +172,38 @@ AppConnectorsServiceTracingStub::AsyncReportStatus(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceTracingStub::ReportStatus(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "ReportStatus");
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "ReportStatus");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReportStatus(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> AppConnectorsServiceTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+AppConnectorsServiceTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> AppConnectorsServiceTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+AppConnectorsServiceTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -177,10 +211,11 @@ StatusOr<google::cloud::location::Location> AppConnectorsServiceTracingStub::Get
 }
 
 StatusOr<google::iam::v1::Policy> AppConnectorsServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -188,43 +223,50 @@ StatusOr<google::iam::v1::Policy> AppConnectorsServiceTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> AppConnectorsServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> AppConnectorsServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AppConnectorsServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> AppConnectorsServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+AppConnectorsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> AppConnectorsServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -232,10 +274,11 @@ StatusOr<google::longrunning::Operation> AppConnectorsServiceTracingStub::GetOpe
 }
 
 Status AppConnectorsServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -243,10 +286,11 @@ Status AppConnectorsServiceTracingStub::DeleteOperation(
 }
 
 Status AppConnectorsServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -263,8 +307,7 @@ AppConnectorsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -277,8 +320,8 @@ future<Status> AppConnectorsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

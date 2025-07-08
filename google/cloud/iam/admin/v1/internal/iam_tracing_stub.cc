@@ -28,178 +28,192 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-IAMTracingStub::IAMTracingStub(
-    std::shared_ptr<IAMStub> child)
+IAMTracingStub::IAMTracingStub(std::shared_ptr<IAMStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::iam::admin::v1::ListServiceAccountsResponse> IAMTracingStub::ListServiceAccounts(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
+IAMTracingStub::ListServiceAccounts(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::ListServiceAccountsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "ListServiceAccounts");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "ListServiceAccounts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListServiceAccounts(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListServiceAccounts(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccount> IAMTracingStub::GetServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccount>
+IAMTracingStub::GetServiceAccount(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "GetServiceAccount");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "GetServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetServiceAccount(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetServiceAccount(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccount> IAMTracingStub::CreateServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccount>
+IAMTracingStub::CreateServiceAccount(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "CreateServiceAccount");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "CreateServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateServiceAccount(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateServiceAccount(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccount> IAMTracingStub::PatchServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccount>
+IAMTracingStub::PatchServiceAccount(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::PatchServiceAccountRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "PatchServiceAccount");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "PatchServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->PatchServiceAccount(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->PatchServiceAccount(context, options, request));
 }
 
 Status IAMTracingStub::DeleteServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "DeleteServiceAccount");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "DeleteServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteServiceAccount(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteServiceAccount(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse> IAMTracingStub::UndeleteServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
+IAMTracingStub::UndeleteServiceAccount(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "UndeleteServiceAccount");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "UndeleteServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UndeleteServiceAccount(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UndeleteServiceAccount(context, options, request));
 }
 
 Status IAMTracingStub::EnableServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::EnableServiceAccountRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "EnableServiceAccount");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "EnableServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->EnableServiceAccount(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->EnableServiceAccount(context, options, request));
 }
 
 Status IAMTracingStub::DisableServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DisableServiceAccountRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "DisableServiceAccount");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "DisableServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DisableServiceAccount(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DisableServiceAccount(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse> IAMTracingStub::ListServiceAccountKeys(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
+IAMTracingStub::ListServiceAccountKeys(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "ListServiceAccountKeys");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "ListServiceAccountKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListServiceAccountKeys(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListServiceAccountKeys(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccountKey> IAMTracingStub::GetServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+IAMTracingStub::GetServiceAccountKey(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "GetServiceAccountKey");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "GetServiceAccountKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetServiceAccountKey(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetServiceAccountKey(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccountKey> IAMTracingStub::CreateServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+IAMTracingStub::CreateServiceAccountKey(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "CreateServiceAccountKey");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "CreateServiceAccountKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateServiceAccountKey(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateServiceAccountKey(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccountKey> IAMTracingStub::UploadServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+IAMTracingStub::UploadServiceAccountKey(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "UploadServiceAccountKey");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "UploadServiceAccountKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UploadServiceAccountKey(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UploadServiceAccountKey(context, options, request));
 }
 
 Status IAMTracingStub::DeleteServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "DeleteServiceAccountKey");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "DeleteServiceAccountKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteServiceAccountKey(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteServiceAccountKey(context, options, request));
 }
 
 Status IAMTracingStub::DisableServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "DisableServiceAccountKey");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "DisableServiceAccountKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DisableServiceAccountKey(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DisableServiceAccountKey(context, options, request));
 }
 
 Status IAMTracingStub::EnableServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "EnableServiceAccountKey");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "EnableServiceAccountKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->EnableServiceAccountKey(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->EnableServiceAccountKey(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> IAMTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
@@ -209,8 +223,7 @@ StatusOr<google::iam::v1::Policy> IAMTracingStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> IAMTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
@@ -219,31 +232,32 @@ StatusOr<google::iam::v1::Policy> IAMTracingStub::SetIamPolicy(
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> IAMTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+IAMTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "TestIamPermissions");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse> IAMTracingStub::QueryGrantableRoles(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
+IAMTracingStub::QueryGrantableRoles(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "QueryGrantableRoles");
+  auto span =
+      internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "QueryGrantableRoles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->QueryGrantableRoles(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->QueryGrantableRoles(context, options, request));
 }
 
 StatusOr<google::iam::admin::v1::ListRolesResponse> IAMTracingStub::ListRoles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::ListRolesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "ListRoles");
   auto scope = opentelemetry::trace::Scope(span);
@@ -253,8 +267,7 @@ StatusOr<google::iam::admin::v1::ListRolesResponse> IAMTracingStub::ListRoles(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingStub::GetRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::GetRoleRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "GetRole");
   auto scope = opentelemetry::trace::Scope(span);
@@ -264,8 +277,7 @@ StatusOr<google::iam::admin::v1::Role> IAMTracingStub::GetRole(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingStub::CreateRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::CreateRoleRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "CreateRole");
   auto scope = opentelemetry::trace::Scope(span);
@@ -275,8 +287,7 @@ StatusOr<google::iam::admin::v1::Role> IAMTracingStub::CreateRole(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingStub::UpdateRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::UpdateRoleRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "UpdateRole");
   auto scope = opentelemetry::trace::Scope(span);
@@ -286,8 +297,7 @@ StatusOr<google::iam::admin::v1::Role> IAMTracingStub::UpdateRole(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingStub::DeleteRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DeleteRoleRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "DeleteRole");
   auto scope = opentelemetry::trace::Scope(span);
@@ -297,8 +307,7 @@ StatusOr<google::iam::admin::v1::Role> IAMTracingStub::DeleteRole(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingStub::UndeleteRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::UndeleteRoleRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "UndeleteRole");
   auto scope = opentelemetry::trace::Scope(span);
@@ -307,31 +316,34 @@ StatusOr<google::iam::admin::v1::Role> IAMTracingStub::UndeleteRole(
                            child_->UndeleteRole(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse> IAMTracingStub::QueryTestablePermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
+IAMTracingStub::QueryTestablePermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "QueryTestablePermissions");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "QueryTestablePermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->QueryTestablePermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->QueryTestablePermissions(context, options, request));
 }
 
-StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse> IAMTracingStub::QueryAuditableServices(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
+IAMTracingStub::QueryAuditableServices(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "QueryAuditableServices");
+  auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM",
+                                     "QueryAuditableServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->QueryAuditableServices(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->QueryAuditableServices(context, options, request));
 }
 
 StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMTracingStub::LintPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::LintPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.admin.v1.IAM", "LintPolicy");
   auto scope = opentelemetry::trace::Scope(span);
@@ -342,8 +354,7 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMTracingStub::LintPolicy(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<IAMStub> MakeIAMTracingStub(
-    std::shared_ptr<IAMStub> stub) {
+std::shared_ptr<IAMStub> MakeIAMTracingStub(std::shared_ptr<IAMStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<IAMTracingStub>(std::move(stub));
 #else

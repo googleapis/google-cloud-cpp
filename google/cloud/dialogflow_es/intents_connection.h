@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/intents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/intents_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,9 +30,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/struct.pb.h>
 #include <google/cloud/dialogflow/v2/intent.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/protobuf/struct.pb.h>
 #include <memory>
 #include <string>
 
@@ -68,14 +68,14 @@ class IntentsLimitedErrorCountRetryPolicy : public IntentsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit IntentsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   IntentsLimitedErrorCountRetryPolicy(
       IntentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : IntentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : IntentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   IntentsLimitedErrorCountRetryPolicy(
       IntentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : IntentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : IntentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,7 +95,9 @@ class IntentsLimitedErrorCountRetryPolicy : public IntentsRetryPolicy {
   using BaseType = IntentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::IntentsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::IntentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -133,12 +135,13 @@ class IntentsLimitedTimeRetryPolicy : public IntentsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit IntentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   IntentsLimitedTimeRetryPolicy(IntentsLimitedTimeRetryPolicy&& rhs) noexcept
-    : IntentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  IntentsLimitedTimeRetryPolicy(IntentsLimitedTimeRetryPolicy const& rhs) noexcept
-    : IntentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : IntentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  IntentsLimitedTimeRetryPolicy(
+      IntentsLimitedTimeRetryPolicy const& rhs) noexcept
+      : IntentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,15 +155,16 @@ class IntentsLimitedTimeRetryPolicy : public IntentsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<IntentsRetryPolicy> clone() const override {
-    return std::make_unique<IntentsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<IntentsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = IntentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::IntentsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::IntentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -181,53 +185,58 @@ class IntentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::v2::Intent>
-  ListIntents(google::cloud::dialogflow::v2::ListIntentsRequest request);
+  virtual StreamRange<google::cloud::dialogflow::v2::Intent> ListIntents(
+      google::cloud::dialogflow::v2::ListIntentsRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Intent>
-  GetIntent(google::cloud::dialogflow::v2::GetIntentRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
+      google::cloud::dialogflow::v2::GetIntentRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Intent>
-  CreateIntent(google::cloud::dialogflow::v2::CreateIntentRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
+      google::cloud::dialogflow::v2::CreateIntentRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Intent>
-  UpdateIntent(google::cloud::dialogflow::v2::UpdateIntentRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
+      google::cloud::dialogflow::v2::UpdateIntentRequest const& request);
 
-  virtual Status
-  DeleteIntent(google::cloud::dialogflow::v2::DeleteIntentRequest const& request);
+  virtual Status DeleteIntent(
+      google::cloud::dialogflow::v2::DeleteIntentRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-  BatchUpdateIntents(google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
+  BatchUpdateIntents(
+      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchUpdateIntents(NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchUpdateIntents(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-  BatchUpdateIntents( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
+  BatchUpdateIntents(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::protobuf::Struct>>
-  BatchDeleteIntents(google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request);
+  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
+      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchDeleteIntents(NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchDeleteIntents(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>>
-  BatchDeleteIntents( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
+      google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -262,8 +271,7 @@ std::shared_ptr<IntentsConnection> MakeIntentsConnection(
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<IntentsConnection> MakeIntentsConnection(
-    Options options = {});
+std::shared_ptr<IntentsConnection> MakeIntentsConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

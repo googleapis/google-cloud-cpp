@@ -31,9 +31,9 @@ AuthorizedDomainsAuth::AuthorizedDomainsAuth(
     std::shared_ptr<AuthorizedDomainsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse> AuthorizedDomainsAuth::ListAuthorizedDomains(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
+AuthorizedDomainsAuth::ListAuthorizedDomains(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

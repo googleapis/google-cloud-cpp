@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConfidentialComputingClient::ConfidentialComputingClient(
     std::shared_ptr<ConfidentialComputingConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ConfidentialComputingClient::~ConfidentialComputingClient() = default;
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
-ConfidentialComputingClient::CreateChallenge(std::string const& parent, google::cloud::confidentialcomputing::v1::Challenge const& challenge, Options opts) {
+ConfidentialComputingClient::CreateChallenge(
+    std::string const& parent,
+    google::cloud::confidentialcomputing::v1::Challenge const& challenge,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::confidentialcomputing::v1::CreateChallengeRequest request;
   request.set_parent(parent);
@@ -42,25 +45,33 @@ ConfidentialComputingClient::CreateChallenge(std::string const& parent, google::
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
-ConfidentialComputingClient::CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request, Options opts) {
+ConfidentialComputingClient::CreateChallenge(
+    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChallenge(request);
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-ConfidentialComputingClient::VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request, Options opts) {
+ConfidentialComputingClient::VerifyAttestation(
+    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->VerifyAttestation(request);
 }
 
 StreamRange<google::cloud::location::Location>
-ConfidentialComputingClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+ConfidentialComputingClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-ConfidentialComputingClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+ConfidentialComputingClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }

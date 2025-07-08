@@ -34,19 +34,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SystemPolicyV1Metadata : public SystemPolicyV1Stub {
  public:
   ~SystemPolicyV1Metadata() override = default;
-  SystemPolicyV1Metadata(
-      std::shared_ptr<SystemPolicyV1Stub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  SystemPolicyV1Metadata(std::shared_ptr<SystemPolicyV1Stub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+          request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

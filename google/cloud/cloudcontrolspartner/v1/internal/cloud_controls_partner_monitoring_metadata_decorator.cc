@@ -46,33 +46,35 @@ CloudControlsPartnerMonitoringMetadata::CloudControlsPartnerMonitoringMetadata(
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
 CloudControlsPartnerMonitoringMetadata::ListViolations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListViolations(context, options, request);
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
 CloudControlsPartnerMonitoringMetadata::GetViolation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetViolation(context, options, request);
 }
 
-void CloudControlsPartnerMonitoringMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void CloudControlsPartnerMonitoringMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void CloudControlsPartnerMonitoringMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+void CloudControlsPartnerMonitoringMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

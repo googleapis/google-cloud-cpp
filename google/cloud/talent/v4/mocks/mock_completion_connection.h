@@ -47,12 +47,13 @@ class MockCompletionConnection : public talent_v4::CompletionConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::talent::v4::CompleteQueryResponse>,
-  CompleteQuery,
-  (google::cloud::talent::v4::CompleteQueryRequest const& request), (override));
+              CompleteQuery,
+              (google::cloud::talent::v4::CompleteQueryRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

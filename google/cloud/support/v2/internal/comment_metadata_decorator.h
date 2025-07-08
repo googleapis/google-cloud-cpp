@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/support/v2/internal/comment_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,24 +34,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CommentServiceMetadata : public CommentServiceStub {
  public:
   ~CommentServiceMetadata() override = default;
-  CommentServiceMetadata(
-      std::shared_ptr<CommentServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  CommentServiceMetadata(std::shared_ptr<CommentServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::support::v2::ListCommentsResponse> ListComments(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCommentsRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

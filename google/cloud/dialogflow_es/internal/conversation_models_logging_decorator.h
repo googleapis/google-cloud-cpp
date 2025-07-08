@@ -36,107 +36,114 @@ class ConversationModelsLogging : public ConversationModelsStub {
  public:
   ~ConversationModelsLogging() override = default;
   ConversationModelsLogging(std::shared_ptr<ConversationModelsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                            TracingOptions tracing_options,
+                            std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) override;
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateConversationModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::ConversationModel> GetConversationModel(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetConversationModelRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ConversationModel>
+  GetConversationModel(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GetConversationModelRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse> ListConversationModels(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListConversationModelsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
+  ListConversationModels(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::ListConversationModelsRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConversationModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) override;
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeployConversationModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) override;
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeployConversationModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUndeployConversationModel(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUndeployConversationModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) override;
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UndeployConversationModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation> GetConversationModelEvaluation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
+  GetConversationModelEvaluation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::
+          GetConversationModelEvaluationRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse> ListConversationModelEvaluations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest const& request) override;
+  StatusOr<
+      google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
+  ListConversationModelEvaluations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::
+          ListConversationModelEvaluationsRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationModelEvaluation(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateConversationModelEvaluation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) override;
+      google::cloud::dialogflow::v2::
+          CreateConversationModelEvaluationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::
+          CreateConversationModelEvaluationRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

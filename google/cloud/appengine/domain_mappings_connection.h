@@ -33,7 +33,8 @@ using ::google::cloud::appengine_v1::MakeDomainMappingsConnection;
 /// @deprecated Use appengine_v1::DomainMappingsConnection directly.
 using ::google::cloud::appengine_v1::DomainMappingsConnection;
 
-/// @deprecated Use appengine_v1::DomainMappingsLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use appengine_v1::DomainMappingsLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::appengine_v1::DomainMappingsLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use appengine_v1::DomainMappingsLimitedTimeRetryPolicy directly.

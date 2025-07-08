@@ -34,91 +34,116 @@ OsConfigServiceTracingConnection::OsConfigServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceTracingConnection::ExecutePatchJob(google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::ExecutePatchJob");
+OsConfigServiceTracingConnection::ExecutePatchJob(
+    google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::ExecutePatchJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ExecutePatchJob(request));
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceTracingConnection::GetPatchJob(google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::GetPatchJob");
+OsConfigServiceTracingConnection::GetPatchJob(
+    google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::GetPatchJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPatchJob(request));
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceTracingConnection::CancelPatchJob(google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::CancelPatchJob");
+OsConfigServiceTracingConnection::CancelPatchJob(
+    google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::CancelPatchJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelPatchJob(request));
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJob>
-OsConfigServiceTracingConnection::ListPatchJobs(google::cloud::osconfig::v1::ListPatchJobsRequest request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::ListPatchJobs");
+OsConfigServiceTracingConnection::ListPatchJobs(
+    google::cloud::osconfig::v1::ListPatchJobsRequest request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::ListPatchJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListPatchJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::PatchJob>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
-OsConfigServiceTracingConnection::ListPatchJobInstanceDetails(google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::ListPatchJobInstanceDetails");
+OsConfigServiceTracingConnection::ListPatchJobInstanceDetails(
+    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::ListPatchJobInstanceDetails");
   internal::OTelScope scope(span);
   auto sr = child_->ListPatchJobInstanceDetails(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::osconfig::v1::PatchJobInstanceDetails>(std::move(span),
+                                                            std::move(sr));
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingConnection::CreatePatchDeployment(google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::CreatePatchDeployment");
+OsConfigServiceTracingConnection::CreatePatchDeployment(
+    google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::CreatePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreatePatchDeployment(request));
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingConnection::GetPatchDeployment(google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::GetPatchDeployment");
+OsConfigServiceTracingConnection::GetPatchDeployment(
+    google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::GetPatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPatchDeployment(request));
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingConnection::ListPatchDeployments(google::cloud::osconfig::v1::ListPatchDeploymentsRequest request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::ListPatchDeployments");
+OsConfigServiceTracingConnection::ListPatchDeployments(
+    google::cloud::osconfig::v1::ListPatchDeploymentsRequest request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::ListPatchDeployments");
   internal::OTelScope scope(span);
   auto sr = child_->ListPatchDeployments(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::PatchDeployment>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::osconfig::v1::PatchDeployment>(std::move(span),
+                                                    std::move(sr));
 }
 
-Status
-OsConfigServiceTracingConnection::DeletePatchDeployment(google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::DeletePatchDeployment");
+Status OsConfigServiceTracingConnection::DeletePatchDeployment(
+    google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::DeletePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeletePatchDeployment(request));
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingConnection::UpdatePatchDeployment(google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::UpdatePatchDeployment");
+OsConfigServiceTracingConnection::UpdatePatchDeployment(
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::UpdatePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdatePatchDeployment(request));
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingConnection::PausePatchDeployment(google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::PausePatchDeployment");
+OsConfigServiceTracingConnection::PausePatchDeployment(
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::PausePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PausePatchDeployment(request));
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-OsConfigServiceTracingConnection::ResumePatchDeployment(google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
-  auto span = internal::MakeSpan("osconfig_v1::OsConfigServiceConnection::ResumePatchDeployment");
+OsConfigServiceTracingConnection::ResumePatchDeployment(
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigServiceConnection::ResumePatchDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResumePatchDeployment(request));
 }

@@ -35,32 +35,27 @@ class AlertPolicyServiceLogging : public AlertPolicyServiceStub {
  public:
   ~AlertPolicyServiceLogging() override = default;
   AlertPolicyServiceLogging(std::shared_ptr<AlertPolicyServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                            TracingOptions tracing_options,
+                            std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListAlertPoliciesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
 
   Status DeleteAlertPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
 
  private:

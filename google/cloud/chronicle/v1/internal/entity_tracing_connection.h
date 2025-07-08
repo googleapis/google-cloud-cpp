@@ -36,36 +36,40 @@ class EntityServiceTracingConnection
   ~EntityServiceTracingConnection() override = default;
 
   explicit EntityServiceTracingConnection(
-    std::shared_ptr<chronicle_v1::EntityServiceConnection> child);
+      std::shared_ptr<chronicle_v1::EntityServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  GetWatchlist(google::cloud::chronicle::v1::GetWatchlistRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Watchlist> GetWatchlist(
+      google::cloud::chronicle::v1::GetWatchlistRequest const& request)
+      override;
 
-  StreamRange<google::cloud::chronicle::v1::Watchlist>
-  ListWatchlists(google::cloud::chronicle::v1::ListWatchlistsRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::Watchlist> ListWatchlists(
+      google::cloud::chronicle::v1::ListWatchlistsRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  CreateWatchlist(google::cloud::chronicle::v1::CreateWatchlistRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Watchlist> CreateWatchlist(
+      google::cloud::chronicle::v1::CreateWatchlistRequest const& request)
+      override;
 
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  UpdateWatchlist(google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Watchlist> UpdateWatchlist(
+      google::cloud::chronicle::v1::UpdateWatchlistRequest const& request)
+      override;
 
-  Status
-  DeleteWatchlist(google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) override;
+  Status DeleteWatchlist(
+      google::cloud::chronicle::v1::DeleteWatchlistRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<chronicle_v1::EntityServiceConnection> child_;

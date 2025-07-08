@@ -17,10 +17,10 @@
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/vmwareengine/v1/vmware_engine_connection.h"
 #include "google/cloud/vmwareengine/v1/vmware_engine_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,37 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options VmwareEngineDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_VMWARE_ENGINE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_VMWARE_ENGINE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_VMWARE_ENGINE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_VMWARE_ENGINE_AUTHORITY",
       "vmwareengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<vmwareengine_v1::VmwareEngineRetryPolicyOption>()) {
     options.set<vmwareengine_v1::VmwareEngineRetryPolicyOption>(
         vmwareengine_v1::VmwareEngineLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<vmwareengine_v1::VmwareEngineBackoffPolicyOption>()) {
     options.set<vmwareengine_v1::VmwareEngineBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<vmwareengine_v1::VmwareEnginePollingPolicyOption>()) {
     options.set<vmwareengine_v1::VmwareEnginePollingPolicyOption>(
         GenericPollingPolicy<
             vmwareengine_v1::VmwareEngineRetryPolicyOption::Type,
             vmwareengine_v1::VmwareEngineBackoffPolicyOption::Type>(
-            options.get<vmwareengine_v1::VmwareEngineRetryPolicyOption>()->clone(),
+            options.get<vmwareengine_v1::VmwareEngineRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>()) {
     options.set<vmwareengine_v1::VmwareEngineConnectionIdempotencyPolicyOption>(
         vmwareengine_v1::MakeDefaultVmwareEngineConnectionIdempotencyPolicy());
   }

@@ -31,54 +31,56 @@ AutoscalingPolicyServiceAuth::AutoscalingPolicyServiceAuth(
     std::shared_ptr<AutoscalingPolicyServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> AutoscalingPolicyServiceAuth::CreateAutoscalingPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) {
+StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
+AutoscalingPolicyServiceAuth::CreateAutoscalingPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAutoscalingPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> AutoscalingPolicyServiceAuth::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) {
+StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
+AutoscalingPolicyServiceAuth::UpdateAutoscalingPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAutoscalingPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> AutoscalingPolicyServiceAuth::GetAutoscalingPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
+AutoscalingPolicyServiceAuth::GetAutoscalingPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAutoscalingPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse> AutoscalingPolicyServiceAuth::ListAutoscalingPolicies(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) {
+StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
+AutoscalingPolicyServiceAuth::ListAutoscalingPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAutoscalingPolicies(context, options, request);
 }
 
 Status AutoscalingPolicyServiceAuth::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> AutoscalingPolicyServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,35 +88,34 @@ StatusOr<google::iam::v1::Policy> AutoscalingPolicyServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> AutoscalingPolicyServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> AutoscalingPolicyServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AutoscalingPolicyServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> AutoscalingPolicyServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+AutoscalingPolicyServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> AutoscalingPolicyServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+AutoscalingPolicyServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +123,7 @@ StatusOr<google::longrunning::Operation> AutoscalingPolicyServiceAuth::GetOperat
 }
 
 Status AutoscalingPolicyServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -131,8 +131,7 @@ Status AutoscalingPolicyServiceAuth::DeleteOperation(
 }
 
 Status AutoscalingPolicyServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

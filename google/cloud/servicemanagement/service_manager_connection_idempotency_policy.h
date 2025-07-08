@@ -26,11 +26,16 @@ namespace cloud {
 namespace servicemanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use servicemanagement_v1::MakeDefaultServiceManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::servicemanagement_v1::MakeDefaultServiceManagerConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// servicemanagement_v1::MakeDefaultServiceManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::servicemanagement_v1::
+    MakeDefaultServiceManagerConnectionIdempotencyPolicy;
 
-/// @deprecated Use servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicy directly.
+using ::google::cloud::servicemanagement_v1::
+    ServiceManagerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement

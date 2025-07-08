@@ -17,9 +17,9 @@
 // source: grafeas/v1/grafeas.proto
 
 #include "google/cloud/containeranalysis/v1/internal/grafeas_connection_impl.h"
+#include "google/cloud/containeranalysis/v1/internal/grafeas_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/containeranalysis/v1/internal/grafeas_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,34 +32,36 @@ namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<containeranalysis_v1::GrafeasRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<containeranalysis_v1::GrafeasRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<containeranalysis_v1::GrafeasRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<containeranalysis_v1::GrafeasBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<containeranalysis_v1::GrafeasBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<containeranalysis_v1::GrafeasConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 GrafeasConnectionImpl::GrafeasConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<containeranalysis_v1_internal::GrafeasStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        GrafeasConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      GrafeasConnection::options())) {}
 
-StatusOr<grafeas::v1::Occurrence>
-GrafeasConnectionImpl::GetOccurrence(grafeas::v1::GetOccurrenceRequest const& request) {
+StatusOr<grafeas::v1::Occurrence> GrafeasConnectionImpl::GetOccurrence(
+    grafeas::v1::GetOccurrenceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -71,18 +73,21 @@ GrafeasConnectionImpl::GetOccurrence(grafeas::v1::GetOccurrenceRequest const& re
       *current, request, __func__);
 }
 
-StreamRange<grafeas::v1::Occurrence>
-GrafeasConnectionImpl::ListOccurrences(grafeas::v1::ListOccurrencesRequest request) {
+StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListOccurrences(
+    grafeas::v1::ListOccurrencesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOccurrences(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<grafeas::v1::Occurrence>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<grafeas::v1::Occurrence>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, grafeas::v1::ListOccurrencesRequest const& r) {
+          Options const& options,
+          grafeas::v1::ListOccurrencesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -99,8 +104,8 @@ GrafeasConnectionImpl::ListOccurrences(grafeas::v1::ListOccurrencesRequest reque
       });
 }
 
-Status
-GrafeasConnectionImpl::DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request) {
+Status GrafeasConnectionImpl::DeleteOccurrence(
+    grafeas::v1::DeleteOccurrenceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -112,8 +117,8 @@ GrafeasConnectionImpl::DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest con
       *current, request, __func__);
 }
 
-StatusOr<grafeas::v1::Occurrence>
-GrafeasConnectionImpl::CreateOccurrence(grafeas::v1::CreateOccurrenceRequest const& request) {
+StatusOr<grafeas::v1::Occurrence> GrafeasConnectionImpl::CreateOccurrence(
+    grafeas::v1::CreateOccurrenceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -126,7 +131,8 @@ GrafeasConnectionImpl::CreateOccurrence(grafeas::v1::CreateOccurrenceRequest con
 }
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
-GrafeasConnectionImpl::BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrencesRequest const& request) {
+GrafeasConnectionImpl::BatchCreateOccurrences(
+    grafeas::v1::BatchCreateOccurrencesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -138,8 +144,8 @@ GrafeasConnectionImpl::BatchCreateOccurrences(grafeas::v1::BatchCreateOccurrence
       *current, request, __func__);
 }
 
-StatusOr<grafeas::v1::Occurrence>
-GrafeasConnectionImpl::UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest const& request) {
+StatusOr<grafeas::v1::Occurrence> GrafeasConnectionImpl::UpdateOccurrence(
+    grafeas::v1::UpdateOccurrenceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -151,8 +157,8 @@ GrafeasConnectionImpl::UpdateOccurrence(grafeas::v1::UpdateOccurrenceRequest con
       *current, request, __func__);
 }
 
-StatusOr<grafeas::v1::Note>
-GrafeasConnectionImpl::GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest const& request) {
+StatusOr<grafeas::v1::Note> GrafeasConnectionImpl::GetOccurrenceNote(
+    grafeas::v1::GetOccurrenceNoteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -164,8 +170,8 @@ GrafeasConnectionImpl::GetOccurrenceNote(grafeas::v1::GetOccurrenceNoteRequest c
       *current, request, __func__);
 }
 
-StatusOr<grafeas::v1::Note>
-GrafeasConnectionImpl::GetNote(grafeas::v1::GetNoteRequest const& request) {
+StatusOr<grafeas::v1::Note> GrafeasConnectionImpl::GetNote(
+    grafeas::v1::GetNoteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -177,16 +183,18 @@ GrafeasConnectionImpl::GetNote(grafeas::v1::GetNoteRequest const& request) {
       *current, request, __func__);
 }
 
-StreamRange<grafeas::v1::Note>
-GrafeasConnectionImpl::ListNotes(grafeas::v1::ListNotesRequest request) {
+StreamRange<grafeas::v1::Note> GrafeasConnectionImpl::ListNotes(
+    grafeas::v1::ListNotesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListNotes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<grafeas::v1::Note>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<grafeas::v1::Note>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, grafeas::v1::ListNotesRequest const& r) {
         return google::cloud::internal::RetryLoop(
@@ -205,8 +213,8 @@ GrafeasConnectionImpl::ListNotes(grafeas::v1::ListNotesRequest request) {
       });
 }
 
-Status
-GrafeasConnectionImpl::DeleteNote(grafeas::v1::DeleteNoteRequest const& request) {
+Status GrafeasConnectionImpl::DeleteNote(
+    grafeas::v1::DeleteNoteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -218,8 +226,8 @@ GrafeasConnectionImpl::DeleteNote(grafeas::v1::DeleteNoteRequest const& request)
       *current, request, __func__);
 }
 
-StatusOr<grafeas::v1::Note>
-GrafeasConnectionImpl::CreateNote(grafeas::v1::CreateNoteRequest const& request) {
+StatusOr<grafeas::v1::Note> GrafeasConnectionImpl::CreateNote(
+    grafeas::v1::CreateNoteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -232,7 +240,8 @@ GrafeasConnectionImpl::CreateNote(grafeas::v1::CreateNoteRequest const& request)
 }
 
 StatusOr<grafeas::v1::BatchCreateNotesResponse>
-GrafeasConnectionImpl::BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest const& request) {
+GrafeasConnectionImpl::BatchCreateNotes(
+    grafeas::v1::BatchCreateNotesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -244,8 +253,8 @@ GrafeasConnectionImpl::BatchCreateNotes(grafeas::v1::BatchCreateNotesRequest con
       *current, request, __func__);
 }
 
-StatusOr<grafeas::v1::Note>
-GrafeasConnectionImpl::UpdateNote(grafeas::v1::UpdateNoteRequest const& request) {
+StatusOr<grafeas::v1::Note> GrafeasConnectionImpl::UpdateNote(
+    grafeas::v1::UpdateNoteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -257,18 +266,21 @@ GrafeasConnectionImpl::UpdateNote(grafeas::v1::UpdateNoteRequest const& request)
       *current, request, __func__);
 }
 
-StreamRange<grafeas::v1::Occurrence>
-GrafeasConnectionImpl::ListNoteOccurrences(grafeas::v1::ListNoteOccurrencesRequest request) {
+StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListNoteOccurrences(
+    grafeas::v1::ListNoteOccurrencesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListNoteOccurrences(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<grafeas::v1::Occurrence>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<grafeas::v1::Occurrence>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, grafeas::v1::ListNoteOccurrencesRequest const& r) {
+          Options const& options,
+          grafeas::v1::ListNoteOccurrencesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,

@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection {
+class MockModelServiceConnection
+    : public aiplatform_v1::ModelServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection 
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UploadModel(Matcher<google::cloud::aiplatform::v1::UploadModelRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UploadModel(Matcher<google::cloud::aiplatform::v1::UploadModelRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>,
-  UploadModel,
-  (google::cloud::aiplatform::v1::UploadModelRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>,
+      UploadModel,
+      (google::cloud::aiplatform::v1::UploadModelRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,53 +68,66 @@ class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UploadModel(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UploadModel, (NoAwaitTag,
-    google::cloud::aiplatform::v1::UploadModelRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UploadModel(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>,
-  UploadModel, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>,
-  GetModel,
-  (google::cloud::aiplatform::v1::GetModelRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>),
-  ListModels,
-  (google::cloud::aiplatform::v1::ListModelsRequest request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>),
-  ListModelVersions,
-  (google::cloud::aiplatform::v1::ListModelVersionsRequest request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>),
-  ListModelVersionCheckpoints,
-  (google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>,
-  UpdateModel,
-  (google::cloud::aiplatform::v1::UpdateModelRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UploadModel,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::UploadModelRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateExplanationDataset(Matcher<google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&>(_)))
+  /// EXPECT_CALL(*mock, UploadModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
-  UpdateExplanationDataset,
-  (google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>,
+      UploadModel, (google::longrunning::Operation const& operation),
+      (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>, GetModel,
+              (google::cloud::aiplatform::v1::GetModelRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>), ListModels,
+              (google::cloud::aiplatform::v1::ListModelsRequest request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Model>),
+              ListModelVersions,
+              (google::cloud::aiplatform::v1::ListModelVersionsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>),
+      ListModelVersionCheckpoints,
+      (google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Model>, UpdateModel,
+      (google::cloud::aiplatform::v1::UpdateModelRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateExplanationDataset(Matcher<google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
+      UpdateExplanationDataset,
+      (google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -118,33 +135,42 @@ class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateExplanationDataset(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateExplanationDataset, (NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateExplanationDataset(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
-  UpdateExplanationDataset, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateExplanationDataset,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteModel(Matcher<google::cloud::aiplatform::v1::DeleteModelRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateExplanationDataset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteModel,
-  (google::cloud::aiplatform::v1::DeleteModelRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
+      UpdateExplanationDataset,
+      (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteModel(Matcher<google::cloud::aiplatform::v1::DeleteModelRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteModel,
+      (google::cloud::aiplatform::v1::DeleteModelRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -152,33 +178,39 @@ class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteModel(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteModel, (NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteModelRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteModel(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteModel, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteModel,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteModelRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteModelVersion(Matcher<google::cloud::aiplatform::v1::DeleteModelVersionRequest const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteModelVersion,
-  (google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteModel, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteModelVersion(Matcher<google::cloud::aiplatform::v1::DeleteModelVersionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteModelVersion,
+      (google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -186,37 +218,45 @@ class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteModelVersion(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteModelVersion, (NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteModelVersion,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteModelVersion(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteModelVersion(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteModelVersion, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteModelVersion, (google::longrunning::Operation const& operation),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>,
-  MergeVersionAliases,
-  (google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request), (override));
+              MergeVersionAliases,
+              (google::cloud::aiplatform::v1::MergeVersionAliasesRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportModel(Matcher<google::cloud::aiplatform::v1::ExportModelRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// ExportModel(Matcher<google::cloud::aiplatform::v1::ExportModelRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
-  ExportModel,
-  (google::cloud::aiplatform::v1::ExportModelRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
+      ExportModel,
+      (google::cloud::aiplatform::v1::ExportModelRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -224,33 +264,39 @@ class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportModel(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  ExportModel, (NoAwaitTag,
-    google::cloud::aiplatform::v1::ExportModelRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportModel(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
-  ExportModel, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportModel,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::ExportModelRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CopyModel(Matcher<google::cloud::aiplatform::v1::CopyModelRequest const&>(_)))
+  /// EXPECT_CALL(*mock, ExportModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
-  CopyModel,
-  (google::cloud::aiplatform::v1::CopyModelRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
+      ExportModel, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CopyModel(Matcher<google::cloud::aiplatform::v1::CopyModelRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
+      CopyModel,
+      (google::cloud::aiplatform::v1::CopyModelRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -258,89 +304,108 @@ class MockModelServiceConnection : public aiplatform_v1::ModelServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CopyModel(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CopyModel, (NoAwaitTag,
-    google::cloud::aiplatform::v1::CopyModelRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CopyModel,
+              (NoAwaitTag,
+               google::cloud::aiplatform::v1::CopyModelRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CopyModel(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CopyModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
-  CopyModel, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
+      CopyModel, (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,
-  ImportModelEvaluation,
-  (google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,
+      ImportModelEvaluation,
+      (google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>,
-  BatchImportModelEvaluationSlices,
-  (google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
+                           BatchImportModelEvaluationSlicesResponse>,
+              BatchImportModelEvaluationSlices,
+              (google::cloud::aiplatform::v1::
+                   BatchImportModelEvaluationSlicesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>,
-  BatchImportEvaluatedAnnotations,
-  (google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
+                           BatchImportEvaluatedAnnotationsResponse>,
+              BatchImportEvaluatedAnnotations,
+              (google::cloud::aiplatform::v1::
+                   BatchImportEvaluatedAnnotationsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,
-  GetModelEvaluation,
-  (google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,
+      GetModelEvaluation,
+      (google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>),
-  ListModelEvaluations,
-  (google::cloud::aiplatform::v1::ListModelEvaluationsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>),
+      ListModelEvaluations,
+      (google::cloud::aiplatform::v1::ListModelEvaluationsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>,
-  GetModelEvaluationSlice,
-  (google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>,
+      GetModelEvaluationSlice,
+      (google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>),
-  ListModelEvaluationSlices,
-  (google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>),
+      ListModelEvaluationSlices,
+      (google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  WaitOperation,
-  (google::longrunning::WaitOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
+              (google::longrunning::WaitOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

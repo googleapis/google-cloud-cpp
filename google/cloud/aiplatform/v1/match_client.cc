@@ -28,54 +28,60 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MatchServiceClient::MatchServiceClient(
     std::shared_ptr<MatchServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MatchServiceClient::~MatchServiceClient() = default;
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
-MatchServiceClient::FindNeighbors(google::cloud::aiplatform::v1::FindNeighborsRequest const& request, Options opts) {
+MatchServiceClient::FindNeighbors(
+    google::cloud::aiplatform::v1::FindNeighborsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FindNeighbors(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
-MatchServiceClient::ReadIndexDatapoints(google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request, Options opts) {
+MatchServiceClient::ReadIndexDatapoints(
+    google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadIndexDatapoints(request);
 }
 
 StreamRange<google::cloud::location::Location>
-MatchServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+MatchServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-MatchServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> MatchServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-MatchServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> MatchServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-MatchServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> MatchServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-MatchServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+MatchServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation>
-MatchServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> MatchServiceClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -83,56 +89,56 @@ MatchServiceClient::ListOperations(std::string const& name, std::string const& f
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-MatchServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> MatchServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-MatchServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> MatchServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MatchServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MatchServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-MatchServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status MatchServiceClient::DeleteOperation(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-MatchServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status MatchServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-MatchServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status MatchServiceClient::CancelOperation(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-MatchServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status MatchServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MatchServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MatchServiceClient::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

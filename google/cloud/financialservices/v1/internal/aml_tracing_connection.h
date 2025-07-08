@@ -30,339 +30,422 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class AMLTracingConnection
-    : public financialservices_v1::AMLConnection {
+class AMLTracingConnection : public financialservices_v1::AMLConnection {
  public:
   ~AMLTracingConnection() override = default;
 
   explicit AMLTracingConnection(
-    std::shared_ptr<financialservices_v1::AMLConnection> child);
+      std::shared_ptr<financialservices_v1::AMLConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::financialservices::v1::Instance>
-  ListInstances(google::cloud::financialservices::v1::ListInstancesRequest request) override;
+  StreamRange<google::cloud::financialservices::v1::Instance> ListInstances(
+      google::cloud::financialservices::v1::ListInstancesRequest request)
+      override;
 
-  StatusOr<google::cloud::financialservices::v1::Instance>
-  GetInstance(google::cloud::financialservices::v1::GetInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::financialservices::v1::Instance>>
-  CreateInstance(google::cloud::financialservices::v1::CreateInstanceRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag,
-      google::cloud::financialservices::v1::CreateInstanceRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::Instance> GetInstance(
+      google::cloud::financialservices::v1::GetInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
   CreateInstance(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::financialservices::v1::CreateInstanceRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::CreateInstanceRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
-  UpdateInstance(google::cloud::financialservices::v1::UpdateInstanceRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) override;
+  CreateInstance(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::Instance>>
   UpdateInstance(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::financialservices::v1::UpdateInstanceRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::financialservices::v1::DeleteInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::UpdateInstanceRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::financialservices::v1::Instance>>
+  UpdateInstance(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
   DeleteInstance(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::financialservices::v1::DeleteInstanceRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-  ImportRegisteredParties(google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::DeleteInstanceRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportRegisteredParties(NoAwaitTag,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) override;
+  future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
+  DeleteInstance(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+  future<StatusOr<
+      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+  ImportRegisteredParties(
+      google::cloud::financialservices::v1::
+          ImportRegisteredPartiesRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ImportRegisteredParties(
+      NoAwaitTag, google::cloud::financialservices::v1::
+                      ImportRegisteredPartiesRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
   ImportRegisteredParties(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-  ExportRegisteredParties(google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) override;
+  future<StatusOr<
+      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+  ExportRegisteredParties(
+      google::cloud::financialservices::v1::
+          ExportRegisteredPartiesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportRegisteredParties(NoAwaitTag,
-      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportRegisteredParties(
+      NoAwaitTag, google::cloud::financialservices::v1::
+                      ExportRegisteredPartiesRequest const& request) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+  future<StatusOr<
+      google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
   ExportRegisteredParties(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::financialservices::v1::Dataset>
-  ListDatasets(google::cloud::financialservices::v1::ListDatasetsRequest request) override;
+  StreamRange<google::cloud::financialservices::v1::Dataset> ListDatasets(
+      google::cloud::financialservices::v1::ListDatasetsRequest request)
+      override;
 
-  StatusOr<google::cloud::financialservices::v1::Dataset>
-  GetDataset(google::cloud::financialservices::v1::GetDatasetRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::Dataset> GetDataset(
+      google::cloud::financialservices::v1::GetDatasetRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-  CreateDataset(google::cloud::financialservices::v1::CreateDatasetRequest const& request) override;
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>> CreateDataset(
+      google::cloud::financialservices::v1::CreateDatasetRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag,
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::CreateDatasetRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-  CreateDataset(
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>> CreateDataset(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-  UpdateDataset(google::cloud::financialservices::v1::UpdateDatasetRequest const& request) override;
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>> UpdateDataset(
+      google::cloud::financialservices::v1::UpdateDatasetRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateDataset(NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateDataset(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::UpdateDatasetRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-  UpdateDataset(
+  future<StatusOr<google::cloud::financialservices::v1::Dataset>> UpdateDataset(
       google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteDataset(google::cloud::financialservices::v1::DeleteDatasetRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
   DeleteDataset(
+      google::cloud::financialservices::v1::DeleteDatasetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::DeleteDatasetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
+  DeleteDataset(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::financialservices::v1::Model> ListModels(
+      google::cloud::financialservices::v1::ListModelsRequest request) override;
+
+  StatusOr<google::cloud::financialservices::v1::Model> GetModel(
+      google::cloud::financialservices::v1::GetModelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::financialservices::v1::Model>> CreateModel(
+      google::cloud::financialservices::v1::CreateModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::CreateModelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::financialservices::v1::Model>> CreateModel(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::financialservices::v1::Model>
-  ListModels(google::cloud::financialservices::v1::ListModelsRequest request) override;
+  future<StatusOr<google::cloud::financialservices::v1::Model>> UpdateModel(
+      google::cloud::financialservices::v1::UpdateModelRequest const& request)
+      override;
 
-  StatusOr<google::cloud::financialservices::v1::Model>
-  GetModel(google::cloud::financialservices::v1::GetModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateModel(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::UpdateModelRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::financialservices::v1::Model>>
-  CreateModel(google::cloud::financialservices::v1::CreateModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateModel(NoAwaitTag,
-      google::cloud::financialservices::v1::CreateModelRequest const& request) override;
-
-  future<StatusOr<google::cloud::financialservices::v1::Model>>
-  CreateModel(
+  future<StatusOr<google::cloud::financialservices::v1::Model>> UpdateModel(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::Model>>
-  UpdateModel(google::cloud::financialservices::v1::UpdateModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateModel(NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateModelRequest const& request) override;
-
-  future<StatusOr<google::cloud::financialservices::v1::Model>>
-  UpdateModel(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-  ExportModelMetadata(google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ExportModelMetadata(NoAwaitTag,
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) override;
-
-  future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+  future<StatusOr<
+      google::cloud::financialservices::v1::ExportModelMetadataResponse>>
   ExportModelMetadata(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportModelMetadata(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+  ExportModelMetadata(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteModel(google::cloud::financialservices::v1::DeleteModelRequest const& request) override;
+  DeleteModel(google::cloud::financialservices::v1::DeleteModelRequest const&
+                  request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::DeleteModelRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteModel(
-      google::longrunning::Operation const& operation) override;
+  DeleteModel(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::financialservices::v1::EngineConfig>
-  ListEngineConfigs(google::cloud::financialservices::v1::ListEngineConfigsRequest request) override;
+  ListEngineConfigs(
+      google::cloud::financialservices::v1::ListEngineConfigsRequest request)
+      override;
 
-  StatusOr<google::cloud::financialservices::v1::EngineConfig>
-  GetEngineConfig(google::cloud::financialservices::v1::GetEngineConfigRequest const& request) override;
-
-  future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-  CreateEngineConfig(google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateEngineConfig(NoAwaitTag,
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::EngineConfig> GetEngineConfig(
+      google::cloud::financialservices::v1::GetEngineConfigRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
   CreateEngineConfig(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateEngineConfig(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-  UpdateEngineConfig(google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateEngineConfig(NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) override;
+  CreateEngineConfig(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
   UpdateEngineConfig(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-  ExportEngineConfigMetadata(google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateEngineConfig(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportEngineConfigMetadata(NoAwaitTag,
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) override;
+  future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
+  UpdateEngineConfig(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+  future<StatusOr<
+      google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+  ExportEngineConfigMetadata(
+      google::cloud::financialservices::v1::
+          ExportEngineConfigMetadataRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ExportEngineConfigMetadata(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::
+          ExportEngineConfigMetadataRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
   ExportEngineConfigMetadata(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteEngineConfig(google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) override;
+  DeleteEngineConfig(
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteEngineConfig(NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteEngineConfig(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteEngineConfig(
-      google::longrunning::Operation const& operation) override;
+  DeleteEngineConfig(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::financialservices::v1::EngineVersion>
-  GetEngineVersion(google::cloud::financialservices::v1::GetEngineVersionRequest const& request) override;
+  GetEngineVersion(
+      google::cloud::financialservices::v1::GetEngineVersionRequest const&
+          request) override;
 
   StreamRange<google::cloud::financialservices::v1::EngineVersion>
-  ListEngineVersions(google::cloud::financialservices::v1::ListEngineVersionsRequest request) override;
+  ListEngineVersions(
+      google::cloud::financialservices::v1::ListEngineVersionsRequest request)
+      override;
 
   StreamRange<google::cloud::financialservices::v1::PredictionResult>
-  ListPredictionResults(google::cloud::financialservices::v1::ListPredictionResultsRequest request) override;
+  ListPredictionResults(
+      google::cloud::financialservices::v1::ListPredictionResultsRequest
+          request) override;
 
   StatusOr<google::cloud::financialservices::v1::PredictionResult>
-  GetPredictionResult(google::cloud::financialservices::v1::GetPredictionResultRequest const& request) override;
+  GetPredictionResult(
+      google::cloud::financialservices::v1::GetPredictionResultRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-  CreatePredictionResult(google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) override;
+  CreatePredictionResult(
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreatePredictionResult(NoAwaitTag,
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreatePredictionResult(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
   CreatePredictionResult(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-  UpdatePredictionResult(google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) override;
+  UpdatePredictionResult(
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdatePredictionResult(NoAwaitTag,
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdatePredictionResult(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
   UpdatePredictionResult(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
-  ExportPredictionResultMetadata(google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) override;
+  future<StatusOr<google::cloud::financialservices::v1::
+                      ExportPredictionResultMetadataResponse>>
+  ExportPredictionResultMetadata(
+      google::cloud::financialservices::v1::
+          ExportPredictionResultMetadataRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportPredictionResultMetadata(NoAwaitTag,
-      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportPredictionResultMetadata(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::
+          ExportPredictionResultMetadataRequest const& request) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
+  future<StatusOr<google::cloud::financialservices::v1::
+                      ExportPredictionResultMetadataResponse>>
   ExportPredictionResultMetadata(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeletePredictionResult(google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) override;
+  DeletePredictionResult(
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeletePredictionResult(NoAwaitTag,
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeletePredictionResult(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
   DeletePredictionResult(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::financialservices::v1::BacktestResult>
-  ListBacktestResults(google::cloud::financialservices::v1::ListBacktestResultsRequest request) override;
+  ListBacktestResults(
+      google::cloud::financialservices::v1::ListBacktestResultsRequest request)
+      override;
 
   StatusOr<google::cloud::financialservices::v1::BacktestResult>
-  GetBacktestResult(google::cloud::financialservices::v1::GetBacktestResultRequest const& request) override;
+  GetBacktestResult(
+      google::cloud::financialservices::v1::GetBacktestResultRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-  CreateBacktestResult(google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) override;
+  CreateBacktestResult(
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateBacktestResult(NoAwaitTag,
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateBacktestResult(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
   CreateBacktestResult(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-  UpdateBacktestResult(google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) override;
+  UpdateBacktestResult(
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateBacktestResult(NoAwaitTag,
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateBacktestResult(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
   UpdateBacktestResult(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
-  ExportBacktestResultMetadata(google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) override;
+  future<StatusOr<google::cloud::financialservices::v1::
+                      ExportBacktestResultMetadataResponse>>
+  ExportBacktestResultMetadata(
+      google::cloud::financialservices::v1::
+          ExportBacktestResultMetadataRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportBacktestResultMetadata(NoAwaitTag,
-      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportBacktestResultMetadata(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::
+          ExportBacktestResultMetadataRequest const& request) override;
 
-  future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+  future<StatusOr<google::cloud::financialservices::v1::
+                      ExportBacktestResultMetadataResponse>>
   ExportBacktestResultMetadata(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-  DeleteBacktestResult(google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) override;
+  DeleteBacktestResult(
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteBacktestResult(NoAwaitTag,
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteBacktestResult(
+      NoAwaitTag,
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
   DeleteBacktestResult(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<financialservices_v1::AMLConnection> child_;
@@ -376,8 +459,7 @@ class AMLTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<financialservices_v1::AMLConnection>
-MakeAMLTracingConnection(
+std::shared_ptr<financialservices_v1::AMLConnection> MakeAMLTracingConnection(
     std::shared_ptr<financialservices_v1::AMLConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

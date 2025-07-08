@@ -26,11 +26,17 @@ namespace cloud {
 namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use storagetransfer_v1::MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::storagetransfer_v1::MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// storagetransfer_v1::MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::storagetransfer_v1::
+    MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::storagetransfer_v1::
+    StorageTransferServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer

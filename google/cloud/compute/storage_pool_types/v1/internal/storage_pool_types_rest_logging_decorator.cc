@@ -29,34 +29,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StoragePoolTypesRestLogging::StoragePoolTypesRestLogging(
     std::shared_ptr<StoragePoolTypesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList>
 StoragePoolTypesRestLogging::AggregatedListStoragePoolTypes(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        AggregatedListStoragePoolTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest const& request) {
-        return child_->AggregatedListStoragePoolTypes(rest_context, options, request);
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::storage_pool_types::v1::
+                 AggregatedListStoragePoolTypesRequest const& request) {
+        return child_->AggregatedListStoragePoolTypes(rest_context, options,
+                                                      request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
 StoragePoolTypesRestLogging::GetStoragePoolType(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        GetStoragePoolTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::storage_pool_types::v1::
+                 GetStoragePoolTypeRequest const& request) {
         return child_->GetStoragePoolType(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -64,13 +65,13 @@ StoragePoolTypesRestLogging::GetStoragePoolType(
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeList>
 StoragePoolTypesRestLogging::ListStoragePoolTypes(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        ListStoragePoolTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::storage_pool_types::v1::
+                 ListStoragePoolTypesRequest const& request) {
         return child_->ListStoragePoolTypes(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

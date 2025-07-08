@@ -32,8 +32,7 @@ namespace bigquery_storage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigQueryReadLogging::BigQueryReadLogging(
-    std::shared_ptr<BigQueryReadStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<BigQueryReadStub> child, TracingOptions tracing_options,
     std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
@@ -41,13 +40,14 @@ BigQueryReadLogging::BigQueryReadLogging(
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadLogging::CreateReadSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+              request) {
         return child_->CreateReadSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -56,13 +56,12 @@ BigQueryReadLogging::CreateReadSession(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadLogging::ReadRows(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
-             google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
+      [this](
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::cloud::bigquery::storage::v1::ReadRowsResponse>> {
         auto stream = child_->ReadRows(std::move(context), options, request);
@@ -80,13 +79,13 @@ BigQueryReadLogging::ReadRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadLogging::SplitReadStream(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+                 request) {
         return child_->SplitReadStream(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

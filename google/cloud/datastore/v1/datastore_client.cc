@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatastoreClient::DatastoreClient(
     std::shared_ptr<DatastoreConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DatastoreClient::~DatastoreClient() = default;
 
-StatusOr<google::datastore::v1::LookupResponse>
-DatastoreClient::Lookup(std::string const& project_id, google::datastore::v1::ReadOptions const& read_options, std::vector<google::datastore::v1::Key> const& keys, Options opts) {
+StatusOr<google::datastore::v1::LookupResponse> DatastoreClient::Lookup(
+    std::string const& project_id,
+    google::datastore::v1::ReadOptions const& read_options,
+    std::vector<google::datastore::v1::Key> const& keys, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::v1::LookupRequest request;
   request.set_project_id(project_id);
@@ -42,20 +44,22 @@ DatastoreClient::Lookup(std::string const& project_id, google::datastore::v1::Re
   return connection_->Lookup(request);
 }
 
-StatusOr<google::datastore::v1::LookupResponse>
-DatastoreClient::Lookup(google::datastore::v1::LookupRequest const& request, Options opts) {
+StatusOr<google::datastore::v1::LookupResponse> DatastoreClient::Lookup(
+    google::datastore::v1::LookupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Lookup(request);
 }
 
-StatusOr<google::datastore::v1::RunQueryResponse>
-DatastoreClient::RunQuery(google::datastore::v1::RunQueryRequest const& request, Options opts) {
+StatusOr<google::datastore::v1::RunQueryResponse> DatastoreClient::RunQuery(
+    google::datastore::v1::RunQueryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunQuery(request);
 }
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-DatastoreClient::RunAggregationQuery(google::datastore::v1::RunAggregationQueryRequest const& request, Options opts) {
+DatastoreClient::RunAggregationQuery(
+    google::datastore::v1::RunAggregationQueryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunAggregationQuery(request);
 }
@@ -69,13 +73,19 @@ DatastoreClient::BeginTransaction(std::string const& project_id, Options opts) {
 }
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
-DatastoreClient::BeginTransaction(google::datastore::v1::BeginTransactionRequest const& request, Options opts) {
+DatastoreClient::BeginTransaction(
+    google::datastore::v1::BeginTransactionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BeginTransaction(request);
 }
 
-StatusOr<google::datastore::v1::CommitResponse>
-DatastoreClient::Commit(std::string const& project_id, google::datastore::v1::CommitRequest::Mode mode, std::string const& transaction, std::vector<google::datastore::v1::Mutation> const& mutations, Options opts) {
+StatusOr<google::datastore::v1::CommitResponse> DatastoreClient::Commit(
+    std::string const& project_id,
+    google::datastore::v1::CommitRequest::Mode mode,
+    std::string const& transaction,
+    std::vector<google::datastore::v1::Mutation> const& mutations,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::v1::CommitRequest request;
   request.set_project_id(project_id);
@@ -85,8 +95,11 @@ DatastoreClient::Commit(std::string const& project_id, google::datastore::v1::Co
   return connection_->Commit(request);
 }
 
-StatusOr<google::datastore::v1::CommitResponse>
-DatastoreClient::Commit(std::string const& project_id, google::datastore::v1::CommitRequest::Mode mode, std::vector<google::datastore::v1::Mutation> const& mutations, Options opts) {
+StatusOr<google::datastore::v1::CommitResponse> DatastoreClient::Commit(
+    std::string const& project_id,
+    google::datastore::v1::CommitRequest::Mode mode,
+    std::vector<google::datastore::v1::Mutation> const& mutations,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::v1::CommitRequest request;
   request.set_project_id(project_id);
@@ -95,14 +108,15 @@ DatastoreClient::Commit(std::string const& project_id, google::datastore::v1::Co
   return connection_->Commit(request);
 }
 
-StatusOr<google::datastore::v1::CommitResponse>
-DatastoreClient::Commit(google::datastore::v1::CommitRequest const& request, Options opts) {
+StatusOr<google::datastore::v1::CommitResponse> DatastoreClient::Commit(
+    google::datastore::v1::CommitRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Commit(request);
 }
 
-StatusOr<google::datastore::v1::RollbackResponse>
-DatastoreClient::Rollback(std::string const& project_id, std::string const& transaction, Options opts) {
+StatusOr<google::datastore::v1::RollbackResponse> DatastoreClient::Rollback(
+    std::string const& project_id, std::string const& transaction,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::v1::RollbackRequest request;
   request.set_project_id(project_id);
@@ -110,14 +124,16 @@ DatastoreClient::Rollback(std::string const& project_id, std::string const& tran
   return connection_->Rollback(request);
 }
 
-StatusOr<google::datastore::v1::RollbackResponse>
-DatastoreClient::Rollback(google::datastore::v1::RollbackRequest const& request, Options opts) {
+StatusOr<google::datastore::v1::RollbackResponse> DatastoreClient::Rollback(
+    google::datastore::v1::RollbackRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Rollback(request);
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
-DatastoreClient::AllocateIds(std::string const& project_id, std::vector<google::datastore::v1::Key> const& keys, Options opts) {
+DatastoreClient::AllocateIds(
+    std::string const& project_id,
+    std::vector<google::datastore::v1::Key> const& keys, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::v1::AllocateIdsRequest request;
   request.set_project_id(project_id);
@@ -126,13 +142,15 @@ DatastoreClient::AllocateIds(std::string const& project_id, std::vector<google::
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
-DatastoreClient::AllocateIds(google::datastore::v1::AllocateIdsRequest const& request, Options opts) {
+DatastoreClient::AllocateIds(
+    google::datastore::v1::AllocateIdsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AllocateIds(request);
 }
 
-StatusOr<google::datastore::v1::ReserveIdsResponse>
-DatastoreClient::ReserveIds(std::string const& project_id, std::vector<google::datastore::v1::Key> const& keys, Options opts) {
+StatusOr<google::datastore::v1::ReserveIdsResponse> DatastoreClient::ReserveIds(
+    std::string const& project_id,
+    std::vector<google::datastore::v1::Key> const& keys, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::datastore::v1::ReserveIdsRequest request;
   request.set_project_id(project_id);
@@ -140,14 +158,14 @@ DatastoreClient::ReserveIds(std::string const& project_id, std::vector<google::d
   return connection_->ReserveIds(request);
 }
 
-StatusOr<google::datastore::v1::ReserveIdsResponse>
-DatastoreClient::ReserveIds(google::datastore::v1::ReserveIdsRequest const& request, Options opts) {
+StatusOr<google::datastore::v1::ReserveIdsResponse> DatastoreClient::ReserveIds(
+    google::datastore::v1::ReserveIdsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReserveIds(request);
 }
 
-StreamRange<google::longrunning::Operation>
-DatastoreClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> DatastoreClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -155,50 +173,48 @@ DatastoreClient::ListOperations(std::string const& name, std::string const& filt
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-DatastoreClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> DatastoreClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-DatastoreClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DatastoreClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DatastoreClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DatastoreClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-DatastoreClient::DeleteOperation(std::string const& name, Options opts) {
+Status DatastoreClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-DatastoreClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status DatastoreClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-DatastoreClient::CancelOperation(std::string const& name, Options opts) {
+Status DatastoreClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-DatastoreClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status DatastoreClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

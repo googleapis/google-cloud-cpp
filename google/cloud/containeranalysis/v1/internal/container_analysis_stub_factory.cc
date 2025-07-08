@@ -17,12 +17,12 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_auth_decorator.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_logging_decorator.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_metadata_decorator.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_stub.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -37,28 +37,28 @@ namespace cloud {
 namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ContainerAnalysisStub>
-CreateDefaultContainerAnalysisStub(
+std::shared_ptr<ContainerAnalysisStub> CreateDefaultContainerAnalysisStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::devtools::containeranalysis::v1::ContainerAnalysis::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::devtools::containeranalysis::v1::ContainerAnalysis::NewStub(
+          channel);
   std::shared_ptr<ContainerAnalysisStub> stub =
-    std::make_shared<DefaultContainerAnalysisStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultContainerAnalysisStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ContainerAnalysisAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ContainerAnalysisAuth>(std::move(auth),
+                                                   std::move(stub));
   }
   stub = std::make_shared<ContainerAnalysisMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ContainerAnalysisLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

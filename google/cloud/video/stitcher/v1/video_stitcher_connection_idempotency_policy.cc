@@ -26,151 +26,192 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-VideoStitcherServiceConnectionIdempotencyPolicy::~VideoStitcherServiceConnectionIdempotencyPolicy() = default;
+VideoStitcherServiceConnectionIdempotencyPolicy::
+    ~VideoStitcherServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
 VideoStitcherServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateCdnKey(google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateCdnKey(
+    google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListCdnKeys(google::cloud::video::stitcher::v1::ListCdnKeysRequest) {  // NOLINT
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListCdnKeys(
+    google::cloud::video::stitcher::v1::ListCdnKeysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetCdnKey(google::cloud::video::stitcher::v1::GetCdnKeyRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetCdnKey(
+    google::cloud::video::stitcher::v1::GetCdnKeyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteCdnKey(google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteCdnKey(
+    google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateCdnKey(google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateCdnKey(
+    google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateVodSession(google::cloud::video::stitcher::v1::CreateVodSessionRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateVodSession(
+    google::cloud::video::stitcher::v1::CreateVodSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodSession(google::cloud::video::stitcher::v1::GetVodSessionRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodSession(
+    google::cloud::video::stitcher::v1::GetVodSessionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListVodStitchDetails(google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest) {  // NOLINT
+Idempotency
+VideoStitcherServiceConnectionIdempotencyPolicy::ListVodStitchDetails(
+    google::cloud::video::stitcher::v1::
+        ListVodStitchDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodStitchDetail(google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodStitchDetail(
+    google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListVodAdTagDetails(google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest) {  // NOLINT
+Idempotency
+VideoStitcherServiceConnectionIdempotencyPolicy::ListVodAdTagDetails(
+    google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodAdTagDetail(google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodAdTagDetail(
+    google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListLiveAdTagDetails(google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest) {  // NOLINT
+Idempotency
+VideoStitcherServiceConnectionIdempotencyPolicy::ListLiveAdTagDetails(
+    google::cloud::video::stitcher::v1::
+        ListLiveAdTagDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveAdTagDetail(google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveAdTagDetail(
+    google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateSlate(google::cloud::video::stitcher::v1::CreateSlateRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateSlate(
+    google::cloud::video::stitcher::v1::CreateSlateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListSlates(google::cloud::video::stitcher::v1::ListSlatesRequest) {  // NOLINT
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListSlates(
+    google::cloud::video::stitcher::v1::ListSlatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetSlate(google::cloud::video::stitcher::v1::GetSlateRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetSlate(
+    google::cloud::video::stitcher::v1::GetSlateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateSlate(google::cloud::video::stitcher::v1::UpdateSlateRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateSlate(
+    google::cloud::video::stitcher::v1::UpdateSlateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteSlate(google::cloud::video::stitcher::v1::DeleteSlateRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteSlate(
+    google::cloud::video::stitcher::v1::DeleteSlateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateLiveSession(google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateLiveSession(
+    google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveSession(google::cloud::video::stitcher::v1::GetLiveSessionRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveSession(
+    google::cloud::video::stitcher::v1::GetLiveSessionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateLiveConfig(google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateLiveConfig(
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListLiveConfigs(google::cloud::video::stitcher::v1::ListLiveConfigsRequest) {  // NOLINT
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListLiveConfigs(
+    google::cloud::video::stitcher::v1::ListLiveConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveConfig(google::cloud::video::stitcher::v1::GetLiveConfigRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveConfig(
+    google::cloud::video::stitcher::v1::GetLiveConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteLiveConfig(google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteLiveConfig(
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateLiveConfig(google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateLiveConfig(
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateVodConfig(google::cloud::video::stitcher::v1::CreateVodConfigRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateVodConfig(
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListVodConfigs(google::cloud::video::stitcher::v1::ListVodConfigsRequest) {  // NOLINT
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListVodConfigs(
+    google::cloud::video::stitcher::v1::ListVodConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodConfig(google::cloud::video::stitcher::v1::GetVodConfigRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetVodConfig(
+    google::cloud::video::stitcher::v1::GetVodConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteVodConfig(google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteVodConfig(
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateVodConfig(google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateVodConfig(
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
-    MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy() {
+MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy() {
   return std::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>();
 }
 

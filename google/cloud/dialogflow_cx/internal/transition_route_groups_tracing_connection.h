@@ -36,39 +36,48 @@ class TransitionRouteGroupsTracingConnection
   ~TransitionRouteGroupsTracingConnection() override = default;
 
   explicit TransitionRouteGroupsTracingConnection(
-    std::shared_ptr<dialogflow_cx::TransitionRouteGroupsConnection> child);
+      std::shared_ptr<dialogflow_cx::TransitionRouteGroupsConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  ListTransitionRouteGroups(google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request) override;
+  ListTransitionRouteGroups(
+      google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
+          request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  GetTransitionRouteGroup(google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) override;
+  GetTransitionRouteGroup(
+      google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
+          request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  CreateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) override;
+  CreateTransitionRouteGroup(
+      google::cloud::dialogflow::cx::v3::
+          CreateTransitionRouteGroupRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) override;
+  UpdateTransitionRouteGroup(
+      google::cloud::dialogflow::cx::v3::
+          UpdateTransitionRouteGroupRequest const& request) override;
 
-  Status
-  DeleteTransitionRouteGroup(google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) override;
+  Status DeleteTransitionRouteGroup(
+      google::cloud::dialogflow::cx::v3::
+          DeleteTransitionRouteGroupRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::TransitionRouteGroupsConnection> child_;

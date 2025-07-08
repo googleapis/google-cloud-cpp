@@ -33,85 +33,98 @@ TopicAdminTracingConnection::TopicAdminTracingConnection(
     std::shared_ptr<pubsub_admin::TopicAdminConnection> child)
     : child_(std::move(child)) {}
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminTracingConnection::CreateTopic(google::pubsub::v1::Topic const& request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::CreateTopic");
+StatusOr<google::pubsub::v1::Topic> TopicAdminTracingConnection::CreateTopic(
+    google::pubsub::v1::Topic const& request) {
+  auto span =
+      internal::MakeSpan("pubsub_admin::TopicAdminConnection::CreateTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTopic(request));
 }
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminTracingConnection::UpdateTopic(google::pubsub::v1::UpdateTopicRequest const& request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::UpdateTopic");
+StatusOr<google::pubsub::v1::Topic> TopicAdminTracingConnection::UpdateTopic(
+    google::pubsub::v1::UpdateTopicRequest const& request) {
+  auto span =
+      internal::MakeSpan("pubsub_admin::TopicAdminConnection::UpdateTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTopic(request));
 }
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminTracingConnection::GetTopic(google::pubsub::v1::GetTopicRequest const& request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::GetTopic");
+StatusOr<google::pubsub::v1::Topic> TopicAdminTracingConnection::GetTopic(
+    google::pubsub::v1::GetTopicRequest const& request) {
+  auto span =
+      internal::MakeSpan("pubsub_admin::TopicAdminConnection::GetTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTopic(request));
 }
 
-StreamRange<google::pubsub::v1::Topic>
-TopicAdminTracingConnection::ListTopics(google::pubsub::v1::ListTopicsRequest request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::ListTopics");
+StreamRange<google::pubsub::v1::Topic> TopicAdminTracingConnection::ListTopics(
+    google::pubsub::v1::ListTopicsRequest request) {
+  auto span =
+      internal::MakeSpan("pubsub_admin::TopicAdminConnection::ListTopics");
   internal::OTelScope scope(span);
   auto sr = child_->ListTopics(std::move(request));
   return internal::MakeTracedStreamRange<google::pubsub::v1::Topic>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-StreamRange<std::string>
-TopicAdminTracingConnection::ListTopicSubscriptions(google::pubsub::v1::ListTopicSubscriptionsRequest request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::ListTopicSubscriptions");
+StreamRange<std::string> TopicAdminTracingConnection::ListTopicSubscriptions(
+    google::pubsub::v1::ListTopicSubscriptionsRequest request) {
+  auto span = internal::MakeSpan(
+      "pubsub_admin::TopicAdminConnection::ListTopicSubscriptions");
   internal::OTelScope scope(span);
   auto sr = child_->ListTopicSubscriptions(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(std::move(span),
+                                                      std::move(sr));
 }
 
-StreamRange<std::string>
-TopicAdminTracingConnection::ListTopicSnapshots(google::pubsub::v1::ListTopicSnapshotsRequest request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::ListTopicSnapshots");
+StreamRange<std::string> TopicAdminTracingConnection::ListTopicSnapshots(
+    google::pubsub::v1::ListTopicSnapshotsRequest request) {
+  auto span = internal::MakeSpan(
+      "pubsub_admin::TopicAdminConnection::ListTopicSnapshots");
   internal::OTelScope scope(span);
   auto sr = child_->ListTopicSnapshots(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(std::move(span),
+                                                      std::move(sr));
 }
 
-Status
-TopicAdminTracingConnection::DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::DeleteTopic");
+Status TopicAdminTracingConnection::DeleteTopic(
+    google::pubsub::v1::DeleteTopicRequest const& request) {
+  auto span =
+      internal::MakeSpan("pubsub_admin::TopicAdminConnection::DeleteTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTopic(request));
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-TopicAdminTracingConnection::DetachSubscription(google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::DetachSubscription");
+TopicAdminTracingConnection::DetachSubscription(
+    google::pubsub::v1::DetachSubscriptionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "pubsub_admin::TopicAdminConnection::DetachSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DetachSubscription(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-TopicAdminTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy> TopicAdminTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("pubsub_admin::TopicAdminConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-TopicAdminTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy> TopicAdminTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("pubsub_admin::TopicAdminConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-TopicAdminTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("pubsub_admin::TopicAdminConnection::TestIamPermissions");
+TopicAdminTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "pubsub_admin::TopicAdminConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }

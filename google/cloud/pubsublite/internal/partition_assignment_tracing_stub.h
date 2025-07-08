@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_ASSIGNMENT_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_PARTITION_ASSIGNMENT_TRACING_STUB_H
 
+#include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsublite/internal/partition_assignment_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -32,11 +32,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class PartitionAssignmentServiceTracingStub : public PartitionAssignmentServiceStub {
+class PartitionAssignmentServiceTracingStub
+    : public PartitionAssignmentServiceStub {
  public:
   ~PartitionAssignmentServiceTracingStub() override = default;
 
-  explicit PartitionAssignmentServiceTracingStub(std::shared_ptr<PartitionAssignmentServiceStub> child);
+  explicit PartitionAssignmentServiceTracingStub(
+      std::shared_ptr<PartitionAssignmentServiceStub> child);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
@@ -47,28 +49,25 @@ class PartitionAssignmentServiceTracingStub : public PartitionAssignmentServiceS
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<PartitionAssignmentServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -79,7 +78,8 @@ class PartitionAssignmentServiceTracingStub : public PartitionAssignmentServiceS
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<PartitionAssignmentServiceStub> MakePartitionAssignmentServiceTracingStub(
+std::shared_ptr<PartitionAssignmentServiceStub>
+MakePartitionAssignmentServiceTracingStub(
     std::shared_ptr<PartitionAssignmentServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

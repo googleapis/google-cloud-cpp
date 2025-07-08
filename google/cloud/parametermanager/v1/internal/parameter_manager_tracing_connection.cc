@@ -34,98 +34,136 @@ ParameterManagerTracingConnection::ParameterManagerTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerTracingConnection::ListParameters(google::cloud::parametermanager::v1::ListParametersRequest request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::ListParameters");
+ParameterManagerTracingConnection::ListParameters(
+    google::cloud::parametermanager::v1::ListParametersRequest request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::ListParameters");
   internal::OTelScope scope(span);
   auto sr = child_->ListParameters(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::parametermanager::v1::Parameter>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::parametermanager::v1::Parameter>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerTracingConnection::GetParameter(google::cloud::parametermanager::v1::GetParameterRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::GetParameter");
+ParameterManagerTracingConnection::GetParameter(
+    google::cloud::parametermanager::v1::GetParameterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::GetParameter");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetParameter(request));
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerTracingConnection::CreateParameter(google::cloud::parametermanager::v1::CreateParameterRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::CreateParameter");
+ParameterManagerTracingConnection::CreateParameter(
+    google::cloud::parametermanager::v1::CreateParameterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::CreateParameter");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateParameter(request));
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
-ParameterManagerTracingConnection::UpdateParameter(google::cloud::parametermanager::v1::UpdateParameterRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::UpdateParameter");
+ParameterManagerTracingConnection::UpdateParameter(
+    google::cloud::parametermanager::v1::UpdateParameterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::UpdateParameter");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateParameter(request));
 }
 
-Status
-ParameterManagerTracingConnection::DeleteParameter(google::cloud::parametermanager::v1::DeleteParameterRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::DeleteParameter");
+Status ParameterManagerTracingConnection::DeleteParameter(
+    google::cloud::parametermanager::v1::DeleteParameterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::DeleteParameter");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteParameter(request));
 }
 
 StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerTracingConnection::ListParameterVersions(google::cloud::parametermanager::v1::ListParameterVersionsRequest request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::ListParameterVersions");
+ParameterManagerTracingConnection::ListParameterVersions(
+    google::cloud::parametermanager::v1::ListParameterVersionsRequest request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::ListParameterVersions");
   internal::OTelScope scope(span);
   auto sr = child_->ListParameterVersions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::parametermanager::v1::ParameterVersion>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::parametermanager::v1::ParameterVersion>(std::move(span),
+                                                             std::move(sr));
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerTracingConnection::GetParameterVersion(google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::GetParameterVersion");
+ParameterManagerTracingConnection::GetParameterVersion(
+    google::cloud::parametermanager::v1::GetParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::GetParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetParameterVersion(request));
 }
 
 StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
-ParameterManagerTracingConnection::RenderParameterVersion(google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::RenderParameterVersion");
+ParameterManagerTracingConnection::RenderParameterVersion(
+    google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::"
+      "RenderParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RenderParameterVersion(request));
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerTracingConnection::CreateParameterVersion(google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::CreateParameterVersion");
+ParameterManagerTracingConnection::CreateParameterVersion(
+    google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::"
+      "CreateParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateParameterVersion(request));
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
-ParameterManagerTracingConnection::UpdateParameterVersion(google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::UpdateParameterVersion");
+ParameterManagerTracingConnection::UpdateParameterVersion(
+    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::"
+      "UpdateParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateParameterVersion(request));
 }
 
-Status
-ParameterManagerTracingConnection::DeleteParameterVersion(google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::DeleteParameterVersion");
+Status ParameterManagerTracingConnection::DeleteParameterVersion(
+    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::"
+      "DeleteParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteParameterVersion(request));
 }
 
 StreamRange<google::cloud::location::Location>
-ParameterManagerTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::ListLocations");
+ParameterManagerTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ParameterManagerTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("parametermanager_v1::ParameterManagerConnection::GetLocation");
+ParameterManagerTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "parametermanager_v1::ParameterManagerConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }

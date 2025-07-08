@@ -17,12 +17,12 @@
 // source: google/cloud/discoveryengine/v1/recommendation_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/recommendation_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_auth_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_logging_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_metadata_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_stub.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -42,25 +42,27 @@ std::shared_ptr<RecommendationServiceStub>
 CreateDefaultRecommendationServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::discoveryengine::v1::RecommendationService::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::discoveryengine::v1::RecommendationService::NewStub(
+          channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<RecommendationServiceStub> stub =
-    std::make_shared<DefaultRecommendationServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub));
+      std::make_shared<DefaultRecommendationServiceStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<RecommendationServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<RecommendationServiceAuth>(std::move(auth),
+                                                       std::move(stub));
   }
   stub = std::make_shared<RecommendationServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<RecommendationServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

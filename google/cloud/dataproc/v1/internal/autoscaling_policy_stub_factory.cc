@@ -17,12 +17,12 @@
 // source: google/cloud/dataproc/v1/autoscaling_policies.proto
 
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_auth_decorator.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_logging_decorator.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_metadata_decorator.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_stub.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -43,26 +43,28 @@ std::shared_ptr<AutoscalingPolicyServiceStub>
 CreateDefaultAutoscalingPolicyServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::dataproc::v1::AutoscalingPolicyService::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::dataproc::v1::AutoscalingPolicyService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<AutoscalingPolicyServiceStub> stub =
-    std::make_shared<DefaultAutoscalingPolicyServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub), std::move(service_iampolicy_stub));
+      std::make_shared<DefaultAutoscalingPolicyServiceStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_iampolicy_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<AutoscalingPolicyServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<AutoscalingPolicyServiceAuth>(std::move(auth),
+                                                          std::move(stub));
   }
   stub = std::make_shared<AutoscalingPolicyServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AutoscalingPolicyServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

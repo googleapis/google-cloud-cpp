@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_PUBLIC_CERTIFICATE_AUTHORITY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_PUBLIC_CERTIFICATE_AUTHORITY_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/publicca/v1/public_certificate_authority_connection.h"
 #include "google/cloud/publicca/v1/public_certificate_authority_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,7 +55,8 @@ struct PublicCertificateAuthorityServiceBackoffPolicyOption {
  * @ingroup google-cloud-publicca-options
  */
 struct PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<
+      PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>;
 };
 
 /**
@@ -63,10 +64,10 @@ struct PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption {
  *
  * @ingroup google-cloud-publicca-options
  */
-using PublicCertificateAuthorityServicePolicyOptionList =
-    OptionList<PublicCertificateAuthorityServiceRetryPolicyOption,
-               PublicCertificateAuthorityServiceBackoffPolicyOption,
-               PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption>;
+using PublicCertificateAuthorityServicePolicyOptionList = OptionList<
+    PublicCertificateAuthorityServiceRetryPolicyOption,
+    PublicCertificateAuthorityServiceBackoffPolicyOption,
+    PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace publicca_v1

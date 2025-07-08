@@ -32,8 +32,7 @@ SchemaServiceAuth::SchemaServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::CreateSchema(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CreateSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,26 +40,25 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::CreateSchema(
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::GetSchema(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSchema(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListSchemasResponse> SchemaServiceAuth::ListSchemas(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::ListSchemasResponse>
+SchemaServiceAuth::ListSchemas(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSchemasRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSchemas(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse> SchemaServiceAuth::ListSchemaRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
+SchemaServiceAuth::ListSchemaRevisions(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +66,7 @@ StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse> SchemaServiceAuth::Lis
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::CommitSchema(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CommitSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +74,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::CommitSchema(
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::RollbackSchema(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::RollbackSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +82,7 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::RollbackSchema(
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::DeleteSchemaRevision(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,26 +90,25 @@ StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::DeleteSchemaRevision(
 }
 
 Status SchemaServiceAuth::DeleteSchema(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSchema(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ValidateSchemaResponse> SchemaServiceAuth::ValidateSchema(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::ValidateSchemaResponse>
+SchemaServiceAuth::ValidateSchema(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ValidateSchema(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ValidateMessageResponse> SchemaServiceAuth::ValidateMessage(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::ValidateMessageResponse>
+SchemaServiceAuth::ValidateMessage(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ValidateMessageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +116,7 @@ StatusOr<google::pubsub::v1::ValidateMessageResponse> SchemaServiceAuth::Validat
 }
 
 StatusOr<google::iam::v1::Policy> SchemaServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -131,17 +124,16 @@ StatusOr<google::iam::v1::Policy> SchemaServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> SchemaServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> SchemaServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+SchemaServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

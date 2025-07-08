@@ -17,12 +17,12 @@
 // source: google/cloud/compute/node_groups/v1/node_groups.proto
 
 #include "google/cloud/compute/node_groups/v1/node_groups_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_option_defaults.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_connection_impl.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_stub_factory.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_tracing_connection.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,15 +36,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NodeGroupsConnection> MakeNodeGroupsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      NodeGroupsPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, NodeGroupsPolicyOptionList>(
+      options, __func__);
   options = compute_node_groups_v1_internal::NodeGroupsDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_node_groups_v1_internal::CreateDefaultNodeGroupsRestStub(
-      options);
+  auto stub =
+      compute_node_groups_v1_internal::CreateDefaultNodeGroupsRestStub(options);
   return compute_node_groups_v1_internal::MakeNodeGroupsTracingConnection(
       std::make_shared<
           compute_node_groups_v1_internal::NodeGroupsRestConnectionImpl>(

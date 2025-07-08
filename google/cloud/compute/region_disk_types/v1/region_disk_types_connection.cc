@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_disk_types/v1/region_disk_types.proto
 
 #include "google/cloud/compute/region_disk_types/v1/region_disk_types_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_disk_types/v1/internal/region_disk_types_option_defaults.h"
 #include "google/cloud/compute/region_disk_types/v1/internal/region_disk_types_tracing_connection.h"
 #include "google/cloud/compute/region_disk_types/v1/region_disk_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,12 +38,15 @@ RegionDiskTypesConnection::~RegionDiskTypesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
 RegionDiskTypesConnection::GetDiskType(
-    google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const&) {
+    google::cloud::cpp::compute::region_disk_types::v1::
+        GetDiskTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::DiskType> RegionDiskTypesConnection::ListRegionDiskTypes(
-    google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::DiskType>
+RegionDiskTypesConnection::ListRegionDiskTypes(
+    google::cloud::cpp::compute::region_disk_types::v1::
+        ListRegionDiskTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::DiskType>>();
 }

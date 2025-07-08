@@ -26,67 +26,82 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ParameterManagerConnectionIdempotencyPolicy::~ParameterManagerConnectionIdempotencyPolicy() = default;
+ParameterManagerConnectionIdempotencyPolicy::
+    ~ParameterManagerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ParameterManagerConnectionIdempotencyPolicy>
 ParameterManagerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ParameterManagerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::ListParameters(google::cloud::parametermanager::v1::ListParametersRequest) {  // NOLINT
+Idempotency ParameterManagerConnectionIdempotencyPolicy::ListParameters(
+    google::cloud::parametermanager::v1::ListParametersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::GetParameter(google::cloud::parametermanager::v1::GetParameterRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::GetParameter(
+    google::cloud::parametermanager::v1::GetParameterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::CreateParameter(google::cloud::parametermanager::v1::CreateParameterRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::CreateParameter(
+    google::cloud::parametermanager::v1::CreateParameterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::UpdateParameter(google::cloud::parametermanager::v1::UpdateParameterRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::UpdateParameter(
+    google::cloud::parametermanager::v1::UpdateParameterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::DeleteParameter(google::cloud::parametermanager::v1::DeleteParameterRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::DeleteParameter(
+    google::cloud::parametermanager::v1::DeleteParameterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::ListParameterVersions(google::cloud::parametermanager::v1::ListParameterVersionsRequest) {  // NOLINT
+Idempotency ParameterManagerConnectionIdempotencyPolicy::ListParameterVersions(
+    google::cloud::parametermanager::v1::
+        ListParameterVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::GetParameterVersion(google::cloud::parametermanager::v1::GetParameterVersionRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::GetParameterVersion(
+    google::cloud::parametermanager::v1::GetParameterVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::RenderParameterVersion(google::cloud::parametermanager::v1::RenderParameterVersionRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::RenderParameterVersion(
+    google::cloud::parametermanager::v1::RenderParameterVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::CreateParameterVersion(google::cloud::parametermanager::v1::CreateParameterVersionRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::CreateParameterVersion(
+    google::cloud::parametermanager::v1::CreateParameterVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::UpdateParameterVersion(google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::UpdateParameterVersion(
+    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::DeleteParameterVersion(google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::DeleteParameterVersion(
+    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ParameterManagerConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ParameterManagerConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency ParameterManagerConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ParameterManagerConnectionIdempotencyPolicy>
-    MakeDefaultParameterManagerConnectionIdempotencyPolicy() {
+MakeDefaultParameterManagerConnectionIdempotencyPolicy() {
   return std::make_unique<ParameterManagerConnectionIdempotencyPolicy>();
 }
 

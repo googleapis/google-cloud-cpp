@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_commitments/v1/region_commitments.proto
 
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,62 +41,70 @@ RegionCommitmentsRestMetadata::RegionCommitmentsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
 RegionCommitmentsRestMetadata::AggregatedListRegionCommitments(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        AggregatedListRegionCommitmentsRequest const& request) {
   SetMetadata(rest_context, options);
-  return child_->AggregatedListRegionCommitments(rest_context, options, request);
+  return child_->AggregatedListRegionCommitments(rest_context, options,
+                                                 request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
 RegionCommitmentsRestMetadata::GetCommitment(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        GetCommitmentRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetCommitment(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestMetadata::AsyncInsertCommitment(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertCommitmentRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertCommitment(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncInsertCommitment(cq, std::move(rest_context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsRestMetadata::InsertCommitment(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertCommitmentRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertCommitment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
 RegionCommitmentsRestMetadata::ListRegionCommitments(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        ListRegionCommitmentsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListRegionCommitments(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestMetadata::AsyncUpdateCommitment(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateCommitmentRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncUpdateCommitment(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncUpdateCommitment(cq, std::move(rest_context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsRestMetadata::UpdateCommitment(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateCommitmentRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->UpdateCommitment(rest_context, options, request);
 }
@@ -106,28 +114,29 @@ RegionCommitmentsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
-future<Status>
-RegionCommitmentsRestMetadata::AsyncCancelOperation(
+future<Status> RegionCommitmentsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void RegionCommitmentsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

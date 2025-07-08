@@ -33,7 +33,8 @@ using ::google::cloud::cloudbuild_v1::MakeCloudBuildConnection;
 /// @deprecated Use cloudbuild_v1::CloudBuildConnection directly.
 using ::google::cloud::cloudbuild_v1::CloudBuildConnection;
 
-/// @deprecated Use cloudbuild_v1::CloudBuildLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use cloudbuild_v1::CloudBuildLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::cloudbuild_v1::CloudBuildLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use cloudbuild_v1::CloudBuildLimitedTimeRetryPolicy directly.

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_SERVICE_HEALTH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_SERVICE_HEALTH_CONNECTION_H
 
+#include "google/cloud/servicehealth/v1/internal/service_health_retry_traits.h"
+#include "google/cloud/servicehealth/v1/service_health_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/servicehealth/v1/internal/service_health_retry_traits.h"
-#include "google/cloud/servicehealth/v1/service_health_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,7 +52,8 @@ class ServiceHealthRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServiceHealthLimitedErrorCountRetryPolicy : public ServiceHealthRetryPolicy {
+class ServiceHealthLimitedErrorCountRetryPolicy
+    : public ServiceHealthRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class ServiceHealthLimitedErrorCountRetryPolicy : public ServiceHealthRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit ServiceHealthLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ServiceHealthLimitedErrorCountRetryPolicy(
       ServiceHealthLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ServiceHealthLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServiceHealthLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ServiceHealthLimitedErrorCountRetryPolicy(
       ServiceHealthLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ServiceHealthLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServiceHealthLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class ServiceHealthLimitedErrorCountRetryPolicy : public ServiceHealthRetryPolic
   using BaseType = ServiceHealthRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<servicehealth_v1_internal::ServiceHealthRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      servicehealth_v1_internal::ServiceHealthRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class ServiceHealthLimitedTimeRetryPolicy : public ServiceHealthRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ServiceHealthLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ServiceHealthLimitedTimeRetryPolicy(ServiceHealthLimitedTimeRetryPolicy&& rhs) noexcept
-    : ServiceHealthLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ServiceHealthLimitedTimeRetryPolicy(ServiceHealthLimitedTimeRetryPolicy const& rhs) noexcept
-    : ServiceHealthLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceHealthLimitedTimeRetryPolicy(
+      ServiceHealthLimitedTimeRetryPolicy&& rhs) noexcept
+      : ServiceHealthLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceHealthLimitedTimeRetryPolicy(
+      ServiceHealthLimitedTimeRetryPolicy const& rhs) noexcept
+      : ServiceHealthLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class ServiceHealthLimitedTimeRetryPolicy : public ServiceHealthRetryPolicy {
   using BaseType = ServiceHealthRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<servicehealth_v1_internal::ServiceHealthRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      servicehealth_v1_internal::ServiceHealthRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,29 +182,35 @@ class ServiceHealthConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::servicehealth::v1::Event>
-  ListEvents(google::cloud::servicehealth::v1::ListEventsRequest request);
+  virtual StreamRange<google::cloud::servicehealth::v1::Event> ListEvents(
+      google::cloud::servicehealth::v1::ListEventsRequest request);
 
-  virtual StatusOr<google::cloud::servicehealth::v1::Event>
-  GetEvent(google::cloud::servicehealth::v1::GetEventRequest const& request);
+  virtual StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
+      google::cloud::servicehealth::v1::GetEventRequest const& request);
 
   virtual StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>
-  ListOrganizationEvents(google::cloud::servicehealth::v1::ListOrganizationEventsRequest request);
+  ListOrganizationEvents(
+      google::cloud::servicehealth::v1::ListOrganizationEventsRequest request);
 
   virtual StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
-  GetOrganizationEvent(google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request);
+  GetOrganizationEvent(
+      google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
+          request);
 
   virtual StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
-  ListOrganizationImpacts(google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request);
+  ListOrganizationImpacts(
+      google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request);
 
   virtual StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
-  GetOrganizationImpact(google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request);
+  GetOrganizationImpact(
+      google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 /**

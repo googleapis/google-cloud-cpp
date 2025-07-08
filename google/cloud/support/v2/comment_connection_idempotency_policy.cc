@@ -26,23 +26,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CommentServiceConnectionIdempotencyPolicy::~CommentServiceConnectionIdempotencyPolicy() = default;
+CommentServiceConnectionIdempotencyPolicy::
+    ~CommentServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CommentServiceConnectionIdempotencyPolicy>
 CommentServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CommentServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CommentServiceConnectionIdempotencyPolicy::ListComments(google::cloud::support::v2::ListCommentsRequest) {  // NOLINT
+Idempotency CommentServiceConnectionIdempotencyPolicy::ListComments(
+    google::cloud::support::v2::ListCommentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CommentServiceConnectionIdempotencyPolicy::CreateComment(google::cloud::support::v2::CreateCommentRequest const&) {
+Idempotency CommentServiceConnectionIdempotencyPolicy::CreateComment(
+    google::cloud::support::v2::CreateCommentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CommentServiceConnectionIdempotencyPolicy>
-    MakeDefaultCommentServiceConnectionIdempotencyPolicy() {
+MakeDefaultCommentServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CommentServiceConnectionIdempotencyPolicy>();
 }
 

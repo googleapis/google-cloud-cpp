@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_TARGET_GRPC_PROXIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_TARGET_GRPC_PROXIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_retry_traits.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class TargetGrpcProxiesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetGrpcProxiesLimitedErrorCountRetryPolicy : public TargetGrpcProxiesRetryPolicy {
+class TargetGrpcProxiesLimitedErrorCountRetryPolicy
+    : public TargetGrpcProxiesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class TargetGrpcProxiesLimitedErrorCountRetryPolicy : public TargetGrpcProxiesRe
    *     @p maximum_failures == 0.
    */
   explicit TargetGrpcProxiesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TargetGrpcProxiesLimitedErrorCountRetryPolicy(
       TargetGrpcProxiesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TargetGrpcProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TargetGrpcProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TargetGrpcProxiesLimitedErrorCountRetryPolicy(
       TargetGrpcProxiesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TargetGrpcProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TargetGrpcProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class TargetGrpcProxiesLimitedErrorCountRetryPolicy : public TargetGrpcProxiesRe
   using BaseType = TargetGrpcProxiesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class TargetGrpcProxiesLimitedErrorCountRetryPolicy : public TargetGrpcProxiesRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetGrpcProxiesLimitedTimeRetryPolicy : public TargetGrpcProxiesRetryPolicy {
+class TargetGrpcProxiesLimitedTimeRetryPolicy
+    : public TargetGrpcProxiesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class TargetGrpcProxiesLimitedTimeRetryPolicy : public TargetGrpcProxiesRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit TargetGrpcProxiesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TargetGrpcProxiesLimitedTimeRetryPolicy(TargetGrpcProxiesLimitedTimeRetryPolicy&& rhs) noexcept
-    : TargetGrpcProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TargetGrpcProxiesLimitedTimeRetryPolicy(TargetGrpcProxiesLimitedTimeRetryPolicy const& rhs) noexcept
-    : TargetGrpcProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetGrpcProxiesLimitedTimeRetryPolicy(
+      TargetGrpcProxiesLimitedTimeRetryPolicy&& rhs) noexcept
+      : TargetGrpcProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetGrpcProxiesLimitedTimeRetryPolicy(
+      TargetGrpcProxiesLimitedTimeRetryPolicy const& rhs) noexcept
+      : TargetGrpcProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,20 +163,23 @@ class TargetGrpcProxiesLimitedTimeRetryPolicy : public TargetGrpcProxiesRetryPol
   using BaseType = TargetGrpcProxiesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_target_grpc_proxies_v1_internal::TargetGrpcProxiesRetryTraits>
+      impl_;
 };
 
 /**
  * The `TargetGrpcProxiesConnection` object for `TargetGrpcProxiesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TargetGrpcProxiesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TargetGrpcProxiesClient`.
+ * sets in `TargetGrpcProxiesClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TargetGrpcProxiesClient`.
  *
  * To create a concrete instance, see `MakeTargetGrpcProxiesConnection()`.
  *
- * For mocking, see `compute_target_grpc_proxies_v1_mocks::MockTargetGrpcProxiesConnection`.
+ * For mocking, see
+ * `compute_target_grpc_proxies_v1_mocks::MockTargetGrpcProxiesConnection`.
  */
 class TargetGrpcProxiesConnection {
  public:
@@ -179,37 +188,51 @@ class TargetGrpcProxiesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request);
+  DeleteTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                            DeleteTargetGrpcProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetGrpcProxy(NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request);
+  DeleteTargetGrpcProxy(NoAwaitTag,
+                        google::cloud::cpp::compute::target_grpc_proxies::v1::
+                            DeleteTargetGrpcProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetGrpcProxy( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteTargetGrpcProxy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  GetTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxyRequest const& request);
+  GetTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                         GetTargetGrpcProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request);
+  InsertTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                            InsertTargetGrpcProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetGrpcProxy(NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request);
+  InsertTargetGrpcProxy(NoAwaitTag,
+                        google::cloud::cpp::compute::target_grpc_proxies::v1::
+                            InsertTargetGrpcProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetGrpcProxy( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertTargetGrpcProxy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
-  ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest request);
+  ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                            ListTargetGrpcProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request);
+  PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
+                           PatchTargetGrpcProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchTargetGrpcProxy(NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request);
+  PatchTargetGrpcProxy(NoAwaitTag,
+                       google::cloud::cpp::compute::target_grpc_proxies::v1::
+                           PatchTargetGrpcProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetGrpcProxy( google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchTargetGrpcProxy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

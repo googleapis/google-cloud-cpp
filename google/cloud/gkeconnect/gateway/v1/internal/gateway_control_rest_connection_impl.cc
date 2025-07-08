@@ -17,9 +17,9 @@
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_connection_impl.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub_factory.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
 #include <memory>
@@ -32,21 +32,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GatewayControlRestConnectionImpl::GatewayControlRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlRestStub> stub,
+    std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        GatewayControlConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      GatewayControlConnection::options())) {}
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-GatewayControlRestConnectionImpl::GenerateCredentials(google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+GatewayControlRestConnectionImpl::GenerateCredentials(
+    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateCredentials(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::gkeconnect::gateway::v1::
+                 GenerateCredentialsRequest const& request) {
         return stub_->GenerateCredentials(rest_context, options, request);
       },
       *current, request, __func__);

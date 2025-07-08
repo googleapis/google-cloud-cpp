@@ -33,7 +33,8 @@ using ::google::cloud::retail_v2::MakeUserEventServiceConnection;
 /// @deprecated Use retail_v2::UserEventServiceConnection directly.
 using ::google::cloud::retail_v2::UserEventServiceConnection;
 
-/// @deprecated Use retail_v2::UserEventServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use retail_v2::UserEventServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::retail_v2::UserEventServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use retail_v2::UserEventServiceLimitedTimeRetryPolicy directly.

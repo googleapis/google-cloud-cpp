@@ -36,33 +36,42 @@ class IdentityAwareProxyOAuthServiceTracingConnection
   ~IdentityAwareProxyOAuthServiceTracingConnection() override = default;
 
   explicit IdentityAwareProxyOAuthServiceTracingConnection(
-    std::shared_ptr<iap_v1::IdentityAwareProxyOAuthServiceConnection> child);
+      std::shared_ptr<iap_v1::IdentityAwareProxyOAuthServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::iap::v1::ListBrandsResponse>
-  ListBrands(google::cloud::iap::v1::ListBrandsRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
+      google::cloud::iap::v1::ListBrandsRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::Brand>
-  CreateBrand(google::cloud::iap::v1::CreateBrandRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
+      google::cloud::iap::v1::CreateBrandRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::Brand>
-  GetBrand(google::cloud::iap::v1::GetBrandRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::Brand> GetBrand(
+      google::cloud::iap::v1::GetBrandRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  CreateIdentityAwareProxyClient(google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) override;
+  CreateIdentityAwareProxyClient(
+      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
+          request) override;
 
   StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
-  ListIdentityAwareProxyClients(google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) override;
+  ListIdentityAwareProxyClients(
+      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request)
+      override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  GetIdentityAwareProxyClient(google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) override;
+  GetIdentityAwareProxyClient(
+      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request)
+      override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-  ResetIdentityAwareProxyClientSecret(google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) override;
+  ResetIdentityAwareProxyClientSecret(
+      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
+          request) override;
 
-  Status
-  DeleteIdentityAwareProxyClient(google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) override;
+  Status DeleteIdentityAwareProxyClient(
+      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
+          request) override;
 
  private:
   std::shared_ptr<iap_v1::IdentityAwareProxyOAuthServiceConnection> child_;

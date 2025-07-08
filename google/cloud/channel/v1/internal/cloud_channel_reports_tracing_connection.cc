@@ -29,12 +29,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-CloudChannelReportsServiceTracingConnection::CloudChannelReportsServiceTracingConnection(
-    std::shared_ptr<channel_v1::CloudChannelReportsServiceConnection> child)
+CloudChannelReportsServiceTracingConnection::
+    CloudChannelReportsServiceTracingConnection(
+        std::shared_ptr<channel_v1::CloudChannelReportsServiceConnection> child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-CloudChannelReportsServiceTracingConnection::RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request) {
+CloudChannelReportsServiceTracingConnection::RunReportJob(
+    google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelReportsServiceConnection::RunReportJob");
   internal::OTelScope scope(span);
@@ -43,12 +45,12 @@ CloudChannelReportsServiceTracingConnection::RunReportJob(google::cloud::channel
 
 StatusOr<google::longrunning::Operation>
 CloudChannelReportsServiceTracingConnection::RunReportJob(
-    NoAwaitTag, google::cloud::channel::v1::RunReportJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelReportsServiceConnection::RunReportJob");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RunReportJob(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RunReportJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
@@ -57,54 +59,63 @@ CloudChannelReportsServiceTracingConnection::RunReportJob(
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelReportsServiceConnection::RunReportJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->RunReportJob(operation));
+  return internal::EndSpan(std::move(span), child_->RunReportJob(operation));
 }
 
 StreamRange<google::cloud::channel::v1::Row>
-CloudChannelReportsServiceTracingConnection::FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest request) {
-  auto span = internal::MakeSpan("channel_v1::CloudChannelReportsServiceConnection::FetchReportResults");
+CloudChannelReportsServiceTracingConnection::FetchReportResults(
+    google::cloud::channel::v1::FetchReportResultsRequest request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelReportsServiceConnection::FetchReportResults");
   internal::OTelScope scope(span);
   auto sr = child_->FetchReportResults(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::Row>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::Report>
-CloudChannelReportsServiceTracingConnection::ListReports(google::cloud::channel::v1::ListReportsRequest request) {
-  auto span = internal::MakeSpan("channel_v1::CloudChannelReportsServiceConnection::ListReports");
+CloudChannelReportsServiceTracingConnection::ListReports(
+    google::cloud::channel::v1::ListReportsRequest request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelReportsServiceConnection::ListReports");
   internal::OTelScope scope(span);
   auto sr = child_->ListReports(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::channel::v1::Report>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-CloudChannelReportsServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("channel_v1::CloudChannelReportsServiceConnection::ListOperations");
+CloudChannelReportsServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelReportsServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-CloudChannelReportsServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("channel_v1::CloudChannelReportsServiceConnection::GetOperation");
+CloudChannelReportsServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelReportsServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-CloudChannelReportsServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("channel_v1::CloudChannelReportsServiceConnection::DeleteOperation");
+Status CloudChannelReportsServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelReportsServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-CloudChannelReportsServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("channel_v1::CloudChannelReportsServiceConnection::CancelOperation");
+Status CloudChannelReportsServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelReportsServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -116,7 +127,8 @@ MakeCloudChannelReportsServiceTracingConnection(
     std::shared_ptr<channel_v1::CloudChannelReportsServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<CloudChannelReportsServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<CloudChannelReportsServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -55,7 +55,8 @@ struct PersistentResourceServiceBackoffPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 struct PersistentResourceServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<PersistentResourceServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<PersistentResourceServiceConnectionIdempotencyPolicy>;
 };
 
 /**

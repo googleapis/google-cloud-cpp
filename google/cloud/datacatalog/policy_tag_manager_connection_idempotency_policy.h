@@ -26,11 +26,16 @@ namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datacatalog_v1::MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::datacatalog_v1::MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// datacatalog_v1::MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicy;
+/// @deprecated Use datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog

@@ -36,27 +36,27 @@ class GroupServiceTracingConnection
   ~GroupServiceTracingConnection() override = default;
 
   explicit GroupServiceTracingConnection(
-    std::shared_ptr<monitoring_v3::GroupServiceConnection> child);
+      std::shared_ptr<monitoring_v3::GroupServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::monitoring::v3::Group>
-  ListGroups(google::monitoring::v3::ListGroupsRequest request) override;
+  StreamRange<google::monitoring::v3::Group> ListGroups(
+      google::monitoring::v3::ListGroupsRequest request) override;
 
-  StatusOr<google::monitoring::v3::Group>
-  GetGroup(google::monitoring::v3::GetGroupRequest const& request) override;
+  StatusOr<google::monitoring::v3::Group> GetGroup(
+      google::monitoring::v3::GetGroupRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::Group>
-  CreateGroup(google::monitoring::v3::CreateGroupRequest const& request) override;
+  StatusOr<google::monitoring::v3::Group> CreateGroup(
+      google::monitoring::v3::CreateGroupRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::Group>
-  UpdateGroup(google::monitoring::v3::UpdateGroupRequest const& request) override;
+  StatusOr<google::monitoring::v3::Group> UpdateGroup(
+      google::monitoring::v3::UpdateGroupRequest const& request) override;
 
-  Status
-  DeleteGroup(google::monitoring::v3::DeleteGroupRequest const& request) override;
+  Status DeleteGroup(
+      google::monitoring::v3::DeleteGroupRequest const& request) override;
 
-  StreamRange<google::api::MonitoredResource>
-  ListGroupMembers(google::monitoring::v3::ListGroupMembersRequest request) override;
+  StreamRange<google::api::MonitoredResource> ListGroupMembers(
+      google::monitoring::v3::ListGroupMembersRequest request) override;
 
  private:
   std::shared_ptr<monitoring_v3::GroupServiceConnection> child_;

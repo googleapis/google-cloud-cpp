@@ -30,35 +30,27 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TasksLogging::TasksLogging(
-    std::shared_ptr<TasksStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+TasksLogging::TasksLogging(std::shared_ptr<TasksStub> child,
+                           TracingOptions tracing_options,
+                           std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::run::v2::Task>
-TasksLogging::GetTask(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::run::v2::Task> TasksLogging::GetTask(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetTaskRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::GetTaskRequest const& request) {
         return child_->GetTask(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::run::v2::ListTasksResponse>
-TasksLogging::ListTasks(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::run::v2::ListTasksResponse> TasksLogging::ListTasks(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListTasksRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::ListTasksRequest const& request) {
         return child_->ListTasks(context, options, request);
       },
@@ -67,54 +59,43 @@ TasksLogging::ListTasks(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 TasksLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TasksLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> TasksLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-TasksLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status TasksLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TasksLogging::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> TasksLogging::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::WaitOperationRequest const& request) {
         return child_->WaitOperation(context, options, request);
       },

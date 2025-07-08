@@ -42,17 +42,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCommentServiceConnection : public support_v2::CommentServiceConnection {
+class MockCommentServiceConnection
+    : public support_v2::CommentServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::support::v2::Comment>),
-  ListComments,
-  (google::cloud::support::v2::ListCommentsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::support::v2::Comment>), ListComments,
+              (google::cloud::support::v2::ListCommentsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::support::v2::Comment>,
-  CreateComment,
-  (google::cloud::support::v2::CreateCommentRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::support::v2::Comment>, CreateComment,
+              (google::cloud::support::v2::CreateCommentRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

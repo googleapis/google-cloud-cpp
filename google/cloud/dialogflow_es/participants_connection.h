@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_PARTICIPANTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_PARTICIPANTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/internal/participants_retry_traits.h"
 #include "google/cloud/dialogflow_es/participants_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -54,7 +54,8 @@ class ParticipantsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ParticipantsLimitedErrorCountRetryPolicy : public ParticipantsRetryPolicy {
+class ParticipantsLimitedErrorCountRetryPolicy
+    : public ParticipantsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -64,14 +65,14 @@ class ParticipantsLimitedErrorCountRetryPolicy : public ParticipantsRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit ParticipantsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ParticipantsLimitedErrorCountRetryPolicy(
       ParticipantsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ParticipantsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ParticipantsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ParticipantsLimitedErrorCountRetryPolicy(
       ParticipantsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ParticipantsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ParticipantsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -91,7 +92,9 @@ class ParticipantsLimitedErrorCountRetryPolicy : public ParticipantsRetryPolicy 
   using BaseType = ParticipantsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::ParticipantsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::ParticipantsRetryTraits>
+      impl_;
 };
 
 /**
@@ -129,12 +132,14 @@ class ParticipantsLimitedTimeRetryPolicy : public ParticipantsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ParticipantsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ParticipantsLimitedTimeRetryPolicy(ParticipantsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ParticipantsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ParticipantsLimitedTimeRetryPolicy(ParticipantsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ParticipantsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ParticipantsLimitedTimeRetryPolicy(
+      ParticipantsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ParticipantsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ParticipantsLimitedTimeRetryPolicy(
+      ParticipantsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ParticipantsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -156,7 +161,9 @@ class ParticipantsLimitedTimeRetryPolicy : public ParticipantsRetryPolicy {
   using BaseType = ParticipantsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::ParticipantsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::ParticipantsRetryTraits>
+      impl_;
 };
 
 /**
@@ -178,19 +185,23 @@ class ParticipantsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::dialogflow::v2::Participant>
-  CreateParticipant(google::cloud::dialogflow::v2::CreateParticipantRequest const& request);
+  CreateParticipant(
+      google::cloud::dialogflow::v2::CreateParticipantRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Participant>
-  GetParticipant(google::cloud::dialogflow::v2::GetParticipantRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Participant> GetParticipant(
+      google::cloud::dialogflow::v2::GetParticipantRequest const& request);
 
   virtual StreamRange<google::cloud::dialogflow::v2::Participant>
-  ListParticipants(google::cloud::dialogflow::v2::ListParticipantsRequest request);
+  ListParticipants(
+      google::cloud::dialogflow::v2::ListParticipantsRequest request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::Participant>
-  UpdateParticipant(google::cloud::dialogflow::v2::UpdateParticipantRequest const& request);
+  UpdateParticipant(
+      google::cloud::dialogflow::v2::UpdateParticipantRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
-  AnalyzeContent(google::cloud::dialogflow::v2::AnalyzeContentRequest const& request);
+  AnalyzeContent(
+      google::cloud::dialogflow::v2::AnalyzeContentRequest const& request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
@@ -198,31 +209,37 @@ class ParticipantsConnection {
   AsyncStreamingAnalyzeContent();
 
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
-  SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const& request);
+  SuggestArticles(
+      google::cloud::dialogflow::v2::SuggestArticlesRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
-  SuggestFaqAnswers(google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request);
+  SuggestFaqAnswers(
+      google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
-  SuggestSmartReplies(google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
+  SuggestSmartReplies(
+      google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
-  SuggestKnowledgeAssist(google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const& request);
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

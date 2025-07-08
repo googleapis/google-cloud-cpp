@@ -39,43 +39,45 @@ class ServiceHealthLogging : public ServiceHealthStub {
                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::servicehealth::v1::ListEventsResponse> ListEvents(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::ListEventsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::ListEventsRequest const& request)
+      override;
 
   StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::GetEventRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::GetEventRequest const& request)
+      override;
 
-  StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse> ListOrganizationEvents(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::ListOrganizationEventsRequest const& request) override;
+  StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
+  ListOrganizationEvents(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::servicehealth::v1::OrganizationEvent> GetOrganizationEvent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request) override;
+  StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
+  GetOrganizationEvent(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
+          request) override;
 
-  StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse> ListOrganizationImpacts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const& request) override;
+  StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
+  ListOrganizationImpacts(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::servicehealth::v1::OrganizationImpact> GetOrganizationImpact(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request) override;
+  StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
+  GetOrganizationImpact(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:

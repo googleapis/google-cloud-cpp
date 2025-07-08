@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPLETION_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPLETION_CLIENT_H
 
+#include "google/cloud/talent/v4/completion_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/talent/v4/completion_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CompletionClient {
  public:
-  explicit CompletionClient(std::shared_ptr<CompletionConnection> connection, Options opts = {});
+  explicit CompletionClient(std::shared_ptr<CompletionConnection> connection,
+                            Options opts = {});
   ~CompletionClient();
 
   ///@{
@@ -110,8 +111,9 @@ class CompletionClient {
   /// [google.cloud.talent.v4.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/talent/v4/completion_service.proto#L143}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
-  CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
+      google::cloud::talent::v4::CompleteQueryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -137,8 +139,8 @@ class CompletionClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +171,9 @@ class CompletionClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CompletionConnection> connection_;

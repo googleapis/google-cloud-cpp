@@ -39,59 +39,57 @@ class TransitionRouteGroupsMetadata : public TransitionRouteGroupsStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse> ListTransitionRouteGroups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
+  ListTransitionRouteGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> GetTransitionRouteGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+  GetTransitionRouteGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> CreateTransitionRouteGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+  CreateTransitionRouteGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::
+          CreateTransitionRouteGroupRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> UpdateTransitionRouteGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+  UpdateTransitionRouteGroup(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::
+          UpdateTransitionRouteGroupRequest const& request) override;
 
   Status DeleteTransitionRouteGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::
+          DeleteTransitionRouteGroupRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

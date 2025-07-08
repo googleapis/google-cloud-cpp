@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_CONTAINER_ANALYSIS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_CONTAINER_ANALYSIS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/containeranalysis/v1/container_analysis_connection_idempotency_policy.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <grafeas/v1/grafeas.pb.h>
 #include <google/devtools/containeranalysis/v1/containeranalysis.pb.h>
+#include <grafeas/v1/grafeas.pb.h>
 #include <memory>
 
 namespace google {
@@ -52,7 +52,8 @@ class ContainerAnalysisRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ContainerAnalysisLimitedErrorCountRetryPolicy : public ContainerAnalysisRetryPolicy {
+class ContainerAnalysisLimitedErrorCountRetryPolicy
+    : public ContainerAnalysisRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class ContainerAnalysisLimitedErrorCountRetryPolicy : public ContainerAnalysisRe
    *     @p maximum_failures == 0.
    */
   explicit ContainerAnalysisLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ContainerAnalysisLimitedErrorCountRetryPolicy(
       ContainerAnalysisLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ContainerAnalysisLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ContainerAnalysisLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ContainerAnalysisLimitedErrorCountRetryPolicy(
       ContainerAnalysisLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ContainerAnalysisLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ContainerAnalysisLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class ContainerAnalysisLimitedErrorCountRetryPolicy : public ContainerAnalysisRe
   using BaseType = ContainerAnalysisRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<containeranalysis_v1_internal::ContainerAnalysisRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      containeranalysis_v1_internal::ContainerAnalysisRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class ContainerAnalysisLimitedErrorCountRetryPolicy : public ContainerAnalysisRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ContainerAnalysisLimitedTimeRetryPolicy : public ContainerAnalysisRetryPolicy {
+class ContainerAnalysisLimitedTimeRetryPolicy
+    : public ContainerAnalysisRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class ContainerAnalysisLimitedTimeRetryPolicy : public ContainerAnalysisRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit ContainerAnalysisLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ContainerAnalysisLimitedTimeRetryPolicy(ContainerAnalysisLimitedTimeRetryPolicy&& rhs) noexcept
-    : ContainerAnalysisLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ContainerAnalysisLimitedTimeRetryPolicy(ContainerAnalysisLimitedTimeRetryPolicy const& rhs) noexcept
-    : ContainerAnalysisLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ContainerAnalysisLimitedTimeRetryPolicy(
+      ContainerAnalysisLimitedTimeRetryPolicy&& rhs) noexcept
+      : ContainerAnalysisLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ContainerAnalysisLimitedTimeRetryPolicy(
+      ContainerAnalysisLimitedTimeRetryPolicy const& rhs) noexcept
+      : ContainerAnalysisLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +160,23 @@ class ContainerAnalysisLimitedTimeRetryPolicy : public ContainerAnalysisRetryPol
   using BaseType = ContainerAnalysisRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<containeranalysis_v1_internal::ContainerAnalysisRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      containeranalysis_v1_internal::ContainerAnalysisRetryTraits>
+      impl_;
 };
 
 /**
  * The `ContainerAnalysisConnection` object for `ContainerAnalysisClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ContainerAnalysisClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ContainerAnalysisClient`.
+ * sets in `ContainerAnalysisClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ContainerAnalysisClient`.
  *
  * To create a concrete instance, see `MakeContainerAnalysisConnection()`.
  *
- * For mocking, see `containeranalysis_v1_mocks::MockContainerAnalysisConnection`.
+ * For mocking, see
+ * `containeranalysis_v1_mocks::MockContainerAnalysisConnection`.
  */
 class ContainerAnalysisConnection {
  public:
@@ -175,31 +184,37 @@ class ContainerAnalysisConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-  GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request);
+  virtual StatusOr<
+      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+  GetVulnerabilityOccurrencesSummary(
+      google::devtools::containeranalysis::v1::
+          GetVulnerabilityOccurrencesSummaryRequest const& request);
 
   virtual StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
-  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const& request);
+  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request);
 };
 
 /**
- * A factory function to construct an object of type `ContainerAnalysisConnection`.
+ * A factory function to construct an object of type
+ * `ContainerAnalysisConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ContainerAnalysisClient.
+ * should be passed as an argument to the constructor of
+ * ContainerAnalysisClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ContainerAnalysisConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ContainerAnalysisConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -209,8 +224,8 @@ class ContainerAnalysisConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ContainerAnalysisConnection` created by
- * this function.
+ * @param options (optional) Configure the `ContainerAnalysisConnection` created
+ * by this function.
  */
 std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
     Options options = {});

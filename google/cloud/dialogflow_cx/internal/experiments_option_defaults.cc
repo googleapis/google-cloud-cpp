@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_cx/internal/experiments_option_defaults.h"
 #include "google/cloud/dialogflow_cx/experiments_connection.h"
 #include "google/cloud/dialogflow_cx/experiments_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,23 +34,29 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options ExperimentsDefaultOptions(std::string const& location, Options options) {
+Options ExperimentsDefaultOptions(std::string const& location,
+                                  Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EXPERIMENTS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_EXPERIMENTS_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_EXPERIMENTS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_EXPERIMENTS_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_cx::ExperimentsRetryPolicyOption>()) {
     options.set<dialogflow_cx::ExperimentsRetryPolicyOption>(
         dialogflow_cx::ExperimentsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dialogflow_cx::ExperimentsBackoffPolicyOption>()) {
     options.set<dialogflow_cx::ExperimentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_cx::ExperimentsConnectionIdempotencyPolicyOption>(
         dialogflow_cx::MakeDefaultExperimentsConnectionIdempotencyPolicy());
   }

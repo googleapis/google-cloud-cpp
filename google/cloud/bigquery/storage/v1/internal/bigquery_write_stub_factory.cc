@@ -37,28 +37,26 @@ namespace cloud {
 namespace bigquery_storage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<BigQueryWriteStub>
-CreateDefaultBigQueryWriteStub(
+std::shared_ptr<BigQueryWriteStub> CreateDefaultBigQueryWriteStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::bigquery::storage::v1::BigQueryWrite::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::bigquery::storage::v1::BigQueryWrite::NewStub(channel);
   std::shared_ptr<BigQueryWriteStub> stub =
-    std::make_shared<DefaultBigQueryWriteStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultBigQueryWriteStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<BigQueryWriteAuth>(
-        std::move(auth), std::move(stub));
+    stub =
+        std::make_shared<BigQueryWriteAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<BigQueryWriteMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<BigQueryWriteLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

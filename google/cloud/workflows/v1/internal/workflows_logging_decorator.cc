@@ -30,35 +30,29 @@ namespace cloud {
 namespace workflows_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-WorkflowsLogging::WorkflowsLogging(
-    std::shared_ptr<WorkflowsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+WorkflowsLogging::WorkflowsLogging(std::shared_ptr<WorkflowsStub> child,
+                                   TracingOptions tracing_options,
+                                   std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 WorkflowsLogging::ListWorkflows(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
         return child_->ListWorkflows(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::workflows::v1::Workflow>
-WorkflowsLogging::GetWorkflow(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsLogging::GetWorkflow(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::workflows::v1::GetWorkflowRequest const& request) {
         return child_->GetWorkflow(context, options, request);
       },
@@ -67,31 +61,30 @@ WorkflowsLogging::GetWorkflow(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsLogging::AsyncCreateWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-        return child_->AsyncCreateWorkflow(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+        return child_->AsyncCreateWorkflow(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsLogging::CreateWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkflowsLogging::CreateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
         return child_->CreateWorkflow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,31 +92,30 @@ WorkflowsLogging::CreateWorkflow(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsLogging::AsyncDeleteWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-        return child_->AsyncDeleteWorkflow(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+        return child_->AsyncDeleteWorkflow(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsLogging::DeleteWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkflowsLogging::DeleteWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
         return child_->DeleteWorkflow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,31 +123,30 @@ WorkflowsLogging::DeleteWorkflow(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsLogging::AsyncUpdateWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-        return child_->AsyncUpdateWorkflow(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+        return child_->AsyncUpdateWorkflow(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsLogging::UpdateWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkflowsLogging::UpdateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
         return child_->UpdateWorkflow(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,13 +154,12 @@ WorkflowsLogging::UpdateWorkflow(
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
 WorkflowsLogging::ListWorkflowRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workflows::v1::ListWorkflowRevisionsRequest const&
+                 request) {
         return child_->ListWorkflowRevisions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -177,26 +167,21 @@ WorkflowsLogging::ListWorkflowRevisions(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 WorkflowsLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-WorkflowsLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> WorkflowsLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -205,40 +190,32 @@ WorkflowsLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 WorkflowsLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> WorkflowsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-WorkflowsLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status WorkflowsLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
@@ -256,8 +233,8 @@ WorkflowsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -273,8 +250,8 @@ future<Status> WorkflowsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

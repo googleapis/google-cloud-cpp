@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/operation.pb.h>
 #include <google/appengine/v1/appengine.grpc.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -40,47 +40,46 @@ class ApplicationsStub {
   virtual ~ApplicationsStub() = 0;
 
   virtual StatusOr<google::appengine::v1::Application> GetApplication(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetApplicationRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateApplication(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::appengine::v1::CreateApplicationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::CreateApplicationRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateApplication(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::appengine::v1::UpdateApplicationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::UpdateApplicationRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncRepairApplication(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRepairApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::appengine::v1::RepairApplicationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RepairApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::RepairApplicationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -93,14 +92,15 @@ class ApplicationsStub {
 class DefaultApplicationsStub : public ApplicationsStub {
  public:
   DefaultApplicationsStub(
-      std::unique_ptr<google::appengine::v1::Applications::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::appengine::v1::Applications::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::appengine::v1::Application> GetApplication(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateApplication(
@@ -110,8 +110,7 @@ class DefaultApplicationsStub : public ApplicationsStub {
       google::appengine::v1::CreateApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::CreateApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateApplication(
@@ -121,8 +120,7 @@ class DefaultApplicationsStub : public ApplicationsStub {
       google::appengine::v1::UpdateApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::UpdateApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRepairApplication(
@@ -132,8 +130,7 @@ class DefaultApplicationsStub : public ApplicationsStub {
       google::appengine::v1::RepairApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RepairApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::RepairApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -149,8 +146,10 @@ class DefaultApplicationsStub : public ApplicationsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::appengine::v1::Applications::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::appengine::v1::Applications::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

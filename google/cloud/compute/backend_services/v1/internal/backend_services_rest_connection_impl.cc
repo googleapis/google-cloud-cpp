@@ -17,8 +17,8 @@
 // source: google/cloud/compute/backend_services/v1/backend_services.proto
 
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation_custom.h"
 #include "google/cloud/internal/extract_long_running_result.h"
@@ -36,74 +36,84 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BackendServicesRestConnectionImpl::BackendServicesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_backend_services_v1_internal::BackendServicesRestStub> stub,
+    std::shared_ptr<
+        compute_backend_services_v1_internal::BackendServicesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        BackendServicesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      BackendServicesConnection::options())) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesRestConnectionImpl::AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) {
+BackendServicesRestConnectionImpl::AddSignedUrlKey(
+    google::cloud::cpp::compute::backend_services::v1::
+        AddSignedUrlKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, request,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) {
-      return stub->AsyncAddSignedUrlKey(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->AddSignedUrlKey(request),
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::backend_services::v1::
+                         AddSignedUrlKeyRequest const& request) {
+        return stub->AsyncAddSignedUrlKey(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddSignedUrlKey(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::AddSignedUrlKey(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) {
+BackendServicesRestConnectionImpl::AddSignedUrlKey(
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    AddSignedUrlKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AddSignedUrlKey(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 AddSignedUrlKeyRequest const& request) {
         return stub_->AddSignedUrlKey(rest_context, options, request);
       },
       *current, request, __func__);
@@ -114,72 +124,91 @@ BackendServicesRestConnectionImpl::AddSignedUrlKey(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, operation,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-      r.set_project(info.project);
-      r.set_operation(info.operation);
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
-
-      r.set_project(info.project);
-      r.set_operation(info.operation);
-
-    });
-
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      });
 }
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
-BackendServicesRestConnectionImpl::AggregatedListBackendServices(google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest request) {
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
+BackendServicesRestConnectionImpl::AggregatedListBackendServices(
+    google::cloud::cpp::compute::backend_services::v1::
+        AggregatedListBackendServicesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->AggregatedListBackendServices(request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListBackendServices(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::BackendServicesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_backend_services_v1::BackendServicesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           compute_backend_services_v1::BackendServicesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest const& r) {
+          Options const& options,
+          google::cloud::cpp::compute::backend_services::v1::
+              AggregatedListBackendServicesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest const& request) {
-              return stub->AggregatedListBackendServices(rest_context, options, request);
+                   google::cloud::cpp::compute::backend_services::v1::
+                       AggregatedListBackendServicesRequest const& request) {
+              return stub->AggregatedListBackendServices(rest_context, options,
+                                                         request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::BackendServiceAggregatedList r) {
-        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>> result(r.items().size());
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               BackendServicesScopedList>>
+            result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -187,66 +216,74 @@ BackendServicesRestConnectionImpl::AggregatedListBackendServices(google::cloud::
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesRestConnectionImpl::DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::DeleteBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        DeleteBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, request,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request) {
-      return stub->AsyncDeleteBackendService(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->DeleteBackendService(request),
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::backend_services::v1::
+                         DeleteBackendServiceRequest const& request) {
+        return stub->AsyncDeleteBackendService(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackendService(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::DeleteBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::DeleteBackendService(
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    DeleteBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBackendService(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 DeleteBackendServiceRequest const& request) {
         return stub_->DeleteBackendService(rest_context, options, request);
       },
       *current, request, __func__);
@@ -257,110 +294,123 @@ BackendServicesRestConnectionImpl::DeleteBackendService(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, operation,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-      r.set_project(info.project);
-      r.set_operation(info.operation);
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
-
-      r.set_project(info.project);
-      r.set_operation(info.operation);
-
-    });
-
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesRestConnectionImpl::DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) {
+BackendServicesRestConnectionImpl::DeleteSignedUrlKey(
+    google::cloud::cpp::compute::backend_services::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, request,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) {
-      return stub->AsyncDeleteSignedUrlKey(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->DeleteSignedUrlKey(request),
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::backend_services::v1::
+                         DeleteSignedUrlKeyRequest const& request) {
+        return stub->AsyncDeleteSignedUrlKey(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSignedUrlKey(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::DeleteSignedUrlKey(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) {
+BackendServicesRestConnectionImpl::DeleteSignedUrlKey(
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    DeleteSignedUrlKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSignedUrlKey(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 DeleteSignedUrlKeyRequest const& request) {
         return stub_->DeleteSignedUrlKey(rest_context, options, request);
       },
       *current, request, __func__);
@@ -371,149 +421,171 @@ BackendServicesRestConnectionImpl::DeleteSignedUrlKey(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, operation,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-      r.set_project(info.project);
-      r.set_operation(info.operation);
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
-
-      r.set_project(info.project);
-      r.set_operation(info.operation);
-
-    });
-
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesRestConnectionImpl::GetBackendService(google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::GetBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackendService(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 GetBackendServiceRequest const& request) {
         return stub_->GetBackendService(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-BackendServicesRestConnectionImpl::GetHealth(google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request) {
+BackendServicesRestConnectionImpl::GetHealth(
+    google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHealth(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 GetHealthRequest const& request) {
         return stub_->GetHealth(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesRestConnectionImpl::InsertBackendService(google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::InsertBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        InsertBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, request,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request) {
-      return stub->AsyncInsertBackendService(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->InsertBackendService(request),
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::backend_services::v1::
+                         InsertBackendServiceRequest const& request) {
+        return stub->AsyncInsertBackendService(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InsertBackendService(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::InsertBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::InsertBackendService(
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    InsertBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InsertBackendService(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 InsertBackendServiceRequest const& request) {
         return stub_->InsertBackendService(rest_context, options, request);
       },
       *current, request, __func__);
@@ -524,72 +596,86 @@ BackendServicesRestConnectionImpl::InsertBackendService(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, operation,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-      r.set_project(info.project);
-      r.set_operation(info.operation);
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
-
-      r.set_project(info.project);
-      r.set_operation(info.operation);
-
-    });
-
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      });
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesRestConnectionImpl::ListBackendServices(google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request) {
+BackendServicesRestConnectionImpl::ListBackendServices(
+    google::cloud::cpp::compute::backend_services::v1::
+        ListBackendServicesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListBackendServices(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::BackendService>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendService>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_backend_services_v1::BackendServicesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           compute_backend_services_v1::BackendServicesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest const& r) {
+          Options const& options,
+          google::cloud::cpp::compute::backend_services::v1::
+              ListBackendServicesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest const& request) {
+                   google::cloud::cpp::compute::backend_services::v1::
+                       ListBackendServicesRequest const& request) {
               return stub->ListBackendServices(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::BackendServiceList r) {
-        std::vector<google::cloud::cpp::compute::v1::BackendService> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::BackendService> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -597,28 +683,37 @@ BackendServicesRestConnectionImpl::ListBackendServices(google::cloud::cpp::compu
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesRestConnectionImpl::ListUsable(google::cloud::cpp::compute::backend_services::v1::ListUsableRequest request) {
+BackendServicesRestConnectionImpl::ListUsable(
+    google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListUsable(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::BackendService>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendService>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_backend_services_v1::BackendServicesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           compute_backend_services_v1::BackendServicesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::backend_services::v1::ListUsableRequest const& r) {
+          Options const& options,
+          google::cloud::cpp::compute::backend_services::v1::
+              ListUsableRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::backend_services::v1::ListUsableRequest const& request) {
+                   google::cloud::cpp::compute::backend_services::v1::
+                       ListUsableRequest const& request) {
               return stub->ListUsable(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::BackendServiceListUsable r) {
-        std::vector<google::cloud::cpp::compute::v1::BackendService> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::BackendService> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -626,66 +721,74 @@ BackendServicesRestConnectionImpl::ListUsable(google::cloud::cpp::compute::backe
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesRestConnectionImpl::PatchBackendService(google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::PatchBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        PatchBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, request,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request) {
-      return stub->AsyncPatchBackendService(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->PatchBackendService(request),
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::backend_services::v1::
+                         PatchBackendServiceRequest const& request) {
+        return stub->AsyncPatchBackendService(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PatchBackendService(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::PatchBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::PatchBackendService(
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    PatchBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PatchBackendService(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 PatchBackendServiceRequest const& request) {
         return stub_->PatchBackendService(rest_context, options, request);
       },
       *current, request, __func__);
@@ -696,110 +799,123 @@ BackendServicesRestConnectionImpl::PatchBackendService(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, operation,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-      r.set_project(info.project);
-      r.set_operation(info.operation);
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
-
-      r.set_project(info.project);
-      r.set_operation(info.operation);
-
-    });
-
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      });
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(
+    google::cloud::cpp::compute::backend_services::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, request,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) {
-      return stub->AsyncSetEdgeSecurityPolicy(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->SetEdgeSecurityPolicy(request),
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::backend_services::v1::
+                         SetEdgeSecurityPolicyRequest const& request) {
+        return stub->AsyncSetEdgeSecurityPolicy(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetEdgeSecurityPolicy(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    SetEdgeSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetEdgeSecurityPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 SetEdgeSecurityPolicyRequest const& request) {
         return stub_->SetEdgeSecurityPolicy(rest_context, options, request);
       },
       *current, request, __func__);
@@ -810,123 +926,139 @@ BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, operation,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-      r.set_project(info.project);
-      r.set_operation(info.operation);
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
-
-      r.set_project(info.project);
-      r.set_operation(info.operation);
-
-    });
-
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::backend_services::v1::
+        SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesRestConnectionImpl::SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::SetSecurityPolicy(
+    google::cloud::cpp::compute::backend_services::v1::
+        SetSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, request,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) {
-      return stub->AsyncSetSecurityPolicy(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->SetSecurityPolicy(request),
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::backend_services::v1::
+                         SetSecurityPolicyRequest const& request) {
+        return stub->AsyncSetSecurityPolicy(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetSecurityPolicy(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::SetSecurityPolicy(
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    SetSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetSecurityPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 SetSecurityPolicyRequest const& request) {
         return stub_->SetSecurityPolicy(rest_context, options, request);
       },
       *current, request, __func__);
@@ -937,123 +1069,139 @@ BackendServicesRestConnectionImpl::SetSecurityPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, operation,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-      r.set_project(info.project);
-      r.set_operation(info.operation);
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
-
-      r.set_project(info.project);
-      r.set_operation(info.operation);
-
-    });
-
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-BackendServicesRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest const& request) {
+BackendServicesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::backend_services::v1::
+        TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesRestConnectionImpl::UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::UpdateBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        UpdateBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, request,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options, google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request) {
-      return stub->AsyncUpdateBackendService(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->UpdateBackendService(request),
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::backend_services::v1::
+                         UpdateBackendServiceRequest const& request) {
+        return stub->AsyncUpdateBackendService(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackendService(request),
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    },
-    [request](std::string const& op, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-
-      r.set_project(request.project());
-      r.set_operation(op);
-
-    });
-
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    GetOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      },
+      [request](std::string const& op,
+                google::cloud::cpp::compute::global_operations::v1::
+                    DeleteOperationRequest& r) {
+        r.set_project(request.project());
+        r.set_operation(op);
+      });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::UpdateBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request) {
+BackendServicesRestConnectionImpl::UpdateBackendService(
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    UpdateBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateBackendService(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::backend_services::v1::
+                 UpdateBackendServiceRequest const& request) {
         return stub_->UpdateBackendService(rest_context, options, request);
       },
       *current, request, __func__);
@@ -1064,47 +1212,52 @@ BackendServicesRestConnectionImpl::UpdateBackendService(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::v1::Operation,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest>(
-    background_->cq(), current, operation,
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-      return stub->AsyncGetOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](CompletionQueue& cq,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-      return stub->AsyncCancelOperation(
-          cq, std::move(context), std::move(options), request);
-    },
-    [](StatusOr<google::cloud::cpp::compute::v1::Operation> op, std::string const&) {
-        return op;
-    },
-    polling_policy(*current), __func__,
-    [](google::cloud::cpp::compute::v1::Operation const& op) {
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::v1::Operation,
+      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest,
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest>(
+      background_->cq(), current, operation,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::cpp::compute::global_operations::v1::
+                         DeleteOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [](StatusOr<google::cloud::cpp::compute::v1::Operation> op,
+         std::string const&) { return op; },
+      polling_policy(*current), __func__,
+      [](google::cloud::cpp::compute::v1::Operation const& op) {
         return op.status() == "DONE";
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      GetOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-      r.set_project(info.project);
-      r.set_operation(info.operation);
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      },
+      [operation](std::string const&,
+                  google::cloud::cpp::compute::global_operations::v1::
+                      DeleteOperationRequest& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(
+            operation.self_link());
 
-    },
-    [operation](std::string const&, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest& r) {
-        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
-
-      r.set_project(info.project);
-      r.set_operation(info.operation);
-
-    });
-
+        r.set_project(info.project);
+        r.set_operation(info.operation);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

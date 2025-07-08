@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_V1_MANAGED_IDENTITIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_V1_MANAGED_IDENTITIES_CONNECTION_H
 
+#include "google/cloud/managedidentities/v1/internal/managed_identities_retry_traits.h"
+#include "google/cloud/managedidentities/v1/managed_identities_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
-#include "google/cloud/managedidentities/v1/internal/managed_identities_retry_traits.h"
-#include "google/cloud/managedidentities/v1/managed_identities_connection_idempotency_policy.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,14 +40,17 @@ namespace managedidentities_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ManagedIdentitiesServiceConnection`.
-class ManagedIdentitiesServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class ManagedIdentitiesServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ManagedIdentitiesServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<ManagedIdentitiesServiceRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `ManagedIdentitiesServiceConnection` based on counting errors.
+ * A retry policy for `ManagedIdentitiesServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -56,7 +59,8 @@ class ManagedIdentitiesServiceRetryPolicy : public ::google::cloud::RetryPolicy 
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ManagedIdentitiesServiceLimitedErrorCountRetryPolicy : public ManagedIdentitiesServiceRetryPolicy {
+class ManagedIdentitiesServiceLimitedErrorCountRetryPolicy
+    : public ManagedIdentitiesServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,15 +69,18 @@ class ManagedIdentitiesServiceLimitedErrorCountRetryPolicy : public ManagedIdent
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ManagedIdentitiesServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit ManagedIdentitiesServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   ManagedIdentitiesServiceLimitedErrorCountRetryPolicy(
       ManagedIdentitiesServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ManagedIdentitiesServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ManagedIdentitiesServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   ManagedIdentitiesServiceLimitedErrorCountRetryPolicy(
       ManagedIdentitiesServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ManagedIdentitiesServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ManagedIdentitiesServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -85,7 +92,8 @@ class ManagedIdentitiesServiceLimitedErrorCountRetryPolicy : public ManagedIdent
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ManagedIdentitiesServiceRetryPolicy> clone() const override {
-    return std::make_unique<ManagedIdentitiesServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<
+        ManagedIdentitiesServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -93,11 +101,14 @@ class ManagedIdentitiesServiceLimitedErrorCountRetryPolicy : public ManagedIdent
   using BaseType = ManagedIdentitiesServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<managedidentities_v1_internal::ManagedIdentitiesServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      managedidentities_v1_internal::ManagedIdentitiesServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `ManagedIdentitiesServiceConnection` based on elapsed time.
+ * A retry policy for `ManagedIdentitiesServiceConnection` based on elapsed
+ * time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -106,7 +117,8 @@ class ManagedIdentitiesServiceLimitedErrorCountRetryPolicy : public ManagedIdent
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ManagedIdentitiesServiceLimitedTimeRetryPolicy : public ManagedIdentitiesServiceRetryPolicy {
+class ManagedIdentitiesServiceLimitedTimeRetryPolicy
+    : public ManagedIdentitiesServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +143,16 @@ class ManagedIdentitiesServiceLimitedTimeRetryPolicy : public ManagedIdentitiesS
   template <typename DurationRep, typename DurationPeriod>
   explicit ManagedIdentitiesServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ManagedIdentitiesServiceLimitedTimeRetryPolicy(ManagedIdentitiesServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ManagedIdentitiesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ManagedIdentitiesServiceLimitedTimeRetryPolicy(ManagedIdentitiesServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ManagedIdentitiesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ManagedIdentitiesServiceLimitedTimeRetryPolicy(
+      ManagedIdentitiesServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ManagedIdentitiesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
+  }
+  ManagedIdentitiesServiceLimitedTimeRetryPolicy(
+      ManagedIdentitiesServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ManagedIdentitiesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
+  }
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,20 +174,25 @@ class ManagedIdentitiesServiceLimitedTimeRetryPolicy : public ManagedIdentitiesS
   using BaseType = ManagedIdentitiesServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<managedidentities_v1_internal::ManagedIdentitiesServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      managedidentities_v1_internal::ManagedIdentitiesServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `ManagedIdentitiesServiceConnection` object for `ManagedIdentitiesServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ManagedIdentitiesServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `ManagedIdentitiesServiceConnection` object for
  * `ManagedIdentitiesServiceClient`.
  *
- * To create a concrete instance, see `MakeManagedIdentitiesServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ManagedIdentitiesServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ManagedIdentitiesServiceClient`.
  *
- * For mocking, see `managedidentities_v1_mocks::MockManagedIdentitiesServiceConnection`.
+ * To create a concrete instance, see
+ * `MakeManagedIdentitiesServiceConnection()`.
+ *
+ * For mocking, see
+ * `managedidentities_v1_mocks::MockManagedIdentitiesServiceConnection`.
  */
 class ManagedIdentitiesServiceConnection {
  public:
@@ -180,101 +201,125 @@ class ManagedIdentitiesServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request);
+  CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::
+                              CreateMicrosoftAdDomainRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateMicrosoftAdDomain(NoAwaitTag, google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  CreateMicrosoftAdDomain( google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
-  ResetAdminPassword(google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request);
-
-  virtual StreamRange<google::cloud::managedidentities::v1::Domain>
-  ListDomains(google::cloud::managedidentities::v1::ListDomainsRequest request);
-
-  virtual StatusOr<google::cloud::managedidentities::v1::Domain>
-  GetDomain(google::cloud::managedidentities::v1::GetDomainRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
+      NoAwaitTag, google::cloud::managedidentities::v1::
+                      CreateMicrosoftAdDomainRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  UpdateDomain(google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
+  CreateMicrosoftAdDomain(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateDomain(NoAwaitTag, google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
+  virtual StatusOr<
+      google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
+  ResetAdminPassword(
+      google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
+      google::cloud::managedidentities::v1::ListDomainsRequest request);
+
+  virtual StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
+      google::cloud::managedidentities::v1::GetDomainRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  UpdateDomain( google::longrunning::Operation const& operation);
+  UpdateDomain(
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDomain(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  UpdateDomain(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
+  DeleteDomain(
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteDomain(NoAwaitTag, google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteDomain(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain( google::longrunning::Operation const& operation);
+  DeleteDomain(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  AttachTrust(google::cloud::managedidentities::v1::AttachTrustRequest const& request);
+  AttachTrust(
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  AttachTrust(NoAwaitTag, google::cloud::managedidentities::v1::AttachTrustRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  AttachTrust( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust(google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ReconfigureTrust(NoAwaitTag, google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> AttachTrust(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust( google::longrunning::Operation const& operation);
+  AttachTrust(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  DetachTrust(google::cloud::managedidentities::v1::DetachTrustRequest const& request);
+  ReconfigureTrust(
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DetachTrust(NoAwaitTag, google::cloud::managedidentities::v1::DetachTrustRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  DetachTrust( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ValidateTrust(google::cloud::managedidentities::v1::ValidateTrustRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ValidateTrust(NoAwaitTag, google::cloud::managedidentities::v1::ValidateTrustRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ReconfigureTrust(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ValidateTrust( google::longrunning::Operation const& operation);
+  ReconfigureTrust(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  DetachTrust(
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DetachTrust(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  DetachTrust(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  ValidateTrust(
+      google::cloud::managedidentities::v1::ValidateTrustRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> ValidateTrust(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  ValidateTrust(google::longrunning::Operation const& operation);
 };
 
 /**
- * A factory function to construct an object of type `ManagedIdentitiesServiceConnection`.
+ * A factory function to construct an object of type
+ * `ManagedIdentitiesServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ManagedIdentitiesServiceClient.
+ * should be passed as an argument to the constructor of
+ * ManagedIdentitiesServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ManagedIdentitiesServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ManagedIdentitiesServiceConnection`. Expected options are any of
+ * the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::managedidentities_v1::ManagedIdentitiesServicePolicyOptionList`
+ * -
+ * `google::cloud::managedidentities_v1::ManagedIdentitiesServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ManagedIdentitiesServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `ManagedIdentitiesServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<ManagedIdentitiesServiceConnection> MakeManagedIdentitiesServiceConnection(
-    Options options = {});
+std::shared_ptr<ManagedIdentitiesServiceConnection>
+MakeManagedIdentitiesServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_v1

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_V1_CLOUD_MEMCACHE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_V1_CLOUD_MEMCACHE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/memcache/v1/cloud_memcache_connection.h"
 #include "google/cloud/memcache/v1/cloud_memcache_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct CloudMemcachePollingPolicyOption {
  * @ingroup google-cloud-memcache-options
  */
 using CloudMemcachePolicyOptionList =
-    OptionList<CloudMemcacheRetryPolicyOption,
-               CloudMemcacheBackoffPolicyOption,
+    OptionList<CloudMemcacheRetryPolicyOption, CloudMemcacheBackoffPolicyOption,
                CloudMemcachePollingPolicyOption,
                CloudMemcacheConnectionIdempotencyPolicyOption>;
 

@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ApiKeysClient {
  public:
-  explicit ApiKeysClient(std::shared_ptr<ApiKeysConnection> connection, Options opts = {});
+  explicit ApiKeysClient(std::shared_ptr<ApiKeysConnection> connection,
+                         Options opts = {});
   ~ApiKeysClient();
 
   ///@{
@@ -129,8 +130,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  CreateKey(std::string const& parent, google::api::apikeys::v2::Key const& key, std::string const& key_id, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
+      std::string const& parent, google::api::apikeys::v2::Key const& key,
+      std::string const& key_id, Options opts = {});
 
   // clang-format off
   ///
@@ -143,8 +145,10 @@ class ApiKeysClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateKey(NoAwaitTag, std::string const& parent, google::api::apikeys::v2::Key const& key, std::string const& key_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateKey(
+      NoAwaitTag, std::string const& parent,
+      google::api::apikeys::v2::Key const& key, std::string const& key_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -183,8 +187,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
+      google::api::apikeys::v2::CreateKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -197,8 +202,9 @@ class ApiKeysClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateKey(NoAwaitTag, google::api::apikeys::v2::CreateKeyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateKey(
+      NoAwaitTag, google::api::apikeys::v2::CreateKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -209,8 +215,8 @@ class ApiKeysClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  CreateKey(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -247,8 +253,8 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.ListKeysRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L182}
   ///
   // clang-format on
-  StreamRange<google::api::apikeys::v2::Key>
-  ListKeys(std::string const& parent, Options opts = {});
+  StreamRange<google::api::apikeys::v2::Key> ListKeys(std::string const& parent,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -290,8 +296,8 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.ListKeysRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L182}
   ///
   // clang-format on
-  StreamRange<google::api::apikeys::v2::Key>
-  ListKeys(google::api::apikeys::v2::ListKeysRequest request, Options opts = {});
+  StreamRange<google::api::apikeys::v2::Key> ListKeys(
+      google::api::apikeys::v2::ListKeysRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -319,8 +325,8 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::api::apikeys::v2::Key>
-  GetKey(std::string const& name, Options opts = {});
+  StatusOr<google::api::apikeys::v2::Key> GetKey(std::string const& name,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -353,8 +359,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::api::apikeys::v2::Key>
-  GetKey(google::api::apikeys::v2::GetKeyRequest const& request, Options opts = {});
+  StatusOr<google::api::apikeys::v2::Key> GetKey(
+      google::api::apikeys::v2::GetKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -381,8 +388,8 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.GetKeyStringResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L230}
   ///
   // clang-format on
-  StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-  GetKeyString(std::string const& name, Options opts = {});
+  StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -414,8 +421,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.GetKeyStringResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L230}
   ///
   // clang-format on
-  StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-  GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request, Options opts = {});
+  StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
+      google::api::apikeys::v2::GetKeyStringRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -459,8 +467,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.UpdateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L236}
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UpdateKey(google::api::apikeys::v2::Key const& key, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
+      google::api::apikeys::v2::Key const& key,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -473,8 +482,9 @@ class ApiKeysClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateKey(NoAwaitTag, google::api::apikeys::v2::Key const& key, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateKey(
+      NoAwaitTag, google::api::apikeys::v2::Key const& key,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -514,8 +524,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.UpdateKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L236}
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
+      google::api::apikeys::v2::UpdateKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -528,8 +539,9 @@ class ApiKeysClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateKey(NoAwaitTag, google::api::apikeys::v2::UpdateKeyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateKey(
+      NoAwaitTag, google::api::apikeys::v2::UpdateKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -540,8 +552,8 @@ class ApiKeysClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UpdateKey(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -576,8 +588,8 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  DeleteKey(std::string const& name, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -590,8 +602,9 @@ class ApiKeysClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteKey(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteKey(NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -631,8 +644,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.Key]: @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
+      google::api::apikeys::v2::DeleteKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -645,8 +659,9 @@ class ApiKeysClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteKey(NoAwaitTag, google::api::apikeys::v2::DeleteKeyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteKey(
+      NoAwaitTag, google::api::apikeys::v2::DeleteKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -657,8 +672,8 @@ class ApiKeysClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  DeleteKey(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -697,8 +712,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.UndeleteKeyRequest]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L266}
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
+      google::api::apikeys::v2::UndeleteKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -711,8 +727,9 @@ class ApiKeysClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeleteKey(NoAwaitTag, google::api::apikeys::v2::UndeleteKeyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeleteKey(
+      NoAwaitTag, google::api::apikeys::v2::UndeleteKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -723,8 +740,8 @@ class ApiKeysClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UndeleteKey(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -757,8 +774,9 @@ class ApiKeysClient {
   /// [google.api.apikeys.v2.LookupKeyResponse]: @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L281}
   ///
   // clang-format on
-  StatusOr<google::api::apikeys::v2::LookupKeyResponse>
-  LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request, Options opts = {});
+  StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
+      google::api::apikeys::v2::LookupKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -784,8 +802,8 @@ class ApiKeysClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -816,8 +834,9 @@ class ApiKeysClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ApiKeysConnection> connection_;

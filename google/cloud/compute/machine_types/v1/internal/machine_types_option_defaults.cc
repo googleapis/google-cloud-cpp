@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options MachineTypesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_MACHINE_TYPES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_MACHINE_TYPES_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_MACHINE_TYPES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_MACHINE_TYPES_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_machine_types_v1::MachineTypesRetryPolicyOption>()) {
     options.set<compute_machine_types_v1::MachineTypesRetryPolicyOption>(
         compute_machine_types_v1::MachineTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()) {
+  if (!options
+           .has<compute_machine_types_v1::MachineTypesBackoffPolicyOption>()) {
     options.set<compute_machine_types_v1::MachineTypesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_machine_types_v1::MachineTypesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_machine_types_v1::MachineTypesConnectionIdempotencyPolicyOption>(
-        compute_machine_types_v1::MakeDefaultMachineTypesConnectionIdempotencyPolicy());
+  if (!options.has<compute_machine_types_v1::
+                       MachineTypesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_machine_types_v1::
+                    MachineTypesConnectionIdempotencyPolicyOption>(
+        compute_machine_types_v1::
+            MakeDefaultMachineTypesConnectionIdempotencyPolicy());
   }
 
   return options;

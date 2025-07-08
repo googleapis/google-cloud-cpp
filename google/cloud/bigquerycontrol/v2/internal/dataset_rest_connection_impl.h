@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_DATASET_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_DATASET_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/dataset_connection.h"
 #include "google/cloud/bigquerycontrol/v2/dataset_connection_idempotency_policy.h"
 #include "google/cloud/bigquerycontrol/v2/dataset_options.h"
 #include "google/cloud/bigquerycontrol/v2/internal/dataset_rest_stub.h"
 #include "google/cloud/bigquerycontrol/v2/internal/dataset_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,46 +43,56 @@ class DatasetServiceRestConnectionImpl
   ~DatasetServiceRestConnectionImpl() override = default;
 
   DatasetServiceRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquerycontrol_v2_internal::DatasetServiceRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquerycontrol_v2_internal::DatasetServiceRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  GetDataset(google::cloud::bigquery::v2::GetDatasetRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Dataset> GetDataset(
+      google::cloud::bigquery::v2::GetDatasetRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  InsertDataset(google::cloud::bigquery::v2::InsertDatasetRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Dataset> InsertDataset(
+      google::cloud::bigquery::v2::InsertDatasetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  PatchDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Dataset> PatchDataset(
+      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  UpdateDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Dataset> UpdateDataset(
+      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request)
+      override;
 
-  Status
-  DeleteDataset(google::cloud::bigquery::v2::DeleteDatasetRequest const& request) override;
+  Status DeleteDataset(google::cloud::bigquery::v2::DeleteDatasetRequest const&
+                           request) override;
 
-  StreamRange<google::cloud::bigquery::v2::ListFormatDataset>
-  ListDatasets(google::cloud::bigquery::v2::ListDatasetsRequest request) override;
+  StreamRange<google::cloud::bigquery::v2::ListFormatDataset> ListDatasets(
+      google::cloud::bigquery::v2::ListDatasetsRequest request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Dataset>
-  UndeleteDataset(google::cloud::bigquery::v2::UndeleteDatasetRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Dataset> UndeleteDataset(
+      google::cloud::bigquery::v2::UndeleteDatasetRequest const& request)
+      override;
 
  private:
   static std::unique_ptr<bigquerycontrol_v2::DatasetServiceRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::DatasetServiceRetryPolicyOption>()->clone();
+    return options.get<bigquerycontrol_v2::DatasetServiceRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::DatasetServiceBackoffPolicyOption>()->clone();
+    return options.get<bigquerycontrol_v2::DatasetServiceBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<bigquerycontrol_v2::DatasetServiceConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      bigquerycontrol_v2::DatasetServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::DatasetServiceConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<bigquerycontrol_v2::
+                 DatasetServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

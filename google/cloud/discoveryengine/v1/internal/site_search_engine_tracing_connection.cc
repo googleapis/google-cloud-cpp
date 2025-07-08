@@ -29,147 +29,190 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-SiteSearchEngineServiceTracingConnection::SiteSearchEngineServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::SiteSearchEngineServiceConnection> child)
+SiteSearchEngineServiceTracingConnection::
+    SiteSearchEngineServiceTracingConnection(
+        std::shared_ptr<discoveryengine_v1::SiteSearchEngineServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
-SiteSearchEngineServiceTracingConnection::GetSiteSearchEngine(google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SiteSearchEngineServiceConnection::GetSiteSearchEngine");
+SiteSearchEngineServiceTracingConnection::GetSiteSearchEngine(
+    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "GetSiteSearchEngine");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSiteSearchEngine(request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-SiteSearchEngineServiceTracingConnection::CreateTargetSite(google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
+SiteSearchEngineServiceTracingConnection::CreateTargetSite(
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "CreateTargetSite");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateTargetSite(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::CreateTargetSite(
-    NoAwaitTag, google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "CreateTargetSite");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateTargetSite(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateTargetSite(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceTracingConnection::CreateTargetSite(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "CreateTargetSite");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateTargetSite(operation));
+                           child_->CreateTargetSite(operation));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::BatchCreateTargetSites");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchCreateTargetSites");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchCreateTargetSites(request));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreateTargetSites(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(
-    NoAwaitTag, google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::BatchCreateTargetSites");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchCreateTargetSites");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchCreateTargetSites(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->BatchCreateTargetSites(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
 SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::BatchCreateTargetSites");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchCreateTargetSites");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->BatchCreateTargetSites(operation));
+                           child_->BatchCreateTargetSites(operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
-SiteSearchEngineServiceTracingConnection::GetTargetSite(google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SiteSearchEngineServiceConnection::GetTargetSite");
+SiteSearchEngineServiceTracingConnection::GetTargetSite(
+    google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::GetTargetSite");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTargetSite(request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-SiteSearchEngineServiceTracingConnection::UpdateTargetSite(google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
+SiteSearchEngineServiceTracingConnection::UpdateTargetSite(
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::UpdateTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "UpdateTargetSite");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateTargetSite(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::UpdateTargetSite(
-    NoAwaitTag, google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::UpdateTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "UpdateTargetSite");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateTargetSite(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateTargetSite(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceTracingConnection::UpdateTargetSite(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::UpdateTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "UpdateTargetSite");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateTargetSite(operation));
+                           child_->UpdateTargetSite(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-SiteSearchEngineServiceTracingConnection::DeleteTargetSite(google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
+SiteSearchEngineServiceTracingConnection::DeleteTargetSite(
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DeleteTargetSite");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTargetSite(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::DeleteTargetSite(
-    NoAwaitTag, google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DeleteTargetSite");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteTargetSite(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteTargetSite(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
 SiteSearchEngineServiceTracingConnection::DeleteTargetSite(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteTargetSite");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DeleteTargetSite");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteTargetSite(operation));
+                           child_->DeleteTargetSite(operation));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::TargetSite>
-SiteSearchEngineServiceTracingConnection::ListTargetSites(google::cloud::discoveryengine::v1::ListTargetSitesRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SiteSearchEngineServiceConnection::ListTargetSites");
+SiteSearchEngineServiceTracingConnection::ListTargetSites(
+    google::cloud::discoveryengine::v1::ListTargetSitesRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::ListTargetSites");
   internal::OTelScope scope(span);
   auto sr = child_->ListTargetSites(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::TargetSite>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::TargetSite>(std::move(span),
+                                                      std::move(sr));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
-SiteSearchEngineServiceTracingConnection::CreateSitemap(google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+SiteSearchEngineServiceTracingConnection::CreateSitemap(
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateSitemap");
   internal::OTelScope scope(span);
@@ -178,12 +221,12 @@ SiteSearchEngineServiceTracingConnection::CreateSitemap(google::cloud::discovery
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::CreateSitemap(
-    NoAwaitTag, google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateSitemap");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateSitemap(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateSitemap(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>>
@@ -192,12 +235,12 @@ SiteSearchEngineServiceTracingConnection::CreateSitemap(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::CreateSitemap");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateSitemap(operation));
+  return internal::EndSpan(std::move(span), child_->CreateSitemap(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
-SiteSearchEngineServiceTracingConnection::DeleteSitemap(google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+SiteSearchEngineServiceTracingConnection::DeleteSitemap(
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteSitemap");
   internal::OTelScope scope(span);
@@ -206,12 +249,12 @@ SiteSearchEngineServiceTracingConnection::DeleteSitemap(google::cloud::discovery
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::DeleteSitemap(
-    NoAwaitTag, google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteSitemap");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSitemap(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSitemap(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
@@ -220,75 +263,97 @@ SiteSearchEngineServiceTracingConnection::DeleteSitemap(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::DeleteSitemap");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteSitemap(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSitemap(operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
-SiteSearchEngineServiceTracingConnection::FetchSitemaps(google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SiteSearchEngineServiceConnection::FetchSitemaps");
+SiteSearchEngineServiceTracingConnection::FetchSitemaps(
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::FetchSitemaps");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchSitemaps(request));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
+future<StatusOr<
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::EnableAdvancedSiteSearch");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "EnableAdvancedSiteSearch");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->EnableAdvancedSiteSearch(request));
+  return internal::EndSpan(std::move(span),
+                           child_->EnableAdvancedSiteSearch(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(
-    NoAwaitTag, google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::EnableAdvancedSiteSearch");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "EnableAdvancedSiteSearch");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->EnableAdvancedSiteSearch(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->EnableAdvancedSiteSearch(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+future<StatusOr<
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::EnableAdvancedSiteSearch");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "EnableAdvancedSiteSearch");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->EnableAdvancedSiteSearch(operation));
+                           child_->EnableAdvancedSiteSearch(operation));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
+future<StatusOr<
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::DisableAdvancedSiteSearch");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DisableAdvancedSiteSearch");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DisableAdvancedSiteSearch(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DisableAdvancedSiteSearch(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(
-    NoAwaitTag, google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::DisableAdvancedSiteSearch");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DisableAdvancedSiteSearch");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DisableAdvancedSiteSearch(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DisableAdvancedSiteSearch(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+future<StatusOr<
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::DisableAdvancedSiteSearch");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DisableAdvancedSiteSearch");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DisableAdvancedSiteSearch(operation));
+                           child_->DisableAdvancedSiteSearch(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-SiteSearchEngineServiceTracingConnection::RecrawlUris(google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+SiteSearchEngineServiceTracingConnection::RecrawlUris(
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::RecrawlUris");
   internal::OTelScope scope(span);
@@ -297,12 +362,12 @@ SiteSearchEngineServiceTracingConnection::RecrawlUris(google::cloud::discoveryen
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::RecrawlUris(
-    NoAwaitTag, google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::RecrawlUris");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RecrawlUris(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RecrawlUris(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
@@ -311,66 +376,85 @@ SiteSearchEngineServiceTracingConnection::RecrawlUris(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::RecrawlUris");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->RecrawlUris(operation));
+  return internal::EndSpan(std::move(span), child_->RecrawlUris(operation));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-SiteSearchEngineServiceTracingConnection::BatchVerifyTargetSites(google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+SiteSearchEngineServiceTracingConnection::BatchVerifyTargetSites(
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::BatchVerifyTargetSites");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchVerifyTargetSites");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchVerifyTargetSites(request));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchVerifyTargetSites(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingConnection::BatchVerifyTargetSites(
-    NoAwaitTag, google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::BatchVerifyTargetSites");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchVerifyTargetSites");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchVerifyTargetSites(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->BatchVerifyTargetSites(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
 SiteSearchEngineServiceTracingConnection::BatchVerifyTargetSites(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "discoveryengine_v1::SiteSearchEngineServiceConnection::BatchVerifyTargetSites");
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchVerifyTargetSites");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->BatchVerifyTargetSites(operation));
+                           child_->BatchVerifyTargetSites(operation));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::TargetSite>
-SiteSearchEngineServiceTracingConnection::FetchDomainVerificationStatus(google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SiteSearchEngineServiceConnection::FetchDomainVerificationStatus");
+SiteSearchEngineServiceTracingConnection::FetchDomainVerificationStatus(
+    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "FetchDomainVerificationStatus");
   internal::OTelScope scope(span);
   auto sr = child_->FetchDomainVerificationStatus(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::TargetSite>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::TargetSite>(std::move(span),
+                                                      std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-SiteSearchEngineServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SiteSearchEngineServiceConnection::ListOperations");
+SiteSearchEngineServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SiteSearchEngineServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SiteSearchEngineServiceConnection::GetOperation");
+SiteSearchEngineServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-SiteSearchEngineServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SiteSearchEngineServiceConnection::CancelOperation");
+Status SiteSearchEngineServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -379,10 +463,12 @@ SiteSearchEngineServiceTracingConnection::CancelOperation(google::longrunning::C
 
 std::shared_ptr<discoveryengine_v1::SiteSearchEngineServiceConnection>
 MakeSiteSearchEngineServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::SiteSearchEngineServiceConnection> conn) {
+    std::shared_ptr<discoveryengine_v1::SiteSearchEngineServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SiteSearchEngineServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<SiteSearchEngineServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

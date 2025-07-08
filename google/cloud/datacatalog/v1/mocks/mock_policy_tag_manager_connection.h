@@ -42,77 +42,88 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockPolicyTagManagerConnection : public datacatalog_v1::PolicyTagManagerConnection {
+class MockPolicyTagManagerConnection
+    : public datacatalog_v1::PolicyTagManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Taxonomy>,
-  CreateTaxonomy,
-  (google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, CreateTaxonomy,
+      (google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteTaxonomy,
-  (google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteTaxonomy,
+      (google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Taxonomy>,
-  UpdateTaxonomy,
-  (google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, UpdateTaxonomy,
+      (google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::Taxonomy>),
-  ListTaxonomies,
-  (google::cloud::datacatalog::v1::ListTaxonomiesRequest request), (override));
+              ListTaxonomies,
+              (google::cloud::datacatalog::v1::ListTaxonomiesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Taxonomy>,
-  GetTaxonomy,
-  (google::cloud::datacatalog::v1::GetTaxonomyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, GetTaxonomy,
+      (google::cloud::datacatalog::v1::GetTaxonomyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::PolicyTag>,
-  CreatePolicyTag,
-  (google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::PolicyTag>, CreatePolicyTag,
+      (google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeletePolicyTag,
-  (google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeletePolicyTag,
+      (google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::PolicyTag>,
-  UpdatePolicyTag,
-  (google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::PolicyTag>, UpdatePolicyTag,
+      (google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::datacatalog::v1::PolicyTag>),
-  ListPolicyTags,
-  (google::cloud::datacatalog::v1::ListPolicyTagsRequest request), (override));
+              ListPolicyTags,
+              (google::cloud::datacatalog::v1::ListPolicyTagsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::PolicyTag>,
-  GetPolicyTag,
-  (google::cloud::datacatalog::v1::GetPolicyTagRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::PolicyTag>, GetPolicyTag,
+      (google::cloud::datacatalog::v1::GetPolicyTagRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

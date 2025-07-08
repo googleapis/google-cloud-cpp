@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/cx/v3/transition_route_group.proto
 
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_client.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
@@ -43,16 +43,20 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto vpc_client = google::cloud::dialogflow_cx::TransitionRouteGroupsClient(
-      google::cloud::dialogflow_cx::MakeTransitionRouteGroupsConnection(options));
+      google::cloud::dialogflow_cx::MakeTransitionRouteGroupsConnection(
+          options));
   //! [set-client-endpoint]
 }
 
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy
-   : public google::cloud::dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicy {
+    : public google::cloud::dialogflow_cx::
+          TransitionRouteGroupsConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicy> clone() const override {
+  std::unique_ptr<google::cloud::dialogflow_cx::
+                      TransitionRouteGroupsConnectionIdempotencyPolicy>
+  clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -64,27 +68,43 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options = google::cloud::Options{}
-    .set<google::cloud::dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicyOption>(
-      CustomIdempotencyPolicy().clone())
-    .set<google::cloud::dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>(
-      google::cloud::dialogflow_cx::TransitionRouteGroupsLimitedErrorCountRetryPolicy(3).clone())
-    .set<google::cloud::dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>(
-      google::cloud::ExponentialBackoffPolicy(
-          /*initial_delay=*/std::chrono::milliseconds(200),
-          /*maximum_delay=*/std::chrono::seconds(45),
-          /*scaling=*/2.0).clone());
-  auto connection = google::cloud::dialogflow_cx::MakeTransitionRouteGroupsConnection(options);
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::dialogflow_cx::
+                   TransitionRouteGroupsConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::dialogflow_cx::
+                   TransitionRouteGroupsRetryPolicyOption>(
+              google::cloud::dialogflow_cx::
+                  TransitionRouteGroupsLimitedErrorCountRetryPolicy(3)
+                      .clone())
+          .set<google::cloud::dialogflow_cx::
+                   TransitionRouteGroupsBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection =
+      google::cloud::dialogflow_cx::MakeTransitionRouteGroupsConnection(
+          options);
 
   // c1 and c2 share the same retry policies
-  auto c1 = google::cloud::dialogflow_cx::TransitionRouteGroupsClient(connection);
-  auto c2 = google::cloud::dialogflow_cx::TransitionRouteGroupsClient(connection);
+  auto c1 =
+      google::cloud::dialogflow_cx::TransitionRouteGroupsClient(connection);
+  auto c2 =
+      google::cloud::dialogflow_cx::TransitionRouteGroupsClient(connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::dialogflow_cx::TransitionRouteGroupsClient(
-    connection, google::cloud::Options{}.set<google::cloud::dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>(
-      google::cloud::dialogflow_cx::TransitionRouteGroupsLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
+      connection, google::cloud::Options{}
+                      .set<google::cloud::dialogflow_cx::
+                               TransitionRouteGroupsRetryPolicyOption>(
+                          google::cloud::dialogflow_cx::
+                              TransitionRouteGroupsLimitedTimeRetryPolicy(
+                                  std::chrono::minutes(5))
+                                  .clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -106,7 +126,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::dialogflow_cx::TransitionRouteGroupsClient(
-      google::cloud::dialogflow_cx::MakeTransitionRouteGroupsConnection(options));
+        google::cloud::dialogflow_cx::MakeTransitionRouteGroupsConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -116,9 +137,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet({
-    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
-  });
+  examples::CheckEnvironmentVariablesAreSet(
+      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

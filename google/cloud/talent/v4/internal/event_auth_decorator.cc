@@ -31,9 +31,9 @@ EventServiceAuth::EventServiceAuth(
     std::shared_ptr<EventServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::talent::v4::ClientEvent> EventServiceAuth::CreateClientEvent(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::talent::v4::ClientEvent>
+EventServiceAuth::CreateClientEvent(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::talent::v4::ClientEvent> EventServiceAuth::CreateClientE
 }
 
 StatusOr<google::longrunning::Operation> EventServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

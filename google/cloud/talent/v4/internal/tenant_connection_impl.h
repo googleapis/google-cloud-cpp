@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
 #include "google/cloud/talent/v4/internal/tenant_retry_traits.h"
 #include "google/cloud/talent/v4/internal/tenant_stub.h"
 #include "google/cloud/talent/v4/tenant_connection.h"
 #include "google/cloud/talent/v4/tenant_connection_idempotency_policy.h"
 #include "google/cloud/talent/v4/tenant_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -37,35 +37,34 @@ namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TenantServiceConnectionImpl
-    : public talent_v4::TenantServiceConnection {
+class TenantServiceConnectionImpl : public talent_v4::TenantServiceConnection {
  public:
   ~TenantServiceConnectionImpl() override = default;
 
   TenantServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_v4_internal::TenantServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<talent_v4_internal::TenantServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::talent::v4::Tenant>
-  CreateTenant(google::cloud::talent::v4::CreateTenantRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
+      google::cloud::talent::v4::CreateTenantRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Tenant>
-  GetTenant(google::cloud::talent::v4::GetTenantRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
+      google::cloud::talent::v4::GetTenantRequest const& request) override;
 
-  StatusOr<google::cloud::talent::v4::Tenant>
-  UpdateTenant(google::cloud::talent::v4::UpdateTenantRequest const& request) override;
+  StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
+      google::cloud::talent::v4::UpdateTenantRequest const& request) override;
 
-  Status
-  DeleteTenant(google::cloud::talent::v4::DeleteTenantRequest const& request) override;
+  Status DeleteTenant(
+      google::cloud::talent::v4::DeleteTenantRequest const& request) override;
 
-  StreamRange<google::cloud::talent::v4::Tenant>
-  ListTenants(google::cloud::talent::v4::ListTenantsRequest request) override;
+  StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
+      google::cloud::talent::v4::ListTenantsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

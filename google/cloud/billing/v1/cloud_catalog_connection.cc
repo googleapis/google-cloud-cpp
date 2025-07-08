@@ -17,12 +17,12 @@
 // source: google/cloud/billing/v1/cloud_catalog.proto
 
 #include "google/cloud/billing/v1/cloud_catalog_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/billing/v1/cloud_catalog_options.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_connection_impl.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_option_defaults.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_stub_factory.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,14 +38,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudCatalogConnection::~CloudCatalogConnection() = default;
 
-StreamRange<google::cloud::billing::v1::Service> CloudCatalogConnection::ListServices(
-    google::cloud::billing::v1::ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::billing::v1::Service>
+CloudCatalogConnection::ListServices(
+    google::cloud::billing::v1::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::Service>>();
 }
 
 StreamRange<google::cloud::billing::v1::Sku> CloudCatalogConnection::ListSkus(
-    google::cloud::billing::v1::ListSkusRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::billing::v1::
+        ListSkusRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::Sku>>();
 }
@@ -53,17 +56,17 @@ StreamRange<google::cloud::billing::v1::Sku> CloudCatalogConnection::ListSkus(
 std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      CloudCatalogPolicyOptionList>(options, __func__);
-  options = billing_v1_internal::CloudCatalogDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 CloudCatalogPolicyOptionList>(options,
+                                                               __func__);
+  options = billing_v1_internal::CloudCatalogDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = billing_v1_internal::CreateDefaultCloudCatalogStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return billing_v1_internal::MakeCloudCatalogTracingConnection(
       std::make_shared<billing_v1_internal::CloudCatalogConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

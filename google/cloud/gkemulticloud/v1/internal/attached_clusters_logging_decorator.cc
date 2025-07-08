@@ -31,25 +31,26 @@ namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AttachedClustersLogging::AttachedClustersLogging(
-    std::shared_ptr<AttachedClustersStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<AttachedClustersStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncCreateAttachedCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
-        return child_->AsyncCreateAttachedCluster(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+              request) {
+        return child_->AsyncCreateAttachedCluster(cq, std::move(context),
+                                                  std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -57,13 +58,14 @@ AttachedClustersLogging::AsyncCreateAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersLogging::CreateAttachedCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+              request) {
         return child_->CreateAttachedCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -71,17 +73,20 @@ AttachedClustersLogging::CreateAttachedCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncUpdateAttachedCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
-        return child_->AsyncUpdateAttachedCluster(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+              request) {
+        return child_->AsyncUpdateAttachedCluster(cq, std::move(context),
+                                                  std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -89,13 +94,14 @@ AttachedClustersLogging::AsyncUpdateAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersLogging::UpdateAttachedCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+              request) {
         return child_->UpdateAttachedCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -103,17 +109,20 @@ AttachedClustersLogging::UpdateAttachedCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncImportAttachedCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
-        return child_->AsyncImportAttachedCluster(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+              request) {
+        return child_->AsyncImportAttachedCluster(cq, std::move(context),
+                                                  std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -121,13 +130,14 @@ AttachedClustersLogging::AsyncImportAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersLogging::ImportAttachedCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+              request) {
         return child_->ImportAttachedCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -135,13 +145,13 @@ AttachedClustersLogging::ImportAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
 AttachedClustersLogging::GetAttachedCluster(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
+                 request) {
         return child_->GetAttachedCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -149,13 +159,14 @@ AttachedClustersLogging::GetAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
 AttachedClustersLogging::ListAttachedClusters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
+              request) {
         return child_->ListAttachedClusters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,17 +174,20 @@ AttachedClustersLogging::ListAttachedClusters(
 
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncDeleteAttachedCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
-        return child_->AsyncDeleteAttachedCluster(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+              request) {
+        return child_->AsyncDeleteAttachedCluster(cq, std::move(context),
+                                                  std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -181,13 +195,14 @@ AttachedClustersLogging::AsyncDeleteAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersLogging::DeleteAttachedCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+              request) {
         return child_->DeleteAttachedCluster(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -195,96 +210,89 @@ AttachedClustersLogging::DeleteAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
 AttachedClustersLogging::GetAttachedServerConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::
+                 GetAttachedServerConfigRequest const& request) {
         return child_->GetAttachedServerConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse>
+StatusOr<google::cloud::gkemulticloud::v1::
+             GenerateAttachedClusterInstallManifestResponse>
 AttachedClustersLogging::GenerateAttachedClusterInstallManifest(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterInstallManifestRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request) {
-        return child_->GenerateAttachedClusterInstallManifest(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::
+                 GenerateAttachedClusterInstallManifestRequest const& request) {
+        return child_->GenerateAttachedClusterInstallManifest(context, options,
+                                                              request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
 AttachedClustersLogging::GenerateAttachedClusterAgentToken(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request) {
-        return child_->GenerateAttachedClusterAgentToken(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::
+                 GenerateAttachedClusterAgentTokenRequest const& request) {
+        return child_->GenerateAttachedClusterAgentToken(context, options,
+                                                         request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AttachedClustersLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AttachedClustersLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> AttachedClustersLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AttachedClustersLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AttachedClustersLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AttachedClustersLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AttachedClustersLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -302,8 +310,8 @@ AttachedClustersLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -319,8 +327,8 @@ future<Status> AttachedClustersLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

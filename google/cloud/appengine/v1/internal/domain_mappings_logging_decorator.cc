@@ -31,20 +31,16 @@ namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DomainMappingsLogging::DomainMappingsLogging(
-    std::shared_ptr<DomainMappingsStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<DomainMappingsStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsLogging::ListDomainMappings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::ListDomainMappingsRequest const& request) {
         return child_->ListDomainMappings(context, options, request);
       },
@@ -53,12 +49,10 @@ DomainMappingsLogging::ListDomainMappings(
 
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsLogging::GetDomainMapping(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetDomainMappingRequest const& request) {
         return child_->GetDomainMapping(context, options, request);
       },
@@ -67,17 +61,17 @@ DomainMappingsLogging::GetDomainMapping(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsLogging::AsyncCreateDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::CreateDomainMappingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::CreateDomainMappingRequest const& request) {
-        return child_->AsyncCreateDomainMapping(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCreateDomainMapping(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -85,12 +79,10 @@ DomainMappingsLogging::AsyncCreateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsLogging::CreateDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::CreateDomainMappingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::CreateDomainMappingRequest const& request) {
         return child_->CreateDomainMapping(context, options, request);
       },
@@ -99,17 +91,17 @@ DomainMappingsLogging::CreateDomainMapping(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsLogging::AsyncUpdateDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::UpdateDomainMappingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::UpdateDomainMappingRequest const& request) {
-        return child_->AsyncUpdateDomainMapping(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUpdateDomainMapping(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -117,12 +109,10 @@ DomainMappingsLogging::AsyncUpdateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsLogging::UpdateDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::UpdateDomainMappingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::UpdateDomainMappingRequest const& request) {
         return child_->UpdateDomainMapping(context, options, request);
       },
@@ -131,17 +121,17 @@ DomainMappingsLogging::UpdateDomainMapping(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsLogging::AsyncDeleteDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::DeleteDomainMappingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::DeleteDomainMappingRequest const& request) {
-        return child_->AsyncDeleteDomainMapping(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteDomainMapping(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -149,12 +139,10 @@ DomainMappingsLogging::AsyncDeleteDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsLogging::DeleteDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::DeleteDomainMappingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::DeleteDomainMappingRequest const& request) {
         return child_->DeleteDomainMapping(context, options, request);
       },
@@ -172,8 +160,8 @@ DomainMappingsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -189,8 +177,8 @@ future<Status> DomainMappingsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

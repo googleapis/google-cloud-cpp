@@ -46,105 +46,103 @@ KnowledgeBasesMetadata::KnowledgeBasesMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 KnowledgeBasesMetadata::ListKnowledgeBases(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListKnowledgeBases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::GetKnowledgeBase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetKnowledgeBase(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::CreateKnowledgeBase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateKnowledgeBase(context, options, request);
 }
 
-Status
-KnowledgeBasesMetadata::DeleteKnowledgeBase(
-    grpc::ClientContext& context,
-    Options const& options,
+Status KnowledgeBasesMetadata::DeleteKnowledgeBase(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteKnowledgeBase(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::UpdateKnowledgeBase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("knowledge_base.name=", internal::UrlEncode(request.knowledge_base().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("knowledge_base.name=",
+                   internal::UrlEncode(request.knowledge_base().name())));
   return child_->UpdateKnowledgeBase(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 KnowledgeBasesMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-KnowledgeBasesMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> KnowledgeBasesMetadata::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 KnowledgeBasesMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-KnowledgeBasesMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> KnowledgeBasesMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-KnowledgeBasesMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status KnowledgeBasesMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
 void KnowledgeBasesMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void KnowledgeBasesMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

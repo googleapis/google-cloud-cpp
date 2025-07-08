@@ -34,8 +34,10 @@ using ::google::cloud::dataproc_v1::BatchControllerPollingPolicyOption;
 /// @deprecated Use dataproc_v1::BatchControllerBackoffPolicyOption directly.
 using ::google::cloud::dataproc_v1::BatchControllerBackoffPolicyOption;
 
-/// @deprecated Use dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataproc_v1::
+    BatchControllerConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use dataproc_v1::BatchControllerPolicyOptionList directly.
 using ::google::cloud::dataproc_v1::BatchControllerPolicyOptionList;

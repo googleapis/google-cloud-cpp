@@ -32,8 +32,7 @@ MetadataServiceAuth::MetadataServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceAuth::CreateEntity(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CreateEntityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +40,7 @@ StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceAuth::CreateEntity(
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceAuth::UpdateEntity(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +48,7 @@ StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceAuth::UpdateEntity(
 }
 
 Status MetadataServiceAuth::DeleteEntity(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,26 +56,25 @@ Status MetadataServiceAuth::DeleteEntity(
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceAuth::GetEntity(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetEntityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetEntity(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse> MetadataServiceAuth::ListEntities(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse>
+MetadataServiceAuth::ListEntities(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEntities(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Partition> MetadataServiceAuth::CreatePartition(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::Partition>
+MetadataServiceAuth::CreatePartition(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,35 +82,34 @@ StatusOr<google::cloud::dataplex::v1::Partition> MetadataServiceAuth::CreatePart
 }
 
 Status MetadataServiceAuth::DeletePartition(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePartition(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Partition> MetadataServiceAuth::GetPartition(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::Partition>
+MetadataServiceAuth::GetPartition(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetPartitionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPartition(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse> MetadataServiceAuth::ListPartitions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse>
+MetadataServiceAuth::ListPartitions(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPartitions(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> MetadataServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+MetadataServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +117,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> MetadataServiceAuth::Li
 }
 
 StatusOr<google::cloud::location::Location> MetadataServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -131,8 +125,7 @@ StatusOr<google::cloud::location::Location> MetadataServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> MetadataServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -140,26 +133,25 @@ StatusOr<google::iam::v1::Policy> MetadataServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> MetadataServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> MetadataServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+MetadataServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> MetadataServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+MetadataServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -167,8 +159,7 @@ StatusOr<google::longrunning::ListOperationsResponse> MetadataServiceAuth::ListO
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -176,8 +167,7 @@ StatusOr<google::longrunning::Operation> MetadataServiceAuth::GetOperation(
 }
 
 Status MetadataServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -185,8 +175,7 @@ Status MetadataServiceAuth::DeleteOperation(
 }
 
 Status MetadataServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

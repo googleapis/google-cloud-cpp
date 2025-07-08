@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_HOLDS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_HOLDS_CONNECTION_H
 
+#include "google/cloud/resourcemanager/v3/internal/tag_holds_retry_traits.h"
+#include "google/cloud/resourcemanager/v3/tag_holds_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_holds_retry_traits.h"
-#include "google/cloud/resourcemanager/v3/tag_holds_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -67,14 +67,14 @@ class TagHoldsLimitedErrorCountRetryPolicy : public TagHoldsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit TagHoldsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TagHoldsLimitedErrorCountRetryPolicy(
       TagHoldsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TagHoldsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TagHoldsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TagHoldsLimitedErrorCountRetryPolicy(
       TagHoldsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TagHoldsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TagHoldsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +94,9 @@ class TagHoldsLimitedErrorCountRetryPolicy : public TagHoldsRetryPolicy {
   using BaseType = TagHoldsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<resourcemanager_v3_internal::TagHoldsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      resourcemanager_v3_internal::TagHoldsRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +134,13 @@ class TagHoldsLimitedTimeRetryPolicy : public TagHoldsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TagHoldsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   TagHoldsLimitedTimeRetryPolicy(TagHoldsLimitedTimeRetryPolicy&& rhs) noexcept
-    : TagHoldsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TagHoldsLimitedTimeRetryPolicy(TagHoldsLimitedTimeRetryPolicy const& rhs) noexcept
-    : TagHoldsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : TagHoldsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TagHoldsLimitedTimeRetryPolicy(
+      TagHoldsLimitedTimeRetryPolicy const& rhs) noexcept
+      : TagHoldsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -151,15 +154,16 @@ class TagHoldsLimitedTimeRetryPolicy : public TagHoldsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<TagHoldsRetryPolicy> clone() const override {
-    return std::make_unique<TagHoldsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<TagHoldsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = TagHoldsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<resourcemanager_v3_internal::TagHoldsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      resourcemanager_v3_internal::TagHoldsRetryTraits>
+      impl_;
 };
 
 /**
@@ -181,28 +185,34 @@ class TagHoldsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
-  CreateTagHold(google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request);
+  CreateTagHold(
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateTagHold(NoAwaitTag, google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateTagHold(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
-  CreateTagHold( google::longrunning::Operation const& operation);
+  CreateTagHold(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
+  DeleteTagHold(
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteTagHold(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteTagHold(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request);
 
-  virtual future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
+  DeleteTagHold(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::resourcemanager::v3::TagHold>
-  ListTagHolds(google::cloud::resourcemanager::v3::ListTagHoldsRequest request);
+  virtual StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(
+      google::cloud::resourcemanager::v3::ListTagHoldsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

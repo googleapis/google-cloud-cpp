@@ -32,99 +32,112 @@ FeatureOnlineStoreServiceTracingStub::FeatureOnlineStoreServiceTracingStub(
     std::shared_ptr<FeatureOnlineStoreServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse> FeatureOnlineStoreServiceTracingStub::FetchFeatureValues(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
+FeatureOnlineStoreServiceTracingStub::FetchFeatureValues(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "FetchFeatureValues");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "FetchFeatureValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchFeatureValues(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->FetchFeatureValues(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse> FeatureOnlineStoreServiceTracingStub::SearchNearestEntities(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "SearchNearestEntities");
+StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+FeatureOnlineStoreServiceTracingStub::SearchNearestEntities(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "SearchNearestEntities");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SearchNearestEntities(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->SearchNearestEntities(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> FeatureOnlineStoreServiceTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+FeatureOnlineStoreServiceTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> FeatureOnlineStoreServiceTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+FeatureOnlineStoreServiceTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy> FeatureOnlineStoreServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy>
+FeatureOnlineStoreServiceTracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy> FeatureOnlineStoreServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy>
+FeatureOnlineStoreServiceTracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> FeatureOnlineStoreServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+FeatureOnlineStoreServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> FeatureOnlineStoreServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+FeatureOnlineStoreServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> FeatureOnlineStoreServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -132,10 +145,11 @@ StatusOr<google::longrunning::Operation> FeatureOnlineStoreServiceTracingStub::G
 }
 
 Status FeatureOnlineStoreServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -143,21 +157,23 @@ Status FeatureOnlineStoreServiceTracingStub::DeleteOperation(
 }
 
 Status FeatureOnlineStoreServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService",
+      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelOperation(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> FeatureOnlineStoreServiceTracingStub::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreServiceTracingStub::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.FeatureOnlineStoreService", "WaitOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureOnlineStoreService", "WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -166,10 +182,12 @@ StatusOr<google::longrunning::Operation> FeatureOnlineStoreServiceTracingStub::W
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<FeatureOnlineStoreServiceStub> MakeFeatureOnlineStoreServiceTracingStub(
+std::shared_ptr<FeatureOnlineStoreServiceStub>
+MakeFeatureOnlineStoreServiceTracingStub(
     std::shared_ptr<FeatureOnlineStoreServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<FeatureOnlineStoreServiceTracingStub>(std::move(stub));
+  return std::make_shared<FeatureOnlineStoreServiceTracingStub>(
+      std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

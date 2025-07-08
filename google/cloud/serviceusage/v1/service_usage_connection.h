@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_SERVICE_USAGE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_SERVICE_USAGE_CONNECTION_H
 
+#include "google/cloud/serviceusage/v1/internal/service_usage_retry_traits.h"
+#include "google/cloud/serviceusage/v1/service_usage_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_retry_traits.h"
-#include "google/cloud/serviceusage/v1/service_usage_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -56,7 +56,8 @@ class ServiceUsageRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServiceUsageLimitedErrorCountRetryPolicy : public ServiceUsageRetryPolicy {
+class ServiceUsageLimitedErrorCountRetryPolicy
+    : public ServiceUsageRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ServiceUsageLimitedErrorCountRetryPolicy : public ServiceUsageRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit ServiceUsageLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ServiceUsageLimitedErrorCountRetryPolicy(
       ServiceUsageLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ServiceUsageLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServiceUsageLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ServiceUsageLimitedErrorCountRetryPolicy(
       ServiceUsageLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ServiceUsageLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServiceUsageLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ServiceUsageLimitedErrorCountRetryPolicy : public ServiceUsageRetryPolicy 
   using BaseType = ServiceUsageRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<serviceusage_v1_internal::ServiceUsageRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      serviceusage_v1_internal::ServiceUsageRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class ServiceUsageLimitedTimeRetryPolicy : public ServiceUsageRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ServiceUsageLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ServiceUsageLimitedTimeRetryPolicy(ServiceUsageLimitedTimeRetryPolicy&& rhs) noexcept
-    : ServiceUsageLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ServiceUsageLimitedTimeRetryPolicy(ServiceUsageLimitedTimeRetryPolicy const& rhs) noexcept
-    : ServiceUsageLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceUsageLimitedTimeRetryPolicy(
+      ServiceUsageLimitedTimeRetryPolicy&& rhs) noexcept
+      : ServiceUsageLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceUsageLimitedTimeRetryPolicy(
+      ServiceUsageLimitedTimeRetryPolicy const& rhs) noexcept
+      : ServiceUsageLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class ServiceUsageLimitedTimeRetryPolicy : public ServiceUsageRetryPolicy {
   using BaseType = ServiceUsageRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<serviceusage_v1_internal::ServiceUsageRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      serviceusage_v1_internal::ServiceUsageRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,46 +187,57 @@ class ServiceUsageConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService(google::api::serviceusage::v1::EnableServiceRequest const& request);
+  EnableService(
+      google::api::serviceusage::v1::EnableServiceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  EnableService(NoAwaitTag, google::api::serviceusage::v1::EnableServiceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> EnableService(
+      NoAwaitTag,
+      google::api::serviceusage::v1::EnableServiceRequest const& request);
 
   virtual future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService( google::longrunning::Operation const& operation);
+  EnableService(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService(google::api::serviceusage::v1::DisableServiceRequest const& request);
+  virtual future<
+      StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
+  DisableService(
+      google::api::serviceusage::v1::DisableServiceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DisableService(NoAwaitTag, google::api::serviceusage::v1::DisableServiceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DisableService(
+      NoAwaitTag,
+      google::api::serviceusage::v1::DisableServiceRequest const& request);
 
-  virtual future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
+  DisableService(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::api::serviceusage::v1::Service>
-  GetService(google::api::serviceusage::v1::GetServiceRequest const& request);
+  virtual StatusOr<google::api::serviceusage::v1::Service> GetService(
+      google::api::serviceusage::v1::GetServiceRequest const& request);
 
-  virtual StreamRange<google::api::serviceusage::v1::Service>
-  ListServices(google::api::serviceusage::v1::ListServicesRequest request);
+  virtual StreamRange<google::api::serviceusage::v1::Service> ListServices(
+      google::api::serviceusage::v1::ListServicesRequest request);
 
-  virtual future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-  BatchEnableServices(google::api::serviceusage::v1::BatchEnableServicesRequest const& request);
+  virtual future<
+      StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
+  BatchEnableServices(
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchEnableServices(NoAwaitTag, google::api::serviceusage::v1::BatchEnableServicesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchEnableServices(
+      NoAwaitTag,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request);
 
-  virtual future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-  BatchEnableServices( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
+  BatchEnableServices(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const& request);
+  BatchGetServices(
+      google::api::serviceusage::v1::BatchGetServicesRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

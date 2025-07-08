@@ -35,30 +35,36 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataCatalogDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATA_CATALOG_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DATA_CATALOG_AUTHORITY",
-      "datacatalog.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_DATA_CATALOG_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DATA_CATALOG_AUTHORITY", "datacatalog.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datacatalog_v1::DataCatalogRetryPolicyOption>()) {
     options.set<datacatalog_v1::DataCatalogRetryPolicyOption>(
         datacatalog_v1::DataCatalogLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<datacatalog_v1::DataCatalogBackoffPolicyOption>()) {
     options.set<datacatalog_v1::DataCatalogBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<datacatalog_v1::DataCatalogPollingPolicyOption>()) {
     options.set<datacatalog_v1::DataCatalogPollingPolicyOption>(
         GenericPollingPolicy<
             datacatalog_v1::DataCatalogRetryPolicyOption::Type,
             datacatalog_v1::DataCatalogBackoffPolicyOption::Type>(
-            options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()->clone(),
+            options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()) {
     options.set<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>(
         datacatalog_v1::MakeDefaultDataCatalogConnectionIdempotencyPolicy());
   }

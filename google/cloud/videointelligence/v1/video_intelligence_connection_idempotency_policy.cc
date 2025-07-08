@@ -26,20 +26,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-VideoIntelligenceServiceConnectionIdempotencyPolicy::~VideoIntelligenceServiceConnectionIdempotencyPolicy() = default;
+VideoIntelligenceServiceConnectionIdempotencyPolicy::
+    ~VideoIntelligenceServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
 VideoIntelligenceServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<VideoIntelligenceServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<VideoIntelligenceServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency VideoIntelligenceServiceConnectionIdempotencyPolicy::AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const&) {
+Idempotency VideoIntelligenceServiceConnectionIdempotencyPolicy::AnnotateVideo(
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
-    MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<VideoIntelligenceServiceConnectionIdempotencyPolicy>();
+MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      VideoIntelligenceServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

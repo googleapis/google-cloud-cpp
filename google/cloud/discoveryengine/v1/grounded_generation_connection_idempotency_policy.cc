@@ -26,36 +26,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-GroundedGenerationServiceConnectionIdempotencyPolicy::~GroundedGenerationServiceConnectionIdempotencyPolicy() = default;
+GroundedGenerationServiceConnectionIdempotencyPolicy::
+    ~GroundedGenerationServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<GroundedGenerationServiceConnectionIdempotencyPolicy>
 GroundedGenerationServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<GroundedGenerationServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<GroundedGenerationServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency GroundedGenerationServiceConnectionIdempotencyPolicy::GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&) {
+Idempotency
+GroundedGenerationServiceConnectionIdempotencyPolicy::GenerateGroundedContent(
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GroundedGenerationServiceConnectionIdempotencyPolicy::CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const&) {
+Idempotency
+GroundedGenerationServiceConnectionIdempotencyPolicy::CheckGrounding(
+    google::cloud::discoveryengine::v1::CheckGroundingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GroundedGenerationServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency
+GroundedGenerationServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency GroundedGenerationServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency GroundedGenerationServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency GroundedGenerationServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency
+GroundedGenerationServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<GroundedGenerationServiceConnectionIdempotencyPolicy>
-    MakeDefaultGroundedGenerationServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<GroundedGenerationServiceConnectionIdempotencyPolicy>();
+MakeDefaultGroundedGenerationServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      GroundedGenerationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

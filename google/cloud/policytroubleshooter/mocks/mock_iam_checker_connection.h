@@ -30,7 +30,8 @@ namespace cloud {
 namespace policytroubleshooter_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use policytroubleshooter_v1_mocks::MockIamCheckerConnection directly.
+/// @deprecated Use policytroubleshooter_v1_mocks::MockIamCheckerConnection
+/// directly.
 using ::google::cloud::policytroubleshooter_v1_mocks::MockIamCheckerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

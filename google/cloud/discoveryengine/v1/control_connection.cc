@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/control_service.proto
 
 #include "google/cloud/discoveryengine/v1/control_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/control_options.h"
 #include "google/cloud/discoveryengine/v1/internal/control_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/control_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/control_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/control_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,8 +44,7 @@ ControlServiceConnection::CreateControl(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ControlServiceConnection::DeleteControl(
+Status ControlServiceConnection::DeleteControl(
     google::cloud::discoveryengine::v1::DeleteControlRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -62,26 +61,28 @@ ControlServiceConnection::GetControl(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::discoveryengine::v1::Control> ControlServiceConnection::ListControls(
-    google::cloud::discoveryengine::v1::ListControlsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::discoveryengine::v1::Control>
+ControlServiceConnection::ListControls(
+    google::cloud::discoveryengine::v1::
+        ListControlsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::Control>>();
 }
 
-StreamRange<google::longrunning::Operation> ControlServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ControlServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ControlServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ControlServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ControlServiceConnection::CancelOperation(
+Status ControlServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -89,17 +90,19 @@ ControlServiceConnection::CancelOperation(
 std::shared_ptr<ControlServiceConnection> MakeControlServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ControlServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ControlServicePolicyOptionList>(options,
+                                                                 __func__);
   options = discoveryengine_v1_internal::ControlServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = discoveryengine_v1_internal::CreateDefaultControlServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return discoveryengine_v1_internal::MakeControlServiceTracingConnection(
-      std::make_shared<discoveryengine_v1_internal::ControlServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          discoveryengine_v1_internal::ControlServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

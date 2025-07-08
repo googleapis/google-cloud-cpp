@@ -36,57 +36,66 @@ class MachineImagesTracingConnection
   ~MachineImagesTracingConnection() override = default;
 
   explicit MachineImagesTracingConnection(
-    std::shared_ptr<compute_machine_images_v1::MachineImagesConnection> child);
+      std::shared_ptr<compute_machine_images_v1::MachineImagesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request) override;
+  DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                         DeleteMachineImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteMachineImage(NoAwaitTag,
-      google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImage(
+      NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::
+                      DeleteMachineImageRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteMachineImage(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-  GetMachineImage(google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImage(
+      google::cloud::cpp::compute::machine_images::v1::
+          GetMachineImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::machine_images::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request) override;
+  InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                         InsertMachineImageRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertMachineImage(NoAwaitTag,
-      google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImage(
+      NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::
+                      InsertMachineImageRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertMachineImage(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::MachineImage>
-  ListMachineImages(google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
+      google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::machine_images::v1::
+          SetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_machine_images_v1::MachineImagesConnection> child_;

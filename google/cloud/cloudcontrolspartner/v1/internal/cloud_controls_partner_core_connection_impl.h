@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_connection.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_connection_idempotency_policy.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_options.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_retry_traits.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,48 +43,66 @@ class CloudControlsPartnerCoreConnectionImpl
   ~CloudControlsPartnerCoreConnectionImpl() override = default;
 
   CloudControlsPartnerCoreConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
-  GetWorkload(google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Workload> GetWorkload(
+      google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>
-  ListWorkloads(google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request) override;
+  StreamRange<google::cloud::cloudcontrolspartner::v1::Workload> ListWorkloads(
+      google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request)
+      override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-  GetCustomer(google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
+      google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>
-  ListCustomers(google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request) override;
+  StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> ListCustomers(
+      google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request)
+      override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
-  GetEkmConnections(google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) override;
+  GetEkmConnections(
+      google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
-  GetPartnerPermissions(google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) override;
+  GetPartnerPermissions(
+      google::cloud::cloudcontrolspartner::v1::
+          GetPartnerPermissionsRequest const& request) override;
 
   StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
-  ListAccessApprovalRequests(google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest request) override;
+  ListAccessApprovalRequests(
+      google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest
+          request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
-  GetPartner(google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> GetPartner(
+      google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-  CreateCustomer(google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-  UpdateCustomer(google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request) override;
 
-  Status
-  DeleteCustomer(google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) override;
+  Status DeleteCustomer(
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreStub> stub_;
+  std::shared_ptr<
+      cloudcontrolspartner_v1_internal::CloudControlsPartnerCoreStub>
+      stub_;
   Options options_;
 };
 

@@ -35,13 +35,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionZonesRestMetadata : public RegionZonesRestStub {
  public:
   ~RegionZonesRestMetadata() override = default;
-  explicit RegionZonesRestMetadata(
-      std::shared_ptr<RegionZonesRestStub> child,
-      std::string api_client_header = "");
+  explicit RegionZonesRestMetadata(std::shared_ptr<RegionZonesRestStub> child,
+                                   std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListRegionZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::region_zones::v1::
+          ListRegionZonesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

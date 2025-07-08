@@ -26,10 +26,13 @@ namespace cloud {
 namespace shell {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use shell_v1::MakeDefaultCloudShellServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::shell_v1::MakeDefaultCloudShellServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// shell_v1::MakeDefaultCloudShellServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::shell_v1::
+    MakeDefaultCloudShellServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use shell_v1::CloudShellServiceConnectionIdempotencyPolicy directly.
+/// @deprecated Use shell_v1::CloudShellServiceConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::shell_v1::CloudShellServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

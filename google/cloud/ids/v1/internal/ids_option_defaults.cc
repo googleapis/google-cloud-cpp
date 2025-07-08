@@ -35,28 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options IDSDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IDS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_IDS_AUTHORITY",
-      "ids.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_IDS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_IDS_AUTHORITY", "ids.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<ids_v1::IDSRetryPolicyOption>()) {
     options.set<ids_v1::IDSRetryPolicyOption>(
-        ids_v1::IDSLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        ids_v1::IDSLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
   }
   if (!options.has<ids_v1::IDSBackoffPolicyOption>()) {
     options.set<ids_v1::IDSBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<ids_v1::IDSPollingPolicyOption>()) {
     options.set<ids_v1::IDSPollingPolicyOption>(
-        GenericPollingPolicy<
-            ids_v1::IDSRetryPolicyOption::Type,
-            ids_v1::IDSBackoffPolicyOption::Type>(
+        GenericPollingPolicy<ids_v1::IDSRetryPolicyOption::Type,
+                             ids_v1::IDSBackoffPolicyOption::Type>(
             options.get<ids_v1::IDSRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<ids_v1::IDSConnectionIdempotencyPolicyOption>()) {
     options.set<ids_v1::IDSConnectionIdempotencyPolicyOption>(

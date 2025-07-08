@@ -33,10 +33,13 @@ using ::google::cloud::accessapproval_v1::MakeAccessApprovalConnection;
 /// @deprecated Use accessapproval_v1::AccessApprovalConnection directly.
 using ::google::cloud::accessapproval_v1::AccessApprovalConnection;
 
-/// @deprecated Use accessapproval_v1::AccessApprovalLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::accessapproval_v1::AccessApprovalLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// accessapproval_v1::AccessApprovalLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::accessapproval_v1::
+    AccessApprovalLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy directly.
+/// @deprecated Use accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy;
 
 /// @deprecated Use accessapproval_v1::AccessApprovalRetryPolicy directly.

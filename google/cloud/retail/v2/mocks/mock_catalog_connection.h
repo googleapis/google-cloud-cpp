@@ -42,61 +42,78 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCatalogServiceConnection : public retail_v2::CatalogServiceConnection {
+class MockCatalogServiceConnection
+    : public retail_v2::CatalogServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::retail::v2::Catalog>),
-  ListCatalogs,
-  (google::cloud::retail::v2::ListCatalogsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::retail::v2::Catalog>), ListCatalogs,
+              (google::cloud::retail::v2::ListCatalogsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Catalog>,
-  UpdateCatalog,
-  (google::cloud::retail::v2::UpdateCatalogRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Catalog>, UpdateCatalog,
+              (google::cloud::retail::v2::UpdateCatalogRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  SetDefaultBranch,
-  (google::cloud::retail::v2::SetDefaultBranchRequest const& request), (override));
+  MOCK_METHOD(
+      Status, SetDefaultBranch,
+      (google::cloud::retail::v2::SetDefaultBranchRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>,
-  GetDefaultBranch,
-  (google::cloud::retail::v2::GetDefaultBranchRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>,
+      GetDefaultBranch,
+      (google::cloud::retail::v2::GetDefaultBranchRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::CompletionConfig>,
-  GetCompletionConfig,
-  (google::cloud::retail::v2::GetCompletionConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::CompletionConfig>,
+      GetCompletionConfig,
+      (google::cloud::retail::v2::GetCompletionConfigRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::CompletionConfig>,
-  UpdateCompletionConfig,
-  (google::cloud::retail::v2::UpdateCompletionConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::CompletionConfig>,
+      UpdateCompletionConfig,
+      (google::cloud::retail::v2::UpdateCompletionConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::AttributesConfig>,
+      GetAttributesConfig,
+      (google::cloud::retail::v2::GetAttributesConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::AttributesConfig>,
+      UpdateAttributesConfig,
+      (google::cloud::retail::v2::UpdateAttributesConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::AttributesConfig>,
+      AddCatalogAttribute,
+      (google::cloud::retail::v2::AddCatalogAttributeRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::retail::v2::AttributesConfig>,
+      RemoveCatalogAttribute,
+      (google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::retail::v2::AttributesConfig>,
-  GetAttributesConfig,
-  (google::cloud::retail::v2::GetAttributesConfigRequest const& request), (override));
+              ReplaceCatalogAttribute,
+              (google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::AttributesConfig>,
-  UpdateAttributesConfig,
-  (google::cloud::retail::v2::UpdateAttributesConfigRequest const& request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::AttributesConfig>,
-  AddCatalogAttribute,
-  (google::cloud::retail::v2::AddCatalogAttributeRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::AttributesConfig>,
-  RemoveCatalogAttribute,
-  (google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::AttributesConfig>,
-  ReplaceCatalogAttribute,
-  (google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

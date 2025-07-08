@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_ssl_certs.proto
 
 #include "google/cloud/sql/v1/internal/sql_ssl_certs_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,41 +41,40 @@ SqlSslCertsServiceRestMetadata::SqlSslCertsServiceRestMetadata(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlSslCertsServiceRestMetadata::Delete(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Delete(rest_context, options, request);
 }
 
-StatusOr<google::cloud::sql::v1::SslCert>
-SqlSslCertsServiceRestMetadata::Get(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
+StatusOr<google::cloud::sql::v1::SslCert> SqlSslCertsServiceRestMetadata::Get(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Get(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
 SqlSslCertsServiceRestMetadata::Insert(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Insert(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
 SqlSslCertsServiceRestMetadata::List(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->List(rest_context, options, request);
 }
 
 void SqlSslCertsServiceRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

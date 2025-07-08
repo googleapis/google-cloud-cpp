@@ -17,17 +17,17 @@
 // source: google/cloud/talent/v4/job_service.proto
 
 #include "google/cloud/talent/v4/internal/job_stub_factory.h"
+#include "google/cloud/talent/v4/internal/job_auth_decorator.h"
+#include "google/cloud/talent/v4/internal/job_logging_decorator.h"
+#include "google/cloud/talent/v4/internal/job_metadata_decorator.h"
+#include "google/cloud/talent/v4/internal/job_stub.h"
+#include "google/cloud/talent/v4/internal/job_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/talent/v4/internal/job_auth_decorator.h"
-#include "google/cloud/talent/v4/internal/job_logging_decorator.h"
-#include "google/cloud/talent/v4/internal/job_metadata_decorator.h"
-#include "google/cloud/talent/v4/internal/job_stub.h"
-#include "google/cloud/talent/v4/internal/job_tracing_stub.h"
 #include <google/cloud/talent/v4/job_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -38,30 +38,27 @@ namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<JobServiceStub>
-CreateDefaultJobServiceStub(
+std::shared_ptr<JobServiceStub> CreateDefaultJobServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::talent::v4::JobService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::talent::v4::JobService::NewStub(channel);
   std::shared_ptr<JobServiceStub> stub =
-    std::make_shared<DefaultJobServiceStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultJobServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<JobServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<JobServiceAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<JobServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<JobServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

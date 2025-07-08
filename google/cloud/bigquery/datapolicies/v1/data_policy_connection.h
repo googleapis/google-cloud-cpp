@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_DATA_POLICY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATAPOLICIES_V1_DATA_POLICY_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class DataPolicyServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataPolicyServiceLimitedErrorCountRetryPolicy : public DataPolicyServiceRetryPolicy {
+class DataPolicyServiceLimitedErrorCountRetryPolicy
+    : public DataPolicyServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class DataPolicyServiceLimitedErrorCountRetryPolicy : public DataPolicyServiceRe
    *     @p maximum_failures == 0.
    */
   explicit DataPolicyServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DataPolicyServiceLimitedErrorCountRetryPolicy(
       DataPolicyServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DataPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataPolicyServiceLimitedErrorCountRetryPolicy(
       DataPolicyServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DataPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class DataPolicyServiceLimitedErrorCountRetryPolicy : public DataPolicyServiceRe
   using BaseType = DataPolicyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_datapolicies_v1_internal::DataPolicyServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_datapolicies_v1_internal::DataPolicyServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class DataPolicyServiceLimitedErrorCountRetryPolicy : public DataPolicyServiceRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataPolicyServiceLimitedTimeRetryPolicy : public DataPolicyServiceRetryPolicy {
+class DataPolicyServiceLimitedTimeRetryPolicy
+    : public DataPolicyServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class DataPolicyServiceLimitedTimeRetryPolicy : public DataPolicyServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit DataPolicyServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DataPolicyServiceLimitedTimeRetryPolicy(DataPolicyServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DataPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataPolicyServiceLimitedTimeRetryPolicy(DataPolicyServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DataPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataPolicyServiceLimitedTimeRetryPolicy(
+      DataPolicyServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DataPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataPolicyServiceLimitedTimeRetryPolicy(
+      DataPolicyServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +160,23 @@ class DataPolicyServiceLimitedTimeRetryPolicy : public DataPolicyServiceRetryPol
   using BaseType = DataPolicyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_datapolicies_v1_internal::DataPolicyServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_datapolicies_v1_internal::DataPolicyServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `DataPolicyServiceConnection` object for `DataPolicyServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DataPolicyServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `DataPolicyServiceClient`.
+ * sets in `DataPolicyServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `DataPolicyServiceClient`.
  *
  * To create a concrete instance, see `MakeDataPolicyServiceConnection()`.
  *
- * For mocking, see `bigquery_datapolicies_v1_mocks::MockDataPolicyServiceConnection`.
+ * For mocking, see
+ * `bigquery_datapolicies_v1_mocks::MockDataPolicyServiceConnection`.
  */
 class DataPolicyServiceConnection {
  public:
@@ -176,53 +185,67 @@ class DataPolicyServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  CreateDataPolicy(google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request);
+  CreateDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  UpdateDataPolicy(google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request);
+  UpdateDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  RenameDataPolicy(google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request);
+  RenameDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
+          request);
 
-  virtual Status
-  DeleteDataPolicy(google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request);
+  virtual Status DeleteDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  GetDataPolicy(google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request);
+  GetDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
+          request);
 
   virtual StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  ListDataPolicies(google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest request);
+  ListDataPolicies(
+      google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `DataPolicyServiceConnection`.
+ * A factory function to construct an object of type
+ * `DataPolicyServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of DataPolicyServiceClient.
+ * should be passed as an argument to the constructor of
+ * DataPolicyServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataPolicyServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `DataPolicyServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery_datapolicies_v1::DataPolicyServicePolicyOptionList`
+ * -
+ * `google::cloud::bigquery_datapolicies_v1::DataPolicyServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DataPolicyServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `DataPolicyServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<DataPolicyServiceConnection> MakeDataPolicyServiceConnection(
     Options options = {});

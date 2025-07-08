@@ -26,10 +26,13 @@ namespace cloud {
 namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use memcache_v1::MakeDefaultCloudMemcacheConnectionIdempotencyPolicy directly.
-using ::google::cloud::memcache_v1::MakeDefaultCloudMemcacheConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// memcache_v1::MakeDefaultCloudMemcacheConnectionIdempotencyPolicy directly.
+using ::google::cloud::memcache_v1::
+    MakeDefaultCloudMemcacheConnectionIdempotencyPolicy;
 
-/// @deprecated Use memcache_v1::CloudMemcacheConnectionIdempotencyPolicy directly.
+/// @deprecated Use memcache_v1::CloudMemcacheConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::memcache_v1::CloudMemcacheConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

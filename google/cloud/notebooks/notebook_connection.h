@@ -33,10 +33,13 @@ using ::google::cloud::notebooks_v1::MakeNotebookServiceConnection;
 /// @deprecated Use notebooks_v1::NotebookServiceConnection directly.
 using ::google::cloud::notebooks_v1::NotebookServiceConnection;
 
-/// @deprecated Use notebooks_v1::NotebookServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::notebooks_v1::NotebookServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use notebooks_v1::NotebookServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::notebooks_v1::
+    NotebookServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use notebooks_v1::NotebookServiceLimitedTimeRetryPolicy directly.
+/// @deprecated Use notebooks_v1::NotebookServiceLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::notebooks_v1::NotebookServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use notebooks_v1::NotebookServiceRetryPolicy directly.

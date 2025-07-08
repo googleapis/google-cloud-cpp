@@ -26,35 +26,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ImageAnnotatorConnectionIdempotencyPolicy::~ImageAnnotatorConnectionIdempotencyPolicy() = default;
+ImageAnnotatorConnectionIdempotencyPolicy::
+    ~ImageAnnotatorConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
 ImageAnnotatorConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ImageAnnotatorConnectionIdempotencyPolicy::BatchAnnotateImages(google::cloud::vision::v1::BatchAnnotateImagesRequest const&) {
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::BatchAnnotateImages(
+    google::cloud::vision::v1::BatchAnnotateImagesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImageAnnotatorConnectionIdempotencyPolicy::BatchAnnotateFiles(google::cloud::vision::v1::BatchAnnotateFilesRequest const&) {
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::BatchAnnotateFiles(
+    google::cloud::vision::v1::BatchAnnotateFilesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImageAnnotatorConnectionIdempotencyPolicy::AsyncBatchAnnotateImages(google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&) {
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::AsyncBatchAnnotateImages(
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImageAnnotatorConnectionIdempotencyPolicy::AsyncBatchAnnotateFiles(google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&) {
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::AsyncBatchAnnotateFiles(
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ImageAnnotatorConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
-    MakeDefaultImageAnnotatorConnectionIdempotencyPolicy() {
+MakeDefaultImageAnnotatorConnectionIdempotencyPolicy() {
   return std::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>();
 }
 

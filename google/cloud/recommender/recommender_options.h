@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use recommender_v1::RecommenderBackoffPolicyOption directly.
 using ::google::cloud::recommender_v1::RecommenderBackoffPolicyOption;
 
-/// @deprecated Use recommender_v1::RecommenderConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::recommender_v1::RecommenderConnectionIdempotencyPolicyOption;
+/// @deprecated Use recommender_v1::RecommenderConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::recommender_v1::
+    RecommenderConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use recommender_v1::RecommenderPolicyOptionList directly.
 using ::google::cloud::recommender_v1::RecommenderPolicyOptionList;

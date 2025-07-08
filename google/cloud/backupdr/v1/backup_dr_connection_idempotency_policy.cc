@@ -26,130 +26,161 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BackupDRConnectionIdempotencyPolicy::~BackupDRConnectionIdempotencyPolicy() = default;
+BackupDRConnectionIdempotencyPolicy::~BackupDRConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<BackupDRConnectionIdempotencyPolicy>
 BackupDRConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BackupDRConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListManagementServers(
+    google::cloud::backupdr::v1::ListManagementServersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetManagementServer(
+    google::cloud::backupdr::v1::GetManagementServerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::CreateManagementServer(
+    google::cloud::backupdr::v1::CreateManagementServerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::DeleteManagementServer(
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::CreateBackupVault(google::cloud::backupdr::v1::CreateBackupVaultRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::CreateBackupVault(
+    google::cloud::backupdr::v1::CreateBackupVaultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListBackupVaults(google::cloud::backupdr::v1::ListBackupVaultsRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListBackupVaults(
+    google::cloud::backupdr::v1::ListBackupVaultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::FetchUsableBackupVaults(google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::FetchUsableBackupVaults(
+    google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetBackupVault(google::cloud::backupdr::v1::GetBackupVaultRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetBackupVault(
+    google::cloud::backupdr::v1::GetBackupVaultRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::UpdateBackupVault(google::cloud::backupdr::v1::UpdateBackupVaultRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::UpdateBackupVault(
+    google::cloud::backupdr::v1::UpdateBackupVaultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupVault(google::cloud::backupdr::v1::DeleteBackupVaultRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupVault(
+    google::cloud::backupdr::v1::DeleteBackupVaultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListDataSources(google::cloud::backupdr::v1::ListDataSourcesRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListDataSources(
+    google::cloud::backupdr::v1::ListDataSourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetDataSource(google::cloud::backupdr::v1::GetDataSourceRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetDataSource(
+    google::cloud::backupdr::v1::GetDataSourceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::UpdateDataSource(google::cloud::backupdr::v1::UpdateDataSourceRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::UpdateDataSource(
+    google::cloud::backupdr::v1::UpdateDataSourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListBackups(google::cloud::backupdr::v1::ListBackupsRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListBackups(
+    google::cloud::backupdr::v1::ListBackupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetBackup(google::cloud::backupdr::v1::GetBackupRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetBackup(
+    google::cloud::backupdr::v1::GetBackupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::UpdateBackup(google::cloud::backupdr::v1::UpdateBackupRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::UpdateBackup(
+    google::cloud::backupdr::v1::UpdateBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackup(google::cloud::backupdr::v1::DeleteBackupRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackup(
+    google::cloud::backupdr::v1::DeleteBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::RestoreBackup(google::cloud::backupdr::v1::RestoreBackupRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::RestoreBackup(
+    google::cloud::backupdr::v1::RestoreBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::CreateBackupPlan(google::cloud::backupdr::v1::CreateBackupPlanRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::CreateBackupPlan(
+    google::cloud::backupdr::v1::CreateBackupPlanRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetBackupPlan(google::cloud::backupdr::v1::GetBackupPlanRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetBackupPlan(
+    google::cloud::backupdr::v1::GetBackupPlanRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListBackupPlans(google::cloud::backupdr::v1::ListBackupPlansRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListBackupPlans(
+    google::cloud::backupdr::v1::ListBackupPlansRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupPlan(google::cloud::backupdr::v1::DeleteBackupPlanRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupPlan(
+    google::cloud::backupdr::v1::DeleteBackupPlanRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::CreateBackupPlanAssociation(google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::CreateBackupPlanAssociation(
+    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetBackupPlanAssociation(google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetBackupPlanAssociation(
+    google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListBackupPlanAssociations(google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListBackupPlanAssociations(
+    google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupPlanAssociation(google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::DeleteBackupPlanAssociation(
+    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::TriggerBackup(google::cloud::backupdr::v1::TriggerBackupRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::TriggerBackup(
+    google::cloud::backupdr::v1::TriggerBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::InitializeService(google::cloud::backupdr::v1::InitializeServiceRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::InitializeService(
+    google::cloud::backupdr::v1::InitializeServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -159,32 +190,38 @@ Idempotency BackupDRConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency BackupDRConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackupDRConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency BackupDRConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<BackupDRConnectionIdempotencyPolicy>
-    MakeDefaultBackupDRConnectionIdempotencyPolicy() {
+MakeDefaultBackupDRConnectionIdempotencyPolicy() {
   return std::make_unique<BackupDRConnectionIdempotencyPolicy>();
 }
 

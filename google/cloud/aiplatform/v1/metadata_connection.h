@@ -57,7 +57,8 @@ class MetadataServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetadataServiceLimitedErrorCountRetryPolicy : public MetadataServiceRetryPolicy {
+class MetadataServiceLimitedErrorCountRetryPolicy
+    : public MetadataServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,14 @@ class MetadataServiceLimitedErrorCountRetryPolicy : public MetadataServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit MetadataServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   MetadataServiceLimitedErrorCountRetryPolicy(
       MetadataServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : MetadataServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MetadataServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MetadataServiceLimitedErrorCountRetryPolicy(
       MetadataServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : MetadataServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MetadataServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +95,9 @@ class MetadataServiceLimitedErrorCountRetryPolicy : public MetadataServiceRetryP
   using BaseType = MetadataServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::MetadataServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::MetadataServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -107,7 +110,8 @@ class MetadataServiceLimitedErrorCountRetryPolicy : public MetadataServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetadataServiceLimitedTimeRetryPolicy : public MetadataServiceRetryPolicy {
+class MetadataServiceLimitedTimeRetryPolicy
+    : public MetadataServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +136,14 @@ class MetadataServiceLimitedTimeRetryPolicy : public MetadataServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit MetadataServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  MetadataServiceLimitedTimeRetryPolicy(MetadataServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : MetadataServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MetadataServiceLimitedTimeRetryPolicy(MetadataServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : MetadataServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetadataServiceLimitedTimeRetryPolicy(
+      MetadataServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : MetadataServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetadataServiceLimitedTimeRetryPolicy(
+      MetadataServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : MetadataServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,7 +165,9 @@ class MetadataServiceLimitedTimeRetryPolicy : public MetadataServiceRetryPolicy 
   using BaseType = MetadataServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::MetadataServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::MetadataServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -181,189 +189,237 @@ class MetadataServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-  CreateMetadataStore(google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request);
+  CreateMetadataStore(
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateMetadataStore(NoAwaitTag, google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateMetadataStore(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-  CreateMetadataStore( google::longrunning::Operation const& operation);
+  CreateMetadataStore(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::MetadataStore>
-  GetMetadataStore(google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request);
+  GetMetadataStore(
+      google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::MetadataStore>
-  ListMetadataStores(google::cloud::aiplatform::v1::ListMetadataStoresRequest request);
+  ListMetadataStores(
+      google::cloud::aiplatform::v1::ListMetadataStoresRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-  DeleteMetadataStore(google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+  DeleteMetadataStore(
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteMetadataStore(NoAwaitTag, google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteMetadataStore(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-  DeleteMetadataStore( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+  DeleteMetadataStore(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Artifact>
-  CreateArtifact(google::cloud::aiplatform::v1::CreateArtifactRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Artifact> CreateArtifact(
+      google::cloud::aiplatform::v1::CreateArtifactRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Artifact>
-  GetArtifact(google::cloud::aiplatform::v1::GetArtifactRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Artifact> GetArtifact(
+      google::cloud::aiplatform::v1::GetArtifactRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Artifact>
-  ListArtifacts(google::cloud::aiplatform::v1::ListArtifactsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Artifact> ListArtifacts(
+      google::cloud::aiplatform::v1::ListArtifactsRequest request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Artifact>
-  UpdateArtifact(google::cloud::aiplatform::v1::UpdateArtifactRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Artifact> UpdateArtifact(
+      google::cloud::aiplatform::v1::UpdateArtifactRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteArtifact(google::cloud::aiplatform::v1::DeleteArtifactRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteArtifact(
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteArtifact(NoAwaitTag, google::cloud::aiplatform::v1::DeleteArtifactRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteArtifact(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteArtifact( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteArtifact(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-  PurgeArtifacts(google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
+  PurgeArtifacts(
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  PurgeArtifacts(NoAwaitTag, google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> PurgeArtifacts(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-  PurgeArtifacts( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
+  PurgeArtifacts(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Context>
-  CreateContext(google::cloud::aiplatform::v1::CreateContextRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Context> CreateContext(
+      google::cloud::aiplatform::v1::CreateContextRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Context>
-  GetContext(google::cloud::aiplatform::v1::GetContextRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Context> GetContext(
+      google::cloud::aiplatform::v1::GetContextRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Context>
-  ListContexts(google::cloud::aiplatform::v1::ListContextsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Context> ListContexts(
+      google::cloud::aiplatform::v1::ListContextsRequest request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Context>
-  UpdateContext(google::cloud::aiplatform::v1::UpdateContextRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Context> UpdateContext(
+      google::cloud::aiplatform::v1::UpdateContextRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteContext(google::cloud::aiplatform::v1::DeleteContextRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteContext(
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteContext(NoAwaitTag, google::cloud::aiplatform::v1::DeleteContextRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteContext(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteContext( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteContext(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-  PurgeContexts(google::cloud::aiplatform::v1::PurgeContextsRequest const& request);
+  PurgeContexts(
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  PurgeContexts(NoAwaitTag, google::cloud::aiplatform::v1::PurgeContextsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> PurgeContexts(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-  PurgeContexts( google::longrunning::Operation const& operation);
+  PurgeContexts(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
-  AddContextArtifactsAndExecutions(google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest const& request);
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
+  AddContextArtifactsAndExecutions(
+      google::cloud::aiplatform::v1::
+          AddContextArtifactsAndExecutionsRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
-  AddContextChildren(google::cloud::aiplatform::v1::AddContextChildrenRequest const& request);
+  AddContextChildren(
+      google::cloud::aiplatform::v1::AddContextChildrenRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
-  RemoveContextChildren(google::cloud::aiplatform::v1::RemoveContextChildrenRequest const& request);
+  RemoveContextChildren(
+      google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-  QueryContextLineageSubgraph(google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const& request);
+  QueryContextLineageSubgraph(
+      google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Execution>
-  CreateExecution(google::cloud::aiplatform::v1::CreateExecutionRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Execution> CreateExecution(
+      google::cloud::aiplatform::v1::CreateExecutionRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Execution>
-  GetExecution(google::cloud::aiplatform::v1::GetExecutionRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Execution> GetExecution(
+      google::cloud::aiplatform::v1::GetExecutionRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Execution>
-  ListExecutions(google::cloud::aiplatform::v1::ListExecutionsRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Execution> ListExecutions(
+      google::cloud::aiplatform::v1::ListExecutionsRequest request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Execution>
-  UpdateExecution(google::cloud::aiplatform::v1::UpdateExecutionRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Execution> UpdateExecution(
+      google::cloud::aiplatform::v1::UpdateExecutionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteExecution(google::cloud::aiplatform::v1::DeleteExecutionRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteExecution(
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteExecution(NoAwaitTag, google::cloud::aiplatform::v1::DeleteExecutionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteExecution(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteExecution( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteExecution(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-  PurgeExecutions(google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
+  PurgeExecutions(
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  PurgeExecutions(NoAwaitTag, google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> PurgeExecutions(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-  PurgeExecutions( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
+  PurgeExecutions(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
-  AddExecutionEvents(google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request);
+  AddExecutionEvents(
+      google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-  QueryExecutionInputsAndOutputs(google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const& request);
+  QueryExecutionInputsAndOutputs(
+      google::cloud::aiplatform::v1::
+          QueryExecutionInputsAndOutputsRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-  CreateMetadataSchema(google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request);
+  CreateMetadataSchema(
+      google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-  GetMetadataSchema(google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request);
+  GetMetadataSchema(
+      google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::MetadataSchema>
-  ListMetadataSchemas(google::cloud::aiplatform::v1::ListMetadataSchemasRequest request);
+  ListMetadataSchemas(
+      google::cloud::aiplatform::v1::ListMetadataSchemasRequest request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-  QueryArtifactLineageSubgraph(google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const& request);
+  QueryArtifactLineageSubgraph(
+      google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `MetadataServiceConnection`.
+ * A factory function to construct an object of type
+ * `MetadataServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of MetadataServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `MetadataServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `MetadataServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -374,8 +430,8 @@ class MetadataServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `MetadataServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `MetadataServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
     std::string const& location, Options options = {});

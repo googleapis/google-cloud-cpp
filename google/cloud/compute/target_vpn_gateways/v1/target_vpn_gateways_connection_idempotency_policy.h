@@ -34,29 +34,36 @@ class TargetVpnGatewaysConnectionIdempotencyPolicy {
   virtual ~TargetVpnGatewaysConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TargetVpnGatewaysConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<TargetVpnGatewaysConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest request);
+  virtual google::cloud::Idempotency AggregatedListTargetVpnGateways(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          AggregatedListTargetVpnGatewaysRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request);
+  virtual google::cloud::Idempotency DeleteTargetVpnGateway(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          DeleteTargetVpnGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewayRequest const& request);
+  virtual google::cloud::Idempotency GetTargetVpnGateway(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          GetTargetVpnGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request);
+  virtual google::cloud::Idempotency InsertTargetVpnGateway(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          InsertTargetVpnGatewayRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest request);
+  virtual google::cloud::Idempotency ListTargetVpnGateways(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          ListTargetVpnGatewaysRequest request);
 
-  virtual google::cloud::Idempotency
-  SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request);
+  virtual google::cloud::Idempotency SetLabels(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          SetLabelsRequest const& request);
 };
 
 std::unique_ptr<TargetVpnGatewaysConnectionIdempotencyPolicy>
-    MakeDefaultTargetVpnGatewaysConnectionIdempotencyPolicy();
+MakeDefaultTargetVpnGatewaysConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_vpn_gateways_v1

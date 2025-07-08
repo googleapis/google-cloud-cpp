@@ -36,29 +36,32 @@ class CompletionServiceTracingConnection
   ~CompletionServiceTracingConnection() override = default;
 
   explicit CompletionServiceTracingConnection(
-    std::shared_ptr<retail_v2::CompletionServiceConnection> child);
+      std::shared_ptr<retail_v2::CompletionServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
-  CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
+      google::cloud::retail::v2::CompleteQueryRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-  ImportCompletionData(google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
+  ImportCompletionData(
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportCompletionData(NoAwaitTag,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportCompletionData(
+      NoAwaitTag,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
   ImportCompletionData(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::CompletionServiceConnection> child_;

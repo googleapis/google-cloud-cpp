@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPCONNECTORS_V1_APP_CONNECTORS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPCONNECTORS_V1_APP_CONNECTORS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection_idempotency_policy.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class AppConnectorsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AppConnectorsServiceLimitedErrorCountRetryPolicy : public AppConnectorsServiceRetryPolicy {
+class AppConnectorsServiceLimitedErrorCountRetryPolicy
+    : public AppConnectorsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,15 +66,18 @@ class AppConnectorsServiceLimitedErrorCountRetryPolicy : public AppConnectorsSer
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit AppConnectorsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit AppConnectorsServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   AppConnectorsServiceLimitedErrorCountRetryPolicy(
       AppConnectorsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AppConnectorsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AppConnectorsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   AppConnectorsServiceLimitedErrorCountRetryPolicy(
       AppConnectorsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AppConnectorsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AppConnectorsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +97,9 @@ class AppConnectorsServiceLimitedErrorCountRetryPolicy : public AppConnectorsSer
   using BaseType = AppConnectorsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<beyondcorp_appconnectors_v1_internal::AppConnectorsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      beyondcorp_appconnectors_v1_internal::AppConnectorsServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +112,8 @@ class AppConnectorsServiceLimitedErrorCountRetryPolicy : public AppConnectorsSer
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AppConnectorsServiceLimitedTimeRetryPolicy : public AppConnectorsServiceRetryPolicy {
+class AppConnectorsServiceLimitedTimeRetryPolicy
+    : public AppConnectorsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +138,14 @@ class AppConnectorsServiceLimitedTimeRetryPolicy : public AppConnectorsServiceRe
   template <typename DurationRep, typename DurationPeriod>
   explicit AppConnectorsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AppConnectorsServiceLimitedTimeRetryPolicy(AppConnectorsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : AppConnectorsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AppConnectorsServiceLimitedTimeRetryPolicy(AppConnectorsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : AppConnectorsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AppConnectorsServiceLimitedTimeRetryPolicy(
+      AppConnectorsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : AppConnectorsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AppConnectorsServiceLimitedTimeRetryPolicy(
+      AppConnectorsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : AppConnectorsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,20 +167,23 @@ class AppConnectorsServiceLimitedTimeRetryPolicy : public AppConnectorsServiceRe
   using BaseType = AppConnectorsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<beyondcorp_appconnectors_v1_internal::AppConnectorsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      beyondcorp_appconnectors_v1_internal::AppConnectorsServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `AppConnectorsServiceConnection` object for `AppConnectorsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `AppConnectorsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `AppConnectorsServiceClient`.
+ * sets in `AppConnectorsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AppConnectorsServiceClient`.
  *
  * To create a concrete instance, see `MakeAppConnectorsServiceConnection()`.
  *
- * For mocking, see `beyondcorp_appconnectors_v1_mocks::MockAppConnectorsServiceConnection`.
+ * For mocking, see
+ * `beyondcorp_appconnectors_v1_mocks::MockAppConnectorsServiceConnection`.
  */
 class AppConnectorsServiceConnection {
  public:
@@ -179,99 +191,124 @@ class AppConnectorsServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  ListAppConnectors(google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request);
+  virtual StreamRange<
+      google::cloud::beyondcorp::appconnectors::v1::AppConnector>
+  ListAppConnectors(
+      google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
+          request);
 
   virtual StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-  GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request);
+  GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                      GetAppConnectorRequest const& request);
 
-  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         CreateAppConnectorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAppConnector(
+      NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
+                      CreateAppConnectorRequest const& request);
 
-  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  CreateAppConnector(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         UpdateAppConnectorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateAppConnector(
+      NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
+                      UpdateAppConnectorRequest const& request);
 
-  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  UpdateAppConnector(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-  DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request);
+  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                              AppConnectorOperationMetadata>>
+  DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::
+                         DeleteAppConnectorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAppConnector(
+      NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
+                      DeleteAppConnectorRequest const& request);
 
-  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-  DeleteAppConnector( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                              AppConnectorOperationMetadata>>
+  DeleteAppConnector(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  ReportStatus(
+      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ReportStatus(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ReportStatus(
+      NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  ReportStatus(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `AppConnectorsServiceConnection`.
+ * A factory function to construct an object of type
+ * `AppConnectorsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AppConnectorsServiceClient.
+ * should be passed as an argument to the constructor of
+ * AppConnectorsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AppConnectorsServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `AppConnectorsServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServicePolicyOptionList`
+ * -
+ * `google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AppConnectorsServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `AppConnectorsServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<AppConnectorsServiceConnection> MakeAppConnectorsServiceConnection(
-    Options options = {});
+std::shared_ptr<AppConnectorsServiceConnection>
+MakeAppConnectorsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_appconnectors_v1

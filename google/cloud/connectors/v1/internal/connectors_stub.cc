@@ -33,42 +33,42 @@ ConnectorsStub::~ConnectorsStub() = default;
 
 StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
 DefaultConnectorsStub::ListConnections(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::ListConnectionsRequest const& request) {
-    google::cloud::connectors::v1::ListConnectionsResponse response;
-    auto status =
-        grpc_stub_->ListConnections(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::ListConnectionsRequest const& request) {
+  google::cloud::connectors::v1::ListConnectionsResponse response;
+  auto status = grpc_stub_->ListConnections(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::Connection>
 DefaultConnectorsStub::GetConnection(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::GetConnectionRequest const& request) {
-    google::cloud::connectors::v1::Connection response;
-    auto status =
-        grpc_stub_->GetConnection(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::GetConnectionRequest const& request) {
+  google::cloud::connectors::v1::Connection response;
+  auto status = grpc_stub_->GetConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncCreateConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::connectors::v1::CreateConnectionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::connectors::v1::CreateConnectionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::connectors::v1::CreateConnectionRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::connectors::v1::CreateConnectionRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::connectors::v1::CreateConnectionRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateConnection(context, request, cq);
       },
       request, std::move(context));
@@ -76,30 +76,30 @@ DefaultConnectorsStub::AsyncCreateConnection(
 
 StatusOr<google::longrunning::Operation>
 DefaultConnectorsStub::CreateConnection(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::connectors::v1::CreateConnectionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateConnection(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncUpdateConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::connectors::v1::UpdateConnectionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::connectors::v1::UpdateConnectionRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::connectors::v1::UpdateConnectionRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::connectors::v1::UpdateConnectionRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateConnection(context, request, cq);
       },
       request, std::move(context));
@@ -107,30 +107,30 @@ DefaultConnectorsStub::AsyncUpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 DefaultConnectorsStub::UpdateConnection(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateConnection(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncDeleteConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::connectors::v1::DeleteConnectionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::connectors::v1::DeleteConnectionRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::connectors::v1::DeleteConnectionRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::connectors::v1::DeleteConnectionRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteConnection(context, request, cq);
       },
       request, std::move(context));
@@ -138,307 +138,291 @@ DefaultConnectorsStub::AsyncDeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 DefaultConnectorsStub::DeleteConnection(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteConnection(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
 DefaultConnectorsStub::ListProviders(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::ListProvidersRequest const& request) {
-    google::cloud::connectors::v1::ListProvidersResponse response;
-    auto status =
-        grpc_stub_->ListProviders(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::ListProvidersRequest const& request) {
+  google::cloud::connectors::v1::ListProvidersResponse response;
+  auto status = grpc_stub_->ListProviders(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::Provider>
 DefaultConnectorsStub::GetProvider(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::GetProviderRequest const& request) {
-    google::cloud::connectors::v1::Provider response;
-    auto status =
-        grpc_stub_->GetProvider(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::GetProviderRequest const& request) {
+  google::cloud::connectors::v1::Provider response;
+  auto status = grpc_stub_->GetProvider(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
 DefaultConnectorsStub::ListConnectors(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::ListConnectorsRequest const& request) {
-    google::cloud::connectors::v1::ListConnectorsResponse response;
-    auto status =
-        grpc_stub_->ListConnectors(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::ListConnectorsRequest const& request) {
+  google::cloud::connectors::v1::ListConnectorsResponse response;
+  auto status = grpc_stub_->ListConnectors(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::Connector>
 DefaultConnectorsStub::GetConnector(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::GetConnectorRequest const& request) {
-    google::cloud::connectors::v1::Connector response;
-    auto status =
-        grpc_stub_->GetConnector(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::GetConnectorRequest const& request) {
+  google::cloud::connectors::v1::Connector response;
+  auto status = grpc_stub_->GetConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
 DefaultConnectorsStub::ListConnectorVersions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::ListConnectorVersionsRequest const& request) {
-    google::cloud::connectors::v1::ListConnectorVersionsResponse response;
-    auto status =
-        grpc_stub_->ListConnectorVersions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::ListConnectorVersionsRequest const&
+        request) {
+  google::cloud::connectors::v1::ListConnectorVersionsResponse response;
+  auto status = grpc_stub_->ListConnectorVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
 DefaultConnectorsStub::GetConnectorVersion(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
-    google::cloud::connectors::v1::ConnectorVersion response;
-    auto status =
-        grpc_stub_->GetConnectorVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
+  google::cloud::connectors::v1::ConnectorVersion response;
+  auto status = grpc_stub_->GetConnectorVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
 DefaultConnectorsStub::GetConnectionSchemaMetadata(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request) {
-    google::cloud::connectors::v1::ConnectionSchemaMetadata response;
-    auto status =
-        grpc_stub_->GetConnectionSchemaMetadata(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
+        request) {
+  google::cloud::connectors::v1::ConnectionSchemaMetadata response;
+  auto status =
+      grpc_stub_->GetConnectionSchemaMetadata(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncRefreshConnectionSchemaMetadata(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request,
+             google::cloud::connectors::v1::
+                 RefreshConnectionSchemaMetadataRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncRefreshConnectionSchemaMetadata(context, request, cq);
+        return grpc_stub_->AsyncRefreshConnectionSchemaMetadata(context,
+                                                                request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultConnectorsStub::RefreshConnectionSchemaMetadata(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RefreshConnectionSchemaMetadata(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RefreshConnectionSchemaMetadata(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 DefaultConnectorsStub::ListRuntimeEntitySchemas(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const& request) {
-    google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse response;
-    auto status =
-        grpc_stub_->ListRuntimeEntitySchemas(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
+        request) {
+  google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse response;
+  auto status =
+      grpc_stub_->ListRuntimeEntitySchemas(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
 DefaultConnectorsStub::ListRuntimeActionSchemas(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const& request) {
-    google::cloud::connectors::v1::ListRuntimeActionSchemasResponse response;
-    auto status =
-        grpc_stub_->ListRuntimeActionSchemas(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
+        request) {
+  google::cloud::connectors::v1::ListRuntimeActionSchemasResponse response;
+  auto status =
+      grpc_stub_->ListRuntimeActionSchemas(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 DefaultConnectorsStub::GetRuntimeConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
-    google::cloud::connectors::v1::RuntimeConfig response;
-    auto status =
-        grpc_stub_->GetRuntimeConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
+  google::cloud::connectors::v1::RuntimeConfig response;
+  auto status = grpc_stub_->GetRuntimeConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::Settings>
 DefaultConnectorsStub::GetGlobalSettings(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
-    google::cloud::connectors::v1::Settings response;
-    auto status =
-        grpc_stub_->GetGlobalSettings(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
+  google::cloud::connectors::v1::Settings response;
+  auto status = grpc_stub_->GetGlobalSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConnectorsStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::location::Location>
-DefaultConnectorsStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::location::Location> DefaultConnectorsStub::GetLocation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultConnectorsStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultConnectorsStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultConnectorsStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultConnectorsStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultConnectorsStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultConnectorsStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultConnectorsStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultConnectorsStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultConnectorsStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultConnectorsStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultConnectorsStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultConnectorsStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -467,13 +451,14 @@ future<Status> DefaultConnectorsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -32,80 +32,74 @@ FirewallStub::~FirewallStub() = default;
 
 StatusOr<google::appengine::v1::ListIngressRulesResponse>
 DefaultFirewallStub::ListIngressRules(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::ListIngressRulesRequest const& request) {
-    google::appengine::v1::ListIngressRulesResponse response;
-    auto status =
-        grpc_stub_->ListIngressRules(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::ListIngressRulesRequest const& request) {
+  google::appengine::v1::ListIngressRulesResponse response;
+  auto status = grpc_stub_->ListIngressRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 DefaultFirewallStub::BatchUpdateIngressRules(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
-    google::appengine::v1::BatchUpdateIngressRulesResponse response;
-    auto status =
-        grpc_stub_->BatchUpdateIngressRules(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
+  google::appengine::v1::BatchUpdateIngressRulesResponse response;
+  auto status =
+      grpc_stub_->BatchUpdateIngressRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::CreateIngressRule(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::CreateIngressRuleRequest const& request) {
-    google::appengine::v1::FirewallRule response;
-    auto status =
-        grpc_stub_->CreateIngressRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::CreateIngressRuleRequest const& request) {
+  google::appengine::v1::FirewallRule response;
+  auto status = grpc_stub_->CreateIngressRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::GetIngressRule(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::GetIngressRuleRequest const& request) {
-    google::appengine::v1::FirewallRule response;
-    auto status =
-        grpc_stub_->GetIngressRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::GetIngressRuleRequest const& request) {
+  google::appengine::v1::FirewallRule response;
+  auto status = grpc_stub_->GetIngressRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::UpdateIngressRule(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::UpdateIngressRuleRequest const& request) {
-    google::appengine::v1::FirewallRule response;
-    auto status =
-        grpc_stub_->UpdateIngressRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::UpdateIngressRuleRequest const& request) {
+  google::appengine::v1::FirewallRule response;
+  auto status = grpc_stub_->UpdateIngressRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultFirewallStub::DeleteIngressRule(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::DeleteIngressRuleRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteIngressRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultFirewallStub::DeleteIngressRule(
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::DeleteIngressRuleRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteIngressRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

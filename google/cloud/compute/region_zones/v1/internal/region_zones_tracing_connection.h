@@ -36,12 +36,13 @@ class RegionZonesTracingConnection
   ~RegionZonesTracingConnection() override = default;
 
   explicit RegionZonesTracingConnection(
-    std::shared_ptr<compute_region_zones_v1::RegionZonesConnection> child);
+      std::shared_ptr<compute_region_zones_v1::RegionZonesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListRegionZones(google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Zone> ListRegionZones(
+      google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest
+          request) override;
 
  private:
   std::shared_ptr<compute_region_zones_v1::RegionZonesConnection> child_;

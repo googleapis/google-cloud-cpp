@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_CONNECTION_H
 
+#include "google/cloud/orgpolicy/v2/internal/org_policy_retry_traits.h"
+#include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_retry_traits.h"
-#include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -62,14 +62,14 @@ class OrgPolicyLimitedErrorCountRetryPolicy : public OrgPolicyRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit OrgPolicyLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   OrgPolicyLimitedErrorCountRetryPolicy(
       OrgPolicyLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : OrgPolicyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : OrgPolicyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   OrgPolicyLimitedErrorCountRetryPolicy(
       OrgPolicyLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : OrgPolicyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : OrgPolicyLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +89,9 @@ class OrgPolicyLimitedErrorCountRetryPolicy : public OrgPolicyRetryPolicy {
   using BaseType = OrgPolicyRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<orgpolicy_v2_internal::OrgPolicyRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      orgpolicy_v2_internal::OrgPolicyRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +129,14 @@ class OrgPolicyLimitedTimeRetryPolicy : public OrgPolicyRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit OrgPolicyLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  OrgPolicyLimitedTimeRetryPolicy(OrgPolicyLimitedTimeRetryPolicy&& rhs) noexcept
-    : OrgPolicyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  OrgPolicyLimitedTimeRetryPolicy(OrgPolicyLimitedTimeRetryPolicy const& rhs) noexcept
-    : OrgPolicyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OrgPolicyLimitedTimeRetryPolicy(
+      OrgPolicyLimitedTimeRetryPolicy&& rhs) noexcept
+      : OrgPolicyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OrgPolicyLimitedTimeRetryPolicy(
+      OrgPolicyLimitedTimeRetryPolicy const& rhs) noexcept
+      : OrgPolicyLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +158,9 @@ class OrgPolicyLimitedTimeRetryPolicy : public OrgPolicyRetryPolicy {
   using BaseType = OrgPolicyRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<orgpolicy_v2_internal::OrgPolicyRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      orgpolicy_v2_internal::OrgPolicyRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,41 +181,48 @@ class OrgPolicyConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::orgpolicy::v2::Constraint>
-  ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest request);
+  virtual StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
+      google::cloud::orgpolicy::v2::ListConstraintsRequest request);
 
-  virtual StreamRange<google::cloud::orgpolicy::v2::Policy>
-  ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest request);
+  virtual StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
+      google::cloud::orgpolicy::v2::ListPoliciesRequest request);
 
-  virtual StatusOr<google::cloud::orgpolicy::v2::Policy>
-  GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const& request);
+  virtual StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
+      google::cloud::orgpolicy::v2::GetPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::orgpolicy::v2::Policy>
-  GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request);
+  virtual StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
+      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::orgpolicy::v2::Policy>
-  CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const& request);
+  virtual StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
+      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::orgpolicy::v2::Policy>
-  UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request);
+  virtual StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
+      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request);
 
-  virtual Status
-  DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  CreateCustomConstraint(google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request);
+  virtual Status DeletePolicy(
+      google::cloud::orgpolicy::v2::DeletePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  UpdateCustomConstraint(google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request);
+  CreateCustomConstraint(
+      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+          request);
 
   virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  GetCustomConstraint(google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request);
+  UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
+  GetCustomConstraint(
+      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request);
 
   virtual StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
-  ListCustomConstraints(google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request);
+  ListCustomConstraints(
+      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request);
 
-  virtual Status
-  DeleteCustomConstraint(google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request);
+  virtual Status DeleteCustomConstraint(
+      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+          request);
 };
 
 /**

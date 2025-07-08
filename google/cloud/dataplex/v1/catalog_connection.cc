@@ -17,14 +17,14 @@
 // source: google/cloud/dataplex/v1/catalog.proto
 
 #include "google/cloud/dataplex/v1/catalog_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dataplex/v1/catalog_options.h"
 #include "google/cloud/dataplex/v1/internal/catalog_connection_impl.h"
 #include "google/cloud/dataplex/v1/internal/catalog_option_defaults.h"
 #include "google/cloud/dataplex/v1/internal/catalog_stub_factory.h"
 #include "google/cloud/dataplex/v1/internal/catalog_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,76 +42,75 @@ future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceConnection::CreateEntryType(
     google::cloud::dataplex::v1::CreateEntryTypeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::EntryType>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::EntryType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::CreateEntryType(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateEntryTypeRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateEntryTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceConnection::CreateEntryType(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::EntryType>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::EntryType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceConnection::UpdateEntryType(
     google::cloud::dataplex::v1::UpdateEntryTypeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::EntryType>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::EntryType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::UpdateEntryType(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateEntryTypeRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateEntryTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceConnection::UpdateEntryType(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::EntryType>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::EntryType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteEntryType(
     google::cloud::dataplex::v1::DeleteEntryTypeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::DeleteEntryType(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteEntryTypeRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteEntryTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteEntryType(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::dataplex::v1::EntryType> CatalogServiceConnection::ListEntryTypes(
-    google::cloud::dataplex::v1::ListEntryTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::EntryType>
+CatalogServiceConnection::ListEntryTypes(
+    google::cloud::dataplex::v1::
+        ListEntryTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::EntryType>>();
 }
@@ -126,76 +125,75 @@ future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceConnection::CreateAspectType(
     google::cloud::dataplex::v1::CreateAspectTypeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::AspectType>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::AspectType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::CreateAspectType(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateAspectTypeRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateAspectTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceConnection::CreateAspectType(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::AspectType>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::AspectType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceConnection::UpdateAspectType(
     google::cloud::dataplex::v1::UpdateAspectTypeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::AspectType>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::AspectType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::UpdateAspectType(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateAspectTypeRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateAspectTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceConnection::UpdateAspectType(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::AspectType>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::AspectType>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteAspectType(
     google::cloud::dataplex::v1::DeleteAspectTypeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::DeleteAspectType(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteAspectTypeRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteAspectTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteAspectType(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::dataplex::v1::AspectType> CatalogServiceConnection::ListAspectTypes(
-    google::cloud::dataplex::v1::ListAspectTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::AspectType>
+CatalogServiceConnection::ListAspectTypes(
+    google::cloud::dataplex::v1::
+        ListAspectTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::AspectType>>();
 }
@@ -210,76 +208,75 @@ future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceConnection::CreateEntryGroup(
     google::cloud::dataplex::v1::CreateEntryGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::CreateEntryGroup(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateEntryGroupRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateEntryGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceConnection::CreateEntryGroup(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceConnection::UpdateEntryGroup(
     google::cloud::dataplex::v1::UpdateEntryGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::UpdateEntryGroup(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateEntryGroupRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateEntryGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceConnection::UpdateEntryGroup(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteEntryGroup(
     google::cloud::dataplex::v1::DeleteEntryGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::DeleteEntryGroup(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteEntryGroupRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteEntryGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteEntryGroup(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::dataplex::v1::EntryGroup> CatalogServiceConnection::ListEntryGroups(
-    google::cloud::dataplex::v1::ListEntryGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::EntryGroup>
+CatalogServiceConnection::ListEntryGroups(
+    google::cloud::dataplex::v1::
+        ListEntryGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::EntryGroup>>();
 }
@@ -308,14 +305,15 @@ CatalogServiceConnection::DeleteEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataplex::v1::Entry> CatalogServiceConnection::ListEntries(
-    google::cloud::dataplex::v1::ListEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::Entry>
+CatalogServiceConnection::ListEntries(
+    google::cloud::dataplex::v1::
+        ListEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::Entry>>();
 }
 
-StatusOr<google::cloud::dataplex::v1::Entry>
-CatalogServiceConnection::GetEntry(
+StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceConnection::GetEntry(
     google::cloud::dataplex::v1::GetEntryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -326,8 +324,10 @@ CatalogServiceConnection::LookupEntry(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataplex::v1::SearchEntriesResult> CatalogServiceConnection::SearchEntries(
-    google::cloud::dataplex::v1::SearchEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
+CatalogServiceConnection::SearchEntries(
+    google::cloud::dataplex::v1::
+        SearchEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>>();
 }
@@ -336,24 +336,23 @@ future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
 CatalogServiceConnection::CreateMetadataJob(
     google::cloud::dataplex::v1::CreateMetadataJobRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::MetadataJob>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::MetadataJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::CreateMetadataJob(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateMetadataJobRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateMetadataJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
 CatalogServiceConnection::CreateMetadataJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::MetadataJob>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::MetadataJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dataplex::v1::MetadataJob>
@@ -362,20 +361,23 @@ CatalogServiceConnection::GetMetadataJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataplex::v1::MetadataJob> CatalogServiceConnection::ListMetadataJobs(
-    google::cloud::dataplex::v1::ListMetadataJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceConnection::ListMetadataJobs(
+    google::cloud::dataplex::v1::
+        ListMetadataJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::MetadataJob>>();
 }
 
-Status
-CatalogServiceConnection::CancelMetadataJob(
+Status CatalogServiceConnection::CancelMetadataJob(
     google::cloud::dataplex::v1::CancelMetadataJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> CatalogServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+CatalogServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -386,14 +388,12 @@ CatalogServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-CatalogServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> CatalogServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-CatalogServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> CatalogServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -404,26 +404,25 @@ CatalogServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> CatalogServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+CatalogServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> CatalogServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-CatalogServiceConnection::DeleteOperation(
+Status CatalogServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-CatalogServiceConnection::CancelOperation(
+Status CatalogServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -431,17 +430,18 @@ CatalogServiceConnection::CancelOperation(
 std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      CatalogServicePolicyOptionList>(options, __func__);
-  options = dataplex_v1_internal::CatalogServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 CatalogServicePolicyOptionList>(options,
+                                                                 __func__);
+  options =
+      dataplex_v1_internal::CatalogServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataplex_v1_internal::CreateDefaultCatalogServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dataplex_v1_internal::MakeCatalogServiceTracingConnection(
       std::make_shared<dataplex_v1_internal::CatalogServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

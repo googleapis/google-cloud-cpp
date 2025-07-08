@@ -34,77 +34,95 @@ GeneratorsTracingConnection::GeneratorsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::dialogflow::v2::Generator>
-GeneratorsTracingConnection::CreateGenerator(google::cloud::dialogflow::v2::CreateGeneratorRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::CreateGenerator");
+GeneratorsTracingConnection::CreateGenerator(
+    google::cloud::dialogflow::v2::CreateGeneratorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::GeneratorsConnection::CreateGenerator");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateGenerator(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Generator>
-GeneratorsTracingConnection::GetGenerator(google::cloud::dialogflow::v2::GetGeneratorRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::GetGenerator");
+GeneratorsTracingConnection::GetGenerator(
+    google::cloud::dialogflow::v2::GetGeneratorRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::GeneratorsConnection::GetGenerator");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetGenerator(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::Generator>
-GeneratorsTracingConnection::ListGenerators(google::cloud::dialogflow::v2::ListGeneratorsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::ListGenerators");
+GeneratorsTracingConnection::ListGenerators(
+    google::cloud::dialogflow::v2::ListGeneratorsRequest request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::GeneratorsConnection::ListGenerators");
   internal::OTelScope scope(span);
   auto sr = child_->ListGenerators(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::Generator>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::Generator>(std::move(span), std::move(sr));
 }
 
-Status
-GeneratorsTracingConnection::DeleteGenerator(google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::DeleteGenerator");
+Status GeneratorsTracingConnection::DeleteGenerator(
+    google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::GeneratorsConnection::DeleteGenerator");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteGenerator(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Generator>
-GeneratorsTracingConnection::UpdateGenerator(google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::UpdateGenerator");
+GeneratorsTracingConnection::UpdateGenerator(
+    google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::GeneratorsConnection::UpdateGenerator");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateGenerator(request));
 }
 
 StreamRange<google::cloud::location::Location>
-GeneratorsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::ListLocations");
+GeneratorsTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::GeneratorsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-GeneratorsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::GetLocation");
+GeneratorsTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::GeneratorsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-GeneratorsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::ListOperations");
+GeneratorsTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::GeneratorsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-GeneratorsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::GetOperation");
+GeneratorsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::GeneratorsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-GeneratorsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::GeneratorsConnection::CancelOperation");
+Status GeneratorsTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::GeneratorsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

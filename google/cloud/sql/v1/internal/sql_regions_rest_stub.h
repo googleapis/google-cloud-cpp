@@ -43,8 +43,7 @@ class DefaultSqlRegionsServiceRestStub : public SqlRegionsServiceRestStub {
 
   explicit DefaultSqlRegionsServiceRestStub(Options options);
   DefaultSqlRegionsServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -30,44 +30,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class RevisionsTracingConnection
-    : public run_v2::RevisionsConnection {
+class RevisionsTracingConnection : public run_v2::RevisionsConnection {
  public:
   ~RevisionsTracingConnection() override = default;
 
   explicit RevisionsTracingConnection(
-    std::shared_ptr<run_v2::RevisionsConnection> child);
+      std::shared_ptr<run_v2::RevisionsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::run::v2::Revision>
-  GetRevision(google::cloud::run::v2::GetRevisionRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Revision> GetRevision(
+      google::cloud::run::v2::GetRevisionRequest const& request) override;
 
-  StreamRange<google::cloud::run::v2::Revision>
-  ListRevisions(google::cloud::run::v2::ListRevisionsRequest request) override;
+  StreamRange<google::cloud::run::v2::Revision> ListRevisions(
+      google::cloud::run::v2::ListRevisionsRequest request) override;
 
-  future<StatusOr<google::cloud::run::v2::Revision>>
-  DeleteRevision(google::cloud::run::v2::DeleteRevisionRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteRevision(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Revision>>
-  DeleteRevision(
+  StatusOr<google::longrunning::Operation> DeleteRevision(
+      NoAwaitTag,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<run_v2::RevisionsConnection> child_;
@@ -81,8 +79,7 @@ class RevisionsTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<run_v2::RevisionsConnection>
-MakeRevisionsTracingConnection(
+std::shared_ptr<run_v2::RevisionsConnection> MakeRevisionsTracingConnection(
     std::shared_ptr<run_v2::RevisionsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

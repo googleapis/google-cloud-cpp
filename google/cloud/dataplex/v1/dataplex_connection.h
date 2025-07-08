@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATAPLEX_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATAPLEX_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/dataplex_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/dataplex_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class DataplexServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataplexServiceLimitedErrorCountRetryPolicy : public DataplexServiceRetryPolicy {
+class DataplexServiceLimitedErrorCountRetryPolicy
+    : public DataplexServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class DataplexServiceLimitedErrorCountRetryPolicy : public DataplexServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit DataplexServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DataplexServiceLimitedErrorCountRetryPolicy(
       DataplexServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DataplexServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataplexServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataplexServiceLimitedErrorCountRetryPolicy(
       DataplexServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DataplexServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataplexServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class DataplexServiceLimitedErrorCountRetryPolicy : public DataplexServiceRetryP
   using BaseType = DataplexServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dataplex_v1_internal::DataplexServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dataplex_v1_internal::DataplexServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class DataplexServiceLimitedErrorCountRetryPolicy : public DataplexServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataplexServiceLimitedTimeRetryPolicy : public DataplexServiceRetryPolicy {
+class DataplexServiceLimitedTimeRetryPolicy
+    : public DataplexServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class DataplexServiceLimitedTimeRetryPolicy : public DataplexServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit DataplexServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DataplexServiceLimitedTimeRetryPolicy(DataplexServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DataplexServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataplexServiceLimitedTimeRetryPolicy(DataplexServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DataplexServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataplexServiceLimitedTimeRetryPolicy(
+      DataplexServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DataplexServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataplexServiceLimitedTimeRetryPolicy(
+      DataplexServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataplexServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +164,9 @@ class DataplexServiceLimitedTimeRetryPolicy : public DataplexServiceRetryPolicy 
   using BaseType = DataplexServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dataplex_v1_internal::DataplexServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dataplex_v1_internal::DataplexServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,232 +187,252 @@ class DataplexServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>>
-  CreateLake(google::cloud::dataplex::v1::CreateLakeRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
+      google::cloud::dataplex::v1::CreateLakeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateLake(NoAwaitTag, google::cloud::dataplex::v1::CreateLakeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateLake(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateLakeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>>
-  CreateLake( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>>
-  UpdateLake(google::cloud::dataplex::v1::UpdateLakeRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
+      google::cloud::dataplex::v1::UpdateLakeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateLake(NoAwaitTag, google::cloud::dataplex::v1::UpdateLakeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateLake(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateLakeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>>
-  UpdateLake( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteLake(google::cloud::dataplex::v1::DeleteLakeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteLake(NoAwaitTag, google::cloud::dataplex::v1::DeleteLakeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteLake(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteLakeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteLake( google::longrunning::Operation const& operation);
+  DeleteLake(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Lake>
-  ListLakes(google::cloud::dataplex::v1::ListLakesRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
+      google::cloud::dataplex::v1::ListLakesRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Lake>
-  GetLake(google::cloud::dataplex::v1::GetLakeRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Lake> GetLake(
+      google::cloud::dataplex::v1::GetLakeRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Action>
-  ListLakeActions(google::cloud::dataplex::v1::ListLakeActionsRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
+      google::cloud::dataplex::v1::ListLakeActionsRequest request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>>
-  CreateZone(google::cloud::dataplex::v1::CreateZoneRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
+      google::cloud::dataplex::v1::CreateZoneRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateZone(NoAwaitTag, google::cloud::dataplex::v1::CreateZoneRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateZone(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateZoneRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>>
-  CreateZone( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>>
-  UpdateZone(google::cloud::dataplex::v1::UpdateZoneRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
+      google::cloud::dataplex::v1::UpdateZoneRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateZone(NoAwaitTag, google::cloud::dataplex::v1::UpdateZoneRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateZone(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateZoneRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>>
-  UpdateZone( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteZone(google::cloud::dataplex::v1::DeleteZoneRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteZone(NoAwaitTag, google::cloud::dataplex::v1::DeleteZoneRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteZone(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteZoneRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteZone( google::longrunning::Operation const& operation);
+  DeleteZone(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Zone>
-  ListZones(google::cloud::dataplex::v1::ListZonesRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
+      google::cloud::dataplex::v1::ListZonesRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Zone>
-  GetZone(google::cloud::dataplex::v1::GetZoneRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Zone> GetZone(
+      google::cloud::dataplex::v1::GetZoneRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Action>
-  ListZoneActions(google::cloud::dataplex::v1::ListZoneActionsRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
+      google::cloud::dataplex::v1::ListZoneActionsRequest request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>>
-  CreateAsset(google::cloud::dataplex::v1::CreateAssetRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
+      google::cloud::dataplex::v1::CreateAssetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAsset(NoAwaitTag, google::cloud::dataplex::v1::CreateAssetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAsset(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateAssetRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>>
-  CreateAsset( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>>
-  UpdateAsset(google::cloud::dataplex::v1::UpdateAssetRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
+      google::cloud::dataplex::v1::UpdateAssetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAsset(NoAwaitTag, google::cloud::dataplex::v1::UpdateAssetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateAsset(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateAssetRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>>
-  UpdateAsset( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteAsset(google::cloud::dataplex::v1::DeleteAssetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAsset(NoAwaitTag, google::cloud::dataplex::v1::DeleteAssetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAsset(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteAssetRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAsset( google::longrunning::Operation const& operation);
+  DeleteAsset(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Asset>
-  ListAssets(google::cloud::dataplex::v1::ListAssetsRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
+      google::cloud::dataplex::v1::ListAssetsRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Asset>
-  GetAsset(google::cloud::dataplex::v1::GetAssetRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(
+      google::cloud::dataplex::v1::GetAssetRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Action>
-  ListAssetActions(google::cloud::dataplex::v1::ListAssetActionsRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
+      google::cloud::dataplex::v1::ListAssetActionsRequest request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Task>>
-  CreateTask(google::cloud::dataplex::v1::CreateTaskRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
+      google::cloud::dataplex::v1::CreateTaskRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateTask(NoAwaitTag, google::cloud::dataplex::v1::CreateTaskRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateTask(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateTaskRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Task>>
-  CreateTask( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Task>>
-  UpdateTask(google::cloud::dataplex::v1::UpdateTaskRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
+      google::cloud::dataplex::v1::UpdateTaskRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateTask(NoAwaitTag, google::cloud::dataplex::v1::UpdateTaskRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateTask(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateTaskRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataplex::v1::Task>>
-  UpdateTask( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteTask(google::cloud::dataplex::v1::DeleteTaskRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteTask(NoAwaitTag, google::cloud::dataplex::v1::DeleteTaskRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteTask(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteTaskRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteTask( google::longrunning::Operation const& operation);
+  DeleteTask(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Task>
-  ListTasks(google::cloud::dataplex::v1::ListTasksRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
+      google::cloud::dataplex::v1::ListTasksRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Task>
-  GetTask(google::cloud::dataplex::v1::GetTaskRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Task> GetTask(
+      google::cloud::dataplex::v1::GetTaskRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Job>
-  ListJobs(google::cloud::dataplex::v1::ListJobsRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
+      google::cloud::dataplex::v1::ListJobsRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
-  RunTask(google::cloud::dataplex::v1::RunTaskRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
+      google::cloud::dataplex::v1::RunTaskRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Job>
-  GetJob(google::cloud::dataplex::v1::GetJobRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Job> GetJob(
+      google::cloud::dataplex::v1::GetJobRequest const& request);
 
-  virtual Status
-  CancelJob(google::cloud::dataplex::v1::CancelJobRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
-  CreateEnvironment(google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateEnvironment(NoAwaitTag, google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
+  virtual Status CancelJob(
+      google::cloud::dataplex::v1::CancelJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
-  CreateEnvironment( google::longrunning::Operation const& operation);
+  CreateEnvironment(
+      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
-  UpdateEnvironment(google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateEnvironment(NoAwaitTag, google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
+  CreateEnvironment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
-  UpdateEnvironment( google::longrunning::Operation const& operation);
+  UpdateEnvironment(
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  UpdateEnvironment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
+  DeleteEnvironment(
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteEnvironment(NoAwaitTag, google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment( google::longrunning::Operation const& operation);
+  DeleteEnvironment(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::Environment>
-  ListEnvironments(google::cloud::dataplex::v1::ListEnvironmentsRequest request);
+  ListEnvironments(
+      google::cloud::dataplex::v1::ListEnvironmentsRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Environment>
-  GetEnvironment(google::cloud::dataplex::v1::GetEnvironmentRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
+      google::cloud::dataplex::v1::GetEnvironmentRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Session>
-  ListSessions(google::cloud::dataplex::v1::ListSessionsRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::Session> ListSessions(
+      google::cloud::dataplex::v1::ListSessionsRequest request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `DataplexServiceConnection`.
+ * A factory function to construct an object of type
+ * `DataplexServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of DataplexServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataplexServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `DataplexServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -414,8 +442,8 @@ class DataplexServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DataplexServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `DataplexServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<DataplexServiceConnection> MakeDataplexServiceConnection(
     Options options = {});

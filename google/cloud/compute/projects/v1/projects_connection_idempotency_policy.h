@@ -36,51 +36,64 @@ class ProjectsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ProjectsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request);
+  virtual google::cloud::Idempotency DisableXpnHost(
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request);
+  virtual google::cloud::Idempotency DisableXpnResource(
+      google::cloud::cpp::compute::projects::v1::
+          DisableXpnResourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request);
+  virtual google::cloud::Idempotency EnableXpnHost(
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request);
+  virtual google::cloud::Idempotency EnableXpnResource(
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetProject(google::cloud::cpp::compute::projects::v1::GetProjectRequest const& request);
+  virtual google::cloud::Idempotency GetProject(
+      google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request);
+  virtual google::cloud::Idempotency GetXpnHost(
+      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request);
+  virtual google::cloud::Idempotency GetXpnResources(
+      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request);
+  virtual google::cloud::Idempotency ListXpnHosts(
+      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request);
 
-  virtual google::cloud::Idempotency
-  MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request);
+  virtual google::cloud::Idempotency MoveDisk(
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request);
+  virtual google::cloud::Idempotency MoveInstance(
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetCloudArmorTier(google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const& request);
+  virtual google::cloud::Idempotency SetCloudArmorTier(
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request);
+  virtual google::cloud::Idempotency SetCommonInstanceMetadata(
+      google::cloud::cpp::compute::projects::v1::
+          SetCommonInstanceMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request);
+  virtual google::cloud::Idempotency SetDefaultNetworkTier(
+      google::cloud::cpp::compute::projects::v1::
+          SetDefaultNetworkTierRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request);
+  virtual google::cloud::Idempotency SetUsageExportBucket(
+      google::cloud::cpp::compute::projects::v1::
+          SetUsageExportBucketRequest const& request);
 };
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
-    MakeDefaultProjectsConnectionIdempotencyPolicy();
+MakeDefaultProjectsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_projects_v1

@@ -34,241 +34,317 @@ SqlInstancesServiceTracingConnection::SqlInstancesServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::AddServerCa(google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::AddServerCa");
+SqlInstancesServiceTracingConnection::AddServerCa(
+    google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::AddServerCa");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddServerCa(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Clone(google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Clone");
+SqlInstancesServiceTracingConnection::Clone(
+    google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Clone");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Clone(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Delete(google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Delete");
+SqlInstancesServiceTracingConnection::Delete(
+    google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Delete");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Delete(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::DemoteMaster(google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::DemoteMaster");
+SqlInstancesServiceTracingConnection::DemoteMaster(
+    google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::DemoteMaster");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DemoteMaster(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Demote(google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Demote");
+SqlInstancesServiceTracingConnection::Demote(
+    google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Demote");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Demote(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Export(google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Export");
+SqlInstancesServiceTracingConnection::Export(
+    google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Export");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Export(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Failover(google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Failover");
+SqlInstancesServiceTracingConnection::Failover(
+    google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Failover");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Failover(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Reencrypt(google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Reencrypt");
+SqlInstancesServiceTracingConnection::Reencrypt(
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Reencrypt");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Reencrypt(request));
 }
 
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
-SqlInstancesServiceTracingConnection::Get(google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
+SqlInstancesServiceTracingConnection::Get(
+    google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Get");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Get(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Import(google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Import");
+SqlInstancesServiceTracingConnection::Import(
+    google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Import");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Import(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Insert(google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Insert");
+SqlInstancesServiceTracingConnection::Insert(
+    google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Insert");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Insert(request));
 }
 
 StreamRange<google::cloud::sql::v1::DatabaseInstance>
-SqlInstancesServiceTracingConnection::List(google::cloud::sql::v1::SqlInstancesListRequest request) {
+SqlInstancesServiceTracingConnection::List(
+    google::cloud::sql::v1::SqlInstancesListRequest request) {
   auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::List");
   internal::OTelScope scope(span);
   auto sr = child_->List(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::sql::v1::DatabaseInstance>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::sql::v1::DatabaseInstance>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
-SqlInstancesServiceTracingConnection::ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::ListServerCas");
+SqlInstancesServiceTracingConnection::ListServerCas(
+    google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::ListServerCas");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListServerCas(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Patch(google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Patch");
+SqlInstancesServiceTracingConnection::Patch(
+    google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Patch");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Patch(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::PromoteReplica(google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::PromoteReplica");
+SqlInstancesServiceTracingConnection::PromoteReplica(
+    google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::PromoteReplica");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PromoteReplica(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Switchover(google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Switchover");
+SqlInstancesServiceTracingConnection::Switchover(
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Switchover");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Switchover(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::ResetSslConfig(google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::ResetSslConfig");
+SqlInstancesServiceTracingConnection::ResetSslConfig(
+    google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::ResetSslConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResetSslConfig(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Restart(google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Restart");
+SqlInstancesServiceTracingConnection::Restart(
+    google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Restart");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Restart(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::RestoreBackup(google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::RestoreBackup");
+SqlInstancesServiceTracingConnection::RestoreBackup(
+    google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::RestoreBackup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RestoreBackup(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::RotateServerCa(google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::RotateServerCa");
+SqlInstancesServiceTracingConnection::RotateServerCa(
+    google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::RotateServerCa");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RotateServerCa(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::StartReplica(google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::StartReplica");
+SqlInstancesServiceTracingConnection::StartReplica(
+    google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::StartReplica");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StartReplica(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::StopReplica(google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::StopReplica");
+SqlInstancesServiceTracingConnection::StopReplica(
+    google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::StopReplica");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StopReplica(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::TruncateLog(google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::TruncateLog");
+SqlInstancesServiceTracingConnection::TruncateLog(
+    google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::TruncateLog");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TruncateLog(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::Update(google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Update");
+SqlInstancesServiceTracingConnection::Update(
+    google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::Update");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Update(request));
 }
 
 StatusOr<google::cloud::sql::v1::SslCert>
-SqlInstancesServiceTracingConnection::CreateEphemeral(google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::CreateEphemeral");
+SqlInstancesServiceTracingConnection::CreateEphemeral(
+    google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::CreateEphemeral");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateEphemeral(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::RescheduleMaintenance(google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::RescheduleMaintenance");
+SqlInstancesServiceTracingConnection::RescheduleMaintenance(
+    google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::RescheduleMaintenance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RescheduleMaintenance(request));
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
-SqlInstancesServiceTracingConnection::VerifyExternalSyncSettings(google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::VerifyExternalSyncSettings");
+SqlInstancesServiceTracingConnection::VerifyExternalSyncSettings(
+    google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::VerifyExternalSyncSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->VerifyExternalSyncSettings(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::StartExternalSync(google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::StartExternalSync");
+SqlInstancesServiceTracingConnection::StartExternalSync(
+    google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::StartExternalSync");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->StartExternalSync(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::PerformDiskShrink(google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::PerformDiskShrink");
+SqlInstancesServiceTracingConnection::PerformDiskShrink(
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::PerformDiskShrink");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PerformDiskShrink(request));
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
-SqlInstancesServiceTracingConnection::GetDiskShrinkConfig(google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::GetDiskShrinkConfig");
+SqlInstancesServiceTracingConnection::GetDiskShrinkConfig(
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::GetDiskShrinkConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDiskShrinkConfig(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlInstancesServiceTracingConnection::ResetReplicaSize(google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::ResetReplicaSize");
+SqlInstancesServiceTracingConnection::ResetReplicaSize(
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::ResetReplicaSize");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResetReplicaSize(request));
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
-SqlInstancesServiceTracingConnection::GetLatestRecoveryTime(google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::GetLatestRecoveryTime");
+SqlInstancesServiceTracingConnection::GetLatestRecoveryTime(
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::GetLatestRecoveryTime");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLatestRecoveryTime(request));
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
-SqlInstancesServiceTracingConnection::AcquireSsrsLease(google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::AcquireSsrsLease");
+SqlInstancesServiceTracingConnection::AcquireSsrsLease(
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::AcquireSsrsLease");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AcquireSsrsLease(request));
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
-SqlInstancesServiceTracingConnection::ReleaseSsrsLease(google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlInstancesServiceConnection::ReleaseSsrsLease");
+SqlInstancesServiceTracingConnection::ReleaseSsrsLease(
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "sql_v1::SqlInstancesServiceConnection::ReleaseSsrsLease");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ReleaseSsrsLease(request));
 }
@@ -280,7 +356,8 @@ MakeSqlInstancesServiceTracingConnection(
     std::shared_ptr<sql_v1::SqlInstancesServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SqlInstancesServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<SqlInstancesServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

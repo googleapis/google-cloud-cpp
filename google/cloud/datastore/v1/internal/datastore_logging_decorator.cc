@@ -30,35 +30,27 @@ namespace cloud {
 namespace datastore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DatastoreLogging::DatastoreLogging(
-    std::shared_ptr<DatastoreStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+DatastoreLogging::DatastoreLogging(std::shared_ptr<DatastoreStub> child,
+                                   TracingOptions tracing_options,
+                                   std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::datastore::v1::LookupResponse>
-DatastoreLogging::Lookup(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::LookupResponse> DatastoreLogging::Lookup(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::LookupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::LookupRequest const& request) {
         return child_->Lookup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::datastore::v1::RunQueryResponse>
-DatastoreLogging::RunQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::RunQueryResponse> DatastoreLogging::RunQuery(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::RunQueryRequest const& request) {
         return child_->RunQuery(context, options, request);
       },
@@ -67,12 +59,10 @@ DatastoreLogging::RunQuery(
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
 DatastoreLogging::RunAggregationQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunAggregationQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::RunAggregationQueryRequest const& request) {
         return child_->RunAggregationQuery(context, options, request);
       },
@@ -81,40 +71,32 @@ DatastoreLogging::RunAggregationQuery(
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
 DatastoreLogging::BeginTransaction(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::BeginTransactionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::BeginTransactionRequest const& request) {
         return child_->BeginTransaction(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::datastore::v1::CommitResponse>
-DatastoreLogging::Commit(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::CommitResponse> DatastoreLogging::Commit(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::CommitRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::CommitRequest const& request) {
         return child_->Commit(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::datastore::v1::RollbackResponse>
-DatastoreLogging::Rollback(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::RollbackResponse> DatastoreLogging::Rollback(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RollbackRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::RollbackRequest const& request) {
         return child_->Rollback(context, options, request);
       },
@@ -123,12 +105,10 @@ DatastoreLogging::Rollback(
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
 DatastoreLogging::AllocateIds(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::AllocateIdsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::AllocateIdsRequest const& request) {
         return child_->AllocateIds(context, options, request);
       },
@@ -137,12 +117,10 @@ DatastoreLogging::AllocateIds(
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
 DatastoreLogging::ReserveIds(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::ReserveIdsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::ReserveIdsRequest const& request) {
         return child_->ReserveIds(context, options, request);
       },
@@ -151,54 +129,43 @@ DatastoreLogging::ReserveIds(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DatastoreLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DatastoreLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> DatastoreLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DatastoreLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DatastoreLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DatastoreLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DatastoreLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

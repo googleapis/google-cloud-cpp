@@ -44,21 +44,24 @@ OracleDatabaseMetadata::OracleDatabaseMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresResponse>
+StatusOr<
+    google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresResponse>
 OracleDatabaseMetadata::ListCloudExadataInfrastructures(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListCloudExadataInfrastructuresRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCloudExadataInfrastructures(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
 OracleDatabaseMetadata::GetCloudExadataInfrastructure(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GetCloudExadataInfrastructureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCloudExadataInfrastructure(context, options, request);
 }
 
@@ -67,18 +70,21 @@ OracleDatabaseMetadata::AsyncCreateCloudExadataInfrastructure(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    google::cloud::oracledatabase::v1::
+        CreateCloudExadataInfrastructureRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCloudExadataInfrastructure(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::CreateCloudExadataInfrastructure(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        CreateCloudExadataInfrastructureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCloudExadataInfrastructure(context, options, request);
 }
 
@@ -87,36 +93,41 @@ OracleDatabaseMetadata::AsyncDeleteCloudExadataInfrastructure(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    google::cloud::oracledatabase::v1::
+        DeleteCloudExadataInfrastructureRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCloudExadataInfrastructure(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::DeleteCloudExadataInfrastructure(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        DeleteCloudExadataInfrastructureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteCloudExadataInfrastructure(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
 OracleDatabaseMetadata::ListCloudVmClusters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCloudVmClusters(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>
 OracleDatabaseMetadata::GetCloudVmCluster(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCloudVmCluster(context, options, request);
 }
 
@@ -125,18 +136,21 @@ OracleDatabaseMetadata::AsyncCreateCloudVmCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCloudVmCluster(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateCloudVmCluster(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::CreateCloudVmCluster(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCloudVmCluster(context, options, request);
 }
 
@@ -145,81 +159,87 @@ OracleDatabaseMetadata::AsyncDeleteCloudVmCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCloudVmCluster(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteCloudVmCluster(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::DeleteCloudVmCluster(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteCloudVmCluster(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse>
 OracleDatabaseMetadata::ListEntitlements(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oracledatabase::v1::ListEntitlementsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEntitlements(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse>
 OracleDatabaseMetadata::ListDbServers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oracledatabase::v1::ListDbServersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDbServers(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::ListDbNodesResponse>
 OracleDatabaseMetadata::ListDbNodes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oracledatabase::v1::ListDbNodesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDbNodes(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse>
 OracleDatabaseMetadata::ListGiVersions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oracledatabase::v1::ListGiVersionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGiVersions(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse>
 OracleDatabaseMetadata::ListDbSystemShapes(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDbSystemShapes(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse>
 OracleDatabaseMetadata::ListAutonomousDatabases(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAutonomousDatabases(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
 OracleDatabaseMetadata::GetAutonomousDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAutonomousDatabase(context, options, request);
 }
 
@@ -228,18 +248,21 @@ OracleDatabaseMetadata::AsyncCreateAutonomousDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateAutonomousDatabase(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAutonomousDatabase(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::CreateAutonomousDatabase(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAutonomousDatabase(context, options, request);
 }
 
@@ -248,18 +271,21 @@ OracleDatabaseMetadata::AsyncDeleteAutonomousDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteAutonomousDatabase(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAutonomousDatabase(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::DeleteAutonomousDatabase(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAutonomousDatabase(context, options, request);
 }
 
@@ -268,54 +294,64 @@ OracleDatabaseMetadata::AsyncRestoreAutonomousDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRestoreAutonomousDatabase(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRestoreAutonomousDatabase(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::RestoreAutonomousDatabase(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RestoreAutonomousDatabase(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
+StatusOr<
+    google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
 OracleDatabaseMetadata::GenerateAutonomousDatabaseWallet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GenerateAutonomousDatabaseWalletRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateAutonomousDatabaseWallet(context, options, request);
 }
 
 StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse>
 OracleDatabaseMetadata::ListAutonomousDbVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAutonomousDbVersions(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsResponse>
+StatusOr<google::cloud::oracledatabase::v1::
+             ListAutonomousDatabaseCharacterSetsResponse>
 OracleDatabaseMetadata::ListAutonomousDatabaseCharacterSets(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListAutonomousDatabaseCharacterSetsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAutonomousDatabaseCharacterSets(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse>
+StatusOr<
+    google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse>
 OracleDatabaseMetadata::ListAutonomousDatabaseBackups(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListAutonomousDatabaseBackupsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAutonomousDatabaseBackups(context, options, request);
 }
 
@@ -324,18 +360,21 @@ OracleDatabaseMetadata::AsyncStopAutonomousDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStopAutonomousDatabase(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStopAutonomousDatabase(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::StopAutonomousDatabase(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->StopAutonomousDatabase(context, options, request);
 }
 
@@ -344,18 +383,21 @@ OracleDatabaseMetadata::AsyncStartAutonomousDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStartAutonomousDatabase(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStartAutonomousDatabase(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::StartAutonomousDatabase(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->StartAutonomousDatabase(context, options, request);
 }
 
@@ -364,72 +406,71 @@ OracleDatabaseMetadata::AsyncRestartAutonomousDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRestartAutonomousDatabase(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRestartAutonomousDatabase(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseMetadata::RestartAutonomousDatabase(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RestartAutonomousDatabase(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 OracleDatabaseMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-OracleDatabaseMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> OracleDatabaseMetadata::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 OracleDatabaseMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-OracleDatabaseMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> OracleDatabaseMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-OracleDatabaseMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status OracleDatabaseMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-OracleDatabaseMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status OracleDatabaseMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -441,8 +482,8 @@ OracleDatabaseMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> OracleDatabaseMetadata::AsyncCancelOperation(
@@ -452,21 +493,21 @@ future<Status> OracleDatabaseMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void OracleDatabaseMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void OracleDatabaseMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

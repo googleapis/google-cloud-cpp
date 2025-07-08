@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_INTERNAL_SERVICE_CONTROLLER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V2_INTERNAL_SERVICE_CONTROLLER_TRACING_STUB_H
 
+#include "google/cloud/servicecontrol/v2/internal/service_controller_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/servicecontrol/v2/internal/service_controller_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,21 +36,21 @@ class ServiceControllerTracingStub : public ServiceControllerStub {
  public:
   ~ServiceControllerTracingStub() override = default;
 
-  explicit ServiceControllerTracingStub(std::shared_ptr<ServiceControllerStub> child);
+  explicit ServiceControllerTracingStub(
+      std::shared_ptr<ServiceControllerStub> child);
 
   StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::servicecontrol::v2::CheckRequest const& request) override;
 
   StatusOr<google::api::servicecontrol::v2::ReportResponse> Report(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::servicecontrol::v2::ReportRequest const& request) override;
 
  private:
   std::shared_ptr<ServiceControllerStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

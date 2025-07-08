@@ -34,105 +34,128 @@ ContentServiceTracingConnection::ContentServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceTracingConnection::CreateContent(google::cloud::dataplex::v1::CreateContentRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::CreateContent");
+ContentServiceTracingConnection::CreateContent(
+    google::cloud::dataplex::v1::CreateContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::ContentServiceConnection::CreateContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateContent(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceTracingConnection::UpdateContent(google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::UpdateContent");
+ContentServiceTracingConnection::UpdateContent(
+    google::cloud::dataplex::v1::UpdateContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::ContentServiceConnection::UpdateContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateContent(request));
 }
 
-Status
-ContentServiceTracingConnection::DeleteContent(google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::DeleteContent");
+Status ContentServiceTracingConnection::DeleteContent(
+    google::cloud::dataplex::v1::DeleteContentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::ContentServiceConnection::DeleteContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteContent(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceTracingConnection::GetContent(google::cloud::dataplex::v1::GetContentRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::GetContent");
+ContentServiceTracingConnection::GetContent(
+    google::cloud::dataplex::v1::GetContentRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::ContentServiceConnection::GetContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetContent(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-ContentServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy> ContentServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::ContentServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-ContentServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy> ContentServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::ContentServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContentServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::TestIamPermissions");
+ContentServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::ContentServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Content>
-ContentServiceTracingConnection::ListContent(google::cloud::dataplex::v1::ListContentRequest request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::ListContent");
+ContentServiceTracingConnection::ListContent(
+    google::cloud::dataplex::v1::ListContentRequest request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::ContentServiceConnection::ListContent");
   internal::OTelScope scope(span);
   auto sr = child_->ListContent(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Content>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>
-ContentServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::ListLocations");
+ContentServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::ContentServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ContentServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::GetLocation");
+ContentServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::ContentServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ContentServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::ListOperations");
+ContentServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::ContentServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ContentServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::GetOperation");
+ContentServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::ContentServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ContentServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::DeleteOperation");
+Status ContentServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::ContentServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-ContentServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataplex_v1::ContentServiceConnection::CancelOperation");
+Status ContentServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::ContentServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

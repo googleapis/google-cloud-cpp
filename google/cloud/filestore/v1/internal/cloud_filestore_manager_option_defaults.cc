@@ -42,25 +42,35 @@ Options CloudFilestoreManagerDefaultOptions(Options options) {
   if (!options.has<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()) {
     options.set<filestore_v1::CloudFilestoreManagerRetryPolicyOption>(
         filestore_v1::CloudFilestoreManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()) {
     options.set<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()) {
     options.set<filestore_v1::CloudFilestoreManagerPollingPolicyOption>(
         GenericPollingPolicy<
             filestore_v1::CloudFilestoreManagerRetryPolicyOption::Type,
             filestore_v1::CloudFilestoreManagerBackoffPolicyOption::Type>(
-            options.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()->clone(),
+            options.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicyOption>(
-        filestore_v1::MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy());
+  if (!options
+           .has<filestore_v1::
+                    CloudFilestoreManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicyOption>(
+        filestore_v1::
+            MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy());
   }
 
   return options;

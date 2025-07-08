@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANT_SNAPSHOTS_V1_INTERNAL_INSTANT_SNAPSHOTS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANT_SNAPSHOTS_V1_INTERNAL_INSTANT_SNAPSHOTS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instant_snapshots/v1/instant_snapshots_connection.h"
 #include "google/cloud/compute/instant_snapshots/v1/instant_snapshots_connection_idempotency_policy.h"
 #include "google/cloud/compute/instant_snapshots/v1/instant_snapshots_options.h"
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_rest_stub.h"
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,84 +44,113 @@ class InstantSnapshotsRestConnectionImpl
   ~InstantSnapshotsRestConnectionImpl() override = default;
 
   InstantSnapshotsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_instant_snapshots_v1_internal::InstantSnapshotsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_instant_snapshots_v1_internal::InstantSnapshotsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
-  AggregatedListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
+  AggregatedListInstantSnapshots(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          AggregatedListInstantSnapshotsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) override;
+  DeleteInstantSnapshot(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          DeleteInstantSnapshotRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstantSnapshot(NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstantSnapshot(
+      NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                      DeleteInstantSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstantSnapshot(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
-  GetInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          GetInstantSnapshotRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) override;
+  InsertInstantSnapshot(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          InsertInstantSnapshotRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstantSnapshot(NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstantSnapshot(
+      NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                      InsertInstantSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstantSnapshot(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
-  ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest request) override;
+  ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::
+                           ListInstantSnapshotsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          SetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                      SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<compute_instant_snapshots_v1::InstantSnapshotsRetryPolicy>
+  static std::unique_ptr<
+      compute_instant_snapshots_v1::InstantSnapshotsRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_instant_snapshots_v1::InstantSnapshotsRetryPolicyOption>()->clone();
+    return options
+        .get<compute_instant_snapshots_v1::InstantSnapshotsRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_instant_snapshots_v1::InstantSnapshotsBackoffPolicyOption>()->clone();
+    return options
+        .get<
+            compute_instant_snapshots_v1::InstantSnapshotsBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_instant_snapshots_v1::InstantSnapshotsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_instant_snapshots_v1::InstantSnapshotsConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_instant_snapshots_v1::
+                 InstantSnapshotsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_instant_snapshots_v1::InstantSnapshotsPollingPolicyOption>()->clone();
+    return options
+        .get<
+            compute_instant_snapshots_v1::InstantSnapshotsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_instant_snapshots_v1_internal::InstantSnapshotsRestStub> stub_;
+  std::shared_ptr<
+      compute_instant_snapshots_v1_internal::InstantSnapshotsRestStub>
+      stub_;
   Options options_;
 };
 

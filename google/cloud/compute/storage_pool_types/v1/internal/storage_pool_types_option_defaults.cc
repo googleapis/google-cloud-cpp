@@ -35,23 +35,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options StoragePoolTypesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_POOL_TYPES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_STORAGE_POOL_TYPES_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_STORAGE_POOL_TYPES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_STORAGE_POOL_TYPES_AUTHORITY",
       "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_storage_pool_types_v1::StoragePoolTypesRetryPolicyOption>()) {
-    options.set<compute_storage_pool_types_v1::StoragePoolTypesRetryPolicyOption>(
+  if (!options.has<
+          compute_storage_pool_types_v1::StoragePoolTypesRetryPolicyOption>()) {
+    options.set<
+        compute_storage_pool_types_v1::StoragePoolTypesRetryPolicyOption>(
         compute_storage_pool_types_v1::StoragePoolTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_storage_pool_types_v1::StoragePoolTypesBackoffPolicyOption>()) {
-    options.set<compute_storage_pool_types_v1::StoragePoolTypesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<compute_storage_pool_types_v1::
+                       StoragePoolTypesBackoffPolicyOption>()) {
+    options.set<
+        compute_storage_pool_types_v1::StoragePoolTypesBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_storage_pool_types_v1::StoragePoolTypesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_storage_pool_types_v1::StoragePoolTypesConnectionIdempotencyPolicyOption>(
-        compute_storage_pool_types_v1::MakeDefaultStoragePoolTypesConnectionIdempotencyPolicy());
+  if (!options.has<compute_storage_pool_types_v1::
+                       StoragePoolTypesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_storage_pool_types_v1::
+                    StoragePoolTypesConnectionIdempotencyPolicyOption>(
+        compute_storage_pool_types_v1::
+            MakeDefaultStoragePoolTypesConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -26,7 +26,8 @@ namespace cloud {
 namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use run_v2::MakeDefaultRevisionsConnectionIdempotencyPolicy directly.
+/// @deprecated Use run_v2::MakeDefaultRevisionsConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::run_v2::MakeDefaultRevisionsConnectionIdempotencyPolicy;
 
 /// @deprecated Use run_v2::RevisionsConnectionIdempotencyPolicy directly.

@@ -34,38 +34,46 @@ InstanceServiceTracingConnection::InstanceServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::chronicle::v1::Instance>
-InstanceServiceTracingConnection::GetInstance(google::cloud::chronicle::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::InstanceServiceConnection::GetInstance");
+InstanceServiceTracingConnection::GetInstance(
+    google::cloud::chronicle::v1::GetInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::InstanceServiceConnection::GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 StreamRange<google::longrunning::Operation>
-InstanceServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::InstanceServiceConnection::ListOperations");
+InstanceServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::InstanceServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-InstanceServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::InstanceServiceConnection::GetOperation");
+InstanceServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::InstanceServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-InstanceServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::InstanceServiceConnection::DeleteOperation");
+Status InstanceServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::InstanceServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-InstanceServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::InstanceServiceConnection::CancelOperation");
+Status InstanceServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::InstanceServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

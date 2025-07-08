@@ -19,17 +19,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_CONNECTION_IMPL_H
 
+#include "google/cloud/workflows/executions/v1/executions_connection.h"
+#include "google/cloud/workflows/executions/v1/executions_connection_idempotency_policy.h"
+#include "google/cloud/workflows/executions/v1/executions_options.h"
+#include "google/cloud/workflows/executions/v1/internal/executions_retry_traits.h"
+#include "google/cloud/workflows/executions/v1/internal/executions_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/workflows/executions/v1/executions_connection.h"
-#include "google/cloud/workflows/executions/v1/executions_connection_idempotency_policy.h"
-#include "google/cloud/workflows/executions/v1/executions_options.h"
-#include "google/cloud/workflows/executions/v1/internal/executions_retry_traits.h"
-#include "google/cloud/workflows/executions/v1/internal/executions_stub.h"
 #include <memory>
 
 namespace google {
@@ -43,23 +43,27 @@ class ExecutionsConnectionImpl
   ~ExecutionsConnectionImpl() override = default;
 
   ExecutionsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<workflows_executions_v1_internal::ExecutionsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<workflows_executions_v1_internal::ExecutionsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::workflows::executions::v1::Execution>
-  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request) override;
+  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest
+                     request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution>
-  CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
+      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution>
-  GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
+      google::cloud::workflows::executions::v1::GetExecutionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::workflows::executions::v1::Execution>
-  CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) override;
+  StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
+      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

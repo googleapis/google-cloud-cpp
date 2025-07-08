@@ -28,84 +28,113 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WebSecurityScannerClient::WebSecurityScannerClient(
     std::shared_ptr<WebSecurityScannerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 WebSecurityScannerClient::~WebSecurityScannerClient() = default;
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerClient::CreateScanConfig(google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request, Options opts) {
+WebSecurityScannerClient::CreateScanConfig(
+    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateScanConfig(request);
 }
 
-Status
-WebSecurityScannerClient::DeleteScanConfig(google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request, Options opts) {
+Status WebSecurityScannerClient::DeleteScanConfig(
+    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteScanConfig(request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerClient::GetScanConfig(google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request, Options opts) {
+WebSecurityScannerClient::GetScanConfig(
+    google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetScanConfig(request);
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerClient::ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest request, Options opts) {
+WebSecurityScannerClient::ListScanConfigs(
+    google::cloud::websecurityscanner::v1::ListScanConfigsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListScanConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-WebSecurityScannerClient::UpdateScanConfig(google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request, Options opts) {
+WebSecurityScannerClient::UpdateScanConfig(
+    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateScanConfig(request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerClient::StartScanRun(google::cloud::websecurityscanner::v1::StartScanRunRequest const& request, Options opts) {
+WebSecurityScannerClient::StartScanRun(
+    google::cloud::websecurityscanner::v1::StartScanRunRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartScanRun(request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerClient::GetScanRun(google::cloud::websecurityscanner::v1::GetScanRunRequest const& request, Options opts) {
+WebSecurityScannerClient::GetScanRun(
+    google::cloud::websecurityscanner::v1::GetScanRunRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetScanRun(request);
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerClient::ListScanRuns(google::cloud::websecurityscanner::v1::ListScanRunsRequest request, Options opts) {
+WebSecurityScannerClient::ListScanRuns(
+    google::cloud::websecurityscanner::v1::ListScanRunsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListScanRuns(std::move(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-WebSecurityScannerClient::StopScanRun(google::cloud::websecurityscanner::v1::StopScanRunRequest const& request, Options opts) {
+WebSecurityScannerClient::StopScanRun(
+    google::cloud::websecurityscanner::v1::StopScanRunRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopScanRun(request);
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-WebSecurityScannerClient::ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request, Options opts) {
+WebSecurityScannerClient::ListCrawledUrls(
+    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCrawledUrls(std::move(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
-WebSecurityScannerClient::GetFinding(google::cloud::websecurityscanner::v1::GetFindingRequest const& request, Options opts) {
+WebSecurityScannerClient::GetFinding(
+    google::cloud::websecurityscanner::v1::GetFindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFinding(request);
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::Finding>
-WebSecurityScannerClient::ListFindings(google::cloud::websecurityscanner::v1::ListFindingsRequest request, Options opts) {
+WebSecurityScannerClient::ListFindings(
+    google::cloud::websecurityscanner::v1::ListFindingsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFindings(std::move(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-WebSecurityScannerClient::ListFindingTypeStats(google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request, Options opts) {
+WebSecurityScannerClient::ListFindingTypeStats(
+    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFindingTypeStats(request);
 }

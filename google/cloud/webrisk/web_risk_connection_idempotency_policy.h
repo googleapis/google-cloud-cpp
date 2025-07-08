@@ -26,10 +26,13 @@ namespace cloud {
 namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use webrisk_v1::MakeDefaultWebRiskServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::webrisk_v1::MakeDefaultWebRiskServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// webrisk_v1::MakeDefaultWebRiskServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::webrisk_v1::
+    MakeDefaultWebRiskServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use webrisk_v1::WebRiskServiceConnectionIdempotencyPolicy directly.
+/// @deprecated Use webrisk_v1::WebRiskServiceConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::webrisk_v1::WebRiskServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

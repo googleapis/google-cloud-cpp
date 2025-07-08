@@ -46,8 +46,7 @@ SpeechMetadata::SpeechMetadata(
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechMetadata::Recognize(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::RecognizeRequest const& request) {
   SetMetadata(context, options);
   return child_->Recognize(context, options, request);
@@ -60,45 +59,42 @@ SpeechMetadata::AsyncLongRunningRecognize(
     google::cloud::internal::ImmutableOptions options,
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   SetMetadata(*context, *options);
-  return child_->AsyncLongRunningRecognize(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncLongRunningRecognize(cq, std::move(context),
+                                           std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechMetadata::LongRunningRecognize(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> SpeechMetadata::LongRunningRecognize(
+    grpc::ClientContext& context, Options options,
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   SetMetadata(context, options);
   return child_->LongRunningRecognize(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::cloud::speech::v1::StreamingRecognizeRequest,
-      google::cloud::speech::v1::StreamingRecognizeResponse>>
+    google::cloud::speech::v1::StreamingRecognizeRequest,
+    google::cloud::speech::v1::StreamingRecognizeResponse>>
 SpeechMetadata::AsyncStreamingRecognize(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   SetMetadata(*context, *options);
-  return child_->AsyncStreamingRecognize(cq, std::move(context), std::move(options));
+  return child_->AsyncStreamingRecognize(cq, std::move(context),
+                                         std::move(options));
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SpeechMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   SetMetadata(context, options, absl::StrCat());
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> SpeechMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -110,8 +106,8 @@ SpeechMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> SpeechMetadata::AsyncCancelOperation(
@@ -121,21 +117,21 @@ future<Status> SpeechMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void SpeechMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                 Options const& options,
+                                 std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void SpeechMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                 Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

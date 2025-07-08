@@ -34,20 +34,24 @@ class StoragePoolTypesConnectionIdempotencyPolicy {
   virtual ~StoragePoolTypesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<StoragePoolTypesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<StoragePoolTypesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request);
+  virtual google::cloud::Idempotency AggregatedListStoragePoolTypes(
+      google::cloud::cpp::compute::storage_pool_types::v1::
+          AggregatedListStoragePoolTypesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request);
+  virtual google::cloud::Idempotency GetStoragePoolType(
+      google::cloud::cpp::compute::storage_pool_types::v1::
+          GetStoragePoolTypeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request);
+  virtual google::cloud::Idempotency ListStoragePoolTypes(
+      google::cloud::cpp::compute::storage_pool_types::v1::
+          ListStoragePoolTypesRequest request);
 };
 
 std::unique_ptr<StoragePoolTypesConnectionIdempotencyPolicy>
-    MakeDefaultStoragePoolTypesConnectionIdempotencyPolicy();
+MakeDefaultStoragePoolTypesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_storage_pool_types_v1

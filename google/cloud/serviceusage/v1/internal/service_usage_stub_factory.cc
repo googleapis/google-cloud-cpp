@@ -17,17 +17,17 @@
 // source: google/api/serviceusage/v1/serviceusage.proto
 
 #include "google/cloud/serviceusage/v1/internal/service_usage_stub_factory.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_auth_decorator.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_logging_decorator.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_metadata_decorator.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_stub.h"
+#include "google/cloud/serviceusage/v1/internal/service_usage_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_auth_decorator.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_logging_decorator.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_metadata_decorator.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_stub.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_tracing_stub.h"
 #include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -38,30 +38,27 @@ namespace cloud {
 namespace serviceusage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ServiceUsageStub>
-CreateDefaultServiceUsageStub(
+std::shared_ptr<ServiceUsageStub> CreateDefaultServiceUsageStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::api::serviceusage::v1::ServiceUsage::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::api::serviceusage::v1::ServiceUsage::NewStub(channel);
   std::shared_ptr<ServiceUsageStub> stub =
-    std::make_shared<DefaultServiceUsageStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultServiceUsageStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ServiceUsageAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ServiceUsageAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<ServiceUsageMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ServiceUsageLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

@@ -38,7 +38,8 @@ class SqlFlagsServiceRestStub {
 
   virtual StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlFlagsListRequest const& request) = 0;
+      Options const& options,
+      google::cloud::sql::v1::SqlFlagsListRequest const& request) = 0;
 };
 
 class DefaultSqlFlagsServiceRestStub : public SqlFlagsServiceRestStub {
@@ -47,12 +48,12 @@ class DefaultSqlFlagsServiceRestStub : public SqlFlagsServiceRestStub {
 
   explicit DefaultSqlFlagsServiceRestStub(Options options);
   DefaultSqlFlagsServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -17,17 +17,17 @@
 // source: google/cloud/resourcemanager/v3/tag_bindings.proto
 
 #include "google/cloud/resourcemanager/v3/tag_bindings_connection.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_bindings_connection_impl.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_bindings_option_defaults.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_bindings_stub_factory.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_bindings_tracing_connection.h"
+#include "google/cloud/resourcemanager/v3/tag_bindings_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_bindings_connection_impl.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_bindings_option_defaults.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_bindings_stub_factory.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_bindings_tracing_connection.h"
-#include "google/cloud/resourcemanager/v3/tag_bindings_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TagBindingsConnection::~TagBindingsConnection() = default;
 
-StreamRange<google::cloud::resourcemanager::v3::TagBinding> TagBindingsConnection::ListTagBindings(
-    google::cloud::resourcemanager::v3::ListTagBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::resourcemanager::v3::TagBinding>
+TagBindingsConnection::ListTagBindings(
+    google::cloud::resourcemanager::v3::
+        ListTagBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::TagBinding>>();
 }
@@ -48,8 +50,8 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
 TagBindingsConnection::CreateTagBinding(
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::resourcemanager::v3::TagBinding>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::resourcemanager::v3::TagBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -57,23 +59,22 @@ TagBindingsConnection::CreateTagBinding(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-TagBindingsConnection::CreateTagBinding(
-    google::longrunning::Operation const&) {
+TagBindingsConnection::CreateTagBinding(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::resourcemanager::v3::TagBinding>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::resourcemanager::v3::TagBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
 TagBindingsConnection::DeleteTagBinding(
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -81,25 +82,25 @@ TagBindingsConnection::DeleteTagBinding(
     NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-TagBindingsConnection::DeleteTagBinding(
-    google::longrunning::Operation const&) {
+TagBindingsConnection::DeleteTagBinding(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::resourcemanager::v3::EffectiveTag> TagBindingsConnection::ListEffectiveTags(
-    google::cloud::resourcemanager::v3::ListEffectiveTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>
+TagBindingsConnection::ListEffectiveTags(
+    google::cloud::resourcemanager::v3::
+        ListEffectiveTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>>();
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> TagBindingsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -107,17 +108,18 @@ TagBindingsConnection::GetOperation(
 std::shared_ptr<TagBindingsConnection> MakeTagBindingsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TagBindingsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 TagBindingsPolicyOptionList>(options,
+                                                              __func__);
   options = resourcemanager_v3_internal::TagBindingsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = resourcemanager_v3_internal::CreateDefaultTagBindingsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return resourcemanager_v3_internal::MakeTagBindingsTracingConnection(
       std::make_shared<resourcemanager_v3_internal::TagBindingsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<TagBindingsConnection> MakeTagBindingsConnection(

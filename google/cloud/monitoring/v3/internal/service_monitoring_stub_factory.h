@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SERVICE_MONITORING_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SERVICE_MONITORING_STUB_FACTORY_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/monitoring/v3/internal/service_monitoring_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -30,7 +30,8 @@ namespace cloud {
 namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ServiceMonitoringServiceStub> CreateDefaultServiceMonitoringServiceStub(
+std::shared_ptr<ServiceMonitoringServiceStub>
+CreateDefaultServiceMonitoringServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

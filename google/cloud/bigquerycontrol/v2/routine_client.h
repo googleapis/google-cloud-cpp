@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RoutineServiceClient {
  public:
-  explicit RoutineServiceClient(std::shared_ptr<RoutineServiceConnection> connection, Options opts = {});
+  explicit RoutineServiceClient(
+      std::shared_ptr<RoutineServiceConnection> connection, Options opts = {});
   ~RoutineServiceClient();
 
   ///@{
@@ -74,10 +75,12 @@ class RoutineServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RoutineServiceClient const& a, RoutineServiceClient const& b) {
+  friend bool operator==(RoutineServiceClient const& a,
+                         RoutineServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RoutineServiceClient const& a, RoutineServiceClient const& b) {
+  friend bool operator!=(RoutineServiceClient const& a,
+                         RoutineServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +112,9 @@ class RoutineServiceClient {
   /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L85}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Routine>
-  GetRoutine(google::cloud::bigquery::v2::GetRoutineRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Routine> GetRoutine(
+      google::cloud::bigquery::v2::GetRoutineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -139,8 +143,9 @@ class RoutineServiceClient {
   /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L85}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Routine>
-  InsertRoutine(google::cloud::bigquery::v2::InsertRoutineRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Routine> InsertRoutine(
+      google::cloud::bigquery::v2::InsertRoutineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -170,8 +175,9 @@ class RoutineServiceClient {
   /// [google.cloud.bigquery.v2.UpdateRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L503}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Routine>
-  UpdateRoutine(google::cloud::bigquery::v2::UpdateRoutineRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Routine> UpdateRoutine(
+      google::cloud::bigquery::v2::UpdateRoutineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -201,8 +207,9 @@ class RoutineServiceClient {
   /// [google.cloud.bigquery.v2.Routine]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L85}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::Routine>
-  PatchRoutine(google::cloud::bigquery::v2::PatchRoutineRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::Routine> PatchRoutine(
+      google::cloud::bigquery::v2::PatchRoutineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -228,8 +235,9 @@ class RoutineServiceClient {
   /// [google.cloud.bigquery.v2.DeleteRoutineRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L539}
   ///
   // clang-format on
-  Status
-  DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const& request, Options opts = {});
+  Status DeleteRoutine(
+      google::cloud::bigquery::v2::DeleteRoutineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -259,8 +267,9 @@ class RoutineServiceClient {
   /// [google.cloud.bigquery.v2.ListRoutinesResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/routine.proto#L573}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse>
-  ListRoutines(google::cloud::bigquery::v2::ListRoutinesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse> ListRoutines(
+      google::cloud::bigquery::v2::ListRoutinesRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RoutineServiceConnection> connection_;

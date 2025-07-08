@@ -35,21 +35,24 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudBillingDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_BILLING_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CLOUD_BILLING_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_BILLING_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_BILLING_AUTHORITY",
       "cloudbilling.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<billing_v1::CloudBillingRetryPolicyOption>()) {
     options.set<billing_v1::CloudBillingRetryPolicyOption>(
-        billing_v1::CloudBillingLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        billing_v1::CloudBillingLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<billing_v1::CloudBillingBackoffPolicyOption>()) {
     options.set<billing_v1::CloudBillingBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<billing_v1::CloudBillingConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<billing_v1::CloudBillingConnectionIdempotencyPolicyOption>()) {
     options.set<billing_v1::CloudBillingConnectionIdempotencyPolicyOption>(
         billing_v1::MakeDefaultCloudBillingConnectionIdempotencyPolicy());
   }

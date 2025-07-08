@@ -50,14 +50,15 @@ VizierServiceConnection::GetStudy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Study> VizierServiceConnection::ListStudies(
-    google::cloud::aiplatform::v1::ListStudiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Study>
+VizierServiceConnection::ListStudies(
+    google::cloud::aiplatform::v1::
+        ListStudiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Study>>();
 }
 
-Status
-VizierServiceConnection::DeleteStudy(
+Status VizierServiceConnection::DeleteStudy(
     google::cloud::aiplatform::v1::DeleteStudyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -72,24 +73,21 @@ future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
 VizierServiceConnection::SuggestTrials(
     google::cloud::aiplatform::v1::SuggestTrialsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-VizierServiceConnection::SuggestTrials(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::SuggestTrialsRequest const&) {
+StatusOr<google::longrunning::Operation> VizierServiceConnection::SuggestTrials(
+    NoAwaitTag, google::cloud::aiplatform::v1::SuggestTrialsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-VizierServiceConnection::SuggestTrials(
-    google::longrunning::Operation const&) {
+VizierServiceConnection::SuggestTrials(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
@@ -104,8 +102,10 @@ VizierServiceConnection::GetTrial(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::Trial> VizierServiceConnection::ListTrials(
-    google::cloud::aiplatform::v1::ListTrialsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::Trial>
+VizierServiceConnection::ListTrials(
+    google::cloud::aiplatform::v1::
+        ListTrialsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Trial>>();
 }
@@ -122,18 +122,18 @@ VizierServiceConnection::CompleteTrial(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-VizierServiceConnection::DeleteTrial(
+Status VizierServiceConnection::DeleteTrial(
     google::cloud::aiplatform::v1::DeleteTrialRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+future<StatusOr<
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
 VizierServiceConnection::CheckTrialEarlyStoppingState(
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -141,15 +141,16 @@ VizierServiceConnection::CheckTrialEarlyStoppingState(
     NoAwaitTag,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+future<StatusOr<
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
 VizierServiceConnection::CheckTrialEarlyStoppingState(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
@@ -164,8 +165,10 @@ VizierServiceConnection::ListOptimalTrials(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> VizierServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+VizierServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -176,14 +179,12 @@ VizierServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-VizierServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> VizierServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-VizierServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> VizierServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -194,32 +195,30 @@ VizierServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> VizierServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+VizierServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-VizierServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> VizierServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-VizierServiceConnection::DeleteOperation(
+Status VizierServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-VizierServiceConnection::CancelOperation(
+Status VizierServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation>
-VizierServiceConnection::WaitOperation(
+StatusOr<google::longrunning::Operation> VizierServiceConnection::WaitOperation(
     google::longrunning::WaitOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -227,17 +226,18 @@ VizierServiceConnection::WaitOperation(
 std::shared_ptr<VizierServiceConnection> MakeVizierServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      VizierServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 VizierServicePolicyOptionList>(options,
+                                                                __func__);
   options = aiplatform_v1_internal::VizierServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultVizierServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeVizierServiceTracingConnection(
       std::make_shared<aiplatform_v1_internal::VizierServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

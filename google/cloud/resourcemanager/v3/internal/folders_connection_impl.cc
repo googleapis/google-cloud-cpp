@@ -17,13 +17,13 @@
 // source: google/cloud/resourcemanager/v3/folders.proto
 
 #include "google/cloud/resourcemanager/v3/internal/folders_connection_impl.h"
+#include "google/cloud/resourcemanager/v3/internal/folders_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/resourcemanager/v3/internal/folders_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,71 +33,80 @@ namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<resourcemanager_v3::FoldersRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<resourcemanager_v3::FoldersRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<resourcemanager_v3::FoldersRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<resourcemanager_v3::FoldersBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<resourcemanager_v3::FoldersConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<resourcemanager_v3::FoldersPollingPolicyOption>()->clone();
 }
 
-} // namespace
+}  // namespace
 
 FoldersConnectionImpl::FoldersConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<resourcemanager_v3_internal::FoldersStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        FoldersConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      FoldersConnection::options())) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Folder>
-FoldersConnectionImpl::GetFolder(google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
+FoldersConnectionImpl::GetFolder(
+    google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFolder(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
         return stub_->GetFolder(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersConnectionImpl::ListFolders(google::cloud::resourcemanager::v3::ListFoldersRequest request) {
+FoldersConnectionImpl::ListFolders(
+    google::cloud::resourcemanager::v3::ListFoldersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListFolders(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::resourcemanager::v3::Folder>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::resourcemanager::v3::Folder>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<resourcemanager_v3::FoldersRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<resourcemanager_v3::FoldersRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::resourcemanager::v3::ListFoldersRequest const& r) {
+          Options const& options,
+          google::cloud::resourcemanager::v3::ListFoldersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::resourcemanager::v3::ListFoldersRequest const& request) {
+                   google::cloud::resourcemanager::v3::ListFoldersRequest const&
+                       request) {
               return stub->ListFolders(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::resourcemanager::v3::ListFoldersResponse r) {
-        std::vector<google::cloud::resourcemanager::v3::Folder> result(r.folders().size());
+        std::vector<google::cloud::resourcemanager::v3::Folder> result(
+            r.folders().size());
         auto& messages = *r.mutable_folders();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -105,27 +114,34 @@ FoldersConnectionImpl::ListFolders(google::cloud::resourcemanager::v3::ListFolde
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
-FoldersConnectionImpl::SearchFolders(google::cloud::resourcemanager::v3::SearchFoldersRequest request) {
+FoldersConnectionImpl::SearchFolders(
+    google::cloud::resourcemanager::v3::SearchFoldersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->SearchFolders(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::resourcemanager::v3::Folder>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::resourcemanager::v3::Folder>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<resourcemanager_v3::FoldersRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<resourcemanager_v3::FoldersRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::resourcemanager::v3::SearchFoldersRequest const& r) {
+          Options const& options,
+          google::cloud::resourcemanager::v3::SearchFoldersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::resourcemanager::v3::SearchFoldersRequest const&
+                    request) {
               return stub->SearchFolders(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::resourcemanager::v3::SearchFoldersResponse r) {
-        std::vector<google::cloud::resourcemanager::v3::Folder> result(r.folders().size());
+        std::vector<google::cloud::resourcemanager::v3::Folder> result(
+            r.folders().size());
         auto& messages = *r.mutable_folders();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -133,49 +149,55 @@ FoldersConnectionImpl::SearchFolders(google::cloud::resourcemanager::v3::SearchF
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersConnectionImpl::CreateFolder(google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+FoldersConnectionImpl::CreateFolder(
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateFolder(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
-     return stub->AsyncCreateFolder(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::resourcemanager::v3::CreateFolderRequest const&
+              request) {
+        return stub->AsyncCreateFolder(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersConnectionImpl::CreateFolder(
-      NoAwaitTag, google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+StatusOr<google::longrunning::Operation> FoldersConnectionImpl::CreateFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateFolder(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateFolderRequest const&
+                 request) {
         return stub_->CreateFolder(context, options, request);
       },
       *current, request, __func__);
@@ -183,78 +205,92 @@ FoldersConnectionImpl::CreateFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::CreateFolder(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::CreateFolderMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Folder>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateFolder",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::resourcemanager::v3::
+                   CreateFolderMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateFolder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersConnectionImpl::UpdateFolder(google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+FoldersConnectionImpl::UpdateFolder(
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateFolder(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
-     return stub->AsyncUpdateFolder(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::resourcemanager::v3::UpdateFolderRequest const&
+              request) {
+        return stub->AsyncUpdateFolder(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersConnectionImpl::UpdateFolder(
-      NoAwaitTag, google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+StatusOr<google::longrunning::Operation> FoldersConnectionImpl::UpdateFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateFolder(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UpdateFolderRequest const&
+                 request) {
         return stub_->UpdateFolder(context, options, request);
       },
       *current, request, __func__);
@@ -262,78 +298,92 @@ FoldersConnectionImpl::UpdateFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::UpdateFolder(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::UpdateFolderMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Folder>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateFolder",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::resourcemanager::v3::
+                   UpdateFolderMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateFolder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersConnectionImpl::MoveFolder(google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+FoldersConnectionImpl::MoveFolder(
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->MoveFolder(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
-     return stub->AsyncMoveFolder(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::resourcemanager::v3::MoveFolderRequest const&
+              request) {
+        return stub->AsyncMoveFolder(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersConnectionImpl::MoveFolder(
-      NoAwaitTag, google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+StatusOr<google::longrunning::Operation> FoldersConnectionImpl::MoveFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->MoveFolder(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::MoveFolderRequest const&
+                 request) {
         return stub_->MoveFolder(context, options, request);
       },
       *current, request, __func__);
@@ -341,78 +391,92 @@ FoldersConnectionImpl::MoveFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::MoveFolder(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::MoveFolderMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Folder>>(
-        internal::InvalidArgumentError("operation does not correspond to MoveFolder",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::resourcemanager::v3::
+                   MoveFolderMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to MoveFolder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersConnectionImpl::DeleteFolder(google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+FoldersConnectionImpl::DeleteFolder(
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteFolder(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
-     return stub->AsyncDeleteFolder(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::resourcemanager::v3::DeleteFolderRequest const&
+              request) {
+        return stub->AsyncDeleteFolder(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersConnectionImpl::DeleteFolder(
-      NoAwaitTag, google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+StatusOr<google::longrunning::Operation> FoldersConnectionImpl::DeleteFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteFolder(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteFolderRequest const&
+                 request) {
         return stub_->DeleteFolder(context, options, request);
       },
       *current, request, __func__);
@@ -420,78 +484,92 @@ FoldersConnectionImpl::DeleteFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::DeleteFolder(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::DeleteFolderMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Folder>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteFolder",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::resourcemanager::v3::
+                   DeleteFolderMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteFolder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-FoldersConnectionImpl::UndeleteFolder(google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+FoldersConnectionImpl::UndeleteFolder(
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UndeleteFolder(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
-     return stub->AsyncUndeleteFolder(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
+              request) {
+        return stub->AsyncUndeleteFolder(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersConnectionImpl::UndeleteFolder(
-      NoAwaitTag, google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+StatusOr<google::longrunning::Operation> FoldersConnectionImpl::UndeleteFolder(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UndeleteFolder(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
+                 request) {
         return stub_->UndeleteFolder(context, options, request);
       },
       *current, request, __func__);
@@ -499,36 +577,44 @@ FoldersConnectionImpl::UndeleteFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::UndeleteFolder(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::resourcemanager::v3::UndeleteFolderMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::resourcemanager::v3::Folder>>(
-        internal::InvalidArgumentError("operation does not correspond to UndeleteFolder",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::resourcemanager::v3::
+                   UndeleteFolderMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UndeleteFolder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::resourcemanager::v3::Folder>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::resourcemanager::v3::Folder>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::resourcemanager::v3::Folder>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::Folder>,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> FoldersConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -540,8 +626,8 @@ FoldersConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& 
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-FoldersConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> FoldersConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -554,7 +640,8 @@ FoldersConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& 
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-FoldersConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+FoldersConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -566,8 +653,8 @@ FoldersConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsReq
       *current, request, __func__);
 }
 
-StatusOr<google::longrunning::Operation>
-FoldersConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation> FoldersConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

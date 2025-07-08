@@ -17,13 +17,13 @@
 // source: google/cloud/securitycenter/v1/securitycenter_service.proto
 
 #include "google/cloud/securitycenter/v1/internal/security_center_connection_impl.h"
+#include "google/cloud/securitycenter/v1/internal/security_center_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/securitycenter/v1/internal/security_center_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,80 +33,91 @@ namespace securitycenter_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<securitycenter_v1::SecurityCenterRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()->clone();
+std::unique_ptr<securitycenter_v1::SecurityCenterRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<securitycenter_v1::SecurityCenterRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<securitycenter_v1::SecurityCenterBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<securitycenter_v1::SecurityCenterBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<securitycenter_v1::SecurityCenterConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<securitycenter_v1::SecurityCenterConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<securitycenter_v1::SecurityCenterConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<securitycenter_v1::SecurityCenterPollingPolicyOption>()->clone();
+  return options.get<securitycenter_v1::SecurityCenterPollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 SecurityCenterConnectionImpl::SecurityCenterConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<securitycenter_v1_internal::SecurityCenterStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SecurityCenterConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      SecurityCenterConnection::options())) {}
 
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
-SecurityCenterConnectionImpl::BulkMuteFindings(google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
+SecurityCenterConnectionImpl::BulkMuteFindings(
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->BulkMuteFindings(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
-     return stub->AsyncBulkMuteFindings(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securitycenter::v1::BulkMuteFindingsResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
+              request) {
+        return stub->AsyncBulkMuteFindings(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securitycenter::v1::BulkMuteFindingsResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnectionImpl::BulkMuteFindings(
-      NoAwaitTag, google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
+    NoAwaitTag,
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BulkMuteFindings(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
+                 request) {
         return stub_->BulkMuteFindings(context, options, request);
       },
       *current, request, __func__);
@@ -114,179 +125,216 @@ SecurityCenterConnectionImpl::BulkMuteFindings(
 
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterConnectionImpl::BulkMuteFindings(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Empty>()) {
-    return make_ready_future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to BulkMuteFindings",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+    return make_ready_future<
+        StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BulkMuteFindings",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securitycenter::v1::BulkMuteFindingsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securitycenter::v1::BulkMuteFindingsResponse>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-SecurityCenterConnectionImpl::CreateSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+SecurityCenterConnectionImpl::CreateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateSecurityHealthAnalyticsCustomModule(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->CreateSecurityHealthAnalyticsCustomModule(context, options, request);
+      idempotency_policy(*current)->CreateSecurityHealthAnalyticsCustomModule(
+          request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::
+              CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return stub_->CreateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
-SecurityCenterConnectionImpl::CreateSource(google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
+SecurityCenterConnectionImpl::CreateSource(
+    google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSource(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
+             google::cloud::securitycenter::v1::CreateSourceRequest const&
+                 request) {
         return stub_->CreateSource(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
-SecurityCenterConnectionImpl::CreateFinding(google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
+SecurityCenterConnectionImpl::CreateFinding(
+    google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateFinding(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
+             google::cloud::securitycenter::v1::CreateFindingRequest const&
+                 request) {
         return stub_->CreateFinding(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
-SecurityCenterConnectionImpl::CreateMuteConfig(google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
+SecurityCenterConnectionImpl::CreateMuteConfig(
+    google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateMuteConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
+             google::cloud::securitycenter::v1::CreateMuteConfigRequest const&
+                 request) {
         return stub_->CreateMuteConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
-SecurityCenterConnectionImpl::CreateNotificationConfig(google::cloud::securitycenter::v1::CreateNotificationConfigRequest const& request) {
+SecurityCenterConnectionImpl::CreateNotificationConfig(
+    google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateNotificationConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::CreateNotificationConfigRequest const& request) {
+             google::cloud::securitycenter::v1::
+                 CreateNotificationConfigRequest const& request) {
         return stub_->CreateNotificationConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-SecurityCenterConnectionImpl::DeleteMuteConfig(google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
+Status SecurityCenterConnectionImpl::DeleteMuteConfig(
+    google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteMuteConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
+             google::cloud::securitycenter::v1::DeleteMuteConfigRequest const&
+                 request) {
         return stub_->DeleteMuteConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-SecurityCenterConnectionImpl::DeleteNotificationConfig(google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const& request) {
+Status SecurityCenterConnectionImpl::DeleteNotificationConfig(
+    google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteNotificationConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const& request) {
+             google::cloud::securitycenter::v1::
+                 DeleteNotificationConfigRequest const& request) {
         return stub_->DeleteNotificationConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-SecurityCenterConnectionImpl::DeleteSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
+Status SecurityCenterConnectionImpl::DeleteSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSecurityHealthAnalyticsCustomModule(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->DeleteSecurityHealthAnalyticsCustomModule(context, options, request);
+      idempotency_policy(*current)->DeleteSecurityHealthAnalyticsCustomModule(
+          request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::
+              DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return stub_->DeleteSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Simulation>
-SecurityCenterConnectionImpl::GetSimulation(google::cloud::securitycenter::v1::GetSimulationRequest const& request) {
+SecurityCenterConnectionImpl::GetSimulation(
+    google::cloud::securitycenter::v1::GetSimulationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSimulation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetSimulationRequest const& request) {
+             google::cloud::securitycenter::v1::GetSimulationRequest const&
+                 request) {
         return stub_->GetSimulation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ValuedResource>
-SecurityCenterConnectionImpl::GetValuedResource(google::cloud::securitycenter::v1::GetValuedResourceRequest const& request) {
+SecurityCenterConnectionImpl::GetValuedResource(
+    google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetValuedResource(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetValuedResourceRequest const& request) {
+             google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+                 request) {
         return stub_->GetValuedResource(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
-SecurityCenterConnectionImpl::GetBigQueryExport(google::cloud::securitycenter::v1::GetBigQueryExportRequest const& request) {
+SecurityCenterConnectionImpl::GetBigQueryExport(
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBigQueryExport(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetBigQueryExportRequest const& request) {
+             google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+                 request) {
         return stub_->GetBigQueryExport(context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecurityCenterConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> SecurityCenterConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -299,105 +347,134 @@ SecurityCenterConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest 
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
-SecurityCenterConnectionImpl::GetMuteConfig(google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
+SecurityCenterConnectionImpl::GetMuteConfig(
+    google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMuteConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
+             google::cloud::securitycenter::v1::GetMuteConfigRequest const&
+                 request) {
         return stub_->GetMuteConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
-SecurityCenterConnectionImpl::GetNotificationConfig(google::cloud::securitycenter::v1::GetNotificationConfigRequest const& request) {
+SecurityCenterConnectionImpl::GetNotificationConfig(
+    google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNotificationConfig(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetNotificationConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
+              request) {
         return stub_->GetNotificationConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
-SecurityCenterConnectionImpl::GetOrganizationSettings(google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const& request) {
+SecurityCenterConnectionImpl::GetOrganizationSettings(
+    google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOrganizationSettings(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const& request) {
+             google::cloud::securitycenter::v1::
+                 GetOrganizationSettingsRequest const& request) {
         return stub_->GetOrganizationSettings(context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule>
-SecurityCenterConnectionImpl::GetEffectiveSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::GetEffectiveSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetEffectiveSecurityHealthAnalyticsCustomModule(request),
+      idempotency_policy(*current)
+          ->GetEffectiveSecurityHealthAnalyticsCustomModule(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->GetEffectiveSecurityHealthAnalyticsCustomModule(context, options, request);
+             google::cloud::securitycenter::v1::
+                 GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
+                     request) {
+        return stub_->GetEffectiveSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-SecurityCenterConnectionImpl::GetSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
+SecurityCenterConnectionImpl::GetSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetSecurityHealthAnalyticsCustomModule(request),
+      idempotency_policy(*current)->GetSecurityHealthAnalyticsCustomModule(
+          request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->GetSecurityHealthAnalyticsCustomModule(context, options, request);
+             google::cloud::securitycenter::v1::
+                 GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return stub_->GetSecurityHealthAnalyticsCustomModule(context, options,
+                                                             request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
-SecurityCenterConnectionImpl::GetSource(google::cloud::securitycenter::v1::GetSourceRequest const& request) {
+SecurityCenterConnectionImpl::GetSource(
+    google::cloud::securitycenter::v1::GetSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSource(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetSourceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::GetSourceRequest const& request) {
         return stub_->GetSource(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
-SecurityCenterConnectionImpl::GroupAssets(google::cloud::securitycenter::v1::GroupAssetsRequest request) {
+SecurityCenterConnectionImpl::GroupAssets(
+    google::cloud::securitycenter::v1::GroupAssetsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->GroupAssets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::GroupResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::GroupResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::GroupAssetsRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::GroupAssetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::GroupAssetsRequest const& request) {
+                   google::cloud::securitycenter::v1::GroupAssetsRequest const&
+                       request) {
               return stub->GroupAssets(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::GroupAssetsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::GroupResult> result(r.group_by_results().size());
+        std::vector<google::cloud::securitycenter::v1::GroupResult> result(
+            r.group_by_results().size());
         auto& messages = *r.mutable_group_by_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -405,111 +482,153 @@ SecurityCenterConnectionImpl::GroupAssets(google::cloud::securitycenter::v1::Gro
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
-SecurityCenterConnectionImpl::GroupFindings(google::cloud::securitycenter::v1::GroupFindingsRequest request) {
+SecurityCenterConnectionImpl::GroupFindings(
+    google::cloud::securitycenter::v1::GroupFindingsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->GroupFindings(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::GroupResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::GroupResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::GroupFindingsRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::GroupFindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::GroupFindingsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v1::GroupFindingsRequest const&
+                    request) {
               return stub->GroupFindings(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::GroupFindingsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::GroupResult> result(r.group_by_results().size());
+        std::vector<google::cloud::securitycenter::v1::GroupResult> result(
+            r.group_by_results().size());
         auto& messages = *r.mutable_group_by_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StreamRange<google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
-SecurityCenterConnectionImpl::ListAssets(google::cloud::securitycenter::v1::ListAssetsRequest request) {
+StreamRange<
+    google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
+SecurityCenterConnectionImpl::ListAssets(
+    google::cloud::securitycenter::v1::ListAssetsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAssets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListAssetsRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::ListAssetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListAssetsRequest const& request) {
+                   google::cloud::securitycenter::v1::ListAssetsRequest const&
+                       request) {
               return stub->ListAssets(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::ListAssetsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult> result(r.list_assets_results().size());
+        std::vector<google::cloud::securitycenter::v1::ListAssetsResponse::
+                        ListAssetsResult>
+            result(r.list_assets_results().size());
         auto& messages = *r.mutable_list_assets_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StreamRange<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-SecurityCenterConnectionImpl::ListDescendantSecurityHealthAnalyticsCustomModules(google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesRequest request) {
+StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::
+    ListDescendantSecurityHealthAnalyticsCustomModules(
+        google::cloud::securitycenter::v1::
+            ListDescendantSecurityHealthAnalyticsCustomModulesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListDescendantSecurityHealthAnalyticsCustomModules(request);
+  auto idempotency =
+      idempotency_policy(*current)
+          ->ListDescendantSecurityHealthAnalyticsCustomModules(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::
+              ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+                  r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesRequest const& request) {
-              return stub->ListDescendantSecurityHealthAnalyticsCustomModules(context, options, request);
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v1::
+                    ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+                        request) {
+              return stub->ListDescendantSecurityHealthAnalyticsCustomModules(
+                  context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesResponse r) {
-        std::vector<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule> result(r.security_health_analytics_custom_modules().size());
+      [](google::cloud::securitycenter::v1::
+             ListDescendantSecurityHealthAnalyticsCustomModulesResponse r) {
+        std::vector<google::cloud::securitycenter::v1::
+                        SecurityHealthAnalyticsCustomModule>
+            result(r.security_health_analytics_custom_modules().size());
         auto& messages = *r.mutable_security_health_analytics_custom_modules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
-SecurityCenterConnectionImpl::ListFindings(google::cloud::securitycenter::v1::ListFindingsRequest request) {
+StreamRange<
+    google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
+SecurityCenterConnectionImpl::ListFindings(
+    google::cloud::securitycenter::v1::ListFindingsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListFindings(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
+                      ListFindingsResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListFindingsRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::ListFindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListFindingsRequest const& request) {
+                   google::cloud::securitycenter::v1::ListFindingsRequest const&
+                       request) {
               return stub->ListFindings(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::ListFindingsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult> result(r.list_findings_results().size());
+        std::vector<google::cloud::securitycenter::v1::ListFindingsResponse::
+                        ListFindingsResult>
+            result(r.list_findings_results().size());
         auto& messages = *r.mutable_list_findings_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -517,27 +636,34 @@ SecurityCenterConnectionImpl::ListFindings(google::cloud::securitycenter::v1::Li
 }
 
 StreamRange<google::cloud::securitycenter::v1::MuteConfig>
-SecurityCenterConnectionImpl::ListMuteConfigs(google::cloud::securitycenter::v1::ListMuteConfigsRequest request) {
+SecurityCenterConnectionImpl::ListMuteConfigs(
+    google::cloud::securitycenter::v1::ListMuteConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListMuteConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::MuteConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::MuteConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListMuteConfigsRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::ListMuteConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v1::ListMuteConfigsRequest const&
+                    request) {
               return stub->ListMuteConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::ListMuteConfigsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::MuteConfig> result(r.mute_configs().size());
+        std::vector<google::cloud::securitycenter::v1::MuteConfig> result(
+            r.mute_configs().size());
         auto& messages = *r.mutable_mute_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -545,83 +671,125 @@ SecurityCenterConnectionImpl::ListMuteConfigs(google::cloud::securitycenter::v1:
 }
 
 StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
-SecurityCenterConnectionImpl::ListNotificationConfigs(google::cloud::securitycenter::v1::ListNotificationConfigsRequest request) {
+SecurityCenterConnectionImpl::ListNotificationConfigs(
+    google::cloud::securitycenter::v1::ListNotificationConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListNotificationConfigs(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListNotificationConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::NotificationConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::NotificationConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListNotificationConfigsRequest const& r) {
+          Options const& options, google::cloud::securitycenter::v1::
+                                      ListNotificationConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListNotificationConfigsRequest const& request) {
+                   google::cloud::securitycenter::v1::
+                       ListNotificationConfigsRequest const& request) {
               return stub->ListNotificationConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::ListNotificationConfigsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::NotificationConfig> result(r.notification_configs().size());
+        std::vector<google::cloud::securitycenter::v1::NotificationConfig>
+            result(r.notification_configs().size());
         auto& messages = *r.mutable_notification_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StreamRange<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule>
-SecurityCenterConnectionImpl::ListEffectiveSecurityHealthAnalyticsCustomModules(google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request) {
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::ListEffectiveSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListEffectiveSecurityHealthAnalyticsCustomModules(request);
+  auto idempotency =
+      idempotency_policy(*current)
+          ->ListEffectiveSecurityHealthAnalyticsCustomModules(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::
+                      EffectiveSecurityHealthAnalyticsCustomModule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::
+              ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+                  r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const& request) {
-              return stub->ListEffectiveSecurityHealthAnalyticsCustomModules(context, options, request);
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v1::
+                    ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+                        request) {
+              return stub->ListEffectiveSecurityHealthAnalyticsCustomModules(
+                  context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesResponse r) {
-        std::vector<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule> result(r.effective_security_health_analytics_custom_modules().size());
-        auto& messages = *r.mutable_effective_security_health_analytics_custom_modules();
+      [](google::cloud::securitycenter::v1::
+             ListEffectiveSecurityHealthAnalyticsCustomModulesResponse r) {
+        std::vector<google::cloud::securitycenter::v1::
+                        EffectiveSecurityHealthAnalyticsCustomModule>
+            result(
+                r.effective_security_health_analytics_custom_modules().size());
+        auto& messages =
+            *r.mutable_effective_security_health_analytics_custom_modules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StreamRange<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-SecurityCenterConnectionImpl::ListSecurityHealthAnalyticsCustomModules(google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesRequest request) {
+StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::ListSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListSecurityHealthAnalyticsCustomModulesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListSecurityHealthAnalyticsCustomModules(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListSecurityHealthAnalyticsCustomModules(
+          request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::
+              ListSecurityHealthAnalyticsCustomModulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
-              return stub->ListSecurityHealthAnalyticsCustomModules(context, options, request);
+                   google::cloud::securitycenter::v1::
+                       ListSecurityHealthAnalyticsCustomModulesRequest const&
+                           request) {
+              return stub->ListSecurityHealthAnalyticsCustomModules(
+                  context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesResponse r) {
-        std::vector<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule> result(r.security_health_analytics_custom_modules().size());
+      [](google::cloud::securitycenter::v1::
+             ListSecurityHealthAnalyticsCustomModulesResponse r) {
+        std::vector<google::cloud::securitycenter::v1::
+                        SecurityHealthAnalyticsCustomModule>
+            result(r.security_health_analytics_custom_modules().size());
         auto& messages = *r.mutable_security_health_analytics_custom_modules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -629,27 +797,33 @@ SecurityCenterConnectionImpl::ListSecurityHealthAnalyticsCustomModules(google::c
 }
 
 StreamRange<google::cloud::securitycenter::v1::Source>
-SecurityCenterConnectionImpl::ListSources(google::cloud::securitycenter::v1::ListSourcesRequest request) {
+SecurityCenterConnectionImpl::ListSources(
+    google::cloud::securitycenter::v1::ListSourcesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSources(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::Source>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::Source>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListSourcesRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::ListSourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListSourcesRequest const& request) {
+                   google::cloud::securitycenter::v1::ListSourcesRequest const&
+                       request) {
               return stub->ListSources(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::ListSourcesResponse r) {
-        std::vector<google::cloud::securitycenter::v1::Source> result(r.sources().size());
+        std::vector<google::cloud::securitycenter::v1::Source> result(
+            r.sources().size());
         auto& messages = *r.mutable_sources();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -657,49 +831,58 @@ SecurityCenterConnectionImpl::ListSources(google::cloud::securitycenter::v1::Lis
 }
 
 future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
-SecurityCenterConnectionImpl::RunAssetDiscovery(google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request) {
+SecurityCenterConnectionImpl::RunAssetDiscovery(
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RunAssetDiscovery(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request) {
-     return stub->AsyncRunAssetDiscovery(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+              request) {
+        return stub->AsyncRunAssetDiscovery(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnectionImpl::RunAssetDiscovery(
-      NoAwaitTag, google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request) {
+    NoAwaitTag,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RunAssetDiscovery(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+                 request) {
         return stub_->RunAssetDiscovery(context, options, request);
       },
       *current, request, __func__);
@@ -707,49 +890,58 @@ SecurityCenterConnectionImpl::RunAssetDiscovery(
 
 future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
 SecurityCenterConnectionImpl::RunAssetDiscovery(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Empty>()) {
-    return make_ready_future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to RunAssetDiscovery",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+    return make_ready_future<
+        StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RunAssetDiscovery",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
-SecurityCenterConnectionImpl::SetFindingState(google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
+SecurityCenterConnectionImpl::SetFindingState(
+    google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetFindingState(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
+             google::cloud::securitycenter::v1::SetFindingStateRequest const&
+                 request) {
         return stub_->SetFindingState(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
-SecurityCenterConnectionImpl::SetMute(google::cloud::securitycenter::v1::SetMuteRequest const& request) {
+SecurityCenterConnectionImpl::SetMute(
+    google::cloud::securitycenter::v1::SetMuteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -761,8 +953,8 @@ SecurityCenterConnectionImpl::SetMute(google::cloud::securitycenter::v1::SetMute
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecurityCenterConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> SecurityCenterConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -775,7 +967,8 @@ SecurityCenterConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest 
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SecurityCenterConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+SecurityCenterConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -787,184 +980,235 @@ SecurityCenterConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermiss
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleResponse>
-SecurityCenterConnectionImpl::SimulateSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
+SecurityCenterConnectionImpl::SimulateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SimulateSecurityHealthAnalyticsCustomModule(request),
+      idempotency_policy(*current)->SimulateSecurityHealthAnalyticsCustomModule(
+          request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->SimulateSecurityHealthAnalyticsCustomModule(context, options, request);
+             google::cloud::securitycenter::v1::
+                 SimulateSecurityHealthAnalyticsCustomModuleRequest const&
+                     request) {
+        return stub_->SimulateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
-SecurityCenterConnectionImpl::UpdateExternalSystem(google::cloud::securitycenter::v1::UpdateExternalSystemRequest const& request) {
+SecurityCenterConnectionImpl::UpdateExternalSystem(
+    google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateExternalSystem(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateExternalSystemRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
+              request) {
         return stub_->UpdateExternalSystem(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
-SecurityCenterConnectionImpl::UpdateFinding(google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
+SecurityCenterConnectionImpl::UpdateFinding(
+    google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateFinding(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
+             google::cloud::securitycenter::v1::UpdateFindingRequest const&
+                 request) {
         return stub_->UpdateFinding(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
-SecurityCenterConnectionImpl::UpdateMuteConfig(google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
+SecurityCenterConnectionImpl::UpdateMuteConfig(
+    google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateMuteConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
+             google::cloud::securitycenter::v1::UpdateMuteConfigRequest const&
+                 request) {
         return stub_->UpdateMuteConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
-SecurityCenterConnectionImpl::UpdateNotificationConfig(google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const& request) {
+SecurityCenterConnectionImpl::UpdateNotificationConfig(
+    google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateNotificationConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const& request) {
+             google::cloud::securitycenter::v1::
+                 UpdateNotificationConfigRequest const& request) {
         return stub_->UpdateNotificationConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
-SecurityCenterConnectionImpl::UpdateOrganizationSettings(google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const& request) {
+SecurityCenterConnectionImpl::UpdateOrganizationSettings(
+    google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateOrganizationSettings(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const& request) {
+             google::cloud::securitycenter::v1::
+                 UpdateOrganizationSettingsRequest const& request) {
         return stub_->UpdateOrganizationSettings(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
-SecurityCenterConnectionImpl::UpdateSecurityHealthAnalyticsCustomModule(google::cloud::securitycenter::v1::UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+SecurityCenterConnectionImpl::UpdateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateSecurityHealthAnalyticsCustomModule(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->UpdateSecurityHealthAnalyticsCustomModule(context, options, request);
+      idempotency_policy(*current)->UpdateSecurityHealthAnalyticsCustomModule(
+          request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::
+              UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return stub_->UpdateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
-SecurityCenterConnectionImpl::UpdateSource(google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
+SecurityCenterConnectionImpl::UpdateSource(
+    google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSource(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
+             google::cloud::securitycenter::v1::UpdateSourceRequest const&
+                 request) {
         return stub_->UpdateSource(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
-SecurityCenterConnectionImpl::UpdateSecurityMarks(google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const& request) {
+SecurityCenterConnectionImpl::UpdateSecurityMarks(
+    google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSecurityMarks(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
+              request) {
         return stub_->UpdateSecurityMarks(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
-SecurityCenterConnectionImpl::CreateBigQueryExport(google::cloud::securitycenter::v1::CreateBigQueryExportRequest const& request) {
+SecurityCenterConnectionImpl::CreateBigQueryExport(
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateBigQueryExport(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::CreateBigQueryExportRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+              request) {
         return stub_->CreateBigQueryExport(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-SecurityCenterConnectionImpl::DeleteBigQueryExport(google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const& request) {
+Status SecurityCenterConnectionImpl::DeleteBigQueryExport(
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBigQueryExport(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+              request) {
         return stub_->DeleteBigQueryExport(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
-SecurityCenterConnectionImpl::UpdateBigQueryExport(google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const& request) {
+SecurityCenterConnectionImpl::UpdateBigQueryExport(
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateBigQueryExport(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+              request) {
         return stub_->UpdateBigQueryExport(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
-SecurityCenterConnectionImpl::ListBigQueryExports(google::cloud::securitycenter::v1::ListBigQueryExportsRequest request) {
+SecurityCenterConnectionImpl::ListBigQueryExports(
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListBigQueryExports(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::BigQueryExport>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::BigQueryExport>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListBigQueryExportsRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListBigQueryExportsRequest const& request) {
+                   google::cloud::securitycenter::v1::
+                       ListBigQueryExportsRequest const& request) {
               return stub->ListBigQueryExports(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::ListBigQueryExportsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::BigQueryExport> result(r.big_query_exports().size());
+        std::vector<google::cloud::securitycenter::v1::BigQueryExport> result(
+            r.big_query_exports().size());
         auto& messages = *r.mutable_big_query_exports();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -972,66 +1216,95 @@ SecurityCenterConnectionImpl::ListBigQueryExports(google::cloud::securitycenter:
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-SecurityCenterConnectionImpl::CreateEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::CreateEventThreatDetectionCustomModuleRequest const& request) {
+SecurityCenterConnectionImpl::CreateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        CreateEventThreatDetectionCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateEventThreatDetectionCustomModule(request),
+      idempotency_policy(*current)->CreateEventThreatDetectionCustomModule(
+          request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::CreateEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->CreateEventThreatDetectionCustomModule(context, options, request);
+             google::cloud::securitycenter::v1::
+                 CreateEventThreatDetectionCustomModuleRequest const& request) {
+        return stub_->CreateEventThreatDetectionCustomModule(context, options,
+                                                             request);
       },
       *current, request, __func__);
 }
 
-Status
-SecurityCenterConnectionImpl::DeleteEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::DeleteEventThreatDetectionCustomModuleRequest const& request) {
+Status SecurityCenterConnectionImpl::DeleteEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        DeleteEventThreatDetectionCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteEventThreatDetectionCustomModule(request),
+      idempotency_policy(*current)->DeleteEventThreatDetectionCustomModule(
+          request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::DeleteEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->DeleteEventThreatDetectionCustomModule(context, options, request);
+             google::cloud::securitycenter::v1::
+                 DeleteEventThreatDetectionCustomModuleRequest const& request) {
+        return stub_->DeleteEventThreatDetectionCustomModule(context, options,
+                                                             request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-SecurityCenterConnectionImpl::GetEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::GetEventThreatDetectionCustomModuleRequest const& request) {
+SecurityCenterConnectionImpl::GetEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEventThreatDetectionCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetEventThreatDetectionCustomModule(request),
+      idempotency_policy(*current)->GetEventThreatDetectionCustomModule(
+          request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->GetEventThreatDetectionCustomModule(context, options, request);
+             google::cloud::securitycenter::v1::
+                 GetEventThreatDetectionCustomModuleRequest const& request) {
+        return stub_->GetEventThreatDetectionCustomModule(context, options,
+                                                          request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-SecurityCenterConnectionImpl::ListDescendantEventThreatDetectionCustomModules(google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesRequest request) {
+SecurityCenterConnectionImpl::ListDescendantEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListDescendantEventThreatDetectionCustomModulesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListDescendantEventThreatDetectionCustomModules(request);
+  auto idempotency =
+      idempotency_policy(*current)
+          ->ListDescendantEventThreatDetectionCustomModules(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::
+              ListDescendantEventThreatDetectionCustomModulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesRequest const& request) {
-              return stub->ListDescendantEventThreatDetectionCustomModules(context, options, request);
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v1::
+                    ListDescendantEventThreatDetectionCustomModulesRequest const&
+                        request) {
+              return stub->ListDescendantEventThreatDetectionCustomModules(
+                  context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesResponse r) {
-        std::vector<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule> result(r.event_threat_detection_custom_modules().size());
+      [](google::cloud::securitycenter::v1::
+             ListDescendantEventThreatDetectionCustomModulesResponse r) {
+        std::vector<
+            google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+            result(r.event_threat_detection_custom_modules().size());
         auto& messages = *r.mutable_event_threat_detection_custom_modules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1039,27 +1312,41 @@ SecurityCenterConnectionImpl::ListDescendantEventThreatDetectionCustomModules(go
 }
 
 StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-SecurityCenterConnectionImpl::ListEventThreatDetectionCustomModules(google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesRequest request) {
+SecurityCenterConnectionImpl::ListEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEventThreatDetectionCustomModulesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListEventThreatDetectionCustomModules(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListEventThreatDetectionCustomModules(
+          request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::
+              ListEventThreatDetectionCustomModulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesRequest const& request) {
-              return stub->ListEventThreatDetectionCustomModules(context, options, request);
+                   google::cloud::securitycenter::v1::
+                       ListEventThreatDetectionCustomModulesRequest const&
+                           request) {
+              return stub->ListEventThreatDetectionCustomModules(
+                  context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesResponse r) {
-        std::vector<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule> result(r.event_threat_detection_custom_modules().size());
+      [](google::cloud::securitycenter::v1::
+             ListEventThreatDetectionCustomModulesResponse r) {
+        std::vector<
+            google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+            result(r.event_threat_detection_custom_modules().size());
         auto& messages = *r.mutable_event_threat_detection_custom_modules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1067,133 +1354,190 @@ SecurityCenterConnectionImpl::ListEventThreatDetectionCustomModules(google::clou
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
-SecurityCenterConnectionImpl::UpdateEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::UpdateEventThreatDetectionCustomModuleRequest const& request) {
+SecurityCenterConnectionImpl::UpdateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        UpdateEventThreatDetectionCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateEventThreatDetectionCustomModule(request),
+      idempotency_policy(*current)->UpdateEventThreatDetectionCustomModule(
+          request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->UpdateEventThreatDetectionCustomModule(context, options, request);
+             google::cloud::securitycenter::v1::
+                 UpdateEventThreatDetectionCustomModuleRequest const& request) {
+        return stub_->UpdateEventThreatDetectionCustomModule(context, options,
+                                                             request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleResponse>
-SecurityCenterConnectionImpl::ValidateEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleRequest const& request) {
+StatusOr<google::cloud::securitycenter::v1::
+             ValidateEventThreatDetectionCustomModuleResponse>
+SecurityCenterConnectionImpl::ValidateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        ValidateEventThreatDetectionCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ValidateEventThreatDetectionCustomModule(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->ValidateEventThreatDetectionCustomModule(context, options, request);
+      idempotency_policy(*current)->ValidateEventThreatDetectionCustomModule(
+          request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::
+              ValidateEventThreatDetectionCustomModuleRequest const& request) {
+        return stub_->ValidateEventThreatDetectionCustomModule(context, options,
+                                                               request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule>
-SecurityCenterConnectionImpl::GetEffectiveEventThreatDetectionCustomModule(google::cloud::securitycenter::v1::GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveEventThreatDetectionCustomModule>
+SecurityCenterConnectionImpl::GetEffectiveEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetEffectiveEventThreatDetectionCustomModule(request),
+      idempotency_policy(*current)
+          ->GetEffectiveEventThreatDetectionCustomModule(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->GetEffectiveEventThreatDetectionCustomModule(context, options, request);
+             google::cloud::securitycenter::v1::
+                 GetEffectiveEventThreatDetectionCustomModuleRequest const&
+                     request) {
+        return stub_->GetEffectiveEventThreatDetectionCustomModule(
+            context, options, request);
       },
       *current, request, __func__);
 }
 
-StreamRange<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule>
-SecurityCenterConnectionImpl::ListEffectiveEventThreatDetectionCustomModules(google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesRequest request) {
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveEventThreatDetectionCustomModule>
+SecurityCenterConnectionImpl::ListEffectiveEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEffectiveEventThreatDetectionCustomModulesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListEffectiveEventThreatDetectionCustomModules(request);
+  auto idempotency =
+      idempotency_policy(*current)
+          ->ListEffectiveEventThreatDetectionCustomModules(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::
+                      EffectiveEventThreatDetectionCustomModule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::
+              ListEffectiveEventThreatDetectionCustomModulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesRequest const& request) {
-              return stub->ListEffectiveEventThreatDetectionCustomModules(context, options, request);
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v1::
+                    ListEffectiveEventThreatDetectionCustomModulesRequest const&
+                        request) {
+              return stub->ListEffectiveEventThreatDetectionCustomModules(
+                  context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesResponse r) {
-        std::vector<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule> result(r.effective_event_threat_detection_custom_modules().size());
-        auto& messages = *r.mutable_effective_event_threat_detection_custom_modules();
+      [](google::cloud::securitycenter::v1::
+             ListEffectiveEventThreatDetectionCustomModulesResponse r) {
+        std::vector<google::cloud::securitycenter::v1::
+                        EffectiveEventThreatDetectionCustomModule>
+            result(r.effective_event_threat_detection_custom_modules().size());
+        auto& messages =
+            *r.mutable_effective_event_threat_detection_custom_modules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
-SecurityCenterConnectionImpl::BatchCreateResourceValueConfigs(google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsRequest const& request) {
+StatusOr<
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+SecurityCenterConnectionImpl::BatchCreateResourceValueConfigs(
+    google::cloud::securitycenter::v1::
+        BatchCreateResourceValueConfigsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchCreateResourceValueConfigs(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsRequest const& request) {
-        return stub_->BatchCreateResourceValueConfigs(context, options, request);
+             google::cloud::securitycenter::v1::
+                 BatchCreateResourceValueConfigsRequest const& request) {
+        return stub_->BatchCreateResourceValueConfigs(context, options,
+                                                      request);
       },
       *current, request, __func__);
 }
 
-Status
-SecurityCenterConnectionImpl::DeleteResourceValueConfig(google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const& request) {
+Status SecurityCenterConnectionImpl::DeleteResourceValueConfig(
+    google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteResourceValueConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const& request) {
+             google::cloud::securitycenter::v1::
+                 DeleteResourceValueConfigRequest const& request) {
         return stub_->DeleteResourceValueConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
-SecurityCenterConnectionImpl::GetResourceValueConfig(google::cloud::securitycenter::v1::GetResourceValueConfigRequest const& request) {
+SecurityCenterConnectionImpl::GetResourceValueConfig(
+    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetResourceValueConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::GetResourceValueConfigRequest const& request) {
+             google::cloud::securitycenter::v1::
+                 GetResourceValueConfigRequest const& request) {
         return stub_->GetResourceValueConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>
-SecurityCenterConnectionImpl::ListResourceValueConfigs(google::cloud::securitycenter::v1::ListResourceValueConfigsRequest request) {
+SecurityCenterConnectionImpl::ListResourceValueConfigs(
+    google::cloud::securitycenter::v1::ListResourceValueConfigsRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListResourceValueConfigs(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListResourceValueConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::
+              ListResourceValueConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const& request) {
+                   google::cloud::securitycenter::v1::
+                       ListResourceValueConfigsRequest const& request) {
               return stub->ListResourceValueConfigs(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::securitycenter::v1::ListResourceValueConfigsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::ResourceValueConfig> result(r.resource_value_configs().size());
+      [](google::cloud::securitycenter::v1::ListResourceValueConfigsResponse
+             r) {
+        std::vector<google::cloud::securitycenter::v1::ResourceValueConfig>
+            result(r.resource_value_configs().size());
         auto& messages = *r.mutable_resource_value_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1201,40 +1545,50 @@ SecurityCenterConnectionImpl::ListResourceValueConfigs(google::cloud::securityce
 }
 
 StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
-SecurityCenterConnectionImpl::UpdateResourceValueConfig(google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const& request) {
+SecurityCenterConnectionImpl::UpdateResourceValueConfig(
+    google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateResourceValueConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const& request) {
+             google::cloud::securitycenter::v1::
+                 UpdateResourceValueConfigRequest const& request) {
         return stub_->UpdateResourceValueConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::securitycenter::v1::ValuedResource>
-SecurityCenterConnectionImpl::ListValuedResources(google::cloud::securitycenter::v1::ListValuedResourcesRequest request) {
+SecurityCenterConnectionImpl::ListValuedResources(
+    google::cloud::securitycenter::v1::ListValuedResourcesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListValuedResources(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::ValuedResource>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::ValuedResource>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListValuedResourcesRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListValuedResourcesRequest const& request) {
+                   google::cloud::securitycenter::v1::
+                       ListValuedResourcesRequest const& request) {
               return stub->ListValuedResources(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::ListValuedResourcesResponse r) {
-        std::vector<google::cloud::securitycenter::v1::ValuedResource> result(r.valued_resources().size());
+        std::vector<google::cloud::securitycenter::v1::ValuedResource> result(
+            r.valued_resources().size());
         auto& messages = *r.mutable_valued_resources();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1242,27 +1596,34 @@ SecurityCenterConnectionImpl::ListValuedResources(google::cloud::securitycenter:
 }
 
 StreamRange<google::cloud::securitycenter::v1::AttackPath>
-SecurityCenterConnectionImpl::ListAttackPaths(google::cloud::securitycenter::v1::ListAttackPathsRequest request) {
+SecurityCenterConnectionImpl::ListAttackPaths(
+    google::cloud::securitycenter::v1::ListAttackPathsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAttackPaths(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::securitycenter::v1::AttackPath>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::AttackPath>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::securitycenter::v1::ListAttackPathsRequest const& r) {
+          Options const& options,
+          google::cloud::securitycenter::v1::ListAttackPathsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::securitycenter::v1::ListAttackPathsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v1::ListAttackPathsRequest const&
+                    request) {
               return stub->ListAttackPaths(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::securitycenter::v1::ListAttackPathsResponse r) {
-        std::vector<google::cloud::securitycenter::v1::AttackPath> result(r.attack_paths().size());
+        std::vector<google::cloud::securitycenter::v1::AttackPath> result(
+            r.attack_paths().size());
         auto& messages = *r.mutable_attack_paths();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1270,17 +1631,21 @@ SecurityCenterConnectionImpl::ListAttackPaths(google::cloud::securitycenter::v1:
 }
 
 StreamRange<google::longrunning::Operation>
-SecurityCenterConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+SecurityCenterConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -1290,7 +1655,8 @@ SecurityCenterConnectionImpl::ListOperations(google::longrunning::ListOperations
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1298,7 +1664,8 @@ SecurityCenterConnectionImpl::ListOperations(google::longrunning::ListOperations
 }
 
 StatusOr<google::longrunning::Operation>
-SecurityCenterConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+SecurityCenterConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1310,8 +1677,8 @@ SecurityCenterConnectionImpl::GetOperation(google::longrunning::GetOperationRequ
       *current, request, __func__);
 }
 
-Status
-SecurityCenterConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status SecurityCenterConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1323,8 +1690,8 @@ SecurityCenterConnectionImpl::DeleteOperation(google::longrunning::DeleteOperati
       *current, request, __func__);
 }
 
-Status
-SecurityCenterConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status SecurityCenterConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

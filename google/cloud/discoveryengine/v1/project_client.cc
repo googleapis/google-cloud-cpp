@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProjectServiceClient::ProjectServiceClient(
     std::shared_ptr<ProjectServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProjectServiceClient::~ProjectServiceClient() = default;
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
@@ -40,8 +40,8 @@ ProjectServiceClient::ProvisionProject(std::string const& name, Options opts) {
   return connection_->ProvisionProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectServiceClient::ProvisionProject(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectServiceClient::ProvisionProject(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::ProvisionProjectRequest request;
   request.set_name(name);
@@ -49,25 +49,31 @@ ProjectServiceClient::ProvisionProject(NoAwaitTag, std::string const& name, Opti
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-ProjectServiceClient::ProvisionProject(google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request, Options opts) {
+ProjectServiceClient::ProvisionProject(
+    google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ProvisionProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectServiceClient::ProvisionProject(NoAwaitTag, google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectServiceClient::ProvisionProject(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ProvisionProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-ProjectServiceClient::ProvisionProject(google::longrunning::Operation const& operation, Options opts) {
+ProjectServiceClient::ProvisionProject(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ProvisionProject(operation);
 }
 
 StreamRange<google::longrunning::Operation>
-ProjectServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+ProjectServiceClient::ListOperations(std::string const& name,
+                                     std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -76,35 +82,36 @@ ProjectServiceClient::ListOperations(std::string const& name, std::string const&
 }
 
 StreamRange<google::longrunning::Operation>
-ProjectServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+ProjectServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-ProjectServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status ProjectServiceClient::CancelOperation(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-ProjectServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status ProjectServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

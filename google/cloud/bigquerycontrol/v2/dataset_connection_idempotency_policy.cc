@@ -26,43 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DatasetServiceConnectionIdempotencyPolicy::~DatasetServiceConnectionIdempotencyPolicy() = default;
+DatasetServiceConnectionIdempotencyPolicy::
+    ~DatasetServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy>
 DatasetServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DatasetServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::GetDataset(google::cloud::bigquery::v2::GetDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::GetDataset(
+    google::cloud::bigquery::v2::GetDatasetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::InsertDataset(google::cloud::bigquery::v2::InsertDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::InsertDataset(
+    google::cloud::bigquery::v2::InsertDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::PatchDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::PatchDataset(
+    google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::UpdateDataset(google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::UpdateDataset(
+    google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteDataset(google::cloud::bigquery::v2::DeleteDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::DeleteDataset(
+    google::cloud::bigquery::v2::DeleteDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDatasets(google::cloud::bigquery::v2::ListDatasetsRequest) {  // NOLINT
+Idempotency DatasetServiceConnectionIdempotencyPolicy::ListDatasets(
+    google::cloud::bigquery::v2::ListDatasetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatasetServiceConnectionIdempotencyPolicy::UndeleteDataset(google::cloud::bigquery::v2::UndeleteDatasetRequest const&) {
+Idempotency DatasetServiceConnectionIdempotencyPolicy::UndeleteDataset(
+    google::cloud::bigquery::v2::UndeleteDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DatasetServiceConnectionIdempotencyPolicy>
-    MakeDefaultDatasetServiceConnectionIdempotencyPolicy() {
+MakeDefaultDatasetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DatasetServiceConnectionIdempotencyPolicy>();
 }
 

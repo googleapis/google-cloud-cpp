@@ -17,8 +17,8 @@
 // source: google/cloud/compute/disk_types/v1/disk_types.proto
 
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -35,34 +35,45 @@ DiskTypesRestConnectionImpl::DiskTypesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_disk_types_v1_internal::DiskTypesRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        DiskTypesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      DiskTypesConnection::options())) {}
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>
-DiskTypesRestConnectionImpl::AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest request) {
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+DiskTypesRestConnectionImpl::AggregatedListDiskTypes(
+    google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->AggregatedListDiskTypes(request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListDiskTypes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_disk_types_v1::DiskTypesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<compute_disk_types_v1::DiskTypesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::disk_types::v1::
+                                      AggregatedListDiskTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest const& request) {
-              return stub->AggregatedListDiskTypes(rest_context, options, request);
+                   google::cloud::cpp::compute::disk_types::v1::
+                       AggregatedListDiskTypesRequest const& request) {
+              return stub->AggregatedListDiskTypes(rest_context, options,
+                                                   request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::DiskTypeAggregatedList r) {
-        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>> result(r.items().size());
+        std::vector<std::pair<
+            std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+            result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -70,41 +81,51 @@ DiskTypesRestConnectionImpl::AggregatedListDiskTypes(google::cloud::cpp::compute
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesRestConnectionImpl::GetDiskType(google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const& request) {
+DiskTypesRestConnectionImpl::GetDiskType(
+    google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDiskType(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
+              request) {
         return stub_->GetDiskType(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::DiskType>
-DiskTypesRestConnectionImpl::ListDiskTypes(google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request) {
+DiskTypesRestConnectionImpl::ListDiskTypes(
+    google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListDiskTypes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::DiskType>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::DiskType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_disk_types_v1::DiskTypesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<compute_disk_types_v1::DiskTypesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const& r) {
+          Options const& options, google::cloud::cpp::compute::disk_types::v1::
+                                      ListDiskTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const& request) {
+                   google::cloud::cpp::compute::disk_types::v1::
+                       ListDiskTypesRequest const& request) {
               return stub->ListDiskTypes(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::DiskTypeList r) {
-        std::vector<google::cloud::cpp::compute::v1::DiskType> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::DiskType> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

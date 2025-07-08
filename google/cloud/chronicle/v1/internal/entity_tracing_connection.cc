@@ -34,68 +34,83 @@ EntityServiceTracingConnection::EntityServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceTracingConnection::GetWatchlist(google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::GetWatchlist");
+EntityServiceTracingConnection::GetWatchlist(
+    google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::EntityServiceConnection::GetWatchlist");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetWatchlist(request));
 }
 
 StreamRange<google::cloud::chronicle::v1::Watchlist>
-EntityServiceTracingConnection::ListWatchlists(google::cloud::chronicle::v1::ListWatchlistsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::ListWatchlists");
+EntityServiceTracingConnection::ListWatchlists(
+    google::cloud::chronicle::v1::ListWatchlistsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::EntityServiceConnection::ListWatchlists");
   internal::OTelScope scope(span);
   auto sr = child_->ListWatchlists(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::chronicle::v1::Watchlist>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::chronicle::v1::Watchlist>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceTracingConnection::CreateWatchlist(google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::CreateWatchlist");
+EntityServiceTracingConnection::CreateWatchlist(
+    google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::EntityServiceConnection::CreateWatchlist");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateWatchlist(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
-EntityServiceTracingConnection::UpdateWatchlist(google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::UpdateWatchlist");
+EntityServiceTracingConnection::UpdateWatchlist(
+    google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::EntityServiceConnection::UpdateWatchlist");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateWatchlist(request));
 }
 
-Status
-EntityServiceTracingConnection::DeleteWatchlist(google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::DeleteWatchlist");
+Status EntityServiceTracingConnection::DeleteWatchlist(
+    google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::EntityServiceConnection::DeleteWatchlist");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteWatchlist(request));
 }
 
 StreamRange<google::longrunning::Operation>
-EntityServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::ListOperations");
+EntityServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::EntityServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-EntityServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::GetOperation");
+EntityServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::EntityServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-EntityServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::DeleteOperation");
+Status EntityServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::EntityServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-EntityServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::EntityServiceConnection::CancelOperation");
+Status EntityServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::EntityServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

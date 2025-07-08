@@ -43,27 +43,37 @@ class AdvisoryNotificationsServiceConnectionImpl
   ~AdvisoryNotificationsServiceConnectionImpl() override = default;
 
   AdvisoryNotificationsServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
-  ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest request) override;
+  ListNotifications(
+      google::cloud::advisorynotifications::v1::ListNotificationsRequest
+          request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
-  GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) override;
+  GetNotification(
+      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+          request) override;
 
-  StatusOr<google::cloud::advisorynotifications::v1::Settings>
-  GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::advisorynotifications::v1::Settings>
-  UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub> stub_;
+  std::shared_ptr<
+      advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub>
+      stub_;
   Options options_;
 };
 

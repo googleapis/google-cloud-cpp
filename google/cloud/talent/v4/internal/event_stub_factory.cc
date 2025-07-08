@@ -17,17 +17,17 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/v4/internal/event_stub_factory.h"
+#include "google/cloud/talent/v4/internal/event_auth_decorator.h"
+#include "google/cloud/talent/v4/internal/event_logging_decorator.h"
+#include "google/cloud/talent/v4/internal/event_metadata_decorator.h"
+#include "google/cloud/talent/v4/internal/event_stub.h"
+#include "google/cloud/talent/v4/internal/event_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/talent/v4/internal/event_auth_decorator.h"
-#include "google/cloud/talent/v4/internal/event_logging_decorator.h"
-#include "google/cloud/talent/v4/internal/event_metadata_decorator.h"
-#include "google/cloud/talent/v4/internal/event_stub.h"
-#include "google/cloud/talent/v4/internal/event_tracing_stub.h"
 #include <google/cloud/talent/v4/event_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -38,29 +38,28 @@ namespace cloud {
 namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<EventServiceStub>
-CreateDefaultEventServiceStub(
+std::shared_ptr<EventServiceStub> CreateDefaultEventServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::talent::v4::EventService::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::talent::v4::EventService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<EventServiceStub> stub =
-    std::make_shared<DefaultEventServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub));
+      std::make_shared<DefaultEventServiceStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<EventServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<EventServiceAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<EventServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<EventServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

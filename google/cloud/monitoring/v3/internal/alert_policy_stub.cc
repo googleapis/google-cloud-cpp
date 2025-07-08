@@ -32,67 +32,61 @@ AlertPolicyServiceStub::~AlertPolicyServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 DefaultAlertPolicyServiceStub::ListAlertPolicies(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::ListAlertPoliciesRequest const& request) {
-    google::monitoring::v3::ListAlertPoliciesResponse response;
-    auto status =
-        grpc_stub_->ListAlertPolicies(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::ListAlertPoliciesRequest const& request) {
+  google::monitoring::v3::ListAlertPoliciesResponse response;
+  auto status = grpc_stub_->ListAlertPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::GetAlertPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::GetAlertPolicyRequest const& request) {
-    google::monitoring::v3::AlertPolicy response;
-    auto status =
-        grpc_stub_->GetAlertPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::GetAlertPolicyRequest const& request) {
+  google::monitoring::v3::AlertPolicy response;
+  auto status = grpc_stub_->GetAlertPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::CreateAlertPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-    google::monitoring::v3::AlertPolicy response;
-    auto status =
-        grpc_stub_->CreateAlertPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::CreateAlertPolicyRequest const& request) {
+  google::monitoring::v3::AlertPolicy response;
+  auto status = grpc_stub_->CreateAlertPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultAlertPolicyServiceStub::DeleteAlertPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteAlertPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultAlertPolicyServiceStub::DeleteAlertPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteAlertPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::UpdateAlertPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-    google::monitoring::v3::AlertPolicy response;
-    auto status =
-        grpc_stub_->UpdateAlertPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
+  google::monitoring::v3::AlertPolicy response;
+  auto status = grpc_stub_->UpdateAlertPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

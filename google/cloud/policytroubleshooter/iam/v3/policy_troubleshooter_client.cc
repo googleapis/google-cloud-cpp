@@ -28,12 +28,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PolicyTroubleshooterClient::PolicyTroubleshooterClient(
     std::shared_ptr<PolicyTroubleshooterConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PolicyTroubleshooterClient::~PolicyTroubleshooterClient() = default;
 
-StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
-PolicyTroubleshooterClient::TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+PolicyTroubleshooterClient::TroubleshootIamPolicy(
+    google::cloud::policytroubleshooter::iam::v3::
+        TroubleshootIamPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TroubleshootIamPolicy(request);
 }

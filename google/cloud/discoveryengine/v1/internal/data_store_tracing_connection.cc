@@ -34,7 +34,8 @@ DataStoreServiceTracingConnection::DataStoreServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
-DataStoreServiceTracingConnection::CreateDataStore(google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+DataStoreServiceTracingConnection::CreateDataStore(
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DataStoreServiceConnection::CreateDataStore");
   internal::OTelScope scope(span);
@@ -43,12 +44,13 @@ DataStoreServiceTracingConnection::CreateDataStore(google::cloud::discoveryengin
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceTracingConnection::CreateDataStore(
-    NoAwaitTag, google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DataStoreServiceConnection::CreateDataStore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateDataStore(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateDataStore(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
@@ -57,28 +59,33 @@ DataStoreServiceTracingConnection::CreateDataStore(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DataStoreServiceConnection::CreateDataStore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateDataStore(operation));
+  return internal::EndSpan(std::move(span), child_->CreateDataStore(operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
-DataStoreServiceTracingConnection::GetDataStore(google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DataStoreServiceConnection::GetDataStore");
+DataStoreServiceTracingConnection::GetDataStore(
+    google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::GetDataStore");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataStore(request));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::DataStore>
-DataStoreServiceTracingConnection::ListDataStores(google::cloud::discoveryengine::v1::ListDataStoresRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DataStoreServiceConnection::ListDataStores");
+DataStoreServiceTracingConnection::ListDataStores(
+    google::cloud::discoveryengine::v1::ListDataStoresRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::ListDataStores");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataStores(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::DataStore>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::DataStore>(std::move(span),
+                                                     std::move(sr));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
-DataStoreServiceTracingConnection::DeleteDataStore(google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+DataStoreServiceTracingConnection::DeleteDataStore(
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DataStoreServiceConnection::DeleteDataStore");
   internal::OTelScope scope(span);
@@ -87,12 +94,13 @@ DataStoreServiceTracingConnection::DeleteDataStore(google::cloud::discoveryengin
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceTracingConnection::DeleteDataStore(
-    NoAwaitTag, google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DataStoreServiceConnection::DeleteDataStore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteDataStore(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteDataStore(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
@@ -101,36 +109,42 @@ DataStoreServiceTracingConnection::DeleteDataStore(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DataStoreServiceConnection::DeleteDataStore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteDataStore(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteDataStore(operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
-DataStoreServiceTracingConnection::UpdateDataStore(google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DataStoreServiceConnection::UpdateDataStore");
+DataStoreServiceTracingConnection::UpdateDataStore(
+    google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::UpdateDataStore");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDataStore(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DataStoreServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DataStoreServiceConnection::ListOperations");
+DataStoreServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DataStoreServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DataStoreServiceConnection::GetOperation");
+DataStoreServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-DataStoreServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DataStoreServiceConnection::CancelOperation");
+Status DataStoreServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

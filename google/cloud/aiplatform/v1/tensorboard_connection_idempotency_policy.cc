@@ -26,134 +26,190 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TensorboardServiceConnectionIdempotencyPolicy::~TensorboardServiceConnectionIdempotencyPolicy() = default;
+TensorboardServiceConnectionIdempotencyPolicy::
+    ~TensorboardServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TensorboardServiceConnectionIdempotencyPolicy>
 TensorboardServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TensorboardServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboard(google::cloud::aiplatform::v1::CreateTensorboardRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboard(
+    google::cloud::aiplatform::v1::CreateTensorboardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetTensorboard(google::cloud::aiplatform::v1::GetTensorboardRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetTensorboard(
+    google::cloud::aiplatform::v1::GetTensorboardRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboard(google::cloud::aiplatform::v1::UpdateTensorboardRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboard(
+    google::cloud::aiplatform::v1::UpdateTensorboardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListTensorboards(google::cloud::aiplatform::v1::ListTensorboardsRequest) {  // NOLINT
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListTensorboards(
+    google::cloud::aiplatform::v1::ListTensorboardsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboard(google::cloud::aiplatform::v1::DeleteTensorboardRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboard(
+    google::cloud::aiplatform::v1::DeleteTensorboardRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardUsage(google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardUsage(
+    google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardSize(google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardSize(
+    google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboardExperiment(google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboardExperiment(
+    google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetTensorboardExperiment(google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::GetTensorboardExperiment(
+    google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboardExperiment(google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboardExperiment(
+    google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListTensorboardExperiments(google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest) {  // NOLINT
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::ListTensorboardExperiments(
+    google::cloud::aiplatform::v1::
+        ListTensorboardExperimentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboardExperiment(google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboardExperiment(
+    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboardRun(google::cloud::aiplatform::v1::CreateTensorboardRunRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboardRun(
+    google::cloud::aiplatform::v1::CreateTensorboardRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::BatchCreateTensorboardRuns(google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::BatchCreateTensorboardRuns(
+    google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetTensorboardRun(google::cloud::aiplatform::v1::GetTensorboardRunRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetTensorboardRun(
+    google::cloud::aiplatform::v1::GetTensorboardRunRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboardRun(google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboardRun(
+    google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListTensorboardRuns(google::cloud::aiplatform::v1::ListTensorboardRunsRequest) {  // NOLINT
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListTensorboardRuns(
+    google::cloud::aiplatform::v1::ListTensorboardRunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboardRun(google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboardRun(
+    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::BatchCreateTensorboardTimeSeries(google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::BatchCreateTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::
+        BatchCreateTensorboardTimeSeriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboardTimeSeries(google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::CreateTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetTensorboardTimeSeries(google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::GetTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboardTimeSeries(google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::UpdateTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListTensorboardTimeSeries(google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest) {  // NOLINT
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::ListTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::
+        ListTensorboardTimeSeriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboardTimeSeries(google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::DeleteTensorboardTimeSeries(
+    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::BatchReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::
+    BatchReadTensorboardTimeSeriesData(
+        google::cloud::aiplatform::v1::
+            BatchReadTensorboardTimeSeriesDataRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::ReadTensorboardTimeSeriesData(
+    google::cloud::aiplatform::v1::
+        ReadTensorboardTimeSeriesDataRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::WriteTensorboardExperimentData(google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::WriteTensorboardExperimentData(
+    google::cloud::aiplatform::v1::
+        WriteTensorboardExperimentDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::WriteTensorboardRunData(google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&) {
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::WriteTensorboardRunData(
+    google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ExportTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest) {  // NOLINT
+Idempotency
+TensorboardServiceConnectionIdempotencyPolicy::ExportTensorboardTimeSeriesData(
+    google::cloud::aiplatform::v1::
+        ExportTensorboardTimeSeriesDataRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -163,36 +219,43 @@ Idempotency TensorboardServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TensorboardServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency TensorboardServiceConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TensorboardServiceConnectionIdempotencyPolicy>
-    MakeDefaultTensorboardServiceConnectionIdempotencyPolicy() {
+MakeDefaultTensorboardServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TensorboardServiceConnectionIdempotencyPolicy>();
 }
 

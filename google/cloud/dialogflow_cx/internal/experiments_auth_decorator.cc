@@ -31,36 +31,36 @@ ExperimentsAuth::ExperimentsAuth(
     std::shared_ptr<ExperimentsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse> ExperimentsAuth::ListExperiments(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
+ExperimentsAuth::ListExperiments(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListExperiments(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Experiment> ExperimentsAuth::GetExperiment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+ExperimentsAuth::GetExperiment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetExperiment(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Experiment> ExperimentsAuth::CreateExperiment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+ExperimentsAuth::CreateExperiment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateExperiment(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Experiment> ExperimentsAuth::UpdateExperiment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+ExperimentsAuth::UpdateExperiment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,35 +68,34 @@ StatusOr<google::cloud::dialogflow::cx::v3::Experiment> ExperimentsAuth::UpdateE
 }
 
 Status ExperimentsAuth::DeleteExperiment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteExperiment(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Experiment> ExperimentsAuth::StartExperiment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+ExperimentsAuth::StartExperiment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartExperiment(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Experiment> ExperimentsAuth::StopExperiment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
+ExperimentsAuth::StopExperiment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StopExperiment(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ExperimentsAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ExperimentsAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,17 +103,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> ExperimentsAuth::ListLo
 }
 
 StatusOr<google::cloud::location::Location> ExperimentsAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ExperimentsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ExperimentsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +120,7 @@ StatusOr<google::longrunning::ListOperationsResponse> ExperimentsAuth::ListOpera
 }
 
 StatusOr<google::longrunning::Operation> ExperimentsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -131,8 +128,7 @@ StatusOr<google::longrunning::Operation> ExperimentsAuth::GetOperation(
 }
 
 Status ExperimentsAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

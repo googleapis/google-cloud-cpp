@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_connection.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

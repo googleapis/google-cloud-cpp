@@ -30,69 +30,68 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class CloudTasksTracingConnection
-    : public tasks_v2::CloudTasksConnection {
+class CloudTasksTracingConnection : public tasks_v2::CloudTasksConnection {
  public:
   ~CloudTasksTracingConnection() override = default;
 
   explicit CloudTasksTracingConnection(
-    std::shared_ptr<tasks_v2::CloudTasksConnection> child);
+      std::shared_ptr<tasks_v2::CloudTasksConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::tasks::v2::Queue>
-  ListQueues(google::cloud::tasks::v2::ListQueuesRequest request) override;
+  StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
+      google::cloud::tasks::v2::ListQueuesRequest request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  GetQueue(google::cloud::tasks::v2::GetQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
+      google::cloud::tasks::v2::GetQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
+      google::cloud::tasks::v2::CreateQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
+      google::cloud::tasks::v2::UpdateQueueRequest const& request) override;
 
-  Status
-  DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const& request) override;
+  Status DeleteQueue(
+      google::cloud::tasks::v2::DeleteQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
+      google::cloud::tasks::v2::PurgeQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
+      google::cloud::tasks::v2::PauseQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
+      google::cloud::tasks::v2::ResumeQueueRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::cloud::tasks::v2::Task>
-  ListTasks(google::cloud::tasks::v2::ListTasksRequest request) override;
+  StreamRange<google::cloud::tasks::v2::Task> ListTasks(
+      google::cloud::tasks::v2::ListTasksRequest request) override;
 
-  StatusOr<google::cloud::tasks::v2::Task>
-  GetTask(google::cloud::tasks::v2::GetTaskRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Task> GetTask(
+      google::cloud::tasks::v2::GetTaskRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Task>
-  CreateTask(google::cloud::tasks::v2::CreateTaskRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Task> CreateTask(
+      google::cloud::tasks::v2::CreateTaskRequest const& request) override;
 
-  Status
-  DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
+  Status DeleteTask(
+      google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Task>
-  RunTask(google::cloud::tasks::v2::RunTaskRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Task> RunTask(
+      google::cloud::tasks::v2::RunTaskRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::shared_ptr<tasks_v2::CloudTasksConnection> child_;
@@ -106,8 +105,7 @@ class CloudTasksTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<tasks_v2::CloudTasksConnection>
-MakeCloudTasksTracingConnection(
+std::shared_ptr<tasks_v2::CloudTasksConnection> MakeCloudTasksTracingConnection(
     std::shared_ptr<tasks_v2::CloudTasksConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

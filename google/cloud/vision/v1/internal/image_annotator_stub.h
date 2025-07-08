@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,47 +38,50 @@ class ImageAnnotatorStub {
  public:
   virtual ~ImageAnnotatorStub() = 0;
 
-  virtual StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse> BatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
+  BatchAnnotateImages(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse> BatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
+  BatchAnnotateFiles(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncAsyncBatchAnnotateImages(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncAsyncBatchAnnotateImages(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) = 0;
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncAsyncBatchAnnotateFiles(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncAsyncBatchAnnotateFiles(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) = 0;
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -91,46 +94,51 @@ class ImageAnnotatorStub {
 class DefaultImageAnnotatorStub : public ImageAnnotatorStub {
  public:
   DefaultImageAnnotatorStub(
-      std::unique_ptr<google::cloud::vision::v1::ImageAnnotator::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::vision::v1::ImageAnnotator::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse> BatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
+  BatchAnnotateImages(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse> BatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
+  BatchAnnotateFiles(grpc::ClientContext& context, Options const& options,
+                     google::cloud::vision::v1::BatchAnnotateFilesRequest const&
+                         request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncAsyncBatchAnnotateImages(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncAsyncBatchAnnotateImages(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) override;
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAsyncBatchAnnotateFiles(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) override;
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -146,8 +154,10 @@ class DefaultImageAnnotatorStub : public ImageAnnotatorStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::vision::v1::ImageAnnotator::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::vision::v1::ImageAnnotator::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

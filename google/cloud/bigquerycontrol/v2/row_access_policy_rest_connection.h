@@ -30,17 +30,18 @@ namespace bigquerycontrol_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A factory function to construct an object of type `RowAccessPolicyServiceConnection`
- * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
- * only be used for services that do not support gRPC or if the existing network
- * configuration precludes using gRPC.
+ * A factory function to construct an object of type
+ * `RowAccessPolicyServiceConnection` that uses REST over HTTP as transport in
+ * lieu of gRPC. REST transport should only be used for services that do not
+ * support gRPC or if the existing network configuration precludes using gRPC.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of RowAccessPolicyServiceClient.
+ * should be passed as an argument to the constructor of
+ * RowAccessPolicyServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `RowAccessPolicyServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `RowAccessPolicyServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
@@ -50,11 +51,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `RowAccessPolicyServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `RowAccessPolicyServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<RowAccessPolicyServiceConnection> MakeRowAccessPolicyServiceConnectionRest(
-    Options options = {});
+std::shared_ptr<RowAccessPolicyServiceConnection>
+MakeRowAccessPolicyServiceConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2

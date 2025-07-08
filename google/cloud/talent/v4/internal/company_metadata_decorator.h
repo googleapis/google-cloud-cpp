@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPANY_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPANY_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/talent/v4/internal/company_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,44 +34,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CompanyServiceMetadata : public CompanyServiceStub {
  public:
   ~CompanyServiceMetadata() override = default;
-  CompanyServiceMetadata(
-      std::shared_ptr<CompanyServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  CompanyServiceMetadata(std::shared_ptr<CompanyServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
 
   Status DeleteCompany(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListCompaniesResponse> ListCompanies(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

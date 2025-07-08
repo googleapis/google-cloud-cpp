@@ -26,63 +26,76 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-VersionsConnectionIdempotencyPolicy::~VersionsConnectionIdempotencyPolicy() = default;
+VersionsConnectionIdempotencyPolicy::~VersionsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>
 VersionsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<VersionsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::ListVersions(google::cloud::dialogflow::cx::v3::ListVersionsRequest) {  // NOLINT
+Idempotency VersionsConnectionIdempotencyPolicy::ListVersions(
+    google::cloud::dialogflow::cx::v3::ListVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::GetVersion(google::cloud::dialogflow::cx::v3::GetVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::GetVersion(
+    google::cloud::dialogflow::cx::v3::GetVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::CreateVersion(google::cloud::dialogflow::cx::v3::CreateVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::CreateVersion(
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::UpdateVersion(google::cloud::dialogflow::cx::v3::UpdateVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::UpdateVersion(
+    google::cloud::dialogflow::cx::v3::UpdateVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::DeleteVersion(google::cloud::dialogflow::cx::v3::DeleteVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::DeleteVersion(
+    google::cloud::dialogflow::cx::v3::DeleteVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::LoadVersion(google::cloud::dialogflow::cx::v3::LoadVersionRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::LoadVersion(
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::CompareVersions(google::cloud::dialogflow::cx::v3::CompareVersionsRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::CompareVersions(
+    google::cloud::dialogflow::cx::v3::CompareVersionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency VersionsConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency VersionsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency VersionsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency VersionsConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>
-    MakeDefaultVersionsConnectionIdempotencyPolicy() {
+MakeDefaultVersionsConnectionIdempotencyPolicy() {
   return std::make_unique<VersionsConnectionIdempotencyPolicy>();
 }
 

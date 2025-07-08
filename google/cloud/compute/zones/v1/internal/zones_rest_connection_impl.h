@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_INTERNAL_ZONES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_INTERNAL_ZONES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/zones/v1/internal/zones_rest_stub.h"
 #include "google/cloud/compute/zones/v1/internal/zones_retry_traits.h"
 #include "google/cloud/compute/zones/v1/zones_connection.h"
 #include "google/cloud/compute/zones/v1/zones_connection_idempotency_policy.h"
 #include "google/cloud/compute/zones/v1/zones_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,27 +37,28 @@ namespace cloud {
 namespace compute_zones_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ZonesRestConnectionImpl
-    : public compute_zones_v1::ZonesConnection {
+class ZonesRestConnectionImpl : public compute_zones_v1::ZonesConnection {
  public:
   ~ZonesRestConnectionImpl() override = default;
 
   ZonesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_zones_v1_internal::ZonesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_zones_v1_internal::ZonesRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Zone>
-  GetZone(google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request)
+      override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest request)
+      override;
 
  private:
-  static std::unique_ptr<compute_zones_v1::ZonesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<compute_zones_v1::ZonesRetryPolicy> retry_policy(
+      Options const& options) {
     return options.get<compute_zones_v1::ZonesRetryPolicyOption>()->clone();
   }
 
@@ -67,7 +68,9 @@ class ZonesRestConnectionImpl
 
   static std::unique_ptr<compute_zones_v1::ZonesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_zones_v1::ZonesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_zones_v1::ZonesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

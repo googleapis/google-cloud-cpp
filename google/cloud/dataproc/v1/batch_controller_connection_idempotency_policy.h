@@ -36,44 +36,45 @@ class BatchControllerConnectionIdempotencyPolicy {
   virtual ~BatchControllerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<BatchControllerConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<BatchControllerConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateBatch(google::cloud::dataproc::v1::CreateBatchRequest const& request);
+  virtual google::cloud::Idempotency CreateBatch(
+      google::cloud::dataproc::v1::CreateBatchRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetBatch(google::cloud::dataproc::v1::GetBatchRequest const& request);
+  virtual google::cloud::Idempotency GetBatch(
+      google::cloud::dataproc::v1::GetBatchRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListBatches(google::cloud::dataproc::v1::ListBatchesRequest request);
+  virtual google::cloud::Idempotency ListBatches(
+      google::cloud::dataproc::v1::ListBatchesRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteBatch(google::cloud::dataproc::v1::DeleteBatchRequest const& request);
+  virtual google::cloud::Idempotency DeleteBatch(
+      google::cloud::dataproc::v1::DeleteBatchRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>
-    MakeDefaultBatchControllerConnectionIdempotencyPolicy();
+MakeDefaultBatchControllerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1

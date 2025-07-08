@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/connection/v1/connection.proto
 
 #include "google/cloud/bigquery/connection/v1/connection_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/connection/v1/connection_options.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_connection_impl.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_option_defaults.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_stub_factory.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -50,8 +50,10 @@ ConnectionServiceConnection::GetConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::connection::v1::Connection> ConnectionServiceConnection::ListConnections(
-    google::cloud::bigquery::connection::v1::ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::connection::v1::Connection>
+ConnectionServiceConnection::ListConnections(
+    google::cloud::bigquery::connection::v1::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::connection::v1::Connection>>();
 }
@@ -62,20 +64,17 @@ ConnectionServiceConnection::UpdateConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConnectionServiceConnection::DeleteConnection(
+Status ConnectionServiceConnection::DeleteConnection(
     google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectionServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> ConnectionServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectionServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> ConnectionServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -89,17 +88,21 @@ ConnectionServiceConnection::TestIamPermissions(
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ConnectionServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ConnectionServicePolicyOptionList>(options,
+                                                                    __func__);
   options = bigquery_connection_v1_internal::ConnectionServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = bigquery_connection_v1_internal::CreateDefaultConnectionServiceStub(
-    std::move(auth), options);
-  return bigquery_connection_v1_internal::MakeConnectionServiceTracingConnection(
-      std::make_shared<bigquery_connection_v1_internal::ConnectionServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      bigquery_connection_v1_internal::CreateDefaultConnectionServiceStub(
+          std::move(auth), options);
+  return bigquery_connection_v1_internal::
+      MakeConnectionServiceTracingConnection(
+          std::make_shared<
+              bigquery_connection_v1_internal::ConnectionServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

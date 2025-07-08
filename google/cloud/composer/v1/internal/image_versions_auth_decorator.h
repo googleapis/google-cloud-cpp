@@ -38,24 +38,22 @@ class ImageVersionsAuth : public ImageVersionsStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<ImageVersionsStub> child);
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::ListImageVersionsResponse> ListImageVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest const& request) override;
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ListImageVersionsResponse>
+  ListImageVersions(grpc::ClientContext& context, Options const& options,
+                    google::cloud::orchestration::airflow::service::v1::
+                        ListImageVersionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
  private:

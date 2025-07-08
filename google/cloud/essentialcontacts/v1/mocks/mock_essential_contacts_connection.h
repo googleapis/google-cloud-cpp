@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `EssentialContactsServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `EssentialContactsServiceClient`. To do so,
- * construct an object of type `EssentialContactsServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `EssentialContactsServiceClient`. To
+ * do so, construct an object of type `EssentialContactsServiceClient` with an
+ * instance of this class. Then use the Google Test framework functions to
+ * program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,37 +42,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockEssentialContactsServiceConnection : public essentialcontacts_v1::EssentialContactsServiceConnection {
+class MockEssentialContactsServiceConnection
+    : public essentialcontacts_v1::EssentialContactsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::essentialcontacts::v1::Contact>,
-  CreateContact,
-  (google::cloud::essentialcontacts::v1::CreateContactRequest const& request), (override));
+              CreateContact,
+              (google::cloud::essentialcontacts::v1::CreateContactRequest const&
+                   request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::essentialcontacts::v1::Contact>,
-  UpdateContact,
-  (google::cloud::essentialcontacts::v1::UpdateContactRequest const& request), (override));
+              UpdateContact,
+              (google::cloud::essentialcontacts::v1::UpdateContactRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::essentialcontacts::v1::Contact>),
-  ListContacts,
-  (google::cloud::essentialcontacts::v1::ListContactsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::essentialcontacts::v1::Contact>),
+      ListContacts,
+      (google::cloud::essentialcontacts::v1::ListContactsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::essentialcontacts::v1::Contact>,
-  GetContact,
-  (google::cloud::essentialcontacts::v1::GetContactRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::essentialcontacts::v1::Contact>, GetContact,
+      (google::cloud::essentialcontacts::v1::GetContactRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteContact,
-  (google::cloud::essentialcontacts::v1::DeleteContactRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteContact,
+              (google::cloud::essentialcontacts::v1::DeleteContactRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::essentialcontacts::v1::Contact>),
-  ComputeContacts,
-  (google::cloud::essentialcontacts::v1::ComputeContactsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::essentialcontacts::v1::Contact>),
+      ComputeContacts,
+      (google::cloud::essentialcontacts::v1::ComputeContactsRequest request),
+      (override));
 
-  MOCK_METHOD(Status,
-  SendTestMessage,
-  (google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request), (override));
+  MOCK_METHOD(
+      Status, SendTestMessage,
+      (google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

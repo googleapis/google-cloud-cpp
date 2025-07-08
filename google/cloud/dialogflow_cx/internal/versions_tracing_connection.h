@@ -30,67 +30,73 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class VersionsTracingConnection
-    : public dialogflow_cx::VersionsConnection {
+class VersionsTracingConnection : public dialogflow_cx::VersionsConnection {
  public:
   ~VersionsTracingConnection() override = default;
 
   explicit VersionsTracingConnection(
-    std::shared_ptr<dialogflow_cx::VersionsConnection> child);
+      std::shared_ptr<dialogflow_cx::VersionsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Version>
-  ListVersions(google::cloud::dialogflow::cx::v3::ListVersionsRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
+      google::cloud::dialogflow::cx::v3::ListVersionsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Version>
-  GetVersion(google::cloud::dialogflow::cx::v3::GetVersionRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
+      google::cloud::dialogflow::cx::v3::GetVersionRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) override;
+  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
+      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateVersion(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(
+  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Version>
-  UpdateVersion(google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
+      google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request)
+      override;
 
-  Status
-  DeleteVersion(google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request) override;
+  Status DeleteVersion(
+      google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request)
+      override;
 
-  future<StatusOr<google::protobuf::Struct>>
-  LoadVersion(google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) override;
+  future<StatusOr<google::protobuf::Struct>> LoadVersion(
+      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  LoadVersion(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> LoadVersion(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request)
+      override;
 
-  future<StatusOr<google::protobuf::Struct>>
-  LoadVersion(
+  future<StatusOr<google::protobuf::Struct>> LoadVersion(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
-  CompareVersions(google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request) override;
+  CompareVersions(
+      google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::VersionsConnection> child_;

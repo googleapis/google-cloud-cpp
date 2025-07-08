@@ -30,31 +30,33 @@ namespace compute_interconnect_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A factory function to construct an object of type `InterconnectGroupsConnection`
- * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
- * only be used for services that do not support gRPC or if the existing network
- * configuration precludes using gRPC.
+ * A factory function to construct an object of type
+ * `InterconnectGroupsConnection` that uses REST over HTTP as transport in lieu
+ * of gRPC. REST transport should only be used for services that do not support
+ * gRPC or if the existing network configuration precludes using gRPC.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of InterconnectGroupsClient.
+ * should be passed as an argument to the constructor of
+ * InterconnectGroupsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `InterconnectGroupsConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `InterconnectGroupsConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::compute_interconnect_groups_v1::InterconnectGroupsPolicyOptionList`
+ * -
+ * `google::cloud::compute_interconnect_groups_v1::InterconnectGroupsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `InterconnectGroupsConnection` created by
- * this function.
+ * @param options (optional) Configure the `InterconnectGroupsConnection`
+ * created by this function.
  */
-std::shared_ptr<InterconnectGroupsConnection> MakeInterconnectGroupsConnectionRest(
-    Options options = {});
+std::shared_ptr<InterconnectGroupsConnection>
+MakeInterconnectGroupsConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_interconnect_groups_v1

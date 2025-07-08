@@ -33,14 +33,16 @@ NotebookServiceAuth::NotebookServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncCreateNotebookRuntimeTemplate(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -52,27 +54,29 @@ NotebookServiceAuth::AsyncCreateNotebookRuntimeTemplate(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::CreateNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateNotebookRuntimeTemplate(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> NotebookServiceAuth::GetNotebookRuntimeTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request) {
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceAuth::GetNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetNotebookRuntimeTemplate(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse> NotebookServiceAuth::ListNotebookRuntimeTemplates(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const& request) {
+StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse>
+NotebookServiceAuth::ListNotebookRuntimeTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListNotebookRuntimeTemplates(context, options, request);
@@ -80,14 +84,16 @@ StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse> No
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncDeleteNotebookRuntimeTemplate(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -99,18 +105,19 @@ NotebookServiceAuth::AsyncDeleteNotebookRuntimeTemplate(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::DeleteNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteNotebookRuntimeTemplate(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> NotebookServiceAuth::UpdateNotebookRuntimeTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request) {
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceAuth::UpdateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateNotebookRuntimeTemplate(context, options, request);
@@ -118,45 +125,47 @@ StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> NotebookService
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncAssignNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAssignNotebookRuntime(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncAssignNotebookRuntime(cq, *std::move(context),
+                                                 std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::AssignNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AssignNotebookRuntime(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> NotebookServiceAuth::GetNotebookRuntime(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
+NotebookServiceAuth::GetNotebookRuntime(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetNotebookRuntime(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse> NotebookServiceAuth::ListNotebookRuntimes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse>
+NotebookServiceAuth::ListNotebookRuntimes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListNotebookRuntimesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -165,28 +174,30 @@ StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse> NotebookSe
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncDeleteNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteNotebookRuntime(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteNotebookRuntime(cq, *std::move(context),
+                                                 std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::DeleteNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteNotebookRuntime(context, options, request);
@@ -194,28 +205,30 @@ NotebookServiceAuth::DeleteNotebookRuntime(
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncUpgradeNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpgradeNotebookRuntime(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpgradeNotebookRuntime(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::UpgradeNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpgradeNotebookRuntime(context, options, request);
@@ -223,28 +236,28 @@ NotebookServiceAuth::UpgradeNotebookRuntime(
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncStartNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStartNotebookRuntime(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStartNotebookRuntime(cq, *std::move(context),
+                                                std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::StartNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartNotebookRuntime(context, options, request);
@@ -252,28 +265,28 @@ NotebookServiceAuth::StartNotebookRuntime(
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncStopNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStopNotebookRuntime(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStopNotebookRuntime(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::StopNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StopNotebookRuntime(context, options, request);
@@ -281,14 +294,16 @@ NotebookServiceAuth::StopNotebookRuntime(
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncCreateNotebookExecutionJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -300,27 +315,29 @@ NotebookServiceAuth::AsyncCreateNotebookExecutionJob(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::CreateNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateNotebookExecutionJob(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob> NotebookServiceAuth::GetNotebookExecutionJob(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const& request) {
+StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceAuth::GetNotebookExecutionJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetNotebookExecutionJob(context, options, request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse> NotebookServiceAuth::ListNotebookExecutionJobs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const& request) {
+StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse>
+NotebookServiceAuth::ListNotebookExecutionJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListNotebookExecutionJobs(context, options, request);
@@ -328,14 +345,16 @@ StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse> Noteb
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncDeleteNotebookExecutionJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -347,17 +366,17 @@ NotebookServiceAuth::AsyncDeleteNotebookExecutionJob(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceAuth::DeleteNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteNotebookExecutionJob(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> NotebookServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+NotebookServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -365,8 +384,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> NotebookServiceAuth::Li
 }
 
 StatusOr<google::cloud::location::Location> NotebookServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -374,8 +392,7 @@ StatusOr<google::cloud::location::Location> NotebookServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> NotebookServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -383,26 +400,25 @@ StatusOr<google::iam::v1::Policy> NotebookServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> NotebookServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> NotebookServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+NotebookServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> NotebookServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+NotebookServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -410,8 +426,7 @@ StatusOr<google::longrunning::ListOperationsResponse> NotebookServiceAuth::ListO
 }
 
 StatusOr<google::longrunning::Operation> NotebookServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -419,8 +434,7 @@ StatusOr<google::longrunning::Operation> NotebookServiceAuth::GetOperation(
 }
 
 Status NotebookServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -428,8 +442,7 @@ Status NotebookServiceAuth::DeleteOperation(
 }
 
 Status NotebookServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -437,8 +450,7 @@ Status NotebookServiceAuth::CancelOperation(
 }
 
 StatusOr<google::longrunning::Operation> NotebookServiceAuth::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -452,15 +464,16 @@ NotebookServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -469,13 +482,14 @@ future<Status> NotebookServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_DOCUMENT_SCHEMA_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_DOCUMENT_SCHEMA_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/document_schema_connection.h"
 #include "google/cloud/contentwarehouse/v1/document_schema_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct DocumentSchemaServiceBackoffPolicyOption {
  * @ingroup google-cloud-contentwarehouse-options
  */
 struct DocumentSchemaServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DocumentSchemaServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<DocumentSchemaServiceConnectionIdempotencyPolicy>;
 };
 
 /**

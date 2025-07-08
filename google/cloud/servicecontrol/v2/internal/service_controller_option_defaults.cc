@@ -17,10 +17,10 @@
 // source: google/api/servicecontrol/v2/service_controller.proto
 
 #include "google/cloud/servicecontrol/v2/internal/service_controller_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/servicecontrol/v2/service_controller_connection.h"
 #include "google/cloud/servicecontrol/v2/service_controller_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ServiceControllerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_CONTROLLER_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SERVICE_CONTROLLER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_CONTROLLER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SERVICE_CONTROLLER_AUTHORITY",
       "servicecontrol.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<servicecontrol_v2::ServiceControllerRetryPolicyOption>()) {
     options.set<servicecontrol_v2::ServiceControllerRetryPolicyOption>(
         servicecontrol_v2::ServiceControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<servicecontrol_v2::ServiceControllerBackoffPolicyOption>()) {
     options.set<servicecontrol_v2::ServiceControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<servicecontrol_v2::ServiceControllerConnectionIdempotencyPolicyOption>()) {
-    options.set<servicecontrol_v2::ServiceControllerConnectionIdempotencyPolicyOption>(
-        servicecontrol_v2::MakeDefaultServiceControllerConnectionIdempotencyPolicy());
+  if (!options.has<servicecontrol_v2::
+                       ServiceControllerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        servicecontrol_v2::ServiceControllerConnectionIdempotencyPolicyOption>(
+        servicecontrol_v2::
+            MakeDefaultServiceControllerConnectionIdempotencyPolicy());
   }
 
   return options;

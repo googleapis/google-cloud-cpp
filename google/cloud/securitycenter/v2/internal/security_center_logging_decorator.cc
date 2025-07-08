@@ -31,39 +31,40 @@ namespace securitycenter_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecurityCenterLogging::SecurityCenterLogging(
-    std::shared_ptr<SecurityCenterStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<SecurityCenterStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsResponse>
+StatusOr<
+    google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsResponse>
 SecurityCenterLogging::BatchCreateResourceValueConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::
+        BatchCreateResourceValueConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsRequest const& request) {
-        return child_->BatchCreateResourceValueConfigs(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 BatchCreateResourceValueConfigsRequest const& request) {
+        return child_->BatchCreateResourceValueConfigs(context, options,
+                                                       request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterLogging::AsyncBulkMuteFindings(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
-        return child_->AsyncBulkMuteFindings(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+                 request) {
+        return child_->AsyncBulkMuteFindings(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -71,13 +72,12 @@ SecurityCenterLogging::AsyncBulkMuteFindings(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterLogging::BulkMuteFindings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+                 request) {
         return child_->BulkMuteFindings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -85,13 +85,14 @@ SecurityCenterLogging::BulkMuteFindings(
 
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
 SecurityCenterLogging::CreateBigQueryExport(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::CreateBigQueryExportRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::CreateBigQueryExportRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&
+              request) {
         return child_->CreateBigQueryExport(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,13 +100,12 @@ SecurityCenterLogging::CreateBigQueryExport(
 
 StatusOr<google::cloud::securitycenter::v2::Finding>
 SecurityCenterLogging::CreateFinding(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::CreateFindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::CreateFindingRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::CreateFindingRequest const&
+                 request) {
         return child_->CreateFinding(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -113,13 +113,12 @@ SecurityCenterLogging::CreateFinding(
 
 StatusOr<google::cloud::securitycenter::v2::MuteConfig>
 SecurityCenterLogging::CreateMuteConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::CreateMuteConfigRequest const&
+                 request) {
         return child_->CreateMuteConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -127,13 +126,13 @@ SecurityCenterLogging::CreateMuteConfig(
 
 StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
 SecurityCenterLogging::CreateNotificationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::CreateNotificationConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::CreateNotificationConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::CreateNotificationConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 CreateNotificationConfigRequest const& request) {
         return child_->CreateNotificationConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -141,69 +140,64 @@ SecurityCenterLogging::CreateNotificationConfig(
 
 StatusOr<google::cloud::securitycenter::v2::Source>
 SecurityCenterLogging::CreateSource(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::CreateSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::CreateSourceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::CreateSourceRequest const&
+                 request) {
         return child_->CreateSource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SecurityCenterLogging::DeleteBigQueryExport(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const& request) {
+Status SecurityCenterLogging::DeleteBigQueryExport(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const&
+              request) {
         return child_->DeleteBigQueryExport(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SecurityCenterLogging::DeleteMuteConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SecurityCenterLogging::DeleteMuteConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::DeleteMuteConfigRequest const&
+                 request) {
         return child_->DeleteMuteConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SecurityCenterLogging::DeleteNotificationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const& request) {
+Status SecurityCenterLogging::DeleteNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 DeleteNotificationConfigRequest const& request) {
         return child_->DeleteNotificationConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SecurityCenterLogging::DeleteResourceValueConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const& request) {
+Status SecurityCenterLogging::DeleteResourceValueConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 DeleteResourceValueConfigRequest const& request) {
         return child_->DeleteResourceValueConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -211,13 +205,13 @@ SecurityCenterLogging::DeleteResourceValueConfig(
 
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
 SecurityCenterLogging::GetBigQueryExport(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::GetBigQueryExportRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::GetBigQueryExportRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::GetBigQueryExportRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::GetBigQueryExportRequest const&
+                 request) {
         return child_->GetBigQueryExport(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -225,13 +219,12 @@ SecurityCenterLogging::GetBigQueryExport(
 
 StatusOr<google::cloud::securitycenter::v2::Simulation>
 SecurityCenterLogging::GetSimulation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::GetSimulationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::GetSimulationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::GetSimulationRequest const&
+                 request) {
         return child_->GetSimulation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -239,26 +232,23 @@ SecurityCenterLogging::GetSimulation(
 
 StatusOr<google::cloud::securitycenter::v2::ValuedResource>
 SecurityCenterLogging::GetValuedResource(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::GetValuedResourceRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::GetValuedResourceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::GetValuedResourceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::GetValuedResourceRequest const&
+                 request) {
         return child_->GetValuedResource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecurityCenterLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> SecurityCenterLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -267,13 +257,12 @@ SecurityCenterLogging::GetIamPolicy(
 
 StatusOr<google::cloud::securitycenter::v2::MuteConfig>
 SecurityCenterLogging::GetMuteConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::GetMuteConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::GetMuteConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::GetMuteConfigRequest const&
+                 request) {
         return child_->GetMuteConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -281,13 +270,14 @@ SecurityCenterLogging::GetMuteConfig(
 
 StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
 SecurityCenterLogging::GetNotificationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::GetNotificationConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::GetNotificationConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::GetNotificationConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::GetNotificationConfigRequest const&
+              request) {
         return child_->GetNotificationConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -295,13 +285,13 @@ SecurityCenterLogging::GetNotificationConfig(
 
 StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
 SecurityCenterLogging::GetResourceValueConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::GetResourceValueConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::GetResourceValueConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::GetResourceValueConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 GetResourceValueConfigRequest const& request) {
         return child_->GetResourceValueConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -309,13 +299,12 @@ SecurityCenterLogging::GetResourceValueConfig(
 
 StatusOr<google::cloud::securitycenter::v2::Source>
 SecurityCenterLogging::GetSource(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::GetSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::GetSourceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::GetSourceRequest const& request) {
         return child_->GetSource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -323,13 +312,12 @@ SecurityCenterLogging::GetSource(
 
 StatusOr<google::cloud::securitycenter::v2::GroupFindingsResponse>
 SecurityCenterLogging::GroupFindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::GroupFindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::GroupFindingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::GroupFindingsRequest const&
+                 request) {
         return child_->GroupFindings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -337,13 +325,12 @@ SecurityCenterLogging::GroupFindings(
 
 StatusOr<google::cloud::securitycenter::v2::ListAttackPathsResponse>
 SecurityCenterLogging::ListAttackPaths(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::ListAttackPathsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::ListAttackPathsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::ListAttackPathsRequest const&
+                 request) {
         return child_->ListAttackPaths(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -351,13 +338,14 @@ SecurityCenterLogging::ListAttackPaths(
 
 StatusOr<google::cloud::securitycenter::v2::ListBigQueryExportsResponse>
 SecurityCenterLogging::ListBigQueryExports(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::ListBigQueryExportsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::ListBigQueryExportsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::ListBigQueryExportsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::ListBigQueryExportsRequest const&
+              request) {
         return child_->ListBigQueryExports(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -365,13 +353,12 @@ SecurityCenterLogging::ListBigQueryExports(
 
 StatusOr<google::cloud::securitycenter::v2::ListFindingsResponse>
 SecurityCenterLogging::ListFindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::ListFindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::ListFindingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::ListFindingsRequest const&
+                 request) {
         return child_->ListFindings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -379,13 +366,12 @@ SecurityCenterLogging::ListFindings(
 
 StatusOr<google::cloud::securitycenter::v2::ListMuteConfigsResponse>
 SecurityCenterLogging::ListMuteConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::ListMuteConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::ListMuteConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::ListMuteConfigsRequest const&
+                 request) {
         return child_->ListMuteConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -393,13 +379,13 @@ SecurityCenterLogging::ListMuteConfigs(
 
 StatusOr<google::cloud::securitycenter::v2::ListNotificationConfigsResponse>
 SecurityCenterLogging::ListNotificationConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::ListNotificationConfigsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::ListNotificationConfigsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::ListNotificationConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 ListNotificationConfigsRequest const& request) {
         return child_->ListNotificationConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -407,13 +393,13 @@ SecurityCenterLogging::ListNotificationConfigs(
 
 StatusOr<google::cloud::securitycenter::v2::ListResourceValueConfigsResponse>
 SecurityCenterLogging::ListResourceValueConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::ListResourceValueConfigsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::ListResourceValueConfigsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::ListResourceValueConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 ListResourceValueConfigsRequest const& request) {
         return child_->ListResourceValueConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -421,13 +407,12 @@ SecurityCenterLogging::ListResourceValueConfigs(
 
 StatusOr<google::cloud::securitycenter::v2::ListSourcesResponse>
 SecurityCenterLogging::ListSources(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::ListSourcesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::ListSourcesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::ListSourcesRequest const&
+                 request) {
         return child_->ListSources(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -435,13 +420,14 @@ SecurityCenterLogging::ListSources(
 
 StatusOr<google::cloud::securitycenter::v2::ListValuedResourcesResponse>
 SecurityCenterLogging::ListValuedResources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::ListValuedResourcesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::ListValuedResourcesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::ListValuedResourcesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::ListValuedResourcesRequest const&
+              request) {
         return child_->ListValuedResources(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -449,26 +435,22 @@ SecurityCenterLogging::ListValuedResources(
 
 StatusOr<google::cloud::securitycenter::v2::Finding>
 SecurityCenterLogging::SetFindingState(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::SetFindingStateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::SetFindingStateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::SetFindingStateRequest const&
+                 request) {
         return child_->SetFindingState(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecurityCenterLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> SecurityCenterLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -477,12 +459,10 @@ SecurityCenterLogging::SetIamPolicy(
 
 StatusOr<google::cloud::securitycenter::v2::Finding>
 SecurityCenterLogging::SetMute(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::SetMuteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycenter::v2::SetMuteRequest const& request) {
         return child_->SetMute(context, options, request);
       },
@@ -491,12 +471,10 @@ SecurityCenterLogging::SetMute(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecurityCenterLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -505,13 +483,14 @@ SecurityCenterLogging::TestIamPermissions(
 
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
 SecurityCenterLogging::UpdateBigQueryExport(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const&
+              request) {
         return child_->UpdateBigQueryExport(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -519,13 +498,14 @@ SecurityCenterLogging::UpdateBigQueryExport(
 
 StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
 SecurityCenterLogging::UpdateExternalSystem(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::UpdateExternalSystemRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::UpdateExternalSystemRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::UpdateExternalSystemRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::UpdateExternalSystemRequest const&
+              request) {
         return child_->UpdateExternalSystem(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -533,13 +513,12 @@ SecurityCenterLogging::UpdateExternalSystem(
 
 StatusOr<google::cloud::securitycenter::v2::Finding>
 SecurityCenterLogging::UpdateFinding(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::UpdateFindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::UpdateFindingRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::UpdateFindingRequest const&
+                 request) {
         return child_->UpdateFinding(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -547,13 +526,12 @@ SecurityCenterLogging::UpdateFinding(
 
 StatusOr<google::cloud::securitycenter::v2::MuteConfig>
 SecurityCenterLogging::UpdateMuteConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::UpdateMuteConfigRequest const&
+                 request) {
         return child_->UpdateMuteConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -561,13 +539,13 @@ SecurityCenterLogging::UpdateMuteConfig(
 
 StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
 SecurityCenterLogging::UpdateNotificationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 UpdateNotificationConfigRequest const& request) {
         return child_->UpdateNotificationConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -575,13 +553,13 @@ SecurityCenterLogging::UpdateNotificationConfig(
 
 StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
 SecurityCenterLogging::UpdateResourceValueConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::
+                 UpdateResourceValueConfigRequest const& request) {
         return child_->UpdateResourceValueConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -589,13 +567,14 @@ SecurityCenterLogging::UpdateResourceValueConfig(
 
 StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
 SecurityCenterLogging::UpdateSecurityMarks(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const&
+              request) {
         return child_->UpdateSecurityMarks(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -603,13 +582,12 @@ SecurityCenterLogging::UpdateSecurityMarks(
 
 StatusOr<google::cloud::securitycenter::v2::Source>
 SecurityCenterLogging::UpdateSource(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v2::UpdateSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::securitycenter::v2::UpdateSourceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::UpdateSourceRequest const&
+                 request) {
         return child_->UpdateSource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -617,54 +595,43 @@ SecurityCenterLogging::UpdateSource(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SecurityCenterLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SecurityCenterLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> SecurityCenterLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SecurityCenterLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SecurityCenterLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SecurityCenterLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SecurityCenterLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -682,8 +649,8 @@ SecurityCenterLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -699,8 +666,8 @@ future<Status> SecurityCenterLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

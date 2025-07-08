@@ -35,35 +35,38 @@ class ServiceHealthConnectionIdempotencyPolicy {
   virtual ~ServiceHealthConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ServiceHealthConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ServiceHealthConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListEvents(google::cloud::servicehealth::v1::ListEventsRequest request);
+  virtual google::cloud::Idempotency ListEvents(
+      google::cloud::servicehealth::v1::ListEventsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetEvent(google::cloud::servicehealth::v1::GetEventRequest const& request);
+  virtual google::cloud::Idempotency GetEvent(
+      google::cloud::servicehealth::v1::GetEventRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOrganizationEvents(google::cloud::servicehealth::v1::ListOrganizationEventsRequest request);
+  virtual google::cloud::Idempotency ListOrganizationEvents(
+      google::cloud::servicehealth::v1::ListOrganizationEventsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOrganizationEvent(google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request);
+  virtual google::cloud::Idempotency GetOrganizationEvent(
+      google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListOrganizationImpacts(google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request);
+  virtual google::cloud::Idempotency ListOrganizationImpacts(
+      google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOrganizationImpact(google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request);
+  virtual google::cloud::Idempotency GetOrganizationImpact(
+      google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 std::unique_ptr<ServiceHealthConnectionIdempotencyPolicy>
-    MakeDefaultServiceHealthConnectionIdempotencyPolicy();
+MakeDefaultServiceHealthConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicehealth_v1

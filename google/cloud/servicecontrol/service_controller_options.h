@@ -28,16 +28,22 @@ namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use servicecontrol_v1::ServiceControllerBackoffPolicyOption directly.
+/// @deprecated Use servicecontrol_v1::ServiceControllerBackoffPolicyOption
+/// directly.
 using ::google::cloud::servicecontrol_v1::ServiceControllerBackoffPolicyOption;
 
-/// @deprecated Use servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::servicecontrol_v1::
+    ServiceControllerConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use servicecontrol_v1::ServiceControllerPolicyOptionList directly.
+/// @deprecated Use servicecontrol_v1::ServiceControllerPolicyOptionList
+/// directly.
 using ::google::cloud::servicecontrol_v1::ServiceControllerPolicyOptionList;
 
-/// @deprecated Use servicecontrol_v1::ServiceControllerRetryPolicyOption directly.
+/// @deprecated Use servicecontrol_v1::ServiceControllerRetryPolicyOption
+/// directly.
 using ::google::cloud::servicecontrol_v1::ServiceControllerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

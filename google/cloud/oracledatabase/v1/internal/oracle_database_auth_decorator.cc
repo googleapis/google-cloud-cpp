@@ -31,19 +31,22 @@ OracleDatabaseAuth::OracleDatabaseAuth(
     std::shared_ptr<OracleDatabaseStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresResponse> OracleDatabaseAuth::ListCloudExadataInfrastructures(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest const& request) {
+StatusOr<
+    google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresResponse>
+OracleDatabaseAuth::ListCloudExadataInfrastructures(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListCloudExadataInfrastructuresRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListCloudExadataInfrastructures(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure> OracleDatabaseAuth::GetCloudExadataInfrastructure(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request) {
+StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
+OracleDatabaseAuth::GetCloudExadataInfrastructure(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GetCloudExadataInfrastructureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCloudExadataInfrastructure(context, options, request);
@@ -51,14 +54,16 @@ StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure> OracleDa
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncCreateCloudExadataInfrastructure(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        CreateCloudExadataInfrastructureRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -70,9 +75,9 @@ OracleDatabaseAuth::AsyncCreateCloudExadataInfrastructure(
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::CreateCloudExadataInfrastructure(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        CreateCloudExadataInfrastructureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCloudExadataInfrastructure(context, options, request);
@@ -80,14 +85,16 @@ OracleDatabaseAuth::CreateCloudExadataInfrastructure(
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncDeleteCloudExadataInfrastructure(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::
+        DeleteCloudExadataInfrastructureRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -99,27 +106,29 @@ OracleDatabaseAuth::AsyncDeleteCloudExadataInfrastructure(
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::DeleteCloudExadataInfrastructure(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::
+        DeleteCloudExadataInfrastructureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCloudExadataInfrastructure(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse> OracleDatabaseAuth::ListCloudVmClusters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const& request) {
+StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
+OracleDatabaseAuth::ListCloudVmClusters(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListCloudVmClusters(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> OracleDatabaseAuth::GetCloudVmCluster(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request) {
+StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>
+OracleDatabaseAuth::GetCloudVmCluster(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCloudVmCluster(context, options, request);
@@ -127,28 +136,30 @@ StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> OracleDatabaseAuth::
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncCreateCloudVmCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCloudVmCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateCloudVmCluster(cq, *std::move(context),
+                                                std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::CreateCloudVmCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCloudVmCluster(context, options, request);
@@ -156,91 +167,96 @@ OracleDatabaseAuth::CreateCloudVmCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncDeleteCloudVmCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteCloudVmCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteCloudVmCluster(cq, *std::move(context),
+                                                std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::DeleteCloudVmCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCloudVmCluster(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse> OracleDatabaseAuth::ListEntitlements(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse>
+OracleDatabaseAuth::ListEntitlements(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oracledatabase::v1::ListEntitlementsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEntitlements(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse> OracleDatabaseAuth::ListDbServers(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse>
+OracleDatabaseAuth::ListDbServers(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oracledatabase::v1::ListDbServersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDbServers(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListDbNodesResponse> OracleDatabaseAuth::ListDbNodes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oracledatabase::v1::ListDbNodesResponse>
+OracleDatabaseAuth::ListDbNodes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oracledatabase::v1::ListDbNodesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDbNodes(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse> OracleDatabaseAuth::ListGiVersions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse>
+OracleDatabaseAuth::ListGiVersions(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oracledatabase::v1::ListGiVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListGiVersions(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse> OracleDatabaseAuth::ListDbSystemShapes(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const& request) {
+StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse>
+OracleDatabaseAuth::ListDbSystemShapes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDbSystemShapes(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse> OracleDatabaseAuth::ListAutonomousDatabases(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const& request) {
+StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse>
+OracleDatabaseAuth::ListAutonomousDatabases(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAutonomousDatabases(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase> OracleDatabaseAuth::GetAutonomousDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request) {
+StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
+OracleDatabaseAuth::GetAutonomousDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAutonomousDatabase(context, options, request);
@@ -248,14 +264,16 @@ StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase> OracleDatabaseAu
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncCreateAutonomousDatabase(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -267,9 +285,9 @@ OracleDatabaseAuth::AsyncCreateAutonomousDatabase(
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::CreateAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAutonomousDatabase(context, options, request);
@@ -277,14 +295,16 @@ OracleDatabaseAuth::CreateAutonomousDatabase(
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncDeleteAutonomousDatabase(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -296,9 +316,9 @@ OracleDatabaseAuth::AsyncDeleteAutonomousDatabase(
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::DeleteAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAutonomousDatabase(context, options, request);
@@ -306,14 +326,16 @@ OracleDatabaseAuth::DeleteAutonomousDatabase(
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncRestoreAutonomousDatabase(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -325,45 +347,52 @@ OracleDatabaseAuth::AsyncRestoreAutonomousDatabase(
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::RestoreAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestoreAutonomousDatabase(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse> OracleDatabaseAuth::GenerateAutonomousDatabaseWallet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request) {
+StatusOr<
+    google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
+OracleDatabaseAuth::GenerateAutonomousDatabaseWallet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        GenerateAutonomousDatabaseWalletRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateAutonomousDatabaseWallet(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse> OracleDatabaseAuth::ListAutonomousDbVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const& request) {
+StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse>
+OracleDatabaseAuth::ListAutonomousDbVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAutonomousDbVersions(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsResponse> OracleDatabaseAuth::ListAutonomousDatabaseCharacterSets(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest const& request) {
+StatusOr<google::cloud::oracledatabase::v1::
+             ListAutonomousDatabaseCharacterSetsResponse>
+OracleDatabaseAuth::ListAutonomousDatabaseCharacterSets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListAutonomousDatabaseCharacterSetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAutonomousDatabaseCharacterSets(context, options, request);
 }
 
-StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse> OracleDatabaseAuth::ListAutonomousDatabaseBackups(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest const& request) {
+StatusOr<
+    google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse>
+OracleDatabaseAuth::ListAutonomousDatabaseBackups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::oracledatabase::v1::
+        ListAutonomousDatabaseBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAutonomousDatabaseBackups(context, options, request);
@@ -371,28 +400,30 @@ StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRespons
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncStopAutonomousDatabase(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStopAutonomousDatabase(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStopAutonomousDatabase(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::StopAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StopAutonomousDatabase(context, options, request);
@@ -400,28 +431,30 @@ OracleDatabaseAuth::StopAutonomousDatabase(
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncStartAutonomousDatabase(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStartAutonomousDatabase(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStartAutonomousDatabase(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::StartAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartAutonomousDatabase(context, options, request);
@@ -429,14 +462,16 @@ OracleDatabaseAuth::StartAutonomousDatabase(
 
 future<StatusOr<google::longrunning::Operation>>
 OracleDatabaseAuth::AsyncRestartAutonomousDatabase(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -448,17 +483,17 @@ OracleDatabaseAuth::AsyncRestartAutonomousDatabase(
 
 StatusOr<google::longrunning::Operation>
 OracleDatabaseAuth::RestartAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestartAutonomousDatabase(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> OracleDatabaseAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+OracleDatabaseAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -466,17 +501,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> OracleDatabaseAuth::Lis
 }
 
 StatusOr<google::cloud::location::Location> OracleDatabaseAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> OracleDatabaseAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+OracleDatabaseAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -484,8 +518,7 @@ StatusOr<google::longrunning::ListOperationsResponse> OracleDatabaseAuth::ListOp
 }
 
 StatusOr<google::longrunning::Operation> OracleDatabaseAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -493,8 +526,7 @@ StatusOr<google::longrunning::Operation> OracleDatabaseAuth::GetOperation(
 }
 
 Status OracleDatabaseAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -502,8 +534,7 @@ Status OracleDatabaseAuth::DeleteOperation(
 }
 
 Status OracleDatabaseAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -517,15 +548,16 @@ OracleDatabaseAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -534,13 +566,14 @@ future<Status> OracleDatabaseAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

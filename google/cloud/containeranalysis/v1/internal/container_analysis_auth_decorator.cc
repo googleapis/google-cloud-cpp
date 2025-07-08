@@ -32,8 +32,7 @@ ContainerAnalysisAuth::ContainerAnalysisAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,35 +40,36 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> ContainerAnalysisAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContainerAnalysisAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary> ContainerAnalysisAuth::GetVulnerabilityOccurrencesSummary(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
+StatusOr<
+    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+ContainerAnalysisAuth::GetVulnerabilityOccurrencesSummary(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::containeranalysis::v1::
+        GetVulnerabilityOccurrencesSummaryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetVulnerabilityOccurrencesSummary(context, options, request);
 }
 
-StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse> ContainerAnalysisAuth::ExportSBOM(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+ContainerAnalysisAuth::ExportSBOM(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

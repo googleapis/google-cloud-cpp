@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TranslationServiceClient::TranslationServiceClient(
     std::shared_ptr<TranslationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TranslationServiceClient::~TranslationServiceClient() = default;
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-TranslationServiceClient::TranslateText(std::string const& parent, std::string const& target_language_code, std::vector<std::string> const& contents, Options opts) {
+TranslationServiceClient::TranslateText(
+    std::string const& parent, std::string const& target_language_code,
+    std::vector<std::string> const& contents, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::TranslateTextRequest request;
   request.set_parent(parent);
@@ -43,7 +45,11 @@ TranslationServiceClient::TranslateText(std::string const& parent, std::string c
 }
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-TranslationServiceClient::TranslateText(std::string const& parent, std::string const& model, std::string const& mime_type, std::string const& source_language_code, std::string const& target_language_code, std::vector<std::string> const& contents, Options opts) {
+TranslationServiceClient::TranslateText(
+    std::string const& parent, std::string const& model,
+    std::string const& mime_type, std::string const& source_language_code,
+    std::string const& target_language_code,
+    std::vector<std::string> const& contents, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::TranslateTextRequest request;
   request.set_parent(parent);
@@ -56,13 +62,17 @@ TranslationServiceClient::TranslateText(std::string const& parent, std::string c
 }
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-TranslationServiceClient::TranslateText(google::cloud::translation::v3::TranslateTextRequest const& request, Options opts) {
+TranslationServiceClient::TranslateText(
+    google::cloud::translation::v3::TranslateTextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TranslateText(request);
 }
 
 StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
-TranslationServiceClient::RomanizeText(std::string const& parent, std::vector<std::string> const& contents, Options opts) {
+TranslationServiceClient::RomanizeText(std::string const& parent,
+                                       std::vector<std::string> const& contents,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::RomanizeTextRequest request;
   request.set_parent(parent);
@@ -71,13 +81,19 @@ TranslationServiceClient::RomanizeText(std::string const& parent, std::vector<st
 }
 
 StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
-TranslationServiceClient::RomanizeText(google::cloud::translation::v3::RomanizeTextRequest const& request, Options opts) {
+TranslationServiceClient::RomanizeText(
+    google::cloud::translation::v3::RomanizeTextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RomanizeText(request);
 }
 
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
-TranslationServiceClient::DetectLanguage(std::string const& parent, std::string const& model, std::string const& mime_type, std::string const& content, Options opts) {
+TranslationServiceClient::DetectLanguage(std::string const& parent,
+                                         std::string const& model,
+                                         std::string const& mime_type,
+                                         std::string const& content,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DetectLanguageRequest request;
   request.set_parent(parent);
@@ -88,13 +104,17 @@ TranslationServiceClient::DetectLanguage(std::string const& parent, std::string 
 }
 
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
-TranslationServiceClient::DetectLanguage(google::cloud::translation::v3::DetectLanguageRequest const& request, Options opts) {
+TranslationServiceClient::DetectLanguage(
+    google::cloud::translation::v3::DetectLanguageRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetectLanguage(request);
 }
 
 StatusOr<google::cloud::translation::v3::SupportedLanguages>
-TranslationServiceClient::GetSupportedLanguages(std::string const& parent, std::string const& model, std::string const& display_language_code, Options opts) {
+TranslationServiceClient::GetSupportedLanguages(
+    std::string const& parent, std::string const& model,
+    std::string const& display_language_code, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::GetSupportedLanguagesRequest request;
   request.set_parent(parent);
@@ -104,79 +124,118 @@ TranslationServiceClient::GetSupportedLanguages(std::string const& parent, std::
 }
 
 StatusOr<google::cloud::translation::v3::SupportedLanguages>
-TranslationServiceClient::GetSupportedLanguages(google::cloud::translation::v3::GetSupportedLanguagesRequest const& request, Options opts) {
+TranslationServiceClient::GetSupportedLanguages(
+    google::cloud::translation::v3::GetSupportedLanguagesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSupportedLanguages(request);
 }
 
 StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
-TranslationServiceClient::TranslateDocument(google::cloud::translation::v3::TranslateDocumentRequest const& request, Options opts) {
+TranslationServiceClient::TranslateDocument(
+    google::cloud::translation::v3::TranslateDocumentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TranslateDocument(request);
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-TranslationServiceClient::BatchTranslateText(google::cloud::translation::v3::BatchTranslateTextRequest const& request, Options opts) {
+TranslationServiceClient::BatchTranslateText(
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateText(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::BatchTranslateText(NoAwaitTag, google::cloud::translation::v3::BatchTranslateTextRequest const& request, Options opts) {
+TranslationServiceClient::BatchTranslateText(
+    NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateText(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-TranslationServiceClient::BatchTranslateText(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::BatchTranslateText(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateText(operation);
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-TranslationServiceClient::BatchTranslateDocument(std::string const& parent, std::string const& source_language_code, std::vector<std::string> const& target_language_codes, std::vector<google::cloud::translation::v3::BatchDocumentInputConfig> const& input_configs, google::cloud::translation::v3::BatchDocumentOutputConfig const& output_config, Options opts) {
+TranslationServiceClient::BatchTranslateDocument(
+    std::string const& parent, std::string const& source_language_code,
+    std::vector<std::string> const& target_language_codes,
+    std::vector<google::cloud::translation::v3::BatchDocumentInputConfig> const&
+        input_configs,
+    google::cloud::translation::v3::BatchDocumentOutputConfig const&
+        output_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::BatchTranslateDocumentRequest request;
   request.set_parent(parent);
   request.set_source_language_code(source_language_code);
-  *request.mutable_target_language_codes() = {target_language_codes.begin(), target_language_codes.end()};
-  *request.mutable_input_configs() = {input_configs.begin(), input_configs.end()};
+  *request.mutable_target_language_codes() = {target_language_codes.begin(),
+                                              target_language_codes.end()};
+  *request.mutable_input_configs() = {input_configs.begin(),
+                                      input_configs.end()};
   *request.mutable_output_config() = output_config;
   return connection_->BatchTranslateDocument(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::BatchTranslateDocument(NoAwaitTag, std::string const& parent, std::string const& source_language_code, std::vector<std::string> const& target_language_codes, std::vector<google::cloud::translation::v3::BatchDocumentInputConfig> const& input_configs, google::cloud::translation::v3::BatchDocumentOutputConfig const& output_config, Options opts) {
+TranslationServiceClient::BatchTranslateDocument(
+    NoAwaitTag, std::string const& parent,
+    std::string const& source_language_code,
+    std::vector<std::string> const& target_language_codes,
+    std::vector<google::cloud::translation::v3::BatchDocumentInputConfig> const&
+        input_configs,
+    google::cloud::translation::v3::BatchDocumentOutputConfig const&
+        output_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::BatchTranslateDocumentRequest request;
   request.set_parent(parent);
   request.set_source_language_code(source_language_code);
-  *request.mutable_target_language_codes() = {target_language_codes.begin(), target_language_codes.end()};
-  *request.mutable_input_configs() = {input_configs.begin(), input_configs.end()};
+  *request.mutable_target_language_codes() = {target_language_codes.begin(),
+                                              target_language_codes.end()};
+  *request.mutable_input_configs() = {input_configs.begin(),
+                                      input_configs.end()};
   *request.mutable_output_config() = output_config;
   return connection_->BatchTranslateDocument(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-TranslationServiceClient::BatchTranslateDocument(google::cloud::translation::v3::BatchTranslateDocumentRequest const& request, Options opts) {
+TranslationServiceClient::BatchTranslateDocument(
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateDocument(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::BatchTranslateDocument(NoAwaitTag, google::cloud::translation::v3::BatchTranslateDocumentRequest const& request, Options opts) {
+TranslationServiceClient::BatchTranslateDocument(
+    NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateDocument(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-TranslationServiceClient::BatchTranslateDocument(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::BatchTranslateDocument(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateDocument(operation);
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
-TranslationServiceClient::CreateGlossary(std::string const& parent, google::cloud::translation::v3::Glossary const& glossary, Options opts) {
+TranslationServiceClient::CreateGlossary(
+    std::string const& parent,
+    google::cloud::translation::v3::Glossary const& glossary, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateGlossaryRequest request;
   request.set_parent(parent);
@@ -185,7 +244,9 @@ TranslationServiceClient::CreateGlossary(std::string const& parent, google::clou
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::CreateGlossary(NoAwaitTag, std::string const& parent, google::cloud::translation::v3::Glossary const& glossary, Options opts) {
+TranslationServiceClient::CreateGlossary(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::translation::v3::Glossary const& glossary, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateGlossaryRequest request;
   request.set_parent(parent);
@@ -194,25 +255,33 @@ TranslationServiceClient::CreateGlossary(NoAwaitTag, std::string const& parent, 
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
-TranslationServiceClient::CreateGlossary(google::cloud::translation::v3::CreateGlossaryRequest const& request, Options opts) {
+TranslationServiceClient::CreateGlossary(
+    google::cloud::translation::v3::CreateGlossaryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGlossary(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::CreateGlossary(NoAwaitTag, google::cloud::translation::v3::CreateGlossaryRequest const& request, Options opts) {
+TranslationServiceClient::CreateGlossary(
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGlossary(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
-TranslationServiceClient::CreateGlossary(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::CreateGlossary(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGlossary(operation);
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
-TranslationServiceClient::UpdateGlossary(google::cloud::translation::v3::Glossary const& glossary, google::protobuf::FieldMask const& update_mask, Options opts) {
+TranslationServiceClient::UpdateGlossary(
+    google::cloud::translation::v3::Glossary const& glossary,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::UpdateGlossaryRequest request;
   *request.mutable_glossary() = glossary;
@@ -221,7 +290,9 @@ TranslationServiceClient::UpdateGlossary(google::cloud::translation::v3::Glossar
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::UpdateGlossary(NoAwaitTag, google::cloud::translation::v3::Glossary const& glossary, google::protobuf::FieldMask const& update_mask, Options opts) {
+TranslationServiceClient::UpdateGlossary(
+    NoAwaitTag, google::cloud::translation::v3::Glossary const& glossary,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::UpdateGlossaryRequest request;
   *request.mutable_glossary() = glossary;
@@ -230,25 +301,32 @@ TranslationServiceClient::UpdateGlossary(NoAwaitTag, google::cloud::translation:
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
-TranslationServiceClient::UpdateGlossary(google::cloud::translation::v3::UpdateGlossaryRequest const& request, Options opts) {
+TranslationServiceClient::UpdateGlossary(
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGlossary(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::UpdateGlossary(NoAwaitTag, google::cloud::translation::v3::UpdateGlossaryRequest const& request, Options opts) {
+TranslationServiceClient::UpdateGlossary(
+    NoAwaitTag,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGlossary(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
-TranslationServiceClient::UpdateGlossary(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::UpdateGlossary(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGlossary(operation);
 }
 
 StreamRange<google::cloud::translation::v3::Glossary>
-TranslationServiceClient::ListGlossaries(std::string const& parent, Options opts) {
+TranslationServiceClient::ListGlossaries(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ListGlossariesRequest request;
   request.set_parent(parent);
@@ -256,7 +334,9 @@ TranslationServiceClient::ListGlossaries(std::string const& parent, Options opts
 }
 
 StreamRange<google::cloud::translation::v3::Glossary>
-TranslationServiceClient::ListGlossaries(google::cloud::translation::v3::ListGlossariesRequest request, Options opts) {
+TranslationServiceClient::ListGlossaries(
+    google::cloud::translation::v3::ListGlossariesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGlossaries(std::move(request));
 }
@@ -270,13 +350,16 @@ TranslationServiceClient::GetGlossary(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::translation::v3::Glossary>
-TranslationServiceClient::GetGlossary(google::cloud::translation::v3::GetGlossaryRequest const& request, Options opts) {
+TranslationServiceClient::GetGlossary(
+    google::cloud::translation::v3::GetGlossaryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGlossary(request);
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-TranslationServiceClient::DeleteGlossary(std::string const& name, Options opts) {
+TranslationServiceClient::DeleteGlossary(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DeleteGlossaryRequest request;
   request.set_name(name);
@@ -284,7 +367,8 @@ TranslationServiceClient::DeleteGlossary(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::DeleteGlossary(NoAwaitTag, std::string const& name, Options opts) {
+TranslationServiceClient::DeleteGlossary(NoAwaitTag, std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DeleteGlossaryRequest request;
   request.set_name(name);
@@ -292,25 +376,32 @@ TranslationServiceClient::DeleteGlossary(NoAwaitTag, std::string const& name, Op
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-TranslationServiceClient::DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const& request, Options opts) {
+TranslationServiceClient::DeleteGlossary(
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGlossary(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::DeleteGlossary(NoAwaitTag, google::cloud::translation::v3::DeleteGlossaryRequest const& request, Options opts) {
+TranslationServiceClient::DeleteGlossary(
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGlossary(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-TranslationServiceClient::DeleteGlossary(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::DeleteGlossary(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGlossary(operation);
 }
 
 StatusOr<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceClient::GetGlossaryEntry(std::string const& name, Options opts) {
+TranslationServiceClient::GetGlossaryEntry(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::GetGlossaryEntryRequest request;
   request.set_name(name);
@@ -318,13 +409,16 @@ TranslationServiceClient::GetGlossaryEntry(std::string const& name, Options opts
 }
 
 StatusOr<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceClient::GetGlossaryEntry(google::cloud::translation::v3::GetGlossaryEntryRequest const& request, Options opts) {
+TranslationServiceClient::GetGlossaryEntry(
+    google::cloud::translation::v3::GetGlossaryEntryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGlossaryEntry(request);
 }
 
 StreamRange<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceClient::ListGlossaryEntries(std::string const& parent, Options opts) {
+TranslationServiceClient::ListGlossaryEntries(std::string const& parent,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ListGlossaryEntriesRequest request;
   request.set_parent(parent);
@@ -332,13 +426,18 @@ TranslationServiceClient::ListGlossaryEntries(std::string const& parent, Options
 }
 
 StreamRange<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceClient::ListGlossaryEntries(google::cloud::translation::v3::ListGlossaryEntriesRequest request, Options opts) {
+TranslationServiceClient::ListGlossaryEntries(
+    google::cloud::translation::v3::ListGlossaryEntriesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGlossaryEntries(std::move(request));
 }
 
 StatusOr<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceClient::CreateGlossaryEntry(std::string const& parent, google::cloud::translation::v3::GlossaryEntry const& glossary_entry, Options opts) {
+TranslationServiceClient::CreateGlossaryEntry(
+    std::string const& parent,
+    google::cloud::translation::v3::GlossaryEntry const& glossary_entry,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateGlossaryEntryRequest request;
   request.set_parent(parent);
@@ -347,13 +446,17 @@ TranslationServiceClient::CreateGlossaryEntry(std::string const& parent, google:
 }
 
 StatusOr<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceClient::CreateGlossaryEntry(google::cloud::translation::v3::CreateGlossaryEntryRequest const& request, Options opts) {
+TranslationServiceClient::CreateGlossaryEntry(
+    google::cloud::translation::v3::CreateGlossaryEntryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGlossaryEntry(request);
 }
 
 StatusOr<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceClient::UpdateGlossaryEntry(google::cloud::translation::v3::GlossaryEntry const& glossary_entry, Options opts) {
+TranslationServiceClient::UpdateGlossaryEntry(
+    google::cloud::translation::v3::GlossaryEntry const& glossary_entry,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::UpdateGlossaryEntryRequest request;
   *request.mutable_glossary_entry() = glossary_entry;
@@ -361,27 +464,32 @@ TranslationServiceClient::UpdateGlossaryEntry(google::cloud::translation::v3::Gl
 }
 
 StatusOr<google::cloud::translation::v3::GlossaryEntry>
-TranslationServiceClient::UpdateGlossaryEntry(google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request, Options opts) {
+TranslationServiceClient::UpdateGlossaryEntry(
+    google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGlossaryEntry(request);
 }
 
-Status
-TranslationServiceClient::DeleteGlossaryEntry(std::string const& name, Options opts) {
+Status TranslationServiceClient::DeleteGlossaryEntry(std::string const& name,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DeleteGlossaryEntryRequest request;
   request.set_name(name);
   return connection_->DeleteGlossaryEntry(request);
 }
 
-Status
-TranslationServiceClient::DeleteGlossaryEntry(google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request, Options opts) {
+Status TranslationServiceClient::DeleteGlossaryEntry(
+    google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGlossaryEntry(request);
 }
 
 future<StatusOr<google::cloud::translation::v3::Dataset>>
-TranslationServiceClient::CreateDataset(std::string const& parent, google::cloud::translation::v3::Dataset const& dataset, Options opts) {
+TranslationServiceClient::CreateDataset(
+    std::string const& parent,
+    google::cloud::translation::v3::Dataset const& dataset, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateDatasetRequest request;
   request.set_parent(parent);
@@ -390,7 +498,9 @@ TranslationServiceClient::CreateDataset(std::string const& parent, google::cloud
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::CreateDataset(NoAwaitTag, std::string const& parent, google::cloud::translation::v3::Dataset const& dataset, Options opts) {
+TranslationServiceClient::CreateDataset(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::translation::v3::Dataset const& dataset, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateDatasetRequest request;
   request.set_parent(parent);
@@ -399,19 +509,25 @@ TranslationServiceClient::CreateDataset(NoAwaitTag, std::string const& parent, g
 }
 
 future<StatusOr<google::cloud::translation::v3::Dataset>>
-TranslationServiceClient::CreateDataset(google::cloud::translation::v3::CreateDatasetRequest const& request, Options opts) {
+TranslationServiceClient::CreateDataset(
+    google::cloud::translation::v3::CreateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::CreateDataset(NoAwaitTag, google::cloud::translation::v3::CreateDatasetRequest const& request, Options opts) {
+TranslationServiceClient::CreateDataset(
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::Dataset>>
-TranslationServiceClient::CreateDataset(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::CreateDataset(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(operation);
 }
@@ -425,13 +541,16 @@ TranslationServiceClient::GetDataset(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::translation::v3::Dataset>
-TranslationServiceClient::GetDataset(google::cloud::translation::v3::GetDatasetRequest const& request, Options opts) {
+TranslationServiceClient::GetDataset(
+    google::cloud::translation::v3::GetDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataset(request);
 }
 
 StreamRange<google::cloud::translation::v3::Dataset>
-TranslationServiceClient::ListDatasets(std::string const& parent, Options opts) {
+TranslationServiceClient::ListDatasets(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ListDatasetsRequest request;
   request.set_parent(parent);
@@ -439,7 +558,8 @@ TranslationServiceClient::ListDatasets(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::translation::v3::Dataset>
-TranslationServiceClient::ListDatasets(google::cloud::translation::v3::ListDatasetsRequest request, Options opts) {
+TranslationServiceClient::ListDatasets(
+    google::cloud::translation::v3::ListDatasetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatasets(std::move(request));
 }
@@ -453,7 +573,8 @@ TranslationServiceClient::DeleteDataset(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::DeleteDataset(NoAwaitTag, std::string const& name, Options opts) {
+TranslationServiceClient::DeleteDataset(NoAwaitTag, std::string const& name,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DeleteDatasetRequest request;
   request.set_name(name);
@@ -461,25 +582,35 @@ TranslationServiceClient::DeleteDataset(NoAwaitTag, std::string const& name, Opt
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
-TranslationServiceClient::DeleteDataset(google::cloud::translation::v3::DeleteDatasetRequest const& request, Options opts) {
+TranslationServiceClient::DeleteDataset(
+    google::cloud::translation::v3::DeleteDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::DeleteDataset(NoAwaitTag, google::cloud::translation::v3::DeleteDatasetRequest const& request, Options opts) {
+TranslationServiceClient::DeleteDataset(
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
-TranslationServiceClient::DeleteDataset(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::DeleteDataset(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(operation);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-TranslationServiceClient::CreateAdaptiveMtDataset(std::string const& parent, google::cloud::translation::v3::AdaptiveMtDataset const& adaptive_mt_dataset, Options opts) {
+TranslationServiceClient::CreateAdaptiveMtDataset(
+    std::string const& parent,
+    google::cloud::translation::v3::AdaptiveMtDataset const&
+        adaptive_mt_dataset,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest request;
   request.set_parent(parent);
@@ -488,27 +619,33 @@ TranslationServiceClient::CreateAdaptiveMtDataset(std::string const& parent, goo
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-TranslationServiceClient::CreateAdaptiveMtDataset(google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const& request, Options opts) {
+TranslationServiceClient::CreateAdaptiveMtDataset(
+    google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAdaptiveMtDataset(request);
 }
 
-Status
-TranslationServiceClient::DeleteAdaptiveMtDataset(std::string const& name, Options opts) {
+Status TranslationServiceClient::DeleteAdaptiveMtDataset(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest request;
   request.set_name(name);
   return connection_->DeleteAdaptiveMtDataset(request);
 }
 
-Status
-TranslationServiceClient::DeleteAdaptiveMtDataset(google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const& request, Options opts) {
+Status TranslationServiceClient::DeleteAdaptiveMtDataset(
+    google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAdaptiveMtDataset(request);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-TranslationServiceClient::GetAdaptiveMtDataset(std::string const& name, Options opts) {
+TranslationServiceClient::GetAdaptiveMtDataset(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::GetAdaptiveMtDatasetRequest request;
   request.set_name(name);
@@ -516,13 +653,16 @@ TranslationServiceClient::GetAdaptiveMtDataset(std::string const& name, Options 
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-TranslationServiceClient::GetAdaptiveMtDataset(google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const& request, Options opts) {
+TranslationServiceClient::GetAdaptiveMtDataset(
+    google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAdaptiveMtDataset(request);
 }
 
 StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
-TranslationServiceClient::ListAdaptiveMtDatasets(std::string const& parent, Options opts) {
+TranslationServiceClient::ListAdaptiveMtDatasets(std::string const& parent,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request;
   request.set_parent(parent);
@@ -530,13 +670,17 @@ TranslationServiceClient::ListAdaptiveMtDatasets(std::string const& parent, Opti
 }
 
 StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
-TranslationServiceClient::ListAdaptiveMtDatasets(google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request, Options opts) {
+TranslationServiceClient::ListAdaptiveMtDatasets(
+    google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAdaptiveMtDatasets(std::move(request));
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
-TranslationServiceClient::AdaptiveMtTranslate(std::string const& parent, std::vector<std::string> const& content, Options opts) {
+TranslationServiceClient::AdaptiveMtTranslate(
+    std::string const& parent, std::vector<std::string> const& content,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::AdaptiveMtTranslateRequest request;
   request.set_parent(parent);
@@ -545,13 +689,16 @@ TranslationServiceClient::AdaptiveMtTranslate(std::string const& parent, std::ve
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
-TranslationServiceClient::AdaptiveMtTranslate(google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request, Options opts) {
+TranslationServiceClient::AdaptiveMtTranslate(
+    google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AdaptiveMtTranslate(request);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
-TranslationServiceClient::GetAdaptiveMtFile(std::string const& name, Options opts) {
+TranslationServiceClient::GetAdaptiveMtFile(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::GetAdaptiveMtFileRequest request;
   request.set_name(name);
@@ -559,27 +706,31 @@ TranslationServiceClient::GetAdaptiveMtFile(std::string const& name, Options opt
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
-TranslationServiceClient::GetAdaptiveMtFile(google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request, Options opts) {
+TranslationServiceClient::GetAdaptiveMtFile(
+    google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAdaptiveMtFile(request);
 }
 
-Status
-TranslationServiceClient::DeleteAdaptiveMtFile(std::string const& name, Options opts) {
+Status TranslationServiceClient::DeleteAdaptiveMtFile(std::string const& name,
+                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DeleteAdaptiveMtFileRequest request;
   request.set_name(name);
   return connection_->DeleteAdaptiveMtFile(request);
 }
 
-Status
-TranslationServiceClient::DeleteAdaptiveMtFile(google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const& request, Options opts) {
+Status TranslationServiceClient::DeleteAdaptiveMtFile(
+    google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAdaptiveMtFile(request);
 }
 
 StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
-TranslationServiceClient::ImportAdaptiveMtFile(std::string const& parent, Options opts) {
+TranslationServiceClient::ImportAdaptiveMtFile(std::string const& parent,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ImportAdaptiveMtFileRequest request;
   request.set_parent(parent);
@@ -587,13 +738,16 @@ TranslationServiceClient::ImportAdaptiveMtFile(std::string const& parent, Option
 }
 
 StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
-TranslationServiceClient::ImportAdaptiveMtFile(google::cloud::translation::v3::ImportAdaptiveMtFileRequest const& request, Options opts) {
+TranslationServiceClient::ImportAdaptiveMtFile(
+    google::cloud::translation::v3::ImportAdaptiveMtFileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportAdaptiveMtFile(request);
 }
 
 StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
-TranslationServiceClient::ListAdaptiveMtFiles(std::string const& parent, Options opts) {
+TranslationServiceClient::ListAdaptiveMtFiles(std::string const& parent,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ListAdaptiveMtFilesRequest request;
   request.set_parent(parent);
@@ -601,13 +755,16 @@ TranslationServiceClient::ListAdaptiveMtFiles(std::string const& parent, Options
 }
 
 StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
-TranslationServiceClient::ListAdaptiveMtFiles(google::cloud::translation::v3::ListAdaptiveMtFilesRequest request, Options opts) {
+TranslationServiceClient::ListAdaptiveMtFiles(
+    google::cloud::translation::v3::ListAdaptiveMtFilesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAdaptiveMtFiles(std::move(request));
 }
 
 StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
-TranslationServiceClient::ListAdaptiveMtSentences(std::string const& parent, Options opts) {
+TranslationServiceClient::ListAdaptiveMtSentences(std::string const& parent,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request;
   request.set_parent(parent);
@@ -615,13 +772,18 @@ TranslationServiceClient::ListAdaptiveMtSentences(std::string const& parent, Opt
 }
 
 StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
-TranslationServiceClient::ListAdaptiveMtSentences(google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request, Options opts) {
+TranslationServiceClient::ListAdaptiveMtSentences(
+    google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAdaptiveMtSentences(std::move(request));
 }
 
 future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
-TranslationServiceClient::ImportData(std::string const& dataset, google::cloud::translation::v3::DatasetInputConfig const& input_config, Options opts) {
+TranslationServiceClient::ImportData(
+    std::string const& dataset,
+    google::cloud::translation::v3::DatasetInputConfig const& input_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ImportDataRequest request;
   request.set_dataset(dataset);
@@ -629,8 +791,10 @@ TranslationServiceClient::ImportData(std::string const& dataset, google::cloud::
   return connection_->ImportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::ImportData(NoAwaitTag, std::string const& dataset, google::cloud::translation::v3::DatasetInputConfig const& input_config, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::ImportData(
+    NoAwaitTag, std::string const& dataset,
+    google::cloud::translation::v3::DatasetInputConfig const& input_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ImportDataRequest request;
   request.set_dataset(dataset);
@@ -639,25 +803,33 @@ TranslationServiceClient::ImportData(NoAwaitTag, std::string const& dataset, goo
 }
 
 future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
-TranslationServiceClient::ImportData(google::cloud::translation::v3::ImportDataRequest const& request, Options opts) {
+TranslationServiceClient::ImportData(
+    google::cloud::translation::v3::ImportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::ImportData(NoAwaitTag, google::cloud::translation::v3::ImportDataRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::ImportData(
+    NoAwaitTag,
+    google::cloud::translation::v3::ImportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
-TranslationServiceClient::ImportData(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::ImportData(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(operation);
 }
 
 future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
-TranslationServiceClient::ExportData(std::string const& dataset, google::cloud::translation::v3::DatasetOutputConfig const& output_config, Options opts) {
+TranslationServiceClient::ExportData(
+    std::string const& dataset,
+    google::cloud::translation::v3::DatasetOutputConfig const& output_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ExportDataRequest request;
   request.set_dataset(dataset);
@@ -665,8 +837,10 @@ TranslationServiceClient::ExportData(std::string const& dataset, google::cloud::
   return connection_->ExportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::ExportData(NoAwaitTag, std::string const& dataset, google::cloud::translation::v3::DatasetOutputConfig const& output_config, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::ExportData(
+    NoAwaitTag, std::string const& dataset,
+    google::cloud::translation::v3::DatasetOutputConfig const& output_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ExportDataRequest request;
   request.set_dataset(dataset);
@@ -675,25 +849,31 @@ TranslationServiceClient::ExportData(NoAwaitTag, std::string const& dataset, goo
 }
 
 future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
-TranslationServiceClient::ExportData(google::cloud::translation::v3::ExportDataRequest const& request, Options opts) {
+TranslationServiceClient::ExportData(
+    google::cloud::translation::v3::ExportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::ExportData(NoAwaitTag, google::cloud::translation::v3::ExportDataRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::ExportData(
+    NoAwaitTag,
+    google::cloud::translation::v3::ExportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
-TranslationServiceClient::ExportData(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::ExportData(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(operation);
 }
 
 StreamRange<google::cloud::translation::v3::Example>
-TranslationServiceClient::ListExamples(std::string const& parent, Options opts) {
+TranslationServiceClient::ListExamples(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::ListExamplesRequest request;
   request.set_parent(parent);
@@ -701,13 +881,16 @@ TranslationServiceClient::ListExamples(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::translation::v3::Example>
-TranslationServiceClient::ListExamples(google::cloud::translation::v3::ListExamplesRequest request, Options opts) {
+TranslationServiceClient::ListExamples(
+    google::cloud::translation::v3::ListExamplesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListExamples(std::move(request));
 }
 
 future<StatusOr<google::cloud::translation::v3::Model>>
-TranslationServiceClient::CreateModel(std::string const& parent, google::cloud::translation::v3::Model const& model, Options opts) {
+TranslationServiceClient::CreateModel(
+    std::string const& parent,
+    google::cloud::translation::v3::Model const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateModelRequest request;
   request.set_parent(parent);
@@ -715,8 +898,9 @@ TranslationServiceClient::CreateModel(std::string const& parent, google::cloud::
   return connection_->CreateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::CreateModel(NoAwaitTag, std::string const& parent, google::cloud::translation::v3::Model const& model, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::CreateModel(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::translation::v3::Model const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::CreateModelRequest request;
   request.set_parent(parent);
@@ -725,19 +909,24 @@ TranslationServiceClient::CreateModel(NoAwaitTag, std::string const& parent, goo
 }
 
 future<StatusOr<google::cloud::translation::v3::Model>>
-TranslationServiceClient::CreateModel(google::cloud::translation::v3::CreateModelRequest const& request, Options opts) {
+TranslationServiceClient::CreateModel(
+    google::cloud::translation::v3::CreateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::CreateModel(NoAwaitTag, google::cloud::translation::v3::CreateModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::CreateModel(
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::Model>>
-TranslationServiceClient::CreateModel(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::CreateModel(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(operation);
 }
@@ -751,7 +940,8 @@ TranslationServiceClient::ListModels(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::translation::v3::Model>
-TranslationServiceClient::ListModels(google::cloud::translation::v3::ListModelsRequest request, Options opts) {
+TranslationServiceClient::ListModels(
+    google::cloud::translation::v3::ListModelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModels(std::move(request));
 }
@@ -765,7 +955,9 @@ TranslationServiceClient::GetModel(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::translation::v3::Model>
-TranslationServiceClient::GetModel(google::cloud::translation::v3::GetModelRequest const& request, Options opts) {
+TranslationServiceClient::GetModel(
+    google::cloud::translation::v3::GetModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModel(request);
 }
@@ -778,8 +970,8 @@ TranslationServiceClient::DeleteModel(std::string const& name, Options opts) {
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::DeleteModel(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::DeleteModel(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::translation::v3::DeleteModelRequest request;
   request.set_name(name);
@@ -787,37 +979,46 @@ TranslationServiceClient::DeleteModel(NoAwaitTag, std::string const& name, Optio
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
-TranslationServiceClient::DeleteModel(google::cloud::translation::v3::DeleteModelRequest const& request, Options opts) {
+TranslationServiceClient::DeleteModel(
+    google::cloud::translation::v3::DeleteModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::DeleteModel(NoAwaitTag, google::cloud::translation::v3::DeleteModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::DeleteModel(
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
-TranslationServiceClient::DeleteModel(google::longrunning::Operation const& operation, Options opts) {
+TranslationServiceClient::DeleteModel(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-TranslationServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+TranslationServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-TranslationServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+TranslationServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-TranslationServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+TranslationServiceClient::ListOperations(std::string const& name,
+                                         std::string const& filter,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -826,55 +1027,57 @@ TranslationServiceClient::ListOperations(std::string const& name, std::string co
 }
 
 StreamRange<google::longrunning::Operation>
-TranslationServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+TranslationServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TranslationServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TranslationServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-TranslationServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status TranslationServiceClient::DeleteOperation(std::string const& name,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-TranslationServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status TranslationServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-TranslationServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status TranslationServiceClient::CancelOperation(std::string const& name,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-TranslationServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status TranslationServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
 StatusOr<google::longrunning::Operation>
-TranslationServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
+TranslationServiceClient::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

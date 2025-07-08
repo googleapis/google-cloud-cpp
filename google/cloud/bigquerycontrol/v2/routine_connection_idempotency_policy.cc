@@ -26,39 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RoutineServiceConnectionIdempotencyPolicy::~RoutineServiceConnectionIdempotencyPolicy() = default;
+RoutineServiceConnectionIdempotencyPolicy::
+    ~RoutineServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RoutineServiceConnectionIdempotencyPolicy>
 RoutineServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RoutineServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RoutineServiceConnectionIdempotencyPolicy::GetRoutine(google::cloud::bigquery::v2::GetRoutineRequest const&) {
+Idempotency RoutineServiceConnectionIdempotencyPolicy::GetRoutine(
+    google::cloud::bigquery::v2::GetRoutineRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutineServiceConnectionIdempotencyPolicy::InsertRoutine(google::cloud::bigquery::v2::InsertRoutineRequest const&) {
+Idempotency RoutineServiceConnectionIdempotencyPolicy::InsertRoutine(
+    google::cloud::bigquery::v2::InsertRoutineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutineServiceConnectionIdempotencyPolicy::UpdateRoutine(google::cloud::bigquery::v2::UpdateRoutineRequest const&) {
+Idempotency RoutineServiceConnectionIdempotencyPolicy::UpdateRoutine(
+    google::cloud::bigquery::v2::UpdateRoutineRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutineServiceConnectionIdempotencyPolicy::PatchRoutine(google::cloud::bigquery::v2::PatchRoutineRequest const&) {
+Idempotency RoutineServiceConnectionIdempotencyPolicy::PatchRoutine(
+    google::cloud::bigquery::v2::PatchRoutineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutineServiceConnectionIdempotencyPolicy::DeleteRoutine(google::cloud::bigquery::v2::DeleteRoutineRequest const&) {
+Idempotency RoutineServiceConnectionIdempotencyPolicy::DeleteRoutine(
+    google::cloud::bigquery::v2::DeleteRoutineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutineServiceConnectionIdempotencyPolicy::ListRoutines(google::cloud::bigquery::v2::ListRoutinesRequest const&) {
+Idempotency RoutineServiceConnectionIdempotencyPolicy::ListRoutines(
+    google::cloud::bigquery::v2::ListRoutinesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<RoutineServiceConnectionIdempotencyPolicy>
-    MakeDefaultRoutineServiceConnectionIdempotencyPolicy() {
+MakeDefaultRoutineServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RoutineServiceConnectionIdempotencyPolicy>();
 }
 

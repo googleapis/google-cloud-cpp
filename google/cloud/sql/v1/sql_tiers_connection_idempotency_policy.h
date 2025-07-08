@@ -34,14 +34,15 @@ class SqlTiersServiceConnectionIdempotencyPolicy {
   virtual ~SqlTiersServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlTiersServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SqlTiersServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  List(google::cloud::sql::v1::SqlTiersListRequest const& request);
+  virtual google::cloud::Idempotency List(
+      google::cloud::sql::v1::SqlTiersListRequest const& request);
 };
 
 std::unique_ptr<SqlTiersServiceConnectionIdempotencyPolicy>
-    MakeDefaultSqlTiersServiceConnectionIdempotencyPolicy();
+MakeDefaultSqlTiersServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

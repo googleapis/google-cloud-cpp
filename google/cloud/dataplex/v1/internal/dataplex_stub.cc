@@ -33,12 +33,13 @@ DataplexServiceStub::~DataplexServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateLake(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateLakeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateLakeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateLakeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::CreateLakeRequest const& request,
@@ -48,28 +49,26 @@ DefaultDataplexServiceStub::AsyncCreateLake(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::CreateLake(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateLakeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateLake(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::CreateLake(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateLake(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateLake(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateLakeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateLakeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::UpdateLakeRequest const& request,
@@ -79,28 +78,26 @@ DefaultDataplexServiceStub::AsyncUpdateLake(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::UpdateLake(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateLake(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::UpdateLake(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateLake(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteLake(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteLakeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteLakeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::DeleteLakeRequest const& request,
@@ -110,67 +107,61 @@ DefaultDataplexServiceStub::AsyncDeleteLake(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::DeleteLake(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteLake(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::DeleteLake(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteLake(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
 DefaultDataplexServiceStub::ListLakes(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListLakesRequest const& request) {
-    google::cloud::dataplex::v1::ListLakesResponse response;
-    auto status =
-        grpc_stub_->ListLakes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListLakesRequest const& request) {
+  google::cloud::dataplex::v1::ListLakesResponse response;
+  auto status = grpc_stub_->ListLakes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::dataplex::v1::Lake>
-DefaultDataplexServiceStub::GetLake(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetLakeRequest const& request) {
-    google::cloud::dataplex::v1::Lake response;
-    auto status =
-        grpc_stub_->GetLake(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::dataplex::v1::Lake> DefaultDataplexServiceStub::GetLake(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetLakeRequest const& request) {
+  google::cloud::dataplex::v1::Lake response;
+  auto status = grpc_stub_->GetLake(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DefaultDataplexServiceStub::ListLakeActions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListLakeActionsRequest const& request) {
-    google::cloud::dataplex::v1::ListActionsResponse response;
-    auto status =
-        grpc_stub_->ListLakeActions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListLakeActionsRequest const& request) {
+  google::cloud::dataplex::v1::ListActionsResponse response;
+  auto status = grpc_stub_->ListLakeActions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateZone(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateZoneRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateZoneRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateZoneRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::CreateZoneRequest const& request,
@@ -180,28 +171,26 @@ DefaultDataplexServiceStub::AsyncCreateZone(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::CreateZone(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateZoneRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateZone(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::CreateZone(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateZone(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateZoneRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateZoneRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::UpdateZoneRequest const& request,
@@ -211,28 +200,26 @@ DefaultDataplexServiceStub::AsyncUpdateZone(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::UpdateZone(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateZone(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::UpdateZone(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteZone(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteZoneRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteZoneRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::DeleteZoneRequest const& request,
@@ -242,67 +229,61 @@ DefaultDataplexServiceStub::AsyncDeleteZone(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::DeleteZone(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteZone(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::DeleteZone(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
 DefaultDataplexServiceStub::ListZones(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListZonesRequest const& request) {
-    google::cloud::dataplex::v1::ListZonesResponse response;
-    auto status =
-        grpc_stub_->ListZones(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListZonesRequest const& request) {
+  google::cloud::dataplex::v1::ListZonesResponse response;
+  auto status = grpc_stub_->ListZones(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::dataplex::v1::Zone>
-DefaultDataplexServiceStub::GetZone(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetZoneRequest const& request) {
-    google::cloud::dataplex::v1::Zone response;
-    auto status =
-        grpc_stub_->GetZone(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::dataplex::v1::Zone> DefaultDataplexServiceStub::GetZone(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetZoneRequest const& request) {
+  google::cloud::dataplex::v1::Zone response;
+  auto status = grpc_stub_->GetZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DefaultDataplexServiceStub::ListZoneActions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListZoneActionsRequest const& request) {
-    google::cloud::dataplex::v1::ListActionsResponse response;
-    auto status =
-        grpc_stub_->ListZoneActions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListZoneActionsRequest const& request) {
+  google::cloud::dataplex::v1::ListActionsResponse response;
+  auto status = grpc_stub_->ListZoneActions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateAsset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateAssetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateAssetRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateAssetRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::CreateAssetRequest const& request,
@@ -314,26 +295,25 @@ DefaultDataplexServiceStub::AsyncCreateAsset(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataplexServiceStub::CreateAsset(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateAssetRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateAsset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateAsset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateAssetRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateAssetRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::UpdateAssetRequest const& request,
@@ -345,26 +325,25 @@ DefaultDataplexServiceStub::AsyncUpdateAsset(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataplexServiceStub::UpdateAsset(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateAsset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteAsset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteAssetRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteAssetRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::DeleteAssetRequest const& request,
@@ -376,65 +355,61 @@ DefaultDataplexServiceStub::AsyncDeleteAsset(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataplexServiceStub::DeleteAsset(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteAsset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
 DefaultDataplexServiceStub::ListAssets(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListAssetsRequest const& request) {
-    google::cloud::dataplex::v1::ListAssetsResponse response;
-    auto status =
-        grpc_stub_->ListAssets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListAssetsRequest const& request) {
+  google::cloud::dataplex::v1::ListAssetsResponse response;
+  auto status = grpc_stub_->ListAssets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::Asset>
 DefaultDataplexServiceStub::GetAsset(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetAssetRequest const& request) {
-    google::cloud::dataplex::v1::Asset response;
-    auto status =
-        grpc_stub_->GetAsset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetAssetRequest const& request) {
+  google::cloud::dataplex::v1::Asset response;
+  auto status = grpc_stub_->GetAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DefaultDataplexServiceStub::ListAssetActions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListAssetActionsRequest const& request) {
-    google::cloud::dataplex::v1::ListActionsResponse response;
-    auto status =
-        grpc_stub_->ListAssetActions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListAssetActionsRequest const& request) {
+  google::cloud::dataplex::v1::ListActionsResponse response;
+  auto status = grpc_stub_->ListAssetActions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateTask(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateTaskRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateTaskRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateTaskRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::CreateTaskRequest const& request,
@@ -444,28 +419,26 @@ DefaultDataplexServiceStub::AsyncCreateTask(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::CreateTask(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateTaskRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateTask(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::CreateTask(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateTask(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateTaskRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateTaskRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::UpdateTaskRequest const& request,
@@ -475,28 +448,26 @@ DefaultDataplexServiceStub::AsyncUpdateTask(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::UpdateTask(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateTask(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::UpdateTask(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteTask(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteTaskRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteTaskRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::DeleteTaskRequest const& request,
@@ -506,110 +477,100 @@ DefaultDataplexServiceStub::AsyncDeleteTask(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDataplexServiceStub::DeleteTask(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteTask(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDataplexServiceStub::DeleteTask(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
 DefaultDataplexServiceStub::ListTasks(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListTasksRequest const& request) {
-    google::cloud::dataplex::v1::ListTasksResponse response;
-    auto status =
-        grpc_stub_->ListTasks(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListTasksRequest const& request) {
+  google::cloud::dataplex::v1::ListTasksResponse response;
+  auto status = grpc_stub_->ListTasks(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::dataplex::v1::Task>
-DefaultDataplexServiceStub::GetTask(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetTaskRequest const& request) {
-    google::cloud::dataplex::v1::Task response;
-    auto status =
-        grpc_stub_->GetTask(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::dataplex::v1::Task> DefaultDataplexServiceStub::GetTask(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetTaskRequest const& request) {
+  google::cloud::dataplex::v1::Task response;
+  auto status = grpc_stub_->GetTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListJobsResponse>
 DefaultDataplexServiceStub::ListJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListJobsRequest const& request) {
-    google::cloud::dataplex::v1::ListJobsResponse response;
-    auto status =
-        grpc_stub_->ListJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListJobsRequest const& request) {
+  google::cloud::dataplex::v1::ListJobsResponse response;
+  auto status = grpc_stub_->ListJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
 DefaultDataplexServiceStub::RunTask(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::RunTaskRequest const& request) {
-    google::cloud::dataplex::v1::RunTaskResponse response;
-    auto status =
-        grpc_stub_->RunTask(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  google::cloud::dataplex::v1::RunTaskResponse response;
+  auto status = grpc_stub_->RunTask(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::dataplex::v1::Job>
-DefaultDataplexServiceStub::GetJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetJobRequest const& request) {
-    google::cloud::dataplex::v1::Job response;
-    auto status =
-        grpc_stub_->GetJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::dataplex::v1::Job> DefaultDataplexServiceStub::GetJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetJobRequest const& request) {
+  google::cloud::dataplex::v1::Job response;
+  auto status = grpc_stub_->GetJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDataplexServiceStub::CancelJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::CancelJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->CancelJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataplexServiceStub::CancelJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::CancelJobRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->CancelJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncCreateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateEnvironmentRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateEnvironmentRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateEnvironment(context, request, cq);
       },
       request, std::move(context));
@@ -617,30 +578,30 @@ DefaultDataplexServiceStub::AsyncCreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataplexServiceStub::CreateEnvironment(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateEnvironment(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncUpdateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateEnvironmentRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateEnvironment(context, request, cq);
       },
       request, std::move(context));
@@ -648,30 +609,30 @@ DefaultDataplexServiceStub::AsyncUpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataplexServiceStub::UpdateEnvironment(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateEnvironment(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataplexServiceStub::AsyncDeleteEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteEnvironmentRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteEnvironment(context, request, cq);
       },
       request, std::move(context));
@@ -679,172 +640,155 @@ DefaultDataplexServiceStub::AsyncDeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataplexServiceStub::DeleteEnvironment(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteEnvironment(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
 DefaultDataplexServiceStub::ListEnvironments(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
-    google::cloud::dataplex::v1::ListEnvironmentsResponse response;
-    auto status =
-        grpc_stub_->ListEnvironments(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
+  google::cloud::dataplex::v1::ListEnvironmentsResponse response;
+  auto status = grpc_stub_->ListEnvironments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::Environment>
 DefaultDataplexServiceStub::GetEnvironment(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-    google::cloud::dataplex::v1::Environment response;
-    auto status =
-        grpc_stub_->GetEnvironment(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
+  google::cloud::dataplex::v1::Environment response;
+  auto status = grpc_stub_->GetEnvironment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListSessionsResponse>
 DefaultDataplexServiceStub::ListSessions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListSessionsRequest const& request) {
-    google::cloud::dataplex::v1::ListSessionsResponse response;
-    auto status =
-        grpc_stub_->ListSessions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListSessionsRequest const& request) {
+  google::cloud::dataplex::v1::ListSessionsResponse response;
+  auto status = grpc_stub_->ListSessions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDataplexServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultDataplexServiceStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultDataplexServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultDataplexServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultDataplexServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultDataplexServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDataplexServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDataplexServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataplexServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDataplexServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataplexServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultDataplexServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataplexServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -873,13 +817,14 @@ future<Status> DefaultDataplexServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

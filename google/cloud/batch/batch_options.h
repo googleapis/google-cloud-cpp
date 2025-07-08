@@ -34,7 +34,8 @@ using ::google::cloud::batch_v1::BatchServicePollingPolicyOption;
 /// @deprecated Use batch_v1::BatchServiceBackoffPolicyOption directly.
 using ::google::cloud::batch_v1::BatchServiceBackoffPolicyOption;
 
-/// @deprecated Use batch_v1::BatchServiceConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use batch_v1::BatchServiceConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::batch_v1::BatchServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use batch_v1::BatchServicePolicyOptionList directly.

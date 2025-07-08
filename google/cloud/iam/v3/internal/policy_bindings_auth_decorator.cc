@@ -33,36 +33,35 @@ PolicyBindingsAuth::PolicyBindingsAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsAuth::AsyncCreatePolicyBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::CreatePolicyBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::CreatePolicyBindingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreatePolicyBinding(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreatePolicyBinding(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsAuth::CreatePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::CreatePolicyBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::CreatePolicyBindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreatePolicyBinding(context, options, request);
 }
 
 StatusOr<google::iam::v3::PolicyBinding> PolicyBindingsAuth::GetPolicyBinding(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::GetPolicyBindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -71,28 +70,28 @@ StatusOr<google::iam::v3::PolicyBinding> PolicyBindingsAuth::GetPolicyBinding(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsAuth::AsyncUpdatePolicyBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::UpdatePolicyBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::UpdatePolicyBindingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdatePolicyBinding(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdatePolicyBinding(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsAuth::UpdatePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::UpdatePolicyBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::UpdatePolicyBindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdatePolicyBinding(context, options, request);
@@ -100,45 +99,45 @@ PolicyBindingsAuth::UpdatePolicyBinding(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsAuth::AsyncDeletePolicyBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::DeletePolicyBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::DeletePolicyBindingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeletePolicyBinding(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeletePolicyBinding(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsAuth::DeletePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::DeletePolicyBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::DeletePolicyBindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePolicyBinding(context, options, request);
 }
 
-StatusOr<google::iam::v3::ListPolicyBindingsResponse> PolicyBindingsAuth::ListPolicyBindings(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v3::ListPolicyBindingsResponse>
+PolicyBindingsAuth::ListPolicyBindings(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::ListPolicyBindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPolicyBindings(context, options, request);
 }
 
-StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse> PolicyBindingsAuth::SearchTargetPolicyBindings(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse>
+PolicyBindingsAuth::SearchTargetPolicyBindings(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::SearchTargetPolicyBindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -146,8 +145,7 @@ StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse> PolicyBindingsAuth
 }
 
 StatusOr<google::longrunning::Operation> PolicyBindingsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -161,15 +159,16 @@ PolicyBindingsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -178,13 +177,14 @@ future<Status> PolicyBindingsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

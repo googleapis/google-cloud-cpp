@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,125 +39,136 @@ class ServiceManagerStub {
  public:
   virtual ~ServiceManagerStub() = 0;
 
-  virtual StatusOr<google::api::servicemanagement::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::ListServicesRequest const& request) = 0;
+  virtual StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
+  ListServices(grpc::ClientContext& context, Options const& options,
+               google::api::servicemanagement::v1::ListServicesRequest const&
+                   request) = 0;
 
-  virtual StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::api::servicemanagement::v1::ManagedService>
+  GetService(
+      grpc::ClientContext& context, Options const& options,
       google::api::servicemanagement::v1::GetServiceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::CreateServiceRequest const& request) = 0;
+      google::api::servicemanagement::v1::CreateServiceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::CreateServiceRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::CreateServiceRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request) = 0;
+      google::api::servicemanagement::v1::DeleteServiceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::DeleteServiceRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request) = 0;
+      google::api::servicemanagement::v1::UndeleteServiceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UndeleteService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::UndeleteServiceRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse> ListServiceConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::ListServiceConfigsRequest const& request) = 0;
+  virtual StatusOr<
+      google::api::servicemanagement::v1::ListServiceConfigsResponse>
+  ListServiceConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::ListServiceConfigsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::api::Service> GetServiceConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::GetServiceConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::GetServiceConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::api::Service> CreateServiceConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::CreateServiceConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::CreateServiceConfigRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncSubmitConfigSource(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncSubmitConfigSource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request) = 0;
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse> ListServiceRollouts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::ListServiceRolloutsRequest const& request) = 0;
+  virtual StatusOr<
+      google::api::servicemanagement::v1::ListServiceRolloutsResponse>
+  ListServiceRollouts(
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::GetServiceRolloutRequest const& request) = 0;
+  virtual StatusOr<google::api::servicemanagement::v1::Rollout>
+  GetServiceRollout(
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::GetServiceRolloutRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateServiceRollout(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateServiceRollout(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request) = 0;
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse> GenerateConfigReport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::GenerateConfigReportRequest const& request) = 0;
+  virtual StatusOr<
+      google::api::servicemanagement::v1::GenerateConfigReportResponse>
+  GenerateConfigReport(
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::GenerateConfigReportRequest const&
+          request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -170,126 +181,133 @@ class ServiceManagerStub {
 class DefaultServiceManagerStub : public ServiceManagerStub {
  public:
   DefaultServiceManagerStub(
-      std::unique_ptr<google::api::servicemanagement::v1::ServiceManager::StubInterface> grpc_stub,
+      std::unique_ptr<
+          google::api::servicemanagement::v1::ServiceManager::StubInterface>
+          grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::api::servicemanagement::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::ListServicesRequest const& request) override;
+  StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
+  ListServices(grpc::ClientContext& context, Options const& options,
+               google::api::servicemanagement::v1::ListServicesRequest const&
+                   request) override;
 
   StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::GetServiceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::GetServiceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::CreateServiceRequest const& request) override;
+      google::api::servicemanagement::v1::CreateServiceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::CreateServiceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::CreateServiceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request) override;
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request) override;
+      google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UndeleteService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
+      override;
 
-  StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse> ListServiceConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::ListServiceConfigsRequest const& request) override;
+  StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
+  ListServiceConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::ListServiceConfigsRequest const&
+          request) override;
 
   StatusOr<google::api::Service> GetServiceConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::GetServiceConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::GetServiceConfigRequest const&
+          request) override;
 
   StatusOr<google::api::Service> CreateServiceConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::CreateServiceConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::CreateServiceConfigRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubmitConfigSource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request) override;
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request) override;
 
-  StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse> ListServiceRollouts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::ListServiceRolloutsRequest const& request) override;
+  StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
+  ListServiceRollouts(
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
+          request) override;
 
   StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::GetServiceRolloutRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::GetServiceRolloutRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateServiceRollout(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request) override;
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request) override;
 
-  StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse> GenerateConfigReport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicemanagement::v1::GenerateConfigReportRequest const& request) override;
+  StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
+  GenerateConfigReport(
+      grpc::ClientContext& context, Options const& options,
+      google::api::servicemanagement::v1::GenerateConfigReportRequest const&
+          request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -305,9 +323,12 @@ class DefaultServiceManagerStub : public ServiceManagerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::api::servicemanagement::v1::ServiceManager::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::api::servicemanagement::v1::ServiceManager::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

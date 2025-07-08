@@ -34,7 +34,9 @@ InstanceGroupsTracingConnection::InstanceGroupsTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::AddInstances(google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) {
+InstanceGroupsTracingConnection::AddInstances(
+    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::AddInstances");
   internal::OTelScope scope(span);
@@ -43,12 +45,13 @@ InstanceGroupsTracingConnection::AddInstances(google::cloud::cpp::compute::insta
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsTracingConnection::AddInstances(
-    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::AddInstances");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AddInstances(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->AddInstances(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -57,102 +60,135 @@ InstanceGroupsTracingConnection::AddInstances(
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::AddInstances");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->AddInstances(operation));
+  return internal::EndSpan(std::move(span), child_->AddInstances(operation));
 }
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
-InstanceGroupsTracingConnection::AggregatedListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest request) {
-  auto span = internal::MakeSpan("compute_instance_groups_v1::InstanceGroupsConnection::AggregatedListInstanceGroups");
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
+InstanceGroupsTracingConnection::AggregatedListInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::
+        AggregatedListInstanceGroupsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "AggregatedListInstanceGroups");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListInstanceGroups(std::move(request));
-  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request) {
+InstanceGroupsTracingConnection::DeleteInstanceGroup(
+    google::cloud::cpp::compute::instance_groups::v1::
+        DeleteInstanceGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::DeleteInstanceGroup");
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "DeleteInstanceGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteInstanceGroup(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteInstanceGroup(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsTracingConnection::DeleteInstanceGroup(
-    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                    DeleteInstanceGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::DeleteInstanceGroup");
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "DeleteInstanceGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteInstanceGroup(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteInstanceGroup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsTracingConnection::DeleteInstanceGroup(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::DeleteInstanceGroup");
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "DeleteInstanceGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteInstanceGroup(operation));
+                           child_->DeleteInstanceGroup(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsTracingConnection::GetInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest const& request) {
-  auto span = internal::MakeSpan("compute_instance_groups_v1::InstanceGroupsConnection::GetInstanceGroup");
+InstanceGroupsTracingConnection::GetInstanceGroup(
+    google::cloud::cpp::compute::instance_groups::v1::
+        GetInstanceGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::GetInstanceGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstanceGroup(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request) {
+InstanceGroupsTracingConnection::InsertInstanceGroup(
+    google::cloud::cpp::compute::instance_groups::v1::
+        InsertInstanceGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::InsertInstanceGroup");
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "InsertInstanceGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertInstanceGroup(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertInstanceGroup(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsTracingConnection::InsertInstanceGroup(
-    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                    InsertInstanceGroupRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::InsertInstanceGroup");
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "InsertInstanceGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertInstanceGroup(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertInstanceGroup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsTracingConnection::InsertInstanceGroup(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_instance_groups_v1::InstanceGroupsConnection::InsertInstanceGroup");
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "InsertInstanceGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->InsertInstanceGroup(operation));
+                           child_->InsertInstanceGroup(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
-InstanceGroupsTracingConnection::ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest request) {
-  auto span = internal::MakeSpan("compute_instance_groups_v1::InstanceGroupsConnection::ListInstanceGroups");
+InstanceGroupsTracingConnection::ListInstanceGroups(
+    google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::"
+      "ListInstanceGroups");
   internal::OTelScope scope(span);
   auto sr = child_->ListInstanceGroups(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::InstanceGroup>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::InstanceGroup>(std::move(span),
+                                                      std::move(sr));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
-InstanceGroupsTracingConnection::ListInstances(google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest request) {
-  auto span = internal::MakeSpan("compute_instance_groups_v1::InstanceGroupsConnection::ListInstances");
+InstanceGroupsTracingConnection::ListInstances(
+    google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_groups_v1::InstanceGroupsConnection::ListInstances");
   internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::InstanceWithNamedPorts>(std::move(span),
+                                                               std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) {
+InstanceGroupsTracingConnection::RemoveInstances(
+    google::cloud::cpp::compute::instance_groups::v1::
+        RemoveInstancesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::RemoveInstances");
   internal::OTelScope scope(span);
@@ -161,12 +197,13 @@ InstanceGroupsTracingConnection::RemoveInstances(google::cloud::cpp::compute::in
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsTracingConnection::RemoveInstances(
-    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                    RemoveInstancesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::RemoveInstances");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RemoveInstances(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RemoveInstances(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -175,12 +212,13 @@ InstanceGroupsTracingConnection::RemoveInstances(
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::RemoveInstances");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->RemoveInstances(operation));
+  return internal::EndSpan(std::move(span), child_->RemoveInstances(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceGroupsTracingConnection::SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) {
+InstanceGroupsTracingConnection::SetNamedPorts(
+    google::cloud::cpp::compute::instance_groups::v1::
+        SetNamedPortsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::SetNamedPorts");
   internal::OTelScope scope(span);
@@ -189,12 +227,12 @@ InstanceGroupsTracingConnection::SetNamedPorts(google::cloud::cpp::compute::inst
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsTracingConnection::SetNamedPorts(
-    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                    SetNamedPortsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::SetNamedPorts");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetNamedPorts(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetNamedPorts(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -203,15 +241,15 @@ InstanceGroupsTracingConnection::SetNamedPorts(
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::SetNamedPorts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->SetNamedPorts(operation));
+  return internal::EndSpan(std::move(span), child_->SetNamedPorts(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
 MakeInstanceGroupsTracingConnection(
-    std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection> conn) {
+    std::shared_ptr<compute_instance_groups_v1::InstanceGroupsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<InstanceGroupsTracingConnection>(std::move(conn));

@@ -36,22 +36,21 @@ class PredictionServiceTracingConnection
   ~PredictionServiceTracingConnection() override = default;
 
   explicit PredictionServiceTracingConnection(
-    std::shared_ptr<automl_v1::PredictionServiceConnection> child);
+      std::shared_ptr<automl_v1::PredictionServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::automl::v1::PredictResponse>
-  Predict(google::cloud::automl::v1::PredictRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
+      google::cloud::automl::v1::PredictRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
-  BatchPredict(google::cloud::automl::v1::BatchPredictRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  BatchPredict(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
-  BatchPredict(
+  StatusOr<google::longrunning::Operation> BatchPredict(
+      NoAwaitTag,
+      google::cloud::automl::v1::BatchPredictRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       google::longrunning::Operation const& operation) override;
 
  private:

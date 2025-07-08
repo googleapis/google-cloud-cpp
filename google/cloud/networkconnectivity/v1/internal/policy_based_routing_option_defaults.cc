@@ -17,10 +17,10 @@
 // source: google/cloud/networkconnectivity/v1/policy_based_routing.proto
 
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,53 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PolicyBasedRoutingServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_POLICY_BASED_ROUTING_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_POLICY_BASED_ROUTING_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_POLICY_BASED_ROUTING_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_POLICY_BASED_ROUTING_SERVICE_AUTHORITY",
       "networkconnectivity.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption>()) {
-    options.set<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption>(
+  if (!options.has<networkconnectivity_v1::
+                       PolicyBasedRoutingServiceRetryPolicyOption>()) {
+    options.set<
+        networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption>(
         networkconnectivity_v1::PolicyBasedRoutingServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<networkconnectivity_v1::PolicyBasedRoutingServiceBackoffPolicyOption>()) {
-    options.set<networkconnectivity_v1::PolicyBasedRoutingServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<networkconnectivity_v1::
+                       PolicyBasedRoutingServiceBackoffPolicyOption>()) {
+    options.set<
+        networkconnectivity_v1::PolicyBasedRoutingServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<networkconnectivity_v1::PolicyBasedRoutingServicePollingPolicyOption>()) {
-    options.set<networkconnectivity_v1::PolicyBasedRoutingServicePollingPolicyOption>(
+  if (!options.has<networkconnectivity_v1::
+                       PolicyBasedRoutingServicePollingPolicyOption>()) {
+    options.set<
+        networkconnectivity_v1::PolicyBasedRoutingServicePollingPolicyOption>(
         GenericPollingPolicy<
-            networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption::Type,
-            networkconnectivity_v1::PolicyBasedRoutingServiceBackoffPolicyOption::Type>(
-            options.get<networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption>()->clone(),
+            networkconnectivity_v1::PolicyBasedRoutingServiceRetryPolicyOption::
+                Type,
+            networkconnectivity_v1::
+                PolicyBasedRoutingServiceBackoffPolicyOption::Type>(
+            options
+                .get<networkconnectivity_v1::
+                         PolicyBasedRoutingServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<networkconnectivity_v1::PolicyBasedRoutingServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<networkconnectivity_v1::PolicyBasedRoutingServiceConnectionIdempotencyPolicyOption>(
-        networkconnectivity_v1::MakeDefaultPolicyBasedRoutingServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          networkconnectivity_v1::
+              PolicyBasedRoutingServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<networkconnectivity_v1::
+                    PolicyBasedRoutingServiceConnectionIdempotencyPolicyOption>(
+        networkconnectivity_v1::
+            MakeDefaultPolicyBasedRoutingServiceConnectionIdempotencyPolicy());
   }
 
   return options;

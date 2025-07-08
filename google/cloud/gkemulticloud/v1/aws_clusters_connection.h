@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection_idempotency_policy.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -67,14 +67,14 @@ class AwsClustersLimitedErrorCountRetryPolicy : public AwsClustersRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit AwsClustersLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   AwsClustersLimitedErrorCountRetryPolicy(
       AwsClustersLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AwsClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AwsClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AwsClustersLimitedErrorCountRetryPolicy(
       AwsClustersLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AwsClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AwsClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +94,9 @@ class AwsClustersLimitedErrorCountRetryPolicy : public AwsClustersRetryPolicy {
   using BaseType = AwsClustersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<gkemulticloud_v1_internal::AwsClustersRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      gkemulticloud_v1_internal::AwsClustersRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +134,14 @@ class AwsClustersLimitedTimeRetryPolicy : public AwsClustersRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AwsClustersLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AwsClustersLimitedTimeRetryPolicy(AwsClustersLimitedTimeRetryPolicy&& rhs) noexcept
-    : AwsClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AwsClustersLimitedTimeRetryPolicy(AwsClustersLimitedTimeRetryPolicy const& rhs) noexcept
-    : AwsClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AwsClustersLimitedTimeRetryPolicy(
+      AwsClustersLimitedTimeRetryPolicy&& rhs) noexcept
+      : AwsClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AwsClustersLimitedTimeRetryPolicy(
+      AwsClustersLimitedTimeRetryPolicy const& rhs) noexcept
+      : AwsClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,7 +163,9 @@ class AwsClustersLimitedTimeRetryPolicy : public AwsClustersRetryPolicy {
   using BaseType = AwsClustersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<gkemulticloud_v1_internal::AwsClustersRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      gkemulticloud_v1_internal::AwsClustersRetryTraits>
+      impl_;
 };
 
 /**
@@ -181,106 +187,143 @@ class AwsClustersConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  CreateAwsCluster(google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request);
+  CreateAwsCluster(
+      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  CreateAwsCluster( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  UpdateAwsCluster(google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAwsCluster(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  UpdateAwsCluster( google::longrunning::Operation const& operation);
+  CreateAwsCluster(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
-  GetAwsCluster(google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request);
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  UpdateAwsCluster(
+      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAwsCluster(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  UpdateAwsCluster(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
+      google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request);
 
   virtual StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
-  ListAwsClusters(google::cloud::gkemulticloud::v1::ListAwsClustersRequest request);
+  ListAwsClusters(
+      google::cloud::gkemulticloud::v1::ListAwsClustersRequest request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsCluster(google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
+  DeleteAwsCluster(
+      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAwsCluster(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsCluster( google::longrunning::Operation const& operation);
+  DeleteAwsCluster(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
-  GenerateAwsClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const& request);
+  virtual StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAwsClusterAgentTokenRequest const& request);
 
-  virtual StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
-  GenerateAwsAccessToken(google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  CreateAwsNodePool(google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  CreateAwsNodePool( google::longrunning::Operation const& operation);
+  virtual StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
+  GenerateAwsAccessToken(
+      google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  UpdateAwsNodePool(google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request);
+  CreateAwsNodePool(
+      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  UpdateAwsNodePool( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  RollbackAwsNodePoolUpdate(google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  RollbackAwsNodePoolUpdate(NoAwaitTag, google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAwsNodePool(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  RollbackAwsNodePoolUpdate( google::longrunning::Operation const& operation);
+  CreateAwsNodePool(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  UpdateAwsNodePool(
+      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  UpdateAwsNodePool(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
-  GetAwsNodePool(google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request);
+  GetAwsNodePool(
+      google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request);
 
   virtual StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
-  ListAwsNodePools(google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request);
+  ListAwsNodePools(
+      google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsNodePool(google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request);
+  DeleteAwsNodePool(
+      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsNodePool( google::longrunning::Operation const& operation);
+  DeleteAwsNodePool(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
-  GetAwsOpenIdConfig(google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request);
+  GetAwsOpenIdConfig(
+      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+          request);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
-  GetAwsJsonWebKeys(google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request);
+  GetAwsJsonWebKeys(
+      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
+          request);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
-  GetAwsServerConfig(google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const& request);
+  GetAwsServerConfig(
+      google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
+          request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/operation.pb.h>
 #include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -67,14 +67,14 @@ class InstancesLimitedErrorCountRetryPolicy : public InstancesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit InstancesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   InstancesLimitedErrorCountRetryPolicy(
       InstancesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : InstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   InstancesLimitedErrorCountRetryPolicy(
       InstancesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : InstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +94,9 @@ class InstancesLimitedErrorCountRetryPolicy : public InstancesRetryPolicy {
   using BaseType = InstancesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<appengine_v1_internal::InstancesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      appengine_v1_internal::InstancesRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +134,14 @@ class InstancesLimitedTimeRetryPolicy : public InstancesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit InstancesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  InstancesLimitedTimeRetryPolicy(InstancesLimitedTimeRetryPolicy&& rhs) noexcept
-    : InstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  InstancesLimitedTimeRetryPolicy(InstancesLimitedTimeRetryPolicy const& rhs) noexcept
-    : InstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstancesLimitedTimeRetryPolicy(
+      InstancesLimitedTimeRetryPolicy&& rhs) noexcept
+      : InstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstancesLimitedTimeRetryPolicy(
+      InstancesLimitedTimeRetryPolicy const& rhs) noexcept
+      : InstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,7 +163,9 @@ class InstancesLimitedTimeRetryPolicy : public InstancesRetryPolicy {
   using BaseType = InstancesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<appengine_v1_internal::InstancesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      appengine_v1_internal::InstancesRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,29 +186,29 @@ class InstancesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::appengine::v1::Instance>
-  ListInstances(google::appengine::v1::ListInstancesRequest request);
+  virtual StreamRange<google::appengine::v1::Instance> ListInstances(
+      google::appengine::v1::ListInstancesRequest request);
 
-  virtual StatusOr<google::appengine::v1::Instance>
-  GetInstance(google::appengine::v1::GetInstanceRequest const& request);
+  virtual StatusOr<google::appengine::v1::Instance> GetInstance(
+      google::appengine::v1::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteInstance( google::longrunning::Operation const& operation);
+  DeleteInstance(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::appengine::v1::Instance>>
-  DebugInstance(google::appengine::v1::DebugInstanceRequest const& request);
+  virtual future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
+      google::appengine::v1::DebugInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DebugInstance(NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DebugInstance(
+      NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request);
 
-  virtual future<StatusOr<google::appengine::v1::Instance>>
-  DebugInstance( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
+      google::longrunning::Operation const& operation);
 };
 
 /**

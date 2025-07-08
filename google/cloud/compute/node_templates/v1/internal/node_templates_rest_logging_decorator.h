@@ -39,64 +39,88 @@ class NodeTemplatesRestLogging : public NodeTemplatesRestStub {
  public:
   ~NodeTemplatesRestLogging() override = default;
   NodeTemplatesRestLogging(std::shared_ptr<NodeTemplatesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                           TracingOptions tracing_options,
+                           std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList> AggregatedListNodeTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
+  AggregatedListNodeTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_templates::v1::
+          AggregatedListNodeTemplatesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteNodeTemplate(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteNodeTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request) override;
+      google::cloud::cpp::compute::node_templates::v1::
+          DeleteNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_templates::v1::
+          DeleteNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_templates::v1::GetNodeTemplateRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_templates::v1::
+          GetNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_templates::v1::
+          GetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertNodeTemplate(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertNodeTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request) override;
+      google::cloud::cpp::compute::node_templates::v1::
+          InsertNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_templates::v1::
+          InsertNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList> ListNodeTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_templates::v1::
+          ListNodeTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_templates::v1::
+          SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::node_templates::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<NodeTemplatesRestStub> child_;

@@ -17,9 +17,9 @@
 // source: google/cloud/dataform/v1/dataform.proto
 
 #include "google/cloud/dataform/v1/internal/dataform_connection_impl.h"
+#include "google/cloud/dataform/v1/internal/dataform_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/dataform/v1/internal/dataform_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,54 +32,59 @@ namespace dataform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataform_v1::DataformRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<dataform_v1::DataformRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<dataform_v1::DataformRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<dataform_v1::DataformBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<dataform_v1::DataformConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<dataform_v1::DataformConnectionIdempotencyPolicyOption>()->clone();
+  return options.get<dataform_v1::DataformConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 DataformConnectionImpl::DataformConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dataform_v1_internal::DataformStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        DataformConnection::options())) {}
+    std::shared_ptr<dataform_v1_internal::DataformStub> stub, Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      DataformConnection::options())) {}
 
 StreamRange<google::cloud::dataform::v1::Repository>
-DataformConnectionImpl::ListRepositories(google::cloud::dataform::v1::ListRepositoriesRequest request) {
+DataformConnectionImpl::ListRepositories(
+    google::cloud::dataform::v1::ListRepositoriesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListRepositories(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::Repository>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::Repository>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::ListRepositoriesRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::ListRepositoriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::ListRepositoriesRequest const& request) {
+                   google::cloud::dataform::v1::ListRepositoriesRequest const&
+                       request) {
               return stub->ListRepositories(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::ListRepositoriesResponse r) {
-        std::vector<google::cloud::dataform::v1::Repository> result(r.repositories().size());
+        std::vector<google::cloud::dataform::v1::Repository> result(
+            r.repositories().size());
         auto& messages = *r.mutable_repositories();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -87,7 +92,8 @@ DataformConnectionImpl::ListRepositories(google::cloud::dataform::v1::ListReposi
 }
 
 StatusOr<google::cloud::dataform::v1::Repository>
-DataformConnectionImpl::GetRepository(google::cloud::dataform::v1::GetRepositoryRequest const& request) {
+DataformConnectionImpl::GetRepository(
+    google::cloud::dataform::v1::GetRepositoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -100,92 +106,113 @@ DataformConnectionImpl::GetRepository(google::cloud::dataform::v1::GetRepository
 }
 
 StatusOr<google::cloud::dataform::v1::Repository>
-DataformConnectionImpl::CreateRepository(google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
+DataformConnectionImpl::CreateRepository(
+    google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateRepository(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
         return stub_->CreateRepository(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::Repository>
-DataformConnectionImpl::UpdateRepository(google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
+DataformConnectionImpl::UpdateRepository(
+    google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateRepository(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
         return stub_->UpdateRepository(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataformConnectionImpl::DeleteRepository(google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
+Status DataformConnectionImpl::DeleteRepository(
+    google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteRepository(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
         return stub_->DeleteRepository(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
-DataformConnectionImpl::CommitRepositoryChanges(google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request) {
+DataformConnectionImpl::CommitRepositoryChanges(
+    google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CommitRepositoryChanges(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request) {
+             google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
+                 request) {
         return stub_->CommitRepositoryChanges(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
-DataformConnectionImpl::ReadRepositoryFile(google::cloud::dataform::v1::ReadRepositoryFileRequest const& request) {
+DataformConnectionImpl::ReadRepositoryFile(
+    google::cloud::dataform::v1::ReadRepositoryFileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReadRepositoryFile(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::ReadRepositoryFileRequest const& request) {
+             google::cloud::dataform::v1::ReadRepositoryFileRequest const&
+                 request) {
         return stub_->ReadRepositoryFile(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-DataformConnectionImpl::QueryRepositoryDirectoryContents(google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest request) {
+DataformConnectionImpl::QueryRepositoryDirectoryContents(
+    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->QueryRepositoryDirectoryContents(request);
+  auto idempotency =
+      idempotency_policy(*current)->QueryRepositoryDirectoryContents(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::DirectoryEntry>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::DirectoryEntry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::
+              QueryRepositoryDirectoryContentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const& request) {
-              return stub->QueryRepositoryDirectoryContents(context, options, request);
+                   google::cloud::dataform::v1::
+                       QueryRepositoryDirectoryContentsRequest const& request) {
+              return stub->QueryRepositoryDirectoryContents(context, options,
+                                                            request);
             },
             options, r, function_name);
       },
-      [](google::cloud::dataform::v1::QueryRepositoryDirectoryContentsResponse r) {
-        std::vector<google::cloud::dataform::v1::DirectoryEntry> result(r.directory_entries().size());
+      [](google::cloud::dataform::v1::QueryRepositoryDirectoryContentsResponse
+             r) {
+        std::vector<google::cloud::dataform::v1::DirectoryEntry> result(
+            r.directory_entries().size());
         auto& messages = *r.mutable_directory_entries();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -193,81 +220,101 @@ DataformConnectionImpl::QueryRepositoryDirectoryContents(google::cloud::dataform
 }
 
 StreamRange<google::cloud::dataform::v1::CommitLogEntry>
-DataformConnectionImpl::FetchRepositoryHistory(google::cloud::dataform::v1::FetchRepositoryHistoryRequest request) {
+DataformConnectionImpl::FetchRepositoryHistory(
+    google::cloud::dataform::v1::FetchRepositoryHistoryRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->FetchRepositoryHistory(request);
+  auto idempotency =
+      idempotency_policy(*current)->FetchRepositoryHistory(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::CommitLogEntry>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::CommitLogEntry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::FetchRepositoryHistoryRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::FetchRepositoryHistoryRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::FetchRepositoryHistoryRequest const& request) {
+                   google::cloud::dataform::v1::
+                       FetchRepositoryHistoryRequest const& request) {
               return stub->FetchRepositoryHistory(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::FetchRepositoryHistoryResponse r) {
-        std::vector<google::cloud::dataform::v1::CommitLogEntry> result(r.commits().size());
+        std::vector<google::cloud::dataform::v1::CommitLogEntry> result(
+            r.commits().size());
         auto& messages = *r.mutable_commits();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
-DataformConnectionImpl::ComputeRepositoryAccessTokenStatus(google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request) {
+StatusOr<
+    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
+DataformConnectionImpl::ComputeRepositoryAccessTokenStatus(
+    google::cloud::dataform::v1::
+        ComputeRepositoryAccessTokenStatusRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeRepositoryAccessTokenStatus(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request) {
-        return stub_->ComputeRepositoryAccessTokenStatus(context, options, request);
+             google::cloud::dataform::v1::
+                 ComputeRepositoryAccessTokenStatusRequest const& request) {
+        return stub_->ComputeRepositoryAccessTokenStatus(context, options,
+                                                         request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
-DataformConnectionImpl::FetchRemoteBranches(google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request) {
+DataformConnectionImpl::FetchRemoteBranches(
+    google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchRemoteBranches(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request) {
+             google::cloud::dataform::v1::FetchRemoteBranchesRequest const&
+                 request) {
         return stub_->FetchRemoteBranches(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataform::v1::Workspace>
-DataformConnectionImpl::ListWorkspaces(google::cloud::dataform::v1::ListWorkspacesRequest request) {
+DataformConnectionImpl::ListWorkspaces(
+    google::cloud::dataform::v1::ListWorkspacesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListWorkspaces(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::Workspace>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::Workspace>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::ListWorkspacesRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::ListWorkspacesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::ListWorkspacesRequest const& request) {
+                   google::cloud::dataform::v1::ListWorkspacesRequest const&
+                       request) {
               return stub->ListWorkspaces(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::ListWorkspacesResponse r) {
-        std::vector<google::cloud::dataform::v1::Workspace> result(r.workspaces().size());
+        std::vector<google::cloud::dataform::v1::Workspace> result(
+            r.workspaces().size());
         auto& messages = *r.mutable_workspaces();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -275,7 +322,8 @@ DataformConnectionImpl::ListWorkspaces(google::cloud::dataform::v1::ListWorkspac
 }
 
 StatusOr<google::cloud::dataform::v1::Workspace>
-DataformConnectionImpl::GetWorkspace(google::cloud::dataform::v1::GetWorkspaceRequest const& request) {
+DataformConnectionImpl::GetWorkspace(
+    google::cloud::dataform::v1::GetWorkspaceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -288,124 +336,142 @@ DataformConnectionImpl::GetWorkspace(google::cloud::dataform::v1::GetWorkspaceRe
 }
 
 StatusOr<google::cloud::dataform::v1::Workspace>
-DataformConnectionImpl::CreateWorkspace(google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
+DataformConnectionImpl::CreateWorkspace(
+    google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateWorkspace(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
         return stub_->CreateWorkspace(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataformConnectionImpl::DeleteWorkspace(google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
+Status DataformConnectionImpl::DeleteWorkspace(
+    google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteWorkspace(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
         return stub_->DeleteWorkspace(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
-DataformConnectionImpl::InstallNpmPackages(google::cloud::dataform::v1::InstallNpmPackagesRequest const& request) {
+DataformConnectionImpl::InstallNpmPackages(
+    google::cloud::dataform::v1::InstallNpmPackagesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InstallNpmPackages(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::InstallNpmPackagesRequest const& request) {
+             google::cloud::dataform::v1::InstallNpmPackagesRequest const&
+                 request) {
         return stub_->InstallNpmPackages(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse>
-DataformConnectionImpl::PullGitCommits(google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
+DataformConnectionImpl::PullGitCommits(
+    google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PullGitCommits(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
         return stub_->PullGitCommits(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse>
-DataformConnectionImpl::PushGitCommits(google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
+DataformConnectionImpl::PushGitCommits(
+    google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PushGitCommits(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
         return stub_->PushGitCommits(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
-DataformConnectionImpl::FetchFileGitStatuses(google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request) {
+DataformConnectionImpl::FetchFileGitStatuses(
+    google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchFileGitStatuses(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request) {
+             google::cloud::dataform::v1::FetchFileGitStatusesRequest const&
+                 request) {
         return stub_->FetchFileGitStatuses(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
-DataformConnectionImpl::FetchGitAheadBehind(google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request) {
+DataformConnectionImpl::FetchGitAheadBehind(
+    google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchGitAheadBehind(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request) {
+             google::cloud::dataform::v1::FetchGitAheadBehindRequest const&
+                 request) {
         return stub_->FetchGitAheadBehind(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
-DataformConnectionImpl::CommitWorkspaceChanges(google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request) {
+DataformConnectionImpl::CommitWorkspaceChanges(
+    google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CommitWorkspaceChanges(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request) {
+             google::cloud::dataform::v1::CommitWorkspaceChangesRequest const&
+                 request) {
         return stub_->CommitWorkspaceChanges(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
-DataformConnectionImpl::ResetWorkspaceChanges(google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request) {
+DataformConnectionImpl::ResetWorkspaceChanges(
+    google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResetWorkspaceChanges(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request) {
+             google::cloud::dataform::v1::ResetWorkspaceChangesRequest const&
+                 request) {
         return stub_->ResetWorkspaceChanges(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse>
-DataformConnectionImpl::FetchFileDiff(google::cloud::dataform::v1::FetchFileDiffRequest const& request) {
+DataformConnectionImpl::FetchFileDiff(
+    google::cloud::dataform::v1::FetchFileDiffRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -418,27 +484,34 @@ DataformConnectionImpl::FetchFileDiff(google::cloud::dataform::v1::FetchFileDiff
 }
 
 StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-DataformConnectionImpl::QueryDirectoryContents(google::cloud::dataform::v1::QueryDirectoryContentsRequest request) {
+DataformConnectionImpl::QueryDirectoryContents(
+    google::cloud::dataform::v1::QueryDirectoryContentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->QueryDirectoryContents(request);
+  auto idempotency =
+      idempotency_policy(*current)->QueryDirectoryContents(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::DirectoryEntry>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::DirectoryEntry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::QueryDirectoryContentsRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::QueryDirectoryContentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::QueryDirectoryContentsRequest const& request) {
+                   google::cloud::dataform::v1::
+                       QueryDirectoryContentsRequest const& request) {
               return stub->QueryDirectoryContents(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::QueryDirectoryContentsResponse r) {
-        std::vector<google::cloud::dataform::v1::DirectoryEntry> result(r.directory_entries().size());
+        std::vector<google::cloud::dataform::v1::DirectoryEntry> result(
+            r.directory_entries().size());
         auto& messages = *r.mutable_directory_entries();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -446,27 +519,33 @@ DataformConnectionImpl::QueryDirectoryContents(google::cloud::dataform::v1::Quer
 }
 
 StreamRange<google::cloud::dataform::v1::SearchResult>
-DataformConnectionImpl::SearchFiles(google::cloud::dataform::v1::SearchFilesRequest request) {
+DataformConnectionImpl::SearchFiles(
+    google::cloud::dataform::v1::SearchFilesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->SearchFiles(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::SearchResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::SearchResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::SearchFilesRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::SearchFilesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::SearchFilesRequest const& request) {
+                   google::cloud::dataform::v1::SearchFilesRequest const&
+                       request) {
               return stub->SearchFiles(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::SearchFilesResponse r) {
-        std::vector<google::cloud::dataform::v1::SearchResult> result(r.search_results().size());
+        std::vector<google::cloud::dataform::v1::SearchResult> result(
+            r.search_results().size());
         auto& messages = *r.mutable_search_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -474,7 +553,8 @@ DataformConnectionImpl::SearchFiles(google::cloud::dataform::v1::SearchFilesRequ
 }
 
 StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse>
-DataformConnectionImpl::MakeDirectory(google::cloud::dataform::v1::MakeDirectoryRequest const& request) {
+DataformConnectionImpl::MakeDirectory(
+    google::cloud::dataform::v1::MakeDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -487,20 +567,23 @@ DataformConnectionImpl::MakeDirectory(google::cloud::dataform::v1::MakeDirectory
 }
 
 StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
-DataformConnectionImpl::RemoveDirectory(google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
+DataformConnectionImpl::RemoveDirectory(
+    google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RemoveDirectory(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
         return stub_->RemoveDirectory(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse>
-DataformConnectionImpl::MoveDirectory(google::cloud::dataform::v1::MoveDirectoryRequest const& request) {
+DataformConnectionImpl::MoveDirectory(
+    google::cloud::dataform::v1::MoveDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -513,7 +596,8 @@ DataformConnectionImpl::MoveDirectory(google::cloud::dataform::v1::MoveDirectory
 }
 
 StatusOr<google::cloud::dataform::v1::ReadFileResponse>
-DataformConnectionImpl::ReadFile(google::cloud::dataform::v1::ReadFileRequest const& request) {
+DataformConnectionImpl::ReadFile(
+    google::cloud::dataform::v1::ReadFileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -526,7 +610,8 @@ DataformConnectionImpl::ReadFile(google::cloud::dataform::v1::ReadFileRequest co
 }
 
 StatusOr<google::cloud::dataform::v1::RemoveFileResponse>
-DataformConnectionImpl::RemoveFile(google::cloud::dataform::v1::RemoveFileRequest const& request) {
+DataformConnectionImpl::RemoveFile(
+    google::cloud::dataform::v1::RemoveFileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -539,7 +624,8 @@ DataformConnectionImpl::RemoveFile(google::cloud::dataform::v1::RemoveFileReques
 }
 
 StatusOr<google::cloud::dataform::v1::MoveFileResponse>
-DataformConnectionImpl::MoveFile(google::cloud::dataform::v1::MoveFileRequest const& request) {
+DataformConnectionImpl::MoveFile(
+    google::cloud::dataform::v1::MoveFileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -552,7 +638,8 @@ DataformConnectionImpl::MoveFile(google::cloud::dataform::v1::MoveFileRequest co
 }
 
 StatusOr<google::cloud::dataform::v1::WriteFileResponse>
-DataformConnectionImpl::WriteFile(google::cloud::dataform::v1::WriteFileRequest const& request) {
+DataformConnectionImpl::WriteFile(
+    google::cloud::dataform::v1::WriteFileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -565,27 +652,33 @@ DataformConnectionImpl::WriteFile(google::cloud::dataform::v1::WriteFileRequest 
 }
 
 StreamRange<google::cloud::dataform::v1::ReleaseConfig>
-DataformConnectionImpl::ListReleaseConfigs(google::cloud::dataform::v1::ListReleaseConfigsRequest request) {
+DataformConnectionImpl::ListReleaseConfigs(
+    google::cloud::dataform::v1::ListReleaseConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListReleaseConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::ReleaseConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::ReleaseConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::ListReleaseConfigsRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::ListReleaseConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::ListReleaseConfigsRequest const& request) {
+                   google::cloud::dataform::v1::ListReleaseConfigsRequest const&
+                       request) {
               return stub->ListReleaseConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::ListReleaseConfigsResponse r) {
-        std::vector<google::cloud::dataform::v1::ReleaseConfig> result(r.release_configs().size());
+        std::vector<google::cloud::dataform::v1::ReleaseConfig> result(
+            r.release_configs().size());
         auto& messages = *r.mutable_release_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -593,79 +686,93 @@ DataformConnectionImpl::ListReleaseConfigs(google::cloud::dataform::v1::ListRele
 }
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformConnectionImpl::GetReleaseConfig(google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
+DataformConnectionImpl::GetReleaseConfig(
+    google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetReleaseConfig(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
         return stub_->GetReleaseConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformConnectionImpl::CreateReleaseConfig(google::cloud::dataform::v1::CreateReleaseConfigRequest const& request) {
+DataformConnectionImpl::CreateReleaseConfig(
+    google::cloud::dataform::v1::CreateReleaseConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateReleaseConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CreateReleaseConfigRequest const& request) {
+             google::cloud::dataform::v1::CreateReleaseConfigRequest const&
+                 request) {
         return stub_->CreateReleaseConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformConnectionImpl::UpdateReleaseConfig(google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request) {
+DataformConnectionImpl::UpdateReleaseConfig(
+    google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateReleaseConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request) {
+             google::cloud::dataform::v1::UpdateReleaseConfigRequest const&
+                 request) {
         return stub_->UpdateReleaseConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataformConnectionImpl::DeleteReleaseConfig(google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request) {
+Status DataformConnectionImpl::DeleteReleaseConfig(
+    google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteReleaseConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request) {
+             google::cloud::dataform::v1::DeleteReleaseConfigRequest const&
+                 request) {
         return stub_->DeleteReleaseConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataform::v1::CompilationResult>
-DataformConnectionImpl::ListCompilationResults(google::cloud::dataform::v1::ListCompilationResultsRequest request) {
+DataformConnectionImpl::ListCompilationResults(
+    google::cloud::dataform::v1::ListCompilationResultsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListCompilationResults(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListCompilationResults(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::CompilationResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::CompilationResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::ListCompilationResultsRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::ListCompilationResultsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::ListCompilationResultsRequest const& request) {
+                   google::cloud::dataform::v1::
+                       ListCompilationResultsRequest const& request) {
               return stub->ListCompilationResults(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::ListCompilationResultsResponse r) {
-        std::vector<google::cloud::dataform::v1::CompilationResult> result(r.compilation_results().size());
+        std::vector<google::cloud::dataform::v1::CompilationResult> result(
+            r.compilation_results().size());
         auto& messages = *r.mutable_compilation_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -673,53 +780,67 @@ DataformConnectionImpl::ListCompilationResults(google::cloud::dataform::v1::List
 }
 
 StatusOr<google::cloud::dataform::v1::CompilationResult>
-DataformConnectionImpl::GetCompilationResult(google::cloud::dataform::v1::GetCompilationResultRequest const& request) {
+DataformConnectionImpl::GetCompilationResult(
+    google::cloud::dataform::v1::GetCompilationResultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCompilationResult(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::GetCompilationResultRequest const& request) {
+             google::cloud::dataform::v1::GetCompilationResultRequest const&
+                 request) {
         return stub_->GetCompilationResult(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::CompilationResult>
-DataformConnectionImpl::CreateCompilationResult(google::cloud::dataform::v1::CreateCompilationResultRequest const& request) {
+DataformConnectionImpl::CreateCompilationResult(
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCompilationResult(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CreateCompilationResultRequest const& request) {
+             google::cloud::dataform::v1::CreateCompilationResultRequest const&
+                 request) {
         return stub_->CreateCompilationResult(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataform::v1::CompilationResultAction>
-DataformConnectionImpl::QueryCompilationResultActions(google::cloud::dataform::v1::QueryCompilationResultActionsRequest request) {
+DataformConnectionImpl::QueryCompilationResultActions(
+    google::cloud::dataform::v1::QueryCompilationResultActionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->QueryCompilationResultActions(request);
+  auto idempotency =
+      idempotency_policy(*current)->QueryCompilationResultActions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::CompilationResultAction>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::CompilationResultAction>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::QueryCompilationResultActionsRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::
+              QueryCompilationResultActionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::QueryCompilationResultActionsRequest const& request) {
-              return stub->QueryCompilationResultActions(context, options, request);
+                   google::cloud::dataform::v1::
+                       QueryCompilationResultActionsRequest const& request) {
+              return stub->QueryCompilationResultActions(context, options,
+                                                         request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::QueryCompilationResultActionsResponse r) {
-        std::vector<google::cloud::dataform::v1::CompilationResultAction> result(r.compilation_result_actions().size());
+        std::vector<google::cloud::dataform::v1::CompilationResultAction>
+            result(r.compilation_result_actions().size());
         auto& messages = *r.mutable_compilation_result_actions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -727,27 +848,34 @@ DataformConnectionImpl::QueryCompilationResultActions(google::cloud::dataform::v
 }
 
 StreamRange<google::cloud::dataform::v1::WorkflowConfig>
-DataformConnectionImpl::ListWorkflowConfigs(google::cloud::dataform::v1::ListWorkflowConfigsRequest request) {
+DataformConnectionImpl::ListWorkflowConfigs(
+    google::cloud::dataform::v1::ListWorkflowConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListWorkflowConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::WorkflowConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::WorkflowConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::ListWorkflowConfigsRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::ListWorkflowConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::ListWorkflowConfigsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::dataform::v1::ListWorkflowConfigsRequest const&
+                    request) {
               return stub->ListWorkflowConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::ListWorkflowConfigsResponse r) {
-        std::vector<google::cloud::dataform::v1::WorkflowConfig> result(r.workflow_configs().size());
+        std::vector<google::cloud::dataform::v1::WorkflowConfig> result(
+            r.workflow_configs().size());
         auto& messages = *r.mutable_workflow_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -755,79 +883,94 @@ DataformConnectionImpl::ListWorkflowConfigs(google::cloud::dataform::v1::ListWor
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformConnectionImpl::GetWorkflowConfig(google::cloud::dataform::v1::GetWorkflowConfigRequest const& request) {
+DataformConnectionImpl::GetWorkflowConfig(
+    google::cloud::dataform::v1::GetWorkflowConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWorkflowConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::GetWorkflowConfigRequest const& request) {
+             google::cloud::dataform::v1::GetWorkflowConfigRequest const&
+                 request) {
         return stub_->GetWorkflowConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformConnectionImpl::CreateWorkflowConfig(google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request) {
+DataformConnectionImpl::CreateWorkflowConfig(
+    google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateWorkflowConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request) {
+             google::cloud::dataform::v1::CreateWorkflowConfigRequest const&
+                 request) {
         return stub_->CreateWorkflowConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformConnectionImpl::UpdateWorkflowConfig(google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request) {
+DataformConnectionImpl::UpdateWorkflowConfig(
+    google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateWorkflowConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request) {
+             google::cloud::dataform::v1::UpdateWorkflowConfigRequest const&
+                 request) {
         return stub_->UpdateWorkflowConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataformConnectionImpl::DeleteWorkflowConfig(google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request) {
+Status DataformConnectionImpl::DeleteWorkflowConfig(
+    google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteWorkflowConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request) {
+             google::cloud::dataform::v1::DeleteWorkflowConfigRequest const&
+                 request) {
         return stub_->DeleteWorkflowConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
-DataformConnectionImpl::ListWorkflowInvocations(google::cloud::dataform::v1::ListWorkflowInvocationsRequest request) {
+DataformConnectionImpl::ListWorkflowInvocations(
+    google::cloud::dataform::v1::ListWorkflowInvocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListWorkflowInvocations(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListWorkflowInvocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::WorkflowInvocation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::WorkflowInvocation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::ListWorkflowInvocationsRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::ListWorkflowInvocationsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::ListWorkflowInvocationsRequest const& request) {
+                   google::cloud::dataform::v1::
+                       ListWorkflowInvocationsRequest const& request) {
               return stub->ListWorkflowInvocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataform::v1::ListWorkflowInvocationsResponse r) {
-        std::vector<google::cloud::dataform::v1::WorkflowInvocation> result(r.workflow_invocations().size());
+        std::vector<google::cloud::dataform::v1::WorkflowInvocation> result(
+            r.workflow_invocations().size());
         auto& messages = *r.mutable_workflow_invocations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -835,87 +978,108 @@ DataformConnectionImpl::ListWorkflowInvocations(google::cloud::dataform::v1::Lis
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-DataformConnectionImpl::GetWorkflowInvocation(google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request) {
+DataformConnectionImpl::GetWorkflowInvocation(
+    google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWorkflowInvocation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request) {
+             google::cloud::dataform::v1::GetWorkflowInvocationRequest const&
+                 request) {
         return stub_->GetWorkflowInvocation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-DataformConnectionImpl::CreateWorkflowInvocation(google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request) {
+DataformConnectionImpl::CreateWorkflowInvocation(
+    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateWorkflowInvocation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request) {
+             google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
+                 request) {
         return stub_->CreateWorkflowInvocation(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataformConnectionImpl::DeleteWorkflowInvocation(google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request) {
+Status DataformConnectionImpl::DeleteWorkflowInvocation(
+    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteWorkflowInvocation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request) {
+             google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
+                 request) {
         return stub_->DeleteWorkflowInvocation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
-DataformConnectionImpl::CancelWorkflowInvocation(google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request) {
+DataformConnectionImpl::CancelWorkflowInvocation(
+    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelWorkflowInvocation(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request) {
+             google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
+                 request) {
         return stub_->CancelWorkflowInvocation(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>
-DataformConnectionImpl::QueryWorkflowInvocationActions(google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest request) {
+DataformConnectionImpl::QueryWorkflowInvocationActions(
+    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->QueryWorkflowInvocationActions(request);
+  auto idempotency =
+      idempotency_policy(*current)->QueryWorkflowInvocationActions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const& r) {
+          Options const& options,
+          google::cloud::dataform::v1::
+              QueryWorkflowInvocationActionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const& request) {
-              return stub->QueryWorkflowInvocationActions(context, options, request);
+                   google::cloud::dataform::v1::
+                       QueryWorkflowInvocationActionsRequest const& request) {
+              return stub->QueryWorkflowInvocationActions(context, options,
+                                                          request);
             },
             options, r, function_name);
       },
-      [](google::cloud::dataform::v1::QueryWorkflowInvocationActionsResponse r) {
-        std::vector<google::cloud::dataform::v1::WorkflowInvocationAction> result(r.workflow_invocation_actions().size());
+      [](google::cloud::dataform::v1::QueryWorkflowInvocationActionsResponse
+             r) {
+        std::vector<google::cloud::dataform::v1::WorkflowInvocationAction>
+            result(r.workflow_invocation_actions().size());
         auto& messages = *r.mutable_workflow_invocation_actions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformConnectionImpl::GetConfig(google::cloud::dataform::v1::GetConfigRequest const& request) {
+StatusOr<google::cloud::dataform::v1::Config> DataformConnectionImpl::GetConfig(
+    google::cloud::dataform::v1::GetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -928,7 +1092,8 @@ DataformConnectionImpl::GetConfig(google::cloud::dataform::v1::GetConfigRequest 
 }
 
 StatusOr<google::cloud::dataform::v1::Config>
-DataformConnectionImpl::UpdateConfig(google::cloud::dataform::v1::UpdateConfigRequest const& request) {
+DataformConnectionImpl::UpdateConfig(
+    google::cloud::dataform::v1::UpdateConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -941,35 +1106,41 @@ DataformConnectionImpl::UpdateConfig(google::cloud::dataform::v1::UpdateConfigRe
 }
 
 StreamRange<google::cloud::location::Location>
-DataformConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+DataformConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataform_v1::DataformRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::location::Location>
-DataformConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+StatusOr<google::cloud::location::Location> DataformConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -981,8 +1152,8 @@ DataformConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest 
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataformConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> DataformConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -994,8 +1165,8 @@ DataformConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const&
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataformConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> DataformConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1008,7 +1179,8 @@ DataformConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+DataformConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

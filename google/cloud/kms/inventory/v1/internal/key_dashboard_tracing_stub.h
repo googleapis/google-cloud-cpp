@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_TRACING_STUB_H
 
-#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -36,16 +36,18 @@ class KeyDashboardServiceTracingStub : public KeyDashboardServiceStub {
  public:
   ~KeyDashboardServiceTracingStub() override = default;
 
-  explicit KeyDashboardServiceTracingStub(std::shared_ptr<KeyDashboardServiceStub> child);
+  explicit KeyDashboardServiceTracingStub(
+      std::shared_ptr<KeyDashboardServiceStub> child);
 
-  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse> ListCryptoKeys(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) override;
+  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
+                 google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
+                     request) override;
 
  private:
   std::shared_ptr<KeyDashboardServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

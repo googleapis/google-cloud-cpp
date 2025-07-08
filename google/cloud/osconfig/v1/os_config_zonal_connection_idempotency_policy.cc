@@ -26,63 +26,89 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-OsConfigZonalServiceConnectionIdempotencyPolicy::~OsConfigZonalServiceConnectionIdempotencyPolicy() = default;
+OsConfigZonalServiceConnectionIdempotencyPolicy::
+    ~OsConfigZonalServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<OsConfigZonalServiceConnectionIdempotencyPolicy>
 OsConfigZonalServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<OsConfigZonalServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<OsConfigZonalServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::CreateOSPolicyAssignment(google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&) {
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::CreateOSPolicyAssignment(
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::UpdateOSPolicyAssignment(google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&) {
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::UpdateOSPolicyAssignment(
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::GetOSPolicyAssignment(google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const&) {
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::GetOSPolicyAssignment(
+    google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::ListOSPolicyAssignments(google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest) {  // NOLINT
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::ListOSPolicyAssignments(
+    google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::ListOSPolicyAssignmentRevisions(google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest) {  // NOLINT
+Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::
+    ListOSPolicyAssignmentRevisions(
+        google::cloud::osconfig::v1::
+            ListOSPolicyAssignmentRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::DeleteOSPolicyAssignment(google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&) {
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::DeleteOSPolicyAssignment(
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::GetOSPolicyAssignmentReport(google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&) {
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::GetOSPolicyAssignmentReport(
+    google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::ListOSPolicyAssignmentReports(google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest) {  // NOLINT
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::ListOSPolicyAssignmentReports(
+    google::cloud::osconfig::v1::
+        ListOSPolicyAssignmentReportsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::GetInventory(google::cloud::osconfig::v1::GetInventoryRequest const&) {
+Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::GetInventory(
+    google::cloud::osconfig::v1::GetInventoryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::ListInventories(google::cloud::osconfig::v1::ListInventoriesRequest) {  // NOLINT
+Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::ListInventories(
+    google::cloud::osconfig::v1::ListInventoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::GetVulnerabilityReport(google::cloud::osconfig::v1::GetVulnerabilityReportRequest const&) {
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::GetVulnerabilityReport(
+    google::cloud::osconfig::v1::GetVulnerabilityReportRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OsConfigZonalServiceConnectionIdempotencyPolicy::ListVulnerabilityReports(google::cloud::osconfig::v1::ListVulnerabilityReportsRequest) {  // NOLINT
+Idempotency
+OsConfigZonalServiceConnectionIdempotencyPolicy::ListVulnerabilityReports(
+    google::cloud::osconfig::v1::ListVulnerabilityReportsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<OsConfigZonalServiceConnectionIdempotencyPolicy>
-    MakeDefaultOsConfigZonalServiceConnectionIdempotencyPolicy() {
+MakeDefaultOsConfigZonalServiceConnectionIdempotencyPolicy() {
   return std::make_unique<OsConfigZonalServiceConnectionIdempotencyPolicy>();
 }
 

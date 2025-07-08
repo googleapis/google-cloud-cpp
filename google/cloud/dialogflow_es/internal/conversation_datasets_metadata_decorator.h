@@ -40,72 +40,74 @@ class ConversationDatasetsMetadata : public ConversationDatasetsStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateConversationDataset(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateConversationDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request) override;
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateConversationDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::ConversationDataset> GetConversationDataset(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetConversationDatasetRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
+  GetConversationDataset(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse> ListConversationDatasets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListConversationDatasetsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
+  ListConversationDatasets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteConversationDataset(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteConversationDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request) override;
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConversationDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportConversationData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ImportConversationDataRequest const& request) override;
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> ImportConversationData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::ImportConversationDataRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -121,8 +123,7 @@ class ConversationDatasetsMetadata : public ConversationDatasetsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

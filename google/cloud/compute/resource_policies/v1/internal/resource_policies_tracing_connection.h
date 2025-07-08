@@ -36,63 +36,76 @@ class ResourcePoliciesTracingConnection
   ~ResourcePoliciesTracingConnection() override = default;
 
   explicit ResourcePoliciesTracingConnection(
-    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection> child);
+      std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
-  AggregatedListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
+  AggregatedListResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          AggregatedListResourcePoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) override;
+  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                           DeleteResourcePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteResourcePolicy(NoAwaitTag,
-      google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
+      NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                      DeleteResourcePolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteResourcePolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-  GetResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          GetResourcePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) override;
+  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                           InsertResourcePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertResourcePolicy(NoAwaitTag,
-      google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
+      NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                      InsertResourcePolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertResourcePolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
-  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest request) override;
+  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
+                           ListResourcePoliciesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) override;
+  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                          PatchResourcePolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchResourcePolicy(NoAwaitTag,
-      google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
+      NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                      PatchResourcePolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchResourcePolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection> child_;
+  std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -105,7 +118,8 @@ class ResourcePoliciesTracingConnection
  */
 std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
 MakeResourcePoliciesTracingConnection(
-    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection> conn);
+    std::shared_ptr<compute_resource_policies_v1::ResourcePoliciesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_resource_policies_v1_internal

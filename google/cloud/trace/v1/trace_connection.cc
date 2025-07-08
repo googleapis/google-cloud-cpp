@@ -17,17 +17,17 @@
 // source: google/devtools/cloudtrace/v1/trace.proto
 
 #include "google/cloud/trace/v1/trace_connection.h"
+#include "google/cloud/trace/v1/internal/trace_connection_impl.h"
+#include "google/cloud/trace/v1/internal/trace_option_defaults.h"
+#include "google/cloud/trace/v1/internal/trace_stub_factory.h"
+#include "google/cloud/trace/v1/internal/trace_tracing_connection.h"
+#include "google/cloud/trace/v1/trace_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/trace/v1/internal/trace_connection_impl.h"
-#include "google/cloud/trace/v1/internal/trace_option_defaults.h"
-#include "google/cloud/trace/v1/internal/trace_stub_factory.h"
-#include "google/cloud/trace/v1/internal/trace_tracing_connection.h"
-#include "google/cloud/trace/v1/trace_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TraceServiceConnection::~TraceServiceConnection() = default;
 
-StreamRange<google::devtools::cloudtrace::v1::Trace> TraceServiceConnection::ListTraces(
-    google::devtools::cloudtrace::v1::ListTracesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::cloudtrace::v1::Trace>
+TraceServiceConnection::ListTraces(
+    google::devtools::cloudtrace::v1::
+        ListTracesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudtrace::v1::Trace>>();
 }
@@ -50,8 +52,7 @@ TraceServiceConnection::GetTrace(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TraceServiceConnection::PatchTraces(
+Status TraceServiceConnection::PatchTraces(
     google::devtools::cloudtrace::v1::PatchTracesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -59,17 +60,17 @@ TraceServiceConnection::PatchTraces(
 std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TraceServicePolicyOptionList>(options, __func__);
-  options = trace_v1_internal::TraceServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TraceServicePolicyOptionList>(options,
+                                                               __func__);
+  options = trace_v1_internal::TraceServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = trace_v1_internal::CreateDefaultTraceServiceStub(
-    std::move(auth), options);
+  auto stub = trace_v1_internal::CreateDefaultTraceServiceStub(std::move(auth),
+                                                               options);
   return trace_v1_internal::MakeTraceServiceTracingConnection(
       std::make_shared<trace_v1_internal::TraceServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

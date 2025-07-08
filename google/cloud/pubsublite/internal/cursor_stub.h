@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -46,43 +46,42 @@ class CursorServiceStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) = 0;
 
-  virtual StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
+  CommitCursor(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CommitCursorRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse> ListPartitionCursors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
+  ListPartitionCursors(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::pubsublite::v1::ListPartitionCursorsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultCursorServiceStub : public CursorServiceStub {
  public:
   explicit DefaultCursorServiceStub(
-      std::unique_ptr<google::cloud::pubsublite::v1::CursorService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
-)
+      std::unique_ptr<
+          google::cloud::pubsublite::v1::CursorService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -95,38 +94,37 @@ class DefaultCursorServiceStub : public CursorServiceStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::pubsublite::v1::CommitCursorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::pubsublite::v1::CommitCursorRequest const& request)
+      override;
 
-  StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse> ListPartitionCursors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) override;
+  StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
+  ListPartitionCursors(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::pubsublite::v1::CursorService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::pubsublite::v1::CursorService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

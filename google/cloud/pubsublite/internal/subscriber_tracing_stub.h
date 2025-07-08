@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_SUBSCRIBER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_SUBSCRIBER_TRACING_STUB_H
 
+#include "google/cloud/pubsublite/internal/subscriber_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsublite/internal/subscriber_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,39 +36,36 @@ class SubscriberServiceTracingStub : public SubscriberServiceStub {
  public:
   ~SubscriberServiceTracingStub() override = default;
 
-  explicit SubscriberServiceTracingStub(std::shared_ptr<SubscriberServiceStub> child);
+  explicit SubscriberServiceTracingStub(
+      std::shared_ptr<SubscriberServiceStub> child);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>>
-  AsyncSubscribe(
-      google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options) override;
+  AsyncSubscribe(google::cloud::CompletionQueue const& cq,
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<SubscriberServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -32,44 +32,50 @@ ParameterManagerTracingStub::ParameterManagerTracingStub(
     std::shared_ptr<ParameterManagerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::parametermanager::v1::ListParametersResponse> ParameterManagerTracingStub::ListParameters(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::parametermanager::v1::ListParametersResponse>
+ParameterManagerTracingStub::ListParameters(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parametermanager::v1::ListParametersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "ListParameters");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "ListParameters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListParameters(context, options, request));
 }
 
-StatusOr<google::cloud::parametermanager::v1::Parameter> ParameterManagerTracingStub::GetParameter(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::parametermanager::v1::Parameter>
+ParameterManagerTracingStub::GetParameter(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parametermanager::v1::GetParameterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "GetParameter");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "GetParameter");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetParameter(context, options, request));
 }
 
-StatusOr<google::cloud::parametermanager::v1::Parameter> ParameterManagerTracingStub::CreateParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::CreateParameterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "CreateParameter");
+StatusOr<google::cloud::parametermanager::v1::Parameter>
+ParameterManagerTracingStub::CreateParameter(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateParameterRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "CreateParameter");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateParameter(context, options, request));
 }
 
-StatusOr<google::cloud::parametermanager::v1::Parameter> ParameterManagerTracingStub::UpdateParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::UpdateParameterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "UpdateParameter");
+StatusOr<google::cloud::parametermanager::v1::Parameter>
+ParameterManagerTracingStub::UpdateParameter(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateParameterRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "UpdateParameter");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -77,98 +83,122 @@ StatusOr<google::cloud::parametermanager::v1::Parameter> ParameterManagerTracing
 }
 
 Status ParameterManagerTracingStub::DeleteParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::DeleteParameterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "DeleteParameter");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteParameterRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "DeleteParameter");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteParameter(context, options, request));
 }
 
-StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse> ParameterManagerTracingStub::ListParameterVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::ListParameterVersionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "ListParameterVersions");
+StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse>
+ParameterManagerTracingStub::ListParameterVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListParameterVersionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "ListParameterVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListParameterVersions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListParameterVersions(context, options, request));
 }
 
-StatusOr<google::cloud::parametermanager::v1::ParameterVersion> ParameterManagerTracingStub::GetParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "GetParameterVersion");
+StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
+ParameterManagerTracingStub::GetParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "GetParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetParameterVersion(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetParameterVersion(context, options, request));
 }
 
-StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse> ParameterManagerTracingStub::RenderParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "RenderParameterVersion");
+StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
+ParameterManagerTracingStub::RenderParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "RenderParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RenderParameterVersion(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->RenderParameterVersion(context, options, request));
 }
 
-StatusOr<google::cloud::parametermanager::v1::ParameterVersion> ParameterManagerTracingStub::CreateParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "CreateParameterVersion");
+StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
+ParameterManagerTracingStub::CreateParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "CreateParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateParameterVersion(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateParameterVersion(context, options, request));
 }
 
-StatusOr<google::cloud::parametermanager::v1::ParameterVersion> ParameterManagerTracingStub::UpdateParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "UpdateParameterVersion");
+StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
+ParameterManagerTracingStub::UpdateParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "UpdateParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateParameterVersion(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateParameterVersion(context, options, request));
 }
 
 Status ParameterManagerTracingStub::DeleteParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "DeleteParameterVersion");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager",
+      "DeleteParameterVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteParameterVersion(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteParameterVersion(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ParameterManagerTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ParameterManagerTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> ParameterManagerTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+ParameterManagerTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parametermanager.v1.ParameterManager", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parametermanager.v1.ParameterManager", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

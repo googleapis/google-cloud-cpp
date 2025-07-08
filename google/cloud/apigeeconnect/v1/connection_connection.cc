@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConnectionServiceConnection::~ConnectionServiceConnection() = default;
 
-StreamRange<google::cloud::apigeeconnect::v1::Connection> ConnectionServiceConnection::ListConnections(
-    google::cloud::apigeeconnect::v1::ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::apigeeconnect::v1::Connection>
+ConnectionServiceConnection::ListConnections(
+    google::cloud::apigeeconnect::v1::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigeeconnect::v1::Connection>>();
 }
@@ -47,17 +49,19 @@ StreamRange<google::cloud::apigeeconnect::v1::Connection> ConnectionServiceConne
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ConnectionServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ConnectionServicePolicyOptionList>(options,
+                                                                    __func__);
   options = apigeeconnect_v1_internal::ConnectionServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = apigeeconnect_v1_internal::CreateDefaultConnectionServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return apigeeconnect_v1_internal::MakeConnectionServiceTracingConnection(
-      std::make_shared<apigeeconnect_v1_internal::ConnectionServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          apigeeconnect_v1_internal::ConnectionServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_BINAUTHZ_MANAGEMENT_SERVICE_V1_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_BINAUTHZ_MANAGEMENT_SERVICE_V1_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection.h"
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection_idempotency_policy.h"
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_options.h"
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_retry_traits.h"
 #include "google/cloud/binaryauthorization/v1/internal/binauthz_management_service_v1_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,36 +43,47 @@ class BinauthzManagementServiceV1ConnectionImpl
   ~BinauthzManagementServiceV1ConnectionImpl() override = default;
 
   BinauthzManagementServiceV1ConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<binaryauthorization_v1_internal::BinauthzManagementServiceV1Stub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          binaryauthorization_v1_internal::BinauthzManagementServiceV1Stub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::binaryauthorization::v1::Policy>
-  GetPolicy(google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
+      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::Policy>
-  UpdatePolicy(google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
+      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  CreateAttestor(google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
+      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
+          request) override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
+      google::cloud::binaryauthorization::v1::GetAttestorRequest const& request)
+      override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  UpdateAttestor(google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
+      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
+          request) override;
 
-  StreamRange<google::cloud::binaryauthorization::v1::Attestor>
-  ListAttestors(google::cloud::binaryauthorization::v1::ListAttestorsRequest request) override;
+  StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
+      google::cloud::binaryauthorization::v1::ListAttestorsRequest request)
+      override;
 
-  Status
-  DeleteAttestor(google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request) override;
+  Status DeleteAttestor(
+      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<binaryauthorization_v1_internal::BinauthzManagementServiceV1Stub> stub_;
+  std::shared_ptr<
+      binaryauthorization_v1_internal::BinauthzManagementServiceV1Stub>
+      stub_;
   Options options_;
 };
 

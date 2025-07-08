@@ -35,106 +35,85 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StorageLogging::StorageLogging(
-    std::shared_ptr<StorageStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
+StorageLogging::StorageLogging(std::shared_ptr<StorageStub> child,
+                               TracingOptions tracing_options,
+                               std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
-Status
-StorageLogging::DeleteBucket(
-    grpc::ClientContext& context,
-    Options const& options,
+Status StorageLogging::DeleteBucket(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::DeleteBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::DeleteBucketRequest const& request) {
         return child_->DeleteBucket(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Bucket>
-StorageLogging::GetBucket(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Bucket> StorageLogging::GetBucket(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::GetBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::GetBucketRequest const& request) {
         return child_->GetBucket(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Bucket>
-StorageLogging::CreateBucket(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Bucket> StorageLogging::CreateBucket(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::CreateBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::CreateBucketRequest const& request) {
         return child_->CreateBucket(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::ListBucketsResponse>
-StorageLogging::ListBuckets(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::ListBucketsResponse> StorageLogging::ListBuckets(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::ListBucketsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::ListBucketsRequest const& request) {
         return child_->ListBuckets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Bucket>
-StorageLogging::LockBucketRetentionPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Bucket> StorageLogging::LockBucketRetentionPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::v2::LockBucketRetentionPolicyRequest const&
+                 request) {
         return child_->LockBucketRetentionPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-StorageLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> StorageLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-StorageLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> StorageLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -143,68 +122,54 @@ StorageLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 StorageLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Bucket>
-StorageLogging::UpdateBucket(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Bucket> StorageLogging::UpdateBucket(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateBucketRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::UpdateBucketRequest const& request) {
         return child_->UpdateBucket(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Object>
-StorageLogging::ComposeObject(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Object> StorageLogging::ComposeObject(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::ComposeObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::ComposeObjectRequest const& request) {
         return child_->ComposeObject(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-StorageLogging::DeleteObject(
-    grpc::ClientContext& context,
-    Options const& options,
+Status StorageLogging::DeleteObject(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::DeleteObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::DeleteObjectRequest const& request) {
         return child_->DeleteObject(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Object>
-StorageLogging::RestoreObject(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Object> StorageLogging::RestoreObject(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::RestoreObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::RestoreObjectRequest const& request) {
         return child_->RestoreObject(context, options, request);
       },
@@ -213,26 +178,21 @@ StorageLogging::RestoreObject(
 
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 StorageLogging::CancelResumableWrite(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::CancelResumableWriteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::CancelResumableWriteRequest const& request) {
         return child_->CancelResumableWrite(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Object>
-StorageLogging::GetObject(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Object> StorageLogging::GetObject(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::GetObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::GetObjectRequest const& request) {
         return child_->GetObject(context, options, request);
       },
@@ -242,8 +202,7 @@ StorageLogging::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageLogging::ReadObject(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::storage::v2::ReadObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](std::shared_ptr<grpc::ClientContext> context,
@@ -272,12 +231,14 @@ StorageLogging::AsyncBidiReadObject(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::storage::v2::BidiReadObjectRequest, google::storage::v2::BidiReadObjectResponse>;
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::storage::v2::BidiReadObjectRequest,
+          google::storage::v2::BidiReadObjectResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncBidiReadObject(
-      cq, std::move(context), std::move(options));
+  auto stream =
+      child_->AsyncBidiReadObject(cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -285,14 +246,11 @@ StorageLogging::AsyncBidiReadObject(
   return stream;
 }
 
-StatusOr<google::storage::v2::Object>
-StorageLogging::UpdateObject(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Object> StorageLogging::UpdateObject(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::UpdateObjectRequest const& request) {
         return child_->UpdateObject(context, options, request);
       },
@@ -302,11 +260,11 @@ StorageLogging::UpdateObject(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageLogging::WriteObject(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const& options) {
+StorageLogging::WriteObject(std::shared_ptr<grpc::ClientContext> context,
+                            Options const& options) {
   using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
-      google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>;
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
@@ -326,12 +284,14 @@ StorageLogging::AsyncBidiWriteObject(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::storage::v2::BidiWriteObjectRequest, google::storage::v2::BidiWriteObjectResponse>;
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::storage::v2::BidiWriteObjectRequest,
+          google::storage::v2::BidiWriteObjectResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncBidiWriteObject(
-      cq, std::move(context), std::move(options));
+  auto stream =
+      child_->AsyncBidiWriteObject(cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -339,28 +299,22 @@ StorageLogging::AsyncBidiWriteObject(
   return stream;
 }
 
-StatusOr<google::storage::v2::ListObjectsResponse>
-StorageLogging::ListObjects(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::ListObjectsResponse> StorageLogging::ListObjects(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::ListObjectsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::ListObjectsRequest const& request) {
         return child_->ListObjects(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::RewriteResponse>
-StorageLogging::RewriteObject(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::RewriteResponse> StorageLogging::RewriteObject(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::RewriteObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::RewriteObjectRequest const& request) {
         return child_->RewriteObject(context, options, request);
       },
@@ -369,12 +323,10 @@ StorageLogging::RewriteObject(
 
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 StorageLogging::StartResumableWrite(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::StartResumableWriteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::StartResumableWriteRequest const& request) {
         return child_->StartResumableWrite(context, options, request);
       },
@@ -383,26 +335,21 @@ StorageLogging::StartResumableWrite(
 
 StatusOr<google::storage::v2::QueryWriteStatusResponse>
 StorageLogging::QueryWriteStatus(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::QueryWriteStatusRequest const& request) {
         return child_->QueryWriteStatus(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Object>
-StorageLogging::MoveObject(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::v2::Object> StorageLogging::MoveObject(
+    grpc::ClientContext& context, Options const& options,
     google::storage::v2::MoveObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::v2::MoveObjectRequest const& request) {
         return child_->MoveObject(context, options, request);
       },
@@ -411,36 +358,37 @@ StorageLogging::MoveObject(
 
 future<StatusOr<google::storage::v2::Object>>
 StorageLogging::AsyncComposeObject(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::storage::v2::ComposeObjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::ComposeObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::storage::v2::ComposeObjectRequest const& request) {
-        return child_->AsyncComposeObject(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncComposeObject(cq, std::move(context),
+                                          std::move(options), request);
       },
-      cq, std::move(context), std::move(options), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
-future<Status>
-StorageLogging::AsyncDeleteObject(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::storage::v2::DeleteObjectRequest const& request) {
+future<Status> StorageLogging::AsyncDeleteObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::DeleteObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::storage::v2::DeleteObjectRequest const& request) {
-        return child_->AsyncDeleteObject(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteObject(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), std::move(options), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -450,15 +398,15 @@ StorageLogging::AsyncReadObject(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ReadObjectRequest const& request) {
-  using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadRpcLogging<google::storage::v2::ReadObjectResponse>;
+  using LoggingStream = ::google::cloud::internal::AsyncStreamingReadRpcLogging<
+      google::storage::v2::ReadObjectResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   google::cloud::internal::LogRequest(
       __func__, request_id,
       google::cloud::internal::DebugString(request, tracing_options_));
-  auto stream = child_->AsyncReadObject(
-      cq, std::move(context), std::move(options), request);
+  auto stream = child_->AsyncReadObject(cq, std::move(context),
+                                        std::move(options), request);
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -467,18 +415,21 @@ StorageLogging::AsyncReadObject(
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-    google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>>
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
 StorageLogging::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  using LoggingStream = ::google::cloud::internal::AsyncStreamingWriteRpcLogging<
-      google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>;
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingWriteRpcLogging<
+          google::storage::v2::WriteObjectRequest,
+          google::storage::v2::WriteObjectResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncWriteObject(
-      cq, std::move(context), std::move(options));
+  auto stream =
+      child_->AsyncWriteObject(cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -488,53 +439,56 @@ StorageLogging::AsyncWriteObject(
 
 future<StatusOr<google::storage::v2::RewriteResponse>>
 StorageLogging::AsyncRewriteObject(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::storage::v2::RewriteObjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::RewriteObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::storage::v2::RewriteObjectRequest const& request) {
-        return child_->AsyncRewriteObject(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncRewriteObject(cq, std::move(context),
+                                          std::move(options), request);
       },
-      cq, std::move(context), std::move(options), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageLogging::AsyncStartResumableWrite(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::storage::v2::StartResumableWriteRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::StartResumableWriteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::storage::v2::StartResumableWriteRequest const& request) {
-        return child_->AsyncStartResumableWrite(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncStartResumableWrite(cq, std::move(context),
+                                                std::move(options), request);
       },
-      cq, std::move(context), std::move(options), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageLogging::AsyncQueryWriteStatus(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::storage::v2::QueryWriteStatusRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::v2::QueryWriteStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::storage::v2::QueryWriteStatusRequest const& request) {
-        return child_->AsyncQueryWriteStatus(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncQueryWriteStatus(cq, std::move(context),
+                                             std::move(options), request);
       },
-      cq, std::move(context), std::move(options), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

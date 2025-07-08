@@ -26,78 +26,106 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NetworkSecurityConnectionIdempotencyPolicy::~NetworkSecurityConnectionIdempotencyPolicy() = default;
+NetworkSecurityConnectionIdempotencyPolicy::
+    ~NetworkSecurityConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<NetworkSecurityConnectionIdempotencyPolicy>
 NetworkSecurityConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<NetworkSecurityConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListAuthorizationPolicies(google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest) {  // NOLINT
+Idempotency
+NetworkSecurityConnectionIdempotencyPolicy::ListAuthorizationPolicies(
+    google::cloud::networksecurity::v1::
+        ListAuthorizationPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetAuthorizationPolicy(google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetAuthorizationPolicy(
+    google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::CreateAuthorizationPolicy(google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&) {
+Idempotency
+NetworkSecurityConnectionIdempotencyPolicy::CreateAuthorizationPolicy(
+    google::cloud::networksecurity::v1::
+        CreateAuthorizationPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::UpdateAuthorizationPolicy(google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&) {
+Idempotency
+NetworkSecurityConnectionIdempotencyPolicy::UpdateAuthorizationPolicy(
+    google::cloud::networksecurity::v1::
+        UpdateAuthorizationPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::DeleteAuthorizationPolicy(google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&) {
+Idempotency
+NetworkSecurityConnectionIdempotencyPolicy::DeleteAuthorizationPolicy(
+    google::cloud::networksecurity::v1::
+        DeleteAuthorizationPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListServerTlsPolicies(google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest) {  // NOLINT
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListServerTlsPolicies(
+    google::cloud::networksecurity::v1::
+        ListServerTlsPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetServerTlsPolicy(google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetServerTlsPolicy(
+    google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::CreateServerTlsPolicy(google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::CreateServerTlsPolicy(
+    google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::UpdateServerTlsPolicy(google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::UpdateServerTlsPolicy(
+    google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::DeleteServerTlsPolicy(google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::DeleteServerTlsPolicy(
+    google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListClientTlsPolicies(google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest) {  // NOLINT
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListClientTlsPolicies(
+    google::cloud::networksecurity::v1::
+        ListClientTlsPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetClientTlsPolicy(google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetClientTlsPolicy(
+    google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::CreateClientTlsPolicy(google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::CreateClientTlsPolicy(
+    google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::UpdateClientTlsPolicy(google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::UpdateClientTlsPolicy(
+    google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::DeleteClientTlsPolicy(google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::DeleteClientTlsPolicy(
+    google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -107,32 +135,38 @@ Idempotency NetworkSecurityConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworkSecurityConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency NetworkSecurityConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<NetworkSecurityConnectionIdempotencyPolicy>
-    MakeDefaultNetworkSecurityConnectionIdempotencyPolicy() {
+MakeDefaultNetworkSecurityConnectionIdempotencyPolicy() {
   return std::make_unique<NetworkSecurityConnectionIdempotencyPolicy>();
 }
 

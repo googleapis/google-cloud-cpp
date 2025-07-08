@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_JOBS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_JOBS_TRACING_STUB_H
 
+#include "google/cloud/run/v2/internal/jobs_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/run/v2/internal/jobs_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -45,18 +45,15 @@ class JobsTracingStub : public JobsStub {
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::Job> GetJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListJobsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateJob(
@@ -66,8 +63,7 @@ class JobsTracingStub : public JobsStub {
       google::cloud::run::v2::UpdateJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::UpdateJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
@@ -77,8 +73,7 @@ class JobsTracingStub : public JobsStub {
       google::cloud::run::v2::DeleteJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunJob(
@@ -88,43 +83,35 @@ class JobsTracingStub : public JobsStub {
       google::cloud::run::v2::RunJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::RunJobRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -141,7 +128,8 @@ class JobsTracingStub : public JobsStub {
 
  private:
   std::shared_ptr<JobsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -152,8 +140,7 @@ class JobsTracingStub : public JobsStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<JobsStub> MakeJobsTracingStub(
-    std::shared_ptr<JobsStub> stub);
+std::shared_ptr<JobsStub> MakeJobsTracingStub(std::shared_ptr<JobsStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2_internal

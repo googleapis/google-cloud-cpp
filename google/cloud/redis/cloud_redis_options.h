@@ -34,7 +34,8 @@ using ::google::cloud::redis_v1::CloudRedisPollingPolicyOption;
 /// @deprecated Use redis_v1::CloudRedisBackoffPolicyOption directly.
 using ::google::cloud::redis_v1::CloudRedisBackoffPolicyOption;
 
-/// @deprecated Use redis_v1::CloudRedisConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use redis_v1::CloudRedisConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::redis_v1::CloudRedisConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use redis_v1::CloudRedisPolicyOptionList directly.

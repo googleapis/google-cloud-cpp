@@ -42,13 +42,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockRegionZonesConnection : public compute_region_zones_v1::RegionZonesConnection {
+class MockRegionZonesConnection
+    : public compute_region_zones_v1::RegionZonesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Zone>),
-  ListRegionZones,
-  (google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cpp::compute::v1::Zone>), ListRegionZones,
+      (google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,15 +17,15 @@
 // source: google/cloud/sql/v1/cloud_sql_instances.proto
 
 #include "google/cloud/sql/v1/sql_instances_connection.h"
+#include "google/cloud/sql/v1/internal/sql_instances_option_defaults.h"
+#include "google/cloud/sql/v1/internal/sql_instances_tracing_connection.h"
+#include "google/cloud/sql/v1/sql_instances_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/sql/v1/internal/sql_instances_option_defaults.h"
-#include "google/cloud/sql/v1/internal/sql_instances_tracing_connection.h"
-#include "google/cloud/sql/v1/sql_instances_options.h"
 #include <memory>
 #include <utility>
 
@@ -102,8 +102,10 @@ SqlInstancesServiceConnection::Insert(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::sql::v1::DatabaseInstance> SqlInstancesServiceConnection::List(
-    google::cloud::sql::v1::SqlInstancesListRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::sql::v1::DatabaseInstance>
+SqlInstancesServiceConnection::List(
+    google::cloud::sql::v1::
+        SqlInstancesListRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::sql::v1::DatabaseInstance>>();
 }
@@ -194,7 +196,8 @@ SqlInstancesServiceConnection::RescheduleMaintenance(
 
 StatusOr<google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
 SqlInstancesServiceConnection::VerifyExternalSyncSettings(
-    google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const&) {
+    google::cloud::sql::v1::
+        SqlInstancesVerifyExternalSyncSettingsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

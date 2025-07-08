@@ -30,7 +30,8 @@ namespace cloud {
 namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SessionTemplateControllerStub> CreateDefaultSessionTemplateControllerStub(
+std::shared_ptr<SessionTemplateControllerStub>
+CreateDefaultSessionTemplateControllerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

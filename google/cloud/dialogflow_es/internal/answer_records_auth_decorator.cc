@@ -31,27 +31,27 @@ AnswerRecordsAuth::AnswerRecordsAuth(
     std::shared_ptr<AnswerRecordsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse> AnswerRecordsAuth::ListAnswerRecords(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
+AnswerRecordsAuth::ListAnswerRecords(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAnswerRecords(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::AnswerRecord> AnswerRecordsAuth::UpdateAnswerRecord(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
+AnswerRecordsAuth::UpdateAnswerRecord(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAnswerRecord(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> AnswerRecordsAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+AnswerRecordsAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,17 +59,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> AnswerRecordsAuth::List
 }
 
 StatusOr<google::cloud::location::Location> AnswerRecordsAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> AnswerRecordsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+AnswerRecordsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +76,7 @@ StatusOr<google::longrunning::ListOperationsResponse> AnswerRecordsAuth::ListOpe
 }
 
 StatusOr<google::longrunning::Operation> AnswerRecordsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +84,7 @@ StatusOr<google::longrunning::Operation> AnswerRecordsAuth::GetOperation(
 }
 
 Status AnswerRecordsAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -32,24 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FeatureRegistryServiceLogging::FeatureRegistryServiceLogging(
     std::shared_ptr<FeatureRegistryServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceLogging::AsyncCreateFeatureGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
-        return child_->AsyncCreateFeatureGroup(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::CreateFeatureGroupRequest const&
+                 request) {
+        return child_->AsyncCreateFeatureGroup(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -57,13 +56,12 @@ FeatureRegistryServiceLogging::AsyncCreateFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::CreateFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateFeatureGroupRequest const&
+                 request) {
         return child_->CreateFeatureGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -71,13 +69,12 @@ FeatureRegistryServiceLogging::CreateFeatureGroup(
 
 StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
 FeatureRegistryServiceLogging::GetFeatureGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::GetFeatureGroupRequest const&
+                 request) {
         return child_->GetFeatureGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -85,13 +82,12 @@ FeatureRegistryServiceLogging::GetFeatureGroup(
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureGroupsResponse>
 FeatureRegistryServiceLogging::ListFeatureGroups(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureGroupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListFeatureGroupsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ListFeatureGroupsRequest const&
+                 request) {
         return child_->ListFeatureGroups(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,17 +95,18 @@ FeatureRegistryServiceLogging::ListFeatureGroups(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceLogging::AsyncUpdateFeatureGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
-        return child_->AsyncUpdateFeatureGroup(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const&
+                 request) {
+        return child_->AsyncUpdateFeatureGroup(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -117,13 +114,12 @@ FeatureRegistryServiceLogging::AsyncUpdateFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::UpdateFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const&
+                 request) {
         return child_->UpdateFeatureGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,17 +127,18 @@ FeatureRegistryServiceLogging::UpdateFeatureGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceLogging::AsyncDeleteFeatureGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
-        return child_->AsyncDeleteFeatureGroup(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const&
+                 request) {
+        return child_->AsyncDeleteFeatureGroup(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -149,13 +146,12 @@ FeatureRegistryServiceLogging::AsyncDeleteFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::DeleteFeatureGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const&
+                 request) {
         return child_->DeleteFeatureGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,17 +159,18 @@ FeatureRegistryServiceLogging::DeleteFeatureGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceLogging::AsyncCreateFeature(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
-        return child_->AsyncCreateFeature(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+        return child_->AsyncCreateFeature(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -181,13 +178,12 @@ FeatureRegistryServiceLogging::AsyncCreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::CreateFeature(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
         return child_->CreateFeature(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -195,17 +191,18 @@ FeatureRegistryServiceLogging::CreateFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceLogging::AsyncBatchCreateFeatures(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
-        return child_->AsyncBatchCreateFeatures(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+                 request) {
+        return child_->AsyncBatchCreateFeatures(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -213,13 +210,12 @@ FeatureRegistryServiceLogging::AsyncBatchCreateFeatures(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::BatchCreateFeatures(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+                 request) {
         return child_->BatchCreateFeatures(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -227,12 +223,10 @@ FeatureRegistryServiceLogging::BatchCreateFeatures(
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeatureRegistryServiceLogging::GetFeature(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
         return child_->GetFeature(context, options, request);
       },
@@ -241,13 +235,12 @@ FeatureRegistryServiceLogging::GetFeature(
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
 FeatureRegistryServiceLogging::ListFeatures(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
         return child_->ListFeatures(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -255,17 +248,18 @@ FeatureRegistryServiceLogging::ListFeatures(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceLogging::AsyncUpdateFeature(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
-        return child_->AsyncUpdateFeature(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
+        return child_->AsyncUpdateFeature(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -273,13 +267,12 @@ FeatureRegistryServiceLogging::AsyncUpdateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::UpdateFeature(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
         return child_->UpdateFeature(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -287,17 +280,18 @@ FeatureRegistryServiceLogging::UpdateFeature(
 
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceLogging::AsyncDeleteFeature(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
-        return child_->AsyncDeleteFeature(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+        return child_->AsyncDeleteFeature(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -305,13 +299,12 @@ FeatureRegistryServiceLogging::AsyncDeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::DeleteFeature(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
         return child_->DeleteFeature(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -319,12 +312,10 @@ FeatureRegistryServiceLogging::DeleteFeature(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 FeatureRegistryServiceLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -333,40 +324,32 @@ FeatureRegistryServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 FeatureRegistryServiceLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-FeatureRegistryServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> FeatureRegistryServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-FeatureRegistryServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> FeatureRegistryServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -375,12 +358,10 @@ FeatureRegistryServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 FeatureRegistryServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -389,12 +370,10 @@ FeatureRegistryServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 FeatureRegistryServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -403,40 +382,32 @@ FeatureRegistryServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-FeatureRegistryServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status FeatureRegistryServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-FeatureRegistryServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status FeatureRegistryServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -445,12 +416,10 @@ FeatureRegistryServiceLogging::CancelOperation(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceLogging::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::WaitOperationRequest const& request) {
         return child_->WaitOperation(context, options, request);
       },
@@ -468,8 +437,8 @@ FeatureRegistryServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -485,8 +454,8 @@ future<Status> FeatureRegistryServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

@@ -33,25 +33,25 @@ NetAppStub::~NetAppStub() = default;
 
 StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
 DefaultNetAppStub::ListStoragePools(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
-    google::cloud::netapp::v1::ListStoragePoolsResponse response;
-    auto status =
-        grpc_stub_->ListStoragePools(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
+  google::cloud::netapp::v1::ListStoragePoolsResponse response;
+  auto status = grpc_stub_->ListStoragePools(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateStoragePool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateStoragePoolRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateStoragePoolRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::CreateStoragePoolRequest const& request,
@@ -61,41 +61,38 @@ DefaultNetAppStub::AsyncCreateStoragePool(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateStoragePool(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateStoragePool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateStoragePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateStoragePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::StoragePool>
 DefaultNetAppStub::GetStoragePool(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
-    google::cloud::netapp::v1::StoragePool response;
-    auto status =
-        grpc_stub_->GetStoragePool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
+  google::cloud::netapp::v1::StoragePool response;
+  auto status = grpc_stub_->GetStoragePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateStoragePool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateStoragePoolRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateStoragePoolRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::UpdateStoragePoolRequest const& request,
@@ -105,28 +102,26 @@ DefaultNetAppStub::AsyncUpdateStoragePool(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateStoragePool(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateStoragePool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateStoragePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateStoragePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteStoragePool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteStoragePoolRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteStoragePoolRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::DeleteStoragePoolRequest const& request,
@@ -136,31 +131,30 @@ DefaultNetAppStub::AsyncDeleteStoragePool(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteStoragePool(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteStoragePool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteStoragePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteStoragePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncValidateDirectoryService(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::ValidateDirectoryServiceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request,
+             google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncValidateDirectoryService(context, request, cq);
       },
@@ -169,29 +163,30 @@ DefaultNetAppStub::AsyncValidateDirectoryService(
 
 StatusOr<google::longrunning::Operation>
 DefaultNetAppStub::ValidateDirectoryService(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ValidateDirectoryService(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ValidateDirectoryService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncSwitchActiveReplicaZone(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request,
+             google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncSwitchActiveReplicaZone(context, request, cq);
       },
@@ -200,52 +195,49 @@ DefaultNetAppStub::AsyncSwitchActiveReplicaZone(
 
 StatusOr<google::longrunning::Operation>
 DefaultNetAppStub::SwitchActiveReplicaZone(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->SwitchActiveReplicaZone(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->SwitchActiveReplicaZone(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 DefaultNetAppStub::ListVolumes(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListVolumesRequest const& request) {
-    google::cloud::netapp::v1::ListVolumesResponse response;
-    auto status =
-        grpc_stub_->ListVolumes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListVolumesRequest const& request) {
+  google::cloud::netapp::v1::ListVolumesResponse response;
+  auto status = grpc_stub_->ListVolumes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::netapp::v1::Volume>
-DefaultNetAppStub::GetVolume(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetVolumeRequest const& request) {
-    google::cloud::netapp::v1::Volume response;
-    auto status =
-        grpc_stub_->GetVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::netapp::v1::Volume> DefaultNetAppStub::GetVolume(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetVolumeRequest const& request) {
+  google::cloud::netapp::v1::Volume response;
+  auto status = grpc_stub_->GetVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateVolume(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateVolumeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateVolumeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateVolumeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateVolumeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::CreateVolumeRequest const& request,
@@ -255,28 +247,26 @@ DefaultNetAppStub::AsyncCreateVolume(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateVolume(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateVolumeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateVolume(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateVolumeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateVolume(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateVolumeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateVolumeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::UpdateVolumeRequest const& request,
@@ -286,28 +276,26 @@ DefaultNetAppStub::AsyncUpdateVolume(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateVolume(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateVolume(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteVolume(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteVolumeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteVolumeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::DeleteVolumeRequest const& request,
@@ -317,28 +305,26 @@ DefaultNetAppStub::AsyncDeleteVolume(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteVolume(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteVolume(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncRevertVolume(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::RevertVolumeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::RevertVolumeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::RevertVolumeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::RevertVolumeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::RevertVolumeRequest const& request,
@@ -348,54 +334,49 @@ DefaultNetAppStub::AsyncRevertVolume(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::RevertVolume(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::RevertVolumeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RevertVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::RevertVolume(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::RevertVolumeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RevertVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 DefaultNetAppStub::ListSnapshots(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
-    google::cloud::netapp::v1::ListSnapshotsResponse response;
-    auto status =
-        grpc_stub_->ListSnapshots(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
+  google::cloud::netapp::v1::ListSnapshotsResponse response;
+  auto status = grpc_stub_->ListSnapshots(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::netapp::v1::Snapshot>
-DefaultNetAppStub::GetSnapshot(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetSnapshotRequest const& request) {
-    google::cloud::netapp::v1::Snapshot response;
-    auto status =
-        grpc_stub_->GetSnapshot(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::netapp::v1::Snapshot> DefaultNetAppStub::GetSnapshot(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetSnapshotRequest const& request) {
+  google::cloud::netapp::v1::Snapshot response;
+  auto status = grpc_stub_->GetSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateSnapshot(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateSnapshotRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateSnapshotRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::CreateSnapshotRequest const& request,
@@ -405,28 +386,26 @@ DefaultNetAppStub::AsyncCreateSnapshot(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateSnapshot(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateSnapshot(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateSnapshot(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteSnapshot(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteSnapshotRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteSnapshotRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::DeleteSnapshotRequest const& request,
@@ -436,28 +415,26 @@ DefaultNetAppStub::AsyncDeleteSnapshot(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteSnapshot(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteSnapshot(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteSnapshot(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateSnapshot(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateSnapshotRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateSnapshotRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::UpdateSnapshotRequest const& request,
@@ -467,57 +444,54 @@ DefaultNetAppStub::AsyncUpdateSnapshot(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateSnapshot(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateSnapshot(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateSnapshot(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
 DefaultNetAppStub::ListActiveDirectories(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) {
-    google::cloud::netapp::v1::ListActiveDirectoriesResponse response;
-    auto status =
-        grpc_stub_->ListActiveDirectories(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) {
+  google::cloud::netapp::v1::ListActiveDirectoriesResponse response;
+  auto status = grpc_stub_->ListActiveDirectories(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ActiveDirectory>
 DefaultNetAppStub::GetActiveDirectory(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
-    google::cloud::netapp::v1::ActiveDirectory response;
-    auto status =
-        grpc_stub_->GetActiveDirectory(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
+  google::cloud::netapp::v1::ActiveDirectory response;
+  auto status = grpc_stub_->GetActiveDirectory(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateActiveDirectory(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateActiveDirectoryRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateActiveDirectoryRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request,
+             google::cloud::netapp::v1::CreateActiveDirectoryRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateActiveDirectory(context, request, cq);
       },
@@ -526,29 +500,29 @@ DefaultNetAppStub::AsyncCreateActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 DefaultNetAppStub::CreateActiveDirectory(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateActiveDirectory(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateActiveDirectory(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateActiveDirectory(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateActiveDirectoryRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateActiveDirectoryRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request,
+             google::cloud::netapp::v1::UpdateActiveDirectoryRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateActiveDirectory(context, request, cq);
       },
@@ -557,29 +531,29 @@ DefaultNetAppStub::AsyncUpdateActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 DefaultNetAppStub::UpdateActiveDirectory(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateActiveDirectory(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateActiveDirectory(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteActiveDirectory(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteActiveDirectoryRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteActiveDirectoryRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request,
+             google::cloud::netapp::v1::DeleteActiveDirectoryRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteActiveDirectory(context, request, cq);
       },
@@ -588,39 +562,37 @@ DefaultNetAppStub::AsyncDeleteActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 DefaultNetAppStub::DeleteActiveDirectory(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteActiveDirectory(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteActiveDirectory(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
 DefaultNetAppStub::ListKmsConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
-    google::cloud::netapp::v1::ListKmsConfigsResponse response;
-    auto status =
-        grpc_stub_->ListKmsConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
+  google::cloud::netapp::v1::ListKmsConfigsResponse response;
+  auto status = grpc_stub_->ListKmsConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateKmsConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateKmsConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateKmsConfigRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::CreateKmsConfigRequest const& request,
@@ -630,41 +602,37 @@ DefaultNetAppStub::AsyncCreateKmsConfig(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateKmsConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateKmsConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateKmsConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateKmsConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::netapp::v1::KmsConfig>
-DefaultNetAppStub::GetKmsConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
-    google::cloud::netapp::v1::KmsConfig response;
-    auto status =
-        grpc_stub_->GetKmsConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::netapp::v1::KmsConfig> DefaultNetAppStub::GetKmsConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
+  google::cloud::netapp::v1::KmsConfig response;
+  auto status = grpc_stub_->GetKmsConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateKmsConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateKmsConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateKmsConfigRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::UpdateKmsConfigRequest const& request,
@@ -674,28 +642,26 @@ DefaultNetAppStub::AsyncUpdateKmsConfig(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateKmsConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateKmsConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateKmsConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateKmsConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncEncryptVolumes(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::EncryptVolumesRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::EncryptVolumesRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::EncryptVolumesRequest const& request,
@@ -705,41 +671,38 @@ DefaultNetAppStub::AsyncEncryptVolumes(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::EncryptVolumes(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->EncryptVolumes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::EncryptVolumes(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->EncryptVolumes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
 DefaultNetAppStub::VerifyKmsConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
-    google::cloud::netapp::v1::VerifyKmsConfigResponse response;
-    auto status =
-        grpc_stub_->VerifyKmsConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
+  google::cloud::netapp::v1::VerifyKmsConfigResponse response;
+  auto status = grpc_stub_->VerifyKmsConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteKmsConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteKmsConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteKmsConfigRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::DeleteKmsConfigRequest const& request,
@@ -749,54 +712,50 @@ DefaultNetAppStub::AsyncDeleteKmsConfig(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteKmsConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteKmsConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteKmsConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteKmsConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
 DefaultNetAppStub::ListReplications(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListReplicationsRequest const& request) {
-    google::cloud::netapp::v1::ListReplicationsResponse response;
-    auto status =
-        grpc_stub_->ListReplications(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListReplicationsRequest const& request) {
+  google::cloud::netapp::v1::ListReplicationsResponse response;
+  auto status = grpc_stub_->ListReplications(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::Replication>
 DefaultNetAppStub::GetReplication(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetReplicationRequest const& request) {
-    google::cloud::netapp::v1::Replication response;
-    auto status =
-        grpc_stub_->GetReplication(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetReplicationRequest const& request) {
+  google::cloud::netapp::v1::Replication response;
+  auto status = grpc_stub_->GetReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateReplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateReplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateReplicationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateReplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateReplicationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::CreateReplicationRequest const& request,
@@ -806,28 +765,26 @@ DefaultNetAppStub::AsyncCreateReplication(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateReplication(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateReplicationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateReplication(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateReplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateReplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteReplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteReplicationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteReplicationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::DeleteReplicationRequest const& request,
@@ -837,28 +794,26 @@ DefaultNetAppStub::AsyncDeleteReplication(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteReplication(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteReplication(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteReplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateReplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateReplicationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateReplicationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::UpdateReplicationRequest const& request,
@@ -868,28 +823,26 @@ DefaultNetAppStub::AsyncUpdateReplication(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateReplication(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateReplication(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateReplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncStopReplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::StopReplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::StopReplicationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::StopReplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::StopReplicationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::StopReplicationRequest const& request,
@@ -899,28 +852,26 @@ DefaultNetAppStub::AsyncStopReplication(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::StopReplication(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::StopReplicationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->StopReplication(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::StopReplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::StopReplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncResumeReplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::ResumeReplicationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::ResumeReplicationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::ResumeReplicationRequest const& request,
@@ -930,59 +881,62 @@ DefaultNetAppStub::AsyncResumeReplication(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::ResumeReplication(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ResumeReplication(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::ResumeReplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ResumeReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncReverseReplicationDirection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::ReverseReplicationDirectionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::ReverseReplicationDirectionRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::ReverseReplicationDirectionRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncReverseReplicationDirection(context, request, cq);
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncReverseReplicationDirection(context, request,
+                                                            cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultNetAppStub::ReverseReplicationDirection(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ReverseReplicationDirection(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ReverseReplicationDirection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncEstablishPeering(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::EstablishPeeringRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::EstablishPeeringRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::EstablishPeeringRequest const& request,
@@ -992,28 +946,26 @@ DefaultNetAppStub::AsyncEstablishPeering(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::EstablishPeering(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->EstablishPeering(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::EstablishPeering(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->EstablishPeering(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncSyncReplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::SyncReplicationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::SyncReplicationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::SyncReplicationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::SyncReplicationRequest const& request,
@@ -1023,28 +975,26 @@ DefaultNetAppStub::AsyncSyncReplication(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::SyncReplication(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::SyncReplicationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->SyncReplication(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::SyncReplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SyncReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateBackupVault(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateBackupVaultRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateBackupVaultRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::CreateBackupVaultRequest const& request,
@@ -1054,54 +1004,50 @@ DefaultNetAppStub::AsyncCreateBackupVault(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateBackupVault(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateBackupVault(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateBackupVault(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackupVault(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::BackupVault>
 DefaultNetAppStub::GetBackupVault(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
-    google::cloud::netapp::v1::BackupVault response;
-    auto status =
-        grpc_stub_->GetBackupVault(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
+  google::cloud::netapp::v1::BackupVault response;
+  auto status = grpc_stub_->GetBackupVault(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
 DefaultNetAppStub::ListBackupVaults(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
-    google::cloud::netapp::v1::ListBackupVaultsResponse response;
-    auto status =
-        grpc_stub_->ListBackupVaults(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
+  google::cloud::netapp::v1::ListBackupVaultsResponse response;
+  auto status = grpc_stub_->ListBackupVaults(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateBackupVault(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateBackupVaultRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateBackupVaultRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::UpdateBackupVaultRequest const& request,
@@ -1111,28 +1057,26 @@ DefaultNetAppStub::AsyncUpdateBackupVault(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateBackupVault(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateBackupVault(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateBackupVault(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackupVault(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteBackupVault(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteBackupVaultRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteBackupVaultRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::DeleteBackupVaultRequest const& request,
@@ -1142,28 +1086,26 @@ DefaultNetAppStub::AsyncDeleteBackupVault(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteBackupVault(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteBackupVault(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteBackupVault(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackupVault(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateBackupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateBackupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateBackupRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::CreateBackupRequest const& request,
@@ -1173,54 +1115,49 @@ DefaultNetAppStub::AsyncCreateBackup(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateBackup(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateBackupRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateBackup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::netapp::v1::Backup>
-DefaultNetAppStub::GetBackup(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetBackupRequest const& request) {
-    google::cloud::netapp::v1::Backup response;
-    auto status =
-        grpc_stub_->GetBackup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::netapp::v1::Backup> DefaultNetAppStub::GetBackup(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetBackupRequest const& request) {
+  google::cloud::netapp::v1::Backup response;
+  auto status = grpc_stub_->GetBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupsResponse>
 DefaultNetAppStub::ListBackups(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListBackupsRequest const& request) {
-    google::cloud::netapp::v1::ListBackupsResponse response;
-    auto status =
-        grpc_stub_->ListBackups(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListBackupsRequest const& request) {
+  google::cloud::netapp::v1::ListBackupsResponse response;
+  auto status = grpc_stub_->ListBackups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteBackupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteBackupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteBackupRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::DeleteBackupRequest const& request,
@@ -1230,28 +1167,26 @@ DefaultNetAppStub::AsyncDeleteBackup(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteBackup(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteBackupRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteBackup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateBackupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateBackupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateBackupRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::UpdateBackupRequest const& request,
@@ -1261,173 +1196,163 @@ DefaultNetAppStub::AsyncUpdateBackup(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateBackup(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateBackupRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateBackup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateBackupPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateBackupPolicyRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateBackupPolicyRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::CreateBackupPolicyRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::netapp::v1::CreateBackupPolicyRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateBackupPolicy(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateBackupPolicy(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateBackupPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateBackupPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackupPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy>
 DefaultNetAppStub::GetBackupPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
-    google::cloud::netapp::v1::BackupPolicy response;
-    auto status =
-        grpc_stub_->GetBackupPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
+  google::cloud::netapp::v1::BackupPolicy response;
+  auto status = grpc_stub_->GetBackupPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
 DefaultNetAppStub::ListBackupPolicies(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
-    google::cloud::netapp::v1::ListBackupPoliciesResponse response;
-    auto status =
-        grpc_stub_->ListBackupPolicies(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
+  google::cloud::netapp::v1::ListBackupPoliciesResponse response;
+  auto status = grpc_stub_->ListBackupPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateBackupPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateBackupPolicyRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateBackupPolicy(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateBackupPolicy(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateBackupPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateBackupPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackupPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteBackupPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteBackupPolicyRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteBackupPolicy(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteBackupPolicy(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteBackupPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteBackupPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackupPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse>
 DefaultNetAppStub::ListQuotaRules(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::ListQuotaRulesRequest const& request) {
-    google::cloud::netapp::v1::ListQuotaRulesResponse response;
-    auto status =
-        grpc_stub_->ListQuotaRules(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::ListQuotaRulesRequest const& request) {
+  google::cloud::netapp::v1::ListQuotaRulesResponse response;
+  auto status = grpc_stub_->ListQuotaRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::netapp::v1::QuotaRule>
-DefaultNetAppStub::GetQuotaRule(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
-    google::cloud::netapp::v1::QuotaRule response;
-    auto status =
-        grpc_stub_->GetQuotaRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::netapp::v1::QuotaRule> DefaultNetAppStub::GetQuotaRule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+  google::cloud::netapp::v1::QuotaRule response;
+  auto status = grpc_stub_->GetQuotaRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateQuotaRule(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::CreateQuotaRuleRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::CreateQuotaRuleRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::CreateQuotaRuleRequest const& request,
@@ -1437,28 +1362,26 @@ DefaultNetAppStub::AsyncCreateQuotaRule(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::CreateQuotaRule(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateQuotaRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::CreateQuotaRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateQuotaRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateQuotaRule(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::UpdateQuotaRuleRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request,
@@ -1468,28 +1391,26 @@ DefaultNetAppStub::AsyncUpdateQuotaRule(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::UpdateQuotaRule(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateQuotaRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::UpdateQuotaRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateQuotaRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteQuotaRule(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::netapp::v1::DeleteQuotaRuleRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request,
@@ -1499,96 +1420,83 @@ DefaultNetAppStub::AsyncDeleteQuotaRule(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::DeleteQuotaRule(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteQuotaRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::DeleteQuotaRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteQuotaRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultNetAppStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::location::Location>
-DefaultNetAppStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::location::Location> DefaultNetAppStub::GetLocation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultNetAppStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultNetAppStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultNetAppStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultNetAppStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultNetAppStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultNetAppStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -1617,13 +1525,14 @@ future<Status> DefaultNetAppStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

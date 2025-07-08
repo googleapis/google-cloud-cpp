@@ -38,27 +38,33 @@ class SqlDatabasesServiceRestStub {
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) = 0;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::Database> Get(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesGetRequest const& request) = 0;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesGetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) = 0;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::DatabasesListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesListRequest const& request) = 0;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesListRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Patch(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) = 0;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::sql::v1::Operation> Update(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) = 0;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) = 0;
 };
 
 class DefaultSqlDatabasesServiceRestStub : public SqlDatabasesServiceRestStub {
@@ -67,32 +73,41 @@ class DefaultSqlDatabasesServiceRestStub : public SqlDatabasesServiceRestStub {
 
   explicit DefaultSqlDatabasesServiceRestStub(Options options);
   DefaultSqlDatabasesServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::Database> Get(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesGetRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesInsertRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::DatabasesListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesListRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesListRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Patch(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::Operation> Update(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request)
+      override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

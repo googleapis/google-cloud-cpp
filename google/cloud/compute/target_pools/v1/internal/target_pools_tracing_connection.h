@@ -36,105 +36,115 @@ class TargetPoolsTracingConnection
   ~TargetPoolsTracingConnection() override = default;
 
   explicit TargetPoolsTracingConnection(
-    std::shared_ptr<compute_target_pools_v1::TargetPoolsConnection> child);
+      std::shared_ptr<compute_target_pools_v1::TargetPoolsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddHealthCheck(google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
+      google::cloud::cpp::compute::target_pools::v1::
+          AddHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddHealthCheck(NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
+      NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                      AddHealthCheckRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddHealthCheck(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstance(google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
+      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddInstance(NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstance(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
-  AggregatedListTargetPools(google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest request) override;
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
+  AggregatedListTargetPools(
+      google::cloud::cpp::compute::target_pools::v1::
+          AggregatedListTargetPoolsRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPool(google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::
+          DeleteTargetPoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetPool(NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPool(
+      NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                      DeleteTargetPoolRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPool(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-  GetTargetPool(google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
-  GetHealth(google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
+      google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPool(google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
+      google::cloud::cpp::compute::target_pools::v1::
+          InsertTargetPoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetPool(NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPool(
+      NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                      InsertTargetPoolRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPool(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::TargetPool>
-  ListTargetPools(google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::TargetPool> ListTargetPools(
+      google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) override;
+  RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::
+                        RemoveHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveHealthCheck(NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveHealthCheck(
+      NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                      RemoveHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstance(google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
+      google::cloud::cpp::compute::target_pools::v1::
+          RemoveInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveInstance(NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
+      NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                      RemoveInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstance(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
+      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
+      NoAwaitTag,
+      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackup(google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) override;
+  SetSecurityPolicy(google::cloud::cpp::compute::target_pools::v1::
+                        SetSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetBackup(NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackup(
-      google::cloud::cpp::compute::v1::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag,
-      google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                      SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(

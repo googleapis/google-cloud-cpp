@@ -31,35 +31,29 @@ namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 UserEventServiceLogging::UserEventServiceLogging(
-    std::shared_ptr<UserEventServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<UserEventServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::retail::v2::UserEvent>
 UserEventServiceLogging::WriteUserEvent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::WriteUserEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::WriteUserEventRequest const& request) {
         return child_->WriteUserEvent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::api::HttpBody>
-UserEventServiceLogging::CollectUserEvent(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::api::HttpBody> UserEventServiceLogging::CollectUserEvent(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CollectUserEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::CollectUserEventRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::retail::v2::CollectUserEventRequest const& request) {
         return child_->CollectUserEvent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,17 +61,17 @@ UserEventServiceLogging::CollectUserEvent(
 
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceLogging::AsyncPurgeUserEvents(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
-        return child_->AsyncPurgeUserEvents(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncPurgeUserEvents(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -85,12 +79,10 @@ UserEventServiceLogging::AsyncPurgeUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceLogging::PurgeUserEvents(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
         return child_->PurgeUserEvents(context, options, request);
       },
@@ -99,17 +91,18 @@ UserEventServiceLogging::PurgeUserEvents(
 
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceLogging::AsyncImportUserEvents(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::retail::v2::ImportUserEventsRequest const& request) {
-        return child_->AsyncImportUserEvents(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+        return child_->AsyncImportUserEvents(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -117,13 +110,12 @@ UserEventServiceLogging::AsyncImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceLogging::ImportUserEvents(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::retail::v2::ImportUserEventsRequest const& request) {
         return child_->ImportUserEvents(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,17 +123,18 @@ UserEventServiceLogging::ImportUserEvents(
 
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceLogging::AsyncRejoinUserEvents(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
-        return child_->AsyncRejoinUserEvents(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+        return child_->AsyncRejoinUserEvents(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -149,13 +142,12 @@ UserEventServiceLogging::AsyncRejoinUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceLogging::RejoinUserEvents(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
         return child_->RejoinUserEvents(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,26 +155,21 @@ UserEventServiceLogging::RejoinUserEvents(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 UserEventServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-UserEventServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> UserEventServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -200,8 +187,8 @@ UserEventServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -217,8 +204,8 @@ future<Status> UserEventServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SearchServiceClient {
  public:
-  explicit SearchServiceClient(std::shared_ptr<SearchServiceConnection> connection, Options opts = {});
+  explicit SearchServiceClient(
+      std::shared_ptr<SearchServiceConnection> connection, Options opts = {});
   ~SearchServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class SearchServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SearchServiceClient const& a, SearchServiceClient const& b) {
+  friend bool operator==(SearchServiceClient const& a,
+                         SearchServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SearchServiceClient const& a, SearchServiceClient const& b) {
+  friend bool operator!=(SearchServiceClient const& a,
+                         SearchServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,7 +123,8 @@ class SearchServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
-  Search(google::cloud::discoveryengine::v1::SearchRequest request, Options opts = {});
+  Search(google::cloud::discoveryengine::v1::SearchRequest request,
+         Options opts = {});
 
   // clang-format off
   ///
@@ -172,7 +176,8 @@ class SearchServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
-  SearchLite(google::cloud::discoveryengine::v1::SearchRequest request, Options opts = {});
+  SearchLite(google::cloud::discoveryengine::v1::SearchRequest request,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -207,8 +212,8 @@ class SearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -247,8 +252,8 @@ class SearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -274,8 +279,8 @@ class SearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -306,8 +311,9 @@ class SearchServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -341,8 +347,7 @@ class SearchServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -381,8 +386,9 @@ class SearchServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SearchServiceConnection> connection_;

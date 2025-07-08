@@ -42,25 +42,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockVpnTunnelsConnection : public compute_vpn_tunnels_v1::VpnTunnelsConnection {
+class MockVpnTunnelsConnection
+    : public compute_vpn_tunnels_v1::VpnTunnelsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>),
-  AggregatedListVpnTunnels,
-  (google::cloud::cpp::compute::vpn_tunnels::v1::AggregatedListVpnTunnelsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>),
+      AggregatedListVpnTunnels,
+      (google::cloud::cpp::compute::vpn_tunnels::v1::
+           AggregatedListVpnTunnelsRequest request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteVpnTunnel(Matcher<google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteVpnTunnel(Matcher<google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteVpnTunnel,
-  (google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const& request), (override));
-
+              DeleteVpnTunnel,
+              (google::cloud::cpp::compute::vpn_tunnels::v1::
+                   DeleteVpnTunnelRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -69,36 +78,45 @@ class MockVpnTunnelsConnection : public compute_vpn_tunnels_v1::VpnTunnelsConnec
   /// EXPECT_CALL(*mock, DeleteVpnTunnel(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteVpnTunnel, (NoAwaitTag,
-    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteVpnTunnel(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteVpnTunnel, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>,
-  GetVpnTunnel,
-  (google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const& request), (override));
+              DeleteVpnTunnel,
+              (NoAwaitTag, google::cloud::cpp::compute::vpn_tunnels::v1::
+                               DeleteVpnTunnelRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertVpnTunnel(Matcher<google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteVpnTunnel(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertVpnTunnel,
-  (google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const& request), (override));
+              DeleteVpnTunnel,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>, GetVpnTunnel,
+      (google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertVpnTunnel(Matcher<google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertVpnTunnel,
+              (google::cloud::cpp::compute::vpn_tunnels::v1::
+                   InsertVpnTunnelRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -107,36 +125,45 @@ class MockVpnTunnelsConnection : public compute_vpn_tunnels_v1::VpnTunnelsConnec
   /// EXPECT_CALL(*mock, InsertVpnTunnel(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertVpnTunnel, (NoAwaitTag,
-    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertVpnTunnel(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertVpnTunnel, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>),
-  ListVpnTunnels,
-  (google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest request), (override));
+              InsertVpnTunnel,
+              (NoAwaitTag, google::cloud::cpp::compute::vpn_tunnels::v1::
+                               InsertVpnTunnelRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertVpnTunnel(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetLabels,
-  (google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const& request), (override));
+              InsertVpnTunnel,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>), ListVpnTunnels,
+      (google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetLabels(Matcher<google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
+      (google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -144,21 +171,25 @@ class MockVpnTunnelsConnection : public compute_vpn_tunnels_v1::VpnTunnelsConnec
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetLabels(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetLabels, (NoAwaitTag,
-    google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+      (NoAwaitTag,
+       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetLabels, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              SetLabels,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

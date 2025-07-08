@@ -28,16 +28,21 @@ namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use iam_credentials_v1::IAMCredentialsBackoffPolicyOption directly.
+/// @deprecated Use iam_credentials_v1::IAMCredentialsBackoffPolicyOption
+/// directly.
 using ::google::cloud::iam_credentials_v1::IAMCredentialsBackoffPolicyOption;
 
-/// @deprecated Use iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::iam_credentials_v1::
+    IAMCredentialsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use iam_credentials_v1::IAMCredentialsPolicyOptionList directly.
 using ::google::cloud::iam_credentials_v1::IAMCredentialsPolicyOptionList;
 
-/// @deprecated Use iam_credentials_v1::IAMCredentialsRetryPolicyOption directly.
+/// @deprecated Use iam_credentials_v1::IAMCredentialsRetryPolicyOption
+/// directly.
 using ::google::cloud::iam_credentials_v1::IAMCredentialsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

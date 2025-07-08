@@ -29,8 +29,8 @@ namespace cloud {
 namespace compute_reservation_blocks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ReservationBlocksRestStub> CreateDefaultReservationBlocksRestStub(
-    Options const& options);
+std::shared_ptr<ReservationBlocksRestStub>
+CreateDefaultReservationBlocksRestStub(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_reservation_blocks_v1_internal

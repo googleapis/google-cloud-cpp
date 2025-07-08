@@ -33,7 +33,8 @@ using ::google::cloud::resourcemanager_v3::MakeFoldersConnection;
 /// @deprecated Use resourcemanager_v3::FoldersConnection directly.
 using ::google::cloud::resourcemanager_v3::FoldersConnection;
 
-/// @deprecated Use resourcemanager_v3::FoldersLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use resourcemanager_v3::FoldersLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::resourcemanager_v3::FoldersLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use resourcemanager_v3::FoldersLimitedTimeRetryPolicy directly.

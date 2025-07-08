@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_EXECUTIONS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_EXECUTIONS_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/run/v2/internal/executions_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,13 +40,11 @@ class ExecutionsAuth : public ExecutionsStub {
       std::shared_ptr<ExecutionsStub> child);
 
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetExecutionRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListExecutionsResponse> ListExecutions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListExecutionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteExecution(
@@ -56,8 +54,7 @@ class ExecutionsAuth : public ExecutionsStub {
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExecution(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCancelExecution(
@@ -67,28 +64,23 @@ class ExecutionsAuth : public ExecutionsStub {
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CancelExecution(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

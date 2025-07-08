@@ -34,8 +34,10 @@ using ::google::cloud::dataproc_v1::ClusterControllerPollingPolicyOption;
 /// @deprecated Use dataproc_v1::ClusterControllerBackoffPolicyOption directly.
 using ::google::cloud::dataproc_v1::ClusterControllerBackoffPolicyOption;
 
-/// @deprecated Use dataproc_v1::ClusterControllerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::dataproc_v1::ClusterControllerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// dataproc_v1::ClusterControllerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataproc_v1::
+    ClusterControllerConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use dataproc_v1::ClusterControllerPolicyOptionList directly.
 using ::google::cloud::dataproc_v1::ClusterControllerPolicyOptionList;

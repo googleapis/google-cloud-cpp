@@ -49,36 +49,41 @@ FeatureOnlineStoreAdminServiceMetadata::AsyncCreateFeatureOnlineStore(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateFeatureOnlineStore(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateFeatureOnlineStore(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceMetadata::CreateFeatureOnlineStore(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFeatureOnlineStore(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
 FeatureOnlineStoreAdminServiceMetadata::GetFeatureOnlineStore(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFeatureOnlineStore(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse>
 FeatureOnlineStoreAdminServiceMetadata::ListFeatureOnlineStores(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFeatureOnlineStores(context, options, request);
 }
 
@@ -87,18 +92,25 @@ FeatureOnlineStoreAdminServiceMetadata::AsyncUpdateFeatureOnlineStore(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("feature_online_store.name=", internal::UrlEncode(request.feature_online_store().name())));
-  return child_->AsyncUpdateFeatureOnlineStore(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("feature_online_store.name=",
+                   internal::UrlEncode(request.feature_online_store().name())));
+  return child_->AsyncUpdateFeatureOnlineStore(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceMetadata::UpdateFeatureOnlineStore(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("feature_online_store.name=", internal::UrlEncode(request.feature_online_store().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("feature_online_store.name=",
+                   internal::UrlEncode(request.feature_online_store().name())));
   return child_->UpdateFeatureOnlineStore(context, options, request);
 }
 
@@ -107,18 +119,21 @@ FeatureOnlineStoreAdminServiceMetadata::AsyncDeleteFeatureOnlineStore(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteFeatureOnlineStore(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteFeatureOnlineStore(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceMetadata::DeleteFeatureOnlineStore(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFeatureOnlineStore(context, options, request);
 }
 
@@ -128,35 +143,36 @@ FeatureOnlineStoreAdminServiceMetadata::AsyncCreateFeatureView(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateFeatureView(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateFeatureView(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceMetadata::CreateFeatureView(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFeatureView(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
 FeatureOnlineStoreAdminServiceMetadata::GetFeatureView(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFeatureView(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureViewsResponse>
 FeatureOnlineStoreAdminServiceMetadata::ListFeatureViews(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureViewsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFeatureViews(context, options, request);
 }
 
@@ -166,17 +182,20 @@ FeatureOnlineStoreAdminServiceMetadata::AsyncUpdateFeatureView(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("feature_view.name=", internal::UrlEncode(request.feature_view().name())));
-  return child_->AsyncUpdateFeatureView(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("feature_view.name=",
+                           internal::UrlEncode(request.feature_view().name())));
+  return child_->AsyncUpdateFeatureView(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceMetadata::UpdateFeatureView(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("feature_view.name=", internal::UrlEncode(request.feature_view().name())));
+  SetMetadata(context, options,
+              absl::StrCat("feature_view.name=",
+                           internal::UrlEncode(request.feature_view().name())));
   return child_->UpdateFeatureView(context, options, request);
 }
 
@@ -186,132 +205,134 @@ FeatureOnlineStoreAdminServiceMetadata::AsyncDeleteFeatureView(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteFeatureView(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteFeatureView(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceMetadata::DeleteFeatureView(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFeatureView(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
 FeatureOnlineStoreAdminServiceMetadata::SyncFeatureView(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("feature_view=", internal::UrlEncode(request.feature_view())));
+  SetMetadata(context, options,
+              absl::StrCat("feature_view=",
+                           internal::UrlEncode(request.feature_view())));
   return child_->SyncFeatureView(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
 FeatureOnlineStoreAdminServiceMetadata::GetFeatureViewSync(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFeatureViewSync(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse>
 FeatureOnlineStoreAdminServiceMetadata::ListFeatureViewSyncs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFeatureViewSyncs(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 FeatureOnlineStoreAdminServiceMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 FeatureOnlineStoreAdminServiceMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 FeatureOnlineStoreAdminServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 FeatureOnlineStoreAdminServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 FeatureOnlineStoreAdminServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 FeatureOnlineStoreAdminServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-FeatureOnlineStoreAdminServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status FeatureOnlineStoreAdminServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-FeatureOnlineStoreAdminServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status FeatureOnlineStoreAdminServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceMetadata::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   SetMetadata(context, options);
   return child_->WaitOperation(context, options, request);
@@ -325,8 +346,8 @@ FeatureOnlineStoreAdminServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> FeatureOnlineStoreAdminServiceMetadata::AsyncCancelOperation(
@@ -336,21 +357,21 @@ future<Status> FeatureOnlineStoreAdminServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void FeatureOnlineStoreAdminServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void FeatureOnlineStoreAdminServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void FeatureOnlineStoreAdminServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+void FeatureOnlineStoreAdminServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

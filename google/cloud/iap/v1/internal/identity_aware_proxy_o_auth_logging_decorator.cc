@@ -32,19 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IdentityAwareProxyOAuthServiceLogging::IdentityAwareProxyOAuthServiceLogging(
     std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
 IdentityAwareProxyOAuthServiceLogging::ListBrands(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::ListBrandsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::iap::v1::ListBrandsRequest const& request) {
         return child_->ListBrands(context, options, request);
       },
@@ -53,12 +49,10 @@ IdentityAwareProxyOAuthServiceLogging::ListBrands(
 
 StatusOr<google::cloud::iap::v1::Brand>
 IdentityAwareProxyOAuthServiceLogging::CreateBrand(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::CreateBrandRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::iap::v1::CreateBrandRequest const& request) {
         return child_->CreateBrand(context, options, request);
       },
@@ -67,12 +61,10 @@ IdentityAwareProxyOAuthServiceLogging::CreateBrand(
 
 StatusOr<google::cloud::iap::v1::Brand>
 IdentityAwareProxyOAuthServiceLogging::GetBrand(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::GetBrandRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::iap::v1::GetBrandRequest const& request) {
         return child_->GetBrand(context, options, request);
       },
@@ -81,27 +73,29 @@ IdentityAwareProxyOAuthServiceLogging::GetBrand(
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceLogging::CreateIdentityAwareProxyClient(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) {
-        return child_->CreateIdentityAwareProxyClient(context, options, request);
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
+              request) {
+        return child_->CreateIdentityAwareProxyClient(context, options,
+                                                      request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>
 IdentityAwareProxyOAuthServiceLogging::ListIdentityAwareProxyClients(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
+                 request) {
         return child_->ListIdentityAwareProxyClients(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +103,12 @@ IdentityAwareProxyOAuthServiceLogging::ListIdentityAwareProxyClients(
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceLogging::GetIdentityAwareProxyClient(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&
+                 request) {
         return child_->GetIdentityAwareProxyClient(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,28 +116,30 @@ IdentityAwareProxyOAuthServiceLogging::GetIdentityAwareProxyClient(
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceLogging::ResetIdentityAwareProxyClientSecret(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) {
-        return child_->ResetIdentityAwareProxyClientSecret(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::iap::v1::
+                 ResetIdentityAwareProxyClientSecretRequest const& request) {
+        return child_->ResetIdentityAwareProxyClientSecret(context, options,
+                                                           request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-IdentityAwareProxyOAuthServiceLogging::DeleteIdentityAwareProxyClient(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) {
+Status IdentityAwareProxyOAuthServiceLogging::DeleteIdentityAwareProxyClient(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) {
-        return child_->DeleteIdentityAwareProxyClient(context, options, request);
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
+              request) {
+        return child_->DeleteIdentityAwareProxyClient(context, options,
+                                                      request);
       },
       context, options, request, __func__, tracing_options_);
 }

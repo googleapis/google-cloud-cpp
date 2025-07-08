@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionUrlMapsClient::RegionUrlMapsClient(
     std::shared_ptr<RegionUrlMapsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RegionUrlMapsClient::~RegionUrlMapsClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::DeleteUrlMap(std::string const& project, std::string const& region, std::string const& url_map, Options opts) {
+RegionUrlMapsClient::DeleteUrlMap(std::string const& project,
+                                  std::string const& region,
+                                  std::string const& url_map, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest request;
   request.set_project(project);
@@ -43,7 +45,9 @@ RegionUrlMapsClient::DeleteUrlMap(std::string const& project, std::string const&
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsClient::DeleteUrlMap(NoAwaitTag, std::string const& project, std::string const& region, std::string const& url_map, Options opts) {
+RegionUrlMapsClient::DeleteUrlMap(NoAwaitTag, std::string const& project,
+                                  std::string const& region,
+                                  std::string const& url_map, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest request;
   request.set_project(project);
@@ -53,25 +57,35 @@ RegionUrlMapsClient::DeleteUrlMap(NoAwaitTag, std::string const& project, std::s
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::DeleteUrlMap(google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::DeleteUrlMap(
+    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUrlMap(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsClient::DeleteUrlMap(NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::DeleteUrlMap(
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUrlMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::DeleteUrlMap(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+RegionUrlMapsClient::DeleteUrlMap(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUrlMap(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsClient::GetUrlMap(std::string const& project, std::string const& region, std::string const& url_map, Options opts) {
+RegionUrlMapsClient::GetUrlMap(std::string const& project,
+                               std::string const& region,
+                               std::string const& url_map, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest request;
   request.set_project(project);
@@ -81,13 +95,19 @@ RegionUrlMapsClient::GetUrlMap(std::string const& project, std::string const& re
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsClient::GetUrlMap(google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::GetUrlMap(
+    google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetUrlMap(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::InsertUrlMap(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts) {
+RegionUrlMapsClient::InsertUrlMap(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest request;
   request.set_project(project);
@@ -97,7 +117,10 @@ RegionUrlMapsClient::InsertUrlMap(std::string const& project, std::string const&
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsClient::InsertUrlMap(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts) {
+RegionUrlMapsClient::InsertUrlMap(
+    NoAwaitTag, std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest request;
   request.set_project(project);
@@ -107,40 +130,58 @@ RegionUrlMapsClient::InsertUrlMap(NoAwaitTag, std::string const& project, std::s
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::InsertUrlMap(google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::InsertUrlMap(
+    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertUrlMap(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsClient::InsertUrlMap(NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::InsertUrlMap(
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertUrlMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::InsertUrlMap(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+RegionUrlMapsClient::InsertUrlMap(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertUrlMap(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsClient::ListRegionUrlMaps(std::string const& project, std::string const& region, Options opts) {
+RegionUrlMapsClient::ListRegionUrlMaps(std::string const& project,
+                                       std::string const& region,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest request;
+  google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   return connection_->ListRegionUrlMaps(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsClient::ListRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest request, Options opts) {
+RegionUrlMapsClient::ListRegionUrlMaps(
+    google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRegionUrlMaps(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::PatchUrlMap(std::string const& project, std::string const& region, std::string const& url_map, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts) {
+RegionUrlMapsClient::PatchUrlMap(
+    std::string const& project, std::string const& region,
+    std::string const& url_map,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest request;
   request.set_project(project);
@@ -151,7 +192,11 @@ RegionUrlMapsClient::PatchUrlMap(std::string const& project, std::string const& 
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsClient::PatchUrlMap(NoAwaitTag, std::string const& project, std::string const& region, std::string const& url_map, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts) {
+RegionUrlMapsClient::PatchUrlMap(
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& url_map,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest request;
   request.set_project(project);
@@ -162,25 +207,37 @@ RegionUrlMapsClient::PatchUrlMap(NoAwaitTag, std::string const& project, std::st
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::PatchUrlMap(google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::PatchUrlMap(
+    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchUrlMap(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsClient::PatchUrlMap(NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::PatchUrlMap(
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchUrlMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::PatchUrlMap(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+RegionUrlMapsClient::PatchUrlMap(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchUrlMap(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::UpdateUrlMap(std::string const& project, std::string const& region, std::string const& url_map, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts) {
+RegionUrlMapsClient::UpdateUrlMap(
+    std::string const& project, std::string const& region,
+    std::string const& url_map,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest request;
   request.set_project(project);
@@ -191,7 +248,11 @@ RegionUrlMapsClient::UpdateUrlMap(std::string const& project, std::string const&
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsClient::UpdateUrlMap(NoAwaitTag, std::string const& project, std::string const& region, std::string const& url_map, google::cloud::cpp::compute::v1::UrlMap const& url_map_resource, Options opts) {
+RegionUrlMapsClient::UpdateUrlMap(
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& url_map,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest request;
   request.set_project(project);
@@ -202,36 +263,53 @@ RegionUrlMapsClient::UpdateUrlMap(NoAwaitTag, std::string const& project, std::s
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::UpdateUrlMap(google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::UpdateUrlMap(
+    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateUrlMap(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsClient::UpdateUrlMap(NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request, Options opts) {
+RegionUrlMapsClient::UpdateUrlMap(
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateUrlMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionUrlMapsClient::UpdateUrlMap(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+RegionUrlMapsClient::UpdateUrlMap(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateUrlMap(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-RegionUrlMapsClient::Validate(std::string const& project, std::string const& region, std::string const& url_map, google::cloud::cpp::compute::v1::RegionUrlMapsValidateRequest const& region_url_maps_validate_request_resource, Options opts) {
+RegionUrlMapsClient::Validate(
+    std::string const& project, std::string const& region,
+    std::string const& url_map,
+    google::cloud::cpp::compute::v1::RegionUrlMapsValidateRequest const&
+        region_url_maps_validate_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_url_map(url_map);
-  *request.mutable_region_url_maps_validate_request_resource() = region_url_maps_validate_request_resource;
+  *request.mutable_region_url_maps_validate_request_resource() =
+      region_url_maps_validate_request_resource;
   return connection_->Validate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-RegionUrlMapsClient::Validate(google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request, Options opts) {
+RegionUrlMapsClient::Validate(
+    google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Validate(request);
 }

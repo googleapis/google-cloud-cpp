@@ -33,14 +33,16 @@ PrincipalAccessBoundaryPoliciesAuth::PrincipalAccessBoundaryPoliciesAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 PrincipalAccessBoundaryPoliciesAuth::AsyncCreatePrincipalAccessBoundaryPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -52,17 +54,17 @@ PrincipalAccessBoundaryPoliciesAuth::AsyncCreatePrincipalAccessBoundaryPolicy(
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesAuth::CreatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreatePrincipalAccessBoundaryPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy> PrincipalAccessBoundaryPoliciesAuth::GetPrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
+PrincipalAccessBoundaryPoliciesAuth::GetPrincipalAccessBoundaryPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -71,14 +73,16 @@ StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy> PrincipalAccessBoundary
 
 future<StatusOr<google::longrunning::Operation>>
 PrincipalAccessBoundaryPoliciesAuth::AsyncUpdatePrincipalAccessBoundaryPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -90,9 +94,9 @@ PrincipalAccessBoundaryPoliciesAuth::AsyncUpdatePrincipalAccessBoundaryPolicy(
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesAuth::UpdatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdatePrincipalAccessBoundaryPolicy(context, options, request);
@@ -100,14 +104,16 @@ PrincipalAccessBoundaryPoliciesAuth::UpdatePrincipalAccessBoundaryPolicy(
 
 future<StatusOr<google::longrunning::Operation>>
 PrincipalAccessBoundaryPoliciesAuth::AsyncDeletePrincipalAccessBoundaryPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -119,35 +125,39 @@ PrincipalAccessBoundaryPoliciesAuth::AsyncDeletePrincipalAccessBoundaryPolicy(
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesAuth::DeletePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePrincipalAccessBoundaryPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse> PrincipalAccessBoundaryPoliciesAuth::ListPrincipalAccessBoundaryPolicies(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) {
+StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse>
+PrincipalAccessBoundaryPoliciesAuth::ListPrincipalAccessBoundaryPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPrincipalAccessBoundaryPolicies(context, options, request);
 }
 
-StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse> PrincipalAccessBoundaryPoliciesAuth::SearchPrincipalAccessBoundaryPolicyBindings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) {
+StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse>
+PrincipalAccessBoundaryPoliciesAuth::
+    SearchPrincipalAccessBoundaryPolicyBindings(
+        grpc::ClientContext& context, Options const& options,
+        google::iam::v3::
+            SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchPrincipalAccessBoundaryPolicyBindings(context, options, request);
+  return child_->SearchPrincipalAccessBoundaryPolicyBindings(context, options,
+                                                             request);
 }
 
-StatusOr<google::longrunning::Operation> PrincipalAccessBoundaryPoliciesAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+PrincipalAccessBoundaryPoliciesAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -161,15 +171,16 @@ PrincipalAccessBoundaryPoliciesAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -178,13 +189,14 @@ future<Status> PrincipalAccessBoundaryPoliciesAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

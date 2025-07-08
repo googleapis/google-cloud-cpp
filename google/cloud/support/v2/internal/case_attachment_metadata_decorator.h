@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/support/v2/internal/case_attachment_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -40,13 +40,12 @@ class CaseAttachmentServiceMetadata : public CaseAttachmentServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::support::v2::ListAttachmentsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::ListAttachmentsRequest const& request)
+      override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

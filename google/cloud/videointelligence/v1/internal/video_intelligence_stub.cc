@@ -33,15 +33,17 @@ VideoIntelligenceServiceStub::~VideoIntelligenceServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoIntelligenceServiceStub::AsyncAnnotateVideo(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::videointelligence::v1::AnnotateVideoRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::videointelligence::v1::AnnotateVideoRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
+             google::cloud::videointelligence::v1::AnnotateVideoRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncAnnotateVideo(context, request, cq);
       },
@@ -50,16 +52,14 @@ DefaultVideoIntelligenceServiceStub::AsyncAnnotateVideo(
 
 StatusOr<google::longrunning::Operation>
 DefaultVideoIntelligenceServiceStub::AnnotateVideo(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->AnnotateVideo(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AnnotateVideo(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -88,13 +88,14 @@ future<Status> DefaultVideoIntelligenceServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

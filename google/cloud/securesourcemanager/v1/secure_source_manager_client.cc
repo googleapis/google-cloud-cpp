@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecureSourceManagerClient::SecureSourceManagerClient(
     std::shared_ptr<SecureSourceManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SecureSourceManagerClient::~SecureSourceManagerClient() = default;
 
 StreamRange<google::cloud::securesourcemanager::v1::Instance>
-SecureSourceManagerClient::ListInstances(std::string const& parent, Options opts) {
+SecureSourceManagerClient::ListInstances(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::ListInstancesRequest request;
   request.set_parent(parent);
@@ -41,7 +42,9 @@ SecureSourceManagerClient::ListInstances(std::string const& parent, Options opts
 }
 
 StreamRange<google::cloud::securesourcemanager::v1::Instance>
-SecureSourceManagerClient::ListInstances(google::cloud::securesourcemanager::v1::ListInstancesRequest request, Options opts) {
+SecureSourceManagerClient::ListInstances(
+    google::cloud::securesourcemanager::v1::ListInstancesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
@@ -55,13 +58,18 @@ SecureSourceManagerClient::GetInstance(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::Instance>
-SecureSourceManagerClient::GetInstance(google::cloud::securesourcemanager::v1::GetInstanceRequest const& request, Options opts) {
+SecureSourceManagerClient::GetInstance(
+    google::cloud::securesourcemanager::v1::GetInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-SecureSourceManagerClient::CreateInstance(std::string const& parent, google::cloud::securesourcemanager::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+SecureSourceManagerClient::CreateInstance(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -71,7 +79,10 @@ SecureSourceManagerClient::CreateInstance(std::string const& parent, google::clo
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::securesourcemanager::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+SecureSourceManagerClient::CreateInstance(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -81,25 +92,34 @@ SecureSourceManagerClient::CreateInstance(NoAwaitTag, std::string const& parent,
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-SecureSourceManagerClient::CreateInstance(google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request, Options opts) {
+SecureSourceManagerClient::CreateInstance(
+    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::CreateInstance(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateInstanceRequest const& request, Options opts) {
+SecureSourceManagerClient::CreateInstance(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-SecureSourceManagerClient::CreateInstance(google::longrunning::Operation const& operation, Options opts) {
+SecureSourceManagerClient::CreateInstance(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(operation);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteInstance(std::string const& name, Options opts) {
+SecureSourceManagerClient::DeleteInstance(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::DeleteInstanceRequest request;
   request.set_name(name);
@@ -107,7 +127,8 @@ SecureSourceManagerClient::DeleteInstance(std::string const& name, Options opts)
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::DeleteInstance(NoAwaitTag, std::string const& name, Options opts) {
+SecureSourceManagerClient::DeleteInstance(NoAwaitTag, std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::DeleteInstanceRequest request;
   request.set_name(name);
@@ -115,25 +136,34 @@ SecureSourceManagerClient::DeleteInstance(NoAwaitTag, std::string const& name, O
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteInstance(google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request, Options opts) {
+SecureSourceManagerClient::DeleteInstance(
+    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::DeleteInstance(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteInstanceRequest const& request, Options opts) {
+SecureSourceManagerClient::DeleteInstance(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteInstance(google::longrunning::Operation const& operation, Options opts) {
+SecureSourceManagerClient::DeleteInstance(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(operation);
 }
 
 StreamRange<google::cloud::securesourcemanager::v1::Repository>
-SecureSourceManagerClient::ListRepositories(std::string const& parent, Options opts) {
+SecureSourceManagerClient::ListRepositories(std::string const& parent,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::ListRepositoriesRequest request;
   request.set_parent(parent);
@@ -141,13 +171,16 @@ SecureSourceManagerClient::ListRepositories(std::string const& parent, Options o
 }
 
 StreamRange<google::cloud::securesourcemanager::v1::Repository>
-SecureSourceManagerClient::ListRepositories(google::cloud::securesourcemanager::v1::ListRepositoriesRequest request, Options opts) {
+SecureSourceManagerClient::ListRepositories(
+    google::cloud::securesourcemanager::v1::ListRepositoriesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRepositories(std::move(request));
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::Repository>
-SecureSourceManagerClient::GetRepository(std::string const& name, Options opts) {
+SecureSourceManagerClient::GetRepository(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::GetRepositoryRequest request;
   request.set_name(name);
@@ -155,13 +188,18 @@ SecureSourceManagerClient::GetRepository(std::string const& name, Options opts) 
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::Repository>
-SecureSourceManagerClient::GetRepository(google::cloud::securesourcemanager::v1::GetRepositoryRequest const& request, Options opts) {
+SecureSourceManagerClient::GetRepository(
+    google::cloud::securesourcemanager::v1::GetRepositoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRepository(request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-SecureSourceManagerClient::CreateRepository(std::string const& parent, google::cloud::securesourcemanager::v1::Repository const& repository, std::string const& repository_id, Options opts) {
+SecureSourceManagerClient::CreateRepository(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::Repository const& repository,
+    std::string const& repository_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::CreateRepositoryRequest request;
   request.set_parent(parent);
@@ -171,7 +209,10 @@ SecureSourceManagerClient::CreateRepository(std::string const& parent, google::c
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::CreateRepository(NoAwaitTag, std::string const& parent, google::cloud::securesourcemanager::v1::Repository const& repository, std::string const& repository_id, Options opts) {
+SecureSourceManagerClient::CreateRepository(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::Repository const& repository,
+    std::string const& repository_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::CreateRepositoryRequest request;
   request.set_parent(parent);
@@ -181,25 +222,34 @@ SecureSourceManagerClient::CreateRepository(NoAwaitTag, std::string const& paren
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-SecureSourceManagerClient::CreateRepository(google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request, Options opts) {
+SecureSourceManagerClient::CreateRepository(
+    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(request);
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::CreateRepository(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateRepositoryRequest const& request, Options opts) {
+SecureSourceManagerClient::CreateRepository(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-SecureSourceManagerClient::CreateRepository(google::longrunning::Operation const& operation, Options opts) {
+SecureSourceManagerClient::CreateRepository(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(operation);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteRepository(std::string const& name, Options opts) {
+SecureSourceManagerClient::DeleteRepository(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::DeleteRepositoryRequest request;
   request.set_name(name);
@@ -207,7 +257,8 @@ SecureSourceManagerClient::DeleteRepository(std::string const& name, Options opt
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::DeleteRepository(NoAwaitTag, std::string const& name, Options opts) {
+SecureSourceManagerClient::DeleteRepository(NoAwaitTag, std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::DeleteRepositoryRequest request;
   request.set_name(name);
@@ -215,53 +266,62 @@ SecureSourceManagerClient::DeleteRepository(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteRepository(google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request, Options opts) {
+SecureSourceManagerClient::DeleteRepository(
+    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(request);
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::DeleteRepository(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const& request, Options opts) {
+SecureSourceManagerClient::DeleteRepository(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteRepository(google::longrunning::Operation const& operation, Options opts) {
+SecureSourceManagerClient::DeleteRepository(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(operation);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecureSourceManagerClient::GetIamPolicyRepo(std::string const& resource, Options opts) {
+StatusOr<google::iam::v1::Policy> SecureSourceManagerClient::GetIamPolicyRepo(
+    std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicyRepo(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecureSourceManagerClient::GetIamPolicyRepo(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> SecureSourceManagerClient::GetIamPolicyRepo(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicyRepo(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecureSourceManagerClient::SetIamPolicyRepo(std::string const& resource, Options opts) {
+StatusOr<google::iam::v1::Policy> SecureSourceManagerClient::SetIamPolicyRepo(
+    std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->SetIamPolicyRepo(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecureSourceManagerClient::SetIamPolicyRepo(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> SecureSourceManagerClient::SetIamPolicyRepo(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicyRepo(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SecureSourceManagerClient::TestIamPermissionsRepo(std::string const& resource, Options opts) {
+SecureSourceManagerClient::TestIamPermissionsRepo(std::string const& resource,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
@@ -269,13 +329,17 @@ SecureSourceManagerClient::TestIamPermissionsRepo(std::string const& resource, O
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SecureSourceManagerClient::TestIamPermissionsRepo(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+SecureSourceManagerClient::TestIamPermissionsRepo(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissionsRepo(request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-SecureSourceManagerClient::CreateBranchRule(std::string const& parent, google::cloud::securesourcemanager::v1::BranchRule const& branch_rule, std::string const& branch_rule_id, Options opts) {
+SecureSourceManagerClient::CreateBranchRule(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
+    std::string const& branch_rule_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::CreateBranchRuleRequest request;
   request.set_parent(parent);
@@ -285,7 +349,10 @@ SecureSourceManagerClient::CreateBranchRule(std::string const& parent, google::c
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::CreateBranchRule(NoAwaitTag, std::string const& parent, google::cloud::securesourcemanager::v1::BranchRule const& branch_rule, std::string const& branch_rule_id, Options opts) {
+SecureSourceManagerClient::CreateBranchRule(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
+    std::string const& branch_rule_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::CreateBranchRuleRequest request;
   request.set_parent(parent);
@@ -295,25 +362,34 @@ SecureSourceManagerClient::CreateBranchRule(NoAwaitTag, std::string const& paren
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-SecureSourceManagerClient::CreateBranchRule(google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request, Options opts) {
+SecureSourceManagerClient::CreateBranchRule(
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBranchRule(request);
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::CreateBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const& request, Options opts) {
+SecureSourceManagerClient::CreateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBranchRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-SecureSourceManagerClient::CreateBranchRule(google::longrunning::Operation const& operation, Options opts) {
+SecureSourceManagerClient::CreateBranchRule(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBranchRule(operation);
 }
 
 StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
-SecureSourceManagerClient::ListBranchRules(std::string const& parent, Options opts) {
+SecureSourceManagerClient::ListBranchRules(std::string const& parent,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::ListBranchRulesRequest request;
   request.set_parent(parent);
@@ -321,13 +397,16 @@ SecureSourceManagerClient::ListBranchRules(std::string const& parent, Options op
 }
 
 StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
-SecureSourceManagerClient::ListBranchRules(google::cloud::securesourcemanager::v1::ListBranchRulesRequest request, Options opts) {
+SecureSourceManagerClient::ListBranchRules(
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBranchRules(std::move(request));
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
-SecureSourceManagerClient::GetBranchRule(std::string const& name, Options opts) {
+SecureSourceManagerClient::GetBranchRule(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::GetBranchRuleRequest request;
   request.set_name(name);
@@ -335,13 +414,17 @@ SecureSourceManagerClient::GetBranchRule(std::string const& name, Options opts) 
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
-SecureSourceManagerClient::GetBranchRule(google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request, Options opts) {
+SecureSourceManagerClient::GetBranchRule(
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBranchRule(request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-SecureSourceManagerClient::UpdateBranchRule(google::cloud::securesourcemanager::v1::BranchRule const& branch_rule, google::protobuf::FieldMask const& update_mask, Options opts) {
+SecureSourceManagerClient::UpdateBranchRule(
+    google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest request;
   *request.mutable_branch_rule() = branch_rule;
@@ -350,7 +433,10 @@ SecureSourceManagerClient::UpdateBranchRule(google::cloud::securesourcemanager::
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::UpdateBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::BranchRule const& branch_rule, google::protobuf::FieldMask const& update_mask, Options opts) {
+SecureSourceManagerClient::UpdateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest request;
   *request.mutable_branch_rule() = branch_rule;
@@ -359,25 +445,34 @@ SecureSourceManagerClient::UpdateBranchRule(NoAwaitTag, google::cloud::securesou
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-SecureSourceManagerClient::UpdateBranchRule(google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request, Options opts) {
+SecureSourceManagerClient::UpdateBranchRule(
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBranchRule(request);
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::UpdateBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const& request, Options opts) {
+SecureSourceManagerClient::UpdateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBranchRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
-SecureSourceManagerClient::UpdateBranchRule(google::longrunning::Operation const& operation, Options opts) {
+SecureSourceManagerClient::UpdateBranchRule(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBranchRule(operation);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteBranchRule(std::string const& name, Options opts) {
+SecureSourceManagerClient::DeleteBranchRule(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest request;
   request.set_name(name);
@@ -385,7 +480,8 @@ SecureSourceManagerClient::DeleteBranchRule(std::string const& name, Options opt
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::DeleteBranchRule(NoAwaitTag, std::string const& name, Options opts) {
+SecureSourceManagerClient::DeleteBranchRule(NoAwaitTag, std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest request;
   request.set_name(name);
@@ -393,55 +489,68 @@ SecureSourceManagerClient::DeleteBranchRule(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteBranchRule(google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request, Options opts) {
+SecureSourceManagerClient::DeleteBranchRule(
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBranchRule(request);
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::DeleteBranchRule(NoAwaitTag, google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const& request, Options opts) {
+SecureSourceManagerClient::DeleteBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBranchRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-SecureSourceManagerClient::DeleteBranchRule(google::longrunning::Operation const& operation, Options opts) {
+SecureSourceManagerClient::DeleteBranchRule(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBranchRule(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-SecureSourceManagerClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+SecureSourceManagerClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-SecureSourceManagerClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+SecureSourceManagerClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecureSourceManagerClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> SecureSourceManagerClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecureSourceManagerClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> SecureSourceManagerClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SecureSourceManagerClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+SecureSourceManagerClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-SecureSourceManagerClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+SecureSourceManagerClient::ListOperations(std::string const& name,
+                                          std::string const& filter,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -450,7 +559,8 @@ SecureSourceManagerClient::ListOperations(std::string const& name, std::string c
 }
 
 StreamRange<google::longrunning::Operation>
-SecureSourceManagerClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+SecureSourceManagerClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
@@ -464,35 +574,36 @@ SecureSourceManagerClient::GetOperation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-SecureSourceManagerClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+SecureSourceManagerClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-SecureSourceManagerClient::DeleteOperation(std::string const& name, Options opts) {
+Status SecureSourceManagerClient::DeleteOperation(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-SecureSourceManagerClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status SecureSourceManagerClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-SecureSourceManagerClient::CancelOperation(std::string const& name, Options opts) {
+Status SecureSourceManagerClient::CancelOperation(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-SecureSourceManagerClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status SecureSourceManagerClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

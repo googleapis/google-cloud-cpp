@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_TENANT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_TENANT_CONNECTION_H
 
+#include "google/cloud/talent/v4/internal/tenant_retry_traits.h"
+#include "google/cloud/talent/v4/tenant_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/talent/v4/internal/tenant_retry_traits.h"
-#include "google/cloud/talent/v4/tenant_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/tenant_service.pb.h>
 #include <memory>
@@ -52,7 +52,8 @@ class TenantServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TenantServiceLimitedErrorCountRetryPolicy : public TenantServiceRetryPolicy {
+class TenantServiceLimitedErrorCountRetryPolicy
+    : public TenantServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class TenantServiceLimitedErrorCountRetryPolicy : public TenantServiceRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit TenantServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TenantServiceLimitedErrorCountRetryPolicy(
       TenantServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TenantServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TenantServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TenantServiceLimitedErrorCountRetryPolicy(
       TenantServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TenantServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TenantServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class TenantServiceLimitedErrorCountRetryPolicy : public TenantServiceRetryPolic
   using BaseType = TenantServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<talent_v4_internal::TenantServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      talent_v4_internal::TenantServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class TenantServiceLimitedTimeRetryPolicy : public TenantServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TenantServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TenantServiceLimitedTimeRetryPolicy(TenantServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : TenantServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TenantServiceLimitedTimeRetryPolicy(TenantServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : TenantServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TenantServiceLimitedTimeRetryPolicy(
+      TenantServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : TenantServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TenantServiceLimitedTimeRetryPolicy(
+      TenantServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : TenantServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class TenantServiceLimitedTimeRetryPolicy : public TenantServiceRetryPolicy {
   using BaseType = TenantServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<talent_v4_internal::TenantServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      talent_v4_internal::TenantServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,23 +182,23 @@ class TenantServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::talent::v4::Tenant>
-  CreateTenant(google::cloud::talent::v4::CreateTenantRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
+      google::cloud::talent::v4::CreateTenantRequest const& request);
 
-  virtual StatusOr<google::cloud::talent::v4::Tenant>
-  GetTenant(google::cloud::talent::v4::GetTenantRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
+      google::cloud::talent::v4::GetTenantRequest const& request);
 
-  virtual StatusOr<google::cloud::talent::v4::Tenant>
-  UpdateTenant(google::cloud::talent::v4::UpdateTenantRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
+      google::cloud::talent::v4::UpdateTenantRequest const& request);
 
-  virtual Status
-  DeleteTenant(google::cloud::talent::v4::DeleteTenantRequest const& request);
+  virtual Status DeleteTenant(
+      google::cloud::talent::v4::DeleteTenantRequest const& request);
 
-  virtual StreamRange<google::cloud::talent::v4::Tenant>
-  ListTenants(google::cloud::talent::v4::ListTenantsRequest request);
+  virtual StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
+      google::cloud::talent::v4::ListTenantsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

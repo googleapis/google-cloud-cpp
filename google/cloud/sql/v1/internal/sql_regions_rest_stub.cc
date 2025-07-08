@@ -30,16 +30,15 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultSqlRegionsServiceRestStub::DefaultSqlRegionsServiceRestStub(Options options)
+DefaultSqlRegionsServiceRestStub::DefaultSqlRegionsServiceRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultSqlRegionsServiceRestStub::DefaultSqlRegionsServiceRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal

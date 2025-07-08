@@ -30,21 +30,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class TraceServiceTracingConnection
-    : public trace_v2::TraceServiceConnection {
+class TraceServiceTracingConnection : public trace_v2::TraceServiceConnection {
  public:
   ~TraceServiceTracingConnection() override = default;
 
   explicit TraceServiceTracingConnection(
-    std::shared_ptr<trace_v2::TraceServiceConnection> child);
+      std::shared_ptr<trace_v2::TraceServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  Status
-  BatchWriteSpans(google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) override;
+  Status BatchWriteSpans(
+      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
+      override;
 
-  StatusOr<google::devtools::cloudtrace::v2::Span>
-  CreateSpan(google::devtools::cloudtrace::v2::Span const& request) override;
+  StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
+      google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:
   std::shared_ptr<trace_v2::TraceServiceConnection> child_;

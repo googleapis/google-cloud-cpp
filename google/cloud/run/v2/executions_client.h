@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CLIENT_H
 
+#include "google/cloud/run/v2/executions_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/run/v2/executions_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ExecutionsClient {
  public:
-  explicit ExecutionsClient(std::shared_ptr<ExecutionsConnection> connection, Options opts = {});
+  explicit ExecutionsClient(std::shared_ptr<ExecutionsConnection> connection,
+                            Options opts = {});
   ~ExecutionsClient();
 
   ///@{
@@ -110,8 +111,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L86}
   ///
   // clang-format on
-  StatusOr<google::cloud::run::v2::Execution>
-  GetExecution(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::run::v2::Execution> GetExecution(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -140,8 +141,9 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L86}
   ///
   // clang-format on
-  StatusOr<google::cloud::run::v2::Execution>
-  GetExecution(google::cloud::run::v2::GetExecutionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::run::v2::Execution> GetExecution(
+      google::cloud::run::v2::GetExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -178,8 +180,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L98}
   ///
   // clang-format on
-  StreamRange<google::cloud::run::v2::Execution>
-  ListExecutions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::run::v2::Execution> ListExecutions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +220,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L98}
   ///
   // clang-format on
-  StreamRange<google::cloud::run::v2::Execution>
-  ListExecutions(google::cloud::run::v2::ListExecutionsRequest request, Options opts = {});
+  StreamRange<google::cloud::run::v2::Execution> ListExecutions(
+      google::cloud::run::v2::ListExecutionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -253,8 +255,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  DeleteExecution(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -267,8 +269,8 @@ class ExecutionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteExecution(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +306,9 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  DeleteExecution(google::cloud::run::v2::DeleteExecutionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      google::cloud::run::v2::DeleteExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -318,8 +321,9 @@ class ExecutionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteExecution(NoAwaitTag, google::cloud::run::v2::DeleteExecutionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      NoAwaitTag, google::cloud::run::v2::DeleteExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -330,8 +334,8 @@ class ExecutionsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  DeleteExecution(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -365,8 +369,8 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  CancelExecution(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -379,8 +383,8 @@ class ExecutionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CancelExecution(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> CancelExecution(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -416,8 +420,9 @@ class ExecutionsClient {
   /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  CancelExecution(google::cloud::run::v2::CancelExecutionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      google::cloud::run::v2::CancelExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -430,8 +435,9 @@ class ExecutionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CancelExecution(NoAwaitTag, google::cloud::run::v2::CancelExecutionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CancelExecution(
+      NoAwaitTag, google::cloud::run::v2::CancelExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -442,8 +448,8 @@ class ExecutionsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  CancelExecution(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -478,8 +484,8 @@ class ExecutionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -518,8 +524,8 @@ class ExecutionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -545,8 +551,8 @@ class ExecutionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -577,8 +583,9 @@ class ExecutionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -602,8 +609,7 @@ class ExecutionsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -632,8 +638,9 @@ class ExecutionsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -670,8 +677,9 @@ class ExecutionsClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ExecutionsConnection> connection_;

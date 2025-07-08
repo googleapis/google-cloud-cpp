@@ -38,50 +38,58 @@ class AccessApprovalAuth : public AccessApprovalStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<AccessApprovalStub> child);
 
-  StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse> ListApprovalRequests(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::ListApprovalRequestsMessage const& request) override;
+  StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
+  ListApprovalRequests(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
+          request) override;
 
-  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest> GetApprovalRequest(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request) override;
+  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+  GetApprovalRequest(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
+          request) override;
 
-  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest> ApproveApprovalRequest(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request) override;
+  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+  ApproveApprovalRequest(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
+          request) override;
 
-  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest> DismissApprovalRequest(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request) override;
+  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+  DismissApprovalRequest(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
+          request) override;
 
-  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest> InvalidateApprovalRequest(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request) override;
+  StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
+  InvalidateApprovalRequest(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+          request) override;
 
-  StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings> GetAccessApprovalSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request) override;
+  StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
+  GetAccessApprovalSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
+          request) override;
 
-  StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings> UpdateAccessApprovalSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request) override;
+  StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
+  UpdateAccessApprovalSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::
+          UpdateAccessApprovalSettingsMessage const& request) override;
 
   Status DeleteAccessApprovalSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::
+          DeleteAccessApprovalSettingsMessage const& request) override;
 
-  StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount> GetAccessApprovalServiceAccount(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request) override;
+  StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+  GetAccessApprovalServiceAccount(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

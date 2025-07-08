@@ -33,45 +33,44 @@ DataStoreServiceAuth::DataStoreServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 DataStoreServiceAuth::AsyncCreateDataStore(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDataStore(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDataStore(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DataStoreServiceAuth::CreateDataStore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+StatusOr<google::longrunning::Operation> DataStoreServiceAuth::CreateDataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataStore(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::DataStore> DataStoreServiceAuth::GetDataStore(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::DataStore>
+DataStoreServiceAuth::GetDataStore(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataStore(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListDataStoresResponse> DataStoreServiceAuth::ListDataStores(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListDataStoresResponse>
+DataStoreServiceAuth::ListDataStores(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListDataStoresRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -80,45 +79,44 @@ StatusOr<google::cloud::discoveryengine::v1::ListDataStoresResponse> DataStoreSe
 
 future<StatusOr<google::longrunning::Operation>>
 DataStoreServiceAuth::AsyncDeleteDataStore(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDataStore(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDataStore(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DataStoreServiceAuth::DeleteDataStore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+StatusOr<google::longrunning::Operation> DataStoreServiceAuth::DeleteDataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataStore(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::DataStore> DataStoreServiceAuth::UpdateDataStore(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::DataStore>
+DataStoreServiceAuth::UpdateDataStore(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataStore(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DataStoreServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DataStoreServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -126,8 +124,7 @@ StatusOr<google::longrunning::ListOperationsResponse> DataStoreServiceAuth::List
 }
 
 StatusOr<google::longrunning::Operation> DataStoreServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -135,8 +132,7 @@ StatusOr<google::longrunning::Operation> DataStoreServiceAuth::GetOperation(
 }
 
 Status DataStoreServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -150,15 +146,16 @@ DataStoreServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -167,13 +164,14 @@ future<Status> DataStoreServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

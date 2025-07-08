@@ -42,13 +42,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockIamCheckerConnection : public policytroubleshooter_v1::IamCheckerConnection {
+class MockIamCheckerConnection
+    : public policytroubleshooter_v1::IamCheckerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>,
-  TroubleshootIamPolicy,
-  (google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::policytroubleshooter::v1::
+                           TroubleshootIamPolicyResponse>,
+              TroubleshootIamPolicy,
+              (google::cloud::policytroubleshooter::v1::
+                   TroubleshootIamPolicyRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

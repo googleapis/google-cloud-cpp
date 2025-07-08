@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_FLEET_ROUTING_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_FLEET_ROUTING_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/optimization/v1/fleet_routing_connection.h"
 #include "google/cloud/optimization/v1/fleet_routing_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct FleetRoutingPollingPolicyOption {
  * @ingroup google-cloud-optimization-options
  */
 using FleetRoutingPolicyOptionList =
-    OptionList<FleetRoutingRetryPolicyOption,
-               FleetRoutingBackoffPolicyOption,
+    OptionList<FleetRoutingRetryPolicyOption, FleetRoutingBackoffPolicyOption,
                FleetRoutingPollingPolicyOption,
                FleetRoutingConnectionIdempotencyPolicyOption>;
 

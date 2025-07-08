@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 UptimeCheckServiceClient::UptimeCheckServiceClient(
     std::shared_ptr<UptimeCheckServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 UptimeCheckServiceClient::~UptimeCheckServiceClient() = default;
 
 StreamRange<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceClient::ListUptimeCheckConfigs(std::string const& parent, Options opts) {
+UptimeCheckServiceClient::ListUptimeCheckConfigs(std::string const& parent,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListUptimeCheckConfigsRequest request;
   request.set_parent(parent);
@@ -41,13 +42,16 @@ UptimeCheckServiceClient::ListUptimeCheckConfigs(std::string const& parent, Opti
 }
 
 StreamRange<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceClient::ListUptimeCheckConfigs(google::monitoring::v3::ListUptimeCheckConfigsRequest request, Options opts) {
+UptimeCheckServiceClient::ListUptimeCheckConfigs(
+    google::monitoring::v3::ListUptimeCheckConfigsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListUptimeCheckConfigs(std::move(request));
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceClient::GetUptimeCheckConfig(std::string const& name, Options opts) {
+UptimeCheckServiceClient::GetUptimeCheckConfig(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetUptimeCheckConfigRequest request;
   request.set_name(name);
@@ -55,13 +59,18 @@ UptimeCheckServiceClient::GetUptimeCheckConfig(std::string const& name, Options 
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceClient::GetUptimeCheckConfig(google::monitoring::v3::GetUptimeCheckConfigRequest const& request, Options opts) {
+UptimeCheckServiceClient::GetUptimeCheckConfig(
+    google::monitoring::v3::GetUptimeCheckConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetUptimeCheckConfig(request);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceClient::CreateUptimeCheckConfig(std::string const& parent, google::monitoring::v3::UptimeCheckConfig const& uptime_check_config, Options opts) {
+UptimeCheckServiceClient::CreateUptimeCheckConfig(
+    std::string const& parent,
+    google::monitoring::v3::UptimeCheckConfig const& uptime_check_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateUptimeCheckConfigRequest request;
   request.set_parent(parent);
@@ -70,13 +79,17 @@ UptimeCheckServiceClient::CreateUptimeCheckConfig(std::string const& parent, goo
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceClient::CreateUptimeCheckConfig(google::monitoring::v3::CreateUptimeCheckConfigRequest const& request, Options opts) {
+UptimeCheckServiceClient::CreateUptimeCheckConfig(
+    google::monitoring::v3::CreateUptimeCheckConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateUptimeCheckConfig(request);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceClient::UpdateUptimeCheckConfig(google::monitoring::v3::UptimeCheckConfig const& uptime_check_config, Options opts) {
+UptimeCheckServiceClient::UpdateUptimeCheckConfig(
+    google::monitoring::v3::UptimeCheckConfig const& uptime_check_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::UpdateUptimeCheckConfigRequest request;
   *request.mutable_uptime_check_config() = uptime_check_config;
@@ -84,27 +97,31 @@ UptimeCheckServiceClient::UpdateUptimeCheckConfig(google::monitoring::v3::Uptime
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceClient::UpdateUptimeCheckConfig(google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request, Options opts) {
+UptimeCheckServiceClient::UpdateUptimeCheckConfig(
+    google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateUptimeCheckConfig(request);
 }
 
-Status
-UptimeCheckServiceClient::DeleteUptimeCheckConfig(std::string const& name, Options opts) {
+Status UptimeCheckServiceClient::DeleteUptimeCheckConfig(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::DeleteUptimeCheckConfigRequest request;
   request.set_name(name);
   return connection_->DeleteUptimeCheckConfig(request);
 }
 
-Status
-UptimeCheckServiceClient::DeleteUptimeCheckConfig(google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request, Options opts) {
+Status UptimeCheckServiceClient::DeleteUptimeCheckConfig(
+    google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUptimeCheckConfig(request);
 }
 
 StreamRange<google::monitoring::v3::UptimeCheckIp>
-UptimeCheckServiceClient::ListUptimeCheckIps(google::monitoring::v3::ListUptimeCheckIpsRequest request, Options opts) {
+UptimeCheckServiceClient::ListUptimeCheckIps(
+    google::monitoring::v3::ListUptimeCheckIpsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListUptimeCheckIps(std::move(request));
 }

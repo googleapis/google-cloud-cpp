@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_INTERNAL_DATAPROC_METASTORE_FEDERATION_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_INTERNAL_DATAPROC_METASTORE_FEDERATION_STUB_FACTORY_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -30,7 +30,8 @@ namespace cloud {
 namespace metastore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DataprocMetastoreFederationStub> CreateDefaultDataprocMetastoreFederationStub(
+std::shared_ptr<DataprocMetastoreFederationStub>
+CreateDefaultDataprocMetastoreFederationStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

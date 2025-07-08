@@ -22,9 +22,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dataplex/v1/content.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/dataplex/v1/content.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,162 +38,144 @@ class ContentServiceStub {
   virtual ~ContentServiceStub() = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CreateContentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::UpdateContentRequest const& request) = 0;
 
   virtual Status DeleteContent(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeleteContentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetContentRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::dataplex::v1::ListContentResponse> ListContent(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::dataplex::v1::ListContentResponse>
+  ListContent(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListContentRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultContentServiceStub : public ContentServiceStub {
  public:
   explicit DefaultContentServiceStub(
-      std::unique_ptr<google::cloud::dataplex::v1::ContentService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
-,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub
-)
+      std::unique_ptr<
+          google::cloud::dataplex::v1::ContentService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)),
         locations_stub_(std::move(locations_stub)) {}
 
   StatusOr<google::cloud::dataplex::v1::Content> CreateContent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataplex::v1::CreateContentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::CreateContentRequest const& request)
+      override;
 
   StatusOr<google::cloud::dataplex::v1::Content> UpdateContent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataplex::v1::UpdateContentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::UpdateContentRequest const& request)
+      override;
 
-  Status DeleteContent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataplex::v1::DeleteContentRequest const& request) override;
+  Status DeleteContent(grpc::ClientContext& context, Options const& options,
+                       google::cloud::dataplex::v1::DeleteContentRequest const&
+                           request) override;
 
   StatusOr<google::cloud::dataplex::v1::Content> GetContent(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetContentRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListContentResponse> ListContent(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListContentRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::dataplex::v1::ContentService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::cloud::dataplex::v1::ContentService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

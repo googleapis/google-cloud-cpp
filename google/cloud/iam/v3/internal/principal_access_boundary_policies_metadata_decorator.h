@@ -32,7 +32,8 @@ namespace cloud {
 namespace iam_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PrincipalAccessBoundaryPoliciesMetadata : public PrincipalAccessBoundaryPoliciesStub {
+class PrincipalAccessBoundaryPoliciesMetadata
+    : public PrincipalAccessBoundaryPoliciesStub {
  public:
   ~PrincipalAccessBoundaryPoliciesMetadata() override = default;
   PrincipalAccessBoundaryPoliciesMetadata(
@@ -40,57 +41,65 @@ class PrincipalAccessBoundaryPoliciesMetadata : public PrincipalAccessBoundaryPo
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreatePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreatePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy> GetPrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) override;
+  StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
+  GetPrincipalAccessBoundaryPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request)
+      override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdatePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeletePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeletePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeletePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse> ListPrincipalAccessBoundaryPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) override;
+  StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse>
+  ListPrincipalAccessBoundaryPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
+          request) override;
 
-  StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse> SearchPrincipalAccessBoundaryPolicyBindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) override;
+  StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse>
+  SearchPrincipalAccessBoundaryPolicyBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -106,8 +115,7 @@ class PrincipalAccessBoundaryPoliciesMetadata : public PrincipalAccessBoundaryPo
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/agent.proto
 
 #include "google/cloud/dialogflow_cx/agents_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/agents_options.h"
 #include "google/cloud/dialogflow_cx/internal/agents_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/agents_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/agents_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/agents_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,14 +38,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AgentsConnection::~AgentsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::Agent> AgentsConnection::ListAgents(
-    google::cloud::dialogflow::cx::v3::ListAgentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::Agent>
+AgentsConnection::ListAgents(
+    google::cloud::dialogflow::cx::v3::
+        ListAgentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Agent>>();
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Agent>
-AgentsConnection::GetAgent(
+StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsConnection::GetAgent(
     google::cloud::dialogflow::cx::v3::GetAgentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -62,8 +63,7 @@ AgentsConnection::UpdateAgent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AgentsConnection::DeleteAgent(
+Status AgentsConnection::DeleteAgent(
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -72,48 +72,39 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
 AgentsConnection::ExportAgent(
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsConnection::ExportAgent(
-    NoAwaitTag,
-    google::cloud::dialogflow::cx::v3::ExportAgentRequest const&) {
+StatusOr<google::longrunning::Operation> AgentsConnection::ExportAgent(
+    NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportAgentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-AgentsConnection::ExportAgent(
-    google::longrunning::Operation const&) {
+AgentsConnection::ExportAgent(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsConnection::RestoreAgent(
+future<StatusOr<google::protobuf::Struct>> AgentsConnection::RestoreAgent(
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::protobuf::Struct>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsConnection::RestoreAgent(
-    NoAwaitTag,
-    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&) {
+StatusOr<google::longrunning::Operation> AgentsConnection::RestoreAgent(
+    NoAwaitTag, google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsConnection::RestoreAgent(
+future<StatusOr<google::protobuf::Struct>> AgentsConnection::RestoreAgent(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::protobuf::Struct>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
@@ -141,31 +132,30 @@ AgentsConnection::UpdateGenerativeSettings(
 }
 
 StreamRange<google::cloud::location::Location> AgentsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-AgentsConnection::GetLocation(
+StatusOr<google::cloud::location::Location> AgentsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> AgentsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> AgentsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AgentsConnection::CancelOperation(
+Status AgentsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -173,21 +163,20 @@ AgentsConnection::CancelOperation(
 std::shared_ptr<AgentsConnection> MakeAgentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AgentsPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::AgentsDefaultOptions(
-      location, std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AgentsPolicyOptionList>(options, __func__);
+  options = dialogflow_cx_internal::AgentsDefaultOptions(location,
+                                                         std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = dialogflow_cx_internal::CreateDefaultAgentsStub(
-    std::move(auth), options);
+  auto stub =
+      dialogflow_cx_internal::CreateDefaultAgentsStub(std::move(auth), options);
   return dialogflow_cx_internal::MakeAgentsTracingConnection(
       std::make_shared<dialogflow_cx_internal::AgentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<AgentsConnection> MakeAgentsConnection(
-    Options options) {
+std::shared_ptr<AgentsConnection> MakeAgentsConnection(Options options) {
   return MakeAgentsConnection(std::string{}, std::move(options));
 }
 

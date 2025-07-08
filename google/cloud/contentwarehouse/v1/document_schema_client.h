@@ -61,23 +61,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DocumentSchemaServiceClient {
  public:
-  explicit DocumentSchemaServiceClient(std::shared_ptr<DocumentSchemaServiceConnection> connection, Options opts = {});
+  explicit DocumentSchemaServiceClient(
+      std::shared_ptr<DocumentSchemaServiceConnection> connection,
+      Options opts = {});
   ~DocumentSchemaServiceClient();
 
   ///@{
   /// @name Copy and move support
   DocumentSchemaServiceClient(DocumentSchemaServiceClient const&) = default;
-  DocumentSchemaServiceClient& operator=(DocumentSchemaServiceClient const&) = default;
+  DocumentSchemaServiceClient& operator=(DocumentSchemaServiceClient const&) =
+      default;
   DocumentSchemaServiceClient(DocumentSchemaServiceClient&&) = default;
-  DocumentSchemaServiceClient& operator=(DocumentSchemaServiceClient&&) = default;
+  DocumentSchemaServiceClient& operator=(DocumentSchemaServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DocumentSchemaServiceClient const& a, DocumentSchemaServiceClient const& b) {
+  friend bool operator==(DocumentSchemaServiceClient const& a,
+                         DocumentSchemaServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DocumentSchemaServiceClient const& a, DocumentSchemaServiceClient const& b) {
+  friend bool operator!=(DocumentSchemaServiceClient const& a,
+                         DocumentSchemaServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -106,7 +112,11 @@ class DocumentSchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  CreateDocumentSchema(std::string const& parent, google::cloud::contentwarehouse::v1::DocumentSchema const& document_schema, Options opts = {});
+  CreateDocumentSchema(
+      std::string const& parent,
+      google::cloud::contentwarehouse::v1::DocumentSchema const&
+          document_schema,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -136,7 +146,10 @@ class DocumentSchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  CreateDocumentSchema(google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request, Options opts = {});
+  CreateDocumentSchema(
+      google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -171,7 +184,11 @@ class DocumentSchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  UpdateDocumentSchema(std::string const& name, google::cloud::contentwarehouse::v1::DocumentSchema const& document_schema, Options opts = {});
+  UpdateDocumentSchema(
+      std::string const& name,
+      google::cloud::contentwarehouse::v1::DocumentSchema const&
+          document_schema,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -208,7 +225,10 @@ class DocumentSchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  UpdateDocumentSchema(google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request, Options opts = {});
+  UpdateDocumentSchema(
+      google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -265,7 +285,10 @@ class DocumentSchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  GetDocumentSchema(google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request, Options opts = {});
+  GetDocumentSchema(
+      google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -288,8 +311,7 @@ class DocumentSchemaServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteDocumentSchemaRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_schema_service.proto#L138}
   ///
   // clang-format on
-  Status
-  DeleteDocumentSchema(std::string const& name, Options opts = {});
+  Status DeleteDocumentSchema(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -317,8 +339,10 @@ class DocumentSchemaServiceClient {
   /// [google.cloud.contentwarehouse.v1.DeleteDocumentSchemaRequest]: @googleapis_reference_link{google/cloud/contentwarehouse/v1/document_schema_service.proto#L138}
   ///
   // clang-format on
-  Status
-  DeleteDocumentSchema(google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request, Options opts = {});
+  Status DeleteDocumentSchema(
+      google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -392,7 +416,9 @@ class DocumentSchemaServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
-  ListDocumentSchemas(google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request, Options opts = {});
+  ListDocumentSchemas(
+      google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -418,8 +444,8 @@ class DocumentSchemaServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -450,8 +476,9 @@ class DocumentSchemaServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DocumentSchemaServiceConnection> connection_;

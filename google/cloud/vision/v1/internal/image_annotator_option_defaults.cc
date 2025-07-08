@@ -17,10 +17,10 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/v1/internal/image_annotator_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/vision/v1/image_annotator_connection.h"
 #include "google/cloud/vision/v1/image_annotator_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,19 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ImageAnnotatorDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_AUTHORITY",
-      "vision.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_AUTHORITY", "vision.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<vision_v1::ImageAnnotatorRetryPolicyOption>()) {
     options.set<vision_v1::ImageAnnotatorRetryPolicyOption>(
         vision_v1::ImageAnnotatorLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<vision_v1::ImageAnnotatorBackoffPolicyOption>()) {
     options.set<vision_v1::ImageAnnotatorBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<vision_v1::ImageAnnotatorPollingPolicyOption>()) {
     options.set<vision_v1::ImageAnnotatorPollingPolicyOption>(
@@ -56,9 +58,12 @@ Options ImageAnnotatorDefaultOptions(Options options) {
             vision_v1::ImageAnnotatorBackoffPolicyOption::Type>(
             options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
     options.set<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>(
         vision_v1::MakeDefaultImageAnnotatorConnectionIdempotencyPolicy());
   }

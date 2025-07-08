@@ -25,43 +25,47 @@ namespace cloud {
 namespace lustre_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LustreClient::LustreClient(
-    std::shared_ptr<LustreConnection> connection, Options opts)
+LustreClient::LustreClient(std::shared_ptr<LustreConnection> connection,
+                           Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 LustreClient::~LustreClient() = default;
 
-StreamRange<google::cloud::lustre::v1::Instance>
-LustreClient::ListInstances(std::string const& parent, Options opts) {
+StreamRange<google::cloud::lustre::v1::Instance> LustreClient::ListInstances(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::lustre::v1::ListInstancesRequest request;
   request.set_parent(parent);
   return connection_->ListInstances(request);
 }
 
-StreamRange<google::cloud::lustre::v1::Instance>
-LustreClient::ListInstances(google::cloud::lustre::v1::ListInstancesRequest request, Options opts) {
+StreamRange<google::cloud::lustre::v1::Instance> LustreClient::ListInstances(
+    google::cloud::lustre::v1::ListInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
-StatusOr<google::cloud::lustre::v1::Instance>
-LustreClient::GetInstance(std::string const& name, Options opts) {
+StatusOr<google::cloud::lustre::v1::Instance> LustreClient::GetInstance(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::lustre::v1::GetInstanceRequest request;
   request.set_name(name);
   return connection_->GetInstance(request);
 }
 
-StatusOr<google::cloud::lustre::v1::Instance>
-LustreClient::GetInstance(google::cloud::lustre::v1::GetInstanceRequest const& request, Options opts) {
+StatusOr<google::cloud::lustre::v1::Instance> LustreClient::GetInstance(
+    google::cloud::lustre::v1::GetInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::cloud::lustre::v1::Instance>>
-LustreClient::CreateInstance(std::string const& parent, google::cloud::lustre::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+LustreClient::CreateInstance(
+    std::string const& parent,
+    google::cloud::lustre::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::lustre::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -70,8 +74,10 @@ LustreClient::CreateInstance(std::string const& parent, google::cloud::lustre::v
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::lustre::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::CreateInstance(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::lustre::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::lustre::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -81,25 +87,31 @@ LustreClient::CreateInstance(NoAwaitTag, std::string const& parent, google::clou
 }
 
 future<StatusOr<google::cloud::lustre::v1::Instance>>
-LustreClient::CreateInstance(google::cloud::lustre::v1::CreateInstanceRequest const& request, Options opts) {
+LustreClient::CreateInstance(
+    google::cloud::lustre::v1::CreateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::CreateInstance(NoAwaitTag, google::cloud::lustre::v1::CreateInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::CreateInstance(
+    NoAwaitTag, google::cloud::lustre::v1::CreateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::lustre::v1::Instance>>
-LustreClient::CreateInstance(google::longrunning::Operation const& operation, Options opts) {
+LustreClient::CreateInstance(google::longrunning::Operation const& operation,
+                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(operation);
 }
 
 future<StatusOr<google::cloud::lustre::v1::Instance>>
-LustreClient::UpdateInstance(google::cloud::lustre::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
+LustreClient::UpdateInstance(
+    google::cloud::lustre::v1::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::lustre::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -107,8 +119,9 @@ LustreClient::UpdateInstance(google::cloud::lustre::v1::Instance const& instance
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::UpdateInstance(NoAwaitTag, google::cloud::lustre::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::UpdateInstance(
+    NoAwaitTag, google::cloud::lustre::v1::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::lustre::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -117,19 +130,23 @@ LustreClient::UpdateInstance(NoAwaitTag, google::cloud::lustre::v1::Instance con
 }
 
 future<StatusOr<google::cloud::lustre::v1::Instance>>
-LustreClient::UpdateInstance(google::cloud::lustre::v1::UpdateInstanceRequest const& request, Options opts) {
+LustreClient::UpdateInstance(
+    google::cloud::lustre::v1::UpdateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::UpdateInstance(NoAwaitTag, google::cloud::lustre::v1::UpdateInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::UpdateInstance(
+    NoAwaitTag, google::cloud::lustre::v1::UpdateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::lustre::v1::Instance>>
-LustreClient::UpdateInstance(google::longrunning::Operation const& operation, Options opts) {
+LustreClient::UpdateInstance(google::longrunning::Operation const& operation,
+                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(operation);
 }
@@ -142,8 +159,8 @@ LustreClient::DeleteInstance(std::string const& name, Options opts) {
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::DeleteInstance(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::DeleteInstance(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::lustre::v1::DeleteInstanceRequest request;
   request.set_name(name);
@@ -151,19 +168,23 @@ LustreClient::DeleteInstance(NoAwaitTag, std::string const& name, Options opts) 
 }
 
 future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
-LustreClient::DeleteInstance(google::cloud::lustre::v1::DeleteInstanceRequest const& request, Options opts) {
+LustreClient::DeleteInstance(
+    google::cloud::lustre::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::DeleteInstance(NoAwaitTag, google::cloud::lustre::v1::DeleteInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::DeleteInstance(
+    NoAwaitTag, google::cloud::lustre::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
-LustreClient::DeleteInstance(google::longrunning::Operation const& operation, Options opts) {
+LustreClient::DeleteInstance(google::longrunning::Operation const& operation,
+                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(operation);
 }
@@ -176,8 +197,8 @@ LustreClient::ImportData(std::string const& name, Options opts) {
   return connection_->ImportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::ImportData(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::ImportData(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::lustre::v1::ImportDataRequest request;
   request.set_name(name);
@@ -185,55 +206,61 @@ LustreClient::ImportData(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
-LustreClient::ImportData(google::cloud::lustre::v1::ImportDataRequest const& request, Options opts) {
+LustreClient::ImportData(
+    google::cloud::lustre::v1::ImportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::ImportData(NoAwaitTag, google::cloud::lustre::v1::ImportDataRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::ImportData(
+    NoAwaitTag, google::cloud::lustre::v1::ImportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
-LustreClient::ImportData(google::longrunning::Operation const& operation, Options opts) {
+LustreClient::ImportData(google::longrunning::Operation const& operation,
+                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(operation);
 }
 
 future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>
-LustreClient::ExportData(google::cloud::lustre::v1::ExportDataRequest const& request, Options opts) {
+LustreClient::ExportData(
+    google::cloud::lustre::v1::ExportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::ExportData(NoAwaitTag, google::cloud::lustre::v1::ExportDataRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::ExportData(
+    NoAwaitTag, google::cloud::lustre::v1::ExportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>
-LustreClient::ExportData(google::longrunning::Operation const& operation, Options opts) {
+LustreClient::ExportData(google::longrunning::Operation const& operation,
+                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(operation);
 }
 
-StreamRange<google::cloud::location::Location>
-LustreClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> LustreClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-LustreClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> LustreClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-LustreClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> LustreClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -241,50 +268,48 @@ LustreClient::ListOperations(std::string const& name, std::string const& filter,
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-LustreClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> LustreClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-LustreClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> LustreClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-LustreClient::DeleteOperation(std::string const& name, Options opts) {
+Status LustreClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-LustreClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status LustreClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-LustreClient::CancelOperation(std::string const& name, Options opts) {
+Status LustreClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-LustreClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status LustreClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

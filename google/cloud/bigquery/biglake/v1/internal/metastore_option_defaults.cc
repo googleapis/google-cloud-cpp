@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options MetastoreServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_METASTORE_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_METASTORE_SERVICE_AUTHORITY",
-      "biglake.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_METASTORE_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_METASTORE_SERVICE_AUTHORITY", "biglake.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()) {
     options.set<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>(
         bigquery_biglake_v1::MetastoreServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<bigquery_biglake_v1::MetastoreServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<bigquery_biglake_v1::MetastoreServiceBackoffPolicyOption>()) {
     options.set<bigquery_biglake_v1::MetastoreServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<bigquery_biglake_v1::MetastoreServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquery_biglake_v1::MetastoreServiceConnectionIdempotencyPolicyOption>(
-        bigquery_biglake_v1::MakeDefaultMetastoreServiceConnectionIdempotencyPolicy());
+  if (!options.has<bigquery_biglake_v1::
+                       MetastoreServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        bigquery_biglake_v1::MetastoreServiceConnectionIdempotencyPolicyOption>(
+        bigquery_biglake_v1::
+            MakeDefaultMetastoreServiceConnectionIdempotencyPolicy());
   }
 
   return options;

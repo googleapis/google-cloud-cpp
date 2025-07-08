@@ -26,43 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MigrationServiceConnectionIdempotencyPolicy::~MigrationServiceConnectionIdempotencyPolicy() = default;
+MigrationServiceConnectionIdempotencyPolicy::
+    ~MigrationServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
 MigrationServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MigrationServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const&) {
+Idempotency
+MigrationServiceConnectionIdempotencyPolicy::CreateMigrationWorkflow(
+    google::cloud::bigquery::migration::v2::
+        CreateMigrationWorkflowRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::GetMigrationWorkflow(google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::GetMigrationWorkflow(
+    google::cloud::bigquery::migration::v2::
+        GetMigrationWorkflowRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::ListMigrationWorkflows(google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest) {  // NOLINT
+Idempotency MigrationServiceConnectionIdempotencyPolicy::ListMigrationWorkflows(
+    google::cloud::bigquery::migration::v2::
+        ListMigrationWorkflowsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::DeleteMigrationWorkflow(google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const&) {
+Idempotency
+MigrationServiceConnectionIdempotencyPolicy::DeleteMigrationWorkflow(
+    google::cloud::bigquery::migration::v2::
+        DeleteMigrationWorkflowRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::StartMigrationWorkflow(google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::StartMigrationWorkflow(
+    google::cloud::bigquery::migration::v2::
+        StartMigrationWorkflowRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::GetMigrationSubtask(google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&) {
+Idempotency MigrationServiceConnectionIdempotencyPolicy::GetMigrationSubtask(
+    google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MigrationServiceConnectionIdempotencyPolicy::ListMigrationSubtasks(google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest) {  // NOLINT
+Idempotency MigrationServiceConnectionIdempotencyPolicy::ListMigrationSubtasks(
+    google::cloud::bigquery::migration::v2::
+        ListMigrationSubtasksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
-    MakeDefaultMigrationServiceConnectionIdempotencyPolicy() {
+MakeDefaultMigrationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<MigrationServiceConnectionIdempotencyPolicy>();
 }
 

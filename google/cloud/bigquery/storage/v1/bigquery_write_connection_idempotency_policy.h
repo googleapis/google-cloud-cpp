@@ -34,26 +34,31 @@ class BigQueryWriteConnectionIdempotencyPolicy {
   virtual ~BigQueryWriteConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateWriteStream(google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request);
+  virtual google::cloud::Idempotency CreateWriteStream(
+      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetWriteStream(google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request);
+  virtual google::cloud::Idempotency GetWriteStream(
+      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  FinalizeWriteStream(google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request);
+  virtual google::cloud::Idempotency FinalizeWriteStream(
+      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request);
+  virtual google::cloud::Idempotency BatchCommitWriteStreams(
+      google::cloud::bigquery::storage::v1::
+          BatchCommitWriteStreamsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  FlushRows(google::cloud::bigquery::storage::v1::FlushRowsRequest const& request);
+  virtual google::cloud::Idempotency FlushRows(
+      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request);
 };
 
 std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>
-    MakeDefaultBigQueryWriteConnectionIdempotencyPolicy();
+MakeDefaultBigQueryWriteConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_storage_v1

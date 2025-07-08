@@ -25,75 +25,80 @@ namespace cloud {
 namespace appengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-VersionsClient::VersionsClient(
-    std::shared_ptr<VersionsConnection> connection, Options opts)
+VersionsClient::VersionsClient(std::shared_ptr<VersionsConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 VersionsClient::~VersionsClient() = default;
 
-StreamRange<google::appengine::v1::Version>
-VersionsClient::ListVersions(google::appengine::v1::ListVersionsRequest request, Options opts) {
+StreamRange<google::appengine::v1::Version> VersionsClient::ListVersions(
+    google::appengine::v1::ListVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVersions(std::move(request));
 }
 
-StatusOr<google::appengine::v1::Version>
-VersionsClient::GetVersion(google::appengine::v1::GetVersionRequest const& request, Options opts) {
+StatusOr<google::appengine::v1::Version> VersionsClient::GetVersion(
+    google::appengine::v1::GetVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVersion(request);
 }
 
-future<StatusOr<google::appengine::v1::Version>>
-VersionsClient::CreateVersion(google::appengine::v1::CreateVersionRequest const& request, Options opts) {
+future<StatusOr<google::appengine::v1::Version>> VersionsClient::CreateVersion(
+    google::appengine::v1::CreateVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVersion(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VersionsClient::CreateVersion(NoAwaitTag, google::appengine::v1::CreateVersionRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VersionsClient::CreateVersion(
+    NoAwaitTag, google::appengine::v1::CreateVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVersion(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::appengine::v1::Version>>
-VersionsClient::CreateVersion(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::appengine::v1::Version>> VersionsClient::CreateVersion(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVersion(operation);
 }
 
-future<StatusOr<google::appengine::v1::Version>>
-VersionsClient::UpdateVersion(google::appengine::v1::UpdateVersionRequest const& request, Options opts) {
+future<StatusOr<google::appengine::v1::Version>> VersionsClient::UpdateVersion(
+    google::appengine::v1::UpdateVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVersion(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VersionsClient::UpdateVersion(NoAwaitTag, google::appengine::v1::UpdateVersionRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VersionsClient::UpdateVersion(
+    NoAwaitTag, google::appengine::v1::UpdateVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVersion(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::appengine::v1::Version>>
-VersionsClient::UpdateVersion(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::appengine::v1::Version>> VersionsClient::UpdateVersion(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVersion(operation);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-VersionsClient::DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request, Options opts) {
+VersionsClient::DeleteVersion(
+    google::appengine::v1::DeleteVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VersionsClient::DeleteVersion(NoAwaitTag, google::appengine::v1::DeleteVersionRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VersionsClient::DeleteVersion(
+    NoAwaitTag, google::appengine::v1::DeleteVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-VersionsClient::DeleteVersion(google::longrunning::Operation const& operation, Options opts) {
+VersionsClient::DeleteVersion(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(operation);
 }

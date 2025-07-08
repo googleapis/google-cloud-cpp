@@ -30,35 +30,27 @@ namespace cloud {
 namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RuleServiceLogging::RuleServiceLogging(
-    std::shared_ptr<RuleServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+RuleServiceLogging::RuleServiceLogging(std::shared_ptr<RuleServiceStub> child,
+                                       TracingOptions tracing_options,
+                                       std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceLogging::CreateRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceLogging::CreateRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::chronicle::v1::CreateRuleRequest const& request) {
         return child_->CreateRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceLogging::GetRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceLogging::GetRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::chronicle::v1::GetRuleRequest const& request) {
         return child_->GetRule(context, options, request);
       },
@@ -67,40 +59,32 @@ RuleServiceLogging::GetRule(
 
 StatusOr<google::cloud::chronicle::v1::ListRulesResponse>
 RuleServiceLogging::ListRules(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::chronicle::v1::ListRulesRequest const& request) {
         return child_->ListRules(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceLogging::UpdateRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceLogging::UpdateRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
         return child_->UpdateRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-RuleServiceLogging::DeleteRule(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RuleServiceLogging::DeleteRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
         return child_->DeleteRule(context, options, request);
       },
@@ -109,13 +93,12 @@ RuleServiceLogging::DeleteRule(
 
 StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
 RuleServiceLogging::ListRuleRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::ListRuleRevisionsRequest const&
+                 request) {
         return child_->ListRuleRevisions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,31 +106,30 @@ RuleServiceLogging::ListRuleRevisions(
 
 future<StatusOr<google::longrunning::Operation>>
 RuleServiceLogging::AsyncCreateRetrohunt(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
-        return child_->AsyncCreateRetrohunt(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+        return child_->AsyncCreateRetrohunt(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-RuleServiceLogging::CreateRetrohunt(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+StatusOr<google::longrunning::Operation> RuleServiceLogging::CreateRetrohunt(
+    grpc::ClientContext& context, Options options,
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
         return child_->CreateRetrohunt(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -155,12 +137,10 @@ RuleServiceLogging::CreateRetrohunt(
 
 StatusOr<google::cloud::chronicle::v1::Retrohunt>
 RuleServiceLogging::GetRetrohunt(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
         return child_->GetRetrohunt(context, options, request);
       },
@@ -169,13 +149,12 @@ RuleServiceLogging::GetRetrohunt(
 
 StatusOr<google::cloud::chronicle::v1::ListRetrohuntsResponse>
 RuleServiceLogging::ListRetrohunts(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
         return child_->ListRetrohunts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -183,13 +162,12 @@ RuleServiceLogging::ListRetrohunts(
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
 RuleServiceLogging::GetRuleDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::GetRuleDeploymentRequest const&
+                 request) {
         return child_->GetRuleDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -197,13 +175,12 @@ RuleServiceLogging::GetRuleDeployment(
 
 StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse>
 RuleServiceLogging::ListRuleDeployments(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::ListRuleDeploymentsRequest const&
+                 request) {
         return child_->ListRuleDeployments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -211,13 +188,12 @@ RuleServiceLogging::ListRuleDeployments(
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
 RuleServiceLogging::UpdateRuleDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const&
+                 request) {
         return child_->UpdateRuleDeployment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -225,54 +201,43 @@ RuleServiceLogging::UpdateRuleDeployment(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 RuleServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-RuleServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> RuleServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-RuleServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RuleServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-RuleServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RuleServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -290,8 +255,8 @@ RuleServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -307,8 +272,8 @@ future<Status> RuleServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

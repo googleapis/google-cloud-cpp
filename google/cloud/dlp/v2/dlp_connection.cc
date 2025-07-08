@@ -17,14 +17,14 @@
 // source: google/privacy/dlp/v2/dlp.proto
 
 #include "google/cloud/dlp/v2/dlp_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dlp/v2/dlp_options.h"
 #include "google/cloud/dlp/v2/internal/dlp_connection_impl.h"
 #include "google/cloud/dlp/v2/internal/dlp_option_defaults.h"
 #include "google/cloud/dlp/v2/internal/dlp_stub_factory.h"
 #include "google/cloud/dlp/v2/internal/dlp_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -86,14 +86,15 @@ DlpServiceConnection::GetInspectTemplate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::privacy::dlp::v2::InspectTemplate> DlpServiceConnection::ListInspectTemplates(
-    google::privacy::dlp::v2::ListInspectTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::InspectTemplate>
+DlpServiceConnection::ListInspectTemplates(
+    google::privacy::dlp::v2::
+        ListInspectTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::InspectTemplate>>();
 }
 
-Status
-DlpServiceConnection::DeleteInspectTemplate(
+Status DlpServiceConnection::DeleteInspectTemplate(
     google::privacy::dlp::v2::DeleteInspectTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -116,14 +117,15 @@ DlpServiceConnection::GetDeidentifyTemplate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::privacy::dlp::v2::DeidentifyTemplate> DlpServiceConnection::ListDeidentifyTemplates(
-    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
+DlpServiceConnection::ListDeidentifyTemplates(
+    google::privacy::dlp::v2::
+        ListDeidentifyTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>>();
 }
 
-Status
-DlpServiceConnection::DeleteDeidentifyTemplate(
+Status DlpServiceConnection::DeleteDeidentifyTemplate(
     google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -152,14 +154,15 @@ DlpServiceConnection::GetJobTrigger(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::privacy::dlp::v2::JobTrigger> DlpServiceConnection::ListJobTriggers(
-    google::privacy::dlp::v2::ListJobTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::JobTrigger>
+DlpServiceConnection::ListJobTriggers(
+    google::privacy::dlp::v2::
+        ListJobTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::JobTrigger>>();
 }
 
-Status
-DlpServiceConnection::DeleteJobTrigger(
+Status DlpServiceConnection::DeleteJobTrigger(
     google::privacy::dlp::v2::DeleteJobTriggerRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -188,44 +191,42 @@ DlpServiceConnection::GetDiscoveryConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::privacy::dlp::v2::DiscoveryConfig> DlpServiceConnection::ListDiscoveryConfigs(
-    google::privacy::dlp::v2::ListDiscoveryConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
+DlpServiceConnection::ListDiscoveryConfigs(
+    google::privacy::dlp::v2::
+        ListDiscoveryConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::DiscoveryConfig>>();
 }
 
-Status
-DlpServiceConnection::DeleteDiscoveryConfig(
+Status DlpServiceConnection::DeleteDiscoveryConfig(
     google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::privacy::dlp::v2::DlpJob>
-DlpServiceConnection::CreateDlpJob(
+StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::CreateDlpJob(
     google::privacy::dlp::v2::CreateDlpJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::ListDlpJobs(
-    google::privacy::dlp::v2::ListDlpJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::privacy::dlp::v2::
+        ListDlpJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::DlpJob>>();
 }
 
-StatusOr<google::privacy::dlp::v2::DlpJob>
-DlpServiceConnection::GetDlpJob(
+StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceConnection::GetDlpJob(
     google::privacy::dlp::v2::GetDlpJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DlpServiceConnection::DeleteDlpJob(
+Status DlpServiceConnection::DeleteDlpJob(
     google::privacy::dlp::v2::DeleteDlpJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DlpServiceConnection::CancelDlpJob(
+Status DlpServiceConnection::CancelDlpJob(
     google::privacy::dlp::v2::CancelDlpJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -248,32 +249,39 @@ DlpServiceConnection::GetStoredInfoType(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::privacy::dlp::v2::StoredInfoType> DlpServiceConnection::ListStoredInfoTypes(
-    google::privacy::dlp::v2::ListStoredInfoTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::StoredInfoType>
+DlpServiceConnection::ListStoredInfoTypes(
+    google::privacy::dlp::v2::
+        ListStoredInfoTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::StoredInfoType>>();
 }
 
-Status
-DlpServiceConnection::DeleteStoredInfoType(
+Status DlpServiceConnection::DeleteStoredInfoType(
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::privacy::dlp::v2::ProjectDataProfile> DlpServiceConnection::ListProjectDataProfiles(
-    google::privacy::dlp::v2::ListProjectDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceConnection::ListProjectDataProfiles(
+    google::privacy::dlp::v2::
+        ListProjectDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::ProjectDataProfile>>();
 }
 
-StreamRange<google::privacy::dlp::v2::TableDataProfile> DlpServiceConnection::ListTableDataProfiles(
-    google::privacy::dlp::v2::ListTableDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceConnection::ListTableDataProfiles(
+    google::privacy::dlp::v2::
+        ListTableDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::TableDataProfile>>();
 }
 
-StreamRange<google::privacy::dlp::v2::ColumnDataProfile> DlpServiceConnection::ListColumnDataProfiles(
-    google::privacy::dlp::v2::ListColumnDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceConnection::ListColumnDataProfiles(
+    google::privacy::dlp::v2::
+        ListColumnDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::ColumnDataProfile>>();
 }
@@ -284,8 +292,10 @@ DlpServiceConnection::GetProjectDataProfile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::privacy::dlp::v2::FileStoreDataProfile> DlpServiceConnection::ListFileStoreDataProfiles(
-    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceConnection::ListFileStoreDataProfiles(
+    google::privacy::dlp::v2::
+        ListFileStoreDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>>();
 }
@@ -296,8 +306,7 @@ DlpServiceConnection::GetFileStoreDataProfile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DlpServiceConnection::DeleteFileStoreDataProfile(
+Status DlpServiceConnection::DeleteFileStoreDataProfile(
     google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -314,8 +323,7 @@ DlpServiceConnection::GetColumnDataProfile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DlpServiceConnection::DeleteTableDataProfile(
+Status DlpServiceConnection::DeleteTableDataProfile(
     google::privacy::dlp::v2::DeleteTableDataProfileRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -326,8 +334,7 @@ DlpServiceConnection::HybridInspectDlpJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DlpServiceConnection::FinishDlpJob(
+Status DlpServiceConnection::FinishDlpJob(
     google::privacy::dlp::v2::FinishDlpJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -344,20 +351,23 @@ DlpServiceConnection::GetConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::privacy::dlp::v2::Connection> DlpServiceConnection::ListConnections(
-    google::privacy::dlp::v2::ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceConnection::ListConnections(
+    google::privacy::dlp::v2::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::Connection>>();
 }
 
-StreamRange<google::privacy::dlp::v2::Connection> DlpServiceConnection::SearchConnections(
-    google::privacy::dlp::v2::SearchConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::privacy::dlp::v2::Connection>
+DlpServiceConnection::SearchConnections(
+    google::privacy::dlp::v2::
+        SearchConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::Connection>>();
 }
 
-Status
-DlpServiceConnection::DeleteConnection(
+Status DlpServiceConnection::DeleteConnection(
     google::privacy::dlp::v2::DeleteConnectionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -371,17 +381,16 @@ DlpServiceConnection::UpdateConnection(
 std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DlpServicePolicyOptionList>(options, __func__);
-  options = dlp_v2_internal::DlpServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 DlpServicePolicyOptionList>(options, __func__);
+  options = dlp_v2_internal::DlpServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = dlp_v2_internal::CreateDefaultDlpServiceStub(
-    std::move(auth), options);
+  auto stub =
+      dlp_v2_internal::CreateDefaultDlpServiceStub(std::move(auth), options);
   return dlp_v2_internal::MakeDlpServiceTracingConnection(
       std::make_shared<dlp_v2_internal::DlpServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

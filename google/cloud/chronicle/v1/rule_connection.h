@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_RULE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_RULE_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/internal/rule_retry_traits.h"
 #include "google/cloud/chronicle/v1/rule_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class RuleServiceLimitedErrorCountRetryPolicy : public RuleServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RuleServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RuleServiceLimitedErrorCountRetryPolicy(
       RuleServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RuleServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RuleServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RuleServiceLimitedErrorCountRetryPolicy(
       RuleServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RuleServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RuleServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class RuleServiceLimitedErrorCountRetryPolicy : public RuleServiceRetryPolicy {
   using BaseType = RuleServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<chronicle_v1_internal::RuleServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      chronicle_v1_internal::RuleServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,14 @@ class RuleServiceLimitedTimeRetryPolicy : public RuleServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RuleServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RuleServiceLimitedTimeRetryPolicy(RuleServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : RuleServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RuleServiceLimitedTimeRetryPolicy(RuleServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : RuleServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RuleServiceLimitedTimeRetryPolicy(
+      RuleServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : RuleServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RuleServiceLimitedTimeRetryPolicy(
+      RuleServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : RuleServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +162,9 @@ class RuleServiceLimitedTimeRetryPolicy : public RuleServiceRetryPolicy {
   using BaseType = RuleServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<chronicle_v1_internal::RuleServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      chronicle_v1_internal::RuleServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,59 +185,64 @@ class RuleServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::chronicle::v1::Rule>
-  CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const& request);
+  virtual StatusOr<google::cloud::chronicle::v1::Rule> CreateRule(
+      google::cloud::chronicle::v1::CreateRuleRequest const& request);
 
-  virtual StatusOr<google::cloud::chronicle::v1::Rule>
-  GetRule(google::cloud::chronicle::v1::GetRuleRequest const& request);
+  virtual StatusOr<google::cloud::chronicle::v1::Rule> GetRule(
+      google::cloud::chronicle::v1::GetRuleRequest const& request);
 
-  virtual StreamRange<google::cloud::chronicle::v1::Rule>
-  ListRules(google::cloud::chronicle::v1::ListRulesRequest request);
+  virtual StreamRange<google::cloud::chronicle::v1::Rule> ListRules(
+      google::cloud::chronicle::v1::ListRulesRequest request);
 
-  virtual StatusOr<google::cloud::chronicle::v1::Rule>
-  UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const& request);
+  virtual StatusOr<google::cloud::chronicle::v1::Rule> UpdateRule(
+      google::cloud::chronicle::v1::UpdateRuleRequest const& request);
 
-  virtual Status
-  DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const& request);
+  virtual Status DeleteRule(
+      google::cloud::chronicle::v1::DeleteRuleRequest const& request);
 
-  virtual StreamRange<google::cloud::chronicle::v1::Rule>
-  ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest request);
-
-  virtual future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-  CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateRetrohunt(NoAwaitTag, google::cloud::chronicle::v1::CreateRetrohuntRequest const& request);
+  virtual StreamRange<google::cloud::chronicle::v1::Rule> ListRuleRevisions(
+      google::cloud::chronicle::v1::ListRuleRevisionsRequest request);
 
   virtual future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-  CreateRetrohunt( google::longrunning::Operation const& operation);
+  CreateRetrohunt(
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request);
 
-  virtual StatusOr<google::cloud::chronicle::v1::Retrohunt>
-  GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateRetrohunt(
+      NoAwaitTag,
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request);
 
-  virtual StreamRange<google::cloud::chronicle::v1::Retrohunt>
-  ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest request);
+  virtual future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
+  CreateRetrohunt(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::chronicle::v1::Retrohunt> GetRetrohunt(
+      google::cloud::chronicle::v1::GetRetrohuntRequest const& request);
+
+  virtual StreamRange<google::cloud::chronicle::v1::Retrohunt> ListRetrohunts(
+      google::cloud::chronicle::v1::ListRetrohuntsRequest request);
 
   virtual StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-  GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request);
+  GetRuleDeployment(
+      google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request);
 
   virtual StreamRange<google::cloud::chronicle::v1::RuleDeployment>
-  ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest request);
+  ListRuleDeployments(
+      google::cloud::chronicle::v1::ListRuleDeploymentsRequest request);
 
   virtual StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-  UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request);
+  UpdateRuleDeployment(
+      google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

@@ -17,16 +17,16 @@
 // source: google/monitoring/v3/notification_service.proto
 
 #include "google/cloud/monitoring/v3/internal/notification_channel_stub_factory.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/log.h"
 #include "google/cloud/monitoring/v3/internal/notification_channel_auth_decorator.h"
 #include "google/cloud/monitoring/v3/internal/notification_channel_logging_decorator.h"
 #include "google/cloud/monitoring/v3/internal/notification_channel_metadata_decorator.h"
 #include "google/cloud/monitoring/v3/internal/notification_channel_stub.h"
 #include "google/cloud/monitoring/v3/internal/notification_channel_tracing_stub.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/monitoring/v3/notification_service.grpc.pb.h>
 #include <memory>
@@ -41,24 +41,24 @@ std::shared_ptr<NotificationChannelServiceStub>
 CreateDefaultNotificationChannelServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::monitoring::v3::NotificationChannelService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::monitoring::v3::NotificationChannelService::NewStub(channel);
   std::shared_ptr<NotificationChannelServiceStub> stub =
-    std::make_shared<DefaultNotificationChannelServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultNotificationChannelServiceStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<NotificationChannelServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<NotificationChannelServiceAuth>(std::move(auth),
+                                                            std::move(stub));
   }
   stub = std::make_shared<NotificationChannelServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<NotificationChannelServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

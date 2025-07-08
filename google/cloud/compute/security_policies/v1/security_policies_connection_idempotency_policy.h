@@ -34,47 +34,60 @@ class SecurityPoliciesConnectionIdempotencyPolicy {
   virtual ~SecurityPoliciesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SecurityPoliciesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SecurityPoliciesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AddRule(google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const& request);
+  virtual google::cloud::Idempotency AddRule(
+      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  AggregatedListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::AggregatedListSecurityPoliciesRequest request);
+  virtual google::cloud::Idempotency AggregatedListSecurityPolicies(
+      google::cloud::cpp::compute::security_policies::v1::
+          AggregatedListSecurityPoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::DeleteSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency DeleteSecurityPolicy(
+      google::cloud::cpp::compute::security_policies::v1::
+          DeleteSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::GetSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetSecurityPolicy(
+      google::cloud::cpp::compute::security_policies::v1::
+          GetSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetRule(google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const& request);
+  virtual google::cloud::Idempotency GetRule(
+      google::cloud::cpp::compute::security_policies::v1::GetRuleRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::InsertSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency InsertSecurityPolicy(
+      google::cloud::cpp::compute::security_policies::v1::
+          InsertSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::ListSecurityPoliciesRequest request);
+  virtual google::cloud::Idempotency ListSecurityPolicies(
+      google::cloud::cpp::compute::security_policies::v1::
+          ListSecurityPoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListPreconfiguredExpressionSets(google::cloud::cpp::compute::security_policies::v1::ListPreconfiguredExpressionSetsRequest const& request);
+  virtual google::cloud::Idempotency ListPreconfiguredExpressionSets(
+      google::cloud::cpp::compute::security_policies::v1::
+          ListPreconfiguredExpressionSetsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PatchSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::PatchSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency PatchSecurityPolicy(
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PatchRule(google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const& request);
+  virtual google::cloud::Idempotency PatchRule(
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchRuleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RemoveRule(google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const& request);
+  virtual google::cloud::Idempotency RemoveRule(
+      google::cloud::cpp::compute::security_policies::v1::
+          RemoveRuleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetLabels(google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const& request);
+  virtual google::cloud::Idempotency SetLabels(
+      google::cloud::cpp::compute::security_policies::v1::
+          SetLabelsRequest const& request);
 };
 
 std::unique_ptr<SecurityPoliciesConnectionIdempotencyPolicy>
-    MakeDefaultSecurityPoliciesConnectionIdempotencyPolicy();
+MakeDefaultSecurityPoliciesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_security_policies_v1

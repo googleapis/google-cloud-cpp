@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CURSOR_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_CURSOR_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/pubsublite/internal/cursor_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,10 +34,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CursorServiceMetadata : public CursorServiceStub {
  public:
   ~CursorServiceMetadata() override = default;
-  CursorServiceMetadata(
-      std::shared_ptr<CursorServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  CursorServiceMetadata(std::shared_ptr<CursorServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
@@ -48,38 +47,34 @@ class CursorServiceMetadata : public CursorServiceStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::pubsublite::v1::CommitCursorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::pubsublite::v1::CommitCursorRequest const& request)
+      override;
 
-  StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse> ListPartitionCursors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) override;
+  StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
+  ListPartitionCursors(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

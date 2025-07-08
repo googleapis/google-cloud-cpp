@@ -32,33 +32,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContainerAnalysisLogging::ContainerAnalysisLogging(
     std::shared_ptr<ContainerAnalysisStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::iam::v1::Policy>
-ContainerAnalysisLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ContainerAnalysisLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-ContainerAnalysisLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ContainerAnalysisLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -67,41 +59,40 @@ ContainerAnalysisLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContainerAnalysisLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+StatusOr<
+    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
 ContainerAnalysisLogging::GetVulnerabilityOccurrencesSummary(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::containeranalysis::v1::
+        GetVulnerabilityOccurrencesSummaryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
-        return child_->GetVulnerabilityOccurrencesSummary(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::containeranalysis::v1::
+                 GetVulnerabilityOccurrencesSummaryRequest const& request) {
+        return child_->GetVulnerabilityOccurrencesSummary(context, options,
+                                                          request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
 ContainerAnalysisLogging::ExportSBOM(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) {
         return child_->ExportSBOM(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

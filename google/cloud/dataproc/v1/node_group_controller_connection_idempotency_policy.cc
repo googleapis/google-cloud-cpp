@@ -26,22 +26,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NodeGroupControllerConnectionIdempotencyPolicy::~NodeGroupControllerConnectionIdempotencyPolicy() = default;
+NodeGroupControllerConnectionIdempotencyPolicy::
+    ~NodeGroupControllerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<NodeGroupControllerConnectionIdempotencyPolicy>
 NodeGroupControllerConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<NodeGroupControllerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<NodeGroupControllerConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::CreateNodeGroup(
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::ResizeNodeGroup(
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::GetNodeGroup(
+    google::cloud::dataproc::v1::GetNodeGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -51,32 +56,38 @@ Idempotency NodeGroupControllerConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupControllerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency NodeGroupControllerConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<NodeGroupControllerConnectionIdempotencyPolicy>
-    MakeDefaultNodeGroupControllerConnectionIdempotencyPolicy() {
+MakeDefaultNodeGroupControllerConnectionIdempotencyPolicy() {
   return std::make_unique<NodeGroupControllerConnectionIdempotencyPolicy>();
 }
 

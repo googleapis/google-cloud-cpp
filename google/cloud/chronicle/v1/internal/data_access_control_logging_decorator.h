@@ -34,78 +34,76 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DataAccessControlServiceLogging : public DataAccessControlServiceStub {
  public:
   ~DataAccessControlServiceLogging() override = default;
-  DataAccessControlServiceLogging(std::shared_ptr<DataAccessControlServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  DataAccessControlServiceLogging(
+      std::shared_ptr<DataAccessControlServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::chronicle::v1::DataAccessLabel> CreateDataAccessLabel(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request)
+      override;
 
   StatusOr<google::cloud::chronicle::v1::DataAccessLabel> GetDataAccessLabel(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request)
+      override;
 
-  StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse> ListDataAccessLabels(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse>
+  ListDataAccessLabels(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request)
+      override;
 
   StatusOr<google::cloud::chronicle::v1::DataAccessLabel> UpdateDataAccessLabel(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request)
+      override;
 
   Status DeleteDataAccessLabel(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request)
+      override;
 
   StatusOr<google::cloud::chronicle::v1::DataAccessScope> CreateDataAccessScope(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request)
+      override;
 
   StatusOr<google::cloud::chronicle::v1::DataAccessScope> GetDataAccessScope(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request)
+      override;
 
-  StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse> ListDataAccessScopes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse>
+  ListDataAccessScopes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request)
+      override;
 
   StatusOr<google::cloud::chronicle::v1::DataAccessScope> UpdateDataAccessScope(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request)
+      override;
 
   Status DeleteDataAccessScope(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

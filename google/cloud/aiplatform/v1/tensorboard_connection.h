@@ -57,7 +57,8 @@ class TensorboardServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TensorboardServiceLimitedErrorCountRetryPolicy : public TensorboardServiceRetryPolicy {
+class TensorboardServiceLimitedErrorCountRetryPolicy
+    : public TensorboardServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,16 @@ class TensorboardServiceLimitedErrorCountRetryPolicy : public TensorboardService
    *     @p maximum_failures == 0.
    */
   explicit TensorboardServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TensorboardServiceLimitedErrorCountRetryPolicy(
       TensorboardServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TensorboardServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TensorboardServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
   TensorboardServiceLimitedErrorCountRetryPolicy(
       TensorboardServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TensorboardServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TensorboardServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +97,9 @@ class TensorboardServiceLimitedErrorCountRetryPolicy : public TensorboardService
   using BaseType = TensorboardServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::TensorboardServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::TensorboardServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -107,7 +112,8 @@ class TensorboardServiceLimitedErrorCountRetryPolicy : public TensorboardService
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TensorboardServiceLimitedTimeRetryPolicy : public TensorboardServiceRetryPolicy {
+class TensorboardServiceLimitedTimeRetryPolicy
+    : public TensorboardServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +138,14 @@ class TensorboardServiceLimitedTimeRetryPolicy : public TensorboardServiceRetryP
   template <typename DurationRep, typename DurationPeriod>
   explicit TensorboardServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TensorboardServiceLimitedTimeRetryPolicy(TensorboardServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : TensorboardServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TensorboardServiceLimitedTimeRetryPolicy(TensorboardServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : TensorboardServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TensorboardServiceLimitedTimeRetryPolicy(
+      TensorboardServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : TensorboardServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TensorboardServiceLimitedTimeRetryPolicy(
+      TensorboardServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : TensorboardServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,16 +167,18 @@ class TensorboardServiceLimitedTimeRetryPolicy : public TensorboardServiceRetryP
   using BaseType = TensorboardServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::TensorboardServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::TensorboardServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `TensorboardServiceConnection` object for `TensorboardServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TensorboardServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TensorboardServiceClient`.
+ * sets in `TensorboardServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TensorboardServiceClient`.
  *
  * To create a concrete instance, see `MakeTensorboardServiceConnection()`.
  *
@@ -181,171 +191,246 @@ class TensorboardServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  CreateTensorboard(google::cloud::aiplatform::v1::CreateTensorboardRequest const& request);
+  CreateTensorboard(
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateTensorboard(NoAwaitTag, google::cloud::aiplatform::v1::CreateTensorboardRequest const& request);
-
-  virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  CreateTensorboard( google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::aiplatform::v1::Tensorboard>
-  GetTensorboard(google::cloud::aiplatform::v1::GetTensorboardRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateTensorboard(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  UpdateTensorboard(google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
+  CreateTensorboard(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateTensorboard(NoAwaitTag, google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
+      google::cloud::aiplatform::v1::GetTensorboardRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  UpdateTensorboard( google::longrunning::Operation const& operation);
+  UpdateTensorboard(
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateTensorboard(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
+  UpdateTensorboard(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::aiplatform::v1::Tensorboard>
-  ListTensorboards(google::cloud::aiplatform::v1::ListTensorboardsRequest request);
+  ListTensorboards(
+      google::cloud::aiplatform::v1::ListTensorboardsRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboard(google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboard(
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteTensorboard(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteTensorboard(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboard( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboard(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request);
+  ReadTensorboardUsage(
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
-  ReadTensorboardSize(google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request);
+  ReadTensorboardSize(
+      google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-  CreateTensorboardExperiment(google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const& request);
+  CreateTensorboardExperiment(
+      google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-  GetTensorboardExperiment(google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const& request);
+  GetTensorboardExperiment(
+      google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-  UpdateTensorboardExperiment(google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const& request);
+  UpdateTensorboardExperiment(
+      google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
+          request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>
-  ListTensorboardExperiments(google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request);
+  ListTensorboardExperiments(
+      google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardExperiment(google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardExperiment(
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteTensorboardExperiment(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardExperiment( google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  CreateTensorboardRun(google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request);
-
-  virtual StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
-  BatchCreateTensorboardRuns(google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const& request);
-
-  virtual StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  GetTensorboardRun(google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardExperiment(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  UpdateTensorboardRun(google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request);
+  CreateTensorboardRun(
+      google::cloud::aiplatform::v1::CreateTensorboardRunRequest const&
+          request);
+
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
+  BatchCreateTensorboardRuns(
+      google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
+  GetTensorboardRun(
+      google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
+  UpdateTensorboardRun(
+      google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const&
+          request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::TensorboardRun>
-  ListTensorboardRuns(google::cloud::aiplatform::v1::ListTensorboardRunsRequest request);
+  ListTensorboardRuns(
+      google::cloud::aiplatform::v1::ListTensorboardRunsRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardRun(google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardRun(
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteTensorboardRun(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardRun( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardRun(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
-  BatchCreateTensorboardTimeSeries(google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const& request);
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
+  BatchCreateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::
+          BatchCreateTensorboardTimeSeriesRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  CreateTensorboardTimeSeries(google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const& request);
+  CreateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  GetTensorboardTimeSeries(google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const& request);
+  GetTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
+          request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  UpdateTensorboardTimeSeries(google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const& request);
+  UpdateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
+          request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  ListTensorboardTimeSeries(google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request);
+  ListTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardTimeSeries(google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteTensorboardTimeSeries(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardTimeSeries( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardTimeSeries(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
-  BatchReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const& request);
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
+  BatchReadTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::
+          BatchReadTensorboardTimeSeriesDataRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
-  ReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const& request);
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
+  ReadTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
-  ReadTensorboardBlobData(google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const& request);
+  virtual StreamRange<
+      google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
+  ReadTensorboardBlobData(
+      google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
-  WriteTensorboardExperimentData(google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const& request);
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
+  WriteTensorboardExperimentData(
+      google::cloud::aiplatform::v1::
+          WriteTensorboardExperimentDataRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
-  WriteTensorboardRunData(google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const& request);
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
+  WriteTensorboardRunData(
+      google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
+          request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>
-  ExportTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest request);
+  ExportTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `TensorboardServiceConnection`.
+ * A factory function to construct an object of type
+ * `TensorboardServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of TensorboardServiceClient.
+ * should be passed as an argument to the constructor of
+ * TensorboardServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `TensorboardServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `TensorboardServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -356,8 +441,8 @@ class TensorboardServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `TensorboardServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `TensorboardServiceConnection`
+ * created by this function.
  */
 std::shared_ptr<TensorboardServiceConnection> MakeTensorboardServiceConnection(
     std::string const& location, Options options = {});

@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeTemplatesClient {
  public:
-  explicit NodeTemplatesClient(std::shared_ptr<NodeTemplatesConnection> connection, Options opts = {});
+  explicit NodeTemplatesClient(
+      std::shared_ptr<NodeTemplatesConnection> connection, Options opts = {});
   ~NodeTemplatesClient();
 
   ///@{
@@ -77,10 +78,12 @@ class NodeTemplatesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(NodeTemplatesClient const& a, NodeTemplatesClient const& b) {
+  friend bool operator==(NodeTemplatesClient const& a,
+                         NodeTemplatesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NodeTemplatesClient const& a, NodeTemplatesClient const& b) {
+  friend bool operator!=(NodeTemplatesClient const& a,
+                         NodeTemplatesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,7 +121,8 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.NodeTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L330}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
   AggregatedListNodeTemplates(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -159,8 +163,11 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.NodeTemplatesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L330}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
-  AggregatedListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest request, Options opts = {});
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
+  AggregatedListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::
+                                  AggregatedListNodeTemplatesRequest request,
+                              Options opts = {});
 
   // clang-format off
   ///
@@ -194,7 +201,8 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplate(std::string const& project, std::string const& region, std::string const& node_template, Options opts = {});
+  DeleteNodeTemplate(std::string const& project, std::string const& region,
+                     std::string const& node_template, Options opts = {});
 
   // clang-format off
   ///
@@ -207,8 +215,9 @@ class NodeTemplatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeTemplate(NoAwaitTag, std::string const& project, std::string const& region, std::string const& node_template, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& node_template, Options opts = {});
 
   // clang-format off
   ///
@@ -245,7 +254,9 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request, Options opts = {});
+  DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         DeleteNodeTemplateRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -258,8 +269,11 @@ class NodeTemplatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeTemplate(NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
+      NoAwaitTag,
+      google::cloud::cpp::compute::node_templates::v1::
+          DeleteNodeTemplateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -271,7 +285,9 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplate(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  DeleteNodeTemplate(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -298,8 +314,9 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-  GetNodeTemplate(std::string const& project, std::string const& region, std::string const& node_template, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
+      std::string const& project, std::string const& region,
+      std::string const& node_template, Options opts = {});
 
   // clang-format off
   ///
@@ -329,8 +346,10 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-  GetNodeTemplate(google::cloud::cpp::compute::node_templates::v1::GetNodeTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
+      google::cloud::cpp::compute::node_templates::v1::
+          GetNodeTemplateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -358,8 +377,9 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -390,8 +410,10 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::node_templates::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -426,7 +448,10 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplate(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::NodeTemplate const& node_template_resource, Options opts = {});
+  InsertNodeTemplate(std::string const& project, std::string const& region,
+                     google::cloud::cpp::compute::v1::NodeTemplate const&
+                         node_template_resource,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +464,11 @@ class NodeTemplatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeTemplate(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::NodeTemplate const& node_template_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::NodeTemplate const&
+          node_template_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -478,7 +506,9 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request, Options opts = {});
+  InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         InsertNodeTemplateRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -491,8 +521,11 @@ class NodeTemplatesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeTemplate(NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
+      NoAwaitTag,
+      google::cloud::cpp::compute::node_templates::v1::
+          InsertNodeTemplateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -504,7 +537,9 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplate(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  InsertNodeTemplate(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -539,8 +574,8 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L30}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-  ListNodeTemplates(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -579,8 +614,10 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.NodeTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_088.proto#L30}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-  ListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
+      google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -609,8 +646,12 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+          region_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -641,8 +682,10 @@ class NodeTemplatesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::node_templates::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -671,7 +714,12 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -702,7 +750,9 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<NodeTemplatesConnection> connection_;

@@ -62,11 +62,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+/// [google.cloud.dialogflow.cx.v3.Version]:
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
 ///
 class VersionsClient {
  public:
-  explicit VersionsClient(std::shared_ptr<VersionsConnection> connection, Options opts = {});
+  explicit VersionsClient(std::shared_ptr<VersionsConnection> connection,
+                          Options opts = {});
   ~VersionsClient();
 
   ///@{
@@ -122,8 +124,8 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Version>
-  ListVersions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -163,8 +165,9 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Version>
-  ListVersions(google::cloud::dialogflow::cx::v3::ListVersionsRequest request, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
+      google::cloud::dialogflow::cx::v3::ListVersionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +193,8 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Version>
-  GetVersion(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -220,8 +223,9 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Version>
-  GetVersion(google::cloud::dialogflow::cx::v3::GetVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
+      google::cloud::dialogflow::cx::v3::GetVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -266,8 +270,10 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(std::string const& parent, google::cloud::dialogflow::cx::v3::Version const& version, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
+      std::string const& parent,
+      google::cloud::dialogflow::cx::v3::Version const& version,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -280,8 +286,10 @@ class VersionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateVersion(NoAwaitTag, std::string const& parent, google::cloud::dialogflow::cx::v3::Version const& version, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dialogflow::cx::v3::Version const& version,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -328,8 +336,9 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
+      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -342,8 +351,10 @@ class VersionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateVersion(NoAwaitTag, google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -354,8 +365,8 @@ class VersionsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -381,8 +392,9 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Version>
-  UpdateVersion(google::cloud::dialogflow::cx::v3::Version const& version, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
+      google::cloud::dialogflow::cx::v3::Version const& version,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -411,8 +423,9 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Version>
-  UpdateVersion(google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
+      google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -436,8 +449,7 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  Status
-  DeleteVersion(std::string const& name, Options opts = {});
+  Status DeleteVersion(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -464,8 +476,9 @@ class VersionsClient {
   /// [google.cloud.dialogflow.cx.v3.Version]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   // clang-format on
-  Status
-  DeleteVersion(google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request, Options opts = {});
+  Status DeleteVersion(
+      google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -508,8 +521,8 @@ class VersionsClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  LoadVersion(std::string const& name, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> LoadVersion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -522,8 +535,9 @@ class VersionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  LoadVersion(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> LoadVersion(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -568,8 +582,9 @@ class VersionsClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  LoadVersion(google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> LoadVersion(
+      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -582,8 +597,10 @@ class VersionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  LoadVersion(NoAwaitTag, google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> LoadVersion(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +611,8 @@ class VersionsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  LoadVersion(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> LoadVersion(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -654,7 +671,9 @@ class VersionsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
-  CompareVersions(google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request, Options opts = {});
+  CompareVersions(
+      google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -692,8 +711,8 @@ class VersionsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -722,8 +741,9 @@ class VersionsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -758,8 +778,8 @@ class VersionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -798,8 +818,8 @@ class VersionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -825,8 +845,8 @@ class VersionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -857,8 +877,9 @@ class VersionsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -892,8 +913,7 @@ class VersionsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -932,8 +952,9 @@ class VersionsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<VersionsConnection> connection_;

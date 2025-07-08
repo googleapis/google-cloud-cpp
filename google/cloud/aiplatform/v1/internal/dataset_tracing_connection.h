@@ -36,160 +36,177 @@ class DatasetServiceTracingConnection
   ~DatasetServiceTracingConnection() override = default;
 
   explicit DatasetServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::DatasetServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::DatasetServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-  CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
+      google::cloud::aiplatform::v1::CreateDatasetRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDatasetRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-  CreateDataset(
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Dataset>
-  GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
+      google::cloud::aiplatform::v1::GetDatasetRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Dataset>
-  UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
+      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request)
+      override;
 
-  StreamRange<google::cloud::aiplatform::v1::Dataset>
-  ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request) override;
-
-  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) override;
+  StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
+      google::cloud::aiplatform::v1::ListDatasetsRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(
-      google::longrunning::Operation const& operation) override;
+  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const&
+                    request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag,
-      google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDataset(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
   ImportData(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag,
-      google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
+  ImportData(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
   ExportData(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
+  ExportData(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) override;
+  CreateDatasetVersion(
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDatasetVersion(NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDatasetVersion(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
   CreateDatasetVersion(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-  UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
+      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) override;
+  DeleteDatasetVersion(
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteDatasetVersion(NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDatasetVersion(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
-  GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
+      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request)
+      override;
 
   StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request) override;
+  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest
+                          request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) override;
+  RestoreDatasetVersion(
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RestoreDatasetVersion(NoAwaitTag,
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
   RestoreDatasetVersion(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::aiplatform::v1::DataItem>
-  ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
+      google::cloud::aiplatform::v1::ListDataItemsRequest request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::DataItemView>
-  SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::DataItemView> SearchDataItems(
+      google::cloud::aiplatform::v1::SearchDataItemsRequest request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::SavedQuery>
-  ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request) override;
-
-  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteSavedQuery(NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) override;
+  StreamRange<google::cloud::aiplatform::v1::SavedQuery> ListSavedQueries(
+      google::cloud::aiplatform::v1::ListSavedQueriesRequest request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(
-      google::longrunning::Operation const& operation) override;
+  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
+                       request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
-  GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteSavedQuery(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request)
+      override;
 
-  StreamRange<google::cloud::aiplatform::v1::Annotation>
-  ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSavedQuery(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
+      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request)
+      override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(
+      google::cloud::aiplatform::v1::ListAnnotationsRequest request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::DatasetServiceConnection> child_;

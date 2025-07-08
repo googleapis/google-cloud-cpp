@@ -26,39 +26,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-HttpsHealthChecksConnectionIdempotencyPolicy::~HttpsHealthChecksConnectionIdempotencyPolicy() = default;
+HttpsHealthChecksConnectionIdempotencyPolicy::
+    ~HttpsHealthChecksConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<HttpsHealthChecksConnectionIdempotencyPolicy>
 HttpsHealthChecksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<HttpsHealthChecksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::DeleteHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::DeleteHttpsHealthCheckRequest const&) {
+Idempotency
+HttpsHealthChecksConnectionIdempotencyPolicy::DeleteHttpsHealthCheck(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        DeleteHttpsHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::GetHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::GetHttpsHealthCheckRequest const&) {
+Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::GetHttpsHealthCheck(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        GetHttpsHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::InsertHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::InsertHttpsHealthCheckRequest const&) {
+Idempotency
+HttpsHealthChecksConnectionIdempotencyPolicy::InsertHttpsHealthCheck(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        InsertHttpsHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::ListHttpsHealthChecksRequest) {  // NOLINT
+Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::ListHttpsHealthChecks(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        ListHttpsHealthChecksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::PatchHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::PatchHttpsHealthCheckRequest const&) {
+Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::PatchHttpsHealthCheck(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        PatchHttpsHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency HttpsHealthChecksConnectionIdempotencyPolicy::UpdateHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::UpdateHttpsHealthCheckRequest const&) {
+Idempotency
+HttpsHealthChecksConnectionIdempotencyPolicy::UpdateHttpsHealthCheck(
+    google::cloud::cpp::compute::https_health_checks::v1::
+        UpdateHttpsHealthCheckRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<HttpsHealthChecksConnectionIdempotencyPolicy>
-    MakeDefaultHttpsHealthChecksConnectionIdempotencyPolicy() {
+MakeDefaultHttpsHealthChecksConnectionIdempotencyPolicy() {
   return std::make_unique<HttpsHealthChecksConnectionIdempotencyPolicy>();
 }
 

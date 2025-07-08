@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_TENANT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_TENANT_CLIENT_H
 
+#include "google/cloud/talent/v4/tenant_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/talent/v4/tenant_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TenantServiceClient {
  public:
-  explicit TenantServiceClient(std::shared_ptr<TenantServiceConnection> connection, Options opts = {});
+  explicit TenantServiceClient(
+      std::shared_ptr<TenantServiceConnection> connection, Options opts = {});
   ~TenantServiceClient();
 
   ///@{
@@ -74,10 +75,12 @@ class TenantServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TenantServiceClient const& a, TenantServiceClient const& b) {
+  friend bool operator==(TenantServiceClient const& a,
+                         TenantServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TenantServiceClient const& a, TenantServiceClient const& b) {
+  friend bool operator!=(TenantServiceClient const& a,
+                         TenantServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -108,8 +111,9 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Tenant>
-  CreateTenant(std::string const& parent, google::cloud::talent::v4::Tenant const& tenant, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
+      std::string const& parent,
+      google::cloud::talent::v4::Tenant const& tenant, Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +142,9 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Tenant>
-  CreateTenant(google::cloud::talent::v4::CreateTenantRequest const& request, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
+      google::cloud::talent::v4::CreateTenantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -166,8 +171,8 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Tenant>
-  GetTenant(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Tenant> GetTenant(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -196,8 +201,9 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Tenant>
-  GetTenant(google::cloud::talent::v4::GetTenantRequest const& request, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
+      google::cloud::talent::v4::GetTenantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -233,8 +239,9 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.UpdateTenantRequest.update_mask]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L128}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Tenant>
-  UpdateTenant(google::cloud::talent::v4::Tenant const& tenant, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
+      google::cloud::talent::v4::Tenant const& tenant,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -263,8 +270,9 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.UpdateTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::Tenant>
-  UpdateTenant(google::cloud::talent::v4::UpdateTenantRequest const& request, Options opts = {});
+  StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
+      google::cloud::talent::v4::UpdateTenantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -288,8 +296,7 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.DeleteTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L132}
   ///
   // clang-format on
-  Status
-  DeleteTenant(std::string const& name, Options opts = {});
+  Status DeleteTenant(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -315,8 +322,9 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.DeleteTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L132}
   ///
   // clang-format on
-  Status
-  DeleteTenant(google::cloud::talent::v4::DeleteTenantRequest const& request, Options opts = {});
+  Status DeleteTenant(
+      google::cloud::talent::v4::DeleteTenantRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -352,8 +360,8 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::talent::v4::Tenant>
-  ListTenants(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -391,8 +399,8 @@ class TenantServiceClient {
   /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::talent::v4::Tenant>
-  ListTenants(google::cloud::talent::v4::ListTenantsRequest request, Options opts = {});
+  StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
+      google::cloud::talent::v4::ListTenantsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -418,8 +426,8 @@ class TenantServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -450,8 +458,9 @@ class TenantServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TenantServiceConnection> connection_;

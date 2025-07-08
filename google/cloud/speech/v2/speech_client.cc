@@ -25,15 +25,18 @@ namespace cloud {
 namespace speech_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SpeechClient::SpeechClient(
-    std::shared_ptr<SpeechConnection> connection, Options opts)
+SpeechClient::SpeechClient(std::shared_ptr<SpeechConnection> connection,
+                           Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SpeechClient::~SpeechClient() = default;
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::CreateRecognizer(std::string const& parent, google::cloud::speech::v2::Recognizer const& recognizer, std::string const& recognizer_id, Options opts) {
+SpeechClient::CreateRecognizer(
+    std::string const& parent,
+    google::cloud::speech::v2::Recognizer const& recognizer,
+    std::string const& recognizer_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::CreateRecognizerRequest request;
   request.set_parent(parent);
@@ -42,8 +45,10 @@ SpeechClient::CreateRecognizer(std::string const& parent, google::cloud::speech:
   return connection_->CreateRecognizer(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::CreateRecognizer(NoAwaitTag, std::string const& parent, google::cloud::speech::v2::Recognizer const& recognizer, std::string const& recognizer_id, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::CreateRecognizer(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::speech::v2::Recognizer const& recognizer,
+    std::string const& recognizer_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::CreateRecognizerRequest request;
   request.set_parent(parent);
@@ -53,19 +58,24 @@ SpeechClient::CreateRecognizer(NoAwaitTag, std::string const& parent, google::cl
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::CreateRecognizer(google::cloud::speech::v2::CreateRecognizerRequest const& request, Options opts) {
+SpeechClient::CreateRecognizer(
+    google::cloud::speech::v2::CreateRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRecognizer(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::CreateRecognizer(NoAwaitTag, google::cloud::speech::v2::CreateRecognizerRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::CreateRecognizer(
+    NoAwaitTag,
+    google::cloud::speech::v2::CreateRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRecognizer(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::CreateRecognizer(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::CreateRecognizer(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRecognizer(operation);
 }
@@ -79,27 +89,31 @@ SpeechClient::ListRecognizers(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::speech::v2::Recognizer>
-SpeechClient::ListRecognizers(google::cloud::speech::v2::ListRecognizersRequest request, Options opts) {
+SpeechClient::ListRecognizers(
+    google::cloud::speech::v2::ListRecognizersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRecognizers(std::move(request));
 }
 
-StatusOr<google::cloud::speech::v2::Recognizer>
-SpeechClient::GetRecognizer(std::string const& name, Options opts) {
+StatusOr<google::cloud::speech::v2::Recognizer> SpeechClient::GetRecognizer(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::GetRecognizerRequest request;
   request.set_name(name);
   return connection_->GetRecognizer(request);
 }
 
-StatusOr<google::cloud::speech::v2::Recognizer>
-SpeechClient::GetRecognizer(google::cloud::speech::v2::GetRecognizerRequest const& request, Options opts) {
+StatusOr<google::cloud::speech::v2::Recognizer> SpeechClient::GetRecognizer(
+    google::cloud::speech::v2::GetRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRecognizer(request);
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::UpdateRecognizer(google::cloud::speech::v2::Recognizer const& recognizer, google::protobuf::FieldMask const& update_mask, Options opts) {
+SpeechClient::UpdateRecognizer(
+    google::cloud::speech::v2::Recognizer const& recognizer,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UpdateRecognizerRequest request;
   *request.mutable_recognizer() = recognizer;
@@ -107,8 +121,9 @@ SpeechClient::UpdateRecognizer(google::cloud::speech::v2::Recognizer const& reco
   return connection_->UpdateRecognizer(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UpdateRecognizer(NoAwaitTag, google::cloud::speech::v2::Recognizer const& recognizer, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UpdateRecognizer(
+    NoAwaitTag, google::cloud::speech::v2::Recognizer const& recognizer,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UpdateRecognizerRequest request;
   *request.mutable_recognizer() = recognizer;
@@ -117,19 +132,24 @@ SpeechClient::UpdateRecognizer(NoAwaitTag, google::cloud::speech::v2::Recognizer
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::UpdateRecognizer(google::cloud::speech::v2::UpdateRecognizerRequest const& request, Options opts) {
+SpeechClient::UpdateRecognizer(
+    google::cloud::speech::v2::UpdateRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRecognizer(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UpdateRecognizer(NoAwaitTag, google::cloud::speech::v2::UpdateRecognizerRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UpdateRecognizer(
+    NoAwaitTag,
+    google::cloud::speech::v2::UpdateRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRecognizer(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::UpdateRecognizer(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::UpdateRecognizer(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRecognizer(operation);
 }
@@ -142,8 +162,8 @@ SpeechClient::DeleteRecognizer(std::string const& name, Options opts) {
   return connection_->DeleteRecognizer(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::DeleteRecognizer(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::DeleteRecognizer(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::DeleteRecognizerRequest request;
   request.set_name(name);
@@ -151,19 +171,24 @@ SpeechClient::DeleteRecognizer(NoAwaitTag, std::string const& name, Options opts
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::DeleteRecognizer(google::cloud::speech::v2::DeleteRecognizerRequest const& request, Options opts) {
+SpeechClient::DeleteRecognizer(
+    google::cloud::speech::v2::DeleteRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRecognizer(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::DeleteRecognizer(NoAwaitTag, google::cloud::speech::v2::DeleteRecognizerRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::DeleteRecognizer(
+    NoAwaitTag,
+    google::cloud::speech::v2::DeleteRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRecognizer(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::DeleteRecognizer(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::DeleteRecognizer(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRecognizer(operation);
 }
@@ -176,8 +201,8 @@ SpeechClient::UndeleteRecognizer(std::string const& name, Options opts) {
   return connection_->UndeleteRecognizer(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UndeleteRecognizer(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UndeleteRecognizer(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UndeleteRecognizerRequest request;
   request.set_name(name);
@@ -185,25 +210,33 @@ SpeechClient::UndeleteRecognizer(NoAwaitTag, std::string const& name, Options op
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::UndeleteRecognizer(google::cloud::speech::v2::UndeleteRecognizerRequest const& request, Options opts) {
+SpeechClient::UndeleteRecognizer(
+    google::cloud::speech::v2::UndeleteRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteRecognizer(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UndeleteRecognizer(NoAwaitTag, google::cloud::speech::v2::UndeleteRecognizerRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UndeleteRecognizer(
+    NoAwaitTag,
+    google::cloud::speech::v2::UndeleteRecognizerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteRecognizer(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
-SpeechClient::UndeleteRecognizer(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::UndeleteRecognizer(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteRecognizer(operation);
 }
 
-StatusOr<google::cloud::speech::v2::RecognizeResponse>
-SpeechClient::Recognize(std::string const& recognizer, google::cloud::speech::v2::RecognitionConfig const& config, google::protobuf::FieldMask const& config_mask, std::string const& content, Options opts) {
+StatusOr<google::cloud::speech::v2::RecognizeResponse> SpeechClient::Recognize(
+    std::string const& recognizer,
+    google::cloud::speech::v2::RecognitionConfig const& config,
+    google::protobuf::FieldMask const& config_mask, std::string const& content,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::RecognizeRequest request;
   request.set_recognizer(recognizer);
@@ -213,8 +246,8 @@ SpeechClient::Recognize(std::string const& recognizer, google::cloud::speech::v2
   return connection_->Recognize(request);
 }
 
-StatusOr<google::cloud::speech::v2::RecognizeResponse>
-SpeechClient::Recognize(google::cloud::speech::v2::RecognizeRequest const& request, Options opts) {
+StatusOr<google::cloud::speech::v2::RecognizeResponse> SpeechClient::Recognize(
+    google::cloud::speech::v2::RecognizeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Recognize(request);
 }
@@ -223,13 +256,18 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v2::StreamingRecognizeRequest,
     google::cloud::speech::v2::StreamingRecognizeResponse>>
 SpeechClient::AsyncStreamingRecognize(Options opts) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamingRecognize();
 }
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-SpeechClient::BatchRecognize(std::string const& recognizer, google::cloud::speech::v2::RecognitionConfig const& config, google::protobuf::FieldMask const& config_mask, std::vector<google::cloud::speech::v2::BatchRecognizeFileMetadata> const& files, Options opts) {
+SpeechClient::BatchRecognize(
+    std::string const& recognizer,
+    google::cloud::speech::v2::RecognitionConfig const& config,
+    google::protobuf::FieldMask const& config_mask,
+    std::vector<google::cloud::speech::v2::BatchRecognizeFileMetadata> const&
+        files,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::BatchRecognizeRequest request;
   request.set_recognizer(recognizer);
@@ -239,8 +277,13 @@ SpeechClient::BatchRecognize(std::string const& recognizer, google::cloud::speec
   return connection_->BatchRecognize(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::BatchRecognize(NoAwaitTag, std::string const& recognizer, google::cloud::speech::v2::RecognitionConfig const& config, google::protobuf::FieldMask const& config_mask, std::vector<google::cloud::speech::v2::BatchRecognizeFileMetadata> const& files, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::BatchRecognize(
+    NoAwaitTag, std::string const& recognizer,
+    google::cloud::speech::v2::RecognitionConfig const& config,
+    google::protobuf::FieldMask const& config_mask,
+    std::vector<google::cloud::speech::v2::BatchRecognizeFileMetadata> const&
+        files,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::BatchRecognizeRequest request;
   request.set_recognizer(recognizer);
@@ -251,39 +294,44 @@ SpeechClient::BatchRecognize(NoAwaitTag, std::string const& recognizer, google::
 }
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-SpeechClient::BatchRecognize(google::cloud::speech::v2::BatchRecognizeRequest const& request, Options opts) {
+SpeechClient::BatchRecognize(
+    google::cloud::speech::v2::BatchRecognizeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchRecognize(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::BatchRecognize(NoAwaitTag, google::cloud::speech::v2::BatchRecognizeRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::BatchRecognize(
+    NoAwaitTag, google::cloud::speech::v2::BatchRecognizeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchRecognize(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-SpeechClient::BatchRecognize(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::BatchRecognize(google::longrunning::Operation const& operation,
+                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchRecognize(operation);
 }
 
-StatusOr<google::cloud::speech::v2::Config>
-SpeechClient::GetConfig(std::string const& name, Options opts) {
+StatusOr<google::cloud::speech::v2::Config> SpeechClient::GetConfig(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::GetConfigRequest request;
   request.set_name(name);
   return connection_->GetConfig(request);
 }
 
-StatusOr<google::cloud::speech::v2::Config>
-SpeechClient::GetConfig(google::cloud::speech::v2::GetConfigRequest const& request, Options opts) {
+StatusOr<google::cloud::speech::v2::Config> SpeechClient::GetConfig(
+    google::cloud::speech::v2::GetConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConfig(request);
 }
 
-StatusOr<google::cloud::speech::v2::Config>
-SpeechClient::UpdateConfig(google::cloud::speech::v2::Config const& config, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::speech::v2::Config> SpeechClient::UpdateConfig(
+    google::cloud::speech::v2::Config const& config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UpdateConfigRequest request;
   *request.mutable_config() = config;
@@ -291,14 +339,18 @@ SpeechClient::UpdateConfig(google::cloud::speech::v2::Config const& config, goog
   return connection_->UpdateConfig(request);
 }
 
-StatusOr<google::cloud::speech::v2::Config>
-SpeechClient::UpdateConfig(google::cloud::speech::v2::UpdateConfigRequest const& request, Options opts) {
+StatusOr<google::cloud::speech::v2::Config> SpeechClient::UpdateConfig(
+    google::cloud::speech::v2::UpdateConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConfig(request);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::CreateCustomClass(std::string const& parent, google::cloud::speech::v2::CustomClass const& custom_class, std::string const& custom_class_id, Options opts) {
+SpeechClient::CreateCustomClass(
+    std::string const& parent,
+    google::cloud::speech::v2::CustomClass const& custom_class,
+    std::string const& custom_class_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::CreateCustomClassRequest request;
   request.set_parent(parent);
@@ -307,8 +359,10 @@ SpeechClient::CreateCustomClass(std::string const& parent, google::cloud::speech
   return connection_->CreateCustomClass(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::CreateCustomClass(NoAwaitTag, std::string const& parent, google::cloud::speech::v2::CustomClass const& custom_class, std::string const& custom_class_id, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::CreateCustomClass(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::speech::v2::CustomClass const& custom_class,
+    std::string const& custom_class_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::CreateCustomClassRequest request;
   request.set_parent(parent);
@@ -318,19 +372,24 @@ SpeechClient::CreateCustomClass(NoAwaitTag, std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::CreateCustomClass(google::cloud::speech::v2::CreateCustomClassRequest const& request, Options opts) {
+SpeechClient::CreateCustomClass(
+    google::cloud::speech::v2::CreateCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCustomClass(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::CreateCustomClass(NoAwaitTag, google::cloud::speech::v2::CreateCustomClassRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::CreateCustomClass(
+    NoAwaitTag,
+    google::cloud::speech::v2::CreateCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCustomClass(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::CreateCustomClass(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::CreateCustomClass(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCustomClass(operation);
 }
@@ -344,27 +403,31 @@ SpeechClient::ListCustomClasses(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::speech::v2::CustomClass>
-SpeechClient::ListCustomClasses(google::cloud::speech::v2::ListCustomClassesRequest request, Options opts) {
+SpeechClient::ListCustomClasses(
+    google::cloud::speech::v2::ListCustomClassesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCustomClasses(std::move(request));
 }
 
-StatusOr<google::cloud::speech::v2::CustomClass>
-SpeechClient::GetCustomClass(std::string const& name, Options opts) {
+StatusOr<google::cloud::speech::v2::CustomClass> SpeechClient::GetCustomClass(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::GetCustomClassRequest request;
   request.set_name(name);
   return connection_->GetCustomClass(request);
 }
 
-StatusOr<google::cloud::speech::v2::CustomClass>
-SpeechClient::GetCustomClass(google::cloud::speech::v2::GetCustomClassRequest const& request, Options opts) {
+StatusOr<google::cloud::speech::v2::CustomClass> SpeechClient::GetCustomClass(
+    google::cloud::speech::v2::GetCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCustomClass(request);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::UpdateCustomClass(google::cloud::speech::v2::CustomClass const& custom_class, google::protobuf::FieldMask const& update_mask, Options opts) {
+SpeechClient::UpdateCustomClass(
+    google::cloud::speech::v2::CustomClass const& custom_class,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UpdateCustomClassRequest request;
   *request.mutable_custom_class() = custom_class;
@@ -372,8 +435,9 @@ SpeechClient::UpdateCustomClass(google::cloud::speech::v2::CustomClass const& cu
   return connection_->UpdateCustomClass(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UpdateCustomClass(NoAwaitTag, google::cloud::speech::v2::CustomClass const& custom_class, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UpdateCustomClass(
+    NoAwaitTag, google::cloud::speech::v2::CustomClass const& custom_class,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UpdateCustomClassRequest request;
   *request.mutable_custom_class() = custom_class;
@@ -382,19 +446,24 @@ SpeechClient::UpdateCustomClass(NoAwaitTag, google::cloud::speech::v2::CustomCla
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::UpdateCustomClass(google::cloud::speech::v2::UpdateCustomClassRequest const& request, Options opts) {
+SpeechClient::UpdateCustomClass(
+    google::cloud::speech::v2::UpdateCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCustomClass(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UpdateCustomClass(NoAwaitTag, google::cloud::speech::v2::UpdateCustomClassRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UpdateCustomClass(
+    NoAwaitTag,
+    google::cloud::speech::v2::UpdateCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCustomClass(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::UpdateCustomClass(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::UpdateCustomClass(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCustomClass(operation);
 }
@@ -407,8 +476,8 @@ SpeechClient::DeleteCustomClass(std::string const& name, Options opts) {
   return connection_->DeleteCustomClass(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::DeleteCustomClass(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::DeleteCustomClass(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::DeleteCustomClassRequest request;
   request.set_name(name);
@@ -416,19 +485,24 @@ SpeechClient::DeleteCustomClass(NoAwaitTag, std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::DeleteCustomClass(google::cloud::speech::v2::DeleteCustomClassRequest const& request, Options opts) {
+SpeechClient::DeleteCustomClass(
+    google::cloud::speech::v2::DeleteCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCustomClass(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::DeleteCustomClass(NoAwaitTag, google::cloud::speech::v2::DeleteCustomClassRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::DeleteCustomClass(
+    NoAwaitTag,
+    google::cloud::speech::v2::DeleteCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCustomClass(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::DeleteCustomClass(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::DeleteCustomClass(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCustomClass(operation);
 }
@@ -441,8 +515,8 @@ SpeechClient::UndeleteCustomClass(std::string const& name, Options opts) {
   return connection_->UndeleteCustomClass(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UndeleteCustomClass(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UndeleteCustomClass(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UndeleteCustomClassRequest request;
   request.set_name(name);
@@ -450,25 +524,33 @@ SpeechClient::UndeleteCustomClass(NoAwaitTag, std::string const& name, Options o
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::UndeleteCustomClass(google::cloud::speech::v2::UndeleteCustomClassRequest const& request, Options opts) {
+SpeechClient::UndeleteCustomClass(
+    google::cloud::speech::v2::UndeleteCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteCustomClass(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UndeleteCustomClass(NoAwaitTag, google::cloud::speech::v2::UndeleteCustomClassRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UndeleteCustomClass(
+    NoAwaitTag,
+    google::cloud::speech::v2::UndeleteCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteCustomClass(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
-SpeechClient::UndeleteCustomClass(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::UndeleteCustomClass(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteCustomClass(operation);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::CreatePhraseSet(std::string const& parent, google::cloud::speech::v2::PhraseSet const& phrase_set, std::string const& phrase_set_id, Options opts) {
+SpeechClient::CreatePhraseSet(
+    std::string const& parent,
+    google::cloud::speech::v2::PhraseSet const& phrase_set,
+    std::string const& phrase_set_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::CreatePhraseSetRequest request;
   request.set_parent(parent);
@@ -477,8 +559,10 @@ SpeechClient::CreatePhraseSet(std::string const& parent, google::cloud::speech::
   return connection_->CreatePhraseSet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::CreatePhraseSet(NoAwaitTag, std::string const& parent, google::cloud::speech::v2::PhraseSet const& phrase_set, std::string const& phrase_set_id, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::CreatePhraseSet(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::speech::v2::PhraseSet const& phrase_set,
+    std::string const& phrase_set_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::CreatePhraseSetRequest request;
   request.set_parent(parent);
@@ -488,53 +572,61 @@ SpeechClient::CreatePhraseSet(NoAwaitTag, std::string const& parent, google::clo
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::CreatePhraseSet(google::cloud::speech::v2::CreatePhraseSetRequest const& request, Options opts) {
+SpeechClient::CreatePhraseSet(
+    google::cloud::speech::v2::CreatePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePhraseSet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::CreatePhraseSet(NoAwaitTag, google::cloud::speech::v2::CreatePhraseSetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::CreatePhraseSet(
+    NoAwaitTag,
+    google::cloud::speech::v2::CreatePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePhraseSet(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::CreatePhraseSet(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::CreatePhraseSet(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePhraseSet(operation);
 }
 
-StreamRange<google::cloud::speech::v2::PhraseSet>
-SpeechClient::ListPhraseSets(std::string const& parent, Options opts) {
+StreamRange<google::cloud::speech::v2::PhraseSet> SpeechClient::ListPhraseSets(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::ListPhraseSetsRequest request;
   request.set_parent(parent);
   return connection_->ListPhraseSets(request);
 }
 
-StreamRange<google::cloud::speech::v2::PhraseSet>
-SpeechClient::ListPhraseSets(google::cloud::speech::v2::ListPhraseSetsRequest request, Options opts) {
+StreamRange<google::cloud::speech::v2::PhraseSet> SpeechClient::ListPhraseSets(
+    google::cloud::speech::v2::ListPhraseSetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPhraseSets(std::move(request));
 }
 
-StatusOr<google::cloud::speech::v2::PhraseSet>
-SpeechClient::GetPhraseSet(std::string const& name, Options opts) {
+StatusOr<google::cloud::speech::v2::PhraseSet> SpeechClient::GetPhraseSet(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::GetPhraseSetRequest request;
   request.set_name(name);
   return connection_->GetPhraseSet(request);
 }
 
-StatusOr<google::cloud::speech::v2::PhraseSet>
-SpeechClient::GetPhraseSet(google::cloud::speech::v2::GetPhraseSetRequest const& request, Options opts) {
+StatusOr<google::cloud::speech::v2::PhraseSet> SpeechClient::GetPhraseSet(
+    google::cloud::speech::v2::GetPhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPhraseSet(request);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::UpdatePhraseSet(google::cloud::speech::v2::PhraseSet const& phrase_set, google::protobuf::FieldMask const& update_mask, Options opts) {
+SpeechClient::UpdatePhraseSet(
+    google::cloud::speech::v2::PhraseSet const& phrase_set,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UpdatePhraseSetRequest request;
   *request.mutable_phrase_set() = phrase_set;
@@ -542,8 +634,9 @@ SpeechClient::UpdatePhraseSet(google::cloud::speech::v2::PhraseSet const& phrase
   return connection_->UpdatePhraseSet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UpdatePhraseSet(NoAwaitTag, google::cloud::speech::v2::PhraseSet const& phrase_set, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UpdatePhraseSet(
+    NoAwaitTag, google::cloud::speech::v2::PhraseSet const& phrase_set,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UpdatePhraseSetRequest request;
   *request.mutable_phrase_set() = phrase_set;
@@ -552,19 +645,24 @@ SpeechClient::UpdatePhraseSet(NoAwaitTag, google::cloud::speech::v2::PhraseSet c
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::UpdatePhraseSet(google::cloud::speech::v2::UpdatePhraseSetRequest const& request, Options opts) {
+SpeechClient::UpdatePhraseSet(
+    google::cloud::speech::v2::UpdatePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePhraseSet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UpdatePhraseSet(NoAwaitTag, google::cloud::speech::v2::UpdatePhraseSetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UpdatePhraseSet(
+    NoAwaitTag,
+    google::cloud::speech::v2::UpdatePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePhraseSet(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::UpdatePhraseSet(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::UpdatePhraseSet(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePhraseSet(operation);
 }
@@ -577,8 +675,8 @@ SpeechClient::DeletePhraseSet(std::string const& name, Options opts) {
   return connection_->DeletePhraseSet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::DeletePhraseSet(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::DeletePhraseSet(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::DeletePhraseSetRequest request;
   request.set_name(name);
@@ -586,19 +684,24 @@ SpeechClient::DeletePhraseSet(NoAwaitTag, std::string const& name, Options opts)
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::DeletePhraseSet(google::cloud::speech::v2::DeletePhraseSetRequest const& request, Options opts) {
+SpeechClient::DeletePhraseSet(
+    google::cloud::speech::v2::DeletePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePhraseSet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::DeletePhraseSet(NoAwaitTag, google::cloud::speech::v2::DeletePhraseSetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::DeletePhraseSet(
+    NoAwaitTag,
+    google::cloud::speech::v2::DeletePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePhraseSet(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::DeletePhraseSet(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::DeletePhraseSet(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePhraseSet(operation);
 }
@@ -611,8 +714,8 @@ SpeechClient::UndeletePhraseSet(std::string const& name, Options opts) {
   return connection_->UndeletePhraseSet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UndeletePhraseSet(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UndeletePhraseSet(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v2::UndeletePhraseSetRequest request;
   request.set_name(name);
@@ -620,37 +723,42 @@ SpeechClient::UndeletePhraseSet(NoAwaitTag, std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::UndeletePhraseSet(google::cloud::speech::v2::UndeletePhraseSetRequest const& request, Options opts) {
+SpeechClient::UndeletePhraseSet(
+    google::cloud::speech::v2::UndeletePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeletePhraseSet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::UndeletePhraseSet(NoAwaitTag, google::cloud::speech::v2::UndeletePhraseSetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::UndeletePhraseSet(
+    NoAwaitTag,
+    google::cloud::speech::v2::UndeletePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeletePhraseSet(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-SpeechClient::UndeletePhraseSet(google::longrunning::Operation const& operation, Options opts) {
+SpeechClient::UndeletePhraseSet(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeletePhraseSet(operation);
 }
 
-StreamRange<google::cloud::location::Location>
-SpeechClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> SpeechClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-SpeechClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> SpeechClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-SpeechClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> SpeechClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -658,50 +766,48 @@ SpeechClient::ListOperations(std::string const& name, std::string const& filter,
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-SpeechClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> SpeechClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SpeechClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-SpeechClient::DeleteOperation(std::string const& name, Options opts) {
+Status SpeechClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-SpeechClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status SpeechClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-SpeechClient::CancelOperation(std::string const& name, Options opts) {
+Status SpeechClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-SpeechClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status SpeechClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

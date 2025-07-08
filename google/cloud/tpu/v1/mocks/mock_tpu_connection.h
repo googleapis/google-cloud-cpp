@@ -46,25 +46,24 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::tpu::v1::Node>),
-  ListNodes,
-  (google::cloud::tpu::v1::ListNodesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::tpu::v1::Node>), ListNodes,
+              (google::cloud::tpu::v1::ListNodesRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::tpu::v1::Node>,
-  GetNode,
-  (google::cloud::tpu::v1::GetNodeRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::tpu::v1::Node>, GetNode,
+              (google::cloud::tpu::v1::GetNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateNode(Matcher<google::cloud::tpu::v1::CreateNodeRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateNode(Matcher<google::cloud::tpu::v1::CreateNodeRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  CreateNode,
-  (google::cloud::tpu::v1::CreateNodeRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, CreateNode,
+              (google::cloud::tpu::v1::CreateNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -72,33 +71,33 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateNode(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateNode, (NoAwaitTag,
-    google::cloud::tpu::v1::CreateNodeRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateNode(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  CreateNode, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateNode,
+              (NoAwaitTag,
+               google::cloud::tpu::v1::CreateNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteNode(Matcher<google::cloud::tpu::v1::DeleteNodeRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  DeleteNode,
-  (google::cloud::tpu::v1::DeleteNodeRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, CreateNode,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNode(Matcher<google::cloud::tpu::v1::DeleteNodeRequest const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, DeleteNode,
+              (google::cloud::tpu::v1::DeleteNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +105,34 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteNode(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteNode, (NoAwaitTag,
-    google::cloud::tpu::v1::DeleteNodeRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteNode(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  DeleteNode, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteNode,
+              (NoAwaitTag,
+               google::cloud::tpu::v1::DeleteNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ReimageNode(Matcher<google::cloud::tpu::v1::ReimageNodeRequest const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  ReimageNode,
-  (google::cloud::tpu::v1::ReimageNodeRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, DeleteNode,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReimageNode(Matcher<google::cloud::tpu::v1::ReimageNodeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, ReimageNode,
+              (google::cloud::tpu::v1::ReimageNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,33 +140,33 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ReimageNode(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  ReimageNode, (NoAwaitTag,
-    google::cloud::tpu::v1::ReimageNodeRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ReimageNode(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  ReimageNode, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ReimageNode,
+              (NoAwaitTag,
+               google::cloud::tpu::v1::ReimageNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StopNode(Matcher<google::cloud::tpu::v1::StopNodeRequest const&>(_)))
+  /// EXPECT_CALL(*mock, ReimageNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  StopNode,
-  (google::cloud::tpu::v1::StopNodeRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, ReimageNode,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopNode(Matcher<google::cloud::tpu::v1::StopNodeRequest const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, StopNode,
+              (google::cloud::tpu::v1::StopNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -174,33 +174,33 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, StopNode(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  StopNode, (NoAwaitTag,
-    google::cloud::tpu::v1::StopNodeRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StopNode(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  StopNode, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StopNode,
+              (NoAwaitTag,
+               google::cloud::tpu::v1::StopNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartNode(Matcher<google::cloud::tpu::v1::StartNodeRequest const&>(_)))
+  /// EXPECT_CALL(*mock, StopNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  StartNode,
-  (google::cloud::tpu::v1::StartNodeRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, StopNode,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartNode(Matcher<google::cloud::tpu::v1::StartNodeRequest const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, StartNode,
+              (google::cloud::tpu::v1::StartNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -208,61 +208,64 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, StartNode(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  StartNode, (NoAwaitTag,
-    google::cloud::tpu::v1::StartNodeRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartNode,
+              (NoAwaitTag,
+               google::cloud::tpu::v1::StartNodeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartNode(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, StartNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>,
-  StartNode, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, StartNode,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::tpu::v1::TensorFlowVersion>),
-  ListTensorFlowVersions,
-  (google::cloud::tpu::v1::ListTensorFlowVersionsRequest request), (override));
+              ListTensorFlowVersions,
+              (google::cloud::tpu::v1::ListTensorFlowVersionsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::tpu::v1::TensorFlowVersion>,
-  GetTensorFlowVersion,
-  (google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::tpu::v1::TensorFlowVersion>, GetTensorFlowVersion,
+      (google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::tpu::v1::AcceleratorType>),
-  ListAcceleratorTypes,
-  (google::cloud::tpu::v1::ListAcceleratorTypesRequest request), (override));
+              ListAcceleratorTypes,
+              (google::cloud::tpu::v1::ListAcceleratorTypesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::tpu::v1::AcceleratorType>,
-  GetAcceleratorType,
-  (google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::tpu::v1::AcceleratorType>, GetAcceleratorType,
+      (google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

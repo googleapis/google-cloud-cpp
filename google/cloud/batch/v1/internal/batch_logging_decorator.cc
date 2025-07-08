@@ -31,34 +31,26 @@ namespace batch_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BatchServiceLogging::BatchServiceLogging(
-    std::shared_ptr<BatchServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<BatchServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::batch::v1::Job>
-BatchServiceLogging::CreateJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::batch::v1::Job> BatchServiceLogging::CreateJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::CreateJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::batch::v1::CreateJobRequest const& request) {
         return child_->CreateJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::batch::v1::Job>
-BatchServiceLogging::GetJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::batch::v1::Job> BatchServiceLogging::GetJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::GetJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::batch::v1::GetJobRequest const& request) {
         return child_->GetJob(context, options, request);
       },
@@ -67,30 +59,27 @@ BatchServiceLogging::GetJob(
 
 future<StatusOr<google::longrunning::Operation>>
 BatchServiceLogging::AsyncDeleteJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::batch::v1::DeleteJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::batch::v1::DeleteJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::batch::v1::DeleteJobRequest const& request) {
-        return child_->AsyncDeleteJob(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteJob(cq, std::move(context),
+                                      std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-BatchServiceLogging::DeleteJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::batch::v1::DeleteJobRequest const& request) {
+StatusOr<google::longrunning::Operation> BatchServiceLogging::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::batch::v1::DeleteJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::batch::v1::DeleteJobRequest const& request) {
         return child_->DeleteJob(context, options, request);
       },
@@ -99,30 +88,27 @@ BatchServiceLogging::DeleteJob(
 
 future<StatusOr<google::longrunning::Operation>>
 BatchServiceLogging::AsyncCancelJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::batch::v1::CancelJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::batch::v1::CancelJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::batch::v1::CancelJobRequest const& request) {
-        return child_->AsyncCancelJob(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelJob(cq, std::move(context),
+                                      std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-BatchServiceLogging::CancelJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::batch::v1::CancelJobRequest const& request) {
+StatusOr<google::longrunning::Operation> BatchServiceLogging::CancelJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::batch::v1::CancelJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::batch::v1::CancelJobRequest const& request) {
         return child_->CancelJob(context, options, request);
       },
@@ -131,26 +117,21 @@ BatchServiceLogging::CancelJob(
 
 StatusOr<google::cloud::batch::v1::ListJobsResponse>
 BatchServiceLogging::ListJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::ListJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::batch::v1::ListJobsRequest const& request) {
         return child_->ListJobs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::batch::v1::Task>
-BatchServiceLogging::GetTask(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::batch::v1::Task> BatchServiceLogging::GetTask(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::GetTaskRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::batch::v1::GetTaskRequest const& request) {
         return child_->GetTask(context, options, request);
       },
@@ -159,12 +140,10 @@ BatchServiceLogging::GetTask(
 
 StatusOr<google::cloud::batch::v1::ListTasksResponse>
 BatchServiceLogging::ListTasks(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::ListTasksRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::batch::v1::ListTasksRequest const& request) {
         return child_->ListTasks(context, options, request);
       },
@@ -173,26 +152,21 @@ BatchServiceLogging::ListTasks(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 BatchServiceLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-BatchServiceLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> BatchServiceLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -201,54 +175,43 @@ BatchServiceLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 BatchServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-BatchServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> BatchServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-BatchServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status BatchServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-BatchServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status BatchServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -266,8 +229,8 @@ BatchServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -283,8 +246,8 @@ future<Status> BatchServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

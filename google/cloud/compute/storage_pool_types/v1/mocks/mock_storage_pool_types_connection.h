@@ -42,21 +42,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockStoragePoolTypesConnection : public compute_storage_pool_types_v1::StoragePoolTypesConnection {
+class MockStoragePoolTypesConnection
+    : public compute_storage_pool_types_v1::StoragePoolTypesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>),
-  AggregatedListStoragePoolTypes,
-  (google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              StoragePoolTypesScopedList>>),
+      AggregatedListStoragePoolTypes,
+      (google::cloud::cpp::compute::storage_pool_types::v1::
+           AggregatedListStoragePoolTypesRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>,
-  GetStoragePoolType,
-  (google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request), (override));
+              GetStoragePoolType,
+              (google::cloud::cpp::compute::storage_pool_types::v1::
+                   GetStoragePoolTypeRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>),
-  ListStoragePoolTypes,
-  (google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request), (override));
+              ListStoragePoolTypes,
+              (google::cloud::cpp::compute::storage_pool_types::v1::
+                   ListStoragePoolTypesRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,21 +34,26 @@ AttachedClustersTracingConnection::AttachedClustersTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-AttachedClustersTracingConnection::CreateAttachedCluster(google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
+AttachedClustersTracingConnection::CreateAttachedCluster(
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::CreateAttachedCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateAttachedCluster(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAttachedCluster(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersTracingConnection::CreateAttachedCluster(
-    NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::CreateAttachedCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateAttachedCluster(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateAttachedCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -58,25 +63,30 @@ AttachedClustersTracingConnection::CreateAttachedCluster(
       "gkemulticloud_v1::AttachedClustersConnection::CreateAttachedCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateAttachedCluster(operation));
+                           child_->CreateAttachedCluster(operation));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-AttachedClustersTracingConnection::UpdateAttachedCluster(google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
+AttachedClustersTracingConnection::UpdateAttachedCluster(
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::UpdateAttachedCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateAttachedCluster(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAttachedCluster(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersTracingConnection::UpdateAttachedCluster(
-    NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::UpdateAttachedCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateAttachedCluster(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpdateAttachedCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -86,25 +96,30 @@ AttachedClustersTracingConnection::UpdateAttachedCluster(
       "gkemulticloud_v1::AttachedClustersConnection::UpdateAttachedCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateAttachedCluster(operation));
+                           child_->UpdateAttachedCluster(operation));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-AttachedClustersTracingConnection::ImportAttachedCluster(google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
+AttachedClustersTracingConnection::ImportAttachedCluster(
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::ImportAttachedCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ImportAttachedCluster(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ImportAttachedCluster(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersTracingConnection::ImportAttachedCluster(
-    NoAwaitTag, google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::ImportAttachedCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ImportAttachedCluster(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ImportAttachedCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -114,41 +129,52 @@ AttachedClustersTracingConnection::ImportAttachedCluster(
       "gkemulticloud_v1::AttachedClustersConnection::ImportAttachedCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ImportAttachedCluster(operation));
+                           child_->ImportAttachedCluster(operation));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
-AttachedClustersTracingConnection::GetAttachedCluster(google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::GetAttachedCluster");
+AttachedClustersTracingConnection::GetAttachedCluster(
+    google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::GetAttachedCluster");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAttachedCluster(request));
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
-AttachedClustersTracingConnection::ListAttachedClusters(google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::ListAttachedClusters");
+AttachedClustersTracingConnection::ListAttachedClusters(
+    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::ListAttachedClusters");
   internal::OTelScope scope(span);
   auto sr = child_->ListAttachedClusters(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::gkemulticloud::v1::AttachedCluster>(std::move(span),
+                                                         std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AttachedClustersTracingConnection::DeleteAttachedCluster(google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
+AttachedClustersTracingConnection::DeleteAttachedCluster(
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::DeleteAttachedCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteAttachedCluster(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAttachedCluster(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersTracingConnection::DeleteAttachedCluster(
-    NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::DeleteAttachedCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteAttachedCluster(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteAttachedCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -158,56 +184,77 @@ AttachedClustersTracingConnection::DeleteAttachedCluster(
       "gkemulticloud_v1::AttachedClustersConnection::DeleteAttachedCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteAttachedCluster(operation));
+                           child_->DeleteAttachedCluster(operation));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
-AttachedClustersTracingConnection::GetAttachedServerConfig(google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::GetAttachedServerConfig");
+AttachedClustersTracingConnection::GetAttachedServerConfig(
+    google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::GetAttachedServerConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAttachedServerConfig(request));
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse>
-AttachedClustersTracingConnection::GenerateAttachedClusterInstallManifest(google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::GenerateAttachedClusterInstallManifest");
+StatusOr<google::cloud::gkemulticloud::v1::
+             GenerateAttachedClusterInstallManifestResponse>
+AttachedClustersTracingConnection::GenerateAttachedClusterInstallManifest(
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterInstallManifestRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::"
+      "GenerateAttachedClusterInstallManifest");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GenerateAttachedClusterInstallManifest(request));
+  return internal::EndSpan(
+      *span, child_->GenerateAttachedClusterInstallManifest(request));
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
-AttachedClustersTracingConnection::GenerateAttachedClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::GenerateAttachedClusterAgentToken");
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+AttachedClustersTracingConnection::GenerateAttachedClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::"
+      "GenerateAttachedClusterAgentToken");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GenerateAttachedClusterAgentToken(request));
+  return internal::EndSpan(*span,
+                           child_->GenerateAttachedClusterAgentToken(request));
 }
 
 StreamRange<google::longrunning::Operation>
-AttachedClustersTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::ListOperations");
+AttachedClustersTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AttachedClustersTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::GetOperation");
+AttachedClustersTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-AttachedClustersTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::DeleteOperation");
+Status AttachedClustersTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-AttachedClustersTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("gkemulticloud_v1::AttachedClustersConnection::CancelOperation");
+Status AttachedClustersTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

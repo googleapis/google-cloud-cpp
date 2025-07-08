@@ -31,18 +31,18 @@ DomainMappingsAuth::DomainMappingsAuth(
     std::shared_ptr<DomainMappingsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::appengine::v1::ListDomainMappingsResponse> DomainMappingsAuth::ListDomainMappings(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::ListDomainMappingsResponse>
+DomainMappingsAuth::ListDomainMappings(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDomainMappings(context, options, request);
 }
 
-StatusOr<google::appengine::v1::DomainMapping> DomainMappingsAuth::GetDomainMapping(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::DomainMapping>
+DomainMappingsAuth::GetDomainMapping(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetDomainMappingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +51,28 @@ StatusOr<google::appengine::v1::DomainMapping> DomainMappingsAuth::GetDomainMapp
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsAuth::AsyncCreateDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::CreateDomainMappingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDomainMapping(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDomainMapping(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsAuth::CreateDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::CreateDomainMappingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDomainMapping(context, options, request);
@@ -80,28 +80,28 @@ DomainMappingsAuth::CreateDomainMapping(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsAuth::AsyncUpdateDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::UpdateDomainMappingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDomainMapping(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateDomainMapping(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsAuth::UpdateDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::UpdateDomainMappingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDomainMapping(context, options, request);
@@ -109,28 +109,28 @@ DomainMappingsAuth::UpdateDomainMapping(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsAuth::AsyncDeleteDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::DeleteDomainMappingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDomainMapping(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDomainMapping(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsAuth::DeleteDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::DeleteDomainMappingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDomainMapping(context, options, request);
@@ -143,15 +143,16 @@ DomainMappingsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -160,13 +161,14 @@ future<Status> DomainMappingsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

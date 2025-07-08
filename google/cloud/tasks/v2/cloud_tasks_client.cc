@@ -17,8 +17,8 @@
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
 #include "google/cloud/tasks/v2/cloud_tasks_client.h"
-#include <memory>
 #include "google/cloud/tasks/v2/cloud_tasks_options.h"
+#include <memory>
 #include <thread>
 #include <utility>
 
@@ -30,40 +30,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudTasksClient::CloudTasksClient(
     std::shared_ptr<CloudTasksConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudTasksClient::~CloudTasksClient() = default;
 
-StreamRange<google::cloud::tasks::v2::Queue>
-CloudTasksClient::ListQueues(std::string const& parent, Options opts) {
+StreamRange<google::cloud::tasks::v2::Queue> CloudTasksClient::ListQueues(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::ListQueuesRequest request;
   request.set_parent(parent);
   return connection_->ListQueues(request);
 }
 
-StreamRange<google::cloud::tasks::v2::Queue>
-CloudTasksClient::ListQueues(google::cloud::tasks::v2::ListQueuesRequest request, Options opts) {
+StreamRange<google::cloud::tasks::v2::Queue> CloudTasksClient::ListQueues(
+    google::cloud::tasks::v2::ListQueuesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListQueues(std::move(request));
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::GetQueue(std::string const& name, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::GetQueue(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::GetQueueRequest request;
   request.set_name(name);
   return connection_->GetQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::GetQueue(google::cloud::tasks::v2::GetQueueRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::GetQueue(
+    google::cloud::tasks::v2::GetQueueRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::CreateQueue(std::string const& parent, google::cloud::tasks::v2::Queue const& queue, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::CreateQueue(
+    std::string const& parent, google::cloud::tasks::v2::Queue const& queue,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::CreateQueueRequest request;
   request.set_parent(parent);
@@ -71,14 +72,15 @@ CloudTasksClient::CreateQueue(std::string const& parent, google::cloud::tasks::v
   return connection_->CreateQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::CreateQueue(
+    google::cloud::tasks::v2::CreateQueueRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::UpdateQueue(google::cloud::tasks::v2::Queue const& queue, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::UpdateQueue(
+    google::cloud::tasks::v2::Queue const& queue,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::UpdateQueueRequest request;
   *request.mutable_queue() = queue;
@@ -86,84 +88,84 @@ CloudTasksClient::UpdateQueue(google::cloud::tasks::v2::Queue const& queue, goog
   return connection_->UpdateQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::UpdateQueue(
+    google::cloud::tasks::v2::UpdateQueueRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateQueue(request);
 }
 
-Status
-CloudTasksClient::DeleteQueue(std::string const& name, Options opts) {
+Status CloudTasksClient::DeleteQueue(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::DeleteQueueRequest request;
   request.set_name(name);
   return connection_->DeleteQueue(request);
 }
 
-Status
-CloudTasksClient::DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const& request, Options opts) {
+Status CloudTasksClient::DeleteQueue(
+    google::cloud::tasks::v2::DeleteQueueRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::PurgeQueue(std::string const& name, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::PurgeQueue(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::PurgeQueueRequest request;
   request.set_name(name);
   return connection_->PurgeQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::PurgeQueue(
+    google::cloud::tasks::v2::PurgeQueueRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::PauseQueue(std::string const& name, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::PauseQueue(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::PauseQueueRequest request;
   request.set_name(name);
   return connection_->PauseQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::PauseQueue(
+    google::cloud::tasks::v2::PauseQueueRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PauseQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::ResumeQueue(std::string const& name, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::ResumeQueue(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::ResumeQueueRequest request;
   request.set_name(name);
   return connection_->ResumeQueue(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksClient::ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksClient::ResumeQueue(
+    google::cloud::tasks::v2::ResumeQueueRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeQueue(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudTasksClient::GetIamPolicy(std::string const& resource, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudTasksClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudTasksClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudTasksClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudTasksClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudTasksClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
@@ -171,15 +173,16 @@ CloudTasksClient::SetIamPolicy(std::string const& resource, google::iam::v1::Pol
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudTasksClient::SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudTasksClient::SetIamPolicy(
+    std::string const& resource, IamUpdater const& updater, Options opts) {
   internal::CheckExpectedOptions<CloudTasksBackoffPolicyOption>(opts, __func__);
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
-  auto backoff_policy = internal::CurrentOptions().get<CloudTasksBackoffPolicyOption>();
+  auto backoff_policy =
+      internal::CurrentOptions().get<CloudTasksBackoffPolicyOption>();
   if (backoff_policy != nullptr) {
     backoff_policy = backoff_policy->clone();
   }
@@ -196,8 +199,7 @@ CloudTasksClient::SetIamPolicy(std::string const& resource, IamUpdater const& up
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result ||
-        result.status().code() != StatusCode::kAborted ||
+    if (result || result.status().code() != StatusCode::kAborted ||
         backoff_policy == nullptr) {
       return result;
     }
@@ -205,14 +207,16 @@ CloudTasksClient::SetIamPolicy(std::string const& resource, IamUpdater const& up
   }
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudTasksClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudTasksClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudTasksClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts) {
+CloudTasksClient::TestIamPermissions(
+    std::string const& resource, std::vector<std::string> const& permissions,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
@@ -221,41 +225,43 @@ CloudTasksClient::TestIamPermissions(std::string const& resource, std::vector<st
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudTasksClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+CloudTasksClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::cloud::tasks::v2::Task>
-CloudTasksClient::ListTasks(std::string const& parent, Options opts) {
+StreamRange<google::cloud::tasks::v2::Task> CloudTasksClient::ListTasks(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::ListTasksRequest request;
   request.set_parent(parent);
   return connection_->ListTasks(request);
 }
 
-StreamRange<google::cloud::tasks::v2::Task>
-CloudTasksClient::ListTasks(google::cloud::tasks::v2::ListTasksRequest request, Options opts) {
+StreamRange<google::cloud::tasks::v2::Task> CloudTasksClient::ListTasks(
+    google::cloud::tasks::v2::ListTasksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTasks(std::move(request));
 }
 
-StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksClient::GetTask(std::string const& name, Options opts) {
+StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::GetTask(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::GetTaskRequest request;
   request.set_name(name);
   return connection_->GetTask(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksClient::GetTask(google::cloud::tasks::v2::GetTaskRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::GetTask(
+    google::cloud::tasks::v2::GetTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTask(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksClient::CreateTask(std::string const& parent, google::cloud::tasks::v2::Task const& task, Options opts) {
+StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::CreateTask(
+    std::string const& parent, google::cloud::tasks::v2::Task const& task,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::CreateTaskRequest request;
   request.set_parent(parent);
@@ -263,48 +269,47 @@ CloudTasksClient::CreateTask(std::string const& parent, google::cloud::tasks::v2
   return connection_->CreateTask(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksClient::CreateTask(google::cloud::tasks::v2::CreateTaskRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::CreateTask(
+    google::cloud::tasks::v2::CreateTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTask(request);
 }
 
-Status
-CloudTasksClient::DeleteTask(std::string const& name, Options opts) {
+Status CloudTasksClient::DeleteTask(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::DeleteTaskRequest request;
   request.set_name(name);
   return connection_->DeleteTask(request);
 }
 
-Status
-CloudTasksClient::DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request, Options opts) {
+Status CloudTasksClient::DeleteTask(
+    google::cloud::tasks::v2::DeleteTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTask(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksClient::RunTask(std::string const& name, Options opts) {
+StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::RunTask(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tasks::v2::RunTaskRequest request;
   request.set_name(name);
   return connection_->RunTask(request);
 }
 
-StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksClient::RunTask(google::cloud::tasks::v2::RunTaskRequest const& request, Options opts) {
+StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::RunTask(
+    google::cloud::tasks::v2::RunTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTask(request);
 }
 
-StreamRange<google::cloud::location::Location>
-CloudTasksClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> CloudTasksClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-CloudTasksClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> CloudTasksClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }

@@ -26,14 +26,17 @@ namespace cloudcontrolspartner_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudControlsPartnerMonitoringClient::CloudControlsPartnerMonitoringClient(
-    std::shared_ptr<CloudControlsPartnerMonitoringConnection> connection, Options opts)
+    std::shared_ptr<CloudControlsPartnerMonitoringConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
-CloudControlsPartnerMonitoringClient::~CloudControlsPartnerMonitoringClient() = default;
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
+CloudControlsPartnerMonitoringClient::~CloudControlsPartnerMonitoringClient() =
+    default;
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>
-CloudControlsPartnerMonitoringClient::ListViolations(std::string const& parent, Options opts) {
+CloudControlsPartnerMonitoringClient::ListViolations(std::string const& parent,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request;
   request.set_parent(parent);
@@ -41,13 +44,16 @@ CloudControlsPartnerMonitoringClient::ListViolations(std::string const& parent, 
 }
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>
-CloudControlsPartnerMonitoringClient::ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request, Options opts) {
+CloudControlsPartnerMonitoringClient::ListViolations(
+    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListViolations(std::move(request));
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
-CloudControlsPartnerMonitoringClient::GetViolation(std::string const& name, Options opts) {
+CloudControlsPartnerMonitoringClient::GetViolation(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cloudcontrolspartner::v1::GetViolationRequest request;
   request.set_name(name);
@@ -55,7 +61,9 @@ CloudControlsPartnerMonitoringClient::GetViolation(std::string const& name, Opti
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
-CloudControlsPartnerMonitoringClient::GetViolation(google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request, Options opts) {
+CloudControlsPartnerMonitoringClient::GetViolation(
+    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetViolation(request);
 }

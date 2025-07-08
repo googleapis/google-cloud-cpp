@@ -40,35 +40,48 @@ class ReservationBlocksRestMetadata : public ReservationBlocksRestStub {
       std::shared_ptr<ReservationBlocksRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse> GetReservationBlocksGetResponse(
+  StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
+  GetReservationBlocksGetResponse(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          GetReservationBlocksGetResponseRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksListResponse> ListReservationBlocks(
+  StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksListResponse>
+  ListReservationBlocks(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          ListReservationBlocksRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPerformMaintenance(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPerformMaintenance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) override;
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          PerformMaintenanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          PerformMaintenanceRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

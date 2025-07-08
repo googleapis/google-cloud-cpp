@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_CLOUD_FILESTORE_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_CLOUD_FILESTORE_MANAGER_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/filestore/v1/cloud_filestore_manager_connection_idempotency_policy.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -47,7 +47,8 @@ class CloudFilestoreManagerRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `CloudFilestoreManagerConnection` based on counting errors.
+ * A retry policy for `CloudFilestoreManagerConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -56,7 +57,8 @@ class CloudFilestoreManagerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudFilestoreManagerLimitedErrorCountRetryPolicy : public CloudFilestoreManagerRetryPolicy {
+class CloudFilestoreManagerLimitedErrorCountRetryPolicy
+    : public CloudFilestoreManagerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,15 +67,18 @@ class CloudFilestoreManagerLimitedErrorCountRetryPolicy : public CloudFilestoreM
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit CloudFilestoreManagerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit CloudFilestoreManagerLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   CloudFilestoreManagerLimitedErrorCountRetryPolicy(
       CloudFilestoreManagerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : CloudFilestoreManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CloudFilestoreManagerLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   CloudFilestoreManagerLimitedErrorCountRetryPolicy(
       CloudFilestoreManagerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : CloudFilestoreManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CloudFilestoreManagerLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +98,9 @@ class CloudFilestoreManagerLimitedErrorCountRetryPolicy : public CloudFilestoreM
   using BaseType = CloudFilestoreManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<filestore_v1_internal::CloudFilestoreManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      filestore_v1_internal::CloudFilestoreManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +113,8 @@ class CloudFilestoreManagerLimitedErrorCountRetryPolicy : public CloudFilestoreM
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudFilestoreManagerLimitedTimeRetryPolicy : public CloudFilestoreManagerRetryPolicy {
+class CloudFilestoreManagerLimitedTimeRetryPolicy
+    : public CloudFilestoreManagerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +139,14 @@ class CloudFilestoreManagerLimitedTimeRetryPolicy : public CloudFilestoreManager
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudFilestoreManagerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  CloudFilestoreManagerLimitedTimeRetryPolicy(CloudFilestoreManagerLimitedTimeRetryPolicy&& rhs) noexcept
-    : CloudFilestoreManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudFilestoreManagerLimitedTimeRetryPolicy(CloudFilestoreManagerLimitedTimeRetryPolicy const& rhs) noexcept
-    : CloudFilestoreManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudFilestoreManagerLimitedTimeRetryPolicy(
+      CloudFilestoreManagerLimitedTimeRetryPolicy&& rhs) noexcept
+      : CloudFilestoreManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudFilestoreManagerLimitedTimeRetryPolicy(
+      CloudFilestoreManagerLimitedTimeRetryPolicy const& rhs) noexcept
+      : CloudFilestoreManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,16 +168,19 @@ class CloudFilestoreManagerLimitedTimeRetryPolicy : public CloudFilestoreManager
   using BaseType = CloudFilestoreManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<filestore_v1_internal::CloudFilestoreManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      filestore_v1_internal::CloudFilestoreManagerRetryTraits>
+      impl_;
 };
 
 /**
- * The `CloudFilestoreManagerConnection` object for `CloudFilestoreManagerClient`.
+ * The `CloudFilestoreManagerConnection` object for
+ * `CloudFilestoreManagerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudFilestoreManagerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CloudFilestoreManagerClient`.
+ * sets in `CloudFilestoreManagerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CloudFilestoreManagerClient`.
  *
  * To create a concrete instance, see `MakeCloudFilestoreManagerConnection()`.
  *
@@ -179,160 +192,184 @@ class CloudFilestoreManagerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::filestore::v1::Instance>
-  ListInstances(google::cloud::filestore::v1::ListInstancesRequest request);
+  virtual StreamRange<google::cloud::filestore::v1::Instance> ListInstances(
+      google::cloud::filestore::v1::ListInstancesRequest request);
 
-  virtual StatusOr<google::cloud::filestore::v1::Instance>
-  GetInstance(google::cloud::filestore::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  CreateInstance(google::cloud::filestore::v1::CreateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, google::cloud::filestore::v1::CreateInstanceRequest const& request);
+  virtual StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
+      google::cloud::filestore::v1::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  CreateInstance( google::longrunning::Operation const& operation);
+  CreateInstance(
+      google::cloud::filestore::v1::CreateInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::filestore::v1::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  UpdateInstance(google::cloud::filestore::v1::UpdateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::filestore::v1::UpdateInstanceRequest const& request);
+  CreateInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  UpdateInstance( google::longrunning::Operation const& operation);
+  UpdateInstance(
+      google::cloud::filestore::v1::UpdateInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::filestore::v1::UpdateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  RestoreInstance(google::cloud::filestore::v1::RestoreInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  RestoreInstance(NoAwaitTag, google::cloud::filestore::v1::RestoreInstanceRequest const& request);
+  UpdateInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  RestoreInstance( google::longrunning::Operation const& operation);
+  RestoreInstance(
+      google::cloud::filestore::v1::RestoreInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RestoreInstance(
+      NoAwaitTag,
+      google::cloud::filestore::v1::RestoreInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  RevertInstance(google::cloud::filestore::v1::RevertInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  RevertInstance(NoAwaitTag, google::cloud::filestore::v1::RevertInstanceRequest const& request);
+  RestoreInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  RevertInstance( google::longrunning::Operation const& operation);
+  RevertInstance(
+      google::cloud::filestore::v1::RevertInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RevertInstance(
+      NoAwaitTag,
+      google::cloud::filestore::v1::RevertInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
+  RevertInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::common::OperationMetadata>>
-  DeleteInstance(google::cloud::filestore::v1::DeleteInstanceRequest const& request);
+  DeleteInstance(
+      google::cloud::filestore::v1::DeleteInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, google::cloud::filestore::v1::DeleteInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::filestore::v1::DeleteInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::common::OperationMetadata>>
-  DeleteInstance( google::longrunning::Operation const& operation);
+  DeleteInstance(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::filestore::v1::Snapshot>
-  ListSnapshots(google::cloud::filestore::v1::ListSnapshotsRequest request);
+  virtual StreamRange<google::cloud::filestore::v1::Snapshot> ListSnapshots(
+      google::cloud::filestore::v1::ListSnapshotsRequest request);
 
-  virtual StatusOr<google::cloud::filestore::v1::Snapshot>
-  GetSnapshot(google::cloud::filestore::v1::GetSnapshotRequest const& request);
+  virtual StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
+      google::cloud::filestore::v1::GetSnapshotRequest const& request);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Snapshot>>
-  CreateSnapshot(google::cloud::filestore::v1::CreateSnapshotRequest const& request);
+  CreateSnapshot(
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateSnapshot(NoAwaitTag, google::cloud::filestore::v1::CreateSnapshotRequest const& request);
-
-  virtual future<StatusOr<google::cloud::filestore::v1::Snapshot>>
-  CreateSnapshot( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::common::OperationMetadata>>
-  DeleteSnapshot(google::cloud::filestore::v1::DeleteSnapshotRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteSnapshot(NoAwaitTag, google::cloud::filestore::v1::DeleteSnapshotRequest const& request);
-
-  virtual future<StatusOr<google::cloud::common::OperationMetadata>>
-  DeleteSnapshot( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> CreateSnapshot(
+      NoAwaitTag,
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Snapshot>>
-  UpdateSnapshot(google::cloud::filestore::v1::UpdateSnapshotRequest const& request);
+  CreateSnapshot(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateSnapshot(NoAwaitTag, google::cloud::filestore::v1::UpdateSnapshotRequest const& request);
+  virtual future<StatusOr<google::cloud::common::OperationMetadata>>
+  DeleteSnapshot(
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSnapshot(
+      NoAwaitTag,
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request);
+
+  virtual future<StatusOr<google::cloud::common::OperationMetadata>>
+  DeleteSnapshot(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Snapshot>>
-  UpdateSnapshot( google::longrunning::Operation const& operation);
+  UpdateSnapshot(
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request);
 
-  virtual StreamRange<google::cloud::filestore::v1::Backup>
-  ListBackups(google::cloud::filestore::v1::ListBackupsRequest request);
+  virtual StatusOr<google::longrunning::Operation> UpdateSnapshot(
+      NoAwaitTag,
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request);
 
-  virtual StatusOr<google::cloud::filestore::v1::Backup>
-  GetBackup(google::cloud::filestore::v1::GetBackupRequest const& request);
+  virtual future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+  UpdateSnapshot(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::filestore::v1::Backup>>
-  CreateBackup(google::cloud::filestore::v1::CreateBackupRequest const& request);
+  virtual StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
+      google::cloud::filestore::v1::ListBackupsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateBackup(NoAwaitTag, google::cloud::filestore::v1::CreateBackupRequest const& request);
+  virtual StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
+      google::cloud::filestore::v1::GetBackupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::filestore::v1::Backup>>
-  CreateBackup( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
+      google::cloud::filestore::v1::CreateBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateBackup(
+      NoAwaitTag,
+      google::cloud::filestore::v1::CreateBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::common::OperationMetadata>>
-  DeleteBackup(google::cloud::filestore::v1::DeleteBackupRequest const& request);
+  DeleteBackup(
+      google::cloud::filestore::v1::DeleteBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteBackup(NoAwaitTag, google::cloud::filestore::v1::DeleteBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteBackup(
+      NoAwaitTag,
+      google::cloud::filestore::v1::DeleteBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::common::OperationMetadata>>
-  DeleteBackup( google::longrunning::Operation const& operation);
+  DeleteBackup(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::filestore::v1::Backup>>
-  UpdateBackup(google::cloud::filestore::v1::UpdateBackupRequest const& request);
+  virtual future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
+      google::cloud::filestore::v1::UpdateBackupRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateBackup(NoAwaitTag, google::cloud::filestore::v1::UpdateBackupRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateBackup(
+      NoAwaitTag,
+      google::cloud::filestore::v1::UpdateBackupRequest const& request);
 
-  virtual future<StatusOr<google::cloud::filestore::v1::Backup>>
-  UpdateBackup( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  PromoteReplica(google::cloud::filestore::v1::PromoteReplicaRequest const& request);
+  PromoteReplica(
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  PromoteReplica(NoAwaitTag, google::cloud::filestore::v1::PromoteReplicaRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> PromoteReplica(
+      NoAwaitTag,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request);
 
   virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  PromoteReplica( google::longrunning::Operation const& operation);
+  PromoteReplica(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `CloudFilestoreManagerConnection`.
+ * A factory function to construct an object of type
+ * `CloudFilestoreManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CloudFilestoreManagerClient.
+ * should be passed as an argument to the constructor of
+ * CloudFilestoreManagerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `CloudFilestoreManagerConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `CloudFilestoreManagerConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -342,11 +379,11 @@ class CloudFilestoreManagerConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `CloudFilestoreManagerConnection` created by
- * this function.
+ * @param options (optional) Configure the `CloudFilestoreManagerConnection`
+ * created by this function.
  */
-std::shared_ptr<CloudFilestoreManagerConnection> MakeCloudFilestoreManagerConnection(
-    Options options = {});
+std::shared_ptr<CloudFilestoreManagerConnection>
+MakeCloudFilestoreManagerConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_v1

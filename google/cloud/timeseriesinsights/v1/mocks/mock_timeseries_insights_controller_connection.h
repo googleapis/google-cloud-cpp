@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `TimeseriesInsightsControllerConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `TimeseriesInsightsControllerClient`. To do so,
- * construct an object of type `TimeseriesInsightsControllerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type
+ * `TimeseriesInsightsControllerClient`. To do so, construct an object of type
+ * `TimeseriesInsightsControllerClient` with an instance of this class. Then use
+ * the Google Test framework functions to program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,37 +42,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTimeseriesInsightsControllerConnection : public timeseriesinsights_v1::TimeseriesInsightsControllerConnection {
+class MockTimeseriesInsightsControllerConnection
+    : public timeseriesinsights_v1::TimeseriesInsightsControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::timeseriesinsights::v1::DataSet>),
-  ListDataSets,
-  (google::cloud::timeseriesinsights::v1::ListDataSetsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::timeseriesinsights::v1::DataSet>),
+      ListDataSets,
+      (google::cloud::timeseriesinsights::v1::ListDataSetsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::timeseriesinsights::v1::DataSet>,
-  CreateDataSet,
-  (google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::timeseriesinsights::v1::DataSet>, CreateDataSet,
+      (google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteDataSet,
-  (google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteDataSet,
+      (google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>,
-  AppendEvents,
-  (google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>,
+      AppendEvents,
+      (google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>,
-  QueryDataSet,
-  (google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>,
+      QueryDataSet,
+      (google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>,
-  EvaluateSlice,
-  (google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>,
+      EvaluateSlice,
+      (google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>,
-  EvaluateTimeseries,
-  (google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>,
+      EvaluateTimeseries,
+      (google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

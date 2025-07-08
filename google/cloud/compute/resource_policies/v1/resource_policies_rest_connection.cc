@@ -17,12 +17,12 @@
 // source: google/cloud/compute/resource_policies/v1/resource_policies.proto
 
 #include "google/cloud/compute/resource_policies/v1/resource_policies_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_option_defaults.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_rest_connection_impl.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_rest_stub_factory.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_tracing_connection.h"
 #include "google/cloud/compute/resource_policies/v1/resource_policies_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,19 +36,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ResourcePoliciesConnection> MakeResourcePoliciesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      ResourcePoliciesPolicyOptionList>(options, __func__);
-  options = compute_resource_policies_v1_internal::ResourcePoliciesDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, ResourcePoliciesPolicyOptionList>(
+      options, __func__);
+  options =
+      compute_resource_policies_v1_internal::ResourcePoliciesDefaultOptions(
+          std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_resource_policies_v1_internal::CreateDefaultResourcePoliciesRestStub(
-      options);
-  return compute_resource_policies_v1_internal::MakeResourcePoliciesTracingConnection(
-      std::make_shared<
-          compute_resource_policies_v1_internal::ResourcePoliciesRestConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_resource_policies_v1_internal::
+      CreateDefaultResourcePoliciesRestStub(options);
+  return compute_resource_policies_v1_internal::
+      MakeResourcePoliciesTracingConnection(
+          std::make_shared<compute_resource_policies_v1_internal::
+                               ResourcePoliciesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

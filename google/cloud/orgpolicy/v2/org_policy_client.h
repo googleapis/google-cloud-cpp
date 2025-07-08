@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_CLIENT_H
 
+#include "google/cloud/orgpolicy/v2/org_policy_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
-#include "google/cloud/orgpolicy/v2/org_policy_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -47,8 +47,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// particular folder.
 ///
 /// Policies are inherited down through the resource hierarchy. A policy
-/// applied to a parent resource automatically applies to all its child resources
-/// unless overridden with a policy lower in the hierarchy.
+/// applied to a parent resource automatically applies to all its child
+/// resources unless overridden with a policy lower in the hierarchy.
 ///
 /// A constraint defines an aspect of a resource's configuration that can be
 /// controlled by an organization's policy administrator. Policies are a
@@ -80,7 +80,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class OrgPolicyClient {
  public:
-  explicit OrgPolicyClient(std::shared_ptr<OrgPolicyConnection> connection, Options opts = {});
+  explicit OrgPolicyClient(std::shared_ptr<OrgPolicyConnection> connection,
+                           Options opts = {});
   ~OrgPolicyClient();
 
   ///@{
@@ -138,8 +139,8 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L421}
   ///
   // clang-format on
-  StreamRange<google::cloud::orgpolicy::v2::Constraint>
-  ListConstraints(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -177,8 +178,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L421}
   ///
   // clang-format on
-  StreamRange<google::cloud::orgpolicy::v2::Constraint>
-  ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest request, Options opts = {});
+  StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
+      google::cloud::orgpolicy::v2::ListConstraintsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +220,8 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L245}
   ///
   // clang-format on
-  StreamRange<google::cloud::orgpolicy::v2::Policy>
-  ListPolicies(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -257,8 +259,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L245}
   ///
   // clang-format on
-  StreamRange<google::cloud::orgpolicy::v2::Policy>
-  ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest request, Options opts = {});
+  StreamRange<google::cloud::orgpolicy::v2::Policy> ListPolicies(
+      google::cloud::orgpolicy::v2::ListPoliciesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -287,8 +290,8 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L245}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  GetPolicy(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -321,8 +324,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L245}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
+      google::cloud::orgpolicy::v2::GetPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -352,8 +356,8 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L245}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  GetEffectivePolicy(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -387,8 +391,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L245}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
+      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +429,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L245}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  CreatePolicy(std::string const& parent, google::cloud::orgpolicy::v2::Policy const& policy, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
+      std::string const& parent,
+      google::cloud::orgpolicy::v2::Policy const& policy, Options opts = {});
 
   // clang-format off
   ///
@@ -459,8 +465,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.Policy]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L245}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
+      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -492,8 +499,8 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L546}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  UpdatePolicy(google::cloud::orgpolicy::v2::Policy const& policy, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
+      google::cloud::orgpolicy::v2::Policy const& policy, Options opts = {});
 
   // clang-format off
   ///
@@ -530,8 +537,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L546}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::Policy>
-  UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
+      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -556,8 +564,7 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.DeletePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L558}
   ///
   // clang-format on
-  Status
-  DeletePolicy(std::string const& name, Options opts = {});
+  Status DeletePolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -586,8 +593,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.DeletePolicyRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L558}
   ///
   // clang-format on
-  Status
-  DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const& request, Options opts = {});
+  Status DeletePolicy(
+      google::cloud::orgpolicy::v2::DeletePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -620,7 +628,10 @@ class OrgPolicyClient {
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  CreateCustomConstraint(std::string const& parent, google::cloud::orgpolicy::v2::CustomConstraint const& custom_constraint, Options opts = {});
+  CreateCustomConstraint(
+      std::string const& parent,
+      google::cloud::orgpolicy::v2::CustomConstraint const& custom_constraint,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -655,7 +666,10 @@ class OrgPolicyClient {
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  CreateCustomConstraint(google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request, Options opts = {});
+  CreateCustomConstraint(
+      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -686,7 +700,9 @@ class OrgPolicyClient {
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  UpdateCustomConstraint(google::cloud::orgpolicy::v2::CustomConstraint const& custom_constraint, Options opts = {});
+  UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::CustomConstraint const& custom_constraint,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -722,7 +738,10 @@ class OrgPolicyClient {
   ///
   // clang-format on
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  UpdateCustomConstraint(google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request, Options opts = {});
+  UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -750,8 +769,8 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.GetCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L594}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  GetCustomConstraint(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -783,8 +802,9 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.GetCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L594}
   ///
   // clang-format on
-  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-  GetCustomConstraint(google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request, Options opts = {});
+  StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
+      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -863,7 +883,9 @@ class OrgPolicyClient {
   ///
   // clang-format on
   StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
-  ListCustomConstraints(google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request, Options opts = {});
+  ListCustomConstraints(
+      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -888,8 +910,7 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.DeleteCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L654}
   ///
   // clang-format on
-  Status
-  DeleteCustomConstraint(std::string const& name, Options opts = {});
+  Status DeleteCustomConstraint(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -918,8 +939,10 @@ class OrgPolicyClient {
   /// [google.cloud.orgpolicy.v2.DeleteCustomConstraintRequest]: @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L654}
   ///
   // clang-format on
-  Status
-  DeleteCustomConstraint(google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request, Options opts = {});
+  Status DeleteCustomConstraint(
+      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<OrgPolicyConnection> connection_;

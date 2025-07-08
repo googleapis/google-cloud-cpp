@@ -33,38 +33,36 @@ InstancesStub::~InstancesStub() = default;
 
 StatusOr<google::appengine::v1::ListInstancesResponse>
 DefaultInstancesStub::ListInstances(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::ListInstancesRequest const& request) {
-    google::appengine::v1::ListInstancesResponse response;
-    auto status =
-        grpc_stub_->ListInstances(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::ListInstancesRequest const& request) {
+  google::appengine::v1::ListInstancesResponse response;
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::appengine::v1::Instance>
-DefaultInstancesStub::GetInstance(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::GetInstanceRequest const& request) {
-    google::appengine::v1::Instance response;
-    auto status =
-        grpc_stub_->GetInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::appengine::v1::Instance> DefaultInstancesStub::GetInstance(
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::GetInstanceRequest const& request) {
+  google::appengine::v1::Instance response;
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstancesStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::appengine::v1::DeleteInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::appengine::v1::DeleteInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::appengine::v1::DeleteInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::appengine::v1::DeleteInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::appengine::v1::DeleteInstanceRequest const& request,
@@ -74,26 +72,23 @@ DefaultInstancesStub::AsyncDeleteInstance(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultInstancesStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::appengine::v1::DeleteInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultInstancesStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstancesStub::AsyncDebugInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::appengine::v1::DebugInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::appengine::v1::DebugInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::appengine::v1::DebugInstanceRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -105,18 +100,15 @@ DefaultInstancesStub::AsyncDebugInstance(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultInstancesStub::DebugInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::appengine::v1::DebugInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DebugInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultInstancesStub::DebugInstance(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::DebugInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DebugInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -145,13 +137,14 @@ future<Status> DefaultInstancesStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -36,149 +36,154 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
  public:
   ~CloudRedisClusterLogging() override = default;
   CloudRedisClusterLogging(std::shared_ptr<CloudRedisClusterStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                           TracingOptions tracing_options,
+                           std::set<std::string> const& components);
 
-  StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::redis::cluster::v1::ListClustersRequest const& request) override;
+  StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
+  ListClusters(grpc::ClientContext& context, Options const& options,
+               google::cloud::redis::cluster::v1::ListClustersRequest const&
+                   request) override;
 
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::redis::cluster::v1::GetClusterRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetClusterRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) override;
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) override;
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::cluster::v1::CreateClusterRequest const& request) override;
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::redis::cluster::v1::CreateClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
+      override;
 
-  StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority> GetClusterCertificateAuthority(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request) override;
+  StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
+  GetClusterCertificateAuthority(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncRescheduleClusterMaintenance(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRescheduleClusterMaintenance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request) override;
+      google::cloud::redis::cluster::v1::
+          RescheduleClusterMaintenanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RescheduleClusterMaintenance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::
+          RescheduleClusterMaintenanceRequest const& request) override;
 
-  StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse> ListBackupCollections(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const& request) override;
+  StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse>
+  ListBackupCollections(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::redis::cluster::v1::BackupCollection> GetBackupCollection(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const& request) override;
+  StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+  GetBackupCollection(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+          request) override;
 
   StatusOr<google::cloud::redis::cluster::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::redis::cluster::v1::ListBackupsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::ListBackupsRequest const& request)
+      override;
 
   StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::redis::cluster::v1::GetBackupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::redis::cluster::v1::GetBackupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) override;
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::cluster::v1::ExportBackupRequest const& request) override;
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ExportBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::redis::cluster::v1::ExportBackupRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBackupCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::redis::cluster::v1::BackupClusterRequest const& request) override;
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BackupCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::redis::cluster::v1::BackupClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

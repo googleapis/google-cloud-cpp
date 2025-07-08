@@ -30,24 +30,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class TraceServiceTracingConnection
-    : public trace_v1::TraceServiceConnection {
+class TraceServiceTracingConnection : public trace_v1::TraceServiceConnection {
  public:
   ~TraceServiceTracingConnection() override = default;
 
   explicit TraceServiceTracingConnection(
-    std::shared_ptr<trace_v1::TraceServiceConnection> child);
+      std::shared_ptr<trace_v1::TraceServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::devtools::cloudtrace::v1::Trace>
-  ListTraces(google::devtools::cloudtrace::v1::ListTracesRequest request) override;
+  StreamRange<google::devtools::cloudtrace::v1::Trace> ListTraces(
+      google::devtools::cloudtrace::v1::ListTracesRequest request) override;
 
-  StatusOr<google::devtools::cloudtrace::v1::Trace>
-  GetTrace(google::devtools::cloudtrace::v1::GetTraceRequest const& request) override;
+  StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
+      google::devtools::cloudtrace::v1::GetTraceRequest const& request)
+      override;
 
-  Status
-  PatchTraces(google::devtools::cloudtrace::v1::PatchTracesRequest const& request) override;
+  Status PatchTraces(google::devtools::cloudtrace::v1::PatchTracesRequest const&
+                         request) override;
 
  private:
   std::shared_ptr<trace_v1::TraceServiceConnection> child_;

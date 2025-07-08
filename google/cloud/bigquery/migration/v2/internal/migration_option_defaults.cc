@@ -35,23 +35,31 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options MigrationServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_MIGRATION_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_MIGRATION_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_MIGRATION_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_MIGRATION_SERVICE_AUTHORITY",
       "bigquerymigration.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()) {
+  if (!options
+           .has<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()) {
     options.set<bigquery_migration_v2::MigrationServiceRetryPolicyOption>(
         bigquery_migration_v2::MigrationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>()) {
     options.set<bigquery_migration_v2::MigrationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicyOption>(
-        bigquery_migration_v2::MakeDefaultMigrationServiceConnectionIdempotencyPolicy());
+  if (!options.has<bigquery_migration_v2::
+                       MigrationServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<bigquery_migration_v2::
+                    MigrationServiceConnectionIdempotencyPolicyOption>(
+        bigquery_migration_v2::
+            MakeDefaultMigrationServiceConnectionIdempotencyPolicy());
   }
 
   return options;

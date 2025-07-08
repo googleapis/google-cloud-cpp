@@ -42,13 +42,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockQueryServiceConnection : public monitoring_v3::QueryServiceConnection {
+class MockQueryServiceConnection
+    : public monitoring_v3::QueryServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::monitoring::v3::TimeSeriesData>),
-  QueryTimeSeries,
-  (google::monitoring::v3::QueryTimeSeriesRequest request), (override));
+              QueryTimeSeries,
+              (google::monitoring::v3::QueryTimeSeriesRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

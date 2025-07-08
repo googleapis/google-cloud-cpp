@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_V3_TRANSLATION_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_V3_TRANSLATION_CLIENT_H
 
+#include "google/cloud/translate/v3/translation_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/translate/v3/translation_connection.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -64,23 +64,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TranslationServiceClient {
  public:
-  explicit TranslationServiceClient(std::shared_ptr<TranslationServiceConnection> connection, Options opts = {});
+  explicit TranslationServiceClient(
+      std::shared_ptr<TranslationServiceConnection> connection,
+      Options opts = {});
   ~TranslationServiceClient();
 
   ///@{
   /// @name Copy and move support
   TranslationServiceClient(TranslationServiceClient const&) = default;
-  TranslationServiceClient& operator=(TranslationServiceClient const&) = default;
+  TranslationServiceClient& operator=(TranslationServiceClient const&) =
+      default;
   TranslationServiceClient(TranslationServiceClient&&) = default;
   TranslationServiceClient& operator=(TranslationServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(TranslationServiceClient const& a, TranslationServiceClient const& b) {
+  friend bool operator==(TranslationServiceClient const& a,
+                         TranslationServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TranslationServiceClient const& a, TranslationServiceClient const& b) {
+  friend bool operator!=(TranslationServiceClient const& a,
+                         TranslationServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -126,8 +131,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L568}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-  TranslateText(std::string const& parent, std::string const& target_language_code, std::vector<std::string> const& contents, Options opts = {});
+  StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
+      std::string const& parent, std::string const& target_language_code,
+      std::vector<std::string> const& contents, Options opts = {});
 
   // clang-format off
   ///
@@ -196,8 +202,11 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L568}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-  TranslateText(std::string const& parent, std::string const& model, std::string const& mime_type, std::string const& source_language_code, std::string const& target_language_code, std::vector<std::string> const& contents, Options opts = {});
+  StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
+      std::string const& parent, std::string const& model,
+      std::string const& mime_type, std::string const& source_language_code,
+      std::string const& target_language_code,
+      std::vector<std::string> const& contents, Options opts = {});
 
   // clang-format off
   ///
@@ -226,8 +235,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L568}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-  TranslateText(google::cloud::translation::v3::TranslateTextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
+      google::cloud::translation::v3::TranslateTextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -259,8 +269,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.RomanizeTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L654}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
-  RomanizeText(std::string const& parent, std::vector<std::string> const& contents, Options opts = {});
+  StatusOr<google::cloud::translation::v3::RomanizeTextResponse> RomanizeText(
+      std::string const& parent, std::vector<std::string> const& contents,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -289,8 +300,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.RomanizeTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L654}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
-  RomanizeText(google::cloud::translation::v3::RomanizeTextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::RomanizeTextResponse> RomanizeText(
+      google::cloud::translation::v3::RomanizeTextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -337,7 +349,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
-  DetectLanguage(std::string const& parent, std::string const& model, std::string const& mime_type, std::string const& content, Options opts = {});
+  DetectLanguage(std::string const& parent, std::string const& model,
+                 std::string const& mime_type, std::string const& content,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -367,7 +381,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
-  DetectLanguage(google::cloud::translation::v3::DetectLanguageRequest const& request, Options opts = {});
+  DetectLanguage(
+      google::cloud::translation::v3::DetectLanguageRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -419,7 +435,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
-  GetSupportedLanguages(std::string const& parent, std::string const& model, std::string const& display_language_code, Options opts = {});
+  GetSupportedLanguages(std::string const& parent, std::string const& model,
+                        std::string const& display_language_code,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -449,7 +467,10 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
-  GetSupportedLanguages(google::cloud::translation::v3::GetSupportedLanguagesRequest const& request, Options opts = {});
+  GetSupportedLanguages(
+      google::cloud::translation::v3::GetSupportedLanguagesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -479,7 +500,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
-  TranslateDocument(google::cloud::translation::v3::TranslateDocumentRequest const& request, Options opts = {});
+  TranslateDocument(
+      google::cloud::translation::v3::TranslateDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -522,7 +545,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-  BatchTranslateText(google::cloud::translation::v3::BatchTranslateTextRequest const& request, Options opts = {});
+  BatchTranslateText(
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -535,8 +560,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BatchTranslateText(NoAwaitTag, google::cloud::translation::v3::BatchTranslateTextRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> BatchTranslateText(
+      NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -548,7 +575,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-  BatchTranslateText(google::longrunning::Operation const& operation, Options opts = {});
+  BatchTranslateText(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -607,8 +635,17 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1871}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-  BatchTranslateDocument(std::string const& parent, std::string const& source_language_code, std::vector<std::string> const& target_language_codes, std::vector<google::cloud::translation::v3::BatchDocumentInputConfig> const& input_configs, google::cloud::translation::v3::BatchDocumentOutputConfig const& output_config, Options opts = {});
+  future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  BatchTranslateDocument(
+      std::string const& parent, std::string const& source_language_code,
+      std::vector<std::string> const& target_language_codes,
+      std::vector<
+          google::cloud::translation::v3::BatchDocumentInputConfig> const&
+          input_configs,
+      google::cloud::translation::v3::BatchDocumentOutputConfig const&
+          output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -621,8 +658,16 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BatchTranslateDocument(NoAwaitTag, std::string const& parent, std::string const& source_language_code, std::vector<std::string> const& target_language_codes, std::vector<google::cloud::translation::v3::BatchDocumentInputConfig> const& input_configs, google::cloud::translation::v3::BatchDocumentOutputConfig const& output_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> BatchTranslateDocument(
+      NoAwaitTag, std::string const& parent,
+      std::string const& source_language_code,
+      std::vector<std::string> const& target_language_codes,
+      std::vector<
+          google::cloud::translation::v3::BatchDocumentInputConfig> const&
+          input_configs,
+      google::cloud::translation::v3::BatchDocumentOutputConfig const&
+          output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -664,8 +709,12 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1871}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-  BatchTranslateDocument(google::cloud::translation::v3::BatchTranslateDocumentRequest const& request, Options opts = {});
+  future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  BatchTranslateDocument(
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -678,8 +727,11 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BatchTranslateDocument(NoAwaitTag, google::cloud::translation::v3::BatchTranslateDocumentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> BatchTranslateDocument(
+      NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -690,8 +742,10 @@ class TranslationServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-  BatchTranslateDocument(google::longrunning::Operation const& operation, Options opts = {});
+  future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  BatchTranslateDocument(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -724,8 +778,10 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1339}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  CreateGlossary(std::string const& parent, google::cloud::translation::v3::Glossary const& glossary, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
+      std::string const& parent,
+      google::cloud::translation::v3::Glossary const& glossary,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -738,8 +794,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGlossary(NoAwaitTag, std::string const& parent, google::cloud::translation::v3::Glossary const& glossary, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGlossary(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::translation::v3::Glossary const& glossary,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -776,8 +834,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1339}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  CreateGlossary(google::cloud::translation::v3::CreateGlossaryRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
+      google::cloud::translation::v3::CreateGlossaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -790,8 +849,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGlossary(NoAwaitTag, google::cloud::translation::v3::CreateGlossaryRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGlossary(
+      NoAwaitTag,
+      google::cloud::translation::v3::CreateGlossaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -802,8 +863,8 @@ class TranslationServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  CreateGlossary(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -837,8 +898,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.UpdateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1411}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  UpdateGlossary(google::cloud::translation::v3::Glossary const& glossary, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Glossary>> UpdateGlossary(
+      google::cloud::translation::v3::Glossary const& glossary,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -851,8 +913,9 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateGlossary(NoAwaitTag, google::cloud::translation::v3::Glossary const& glossary, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateGlossary(
+      NoAwaitTag, google::cloud::translation::v3::Glossary const& glossary,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -889,8 +952,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.UpdateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1411}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  UpdateGlossary(google::cloud::translation::v3::UpdateGlossaryRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Glossary>> UpdateGlossary(
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -903,8 +967,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateGlossary(NoAwaitTag, google::cloud::translation::v3::UpdateGlossaryRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateGlossary(
+      NoAwaitTag,
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -915,8 +981,8 @@ class TranslationServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  UpdateGlossary(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Glossary>> UpdateGlossary(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -950,8 +1016,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1443}
   ///
   // clang-format on
-  StreamRange<google::cloud::translation::v3::Glossary>
-  ListGlossaries(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -990,8 +1056,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1443}
   ///
   // clang-format on
-  StreamRange<google::cloud::translation::v3::Glossary>
-  ListGlossaries(google::cloud::translation::v3::ListGlossariesRequest request, Options opts = {});
+  StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
+      google::cloud::translation::v3::ListGlossariesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1016,8 +1083,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1339}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::Glossary>
-  GetGlossary(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1047,8 +1114,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1339}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::Glossary>
-  GetGlossary(google::cloud::translation::v3::GetGlossaryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
+      google::cloud::translation::v3::GetGlossaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1095,8 +1163,8 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGlossary(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGlossary(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1135,7 +1203,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const& request, Options opts = {});
+  DeleteGlossary(
+      google::cloud::translation::v3::DeleteGlossaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1148,8 +1218,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGlossary(NoAwaitTag, google::cloud::translation::v3::DeleteGlossaryRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGlossary(
+      NoAwaitTag,
+      google::cloud::translation::v3::DeleteGlossaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1161,7 +1233,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteGlossary(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1185,8 +1258,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L79}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  GetGlossaryEntry(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> GetGlossaryEntry(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1215,8 +1288,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L79}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  GetGlossaryEntry(google::cloud::translation::v3::GetGlossaryEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> GetGlossaryEntry(
+      google::cloud::translation::v3::GetGlossaryEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1290,7 +1364,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::GlossaryEntry>
-  ListGlossaryEntries(google::cloud::translation::v3::ListGlossaryEntriesRequest request, Options opts = {});
+  ListGlossaryEntries(
+      google::cloud::translation::v3::ListGlossaryEntriesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1315,8 +1391,10 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L79}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  CreateGlossaryEntry(std::string const& parent, google::cloud::translation::v3::GlossaryEntry const& glossary_entry, Options opts = {});
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> CreateGlossaryEntry(
+      std::string const& parent,
+      google::cloud::translation::v3::GlossaryEntry const& glossary_entry,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1345,8 +1423,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L79}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  CreateGlossaryEntry(google::cloud::translation::v3::CreateGlossaryEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> CreateGlossaryEntry(
+      google::cloud::translation::v3::CreateGlossaryEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1370,8 +1449,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.UpdateGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1562}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  UpdateGlossaryEntry(google::cloud::translation::v3::GlossaryEntry const& glossary_entry, Options opts = {});
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> UpdateGlossaryEntry(
+      google::cloud::translation::v3::GlossaryEntry const& glossary_entry,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1400,8 +1480,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.UpdateGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1562}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  UpdateGlossaryEntry(google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> UpdateGlossaryEntry(
+      google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1422,8 +1503,7 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.DeleteGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1504}
   ///
   // clang-format on
-  Status
-  DeleteGlossaryEntry(std::string const& name, Options opts = {});
+  Status DeleteGlossaryEntry(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1449,8 +1529,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.DeleteGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1504}
   ///
   // clang-format on
-  Status
-  DeleteGlossaryEntry(google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request, Options opts = {});
+  Status DeleteGlossaryEntry(
+      google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1482,8 +1563,10 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Dataset]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L291}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Dataset>>
-  CreateDataset(std::string const& parent, google::cloud::translation::v3::Dataset const& dataset, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Dataset>> CreateDataset(
+      std::string const& parent,
+      google::cloud::translation::v3::Dataset const& dataset,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1496,8 +1579,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag, std::string const& parent, google::cloud::translation::v3::Dataset const& dataset, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::translation::v3::Dataset const& dataset,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1533,8 +1618,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Dataset]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L291}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Dataset>>
-  CreateDataset(google::cloud::translation::v3::CreateDatasetRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Dataset>> CreateDataset(
+      google::cloud::translation::v3::CreateDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1547,8 +1633,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag, google::cloud::translation::v3::CreateDatasetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag,
+      google::cloud::translation::v3::CreateDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1559,8 +1647,8 @@ class TranslationServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Dataset>>
-  CreateDataset(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Dataset>> CreateDataset(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1584,8 +1672,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.GetDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L141}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::Dataset>
-  GetDataset(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::translation::v3::Dataset> GetDataset(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1614,8 +1702,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.GetDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L141}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::Dataset>
-  GetDataset(google::cloud::translation::v3::GetDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::Dataset> GetDataset(
+      google::cloud::translation::v3::GetDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1649,8 +1738,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L152}
   ///
   // clang-format on
-  StreamRange<google::cloud::translation::v3::Dataset>
-  ListDatasets(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::translation::v3::Dataset> ListDatasets(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1688,8 +1777,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L152}
   ///
   // clang-format on
-  StreamRange<google::cloud::translation::v3::Dataset>
-  ListDatasets(google::cloud::translation::v3::ListDatasetsRequest request, Options opts = {});
+  StreamRange<google::cloud::translation::v3::Dataset> ListDatasets(
+      google::cloud::translation::v3::ListDatasetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1734,8 +1824,8 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1772,7 +1862,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
-  DeleteDataset(google::cloud::translation::v3::DeleteDatasetRequest const& request, Options opts = {});
+  DeleteDataset(
+      google::cloud::translation::v3::DeleteDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1785,8 +1877,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag, google::cloud::translation::v3::DeleteDatasetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag,
+      google::cloud::translation::v3::DeleteDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1798,7 +1892,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
-  DeleteDataset(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteDataset(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1825,7 +1920,11 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-  CreateAdaptiveMtDataset(std::string const& parent, google::cloud::translation::v3::AdaptiveMtDataset const& adaptive_mt_dataset, Options opts = {});
+  CreateAdaptiveMtDataset(
+      std::string const& parent,
+      google::cloud::translation::v3::AdaptiveMtDataset const&
+          adaptive_mt_dataset,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1855,7 +1954,10 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-  CreateAdaptiveMtDataset(google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const& request, Options opts = {});
+  CreateAdaptiveMtDataset(
+      google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1878,8 +1980,7 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.DeleteAdaptiveMtDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L88}
   ///
   // clang-format on
-  Status
-  DeleteAdaptiveMtDataset(std::string const& name, Options opts = {});
+  Status DeleteAdaptiveMtDataset(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1906,8 +2007,10 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.DeleteAdaptiveMtDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L88}
   ///
   // clang-format on
-  Status
-  DeleteAdaptiveMtDataset(google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const& request, Options opts = {});
+  Status DeleteAdaptiveMtDataset(
+      google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1963,7 +2066,10 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-  GetAdaptiveMtDataset(google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const& request, Options opts = {});
+  GetAdaptiveMtDataset(
+      google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2037,7 +2143,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
-  ListAdaptiveMtDatasets(google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request, Options opts = {});
+  ListAdaptiveMtDatasets(
+      google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2065,7 +2173,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
-  AdaptiveMtTranslate(std::string const& parent, std::vector<std::string> const& content, Options opts = {});
+  AdaptiveMtTranslate(std::string const& parent,
+                      std::vector<std::string> const& content,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -2095,7 +2205,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
-  AdaptiveMtTranslate(google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request, Options opts = {});
+  AdaptiveMtTranslate(
+      google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2120,8 +2232,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L296}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
-  GetAdaptiveMtFile(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2150,8 +2262,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L296}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
-  GetAdaptiveMtFile(google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
+      google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2173,8 +2286,7 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L308}
   ///
   // clang-format on
-  Status
-  DeleteAdaptiveMtFile(std::string const& name, Options opts = {});
+  Status DeleteAdaptiveMtFile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2200,8 +2312,10 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L308}
   ///
   // clang-format on
-  Status
-  DeleteAdaptiveMtFile(google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const& request, Options opts = {});
+  Status DeleteAdaptiveMtFile(
+      google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2259,7 +2373,10 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
-  ImportAdaptiveMtFile(google::cloud::translation::v3::ImportAdaptiveMtFileRequest const& request, Options opts = {});
+  ImportAdaptiveMtFile(
+      google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2334,7 +2451,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
-  ListAdaptiveMtFiles(google::cloud::translation::v3::ListAdaptiveMtFilesRequest request, Options opts = {});
+  ListAdaptiveMtFiles(
+      google::cloud::translation::v3::ListAdaptiveMtFilesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2411,7 +2530,9 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
-  ListAdaptiveMtSentences(google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request, Options opts = {});
+  ListAdaptiveMtSentences(
+      google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2445,7 +2566,10 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
-  ImportData(std::string const& dataset, google::cloud::translation::v3::DatasetInputConfig const& input_config, Options opts = {});
+  ImportData(
+      std::string const& dataset,
+      google::cloud::translation::v3::DatasetInputConfig const& input_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2458,8 +2582,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag, std::string const& dataset, google::cloud::translation::v3::DatasetInputConfig const& input_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag, std::string const& dataset,
+      google::cloud::translation::v3::DatasetInputConfig const& input_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2496,7 +2622,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
-  ImportData(google::cloud::translation::v3::ImportDataRequest const& request, Options opts = {});
+  ImportData(google::cloud::translation::v3::ImportDataRequest const& request,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -2509,8 +2636,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag, google::cloud::translation::v3::ImportDataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag,
+      google::cloud::translation::v3::ImportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2522,7 +2651,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
-  ImportData(google::longrunning::Operation const& operation, Options opts = {});
+  ImportData(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -2556,7 +2686,10 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
-  ExportData(std::string const& dataset, google::cloud::translation::v3::DatasetOutputConfig const& output_config, Options opts = {});
+  ExportData(
+      std::string const& dataset,
+      google::cloud::translation::v3::DatasetOutputConfig const& output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2569,8 +2702,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag, std::string const& dataset, google::cloud::translation::v3::DatasetOutputConfig const& output_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag, std::string const& dataset,
+      google::cloud::translation::v3::DatasetOutputConfig const& output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2607,7 +2742,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
-  ExportData(google::cloud::translation::v3::ExportDataRequest const& request, Options opts = {});
+  ExportData(google::cloud::translation::v3::ExportDataRequest const& request,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -2620,8 +2756,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag, google::cloud::translation::v3::ExportDataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag,
+      google::cloud::translation::v3::ExportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2633,7 +2771,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
-  ExportData(google::longrunning::Operation const& operation, Options opts = {});
+  ExportData(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -2667,8 +2806,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.ListExamplesRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L213}
   ///
   // clang-format on
-  StreamRange<google::cloud::translation::v3::Example>
-  ListExamples(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::translation::v3::Example> ListExamples(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2706,8 +2845,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.ListExamplesRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L213}
   ///
   // clang-format on
-  StreamRange<google::cloud::translation::v3::Example>
-  ListExamples(google::cloud::translation::v3::ListExamplesRequest request, Options opts = {});
+  StreamRange<google::cloud::translation::v3::Example> ListExamples(
+      google::cloud::translation::v3::ListExamplesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2740,8 +2880,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L434}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Model>>
-  CreateModel(std::string const& parent, google::cloud::translation::v3::Model const& model, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Model>> CreateModel(
+      std::string const& parent,
+      google::cloud::translation::v3::Model const& model, Options opts = {});
 
   // clang-format off
   ///
@@ -2754,8 +2895,9 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateModel(NoAwaitTag, std::string const& parent, google::cloud::translation::v3::Model const& model, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::translation::v3::Model const& model, Options opts = {});
 
   // clang-format off
   ///
@@ -2791,8 +2933,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L434}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Model>>
-  CreateModel(google::cloud::translation::v3::CreateModelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Model>> CreateModel(
+      google::cloud::translation::v3::CreateModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2805,8 +2948,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateModel(NoAwaitTag, google::cloud::translation::v3::CreateModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag,
+      google::cloud::translation::v3::CreateModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2817,8 +2962,8 @@ class TranslationServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::translation::v3::Model>>
-  CreateModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::translation::v3::Model>> CreateModel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2852,8 +2997,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L434}
   ///
   // clang-format on
-  StreamRange<google::cloud::translation::v3::Model>
-  ListModels(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::translation::v3::Model> ListModels(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2891,8 +3036,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L434}
   ///
   // clang-format on
-  StreamRange<google::cloud::translation::v3::Model>
-  ListModels(google::cloud::translation::v3::ListModelsRequest request, Options opts = {});
+  StreamRange<google::cloud::translation::v3::Model> ListModels(
+      google::cloud::translation::v3::ListModelsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2916,8 +3062,8 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L434}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::Model>
-  GetModel(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::translation::v3::Model> GetModel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2946,8 +3092,9 @@ class TranslationServiceClient {
   /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L434}
   ///
   // clang-format on
-  StatusOr<google::cloud::translation::v3::Model>
-  GetModel(google::cloud::translation::v3::GetModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::translation::v3::Model> GetModel(
+      google::cloud::translation::v3::GetModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2992,8 +3139,9 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteModel(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -3030,7 +3178,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
-  DeleteModel(google::cloud::translation::v3::DeleteModelRequest const& request, Options opts = {});
+  DeleteModel(google::cloud::translation::v3::DeleteModelRequest const& request,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -3043,8 +3192,10 @@ class TranslationServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag, google::cloud::translation::v3::DeleteModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag,
+      google::cloud::translation::v3::DeleteModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3056,7 +3207,8 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
-  DeleteModel(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteModel(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -3094,8 +3246,8 @@ class TranslationServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3124,8 +3276,9 @@ class TranslationServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3160,8 +3313,8 @@ class TranslationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -3200,8 +3353,8 @@ class TranslationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3227,8 +3380,8 @@ class TranslationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -3259,8 +3412,9 @@ class TranslationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3284,8 +3438,7 @@ class TranslationServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3314,8 +3467,9 @@ class TranslationServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3349,8 +3503,7 @@ class TranslationServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3389,8 +3542,9 @@ class TranslationServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3427,8 +3581,9 @@ class TranslationServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TranslationServiceConnection> connection_;

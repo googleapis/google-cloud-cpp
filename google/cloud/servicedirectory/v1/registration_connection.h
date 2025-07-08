@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_REGISTRATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_REGISTRATION_CONNECTION_H
 
+#include "google/cloud/servicedirectory/v1/internal/registration_retry_traits.h"
+#include "google/cloud/servicedirectory/v1/registration_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/servicedirectory/v1/internal/registration_retry_traits.h"
-#include "google/cloud/servicedirectory/v1/registration_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -53,7 +53,8 @@ class RegistrationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class RegistrationServiceLimitedErrorCountRetryPolicy : public RegistrationServiceRetryPolicy {
+class RegistrationServiceLimitedErrorCountRetryPolicy
+    : public RegistrationServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,16 @@ class RegistrationServiceLimitedErrorCountRetryPolicy : public RegistrationServi
    *     @p maximum_failures == 0.
    */
   explicit RegistrationServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RegistrationServiceLimitedErrorCountRetryPolicy(
       RegistrationServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RegistrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RegistrationServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   RegistrationServiceLimitedErrorCountRetryPolicy(
       RegistrationServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RegistrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RegistrationServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +93,9 @@ class RegistrationServiceLimitedErrorCountRetryPolicy : public RegistrationServi
   using BaseType = RegistrationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<servicedirectory_v1_internal::RegistrationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      servicedirectory_v1_internal::RegistrationServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -104,7 +109,8 @@ class RegistrationServiceLimitedErrorCountRetryPolicy : public RegistrationServi
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class RegistrationServiceLimitedTimeRetryPolicy : public RegistrationServiceRetryPolicy {
+class RegistrationServiceLimitedTimeRetryPolicy
+    : public RegistrationServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -129,12 +135,14 @@ class RegistrationServiceLimitedTimeRetryPolicy : public RegistrationServiceRetr
   template <typename DurationRep, typename DurationPeriod>
   explicit RegistrationServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RegistrationServiceLimitedTimeRetryPolicy(RegistrationServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : RegistrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegistrationServiceLimitedTimeRetryPolicy(RegistrationServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : RegistrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegistrationServiceLimitedTimeRetryPolicy(
+      RegistrationServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : RegistrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegistrationServiceLimitedTimeRetryPolicy(
+      RegistrationServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : RegistrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -156,20 +164,23 @@ class RegistrationServiceLimitedTimeRetryPolicy : public RegistrationServiceRetr
   using BaseType = RegistrationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<servicedirectory_v1_internal::RegistrationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      servicedirectory_v1_internal::RegistrationServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `RegistrationServiceConnection` object for `RegistrationServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RegistrationServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `RegistrationServiceClient`.
+ * sets in `RegistrationServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `RegistrationServiceClient`.
  *
  * To create a concrete instance, see `MakeRegistrationServiceConnection()`.
  *
- * For mocking, see `servicedirectory_v1_mocks::MockRegistrationServiceConnection`.
+ * For mocking, see
+ * `servicedirectory_v1_mocks::MockRegistrationServiceConnection`.
  */
 class RegistrationServiceConnection {
  public:
@@ -178,75 +189,90 @@ class RegistrationServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::servicedirectory::v1::Namespace>
-  CreateNamespace(google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request);
+  CreateNamespace(
+      google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
+          request);
 
   virtual StreamRange<google::cloud::servicedirectory::v1::Namespace>
-  ListNamespaces(google::cloud::servicedirectory::v1::ListNamespacesRequest request);
+  ListNamespaces(
+      google::cloud::servicedirectory::v1::ListNamespacesRequest request);
+
+  virtual StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
+      google::cloud::servicedirectory::v1::GetNamespaceRequest const& request);
 
   virtual StatusOr<google::cloud::servicedirectory::v1::Namespace>
-  GetNamespace(google::cloud::servicedirectory::v1::GetNamespaceRequest const& request);
+  UpdateNamespace(
+      google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::servicedirectory::v1::Namespace>
-  UpdateNamespace(google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request);
+  virtual Status DeleteNamespace(
+      google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
+          request);
 
-  virtual Status
-  DeleteNamespace(google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request);
-
-  virtual StatusOr<google::cloud::servicedirectory::v1::Service>
-  CreateService(google::cloud::servicedirectory::v1::CreateServiceRequest const& request);
+  virtual StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
+      google::cloud::servicedirectory::v1::CreateServiceRequest const& request);
 
   virtual StreamRange<google::cloud::servicedirectory::v1::Service>
-  ListServices(google::cloud::servicedirectory::v1::ListServicesRequest request);
+  ListServices(
+      google::cloud::servicedirectory::v1::ListServicesRequest request);
 
-  virtual StatusOr<google::cloud::servicedirectory::v1::Service>
-  GetService(google::cloud::servicedirectory::v1::GetServiceRequest const& request);
+  virtual StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
+      google::cloud::servicedirectory::v1::GetServiceRequest const& request);
 
-  virtual StatusOr<google::cloud::servicedirectory::v1::Service>
-  UpdateService(google::cloud::servicedirectory::v1::UpdateServiceRequest const& request);
+  virtual StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
+      google::cloud::servicedirectory::v1::UpdateServiceRequest const& request);
 
-  virtual Status
-  DeleteService(google::cloud::servicedirectory::v1::DeleteServiceRequest const& request);
+  virtual Status DeleteService(
+      google::cloud::servicedirectory::v1::DeleteServiceRequest const& request);
 
   virtual StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-  CreateEndpoint(google::cloud::servicedirectory::v1::CreateEndpointRequest const& request);
+  CreateEndpoint(
+      google::cloud::servicedirectory::v1::CreateEndpointRequest const&
+          request);
 
   virtual StreamRange<google::cloud::servicedirectory::v1::Endpoint>
-  ListEndpoints(google::cloud::servicedirectory::v1::ListEndpointsRequest request);
+  ListEndpoints(
+      google::cloud::servicedirectory::v1::ListEndpointsRequest request);
+
+  virtual StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
+      google::cloud::servicedirectory::v1::GetEndpointRequest const& request);
 
   virtual StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-  GetEndpoint(google::cloud::servicedirectory::v1::GetEndpointRequest const& request);
+  UpdateEndpoint(
+      google::cloud::servicedirectory::v1::UpdateEndpointRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-  UpdateEndpoint(google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request);
+  virtual Status DeleteEndpoint(
+      google::cloud::servicedirectory::v1::DeleteEndpointRequest const&
+          request);
 
-  virtual Status
-  DeleteEndpoint(google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `RegistrationServiceConnection`.
+ * A factory function to construct an object of type
+ * `RegistrationServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of RegistrationServiceClient.
+ * should be passed as an argument to the constructor of
+ * RegistrationServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `RegistrationServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `RegistrationServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -256,11 +282,11 @@ class RegistrationServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `RegistrationServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `RegistrationServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<RegistrationServiceConnection> MakeRegistrationServiceConnection(
-    Options options = {});
+std::shared_ptr<RegistrationServiceConnection>
+MakeRegistrationServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_v1

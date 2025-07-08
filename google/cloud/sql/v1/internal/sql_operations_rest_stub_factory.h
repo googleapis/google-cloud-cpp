@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_OPERATIONS_REST_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_OPERATIONS_REST_STUB_FACTORY_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_operations_rest_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -29,8 +29,8 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SqlOperationsServiceRestStub> CreateDefaultSqlOperationsServiceRestStub(
-    Options const& options);
+std::shared_ptr<SqlOperationsServiceRestStub>
+CreateDefaultSqlOperationsServiceRestStub(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1_internal

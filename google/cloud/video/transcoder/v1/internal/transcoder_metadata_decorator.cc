@@ -46,87 +46,89 @@ TranscoderServiceMetadata::TranscoderServiceMetadata(
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceMetadata::CreateJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateJob(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse>
 TranscoderServiceMetadata::ListJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListJobs(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceMetadata::GetJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::GetJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetJob(context, options, request);
 }
 
-Status
-TranscoderServiceMetadata::DeleteJob(
-    grpc::ClientContext& context,
-    Options const& options,
+Status TranscoderServiceMetadata::DeleteJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteJob(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 TranscoderServiceMetadata::CreateJobTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateJobTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
 TranscoderServiceMetadata::ListJobTemplates(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListJobTemplates(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 TranscoderServiceMetadata::GetJobTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetJobTemplate(context, options, request);
 }
 
-Status
-TranscoderServiceMetadata::DeleteJobTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status TranscoderServiceMetadata::DeleteJobTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteJobTemplate(context, options, request);
 }
 
 void TranscoderServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                            Options const& options,
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void TranscoderServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                            Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

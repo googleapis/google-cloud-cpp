@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `AppGatewaysServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AppGatewaysServiceClient`. To do so,
- * construct an object of type `AppGatewaysServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `AppGatewaysServiceClient`. To do
+ * so, construct an object of type `AppGatewaysServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,29 +42,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAppGatewaysServiceConnection : public beyondcorp_appgateways_v1::AppGatewaysServiceConnection {
+class MockAppGatewaysServiceConnection
+    : public beyondcorp_appgateways_v1::AppGatewaysServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>),
-  ListAppGateways,
-  (google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>),
+      ListAppGateways,
+      (google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>,
-  GetAppGateway,
-  (google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>,
+      GetAppGateway,
+      (google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAppGateway(Matcher<google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateAppGateway(Matcher<google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
-  CreateAppGateway,
-  (google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
+      CreateAppGateway,
+      (google::cloud::beyondcorp::appgateways::v1::
+           CreateAppGatewayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -72,33 +83,39 @@ class MockAppGatewaysServiceConnection : public beyondcorp_appgateways_v1::AppGa
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateAppGateway(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateAppGateway, (NoAwaitTag,
-    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAppGateway(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
-  CreateAppGateway, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAppGateway,
+              (NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::
+                               CreateAppGatewayRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteAppGateway(Matcher<google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateAppGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>,
-  DeleteAppGateway,
-  (google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
+      CreateAppGateway, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAppGateway(Matcher<google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
+                                  AppGatewayOperationMetadata>>,
+              DeleteAppGateway,
+              (google::cloud::beyondcorp::appgateways::v1::
+                   DeleteAppGatewayRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,57 +123,59 @@ class MockAppGatewaysServiceConnection : public beyondcorp_appgateways_v1::AppGa
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteAppGateway(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteAppGateway, (NoAwaitTag,
-    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAppGateway,
+              (NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::
+                               DeleteAppGatewayRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteAppGateway(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteAppGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>,
-  DeleteAppGateway, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
+                                  AppGatewayOperationMetadata>>,
+              DeleteAppGateway,
+              (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

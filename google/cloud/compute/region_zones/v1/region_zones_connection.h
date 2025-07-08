@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_ZONES_V1_REGION_ZONES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_ZONES_V1_REGION_ZONES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_retry_traits.h"
 #include "google/cloud/compute/region_zones/v1/region_zones_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class RegionZonesLimitedErrorCountRetryPolicy : public RegionZonesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RegionZonesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RegionZonesLimitedErrorCountRetryPolicy(
       RegionZonesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RegionZonesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RegionZonesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionZonesLimitedErrorCountRetryPolicy(
       RegionZonesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RegionZonesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RegionZonesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +89,9 @@ class RegionZonesLimitedErrorCountRetryPolicy : public RegionZonesRetryPolicy {
   using BaseType = RegionZonesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_region_zones_v1_internal::RegionZonesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_region_zones_v1_internal::RegionZonesRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +129,14 @@ class RegionZonesLimitedTimeRetryPolicy : public RegionZonesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionZonesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RegionZonesLimitedTimeRetryPolicy(RegionZonesLimitedTimeRetryPolicy&& rhs) noexcept
-    : RegionZonesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionZonesLimitedTimeRetryPolicy(RegionZonesLimitedTimeRetryPolicy const& rhs) noexcept
-    : RegionZonesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionZonesLimitedTimeRetryPolicy(
+      RegionZonesLimitedTimeRetryPolicy&& rhs) noexcept
+      : RegionZonesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionZonesLimitedTimeRetryPolicy(
+      RegionZonesLimitedTimeRetryPolicy const& rhs) noexcept
+      : RegionZonesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +158,9 @@ class RegionZonesLimitedTimeRetryPolicy : public RegionZonesRetryPolicy {
   using BaseType = RegionZonesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_region_zones_v1_internal::RegionZonesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_region_zones_v1_internal::RegionZonesRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,8 +181,9 @@ class RegionZonesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListRegionZones(google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Zone> ListRegionZones(
+      google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

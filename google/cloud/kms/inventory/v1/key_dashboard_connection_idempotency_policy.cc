@@ -26,19 +26,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-KeyDashboardServiceConnectionIdempotencyPolicy::~KeyDashboardServiceConnectionIdempotencyPolicy() = default;
+KeyDashboardServiceConnectionIdempotencyPolicy::
+    ~KeyDashboardServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<KeyDashboardServiceConnectionIdempotencyPolicy>
 KeyDashboardServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<KeyDashboardServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<KeyDashboardServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency KeyDashboardServiceConnectionIdempotencyPolicy::ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest) {  // NOLINT
+Idempotency KeyDashboardServiceConnectionIdempotencyPolicy::ListCryptoKeys(
+    google::cloud::kms::inventory::v1::ListCryptoKeysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<KeyDashboardServiceConnectionIdempotencyPolicy>
-    MakeDefaultKeyDashboardServiceConnectionIdempotencyPolicy() {
+MakeDefaultKeyDashboardServiceConnectionIdempotencyPolicy() {
   return std::make_unique<KeyDashboardServiceConnectionIdempotencyPolicy>();
 }
 

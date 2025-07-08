@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_UPTIME_CHECK_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_UPTIME_CHECK_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/internal/uptime_check_retry_traits.h"
 #include "google/cloud/monitoring/v3/internal/uptime_check_stub.h"
 #include "google/cloud/monitoring/v3/uptime_check_connection.h"
 #include "google/cloud/monitoring/v3/uptime_check_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/v3/uptime_check_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,29 +43,33 @@ class UptimeCheckServiceConnectionImpl
   ~UptimeCheckServiceConnectionImpl() override = default;
 
   UptimeCheckServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<monitoring_v3_internal::UptimeCheckServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<monitoring_v3_internal::UptimeCheckServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::monitoring::v3::UptimeCheckConfig>
-  ListUptimeCheckConfigs(google::monitoring::v3::ListUptimeCheckConfigsRequest request) override;
+  StreamRange<google::monitoring::v3::UptimeCheckConfig> ListUptimeCheckConfigs(
+      google::monitoring::v3::ListUptimeCheckConfigsRequest request) override;
 
-  StatusOr<google::monitoring::v3::UptimeCheckConfig>
-  GetUptimeCheckConfig(google::monitoring::v3::GetUptimeCheckConfigRequest const& request) override;
+  StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
+      google::monitoring::v3::GetUptimeCheckConfigRequest const& request)
+      override;
 
-  StatusOr<google::monitoring::v3::UptimeCheckConfig>
-  CreateUptimeCheckConfig(google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) override;
+  StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
+      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request)
+      override;
 
-  StatusOr<google::monitoring::v3::UptimeCheckConfig>
-  UpdateUptimeCheckConfig(google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) override;
+  StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
+      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request)
+      override;
 
-  Status
-  DeleteUptimeCheckConfig(google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) override;
+  Status DeleteUptimeCheckConfig(
+      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request)
+      override;
 
-  StreamRange<google::monitoring::v3::UptimeCheckIp>
-  ListUptimeCheckIps(google::monitoring::v3::ListUptimeCheckIpsRequest request) override;
+  StreamRange<google::monitoring::v3::UptimeCheckIp> ListUptimeCheckIps(
+      google::monitoring::v3::ListUptimeCheckIpsRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

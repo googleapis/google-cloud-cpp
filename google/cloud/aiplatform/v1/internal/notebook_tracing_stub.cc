@@ -34,322 +34,390 @@ NotebookServiceTracingStub::NotebookServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncCreateNotebookRuntimeTemplate(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "CreateNotebookRuntimeTemplate");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "CreateNotebookRuntimeTemplate");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateNotebookRuntimeTemplate(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateNotebookRuntimeTemplate(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::CreateNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "CreateNotebookRuntimeTemplate");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "CreateNotebookRuntimeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateNotebookRuntimeTemplate(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateNotebookRuntimeTemplate(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> NotebookServiceTracingStub::GetNotebookRuntimeTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "GetNotebookRuntimeTemplate");
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceTracingStub::GetNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "GetNotebookRuntimeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetNotebookRuntimeTemplate(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetNotebookRuntimeTemplate(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse> NotebookServiceTracingStub::ListNotebookRuntimeTemplates(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "ListNotebookRuntimeTemplates");
+StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse>
+NotebookServiceTracingStub::ListNotebookRuntimeTemplates(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "ListNotebookRuntimeTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListNotebookRuntimeTemplates(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListNotebookRuntimeTemplates(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncDeleteNotebookRuntimeTemplate(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "DeleteNotebookRuntimeTemplate");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "DeleteNotebookRuntimeTemplate");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteNotebookRuntimeTemplate(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteNotebookRuntimeTemplate(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::DeleteNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "DeleteNotebookRuntimeTemplate");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "DeleteNotebookRuntimeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteNotebookRuntimeTemplate(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteNotebookRuntimeTemplate(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> NotebookServiceTracingStub::UpdateNotebookRuntimeTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "UpdateNotebookRuntimeTemplate");
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+NotebookServiceTracingStub::UpdateNotebookRuntimeTemplate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "UpdateNotebookRuntimeTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateNotebookRuntimeTemplate(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateNotebookRuntimeTemplate(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncAssignNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "AssignNotebookRuntime");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "AssignNotebookRuntime");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncAssignNotebookRuntime(cq, context, std::move(options), request);
+  auto f = child_->AsyncAssignNotebookRuntime(cq, context, std::move(options),
+                                              request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::AssignNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "AssignNotebookRuntime");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "AssignNotebookRuntime");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->AssignNotebookRuntime(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->AssignNotebookRuntime(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> NotebookServiceTracingStub::GetNotebookRuntime(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
+NotebookServiceTracingStub::GetNotebookRuntime(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "GetNotebookRuntime");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "GetNotebookRuntime");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetNotebookRuntime(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetNotebookRuntime(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse> NotebookServiceTracingStub::ListNotebookRuntimes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse>
+NotebookServiceTracingStub::ListNotebookRuntimes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListNotebookRuntimesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "ListNotebookRuntimes");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "ListNotebookRuntimes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListNotebookRuntimes(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListNotebookRuntimes(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncDeleteNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "DeleteNotebookRuntime");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "DeleteNotebookRuntime");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteNotebookRuntime(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteNotebookRuntime(cq, context, std::move(options),
+                                              request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::DeleteNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "DeleteNotebookRuntime");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "DeleteNotebookRuntime");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteNotebookRuntime(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteNotebookRuntime(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncUpgradeNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "UpgradeNotebookRuntime");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "UpgradeNotebookRuntime");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpgradeNotebookRuntime(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpgradeNotebookRuntime(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::UpgradeNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "UpgradeNotebookRuntime");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "UpgradeNotebookRuntime");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpgradeNotebookRuntime(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpgradeNotebookRuntime(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncStartNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "StartNotebookRuntime");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "StartNotebookRuntime");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStartNotebookRuntime(cq, context, std::move(options), request);
+  auto f = child_->AsyncStartNotebookRuntime(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::StartNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "StartNotebookRuntime");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "StartNotebookRuntime");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->StartNotebookRuntime(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->StartNotebookRuntime(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncStopNotebookRuntime(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "StopNotebookRuntime");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "StopNotebookRuntime");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStopNotebookRuntime(cq, context, std::move(options), request);
+  auto f = child_->AsyncStopNotebookRuntime(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::StopNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "StopNotebookRuntime");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "StopNotebookRuntime");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->StopNotebookRuntime(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->StopNotebookRuntime(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncCreateNotebookExecutionJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "CreateNotebookExecutionJob");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "CreateNotebookExecutionJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateNotebookExecutionJob(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateNotebookExecutionJob(cq, context,
+                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::CreateNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "CreateNotebookExecutionJob");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "CreateNotebookExecutionJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateNotebookExecutionJob(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateNotebookExecutionJob(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob> NotebookServiceTracingStub::GetNotebookExecutionJob(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "GetNotebookExecutionJob");
+StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceTracingStub::GetNotebookExecutionJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "GetNotebookExecutionJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetNotebookExecutionJob(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetNotebookExecutionJob(context, options, request));
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse> NotebookServiceTracingStub::ListNotebookExecutionJobs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "ListNotebookExecutionJobs");
+StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse>
+NotebookServiceTracingStub::ListNotebookExecutionJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "ListNotebookExecutionJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListNotebookExecutionJobs(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListNotebookExecutionJobs(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceTracingStub::AsyncDeleteNotebookExecutionJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "DeleteNotebookExecutionJob");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "DeleteNotebookExecutionJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteNotebookExecutionJob(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteNotebookExecutionJob(cq, context,
+                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingStub::DeleteNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "DeleteNotebookExecutionJob");
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService",
+                             "DeleteNotebookExecutionJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteNotebookExecutionJob(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteNotebookExecutionJob(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> NotebookServiceTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+NotebookServiceTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> NotebookServiceTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+NotebookServiceTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -357,10 +425,10 @@ StatusOr<google::cloud::location::Location> NotebookServiceTracingStub::GetLocat
 }
 
 StatusOr<google::iam::v1::Policy> NotebookServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -368,43 +436,46 @@ StatusOr<google::iam::v1::Policy> NotebookServiceTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> NotebookServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> NotebookServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+NotebookServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> NotebookServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+NotebookServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> NotebookServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+NotebookServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -412,10 +483,10 @@ StatusOr<google::longrunning::Operation> NotebookServiceTracingStub::GetOperatio
 }
 
 Status NotebookServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -423,21 +494,22 @@ Status NotebookServiceTracingStub::DeleteOperation(
 }
 
 Status NotebookServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelOperation(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> NotebookServiceTracingStub::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+NotebookServiceTracingStub::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.NotebookService", "WaitOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.NotebookService", "WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -454,8 +526,7 @@ NotebookServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -468,8 +539,8 @@ future<Status> NotebookServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -37,143 +37,119 @@ class SchemaServiceStub {
   virtual ~SchemaServiceStub() = 0;
 
   virtual StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::CreateSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Schema> GetSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSchemasRequest const& request) = 0;
 
-  virtual StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse> ListSchemaRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
+  ListSchemaRevisions(
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSchemaRevisionsRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::CommitSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::RollbackSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSchemaRevisionRequest const& request) = 0;
 
   virtual Status DeleteSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ValidateSchemaRequest const& request) = 0;
 
   virtual StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ValidateMessageRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 };
 
 class DefaultSchemaServiceStub : public SchemaServiceStub {
  public:
   explicit DefaultSchemaServiceStub(
-      std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> grpc_stub,
-      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub
-)
+      std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)) {}
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::CreateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> GetSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSchemasRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse> ListSchemaRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSchemaRevisionsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::CommitSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::RollbackSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSchemaRevisionRequest const& request) override;
 
   Status DeleteSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ValidateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:

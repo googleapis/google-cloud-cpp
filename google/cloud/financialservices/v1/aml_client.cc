@@ -25,11 +25,10 @@ namespace cloud {
 namespace financialservices_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AMLClient::AMLClient(
-    std::shared_ptr<AMLConnection> connection, Options opts)
+AMLClient::AMLClient(std::shared_ptr<AMLConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AMLClient::~AMLClient() = default;
 
 StreamRange<google::cloud::financialservices::v1::Instance>
@@ -41,27 +40,33 @@ AMLClient::ListInstances(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::financialservices::v1::Instance>
-AMLClient::ListInstances(google::cloud::financialservices::v1::ListInstancesRequest request, Options opts) {
+AMLClient::ListInstances(
+    google::cloud::financialservices::v1::ListInstancesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
-StatusOr<google::cloud::financialservices::v1::Instance>
-AMLClient::GetInstance(std::string const& name, Options opts) {
+StatusOr<google::cloud::financialservices::v1::Instance> AMLClient::GetInstance(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::GetInstanceRequest request;
   request.set_name(name);
   return connection_->GetInstance(request);
 }
 
-StatusOr<google::cloud::financialservices::v1::Instance>
-AMLClient::GetInstance(google::cloud::financialservices::v1::GetInstanceRequest const& request, Options opts) {
+StatusOr<google::cloud::financialservices::v1::Instance> AMLClient::GetInstance(
+    google::cloud::financialservices::v1::GetInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLClient::CreateInstance(std::string const& parent, google::cloud::financialservices::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+AMLClient::CreateInstance(
+    std::string const& parent,
+    google::cloud::financialservices::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -70,8 +75,10 @@ AMLClient::CreateInstance(std::string const& parent, google::cloud::financialser
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateInstance(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::financialservices::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -81,25 +88,32 @@ AMLClient::CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLClient::CreateInstance(google::cloud::financialservices::v1::CreateInstanceRequest const& request, Options opts) {
+AMLClient::CreateInstance(
+    google::cloud::financialservices::v1::CreateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateInstance(NoAwaitTag, google::cloud::financialservices::v1::CreateInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLClient::CreateInstance(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::CreateInstance(google::longrunning::Operation const& operation,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(operation);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLClient::UpdateInstance(google::cloud::financialservices::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
+AMLClient::UpdateInstance(
+    google::cloud::financialservices::v1::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -107,8 +121,9 @@ AMLClient::UpdateInstance(google::cloud::financialservices::v1::Instance const& 
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateInstance(NoAwaitTag, google::cloud::financialservices::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateInstance(
+    NoAwaitTag, google::cloud::financialservices::v1::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -117,19 +132,24 @@ AMLClient::UpdateInstance(NoAwaitTag, google::cloud::financialservices::v1::Inst
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLClient::UpdateInstance(google::cloud::financialservices::v1::UpdateInstanceRequest const& request, Options opts) {
+AMLClient::UpdateInstance(
+    google::cloud::financialservices::v1::UpdateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateInstance(NoAwaitTag, google::cloud::financialservices::v1::UpdateInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLClient::UpdateInstance(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::UpdateInstance(google::longrunning::Operation const& operation,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(operation);
 }
@@ -142,8 +162,8 @@ AMLClient::DeleteInstance(std::string const& name, Options opts) {
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteInstance(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteInstance(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::DeleteInstanceRequest request;
   request.set_name(name);
@@ -151,25 +171,36 @@ AMLClient::DeleteInstance(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteInstance(google::cloud::financialservices::v1::DeleteInstanceRequest const& request, Options opts) {
+AMLClient::DeleteInstance(
+    google::cloud::financialservices::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteInstance(NoAwaitTag, google::cloud::financialservices::v1::DeleteInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteInstance(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::DeleteInstance(google::longrunning::Operation const& operation,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(operation);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-AMLClient::ImportRegisteredParties(std::string const& name, google::cloud::financialservices::v1::ImportRegisteredPartiesRequest::UpdateMode mode, google::cloud::financialservices::v1::LineOfBusiness line_of_business, std::vector<std::string> const& party_tables, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+AMLClient::ImportRegisteredParties(
+    std::string const& name,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest::
+        UpdateMode mode,
+    google::cloud::financialservices::v1::LineOfBusiness line_of_business,
+    std::vector<std::string> const& party_tables, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::ImportRegisteredPartiesRequest request;
   request.set_name(name);
@@ -179,8 +210,12 @@ AMLClient::ImportRegisteredParties(std::string const& name, google::cloud::finan
   return connection_->ImportRegisteredParties(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::ImportRegisteredParties(NoAwaitTag, std::string const& name, google::cloud::financialservices::v1::ImportRegisteredPartiesRequest::UpdateMode mode, google::cloud::financialservices::v1::LineOfBusiness line_of_business, std::vector<std::string> const& party_tables, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::ImportRegisteredParties(
+    NoAwaitTag, std::string const& name,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest::
+        UpdateMode mode,
+    google::cloud::financialservices::v1::LineOfBusiness line_of_business,
+    std::vector<std::string> const& party_tables, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::ImportRegisteredPartiesRequest request;
   request.set_name(name);
@@ -190,26 +225,40 @@ AMLClient::ImportRegisteredParties(NoAwaitTag, std::string const& name, google::
   return connection_->ImportRegisteredParties(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-AMLClient::ImportRegisteredParties(google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+AMLClient::ImportRegisteredParties(
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportRegisteredParties(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::ImportRegisteredParties(NoAwaitTag, google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::ImportRegisteredParties(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportRegisteredParties(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-AMLClient::ImportRegisteredParties(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+AMLClient::ImportRegisteredParties(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportRegisteredParties(operation);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-AMLClient::ExportRegisteredParties(std::string const& name, google::cloud::financialservices::v1::BigQueryDestination const& dataset, google::cloud::financialservices::v1::LineOfBusiness line_of_business, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+AMLClient::ExportRegisteredParties(
+    std::string const& name,
+    google::cloud::financialservices::v1::BigQueryDestination const& dataset,
+    google::cloud::financialservices::v1::LineOfBusiness line_of_business,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::ExportRegisteredPartiesRequest request;
   request.set_name(name);
@@ -218,8 +267,11 @@ AMLClient::ExportRegisteredParties(std::string const& name, google::cloud::finan
   return connection_->ExportRegisteredParties(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::ExportRegisteredParties(NoAwaitTag, std::string const& name, google::cloud::financialservices::v1::BigQueryDestination const& dataset, google::cloud::financialservices::v1::LineOfBusiness line_of_business, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::ExportRegisteredParties(
+    NoAwaitTag, std::string const& name,
+    google::cloud::financialservices::v1::BigQueryDestination const& dataset,
+    google::cloud::financialservices::v1::LineOfBusiness line_of_business,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::ExportRegisteredPartiesRequest request;
   request.set_name(name);
@@ -228,20 +280,29 @@ AMLClient::ExportRegisteredParties(NoAwaitTag, std::string const& name, google::
   return connection_->ExportRegisteredParties(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-AMLClient::ExportRegisteredParties(google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+AMLClient::ExportRegisteredParties(
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportRegisteredParties(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::ExportRegisteredParties(NoAwaitTag, google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::ExportRegisteredParties(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportRegisteredParties(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-AMLClient::ExportRegisteredParties(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+AMLClient::ExportRegisteredParties(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportRegisteredParties(operation);
 }
@@ -255,27 +316,33 @@ AMLClient::ListDatasets(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::financialservices::v1::Dataset>
-AMLClient::ListDatasets(google::cloud::financialservices::v1::ListDatasetsRequest request, Options opts) {
+AMLClient::ListDatasets(
+    google::cloud::financialservices::v1::ListDatasetsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatasets(std::move(request));
 }
 
-StatusOr<google::cloud::financialservices::v1::Dataset>
-AMLClient::GetDataset(std::string const& name, Options opts) {
+StatusOr<google::cloud::financialservices::v1::Dataset> AMLClient::GetDataset(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::GetDatasetRequest request;
   request.set_name(name);
   return connection_->GetDataset(request);
 }
 
-StatusOr<google::cloud::financialservices::v1::Dataset>
-AMLClient::GetDataset(google::cloud::financialservices::v1::GetDatasetRequest const& request, Options opts) {
+StatusOr<google::cloud::financialservices::v1::Dataset> AMLClient::GetDataset(
+    google::cloud::financialservices::v1::GetDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataset(request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLClient::CreateDataset(std::string const& parent, google::cloud::financialservices::v1::Dataset const& dataset, std::string const& dataset_id, Options opts) {
+AMLClient::CreateDataset(
+    std::string const& parent,
+    google::cloud::financialservices::v1::Dataset const& dataset,
+    std::string const& dataset_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateDatasetRequest request;
   request.set_parent(parent);
@@ -284,8 +351,10 @@ AMLClient::CreateDataset(std::string const& parent, google::cloud::financialserv
   return connection_->CreateDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateDataset(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::Dataset const& dataset, std::string const& dataset_id, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateDataset(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::financialservices::v1::Dataset const& dataset,
+    std::string const& dataset_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateDatasetRequest request;
   request.set_parent(parent);
@@ -295,25 +364,32 @@ AMLClient::CreateDataset(NoAwaitTag, std::string const& parent, google::cloud::f
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLClient::CreateDataset(google::cloud::financialservices::v1::CreateDatasetRequest const& request, Options opts) {
+AMLClient::CreateDataset(
+    google::cloud::financialservices::v1::CreateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateDataset(NoAwaitTag, google::cloud::financialservices::v1::CreateDatasetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLClient::CreateDataset(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::CreateDataset(google::longrunning::Operation const& operation,
+                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(operation);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLClient::UpdateDataset(google::cloud::financialservices::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts) {
+AMLClient::UpdateDataset(
+    google::cloud::financialservices::v1::Dataset const& dataset,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateDatasetRequest request;
   *request.mutable_dataset() = dataset;
@@ -321,8 +397,9 @@ AMLClient::UpdateDataset(google::cloud::financialservices::v1::Dataset const& da
   return connection_->UpdateDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateDataset(NoAwaitTag, google::cloud::financialservices::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateDataset(
+    NoAwaitTag, google::cloud::financialservices::v1::Dataset const& dataset,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateDatasetRequest request;
   *request.mutable_dataset() = dataset;
@@ -331,19 +408,24 @@ AMLClient::UpdateDataset(NoAwaitTag, google::cloud::financialservices::v1::Datas
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLClient::UpdateDataset(google::cloud::financialservices::v1::UpdateDatasetRequest const& request, Options opts) {
+AMLClient::UpdateDataset(
+    google::cloud::financialservices::v1::UpdateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateDataset(NoAwaitTag, google::cloud::financialservices::v1::UpdateDatasetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLClient::UpdateDataset(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::UpdateDataset(google::longrunning::Operation const& operation,
+                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataset(operation);
 }
@@ -356,8 +438,8 @@ AMLClient::DeleteDataset(std::string const& name, Options opts) {
   return connection_->DeleteDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteDataset(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteDataset(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::DeleteDatasetRequest request;
   request.set_name(name);
@@ -365,53 +447,62 @@ AMLClient::DeleteDataset(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteDataset(google::cloud::financialservices::v1::DeleteDatasetRequest const& request, Options opts) {
+AMLClient::DeleteDataset(
+    google::cloud::financialservices::v1::DeleteDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteDataset(NoAwaitTag, google::cloud::financialservices::v1::DeleteDatasetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteDataset(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::DeleteDataset(google::longrunning::Operation const& operation,
+                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(operation);
 }
 
-StreamRange<google::cloud::financialservices::v1::Model>
-AMLClient::ListModels(std::string const& parent, Options opts) {
+StreamRange<google::cloud::financialservices::v1::Model> AMLClient::ListModels(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::ListModelsRequest request;
   request.set_parent(parent);
   return connection_->ListModels(request);
 }
 
-StreamRange<google::cloud::financialservices::v1::Model>
-AMLClient::ListModels(google::cloud::financialservices::v1::ListModelsRequest request, Options opts) {
+StreamRange<google::cloud::financialservices::v1::Model> AMLClient::ListModels(
+    google::cloud::financialservices::v1::ListModelsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModels(std::move(request));
 }
 
-StatusOr<google::cloud::financialservices::v1::Model>
-AMLClient::GetModel(std::string const& name, Options opts) {
+StatusOr<google::cloud::financialservices::v1::Model> AMLClient::GetModel(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::GetModelRequest request;
   request.set_name(name);
   return connection_->GetModel(request);
 }
 
-StatusOr<google::cloud::financialservices::v1::Model>
-AMLClient::GetModel(google::cloud::financialservices::v1::GetModelRequest const& request, Options opts) {
+StatusOr<google::cloud::financialservices::v1::Model> AMLClient::GetModel(
+    google::cloud::financialservices::v1::GetModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModel(request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLClient::CreateModel(std::string const& parent, google::cloud::financialservices::v1::Model const& model, std::string const& model_id, Options opts) {
+AMLClient::CreateModel(std::string const& parent,
+                       google::cloud::financialservices::v1::Model const& model,
+                       std::string const& model_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateModelRequest request;
   request.set_parent(parent);
@@ -420,8 +511,10 @@ AMLClient::CreateModel(std::string const& parent, google::cloud::financialservic
   return connection_->CreateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateModel(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::Model const& model, std::string const& model_id, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateModel(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::financialservices::v1::Model const& model,
+    std::string const& model_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateModelRequest request;
   request.set_parent(parent);
@@ -431,25 +524,32 @@ AMLClient::CreateModel(NoAwaitTag, std::string const& parent, google::cloud::fin
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLClient::CreateModel(google::cloud::financialservices::v1::CreateModelRequest const& request, Options opts) {
+AMLClient::CreateModel(
+    google::cloud::financialservices::v1::CreateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateModel(NoAwaitTag, google::cloud::financialservices::v1::CreateModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLClient::CreateModel(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::CreateModel(google::longrunning::Operation const& operation,
+                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(operation);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLClient::UpdateModel(google::cloud::financialservices::v1::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts) {
+AMLClient::UpdateModel(google::cloud::financialservices::v1::Model const& model,
+                       google::protobuf::FieldMask const& update_mask,
+                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateModelRequest request;
   *request.mutable_model() = model;
@@ -457,8 +557,9 @@ AMLClient::UpdateModel(google::cloud::financialservices::v1::Model const& model,
   return connection_->UpdateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateModel(NoAwaitTag, google::cloud::financialservices::v1::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateModel(
+    NoAwaitTag, google::cloud::financialservices::v1::Model const& model,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateModelRequest request;
   *request.mutable_model() = model;
@@ -467,55 +568,79 @@ AMLClient::UpdateModel(NoAwaitTag, google::cloud::financialservices::v1::Model c
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLClient::UpdateModel(google::cloud::financialservices::v1::UpdateModelRequest const& request, Options opts) {
+AMLClient::UpdateModel(
+    google::cloud::financialservices::v1::UpdateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateModel(NoAwaitTag, google::cloud::financialservices::v1::UpdateModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLClient::UpdateModel(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::UpdateModel(google::longrunning::Operation const& operation,
+                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModel(operation);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-AMLClient::ExportModelMetadata(std::string const& model, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts) {
+future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+AMLClient::ExportModelMetadata(
+    std::string const& model,
+    google::cloud::financialservices::v1::BigQueryDestination const&
+        structured_metadata_destination,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::ExportModelMetadataRequest request;
   request.set_model(model);
-  *request.mutable_structured_metadata_destination() = structured_metadata_destination;
+  *request.mutable_structured_metadata_destination() =
+      structured_metadata_destination;
   return connection_->ExportModelMetadata(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::ExportModelMetadata(NoAwaitTag, std::string const& model, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::ExportModelMetadata(
+    NoAwaitTag, std::string const& model,
+    google::cloud::financialservices::v1::BigQueryDestination const&
+        structured_metadata_destination,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::ExportModelMetadataRequest request;
   request.set_model(model);
-  *request.mutable_structured_metadata_destination() = structured_metadata_destination;
+  *request.mutable_structured_metadata_destination() =
+      structured_metadata_destination;
   return connection_->ExportModelMetadata(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-AMLClient::ExportModelMetadata(google::cloud::financialservices::v1::ExportModelMetadataRequest const& request, Options opts) {
+future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+AMLClient::ExportModelMetadata(
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModelMetadata(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::ExportModelMetadata(NoAwaitTag, google::cloud::financialservices::v1::ExportModelMetadataRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::ExportModelMetadata(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModelMetadata(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-AMLClient::ExportModelMetadata(google::longrunning::Operation const& operation, Options opts) {
+future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+AMLClient::ExportModelMetadata(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModelMetadata(operation);
 }
@@ -528,8 +653,8 @@ AMLClient::DeleteModel(std::string const& name, Options opts) {
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteModel(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteModel(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::DeleteModelRequest request;
   request.set_name(name);
@@ -537,19 +662,24 @@ AMLClient::DeleteModel(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteModel(google::cloud::financialservices::v1::DeleteModelRequest const& request, Options opts) {
+AMLClient::DeleteModel(
+    google::cloud::financialservices::v1::DeleteModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteModel(NoAwaitTag, google::cloud::financialservices::v1::DeleteModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteModel(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::DeleteModel(google::longrunning::Operation const& operation,
+                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(operation);
 }
@@ -563,7 +693,9 @@ AMLClient::ListEngineConfigs(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::financialservices::v1::EngineConfig>
-AMLClient::ListEngineConfigs(google::cloud::financialservices::v1::ListEngineConfigsRequest request, Options opts) {
+AMLClient::ListEngineConfigs(
+    google::cloud::financialservices::v1::ListEngineConfigsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEngineConfigs(std::move(request));
 }
@@ -577,13 +709,18 @@ AMLClient::GetEngineConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineConfig>
-AMLClient::GetEngineConfig(google::cloud::financialservices::v1::GetEngineConfigRequest const& request, Options opts) {
+AMLClient::GetEngineConfig(
+    google::cloud::financialservices::v1::GetEngineConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEngineConfig(request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLClient::CreateEngineConfig(std::string const& parent, google::cloud::financialservices::v1::EngineConfig const& engine_config, std::string const& engine_config_id, Options opts) {
+AMLClient::CreateEngineConfig(
+    std::string const& parent,
+    google::cloud::financialservices::v1::EngineConfig const& engine_config,
+    std::string const& engine_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateEngineConfigRequest request;
   request.set_parent(parent);
@@ -592,8 +729,10 @@ AMLClient::CreateEngineConfig(std::string const& parent, google::cloud::financia
   return connection_->CreateEngineConfig(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateEngineConfig(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::EngineConfig const& engine_config, std::string const& engine_config_id, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateEngineConfig(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::financialservices::v1::EngineConfig const& engine_config,
+    std::string const& engine_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateEngineConfigRequest request;
   request.set_parent(parent);
@@ -603,25 +742,34 @@ AMLClient::CreateEngineConfig(NoAwaitTag, std::string const& parent, google::clo
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLClient::CreateEngineConfig(google::cloud::financialservices::v1::CreateEngineConfigRequest const& request, Options opts) {
+AMLClient::CreateEngineConfig(
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEngineConfig(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::CreateEngineConfigRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateEngineConfig(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEngineConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLClient::CreateEngineConfig(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::CreateEngineConfig(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEngineConfig(operation);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLClient::UpdateEngineConfig(google::cloud::financialservices::v1::EngineConfig const& engine_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+AMLClient::UpdateEngineConfig(
+    google::cloud::financialservices::v1::EngineConfig const& engine_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateEngineConfigRequest request;
   *request.mutable_engine_config() = engine_config;
@@ -629,8 +777,10 @@ AMLClient::UpdateEngineConfig(google::cloud::financialservices::v1::EngineConfig
   return connection_->UpdateEngineConfig(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::EngineConfig const& engine_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateEngineConfig(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::EngineConfig const& engine_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateEngineConfigRequest request;
   *request.mutable_engine_config() = engine_config;
@@ -639,55 +789,83 @@ AMLClient::UpdateEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLClient::UpdateEngineConfig(google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request, Options opts) {
+AMLClient::UpdateEngineConfig(
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEngineConfig(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateEngineConfig(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEngineConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLClient::UpdateEngineConfig(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::UpdateEngineConfig(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEngineConfig(operation);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-AMLClient::ExportEngineConfigMetadata(std::string const& engine_config, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+AMLClient::ExportEngineConfigMetadata(
+    std::string const& engine_config,
+    google::cloud::financialservices::v1::BigQueryDestination const&
+        structured_metadata_destination,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest request;
+  google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest
+      request;
   request.set_engine_config(engine_config);
-  *request.mutable_structured_metadata_destination() = structured_metadata_destination;
+  *request.mutable_structured_metadata_destination() =
+      structured_metadata_destination;
   return connection_->ExportEngineConfigMetadata(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::ExportEngineConfigMetadata(NoAwaitTag, std::string const& engine_config, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::ExportEngineConfigMetadata(
+    NoAwaitTag, std::string const& engine_config,
+    google::cloud::financialservices::v1::BigQueryDestination const&
+        structured_metadata_destination,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest request;
+  google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest
+      request;
   request.set_engine_config(engine_config);
-  *request.mutable_structured_metadata_destination() = structured_metadata_destination;
+  *request.mutable_structured_metadata_destination() =
+      structured_metadata_destination;
   return connection_->ExportEngineConfigMetadata(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-AMLClient::ExportEngineConfigMetadata(google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+AMLClient::ExportEngineConfigMetadata(
+    google::cloud::financialservices::v1::
+        ExportEngineConfigMetadataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportEngineConfigMetadata(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::ExportEngineConfigMetadata(NoAwaitTag, google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::ExportEngineConfigMetadata(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::
+        ExportEngineConfigMetadataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportEngineConfigMetadata(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-AMLClient::ExportEngineConfigMetadata(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+AMLClient::ExportEngineConfigMetadata(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportEngineConfigMetadata(operation);
 }
@@ -700,8 +878,8 @@ AMLClient::DeleteEngineConfig(std::string const& name, Options opts) {
   return connection_->DeleteEngineConfig(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteEngineConfig(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteEngineConfig(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::DeleteEngineConfigRequest request;
   request.set_name(name);
@@ -709,19 +887,26 @@ AMLClient::DeleteEngineConfig(NoAwaitTag, std::string const& name, Options opts)
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteEngineConfig(google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request, Options opts) {
+AMLClient::DeleteEngineConfig(
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEngineConfig(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteEngineConfig(NoAwaitTag, google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteEngineConfig(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEngineConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteEngineConfig(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::DeleteEngineConfig(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEngineConfig(operation);
 }
@@ -735,7 +920,10 @@ AMLClient::GetEngineVersion(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineVersion>
-AMLClient::GetEngineVersion(google::cloud::financialservices::v1::GetEngineVersionRequest const& request, Options opts) {
+AMLClient::GetEngineVersion(
+    google::cloud::financialservices::v1::GetEngineVersionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEngineVersion(request);
 }
@@ -749,7 +937,9 @@ AMLClient::ListEngineVersions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::financialservices::v1::EngineVersion>
-AMLClient::ListEngineVersions(google::cloud::financialservices::v1::ListEngineVersionsRequest request, Options opts) {
+AMLClient::ListEngineVersions(
+    google::cloud::financialservices::v1::ListEngineVersionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEngineVersions(std::move(request));
 }
@@ -763,7 +953,9 @@ AMLClient::ListPredictionResults(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::financialservices::v1::PredictionResult>
-AMLClient::ListPredictionResults(google::cloud::financialservices::v1::ListPredictionResultsRequest request, Options opts) {
+AMLClient::ListPredictionResults(
+    google::cloud::financialservices::v1::ListPredictionResultsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPredictionResults(std::move(request));
 }
@@ -777,13 +969,20 @@ AMLClient::GetPredictionResult(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::financialservices::v1::PredictionResult>
-AMLClient::GetPredictionResult(google::cloud::financialservices::v1::GetPredictionResultRequest const& request, Options opts) {
+AMLClient::GetPredictionResult(
+    google::cloud::financialservices::v1::GetPredictionResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPredictionResult(request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLClient::CreatePredictionResult(std::string const& parent, google::cloud::financialservices::v1::PredictionResult const& prediction_result, std::string const& prediction_result_id, Options opts) {
+AMLClient::CreatePredictionResult(
+    std::string const& parent,
+    google::cloud::financialservices::v1::PredictionResult const&
+        prediction_result,
+    std::string const& prediction_result_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreatePredictionResultRequest request;
   request.set_parent(parent);
@@ -792,8 +991,11 @@ AMLClient::CreatePredictionResult(std::string const& parent, google::cloud::fina
   return connection_->CreatePredictionResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreatePredictionResult(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::PredictionResult const& prediction_result, std::string const& prediction_result_id, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreatePredictionResult(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::financialservices::v1::PredictionResult const&
+        prediction_result,
+    std::string const& prediction_result_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreatePredictionResultRequest request;
   request.set_parent(parent);
@@ -803,25 +1005,35 @@ AMLClient::CreatePredictionResult(NoAwaitTag, std::string const& parent, google:
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLClient::CreatePredictionResult(google::cloud::financialservices::v1::CreatePredictionResultRequest const& request, Options opts) {
+AMLClient::CreatePredictionResult(
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePredictionResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreatePredictionResult(NoAwaitTag, google::cloud::financialservices::v1::CreatePredictionResultRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreatePredictionResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePredictionResult(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLClient::CreatePredictionResult(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::CreatePredictionResult(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePredictionResult(operation);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLClient::UpdatePredictionResult(google::cloud::financialservices::v1::PredictionResult const& prediction_result, google::protobuf::FieldMask const& update_mask, Options opts) {
+AMLClient::UpdatePredictionResult(
+    google::cloud::financialservices::v1::PredictionResult const&
+        prediction_result,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdatePredictionResultRequest request;
   *request.mutable_prediction_result() = prediction_result;
@@ -829,8 +1041,11 @@ AMLClient::UpdatePredictionResult(google::cloud::financialservices::v1::Predicti
   return connection_->UpdatePredictionResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdatePredictionResult(NoAwaitTag, google::cloud::financialservices::v1::PredictionResult const& prediction_result, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdatePredictionResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::PredictionResult const&
+        prediction_result,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdatePredictionResultRequest request;
   *request.mutable_prediction_result() = prediction_result;
@@ -839,55 +1054,85 @@ AMLClient::UpdatePredictionResult(NoAwaitTag, google::cloud::financialservices::
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLClient::UpdatePredictionResult(google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request, Options opts) {
+AMLClient::UpdatePredictionResult(
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePredictionResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdatePredictionResult(NoAwaitTag, google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdatePredictionResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePredictionResult(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLClient::UpdatePredictionResult(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::UpdatePredictionResult(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePredictionResult(operation);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
-AMLClient::ExportPredictionResultMetadata(std::string const& prediction_result, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts) {
+future<StatusOr<google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataResponse>>
+AMLClient::ExportPredictionResultMetadata(
+    std::string const& prediction_result,
+    google::cloud::financialservices::v1::BigQueryDestination const&
+        structured_metadata_destination,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest request;
+  google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest
+      request;
   request.set_prediction_result(prediction_result);
-  *request.mutable_structured_metadata_destination() = structured_metadata_destination;
+  *request.mutable_structured_metadata_destination() =
+      structured_metadata_destination;
   return connection_->ExportPredictionResultMetadata(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AMLClient::ExportPredictionResultMetadata(NoAwaitTag, std::string const& prediction_result, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts) {
+AMLClient::ExportPredictionResultMetadata(
+    NoAwaitTag, std::string const& prediction_result,
+    google::cloud::financialservices::v1::BigQueryDestination const&
+        structured_metadata_destination,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest request;
+  google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest
+      request;
   request.set_prediction_result(prediction_result);
-  *request.mutable_structured_metadata_destination() = structured_metadata_destination;
+  *request.mutable_structured_metadata_destination() =
+      structured_metadata_destination;
   return connection_->ExportPredictionResultMetadata(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
-AMLClient::ExportPredictionResultMetadata(google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request, Options opts) {
+future<StatusOr<google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataResponse>>
+AMLClient::ExportPredictionResultMetadata(
+    google::cloud::financialservices::v1::
+        ExportPredictionResultMetadataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportPredictionResultMetadata(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AMLClient::ExportPredictionResultMetadata(NoAwaitTag, google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request, Options opts) {
+AMLClient::ExportPredictionResultMetadata(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::
+        ExportPredictionResultMetadataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportPredictionResultMetadata(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
-AMLClient::ExportPredictionResultMetadata(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataResponse>>
+AMLClient::ExportPredictionResultMetadata(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportPredictionResultMetadata(operation);
 }
@@ -900,8 +1145,8 @@ AMLClient::DeletePredictionResult(std::string const& name, Options opts) {
   return connection_->DeletePredictionResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeletePredictionResult(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeletePredictionResult(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::DeletePredictionResultRequest request;
   request.set_name(name);
@@ -909,19 +1154,26 @@ AMLClient::DeletePredictionResult(NoAwaitTag, std::string const& name, Options o
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeletePredictionResult(google::cloud::financialservices::v1::DeletePredictionResultRequest const& request, Options opts) {
+AMLClient::DeletePredictionResult(
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePredictionResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeletePredictionResult(NoAwaitTag, google::cloud::financialservices::v1::DeletePredictionResultRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeletePredictionResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePredictionResult(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeletePredictionResult(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::DeletePredictionResult(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePredictionResult(operation);
 }
@@ -935,7 +1187,9 @@ AMLClient::ListBacktestResults(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::financialservices::v1::BacktestResult>
-AMLClient::ListBacktestResults(google::cloud::financialservices::v1::ListBacktestResultsRequest request, Options opts) {
+AMLClient::ListBacktestResults(
+    google::cloud::financialservices::v1::ListBacktestResultsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBacktestResults(std::move(request));
 }
@@ -949,13 +1203,19 @@ AMLClient::GetBacktestResult(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::financialservices::v1::BacktestResult>
-AMLClient::GetBacktestResult(google::cloud::financialservices::v1::GetBacktestResultRequest const& request, Options opts) {
+AMLClient::GetBacktestResult(
+    google::cloud::financialservices::v1::GetBacktestResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBacktestResult(request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLClient::CreateBacktestResult(std::string const& parent, google::cloud::financialservices::v1::BacktestResult const& backtest_result, std::string const& backtest_result_id, Options opts) {
+AMLClient::CreateBacktestResult(
+    std::string const& parent,
+    google::cloud::financialservices::v1::BacktestResult const& backtest_result,
+    std::string const& backtest_result_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateBacktestResultRequest request;
   request.set_parent(parent);
@@ -964,8 +1224,10 @@ AMLClient::CreateBacktestResult(std::string const& parent, google::cloud::financ
   return connection_->CreateBacktestResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateBacktestResult(NoAwaitTag, std::string const& parent, google::cloud::financialservices::v1::BacktestResult const& backtest_result, std::string const& backtest_result_id, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateBacktestResult(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::financialservices::v1::BacktestResult const& backtest_result,
+    std::string const& backtest_result_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::CreateBacktestResultRequest request;
   request.set_parent(parent);
@@ -975,25 +1237,34 @@ AMLClient::CreateBacktestResult(NoAwaitTag, std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLClient::CreateBacktestResult(google::cloud::financialservices::v1::CreateBacktestResultRequest const& request, Options opts) {
+AMLClient::CreateBacktestResult(
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBacktestResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::CreateBacktestResult(NoAwaitTag, google::cloud::financialservices::v1::CreateBacktestResultRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::CreateBacktestResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBacktestResult(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLClient::CreateBacktestResult(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::CreateBacktestResult(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBacktestResult(operation);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLClient::UpdateBacktestResult(google::cloud::financialservices::v1::BacktestResult const& backtest_result, google::protobuf::FieldMask const& update_mask, Options opts) {
+AMLClient::UpdateBacktestResult(
+    google::cloud::financialservices::v1::BacktestResult const& backtest_result,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateBacktestResultRequest request;
   *request.mutable_backtest_result() = backtest_result;
@@ -1001,8 +1272,10 @@ AMLClient::UpdateBacktestResult(google::cloud::financialservices::v1::BacktestRe
   return connection_->UpdateBacktestResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateBacktestResult(NoAwaitTag, google::cloud::financialservices::v1::BacktestResult const& backtest_result, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateBacktestResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::BacktestResult const& backtest_result,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::UpdateBacktestResultRequest request;
   *request.mutable_backtest_result() = backtest_result;
@@ -1011,55 +1284,85 @@ AMLClient::UpdateBacktestResult(NoAwaitTag, google::cloud::financialservices::v1
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLClient::UpdateBacktestResult(google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request, Options opts) {
+AMLClient::UpdateBacktestResult(
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBacktestResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::UpdateBacktestResult(NoAwaitTag, google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::UpdateBacktestResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBacktestResult(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLClient::UpdateBacktestResult(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::UpdateBacktestResult(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBacktestResult(operation);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
-AMLClient::ExportBacktestResultMetadata(std::string const& backtest_result, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+AMLClient::ExportBacktestResultMetadata(
+    std::string const& backtest_result,
+    google::cloud::financialservices::v1::BigQueryDestination const&
+        structured_metadata_destination,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest request;
+  google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest
+      request;
   request.set_backtest_result(backtest_result);
-  *request.mutable_structured_metadata_destination() = structured_metadata_destination;
+  *request.mutable_structured_metadata_destination() =
+      structured_metadata_destination;
   return connection_->ExportBacktestResultMetadata(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AMLClient::ExportBacktestResultMetadata(NoAwaitTag, std::string const& backtest_result, google::cloud::financialservices::v1::BigQueryDestination const& structured_metadata_destination, Options opts) {
+AMLClient::ExportBacktestResultMetadata(
+    NoAwaitTag, std::string const& backtest_result,
+    google::cloud::financialservices::v1::BigQueryDestination const&
+        structured_metadata_destination,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest request;
+  google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest
+      request;
   request.set_backtest_result(backtest_result);
-  *request.mutable_structured_metadata_destination() = structured_metadata_destination;
+  *request.mutable_structured_metadata_destination() =
+      structured_metadata_destination;
   return connection_->ExportBacktestResultMetadata(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
-AMLClient::ExportBacktestResultMetadata(google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+AMLClient::ExportBacktestResultMetadata(
+    google::cloud::financialservices::v1::
+        ExportBacktestResultMetadataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportBacktestResultMetadata(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AMLClient::ExportBacktestResultMetadata(NoAwaitTag, google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request, Options opts) {
+AMLClient::ExportBacktestResultMetadata(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::
+        ExportBacktestResultMetadataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportBacktestResultMetadata(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
-AMLClient::ExportBacktestResultMetadata(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+AMLClient::ExportBacktestResultMetadata(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportBacktestResultMetadata(operation);
 }
@@ -1072,8 +1375,8 @@ AMLClient::DeleteBacktestResult(std::string const& name, Options opts) {
   return connection_->DeleteBacktestResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteBacktestResult(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteBacktestResult(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::financialservices::v1::DeleteBacktestResultRequest request;
   request.set_name(name);
@@ -1081,37 +1384,44 @@ AMLClient::DeleteBacktestResult(NoAwaitTag, std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteBacktestResult(google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request, Options opts) {
+AMLClient::DeleteBacktestResult(
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBacktestResult(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::DeleteBacktestResult(NoAwaitTag, google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::DeleteBacktestResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBacktestResult(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLClient::DeleteBacktestResult(google::longrunning::Operation const& operation, Options opts) {
+AMLClient::DeleteBacktestResult(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBacktestResult(operation);
 }
 
-StreamRange<google::cloud::location::Location>
-AMLClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> AMLClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-AMLClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> AMLClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-AMLClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> AMLClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -1119,50 +1429,48 @@ AMLClient::ListOperations(std::string const& name, std::string const& filter, Op
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-AMLClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> AMLClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AMLClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AMLClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-AMLClient::DeleteOperation(std::string const& name, Options opts) {
+Status AMLClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-AMLClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status AMLClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-AMLClient::CancelOperation(std::string const& name, Options opts) {
+Status AMLClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-AMLClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status AMLClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

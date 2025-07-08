@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockRegionInstancesConnection : public compute_region_instances_v1::RegionInstancesConnection {
+class MockRegionInstancesConnection
+    : public compute_region_instances_v1::RegionInstancesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockRegionInstancesConnection : public compute_region_instances_v1::Region
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BulkInsert(Matcher<google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BulkInsert(Matcher<google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  BulkInsert,
-  (google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request), (override));
-
+              BulkInsert,
+              (google::cloud::cpp::compute::region_instances::v1::
+                   BulkInsertRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,21 +68,23 @@ class MockRegionInstancesConnection : public compute_region_instances_v1::Region
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BulkInsert(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  BulkInsert, (NoAwaitTag,
-    google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkInsert,
+              (NoAwaitTag, google::cloud::cpp::compute::region_instances::v1::
+                               BulkInsertRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BulkInsert(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BulkInsert(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  BulkInsert, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              BulkInsert,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

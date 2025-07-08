@@ -34,38 +34,42 @@ SpeechTracingConnection::SpeechTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
-SpeechTracingConnection::Recognize(google::cloud::speech::v1::RecognizeRequest const& request) {
+SpeechTracingConnection::Recognize(
+    google::cloud::speech::v1::RecognizeRequest const& request) {
   auto span = internal::MakeSpan("speech_v1::SpeechConnection::Recognize");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Recognize(request));
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-SpeechTracingConnection::LongRunningRecognize(google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "speech_v1::SpeechConnection::LongRunningRecognize");
+SpeechTracingConnection::LongRunningRecognize(
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+  auto span =
+      internal::MakeSpan("speech_v1::SpeechConnection::LongRunningRecognize");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->LongRunningRecognize(request));
+  return internal::EndSpan(std::move(span),
+                           child_->LongRunningRecognize(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::LongRunningRecognize(
-    NoAwaitTag, google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
-  auto span = internal::MakeSpan(
-      "speech_v1::SpeechConnection::LongRunningRecognize");
+    NoAwaitTag,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+  auto span =
+      internal::MakeSpan("speech_v1::SpeechConnection::LongRunningRecognize");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->LongRunningRecognize(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->LongRunningRecognize(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
 SpeechTracingConnection::LongRunningRecognize(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "speech_v1::SpeechConnection::LongRunningRecognize");
+  auto span =
+      internal::MakeSpan("speech_v1::SpeechConnection::LongRunningRecognize");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->LongRunningRecognize(operation));
+                           child_->LongRunningRecognize(operation));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -76,16 +80,17 @@ SpeechTracingConnection::AsyncStreamingRecognize() {
 }
 
 StreamRange<google::longrunning::Operation>
-SpeechTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+SpeechTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   auto span = internal::MakeSpan("speech_v1::SpeechConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-StatusOr<google::longrunning::Operation>
-SpeechTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation> SpeechTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto span = internal::MakeSpan("speech_v1::SpeechConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
@@ -93,8 +98,7 @@ SpeechTracingConnection::GetOperation(google::longrunning::GetOperationRequest c
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<speech_v1::SpeechConnection>
-MakeSpeechTracingConnection(
+std::shared_ptr<speech_v1::SpeechConnection> MakeSpeechTracingConnection(
     std::shared_ptr<speech_v1::SpeechConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

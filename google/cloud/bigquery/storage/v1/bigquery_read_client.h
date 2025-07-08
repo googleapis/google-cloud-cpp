@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BigQueryReadClient {
  public:
-  explicit BigQueryReadClient(std::shared_ptr<BigQueryReadConnection> connection, Options opts = {});
+  explicit BigQueryReadClient(
+      std::shared_ptr<BigQueryReadConnection> connection, Options opts = {});
   ~BigQueryReadClient();
 
   ///@{
@@ -76,10 +77,12 @@ class BigQueryReadClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BigQueryReadClient const& a, BigQueryReadClient const& b) {
+  friend bool operator==(BigQueryReadClient const& a,
+                         BigQueryReadClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BigQueryReadClient const& a, BigQueryReadClient const& b) {
+  friend bool operator!=(BigQueryReadClient const& a,
+                         BigQueryReadClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -136,8 +139,10 @@ class BigQueryReadClient {
   /// [google.cloud.bigquery.storage.v1.ReadSession]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L48}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(std::string const& parent, google::cloud::bigquery::storage::v1::ReadSession const& read_session, std::int32_t max_stream_count, Options opts = {});
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
+      std::string const& parent,
+      google::cloud::bigquery::storage::v1::ReadSession const& read_session,
+      std::int32_t max_stream_count, Options opts = {});
 
   // clang-format off
   ///
@@ -184,8 +189,10 @@ class BigQueryReadClient {
   /// [google.cloud.bigquery.storage.v1.ReadSession]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L48}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +225,8 @@ class BigQueryReadClient {
   /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L319}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(std::string const& read_stream, std::int64_t offset, Options opts = {});
+  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
+      std::string const& read_stream, std::int64_t offset, Options opts = {});
 
   // clang-format off
   ///
@@ -254,8 +261,9 @@ class BigQueryReadClient {
   /// [google.cloud.bigquery.storage.v1.ReadRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L319}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(google::cloud::bigquery::storage::v1::ReadRowsRequest const& request, Options opts = {});
+  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
+      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -296,7 +304,10 @@ class BigQueryReadClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
-  SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request, Options opts = {});
+  SplitReadStream(
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<BigQueryReadConnection> connection_;
@@ -304,7 +315,7 @@ class BigQueryReadClient {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1
 }  // namespace cloud
 }  // namespace google

@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMCredentialsClient::IAMCredentialsClient(
     std::shared_ptr<IAMCredentialsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IAMCredentialsClient::~IAMCredentialsClient() = default;
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-IAMCredentialsClient::GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime, Options opts) {
+IAMCredentialsClient::GenerateAccessToken(
+    std::string const& name, std::vector<std::string> const& delegates,
+    std::vector<std::string> const& scope,
+    google::protobuf::Duration const& lifetime, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::credentials::v1::GenerateAccessTokenRequest request;
   request.set_name(name);
@@ -44,13 +47,18 @@ IAMCredentialsClient::GenerateAccessToken(std::string const& name, std::vector<s
 }
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-IAMCredentialsClient::GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const& request, Options opts) {
+IAMCredentialsClient::GenerateAccessToken(
+    google::iam::credentials::v1::GenerateAccessTokenRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateAccessToken(request);
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-IAMCredentialsClient::GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email, Options opts) {
+IAMCredentialsClient::GenerateIdToken(std::string const& name,
+                                      std::vector<std::string> const& delegates,
+                                      std::string const& audience,
+                                      bool include_email, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::credentials::v1::GenerateIdTokenRequest request;
   request.set_name(name);
@@ -61,13 +69,17 @@ IAMCredentialsClient::GenerateIdToken(std::string const& name, std::vector<std::
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-IAMCredentialsClient::GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const& request, Options opts) {
+IAMCredentialsClient::GenerateIdToken(
+    google::iam::credentials::v1::GenerateIdTokenRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateIdToken(request);
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
-IAMCredentialsClient::SignBlob(std::string const& name, std::vector<std::string> const& delegates, std::string const& payload, Options opts) {
+IAMCredentialsClient::SignBlob(std::string const& name,
+                               std::vector<std::string> const& delegates,
+                               std::string const& payload, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::credentials::v1::SignBlobRequest request;
   request.set_name(name);
@@ -77,13 +89,17 @@ IAMCredentialsClient::SignBlob(std::string const& name, std::vector<std::string>
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
-IAMCredentialsClient::SignBlob(google::iam::credentials::v1::SignBlobRequest const& request, Options opts) {
+IAMCredentialsClient::SignBlob(
+    google::iam::credentials::v1::SignBlobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SignBlob(request);
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
-IAMCredentialsClient::SignJwt(std::string const& name, std::vector<std::string> const& delegates, std::string const& payload, Options opts) {
+IAMCredentialsClient::SignJwt(std::string const& name,
+                              std::vector<std::string> const& delegates,
+                              std::string const& payload, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::credentials::v1::SignJwtRequest request;
   request.set_name(name);
@@ -93,7 +109,8 @@ IAMCredentialsClient::SignJwt(std::string const& name, std::vector<std::string> 
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
-IAMCredentialsClient::SignJwt(google::iam::credentials::v1::SignJwtRequest const& request, Options opts) {
+IAMCredentialsClient::SignJwt(
+    google::iam::credentials::v1::SignJwtRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SignJwt(request);
 }

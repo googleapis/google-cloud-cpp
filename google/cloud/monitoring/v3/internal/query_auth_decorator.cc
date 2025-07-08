@@ -31,9 +31,9 @@ QueryServiceAuth::QueryServiceAuth(
     std::shared_ptr<QueryServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryServiceAuth::QueryTimeSeries(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
+QueryServiceAuth::QueryTimeSeries(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

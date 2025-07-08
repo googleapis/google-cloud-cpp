@@ -34,45 +34,50 @@ AnalyticsServiceTracingStub::AnalyticsServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsServiceTracingStub::AsyncExportAnalyticsMetrics(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService", "ExportAnalyticsMetrics");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService",
+                                     "ExportAnalyticsMetrics");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportAnalyticsMetrics(cq, context, std::move(options), request);
+  auto f = child_->AsyncExportAnalyticsMetrics(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsServiceTracingStub::ExportAnalyticsMetrics(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService", "ExportAnalyticsMetrics");
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService",
+                                     "ExportAnalyticsMetrics");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ExportAnalyticsMetrics(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ExportAnalyticsMetrics(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> AnalyticsServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+AnalyticsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> AnalyticsServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -89,8 +94,7 @@ AnalyticsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -103,8 +107,8 @@ future<Status> AnalyticsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

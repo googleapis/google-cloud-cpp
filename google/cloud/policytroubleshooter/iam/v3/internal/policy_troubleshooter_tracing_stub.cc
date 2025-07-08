@@ -32,15 +32,19 @@ PolicyTroubleshooterTracingStub::PolicyTroubleshooterTracingStub(
     std::shared_ptr<PolicyTroubleshooterStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse> PolicyTroubleshooterTracingStub::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.policytroubleshooter.iam.v3.PolicyTroubleshooter", "TroubleshootIamPolicy");
+StatusOr<
+    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+PolicyTroubleshooterTracingStub::TroubleshootIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::policytroubleshooter::iam::v3::
+        TroubleshootIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.policytroubleshooter.iam.v3.PolicyTroubleshooter",
+      "TroubleshootIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TroubleshootIamPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TroubleshootIamPolicy(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

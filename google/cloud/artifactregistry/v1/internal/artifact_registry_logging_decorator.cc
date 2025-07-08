@@ -31,21 +31,20 @@ namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ArtifactRegistryLogging::ArtifactRegistryLogging(
-    std::shared_ptr<ArtifactRegistryStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ArtifactRegistryStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
 ArtifactRegistryLogging::ListDockerImages(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::ListDockerImagesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListDockerImagesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
+              request) {
         return child_->ListDockerImages(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +52,14 @@ ArtifactRegistryLogging::ListDockerImages(
 
 StatusOr<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryLogging::GetDockerImage(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::GetDockerImageRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetDockerImageRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+              request) {
         return child_->GetDockerImage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +67,13 @@ ArtifactRegistryLogging::GetDockerImage(
 
 StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
 ArtifactRegistryLogging::ListMavenArtifacts(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 ListMavenArtifactsRequest const& request) {
         return child_->ListMavenArtifacts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +81,14 @@ ArtifactRegistryLogging::ListMavenArtifacts(
 
 StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
 ArtifactRegistryLogging::GetMavenArtifact(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+              request) {
         return child_->GetMavenArtifact(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +96,14 @@ ArtifactRegistryLogging::GetMavenArtifact(
 
 StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
 ArtifactRegistryLogging::ListNpmPackages(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListNpmPackagesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+              request) {
         return child_->ListNpmPackages(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +111,13 @@ ArtifactRegistryLogging::ListNpmPackages(
 
 StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
 ArtifactRegistryLogging::GetNpmPackage(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+                 request) {
         return child_->GetNpmPackage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,13 +125,13 @@ ArtifactRegistryLogging::GetNpmPackage(
 
 StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
 ArtifactRegistryLogging::ListPythonPackages(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListPythonPackagesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 ListPythonPackagesRequest const& request) {
         return child_->ListPythonPackages(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,13 +139,14 @@ ArtifactRegistryLogging::ListPythonPackages(
 
 StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
 ArtifactRegistryLogging::GetPythonPackage(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+              request) {
         return child_->GetPythonPackage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,17 +154,19 @@ ArtifactRegistryLogging::GetPythonPackage(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncImportAptArtifacts(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) {
-        return child_->AsyncImportAptArtifacts(
-            cq, std::move(context), std::move(options), request);
+             google::devtools::artifactregistry::v1::
+                 ImportAptArtifactsRequest const& request) {
+        return child_->AsyncImportAptArtifacts(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -169,13 +174,13 @@ ArtifactRegistryLogging::AsyncImportAptArtifacts(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryLogging::ImportAptArtifacts(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 ImportAptArtifactsRequest const& request) {
         return child_->ImportAptArtifacts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -183,17 +188,19 @@ ArtifactRegistryLogging::ImportAptArtifacts(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncImportYumArtifacts(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) {
-        return child_->AsyncImportYumArtifacts(
-            cq, std::move(context), std::move(options), request);
+             google::devtools::artifactregistry::v1::
+                 ImportYumArtifactsRequest const& request) {
+        return child_->AsyncImportYumArtifacts(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -201,13 +208,13 @@ ArtifactRegistryLogging::AsyncImportYumArtifacts(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryLogging::ImportYumArtifacts(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 ImportYumArtifactsRequest const& request) {
         return child_->ImportYumArtifacts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -215,13 +222,14 @@ ArtifactRegistryLogging::ImportYumArtifacts(
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
 ArtifactRegistryLogging::ListRepositories(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::ListRepositoriesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListRepositoriesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
+              request) {
         return child_->ListRepositories(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -229,13 +237,13 @@ ArtifactRegistryLogging::ListRepositories(
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryLogging::GetRepository(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+                 request) {
         return child_->GetRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -243,17 +251,20 @@ ArtifactRegistryLogging::GetRepository(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncCreateRepository(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) {
-        return child_->AsyncCreateRepository(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+              request) {
+        return child_->AsyncCreateRepository(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -261,13 +272,14 @@ ArtifactRegistryLogging::AsyncCreateRepository(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryLogging::CreateRepository(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+              request) {
         return child_->CreateRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -275,13 +287,14 @@ ArtifactRegistryLogging::CreateRepository(
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryLogging::UpdateRepository(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+              request) {
         return child_->UpdateRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -289,17 +302,20 @@ ArtifactRegistryLogging::UpdateRepository(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncDeleteRepository(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) {
-        return child_->AsyncDeleteRepository(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+              request) {
+        return child_->AsyncDeleteRepository(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -307,13 +323,14 @@ ArtifactRegistryLogging::AsyncDeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryLogging::DeleteRepository(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+              request) {
         return child_->DeleteRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -321,13 +338,13 @@ ArtifactRegistryLogging::DeleteRepository(
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
 ArtifactRegistryLogging::ListPackages(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::ListPackagesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListPackagesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListPackagesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::ListPackagesRequest const&
+                 request) {
         return child_->ListPackages(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -335,13 +352,12 @@ ArtifactRegistryLogging::ListPackages(
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
 ArtifactRegistryLogging::GetPackage(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetPackageRequest const&
+                 request) {
         return child_->GetPackage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -349,31 +365,32 @@ ArtifactRegistryLogging::GetPackage(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncDeletePackage(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::DeletePackageRequest const& request) {
-        return child_->AsyncDeletePackage(
-            cq, std::move(context), std::move(options), request);
+             google::devtools::artifactregistry::v1::DeletePackageRequest const&
+                 request) {
+        return child_->AsyncDeletePackage(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ArtifactRegistryLogging::DeletePackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) {
+StatusOr<google::longrunning::Operation> ArtifactRegistryLogging::DeletePackage(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::DeletePackageRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeletePackageRequest const&
+                 request) {
         return child_->DeletePackage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -381,13 +398,13 @@ ArtifactRegistryLogging::DeletePackage(
 
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
 ArtifactRegistryLogging::ListVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::ListVersionsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListVersionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListVersionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::ListVersionsRequest const&
+                 request) {
         return child_->ListVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -395,13 +412,12 @@ ArtifactRegistryLogging::ListVersions(
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryLogging::GetVersion(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetVersionRequest const&
+                 request) {
         return child_->GetVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -409,31 +425,32 @@ ArtifactRegistryLogging::GetVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncDeleteVersion(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) {
-        return child_->AsyncDeleteVersion(
-            cq, std::move(context), std::move(options), request);
+             google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+                 request) {
+        return child_->AsyncDeleteVersion(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ArtifactRegistryLogging::DeleteVersion(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) {
+StatusOr<google::longrunning::Operation> ArtifactRegistryLogging::DeleteVersion(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+                 request) {
         return child_->DeleteVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -441,17 +458,19 @@ ArtifactRegistryLogging::DeleteVersion(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncBatchDeleteVersions(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) {
-        return child_->AsyncBatchDeleteVersions(
-            cq, std::move(context), std::move(options), request);
+             google::devtools::artifactregistry::v1::
+                 BatchDeleteVersionsRequest const& request) {
+        return child_->AsyncBatchDeleteVersions(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -459,13 +478,13 @@ ArtifactRegistryLogging::AsyncBatchDeleteVersions(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryLogging::BatchDeleteVersions(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 BatchDeleteVersionsRequest const& request) {
         return child_->BatchDeleteVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -473,13 +492,13 @@ ArtifactRegistryLogging::BatchDeleteVersions(
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryLogging::UpdateVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::UpdateVersionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::UpdateVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+                 request) {
         return child_->UpdateVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -487,13 +506,12 @@ ArtifactRegistryLogging::UpdateVersion(
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 ArtifactRegistryLogging::ListFiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::ListFilesRequest const&
+                 request) {
         return child_->ListFiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -501,13 +519,12 @@ ArtifactRegistryLogging::ListFiles(
 
 StatusOr<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryLogging::GetFile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::GetFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetFileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetFileRequest const&
+                 request) {
         return child_->GetFile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -515,31 +532,30 @@ ArtifactRegistryLogging::GetFile(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncDeleteFile(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
-        return child_->AsyncDeleteFile(
-            cq, std::move(context), std::move(options), request);
+             google::devtools::artifactregistry::v1::DeleteFileRequest const&
+                 request) {
+        return child_->AsyncDeleteFile(cq, std::move(context),
+                                       std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ArtifactRegistryLogging::DeleteFile(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+StatusOr<google::longrunning::Operation> ArtifactRegistryLogging::DeleteFile(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeleteFileRequest const&
+                 request) {
         return child_->DeleteFile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -547,13 +563,12 @@ ArtifactRegistryLogging::DeleteFile(
 
 StatusOr<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryLogging::UpdateFile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdateFileRequest const&
+                 request) {
         return child_->UpdateFile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -561,13 +576,12 @@ ArtifactRegistryLogging::UpdateFile(
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
 ArtifactRegistryLogging::ListTags(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::ListTagsRequest const&
+                 request) {
         return child_->ListTags(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -575,27 +589,23 @@ ArtifactRegistryLogging::ListTags(
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryLogging::GetTag(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::GetTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetTagRequest const& request) {
-        return child_->GetTag(context, options, request);
-      },
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetTagRequest const&
+                 request) { return child_->GetTag(context, options, request); },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryLogging::CreateTag(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::CreateTagRequest const&
+                 request) {
         return child_->CreateTag(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -603,27 +613,24 @@ ArtifactRegistryLogging::CreateTag(
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryLogging::UpdateTag(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdateTagRequest const&
+                 request) {
         return child_->UpdateTag(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ArtifactRegistryLogging::DeleteTag(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ArtifactRegistryLogging::DeleteTag(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeleteTagRequest const&
+                 request) {
         return child_->DeleteTag(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -631,13 +638,12 @@ ArtifactRegistryLogging::DeleteTag(
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 ArtifactRegistryLogging::CreateRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::CreateRuleRequest const&
+                 request) {
         return child_->CreateRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -645,13 +651,12 @@ ArtifactRegistryLogging::CreateRule(
 
 StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse>
 ArtifactRegistryLogging::ListRules(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::ListRulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListRulesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::ListRulesRequest const&
+                 request) {
         return child_->ListRules(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -659,13 +664,12 @@ ArtifactRegistryLogging::ListRules(
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 ArtifactRegistryLogging::GetRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetRuleRequest const&
+                 request) {
         return child_->GetRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -673,54 +677,45 @@ ArtifactRegistryLogging::GetRule(
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 ArtifactRegistryLogging::UpdateRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdateRuleRequest const&
+                 request) {
         return child_->UpdateRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ArtifactRegistryLogging::DeleteRule(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ArtifactRegistryLogging::DeleteRule(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeleteRuleRequest const&
+                 request) {
         return child_->DeleteRule(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-ArtifactRegistryLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ArtifactRegistryLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-ArtifactRegistryLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ArtifactRegistryLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -729,12 +724,10 @@ ArtifactRegistryLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ArtifactRegistryLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -743,13 +736,13 @@ ArtifactRegistryLogging::TestIamPermissions(
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 ArtifactRegistryLogging::GetProjectSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 GetProjectSettingsRequest const& request) {
         return child_->GetProjectSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -757,13 +750,13 @@ ArtifactRegistryLogging::GetProjectSettings(
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 ArtifactRegistryLogging::UpdateProjectSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 UpdateProjectSettingsRequest const& request) {
         return child_->UpdateProjectSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -771,13 +764,14 @@ ArtifactRegistryLogging::UpdateProjectSettings(
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 ArtifactRegistryLogging::GetVPCSCConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+              request) {
         return child_->GetVPCSCConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -785,13 +779,13 @@ ArtifactRegistryLogging::GetVPCSCConfig(
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 ArtifactRegistryLogging::UpdateVPCSCConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 UpdateVPCSCConfigRequest const& request) {
         return child_->UpdateVPCSCConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -799,13 +793,13 @@ ArtifactRegistryLogging::UpdateVPCSCConfig(
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
 ArtifactRegistryLogging::UpdatePackage(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::UpdatePackageRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::UpdatePackageRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+                 request) {
         return child_->UpdatePackage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -813,13 +807,14 @@ ArtifactRegistryLogging::UpdatePackage(
 
 StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse>
 ArtifactRegistryLogging::ListAttachments(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::ListAttachmentsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::ListAttachmentsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+              request) {
         return child_->ListAttachments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -827,13 +822,13 @@ ArtifactRegistryLogging::ListAttachments(
 
 StatusOr<google::devtools::artifactregistry::v1::Attachment>
 ArtifactRegistryLogging::GetAttachment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::artifactregistry::v1::GetAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::GetAttachmentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+                 request) {
         return child_->GetAttachment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -841,17 +836,20 @@ ArtifactRegistryLogging::GetAttachment(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncCreateAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) {
-        return child_->AsyncCreateAttachment(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+              request) {
+        return child_->AsyncCreateAttachment(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -859,13 +857,14 @@ ArtifactRegistryLogging::AsyncCreateAttachment(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryLogging::CreateAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+              request) {
         return child_->CreateAttachment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -873,17 +872,20 @@ ArtifactRegistryLogging::CreateAttachment(
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncDeleteAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) {
-        return child_->AsyncDeleteAttachment(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+              request) {
+        return child_->AsyncDeleteAttachment(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -891,13 +893,14 @@ ArtifactRegistryLogging::AsyncDeleteAttachment(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryLogging::DeleteAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+              request) {
         return child_->DeleteAttachment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -905,12 +908,10 @@ ArtifactRegistryLogging::DeleteAttachment(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ArtifactRegistryLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -919,26 +920,21 @@ ArtifactRegistryLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 ArtifactRegistryLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ArtifactRegistryLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ArtifactRegistryLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -956,8 +952,8 @@ ArtifactRegistryLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -973,8 +969,8 @@ future<Status> ArtifactRegistryLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

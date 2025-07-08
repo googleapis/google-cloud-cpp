@@ -26,75 +26,91 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EntityTypesConnectionIdempotencyPolicy::~EntityTypesConnectionIdempotencyPolicy() = default;
+EntityTypesConnectionIdempotencyPolicy::
+    ~EntityTypesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>
 EntityTypesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<EntityTypesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::ListEntityTypes(google::cloud::dialogflow::v2::ListEntityTypesRequest) {  // NOLINT
+Idempotency EntityTypesConnectionIdempotencyPolicy::ListEntityTypes(
+    google::cloud::dialogflow::v2::ListEntityTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::GetEntityType(google::cloud::dialogflow::v2::GetEntityTypeRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::GetEntityType(
+    google::cloud::dialogflow::v2::GetEntityTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::CreateEntityType(google::cloud::dialogflow::v2::CreateEntityTypeRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::CreateEntityType(
+    google::cloud::dialogflow::v2::CreateEntityTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::UpdateEntityType(google::cloud::dialogflow::v2::UpdateEntityTypeRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::UpdateEntityType(
+    google::cloud::dialogflow::v2::UpdateEntityTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::DeleteEntityType(google::cloud::dialogflow::v2::DeleteEntityTypeRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::DeleteEntityType(
+    google::cloud::dialogflow::v2::DeleteEntityTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::BatchUpdateEntityTypes(google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchUpdateEntityTypes(
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::BatchDeleteEntityTypes(google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchDeleteEntityTypes(
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::BatchCreateEntities(google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchCreateEntities(
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::BatchUpdateEntities(google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchUpdateEntities(
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::BatchDeleteEntities(google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::BatchDeleteEntities(
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency EntityTypesConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency EntityTypesConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EntityTypesConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency EntityTypesConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>
-    MakeDefaultEntityTypesConnectionIdempotencyPolicy() {
+MakeDefaultEntityTypesConnectionIdempotencyPolicy() {
   return std::make_unique<EntityTypesConnectionIdempotencyPolicy>();
 }
 

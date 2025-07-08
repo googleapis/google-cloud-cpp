@@ -17,15 +17,15 @@
 // source: google/cloud/iap/v1/service.proto
 
 #include "google/cloud/iap/v1/identity_aware_proxy_o_auth_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/iap/v1/identity_aware_proxy_o_auth_options.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_connection_impl.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_option_defaults.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_stub_factory.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
@@ -36,7 +36,8 @@ namespace cloud {
 namespace iap_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-IdentityAwareProxyOAuthServiceConnection::~IdentityAwareProxyOAuthServiceConnection() = default;
+IdentityAwareProxyOAuthServiceConnection::
+    ~IdentityAwareProxyOAuthServiceConnection() = default;
 
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
 IdentityAwareProxyOAuthServiceConnection::ListBrands(
@@ -62,8 +63,10 @@ IdentityAwareProxyOAuthServiceConnection::CreateIdentityAwareProxyClient(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient> IdentityAwareProxyOAuthServiceConnection::ListIdentityAwareProxyClients(
-    google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
+IdentityAwareProxyOAuthServiceConnection::ListIdentityAwareProxyClients(
+    google::cloud::iap::v1::
+        ListIdentityAwareProxyClientsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>>();
 }
@@ -80,26 +83,26 @@ IdentityAwareProxyOAuthServiceConnection::ResetIdentityAwareProxyClientSecret(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-IdentityAwareProxyOAuthServiceConnection::DeleteIdentityAwareProxyClient(
+Status IdentityAwareProxyOAuthServiceConnection::DeleteIdentityAwareProxyClient(
     google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<IdentityAwareProxyOAuthServiceConnection> MakeIdentityAwareProxyOAuthServiceConnection(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
+std::shared_ptr<IdentityAwareProxyOAuthServiceConnection>
+MakeIdentityAwareProxyOAuthServiceConnection(Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       IdentityAwareProxyOAuthServicePolicyOptionList>(options, __func__);
   options = iap_v1_internal::IdentityAwareProxyOAuthServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = iap_v1_internal::CreateDefaultIdentityAwareProxyOAuthServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return iap_v1_internal::MakeIdentityAwareProxyOAuthServiceTracingConnection(
-      std::make_shared<iap_v1_internal::IdentityAwareProxyOAuthServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          iap_v1_internal::IdentityAwareProxyOAuthServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

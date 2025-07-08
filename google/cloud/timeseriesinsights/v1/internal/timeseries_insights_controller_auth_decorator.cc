@@ -31,64 +31,67 @@ TimeseriesInsightsControllerAuth::TimeseriesInsightsControllerAuth(
     std::shared_ptr<TimeseriesInsightsControllerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse> TimeseriesInsightsControllerAuth::ListDataSets(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
+TimeseriesInsightsControllerAuth::ListDataSets(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataSets(context, options, request);
 }
 
-StatusOr<google::cloud::timeseriesinsights::v1::DataSet> TimeseriesInsightsControllerAuth::CreateDataSet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request) {
+StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
+TimeseriesInsightsControllerAuth::CreateDataSet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataSet(context, options, request);
 }
 
 Status TimeseriesInsightsControllerAuth::DeleteDataSet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataSet(context, options, request);
 }
 
-StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse> TimeseriesInsightsControllerAuth::AppendEvents(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
+TimeseriesInsightsControllerAuth::AppendEvents(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AppendEvents(context, options, request);
 }
 
-StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse> TimeseriesInsightsControllerAuth::QueryDataSet(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
+TimeseriesInsightsControllerAuth::QueryDataSet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryDataSet(context, options, request);
 }
 
-StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> TimeseriesInsightsControllerAuth::EvaluateSlice(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request) {
+StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
+TimeseriesInsightsControllerAuth::EvaluateSlice(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->EvaluateSlice(context, options, request);
 }
 
-StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> TimeseriesInsightsControllerAuth::EvaluateTimeseries(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request) {
+StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
+TimeseriesInsightsControllerAuth::EvaluateTimeseries(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->EvaluateTimeseries(context, options, request);

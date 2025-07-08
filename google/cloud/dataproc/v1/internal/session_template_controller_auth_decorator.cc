@@ -31,36 +31,36 @@ SessionTemplateControllerAuth::SessionTemplateControllerAuth(
     std::shared_ptr<SessionTemplateControllerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dataproc::v1::SessionTemplate> SessionTemplateControllerAuth::CreateSessionTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+SessionTemplateControllerAuth::CreateSessionTemplate(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSessionTemplate(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::SessionTemplate> SessionTemplateControllerAuth::UpdateSessionTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+SessionTemplateControllerAuth::UpdateSessionTemplate(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSessionTemplate(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::SessionTemplate> SessionTemplateControllerAuth::GetSessionTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::SessionTemplate>
+SessionTemplateControllerAuth::GetSessionTemplate(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetSessionTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSessionTemplate(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::ListSessionTemplatesResponse> SessionTemplateControllerAuth::ListSessionTemplates(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::ListSessionTemplatesResponse>
+SessionTemplateControllerAuth::ListSessionTemplates(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListSessionTemplatesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +68,7 @@ StatusOr<google::cloud::dataproc::v1::ListSessionTemplatesResponse> SessionTempl
 }
 
 Status SessionTemplateControllerAuth::DeleteSessionTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +76,7 @@ Status SessionTemplateControllerAuth::DeleteSessionTemplate(
 }
 
 StatusOr<google::iam::v1::Policy> SessionTemplateControllerAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,35 +84,34 @@ StatusOr<google::iam::v1::Policy> SessionTemplateControllerAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> SessionTemplateControllerAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> SessionTemplateControllerAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+SessionTemplateControllerAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> SessionTemplateControllerAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+SessionTemplateControllerAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> SessionTemplateControllerAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+SessionTemplateControllerAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +119,7 @@ StatusOr<google::longrunning::Operation> SessionTemplateControllerAuth::GetOpera
 }
 
 Status SessionTemplateControllerAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -131,8 +127,7 @@ Status SessionTemplateControllerAuth::DeleteOperation(
 }
 
 Status SessionTemplateControllerAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

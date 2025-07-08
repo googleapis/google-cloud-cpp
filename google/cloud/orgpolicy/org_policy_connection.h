@@ -33,7 +33,8 @@ using ::google::cloud::orgpolicy_v2::MakeOrgPolicyConnection;
 /// @deprecated Use orgpolicy_v2::OrgPolicyConnection directly.
 using ::google::cloud::orgpolicy_v2::OrgPolicyConnection;
 
-/// @deprecated Use orgpolicy_v2::OrgPolicyLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use orgpolicy_v2::OrgPolicyLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::orgpolicy_v2::OrgPolicyLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use orgpolicy_v2::OrgPolicyLimitedTimeRetryPolicy directly.

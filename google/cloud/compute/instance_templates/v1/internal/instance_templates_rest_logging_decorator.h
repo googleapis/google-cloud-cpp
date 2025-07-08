@@ -39,64 +39,89 @@ class InstanceTemplatesRestLogging : public InstanceTemplatesRestStub {
  public:
   ~InstanceTemplatesRestLogging() override = default;
   InstanceTemplatesRestLogging(std::shared_ptr<InstanceTemplatesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                               TracingOptions tracing_options,
+                               std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList> AggregatedListInstanceTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+  AggregatedListInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::instance_templates::v1::
+          AggregatedListInstanceTemplatesRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteInstanceTemplate(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request) override;
+      google::cloud::cpp::compute::instance_templates::v1::
+          DeleteInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::instance_templates::v1::
+          DeleteInstanceTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate> GetInstanceTemplate(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
+  GetInstanceTemplate(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
+                      google::cloud::cpp::compute::instance_templates::v1::
+                          GetInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::instance_templates::v1::
+          GetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertInstanceTemplate(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertInstanceTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request) override;
+      google::cloud::cpp::compute::instance_templates::v1::
+          InsertInstanceTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::instance_templates::v1::
+          InsertInstanceTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList> ListInstanceTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
+  ListInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::instance_templates::v1::
+          ListInstanceTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::instance_templates::v1::
+          SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::instance_templates::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<InstanceTemplatesRestStub> child_;

@@ -34,14 +34,15 @@ class ProjectServiceConnectionIdempotencyPolicy {
   virtual ~ProjectServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ProjectServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ProjectServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency GetServiceAccount(
+      google::cloud::bigquery::v2::GetServiceAccountRequest const& request);
 };
 
 std::unique_ptr<ProjectServiceConnectionIdempotencyPolicy>
-    MakeDefaultProjectServiceConnectionIdempotencyPolicy();
+MakeDefaultProjectServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2

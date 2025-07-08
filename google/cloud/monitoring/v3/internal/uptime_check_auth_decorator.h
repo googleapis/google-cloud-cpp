@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_UPTIME_CHECK_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_UPTIME_CHECK_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/monitoring/v3/internal/uptime_check_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,35 +38,36 @@ class UptimeCheckServiceAuth : public UptimeCheckServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<UptimeCheckServiceStub> child);
 
-  StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse> ListUptimeCheckConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) override;
+  StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
+  ListUptimeCheckConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::ListUptimeCheckConfigsRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::GetUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::GetUptimeCheckConfigRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request)
+      override;
 
   Status DeleteUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request)
+      override;
 
-  StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse> ListUptimeCheckIps(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::ListUptimeCheckIpsRequest const& request) override;
+  StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
+  ListUptimeCheckIps(grpc::ClientContext& context, Options const& options,
+                     google::monitoring::v3::ListUptimeCheckIpsRequest const&
+                         request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

@@ -32,12 +32,13 @@ namespace cloud {
 namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudChannelReportsServiceLogging : public CloudChannelReportsServiceStub {
+class CloudChannelReportsServiceLogging
+    : public CloudChannelReportsServiceStub {
  public:
   ~CloudChannelReportsServiceLogging() override = default;
-  CloudChannelReportsServiceLogging(std::shared_ptr<CloudChannelReportsServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  CloudChannelReportsServiceLogging(
+      std::shared_ptr<CloudChannelReportsServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunReportJob(
       google::cloud::CompletionQueue& cq,
@@ -46,38 +47,33 @@ class CloudChannelReportsServiceLogging : public CloudChannelReportsServiceStub 
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunReportJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
-  StatusOr<google::cloud::channel::v1::FetchReportResultsResponse> FetchReportResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::channel::v1::FetchReportResultsRequest const& request) override;
+  StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
+  FetchReportResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::channel::v1::FetchReportResultsRequest const& request)
+      override;
 
   StatusOr<google::cloud::channel::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListReportsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

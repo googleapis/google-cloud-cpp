@@ -17,10 +17,10 @@
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
 #include "google/cloud/videointelligence/v1/video_intelligence_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,54 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options VideoIntelligenceServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_VIDEO_INTELLIGENCE_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_VIDEO_INTELLIGENCE_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_VIDEO_INTELLIGENCE_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_VIDEO_INTELLIGENCE_SERVICE_AUTHORITY",
       "videointelligence.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>()) {
-    options.set<videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>(
+  if (!options.has<
+          videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>()) {
+    options.set<
+        videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>(
         videointelligence_v1::VideoIntelligenceServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption>()) {
-    options.set<videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<videointelligence_v1::
+                       VideoIntelligenceServiceBackoffPolicyOption>()) {
+    options
+        .set<videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<videointelligence_v1::VideoIntelligenceServicePollingPolicyOption>()) {
-    options.set<videointelligence_v1::VideoIntelligenceServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption::Type,
-            videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption::Type>(
-            options.get<videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+  if (!options.has<videointelligence_v1::
+                       VideoIntelligenceServicePollingPolicyOption>()) {
+    options
+        .set<videointelligence_v1::VideoIntelligenceServicePollingPolicyOption>(
+            GenericPollingPolicy<
+                videointelligence_v1::
+                    VideoIntelligenceServiceRetryPolicyOption::Type,
+                videointelligence_v1::
+                    VideoIntelligenceServiceBackoffPolicyOption::Type>(
+                options
+                    .get<videointelligence_v1::
+                             VideoIntelligenceServiceRetryPolicyOption>()
+                    ->clone(),
+                ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                         std::chrono::minutes(5),
+                                         kBackoffScaling)
+                    .clone())
+                .clone());
   }
-  if (!options.has<videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicyOption>(
-        videointelligence_v1::MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          videointelligence_v1::
+              VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<videointelligence_v1::
+                    VideoIntelligenceServiceConnectionIdempotencyPolicyOption>(
+        videointelligence_v1::
+            MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy());
   }
 
   return options;

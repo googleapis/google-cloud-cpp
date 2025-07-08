@@ -26,10 +26,13 @@ namespace cloud {
 namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use vision_v1::MakeDefaultProductSearchConnectionIdempotencyPolicy directly.
-using ::google::cloud::vision_v1::MakeDefaultProductSearchConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// vision_v1::MakeDefaultProductSearchConnectionIdempotencyPolicy directly.
+using ::google::cloud::vision_v1::
+    MakeDefaultProductSearchConnectionIdempotencyPolicy;
 
-/// @deprecated Use vision_v1::ProductSearchConnectionIdempotencyPolicy directly.
+/// @deprecated Use vision_v1::ProductSearchConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::vision_v1::ProductSearchConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

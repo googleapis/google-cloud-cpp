@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_DOCUMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_DOCUMENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/documents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/documents_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -67,14 +67,14 @@ class DocumentsLimitedErrorCountRetryPolicy : public DocumentsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DocumentsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DocumentsLimitedErrorCountRetryPolicy(
       DocumentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DocumentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DocumentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DocumentsLimitedErrorCountRetryPolicy(
       DocumentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DocumentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DocumentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +94,9 @@ class DocumentsLimitedErrorCountRetryPolicy : public DocumentsRetryPolicy {
   using BaseType = DocumentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::DocumentsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::DocumentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +134,14 @@ class DocumentsLimitedTimeRetryPolicy : public DocumentsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DocumentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DocumentsLimitedTimeRetryPolicy(DocumentsLimitedTimeRetryPolicy&& rhs) noexcept
-    : DocumentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DocumentsLimitedTimeRetryPolicy(DocumentsLimitedTimeRetryPolicy const& rhs) noexcept
-    : DocumentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentsLimitedTimeRetryPolicy(
+      DocumentsLimitedTimeRetryPolicy&& rhs) noexcept
+      : DocumentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentsLimitedTimeRetryPolicy(
+      DocumentsLimitedTimeRetryPolicy const& rhs) noexcept
+      : DocumentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,7 +163,9 @@ class DocumentsLimitedTimeRetryPolicy : public DocumentsRetryPolicy {
   using BaseType = DocumentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::DocumentsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::DocumentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,80 +186,96 @@ class DocumentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::v2::Document>
-  ListDocuments(google::cloud::dialogflow::v2::ListDocumentsRequest request);
+  virtual StreamRange<google::cloud::dialogflow::v2::Document> ListDocuments(
+      google::cloud::dialogflow::v2::ListDocumentsRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Document>
-  GetDocument(google::cloud::dialogflow::v2::GetDocumentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  CreateDocument(google::cloud::dialogflow::v2::CreateDocumentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateDocument(NoAwaitTag, google::cloud::dialogflow::v2::CreateDocumentRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
+      google::cloud::dialogflow::v2::GetDocumentRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  CreateDocument( google::longrunning::Operation const& operation);
+  CreateDocument(
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-  ImportDocuments(google::cloud::dialogflow::v2::ImportDocumentsRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ImportDocuments(NoAwaitTag, google::cloud::dialogflow::v2::ImportDocumentsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-  ImportDocuments( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-  DeleteDocument(google::cloud::dialogflow::v2::DeleteDocumentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteDocument(NoAwaitTag, google::cloud::dialogflow::v2::DeleteDocumentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-  DeleteDocument( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> CreateDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  UpdateDocument(google::cloud::dialogflow::v2::UpdateDocumentRequest const& request);
+  CreateDocument(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateDocument(NoAwaitTag, google::cloud::dialogflow::v2::UpdateDocumentRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
+  ImportDocuments(
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportDocuments(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
+  ImportDocuments(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
+  DeleteDocument(
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
+  DeleteDocument(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  UpdateDocument( google::longrunning::Operation const& operation);
+  UpdateDocument(
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ReloadDocument(google::cloud::dialogflow::v2::ReloadDocumentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ReloadDocument(NoAwaitTag, google::cloud::dialogflow::v2::ReloadDocumentRequest const& request);
+  UpdateDocument(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ReloadDocument( google::longrunning::Operation const& operation);
+  ReloadDocument(
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ReloadDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ExportDocument(google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ExportDocument(NoAwaitTag, google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
+  ReloadDocument(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ExportDocument( google::longrunning::Operation const& operation);
+  ExportDocument(
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation> ExportDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  ExportDocument(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

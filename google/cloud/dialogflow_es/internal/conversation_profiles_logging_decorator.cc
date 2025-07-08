@@ -32,20 +32,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationProfilesLogging::ConversationProfilesLogging(
     std::shared_ptr<ConversationProfilesStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
 ConversationProfilesLogging::ListConversationProfiles(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::ListConversationProfilesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::ListConversationProfilesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
+              request) {
         return child_->ListConversationProfiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +52,13 @@ ConversationProfilesLogging::ListConversationProfiles(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesLogging::GetConversationProfile(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::GetConversationProfileRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GetConversationProfileRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::GetConversationProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::GetConversationProfileRequest const&
+                 request) {
         return child_->GetConversationProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +66,14 @@ ConversationProfilesLogging::GetConversationProfile(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesLogging::CreateConversationProfile(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
+              request) {
         return child_->CreateConversationProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +81,28 @@ ConversationProfilesLogging::CreateConversationProfile(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesLogging::UpdateConversationProfile(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
+              request) {
         return child_->UpdateConversationProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ConversationProfilesLogging::DeleteConversationProfile(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request) {
+Status ConversationProfilesLogging::DeleteConversationProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
+              request) {
         return child_->DeleteConversationProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,15 +110,17 @@ ConversationProfilesLogging::DeleteConversationProfile(
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesLogging::AsyncSetSuggestionFeatureConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+             google::cloud::dialogflow::v2::
+                 SetSuggestionFeatureConfigRequest const& request) {
         return child_->AsyncSetSuggestionFeatureConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -127,13 +130,13 @@ ConversationProfilesLogging::AsyncSetSuggestionFeatureConfig(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesLogging::SetSuggestionFeatureConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 SetSuggestionFeatureConfigRequest const& request) {
         return child_->SetSuggestionFeatureConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -141,15 +144,17 @@ ConversationProfilesLogging::SetSuggestionFeatureConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesLogging::AsyncClearSuggestionFeatureConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+             google::cloud::dialogflow::v2::
+                 ClearSuggestionFeatureConfigRequest const& request) {
         return child_->AsyncClearSuggestionFeatureConfig(
             cq, std::move(context), std::move(options), request);
       },
@@ -159,13 +164,13 @@ ConversationProfilesLogging::AsyncClearSuggestionFeatureConfig(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesLogging::ClearSuggestionFeatureConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 ClearSuggestionFeatureConfigRequest const& request) {
         return child_->ClearSuggestionFeatureConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -173,12 +178,10 @@ ConversationProfilesLogging::ClearSuggestionFeatureConfig(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ConversationProfilesLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -187,12 +190,10 @@ ConversationProfilesLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 ConversationProfilesLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -201,12 +202,10 @@ ConversationProfilesLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ConversationProfilesLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -215,26 +214,21 @@ ConversationProfilesLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ConversationProfilesLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ConversationProfilesLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -252,8 +246,8 @@ ConversationProfilesLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -269,8 +263,8 @@ future<Status> ConversationProfilesLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

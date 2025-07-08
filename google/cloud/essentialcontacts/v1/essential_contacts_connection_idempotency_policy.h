@@ -34,32 +34,37 @@ class EssentialContactsServiceConnectionIdempotencyPolicy {
   virtual ~EssentialContactsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EssentialContactsServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<EssentialContactsServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateContact(google::cloud::essentialcontacts::v1::CreateContactRequest const& request);
+  virtual google::cloud::Idempotency CreateContact(
+      google::cloud::essentialcontacts::v1::CreateContactRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateContact(google::cloud::essentialcontacts::v1::UpdateContactRequest const& request);
+  virtual google::cloud::Idempotency UpdateContact(
+      google::cloud::essentialcontacts::v1::UpdateContactRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListContacts(google::cloud::essentialcontacts::v1::ListContactsRequest request);
+  virtual google::cloud::Idempotency ListContacts(
+      google::cloud::essentialcontacts::v1::ListContactsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetContact(google::cloud::essentialcontacts::v1::GetContactRequest const& request);
+  virtual google::cloud::Idempotency GetContact(
+      google::cloud::essentialcontacts::v1::GetContactRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteContact(google::cloud::essentialcontacts::v1::DeleteContactRequest const& request);
+  virtual google::cloud::Idempotency DeleteContact(
+      google::cloud::essentialcontacts::v1::DeleteContactRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ComputeContacts(google::cloud::essentialcontacts::v1::ComputeContactsRequest request);
+  virtual google::cloud::Idempotency ComputeContacts(
+      google::cloud::essentialcontacts::v1::ComputeContactsRequest request);
 
-  virtual google::cloud::Idempotency
-  SendTestMessage(google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request);
+  virtual google::cloud::Idempotency SendTestMessage(
+      google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
+          request);
 };
 
 std::unique_ptr<EssentialContactsServiceConnectionIdempotencyPolicy>
-    MakeDefaultEssentialContactsServiceConnectionIdempotencyPolicy();
+MakeDefaultEssentialContactsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace essentialcontacts_v1

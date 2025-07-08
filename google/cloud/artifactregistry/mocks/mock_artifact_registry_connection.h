@@ -30,8 +30,10 @@ namespace cloud {
 namespace artifactregistry_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use artifactregistry_v1_mocks::MockArtifactRegistryConnection directly.
-using ::google::cloud::artifactregistry_v1_mocks::MockArtifactRegistryConnection;
+/// @deprecated Use artifactregistry_v1_mocks::MockArtifactRegistryConnection
+/// directly.
+using ::google::cloud::artifactregistry_v1_mocks::
+    MockArtifactRegistryConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_mocks

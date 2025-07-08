@@ -36,43 +36,51 @@ class RegionCommitmentsTracingConnection
   ~RegionCommitmentsTracingConnection() override = default;
 
   explicit RegionCommitmentsTracingConnection(
-    std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection> child);
+      std::shared_ptr<
+          compute_region_commitments_v1::RegionCommitmentsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>
-  AggregatedListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest request) override;
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::CommitmentsScopedList>>
+  AggregatedListRegionCommitments(
+      google::cloud::cpp::compute::region_commitments::v1::
+          AggregatedListRegionCommitmentsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Commitment>
-  GetCommitment(google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
+      google::cloud::cpp::compute::region_commitments::v1::
+          GetCommitmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertCommitment(NoAwaitTag,
-      google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
+      NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                      InsertCommitmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
-  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest request) override;
+  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
+                            ListRegionCommitmentsRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateCommitment(NoAwaitTag,
-      google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
+      NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                      UpdateCommitmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection> child_;
+  std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -85,7 +93,8 @@ class RegionCommitmentsTracingConnection
  */
 std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection>
 MakeRegionCommitmentsTracingConnection(
-    std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection> conn);
+    std::shared_ptr<compute_region_commitments_v1::RegionCommitmentsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_commitments_v1_internal

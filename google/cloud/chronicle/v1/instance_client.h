@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstanceServiceClient {
  public:
-  explicit InstanceServiceClient(std::shared_ptr<InstanceServiceConnection> connection, Options opts = {});
+  explicit InstanceServiceClient(
+      std::shared_ptr<InstanceServiceConnection> connection, Options opts = {});
   ~InstanceServiceClient();
 
   ///@{
@@ -74,10 +75,12 @@ class InstanceServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(InstanceServiceClient const& a, InstanceServiceClient const& b) {
+  friend bool operator==(InstanceServiceClient const& a,
+                         InstanceServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InstanceServiceClient const& a, InstanceServiceClient const& b) {
+  friend bool operator!=(InstanceServiceClient const& a,
+                         InstanceServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -106,8 +109,8 @@ class InstanceServiceClient {
   /// [google.cloud.chronicle.v1.Instance]: @googleapis_reference_link{google/cloud/chronicle/v1/instance.proto#L48}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Instance>
-  GetInstance(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Instance> GetInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -136,8 +139,9 @@ class InstanceServiceClient {
   /// [google.cloud.chronicle.v1.Instance]: @googleapis_reference_link{google/cloud/chronicle/v1/instance.proto#L48}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Instance>
-  GetInstance(google::cloud::chronicle::v1::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Instance> GetInstance(
+      google::cloud::chronicle::v1::GetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -172,8 +176,8 @@ class InstanceServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -212,8 +216,8 @@ class InstanceServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -239,8 +243,8 @@ class InstanceServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -271,8 +275,9 @@ class InstanceServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -296,8 +301,7 @@ class InstanceServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -326,8 +330,9 @@ class InstanceServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -361,8 +366,7 @@ class InstanceServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -401,8 +405,9 @@ class InstanceServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<InstanceServiceConnection> connection_;

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_VIDEO_INTELLIGENCE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_VIDEO_INTELLIGENCE_CLIENT_H
 
+#include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -63,23 +63,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class VideoIntelligenceServiceClient {
  public:
-  explicit VideoIntelligenceServiceClient(std::shared_ptr<VideoIntelligenceServiceConnection> connection, Options opts = {});
+  explicit VideoIntelligenceServiceClient(
+      std::shared_ptr<VideoIntelligenceServiceConnection> connection,
+      Options opts = {});
   ~VideoIntelligenceServiceClient();
 
   ///@{
   /// @name Copy and move support
-  VideoIntelligenceServiceClient(VideoIntelligenceServiceClient const&) = default;
-  VideoIntelligenceServiceClient& operator=(VideoIntelligenceServiceClient const&) = default;
+  VideoIntelligenceServiceClient(VideoIntelligenceServiceClient const&) =
+      default;
+  VideoIntelligenceServiceClient& operator=(
+      VideoIntelligenceServiceClient const&) = default;
   VideoIntelligenceServiceClient(VideoIntelligenceServiceClient&&) = default;
-  VideoIntelligenceServiceClient& operator=(VideoIntelligenceServiceClient&&) = default;
+  VideoIntelligenceServiceClient& operator=(VideoIntelligenceServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(VideoIntelligenceServiceClient const& a, VideoIntelligenceServiceClient const& b) {
+  friend bool operator==(VideoIntelligenceServiceClient const& a,
+                         VideoIntelligenceServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(VideoIntelligenceServiceClient const& a, VideoIntelligenceServiceClient const& b) {
+  friend bool operator!=(VideoIntelligenceServiceClient const& a,
+                         VideoIntelligenceServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -128,7 +135,11 @@ class VideoIntelligenceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(std::string const& input_uri, std::vector<google::cloud::videointelligence::v1::Feature> const& features, Options opts = {});
+  AnnotateVideo(
+      std::string const& input_uri,
+      std::vector<google::cloud::videointelligence::v1::Feature> const&
+          features,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -141,8 +152,11 @@ class VideoIntelligenceServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  AnnotateVideo(NoAwaitTag, std::string const& input_uri, std::vector<google::cloud::videointelligence::v1::Feature> const& features, Options opts = {});
+  StatusOr<google::longrunning::Operation> AnnotateVideo(
+      NoAwaitTag, std::string const& input_uri,
+      std::vector<google::cloud::videointelligence::v1::Feature> const&
+          features,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -182,7 +196,9 @@ class VideoIntelligenceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const& request, Options opts = {});
+  AnnotateVideo(
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -195,8 +211,10 @@ class VideoIntelligenceServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  AnnotateVideo(NoAwaitTag, google::cloud::videointelligence::v1::AnnotateVideoRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> AnnotateVideo(
+      NoAwaitTag,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -208,7 +226,8 @@ class VideoIntelligenceServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(google::longrunning::Operation const& operation, Options opts = {});
+  AnnotateVideo(google::longrunning::Operation const& operation,
+                Options opts = {});
 
  private:
   std::shared_ptr<VideoIntelligenceServiceConnection> connection_;

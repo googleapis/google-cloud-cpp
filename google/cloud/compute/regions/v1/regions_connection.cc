@@ -17,11 +17,11 @@
 // source: google/cloud/compute/regions/v1/regions.proto
 
 #include "google/cloud/compute/regions/v1/regions_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/regions/v1/internal/regions_option_defaults.h"
 #include "google/cloud/compute/regions/v1/internal/regions_tracing_connection.h"
 #include "google/cloud/compute/regions/v1/regions_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,14 +36,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionsConnection::~RegionsConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::Region>
-RegionsConnection::GetRegion(
+StatusOr<google::cloud::cpp::compute::v1::Region> RegionsConnection::GetRegion(
     google::cloud::cpp::compute::regions::v1::GetRegionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Region> RegionsConnection::ListRegions(
-    google::cloud::cpp::compute::regions::v1::ListRegionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Region>
+RegionsConnection::ListRegions(
+    google::cloud::cpp::compute::regions::v1::
+        ListRegionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Region>>();
 }

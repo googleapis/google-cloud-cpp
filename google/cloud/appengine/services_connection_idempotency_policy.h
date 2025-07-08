@@ -26,8 +26,10 @@ namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use appengine_v1::MakeDefaultServicesConnectionIdempotencyPolicy directly.
-using ::google::cloud::appengine_v1::MakeDefaultServicesConnectionIdempotencyPolicy;
+/// @deprecated Use appengine_v1::MakeDefaultServicesConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::appengine_v1::
+    MakeDefaultServicesConnectionIdempotencyPolicy;
 
 /// @deprecated Use appengine_v1::ServicesConnectionIdempotencyPolicy directly.
 using ::google::cloud::appengine_v1::ServicesConnectionIdempotencyPolicy;

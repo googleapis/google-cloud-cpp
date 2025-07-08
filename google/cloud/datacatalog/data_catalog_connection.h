@@ -33,7 +33,8 @@ using ::google::cloud::datacatalog_v1::MakeDataCatalogConnection;
 /// @deprecated Use datacatalog_v1::DataCatalogConnection directly.
 using ::google::cloud::datacatalog_v1::DataCatalogConnection;
 
-/// @deprecated Use datacatalog_v1::DataCatalogLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use datacatalog_v1::DataCatalogLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::datacatalog_v1::DataCatalogLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use datacatalog_v1::DataCatalogLimitedTimeRetryPolicy directly.

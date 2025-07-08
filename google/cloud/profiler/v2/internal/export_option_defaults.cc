@@ -17,10 +17,10 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/v2/internal/export_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/profiler/v2/export_connection.h"
 #include "google/cloud/profiler/v2/export_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,21 +35,25 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ExportServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EXPORT_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_EXPORT_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_EXPORT_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_EXPORT_SERVICE_AUTHORITY",
       "cloudprofiler.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<profiler_v2::ExportServiceRetryPolicyOption>()) {
     options.set<profiler_v2::ExportServiceRetryPolicyOption>(
         profiler_v2::ExportServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<profiler_v2::ExportServiceBackoffPolicyOption>()) {
     options.set<profiler_v2::ExportServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<profiler_v2::ExportServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          profiler_v2::ExportServiceConnectionIdempotencyPolicyOption>()) {
     options.set<profiler_v2::ExportServiceConnectionIdempotencyPolicyOption>(
         profiler_v2::MakeDefaultExportServiceConnectionIdempotencyPolicy());
   }

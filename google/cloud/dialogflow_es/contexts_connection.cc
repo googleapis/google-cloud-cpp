@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/context.proto
 
 #include "google/cloud/dialogflow_es/contexts_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/contexts_options.h"
 #include "google/cloud/dialogflow_es/internal/contexts_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/contexts_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/contexts_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/contexts_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,14 +38,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContextsConnection::~ContextsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::v2::Context> ContextsConnection::ListContexts(
-    google::cloud::dialogflow::v2::ListContextsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::Context>
+ContextsConnection::ListContexts(
+    google::cloud::dialogflow::v2::
+        ListContextsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Context>>();
 }
 
-StatusOr<google::cloud::dialogflow::v2::Context>
-ContextsConnection::GetContext(
+StatusOr<google::cloud::dialogflow::v2::Context> ContextsConnection::GetContext(
     google::cloud::dialogflow::v2::GetContextRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -62,44 +63,42 @@ ContextsConnection::UpdateContext(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContextsConnection::DeleteContext(
+Status ContextsConnection::DeleteContext(
     google::cloud::dialogflow::v2::DeleteContextRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContextsConnection::DeleteAllContexts(
+Status ContextsConnection::DeleteAllContexts(
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> ContextsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ContextsConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-ContextsConnection::GetLocation(
+StatusOr<google::cloud::location::Location> ContextsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> ContextsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ContextsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ContextsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContextsConnection::CancelOperation(
+Status ContextsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -107,21 +106,20 @@ ContextsConnection::CancelOperation(
 std::shared_ptr<ContextsConnection> MakeContextsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ContextsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::ContextsDefaultOptions(
-      location, std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ContextsPolicyOptionList>(options, __func__);
+  options = dialogflow_es_internal::ContextsDefaultOptions(location,
+                                                           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = dialogflow_es_internal::CreateDefaultContextsStub(
-    std::move(auth), options);
+  auto stub = dialogflow_es_internal::CreateDefaultContextsStub(std::move(auth),
+                                                                options);
   return dialogflow_es_internal::MakeContextsTracingConnection(
       std::make_shared<dialogflow_es_internal::ContextsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<ContextsConnection> MakeContextsConnection(
-    Options options) {
+std::shared_ptr<ContextsConnection> MakeContextsConnection(Options options) {
   return MakeContextsConnection(std::string{}, std::move(options));
 }
 

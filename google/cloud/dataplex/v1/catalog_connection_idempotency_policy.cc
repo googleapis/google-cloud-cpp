@@ -26,122 +26,151 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CatalogServiceConnectionIdempotencyPolicy::~CatalogServiceConnectionIdempotencyPolicy() = default;
+CatalogServiceConnectionIdempotencyPolicy::
+    ~CatalogServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy>
 CatalogServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CatalogServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateEntryType(google::cloud::dataplex::v1::CreateEntryTypeRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateEntryType(
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateEntryType(google::cloud::dataplex::v1::UpdateEntryTypeRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateEntryType(
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteEntryType(google::cloud::dataplex::v1::DeleteEntryTypeRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteEntryType(
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::ListEntryTypes(google::cloud::dataplex::v1::ListEntryTypesRequest) {  // NOLINT
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListEntryTypes(
+    google::cloud::dataplex::v1::ListEntryTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::GetEntryType(google::cloud::dataplex::v1::GetEntryTypeRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetEntryType(
+    google::cloud::dataplex::v1::GetEntryTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateAspectType(google::cloud::dataplex::v1::CreateAspectTypeRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateAspectType(
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateAspectType(google::cloud::dataplex::v1::UpdateAspectTypeRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateAspectType(
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteAspectType(google::cloud::dataplex::v1::DeleteAspectTypeRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteAspectType(
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::ListAspectTypes(google::cloud::dataplex::v1::ListAspectTypesRequest) {  // NOLINT
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListAspectTypes(
+    google::cloud::dataplex::v1::ListAspectTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::GetAspectType(google::cloud::dataplex::v1::GetAspectTypeRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetAspectType(
+    google::cloud::dataplex::v1::GetAspectTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateEntryGroup(google::cloud::dataplex::v1::CreateEntryGroupRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateEntryGroup(
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateEntryGroup(google::cloud::dataplex::v1::UpdateEntryGroupRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateEntryGroup(
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteEntryGroup(google::cloud::dataplex::v1::DeleteEntryGroupRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteEntryGroup(
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::ListEntryGroups(google::cloud::dataplex::v1::ListEntryGroupsRequest) {  // NOLINT
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListEntryGroups(
+    google::cloud::dataplex::v1::ListEntryGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::GetEntryGroup(google::cloud::dataplex::v1::GetEntryGroupRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetEntryGroup(
+    google::cloud::dataplex::v1::GetEntryGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateEntry(google::cloud::dataplex::v1::CreateEntryRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateEntry(
+    google::cloud::dataplex::v1::CreateEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateEntry(google::cloud::dataplex::v1::UpdateEntryRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::UpdateEntry(
+    google::cloud::dataplex::v1::UpdateEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteEntry(google::cloud::dataplex::v1::DeleteEntryRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteEntry(
+    google::cloud::dataplex::v1::DeleteEntryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::ListEntries(google::cloud::dataplex::v1::ListEntriesRequest) {  // NOLINT
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListEntries(
+    google::cloud::dataplex::v1::ListEntriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::GetEntry(google::cloud::dataplex::v1::GetEntryRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetEntry(
+    google::cloud::dataplex::v1::GetEntryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::LookupEntry(google::cloud::dataplex::v1::LookupEntryRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::LookupEntry(
+    google::cloud::dataplex::v1::LookupEntryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::SearchEntries(google::cloud::dataplex::v1::SearchEntriesRequest) {  // NOLINT
+Idempotency CatalogServiceConnectionIdempotencyPolicy::SearchEntries(
+    google::cloud::dataplex::v1::SearchEntriesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateMetadataJob(google::cloud::dataplex::v1::CreateMetadataJobRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CreateMetadataJob(
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::GetMetadataJob(google::cloud::dataplex::v1::GetMetadataJobRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetMetadataJob(
+    google::cloud::dataplex::v1::GetMetadataJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::ListMetadataJobs(google::cloud::dataplex::v1::ListMetadataJobsRequest) {  // NOLINT
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListMetadataJobs(
+    google::cloud::dataplex::v1::ListMetadataJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::CancelMetadataJob(google::cloud::dataplex::v1::CancelMetadataJobRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CancelMetadataJob(
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -151,32 +180,38 @@ Idempotency CatalogServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CatalogServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency CatalogServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy>
-    MakeDefaultCatalogServiceConnectionIdempotencyPolicy() {
+MakeDefaultCatalogServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CatalogServiceConnectionIdempotencyPolicy>();
 }
 

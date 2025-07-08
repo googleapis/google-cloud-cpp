@@ -30,7 +30,8 @@ namespace cloud {
 namespace notebooks_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use notebooks_v1_mocks::MockManagedNotebookServiceConnection directly.
+/// @deprecated Use notebooks_v1_mocks::MockManagedNotebookServiceConnection
+/// directly.
 using ::google::cloud::notebooks_v1_mocks::MockManagedNotebookServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

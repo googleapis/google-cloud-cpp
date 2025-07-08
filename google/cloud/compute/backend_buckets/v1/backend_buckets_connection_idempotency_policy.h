@@ -34,47 +34,60 @@ class BackendBucketsConnectionIdempotencyPolicy {
   virtual ~BackendBucketsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<BackendBucketsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<BackendBucketsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AddSignedUrlKey(google::cloud::cpp::compute::backend_buckets::v1::AddSignedUrlKeyRequest const& request);
+  virtual google::cloud::Idempotency AddSignedUrlKey(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AddSignedUrlKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketRequest const& request);
+  virtual google::cloud::Idempotency DeleteBackendBucket(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          DeleteBackendBucketRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_buckets::v1::DeleteSignedUrlKeyRequest const& request);
+  virtual google::cloud::Idempotency DeleteSignedUrlKey(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          DeleteSignedUrlKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::GetBackendBucketRequest const& request);
+  virtual google::cloud::Idempotency GetBackendBucket(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          GetBackendBucketRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::backend_buckets::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketRequest const& request);
+  virtual google::cloud::Idempotency InsertBackendBucket(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          InsertBackendBucketRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListBackendBuckets(google::cloud::cpp::compute::backend_buckets::v1::ListBackendBucketsRequest request);
+  virtual google::cloud::Idempotency ListBackendBuckets(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          ListBackendBucketsRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketRequest const& request);
+  virtual google::cloud::Idempotency PatchBackendBucket(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          PatchBackendBucketRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_buckets::v1::SetEdgeSecurityPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetEdgeSecurityPolicy(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetEdgeSecurityPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::backend_buckets::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::backend_buckets::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketRequest const& request);
+  virtual google::cloud::Idempotency UpdateBackendBucket(
+      google::cloud::cpp::compute::backend_buckets::v1::
+          UpdateBackendBucketRequest const& request);
 };
 
 std::unique_ptr<BackendBucketsConnectionIdempotencyPolicy>
-    MakeDefaultBackendBucketsConnectionIdempotencyPolicy();
+MakeDefaultBackendBucketsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_backend_buckets_v1

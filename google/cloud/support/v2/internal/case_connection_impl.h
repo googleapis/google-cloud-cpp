@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
 #include "google/cloud/support/v2/case_connection.h"
 #include "google/cloud/support/v2/case_connection_idempotency_policy.h"
 #include "google/cloud/support/v2/case_options.h"
 #include "google/cloud/support/v2/internal/case_retry_traits.h"
 #include "google/cloud/support/v2/internal/case_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -37,41 +37,42 @@ namespace cloud {
 namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CaseServiceConnectionImpl
-    : public support_v2::CaseServiceConnection {
+class CaseServiceConnectionImpl : public support_v2::CaseServiceConnection {
  public:
   ~CaseServiceConnectionImpl() override = default;
 
   CaseServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<support_v2_internal::CaseServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<support_v2_internal::CaseServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::support::v2::Case>
-  GetCase(google::cloud::support::v2::GetCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case> GetCase(
+      google::cloud::support::v2::GetCaseRequest const& request) override;
 
-  StreamRange<google::cloud::support::v2::Case>
-  ListCases(google::cloud::support::v2::ListCasesRequest request) override;
+  StreamRange<google::cloud::support::v2::Case> ListCases(
+      google::cloud::support::v2::ListCasesRequest request) override;
 
-  StreamRange<google::cloud::support::v2::Case>
-  SearchCases(google::cloud::support::v2::SearchCasesRequest request) override;
+  StreamRange<google::cloud::support::v2::Case> SearchCases(
+      google::cloud::support::v2::SearchCasesRequest request) override;
 
-  StatusOr<google::cloud::support::v2::Case>
-  CreateCase(google::cloud::support::v2::CreateCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case> CreateCase(
+      google::cloud::support::v2::CreateCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::Case>
-  UpdateCase(google::cloud::support::v2::UpdateCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case> UpdateCase(
+      google::cloud::support::v2::UpdateCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::Case>
-  EscalateCase(google::cloud::support::v2::EscalateCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case> EscalateCase(
+      google::cloud::support::v2::EscalateCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::Case>
-  CloseCase(google::cloud::support::v2::CloseCaseRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Case> CloseCase(
+      google::cloud::support::v2::CloseCaseRequest const& request) override;
 
   StreamRange<google::cloud::support::v2::CaseClassification>
-  SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest request) override;
+  SearchCaseClassifications(
+      google::cloud::support::v2::SearchCaseClassificationsRequest request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_EXPORT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_EXPORT_CLIENT_H
 
+#include "google/cloud/profiler/v2/export_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/profiler/v2/export_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -34,8 +34,8 @@ namespace profiler_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Service allows existing Cloud Profiler customers to export their profile data
-/// out of Google Cloud.
+/// Service allows existing Cloud Profiler customers to export their profile
+/// data out of Google Cloud.
 ///
 /// @par Equality
 ///
@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ExportServiceClient {
  public:
-  explicit ExportServiceClient(std::shared_ptr<ExportServiceConnection> connection, Options opts = {});
+  explicit ExportServiceClient(
+      std::shared_ptr<ExportServiceConnection> connection, Options opts = {});
   ~ExportServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class ExportServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ExportServiceClient const& a, ExportServiceClient const& b) {
+  friend bool operator==(ExportServiceClient const& a,
+                         ExportServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ExportServiceClient const& a, ExportServiceClient const& b) {
+  friend bool operator!=(ExportServiceClient const& a,
+                         ExportServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +119,8 @@ class ExportServiceClient {
   /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudprofiler::v2::Profile>
-  ListProfiles(std::string const& parent, Options opts = {});
+  StreamRange<google::devtools::cloudprofiler::v2::Profile> ListProfiles(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -156,8 +159,9 @@ class ExportServiceClient {
   /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
   ///
   // clang-format on
-  StreamRange<google::devtools::cloudprofiler::v2::Profile>
-  ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest request, Options opts = {});
+  StreamRange<google::devtools::cloudprofiler::v2::Profile> ListProfiles(
+      google::devtools::cloudprofiler::v2::ListProfilesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ExportServiceConnection> connection_;

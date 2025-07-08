@@ -17,12 +17,12 @@
 // source: google/devtools/cloudtrace/v1/trace.proto
 
 #include "google/cloud/trace/v1/internal/trace_connection_impl.h"
+#include "google/cloud/trace/v1/internal/trace_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/trace/v1/internal/trace_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,54 +32,59 @@ namespace trace_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<trace_v1::TraceServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<trace_v1::TraceServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<trace_v1::TraceServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<trace_v1::TraceServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<trace_v1::TraceServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options.get<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 TraceServiceConnectionImpl::TraceServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<trace_v1_internal::TraceServiceStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        TraceServiceConnection::options())) {}
+    std::shared_ptr<trace_v1_internal::TraceServiceStub> stub, Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      TraceServiceConnection::options())) {}
 
 StreamRange<google::devtools::cloudtrace::v1::Trace>
-TraceServiceConnectionImpl::ListTraces(google::devtools::cloudtrace::v1::ListTracesRequest request) {
+TraceServiceConnectionImpl::ListTraces(
+    google::devtools::cloudtrace::v1::ListTracesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTraces(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::devtools::cloudtrace::v1::Trace>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::devtools::cloudtrace::v1::Trace>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<trace_v1::TraceServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<trace_v1::TraceServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::devtools::cloudtrace::v1::ListTracesRequest const& r) {
+          Options const& options,
+          google::devtools::cloudtrace::v1::ListTracesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
+                   google::devtools::cloudtrace::v1::ListTracesRequest const&
+                       request) {
               return stub->ListTraces(context, options, request);
             },
             options, r, function_name);
       },
       [](google::devtools::cloudtrace::v1::ListTracesResponse r) {
-        std::vector<google::devtools::cloudtrace::v1::Trace> result(r.traces().size());
+        std::vector<google::devtools::cloudtrace::v1::Trace> result(
+            r.traces().size());
         auto& messages = *r.mutable_traces();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -87,7 +92,8 @@ TraceServiceConnectionImpl::ListTraces(google::devtools::cloudtrace::v1::ListTra
 }
 
 StatusOr<google::devtools::cloudtrace::v1::Trace>
-TraceServiceConnectionImpl::GetTrace(google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
+TraceServiceConnectionImpl::GetTrace(
+    google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -99,14 +105,15 @@ TraceServiceConnectionImpl::GetTrace(google::devtools::cloudtrace::v1::GetTraceR
       *current, request, __func__);
 }
 
-Status
-TraceServiceConnectionImpl::PatchTraces(google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
+Status TraceServiceConnectionImpl::PatchTraces(
+    google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PatchTraces(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
         return stub_->PatchTraces(context, options, request);
       },
       *current, request, __func__);

@@ -27,19 +27,29 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_datatransfer_v1::MakeDataTransferServiceConnection directly.
-using ::google::cloud::bigquery_datatransfer_v1::MakeDataTransferServiceConnection;
+/// @deprecated Use bigquery_datatransfer_v1::MakeDataTransferServiceConnection
+/// directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    MakeDataTransferServiceConnection;
 
-/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceConnection directly.
+/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceConnection
+/// directly.
 using ::google::cloud::bigquery_datatransfer_v1::DataTransferServiceConnection;
 
-/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::bigquery_datatransfer_v1::DataTransferServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// bigquery_datatransfer_v1::DataTransferServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    DataTransferServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::bigquery_datatransfer_v1::DataTransferServiceLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// bigquery_datatransfer_v1::DataTransferServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    DataTransferServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceRetryPolicy directly.
+/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceRetryPolicy
+/// directly.
 using ::google::cloud::bigquery_datatransfer_v1::DataTransferServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

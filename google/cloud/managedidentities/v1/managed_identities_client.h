@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_V1_MANAGED_IDENTITIES_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_V1_MANAGED_IDENTITIES_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/managedidentities/v1/managed_identities_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -44,8 +44,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// (e.g. Microsoft Active Directory).
 ///
 /// The Managed Identities service provides methods to manage
-/// (create/read/update/delete) domains, reset managed identities admin password,
-/// add/remove domain controllers in GCP regions and add/remove VPC peering.
+/// (create/read/update/delete) domains, reset managed identities admin
+/// password, add/remove domain controllers in GCP regions and add/remove VPC
+/// peering.
 ///
 /// Data Model
 ///
@@ -95,23 +96,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ManagedIdentitiesServiceClient {
  public:
-  explicit ManagedIdentitiesServiceClient(std::shared_ptr<ManagedIdentitiesServiceConnection> connection, Options opts = {});
+  explicit ManagedIdentitiesServiceClient(
+      std::shared_ptr<ManagedIdentitiesServiceConnection> connection,
+      Options opts = {});
   ~ManagedIdentitiesServiceClient();
 
   ///@{
   /// @name Copy and move support
-  ManagedIdentitiesServiceClient(ManagedIdentitiesServiceClient const&) = default;
-  ManagedIdentitiesServiceClient& operator=(ManagedIdentitiesServiceClient const&) = default;
+  ManagedIdentitiesServiceClient(ManagedIdentitiesServiceClient const&) =
+      default;
+  ManagedIdentitiesServiceClient& operator=(
+      ManagedIdentitiesServiceClient const&) = default;
   ManagedIdentitiesServiceClient(ManagedIdentitiesServiceClient&&) = default;
-  ManagedIdentitiesServiceClient& operator=(ManagedIdentitiesServiceClient&&) = default;
+  ManagedIdentitiesServiceClient& operator=(ManagedIdentitiesServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ManagedIdentitiesServiceClient const& a, ManagedIdentitiesServiceClient const& b) {
+  friend bool operator==(ManagedIdentitiesServiceClient const& a,
+                         ManagedIdentitiesServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ManagedIdentitiesServiceClient const& a, ManagedIdentitiesServiceClient const& b) {
+  friend bool operator!=(ManagedIdentitiesServiceClient const& a,
+                         ManagedIdentitiesServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -160,7 +168,10 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  CreateMicrosoftAdDomain(std::string const& parent, std::string const& domain_name, google::cloud::managedidentities::v1::Domain const& domain, Options opts = {});
+  CreateMicrosoftAdDomain(
+      std::string const& parent, std::string const& domain_name,
+      google::cloud::managedidentities::v1::Domain const& domain,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -173,8 +184,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMicrosoftAdDomain(NoAwaitTag, std::string const& parent, std::string const& domain_name, google::cloud::managedidentities::v1::Domain const& domain, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
+      NoAwaitTag, std::string const& parent, std::string const& domain_name,
+      google::cloud::managedidentities::v1::Domain const& domain,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -211,7 +224,9 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request, Options opts = {});
+  CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::
+                              CreateMicrosoftAdDomainRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -224,8 +239,11 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMicrosoftAdDomain(NoAwaitTag, google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::
+          CreateMicrosoftAdDomainRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -237,7 +255,8 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  CreateMicrosoftAdDomain(google::longrunning::Operation const& operation, Options opts = {});
+  CreateMicrosoftAdDomain(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -293,7 +312,10 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
-  ResetAdminPassword(google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request, Options opts = {});
+  ResetAdminPassword(
+      google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -327,8 +349,8 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.ListDomainsRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
   ///
   // clang-format on
-  StreamRange<google::cloud::managedidentities::v1::Domain>
-  ListDomains(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -366,8 +388,9 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.ListDomainsRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
   ///
   // clang-format on
-  StreamRange<google::cloud::managedidentities::v1::Domain>
-  ListDomains(google::cloud::managedidentities::v1::ListDomainsRequest request, Options opts = {});
+  StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
+      google::cloud::managedidentities::v1::ListDomainsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -392,8 +415,8 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.GetDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedidentities::v1::Domain>
-  GetDomain(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -422,8 +445,9 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.GetDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedidentities::v1::Domain>
-  GetDomain(google::cloud::managedidentities::v1::GetDomainRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
+      google::cloud::managedidentities::v1::GetDomainRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -461,8 +485,9 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.UpdateDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  UpdateDomain(google::cloud::managedidentities::v1::Domain const& domain, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
+      google::cloud::managedidentities::v1::Domain const& domain,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -475,8 +500,9 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDomain(NoAwaitTag, google::cloud::managedidentities::v1::Domain const& domain, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDomain(
+      NoAwaitTag, google::cloud::managedidentities::v1::Domain const& domain,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -512,8 +538,9 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.UpdateDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  UpdateDomain(google::cloud::managedidentities::v1::UpdateDomainRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -526,8 +553,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDomain(NoAwaitTag, google::cloud::managedidentities::v1::UpdateDomainRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDomain(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -538,8 +567,8 @@ class ManagedIdentitiesServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  UpdateDomain(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -585,8 +614,9 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDomain(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDomain(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -623,7 +653,9 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(google::cloud::managedidentities::v1::DeleteDomainRequest const& request, Options opts = {});
+  DeleteDomain(
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -636,8 +668,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDomain(NoAwaitTag, google::cloud::managedidentities::v1::DeleteDomainRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDomain(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -649,7 +683,8 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteDomain(google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -682,8 +717,10 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  AttachTrust(std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
+      std::string const& name,
+      google::cloud::managedidentities::v1::Trust const& trust,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -696,8 +733,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  AttachTrust(NoAwaitTag, std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts = {});
+  StatusOr<google::longrunning::Operation> AttachTrust(
+      NoAwaitTag, std::string const& name,
+      google::cloud::managedidentities::v1::Trust const& trust,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -733,8 +772,9 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  AttachTrust(google::cloud::managedidentities::v1::AttachTrustRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -747,8 +787,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  AttachTrust(NoAwaitTag, google::cloud::managedidentities::v1::AttachTrustRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> AttachTrust(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -759,8 +801,8 @@ class ManagedIdentitiesServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  AttachTrust(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -797,7 +839,10 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust(std::string const& name, std::string const& target_domain_name, std::vector<std::string> const& target_dns_ip_addresses, Options opts = {});
+  ReconfigureTrust(std::string const& name,
+                   std::string const& target_domain_name,
+                   std::vector<std::string> const& target_dns_ip_addresses,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -810,8 +855,11 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ReconfigureTrust(NoAwaitTag, std::string const& name, std::string const& target_domain_name, std::vector<std::string> const& target_dns_ip_addresses, Options opts = {});
+  StatusOr<google::longrunning::Operation> ReconfigureTrust(
+      NoAwaitTag, std::string const& name,
+      std::string const& target_domain_name,
+      std::vector<std::string> const& target_dns_ip_addresses,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -848,7 +896,10 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust(google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request, Options opts = {});
+  ReconfigureTrust(
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -861,8 +912,11 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ReconfigureTrust(NoAwaitTag, google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ReconfigureTrust(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -874,7 +928,8 @@ class ManagedIdentitiesServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust(google::longrunning::Operation const& operation, Options opts = {});
+  ReconfigureTrust(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -907,8 +962,10 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  DetachTrust(std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
+      std::string const& name,
+      google::cloud::managedidentities::v1::Trust const& trust,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -921,8 +978,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DetachTrust(NoAwaitTag, std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts = {});
+  StatusOr<google::longrunning::Operation> DetachTrust(
+      NoAwaitTag, std::string const& name,
+      google::cloud::managedidentities::v1::Trust const& trust,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -958,8 +1017,9 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  DetachTrust(google::cloud::managedidentities::v1::DetachTrustRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -972,8 +1032,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DetachTrust(NoAwaitTag, google::cloud::managedidentities::v1::DetachTrustRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DetachTrust(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -984,8 +1046,8 @@ class ManagedIdentitiesServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  DetachTrust(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1019,8 +1081,10 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.ValidateTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ValidateTrust(std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
+      std::string const& name,
+      google::cloud::managedidentities::v1::Trust const& trust,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1033,8 +1097,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ValidateTrust(NoAwaitTag, std::string const& name, google::cloud::managedidentities::v1::Trust const& trust, Options opts = {});
+  StatusOr<google::longrunning::Operation> ValidateTrust(
+      NoAwaitTag, std::string const& name,
+      google::cloud::managedidentities::v1::Trust const& trust,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1071,8 +1137,9 @@ class ManagedIdentitiesServiceClient {
   /// [google.cloud.managedidentities.v1.ValidateTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ValidateTrust(google::cloud::managedidentities::v1::ValidateTrustRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
+      google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1085,8 +1152,10 @@ class ManagedIdentitiesServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ValidateTrust(NoAwaitTag, google::cloud::managedidentities::v1::ValidateTrustRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ValidateTrust(
+      NoAwaitTag,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1097,8 +1166,8 @@ class ManagedIdentitiesServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ValidateTrust(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ManagedIdentitiesServiceConnection> connection_;

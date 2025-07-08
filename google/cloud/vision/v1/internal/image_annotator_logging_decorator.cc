@@ -31,21 +31,18 @@ namespace vision_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageAnnotatorLogging::ImageAnnotatorLogging(
-    std::shared_ptr<ImageAnnotatorStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ImageAnnotatorStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorLogging::BatchAnnotateImages(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::BatchAnnotateImagesRequest const&
+                 request) {
         return child_->BatchAnnotateImages(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ ImageAnnotatorLogging::BatchAnnotateImages(
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorLogging::BatchAnnotateFiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
         return child_->BatchAnnotateFiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,15 +63,16 @@ ImageAnnotatorLogging::BatchAnnotateFiles(
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorLogging::AsyncAsyncBatchAnnotateImages(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+                 request) {
         return child_->AsyncAsyncBatchAnnotateImages(
             cq, std::move(context), std::move(options), request);
       },
@@ -85,13 +82,12 @@ ImageAnnotatorLogging::AsyncAsyncBatchAnnotateImages(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorLogging::AsyncBatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+                 request) {
         return child_->AsyncBatchAnnotateImages(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,15 +95,16 @@ ImageAnnotatorLogging::AsyncBatchAnnotateImages(
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorLogging::AsyncAsyncBatchAnnotateFiles(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+                 request) {
         return child_->AsyncAsyncBatchAnnotateFiles(
             cq, std::move(context), std::move(options), request);
       },
@@ -117,26 +114,22 @@ ImageAnnotatorLogging::AsyncAsyncBatchAnnotateFiles(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorLogging::AsyncBatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+                 request) {
         return child_->AsyncBatchAnnotateFiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ImageAnnotatorLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ImageAnnotatorLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -154,8 +147,8 @@ ImageAnnotatorLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -171,8 +164,8 @@ future<Status> ImageAnnotatorLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

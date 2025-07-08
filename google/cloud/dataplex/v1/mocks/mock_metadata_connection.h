@@ -42,81 +42,85 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockMetadataServiceConnection : public dataplex_v1::MetadataServiceConnection {
+class MockMetadataServiceConnection
+    : public dataplex_v1::MetadataServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>,
-  CreateEntity,
-  (google::cloud::dataplex::v1::CreateEntityRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, CreateEntity,
+              (google::cloud::dataplex::v1::CreateEntityRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>,
-  UpdateEntity,
-  (google::cloud::dataplex::v1::UpdateEntityRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, UpdateEntity,
+              (google::cloud::dataplex::v1::UpdateEntityRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteEntity,
-  (google::cloud::dataplex::v1::DeleteEntityRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteEntity,
+              (google::cloud::dataplex::v1::DeleteEntityRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>,
-  GetEntity,
-  (google::cloud::dataplex::v1::GetEntityRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, GetEntity,
+              (google::cloud::dataplex::v1::GetEntityRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Entity>),
-  ListEntities,
-  (google::cloud::dataplex::v1::ListEntitiesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Entity>), ListEntities,
+              (google::cloud::dataplex::v1::ListEntitiesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Partition>,
-  CreatePartition,
-  (google::cloud::dataplex::v1::CreatePartitionRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::Partition>, CreatePartition,
+      (google::cloud::dataplex::v1::CreatePartitionRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeletePartition,
-  (google::cloud::dataplex::v1::DeletePartitionRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeletePartition,
+      (google::cloud::dataplex::v1::DeletePartitionRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Partition>,
-  GetPartition,
-  (google::cloud::dataplex::v1::GetPartitionRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Partition>, GetPartition,
+              (google::cloud::dataplex::v1::GetPartitionRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Partition>),
-  ListPartitions,
-  (google::cloud::dataplex::v1::ListPartitionsRequest request), (override));
+              ListPartitions,
+              (google::cloud::dataplex::v1::ListPartitionsRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

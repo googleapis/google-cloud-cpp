@@ -34,31 +34,38 @@ RecommendationServiceTracingConnection::RecommendationServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::RecommendResponse>
-RecommendationServiceTracingConnection::Recommend(google::cloud::discoveryengine::v1::RecommendRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::RecommendationServiceConnection::Recommend");
+RecommendationServiceTracingConnection::Recommend(
+    google::cloud::discoveryengine::v1::RecommendRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::RecommendationServiceConnection::Recommend");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Recommend(request));
 }
 
 StreamRange<google::longrunning::Operation>
-RecommendationServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::RecommendationServiceConnection::ListOperations");
+RecommendationServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::RecommendationServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-RecommendationServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::RecommendationServiceConnection::GetOperation");
+RecommendationServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::RecommendationServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-RecommendationServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::RecommendationServiceConnection::CancelOperation");
+Status RecommendationServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::RecommendationServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -70,7 +77,8 @@ MakeRecommendationServiceTracingConnection(
     std::shared_ptr<discoveryengine_v1::RecommendationServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<RecommendationServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<RecommendationServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

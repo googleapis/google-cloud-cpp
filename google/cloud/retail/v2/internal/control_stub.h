@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/retail/v2/control_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -37,88 +37,78 @@ class ControlServiceStub {
   virtual ~ControlServiceStub() = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Control> CreateControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateControlRequest const& request) = 0;
 
   virtual Status DeleteControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteControlRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Control> UpdateControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateControlRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Control> GetControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetControlRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::retail::v2::ListControlsResponse> ListControls(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::retail::v2::ListControlsResponse>
+  ListControls(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListControlsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultControlServiceStub : public ControlServiceStub {
  public:
   explicit DefaultControlServiceStub(
-      std::unique_ptr<google::cloud::retail::v2::ControlService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
-)
+      std::unique_ptr<google::cloud::retail::v2::ControlService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::retail::v2::Control> CreateControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateControlRequest const& request) override;
 
   Status DeleteControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Control> UpdateControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Control> GetControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListControlsResponse> ListControls(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListControlsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::retail::v2::ControlService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::retail::v2::ControlService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

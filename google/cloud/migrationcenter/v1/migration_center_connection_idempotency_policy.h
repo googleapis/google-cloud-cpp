@@ -36,173 +36,194 @@ class MigrationCenterConnectionIdempotencyPolicy {
   virtual ~MigrationCenterConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MigrationCenterConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<MigrationCenterConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListAssets(google::cloud::migrationcenter::v1::ListAssetsRequest request);
+  virtual google::cloud::Idempotency ListAssets(
+      google::cloud::migrationcenter::v1::ListAssetsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetAsset(google::cloud::migrationcenter::v1::GetAssetRequest const& request);
+  virtual google::cloud::Idempotency GetAsset(
+      google::cloud::migrationcenter::v1::GetAssetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateAsset(google::cloud::migrationcenter::v1::UpdateAssetRequest const& request);
+  virtual google::cloud::Idempotency UpdateAsset(
+      google::cloud::migrationcenter::v1::UpdateAssetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BatchUpdateAssets(google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const& request);
+  virtual google::cloud::Idempotency BatchUpdateAssets(
+      google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteAsset(google::cloud::migrationcenter::v1::DeleteAssetRequest const& request);
+  virtual google::cloud::Idempotency DeleteAsset(
+      google::cloud::migrationcenter::v1::DeleteAssetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BatchDeleteAssets(google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const& request);
+  virtual google::cloud::Idempotency BatchDeleteAssets(
+      google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ReportAssetFrames(google::cloud::migrationcenter::v1::ReportAssetFramesRequest const& request);
+  virtual google::cloud::Idempotency ReportAssetFrames(
+      google::cloud::migrationcenter::v1::ReportAssetFramesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  AggregateAssetsValues(google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const& request);
+  virtual google::cloud::Idempotency AggregateAssetsValues(
+      google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateImportJob(google::cloud::migrationcenter::v1::CreateImportJobRequest const& request);
+  virtual google::cloud::Idempotency CreateImportJob(
+      google::cloud::migrationcenter::v1::CreateImportJobRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListImportJobs(google::cloud::migrationcenter::v1::ListImportJobsRequest request);
+  virtual google::cloud::Idempotency ListImportJobs(
+      google::cloud::migrationcenter::v1::ListImportJobsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetImportJob(google::cloud::migrationcenter::v1::GetImportJobRequest const& request);
+  virtual google::cloud::Idempotency GetImportJob(
+      google::cloud::migrationcenter::v1::GetImportJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteImportJob(google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request);
+  virtual google::cloud::Idempotency DeleteImportJob(
+      google::cloud::migrationcenter::v1::DeleteImportJobRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateImportJob(google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request);
+  virtual google::cloud::Idempotency UpdateImportJob(
+      google::cloud::migrationcenter::v1::UpdateImportJobRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ValidateImportJob(google::cloud::migrationcenter::v1::ValidateImportJobRequest const& request);
+  virtual google::cloud::Idempotency ValidateImportJob(
+      google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RunImportJob(google::cloud::migrationcenter::v1::RunImportJobRequest const& request);
+  virtual google::cloud::Idempotency RunImportJob(
+      google::cloud::migrationcenter::v1::RunImportJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetImportDataFile(google::cloud::migrationcenter::v1::GetImportDataFileRequest const& request);
+  virtual google::cloud::Idempotency GetImportDataFile(
+      google::cloud::migrationcenter::v1::GetImportDataFileRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListImportDataFiles(google::cloud::migrationcenter::v1::ListImportDataFilesRequest request);
+  virtual google::cloud::Idempotency ListImportDataFiles(
+      google::cloud::migrationcenter::v1::ListImportDataFilesRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateImportDataFile(google::cloud::migrationcenter::v1::CreateImportDataFileRequest const& request);
+  virtual google::cloud::Idempotency CreateImportDataFile(
+      google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteImportDataFile(google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const& request);
+  virtual google::cloud::Idempotency DeleteImportDataFile(
+      google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListGroups(google::cloud::migrationcenter::v1::ListGroupsRequest request);
+  virtual google::cloud::Idempotency ListGroups(
+      google::cloud::migrationcenter::v1::ListGroupsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetGroup(google::cloud::migrationcenter::v1::GetGroupRequest const& request);
+  virtual google::cloud::Idempotency GetGroup(
+      google::cloud::migrationcenter::v1::GetGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateGroup(google::cloud::migrationcenter::v1::CreateGroupRequest const& request);
+  virtual google::cloud::Idempotency CreateGroup(
+      google::cloud::migrationcenter::v1::CreateGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateGroup(google::cloud::migrationcenter::v1::UpdateGroupRequest const& request);
+  virtual google::cloud::Idempotency UpdateGroup(
+      google::cloud::migrationcenter::v1::UpdateGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteGroup(google::cloud::migrationcenter::v1::DeleteGroupRequest const& request);
+  virtual google::cloud::Idempotency DeleteGroup(
+      google::cloud::migrationcenter::v1::DeleteGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AddAssetsToGroup(google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const& request);
+  virtual google::cloud::Idempotency AddAssetsToGroup(
+      google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RemoveAssetsFromGroup(google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const& request);
+  virtual google::cloud::Idempotency RemoveAssetsFromGroup(
+      google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListErrorFrames(google::cloud::migrationcenter::v1::ListErrorFramesRequest request);
+  virtual google::cloud::Idempotency ListErrorFrames(
+      google::cloud::migrationcenter::v1::ListErrorFramesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetErrorFrame(google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request);
+  virtual google::cloud::Idempotency GetErrorFrame(
+      google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSources(google::cloud::migrationcenter::v1::ListSourcesRequest request);
+  virtual google::cloud::Idempotency ListSources(
+      google::cloud::migrationcenter::v1::ListSourcesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetSource(google::cloud::migrationcenter::v1::GetSourceRequest const& request);
+  virtual google::cloud::Idempotency GetSource(
+      google::cloud::migrationcenter::v1::GetSourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateSource(google::cloud::migrationcenter::v1::CreateSourceRequest const& request);
+  virtual google::cloud::Idempotency CreateSource(
+      google::cloud::migrationcenter::v1::CreateSourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateSource(google::cloud::migrationcenter::v1::UpdateSourceRequest const& request);
+  virtual google::cloud::Idempotency UpdateSource(
+      google::cloud::migrationcenter::v1::UpdateSourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSource(google::cloud::migrationcenter::v1::DeleteSourceRequest const& request);
+  virtual google::cloud::Idempotency DeleteSource(
+      google::cloud::migrationcenter::v1::DeleteSourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListPreferenceSets(google::cloud::migrationcenter::v1::ListPreferenceSetsRequest request);
+  virtual google::cloud::Idempotency ListPreferenceSets(
+      google::cloud::migrationcenter::v1::ListPreferenceSetsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetPreferenceSet(google::cloud::migrationcenter::v1::GetPreferenceSetRequest const& request);
+  virtual google::cloud::Idempotency GetPreferenceSet(
+      google::cloud::migrationcenter::v1::GetPreferenceSetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreatePreferenceSet(google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const& request);
+  virtual google::cloud::Idempotency CreatePreferenceSet(
+      google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdatePreferenceSet(google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const& request);
+  virtual google::cloud::Idempotency UpdatePreferenceSet(
+      google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeletePreferenceSet(google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const& request);
+  virtual google::cloud::Idempotency DeletePreferenceSet(
+      google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetSettings(google::cloud::migrationcenter::v1::GetSettingsRequest const& request);
+  virtual google::cloud::Idempotency GetSettings(
+      google::cloud::migrationcenter::v1::GetSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateSettings(google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request);
+  virtual google::cloud::Idempotency UpdateSettings(
+      google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateReportConfig(google::cloud::migrationcenter::v1::CreateReportConfigRequest const& request);
+  virtual google::cloud::Idempotency CreateReportConfig(
+      google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetReportConfig(google::cloud::migrationcenter::v1::GetReportConfigRequest const& request);
+  virtual google::cloud::Idempotency GetReportConfig(
+      google::cloud::migrationcenter::v1::GetReportConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListReportConfigs(google::cloud::migrationcenter::v1::ListReportConfigsRequest request);
+  virtual google::cloud::Idempotency ListReportConfigs(
+      google::cloud::migrationcenter::v1::ListReportConfigsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteReportConfig(google::cloud::migrationcenter::v1::DeleteReportConfigRequest const& request);
+  virtual google::cloud::Idempotency DeleteReportConfig(
+      google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateReport(google::cloud::migrationcenter::v1::CreateReportRequest const& request);
+  virtual google::cloud::Idempotency CreateReport(
+      google::cloud::migrationcenter::v1::CreateReportRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetReport(google::cloud::migrationcenter::v1::GetReportRequest const& request);
+  virtual google::cloud::Idempotency GetReport(
+      google::cloud::migrationcenter::v1::GetReportRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListReports(google::cloud::migrationcenter::v1::ListReportsRequest request);
+  virtual google::cloud::Idempotency ListReports(
+      google::cloud::migrationcenter::v1::ListReportsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteReport(google::cloud::migrationcenter::v1::DeleteReportRequest const& request);
+  virtual google::cloud::Idempotency DeleteReport(
+      google::cloud::migrationcenter::v1::DeleteReportRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<MigrationCenterConnectionIdempotencyPolicy>
-    MakeDefaultMigrationCenterConnectionIdempotencyPolicy();
+MakeDefaultMigrationCenterConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace migrationcenter_v1

@@ -31,36 +31,36 @@ TopicStatsServiceAuth::TopicStatsServiceAuth(
     std::shared_ptr<TopicStatsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse> TopicStatsServiceAuth::ComputeMessageStats(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
+TopicStatsServiceAuth::ComputeMessageStats(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ComputeMessageStats(context, options, request);
 }
 
-StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse> TopicStatsServiceAuth::ComputeHeadCursor(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
+TopicStatsServiceAuth::ComputeHeadCursor(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ComputeHeadCursor(context, options, request);
 }
 
-StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse> TopicStatsServiceAuth::ComputeTimeCursor(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
+TopicStatsServiceAuth::ComputeTimeCursor(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ComputeTimeCursor(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> TopicStatsServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+TopicStatsServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +68,7 @@ StatusOr<google::longrunning::ListOperationsResponse> TopicStatsServiceAuth::Lis
 }
 
 StatusOr<google::longrunning::Operation> TopicStatsServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +76,7 @@ StatusOr<google::longrunning::Operation> TopicStatsServiceAuth::GetOperation(
 }
 
 Status TopicStatsServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +84,7 @@ Status TopicStatsServiceAuth::DeleteOperation(
 }
 
 Status TopicStatsServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

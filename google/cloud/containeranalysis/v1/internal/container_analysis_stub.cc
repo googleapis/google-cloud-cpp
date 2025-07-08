@@ -30,69 +30,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContainerAnalysisStub::~ContainerAnalysisStub() = default;
 
-StatusOr<google::iam::v1::Policy>
-DefaultContainerAnalysisStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        grpc_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultContainerAnalysisStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultContainerAnalysisStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        grpc_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultContainerAnalysisStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultContainerAnalysisStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        grpc_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+StatusOr<
+    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
 DefaultContainerAnalysisStub::GetVulnerabilityOccurrencesSummary(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
-    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary response;
-    auto status =
-        grpc_stub_->GetVulnerabilityOccurrencesSummary(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::containeranalysis::v1::
+        GetVulnerabilityOccurrencesSummaryRequest const& request) {
+  google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary
+      response;
+  auto status = grpc_stub_->GetVulnerabilityOccurrencesSummary(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
 DefaultContainerAnalysisStub::ExportSBOM(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
-    google::devtools::containeranalysis::v1::ExportSBOMResponse response;
-    auto status =
-        grpc_stub_->ExportSBOM(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+  google::devtools::containeranalysis::v1::ExportSBOMResponse response;
+  auto status = grpc_stub_->ExportSBOM(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

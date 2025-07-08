@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_MIGRATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_MIGRATION_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/migration/v2/internal/migration_retry_traits.h"
 #include "google/cloud/bigquery/migration/v2/migration_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class MigrationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MigrationServiceLimitedErrorCountRetryPolicy : public MigrationServiceRetryPolicy {
+class MigrationServiceLimitedErrorCountRetryPolicy
+    : public MigrationServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class MigrationServiceLimitedErrorCountRetryPolicy : public MigrationServiceRetr
    *     @p maximum_failures == 0.
    */
   explicit MigrationServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   MigrationServiceLimitedErrorCountRetryPolicy(
       MigrationServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : MigrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MigrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MigrationServiceLimitedErrorCountRetryPolicy(
       MigrationServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : MigrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MigrationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class MigrationServiceLimitedErrorCountRetryPolicy : public MigrationServiceRetr
   using BaseType = MigrationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_migration_v2_internal::MigrationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_migration_v2_internal::MigrationServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class MigrationServiceLimitedErrorCountRetryPolicy : public MigrationServiceRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MigrationServiceLimitedTimeRetryPolicy : public MigrationServiceRetryPolicy {
+class MigrationServiceLimitedTimeRetryPolicy
+    : public MigrationServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class MigrationServiceLimitedTimeRetryPolicy : public MigrationServiceRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit MigrationServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  MigrationServiceLimitedTimeRetryPolicy(MigrationServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : MigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MigrationServiceLimitedTimeRetryPolicy(MigrationServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : MigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MigrationServiceLimitedTimeRetryPolicy(
+      MigrationServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : MigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MigrationServiceLimitedTimeRetryPolicy(
+      MigrationServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : MigrationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class MigrationServiceLimitedTimeRetryPolicy : public MigrationServiceRetryPolic
   using BaseType = MigrationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_migration_v2_internal::MigrationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_migration_v2_internal::MigrationServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -167,7 +175,8 @@ class MigrationServiceLimitedTimeRetryPolicy : public MigrationServiceRetryPolic
  *
  * To create a concrete instance, see `MakeMigrationServiceConnection()`.
  *
- * For mocking, see `bigquery_migration_v2_mocks::MockMigrationServiceConnection`.
+ * For mocking, see
+ * `bigquery_migration_v2_mocks::MockMigrationServiceConnection`.
  */
 class MigrationServiceConnection {
  public:
@@ -176,36 +185,48 @@ class MigrationServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request);
+  CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::
+                              CreateMigrationWorkflowRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  GetMigrationWorkflow(google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request);
+  GetMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
+          request);
 
   virtual StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  ListMigrationWorkflows(google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest request);
+  ListMigrationWorkflows(
+      google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
+          request);
 
-  virtual Status
-  DeleteMigrationWorkflow(google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request);
+  virtual Status DeleteMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::
+          DeleteMigrationWorkflowRequest const& request);
 
-  virtual Status
-  StartMigrationWorkflow(google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request);
+  virtual Status StartMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::
+          StartMigrationWorkflowRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
-  GetMigrationSubtask(google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request);
+  GetMigrationSubtask(
+      google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
+          request);
 
   virtual StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
-  ListMigrationSubtasks(google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest request);
+  ListMigrationSubtasks(
+      google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
+          request);
 };
 
 /**
- * A factory function to construct an object of type `MigrationServiceConnection`.
+ * A factory function to construct an object of type
+ * `MigrationServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of MigrationServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `MigrationServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `MigrationServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -215,8 +236,8 @@ class MigrationServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `MigrationServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `MigrationServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<MigrationServiceConnection> MakeMigrationServiceConnection(
     Options options = {});

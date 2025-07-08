@@ -31,21 +31,18 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AnswerRecordsLogging::AnswerRecordsLogging(
-    std::shared_ptr<AnswerRecordsStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<AnswerRecordsStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 AnswerRecordsLogging::ListAnswerRecords(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::ListAnswerRecordsRequest const&
+                 request) {
         return child_->ListAnswerRecords(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ AnswerRecordsLogging::ListAnswerRecords(
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsLogging::UpdateAnswerRecord(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const&
+                 request) {
         return child_->UpdateAnswerRecord(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,26 +63,21 @@ AnswerRecordsLogging::UpdateAnswerRecord(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 AnswerRecordsLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-AnswerRecordsLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> AnswerRecordsLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -95,40 +86,32 @@ AnswerRecordsLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AnswerRecordsLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AnswerRecordsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> AnswerRecordsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AnswerRecordsLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AnswerRecordsLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

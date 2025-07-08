@@ -26,63 +26,76 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AdaptationConnectionIdempotencyPolicy::~AdaptationConnectionIdempotencyPolicy() = default;
+AdaptationConnectionIdempotencyPolicy::
+    ~AdaptationConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AdaptationConnectionIdempotencyPolicy>
 AdaptationConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AdaptationConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::CreatePhraseSet(
+    google::cloud::speech::v1::CreatePhraseSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::GetPhraseSet(
+    google::cloud::speech::v1::GetPhraseSetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest) {  // NOLINT
+Idempotency AdaptationConnectionIdempotencyPolicy::ListPhraseSet(
+    google::cloud::speech::v1::ListPhraseSetRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::UpdatePhraseSet(
+    google::cloud::speech::v1::UpdatePhraseSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::DeletePhraseSet(
+    google::cloud::speech::v1::DeletePhraseSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::CreateCustomClass(
+    google::cloud::speech::v1::CreateCustomClassRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::GetCustomClass(
+    google::cloud::speech::v1::GetCustomClassRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest) {  // NOLINT
+Idempotency AdaptationConnectionIdempotencyPolicy::ListCustomClasses(
+    google::cloud::speech::v1::ListCustomClassesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::UpdateCustomClass(
+    google::cloud::speech::v1::UpdateCustomClassRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::DeleteCustomClass(
+    google::cloud::speech::v1::DeleteCustomClassRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AdaptationConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AdaptationConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency AdaptationConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AdaptationConnectionIdempotencyPolicy>
-    MakeDefaultAdaptationConnectionIdempotencyPolicy() {
+MakeDefaultAdaptationConnectionIdempotencyPolicy() {
   return std::make_unique<AdaptationConnectionIdempotencyPolicy>();
 }
 

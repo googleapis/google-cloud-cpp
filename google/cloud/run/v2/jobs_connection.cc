@@ -17,17 +17,17 @@
 // source: google/cloud/run/v2/job.proto
 
 #include "google/cloud/run/v2/jobs_connection.h"
+#include "google/cloud/run/v2/internal/jobs_connection_impl.h"
+#include "google/cloud/run/v2/internal/jobs_option_defaults.h"
+#include "google/cloud/run/v2/internal/jobs_stub_factory.h"
+#include "google/cloud/run/v2/internal/jobs_tracing_connection.h"
+#include "google/cloud/run/v2/jobs_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/run/v2/internal/jobs_connection_impl.h"
-#include "google/cloud/run/v2/internal/jobs_option_defaults.h"
-#include "google/cloud/run/v2/internal/jobs_stub_factory.h"
-#include "google/cloud/run/v2/internal/jobs_tracing_connection.h"
-#include "google/cloud/run/v2/jobs_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,122 +38,104 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 JobsConnection::~JobsConnection() = default;
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnection::CreateJob(
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnection::CreateJob(
     google::cloud::run::v2::CreateJobRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Job>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Job>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-JobsConnection::CreateJob(
-    NoAwaitTag,
-    google::cloud::run::v2::CreateJobRequest const&) {
+StatusOr<google::longrunning::Operation> JobsConnection::CreateJob(
+    NoAwaitTag, google::cloud::run::v2::CreateJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnection::CreateJob(
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnection::CreateJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Job>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Job>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::run::v2::Job>
-JobsConnection::GetJob(
+StatusOr<google::cloud::run::v2::Job> JobsConnection::GetJob(
     google::cloud::run::v2::GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::run::v2::Job> JobsConnection::ListJobs(
-    google::cloud::run::v2::ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::run::v2::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::run::v2::Job>>();
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnection::UpdateJob(
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnection::UpdateJob(
     google::cloud::run::v2::UpdateJobRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Job>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Job>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-JobsConnection::UpdateJob(
-    NoAwaitTag,
-    google::cloud::run::v2::UpdateJobRequest const&) {
+StatusOr<google::longrunning::Operation> JobsConnection::UpdateJob(
+    NoAwaitTag, google::cloud::run::v2::UpdateJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnection::UpdateJob(
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnection::UpdateJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Job>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Job>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnection::DeleteJob(
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnection::DeleteJob(
     google::cloud::run::v2::DeleteJobRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Job>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Job>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-JobsConnection::DeleteJob(
-    NoAwaitTag,
-    google::cloud::run::v2::DeleteJobRequest const&) {
+StatusOr<google::longrunning::Operation> JobsConnection::DeleteJob(
+    NoAwaitTag, google::cloud::run::v2::DeleteJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::run::v2::Job>>
-JobsConnection::DeleteJob(
+future<StatusOr<google::cloud::run::v2::Job>> JobsConnection::DeleteJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Job>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Job>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::run::v2::Execution>>
-JobsConnection::RunJob(
+future<StatusOr<google::cloud::run::v2::Execution>> JobsConnection::RunJob(
     google::cloud::run::v2::RunJobRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Execution>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Execution>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-JobsConnection::RunJob(
-    NoAwaitTag,
-    google::cloud::run::v2::RunJobRequest const&) {
+StatusOr<google::longrunning::Operation> JobsConnection::RunJob(
+    NoAwaitTag, google::cloud::run::v2::RunJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::run::v2::Execution>>
-JobsConnection::RunJob(
+future<StatusOr<google::cloud::run::v2::Execution>> JobsConnection::RunJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Execution>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Execution>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> JobsConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> JobsConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -165,43 +147,38 @@ JobsConnection::TestIamPermissions(
 }
 
 StreamRange<google::longrunning::Operation> JobsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-JobsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> JobsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-JobsConnection::DeleteOperation(
+Status JobsConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation>
-JobsConnection::WaitOperation(
+StatusOr<google::longrunning::Operation> JobsConnection::WaitOperation(
     google::longrunning::WaitOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<JobsConnection> MakeJobsConnection(
-    Options options) {
+std::shared_ptr<JobsConnection> MakeJobsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      JobsPolicyOptionList>(options, __func__);
-  options = run_v2_internal::JobsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 JobsPolicyOptionList>(options, __func__);
+  options = run_v2_internal::JobsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = run_v2_internal::CreateDefaultJobsStub(
-    std::move(auth), options);
+  auto stub = run_v2_internal::CreateDefaultJobsStub(std::move(auth), options);
   return run_v2_internal::MakeJobsTracingConnection(
       std::make_shared<run_v2_internal::JobsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_INTERNAL_VIDEO_INTELLIGENCE_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_INTERNAL_VIDEO_INTELLIGENCE_TRACING_CONNECTION_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
@@ -36,23 +36,27 @@ class VideoIntelligenceServiceTracingConnection
   ~VideoIntelligenceServiceTracingConnection() override = default;
 
   explicit VideoIntelligenceServiceTracingConnection(
-    std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection> child);
+      std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
+  AnnotateVideo(
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  AnnotateVideo(NoAwaitTag,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
+  StatusOr<google::longrunning::Operation> AnnotateVideo(
+      NoAwaitTag,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(
-      google::longrunning::Operation const& operation) override;
+  AnnotateVideo(google::longrunning::Operation const& operation) override;
 
  private:
-  std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection> child_;
+  std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -65,7 +69,8 @@ class VideoIntelligenceServiceTracingConnection
  */
 std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceTracingConnection(
-    std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection> conn);
+    std::shared_ptr<videointelligence_v1::VideoIntelligenceServiceConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_v1_internal

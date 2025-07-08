@@ -34,11 +34,13 @@ VideoIntelligenceServiceTracingStub::VideoIntelligenceServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceTracingStub::AsyncAnnotateVideo(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.videointelligence.v1.VideoIntelligenceService", "AnnotateVideo");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.videointelligence.v1.VideoIntelligenceService",
+      "AnnotateVideo");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncAnnotateVideo(cq, context, std::move(options), request);
@@ -47,10 +49,11 @@ VideoIntelligenceServiceTracingStub::AsyncAnnotateVideo(
 
 StatusOr<google::longrunning::Operation>
 VideoIntelligenceServiceTracingStub::AnnotateVideo(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.videointelligence.v1.VideoIntelligenceService", "AnnotateVideo");
+    grpc::ClientContext& context, Options options,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.videointelligence.v1.VideoIntelligenceService",
+      "AnnotateVideo");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -67,8 +70,7 @@ VideoIntelligenceServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -81,14 +83,15 @@ future<Status> VideoIntelligenceServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<VideoIntelligenceServiceStub> MakeVideoIntelligenceServiceTracingStub(
+std::shared_ptr<VideoIntelligenceServiceStub>
+MakeVideoIntelligenceServiceTracingStub(
     std::shared_ptr<VideoIntelligenceServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<VideoIntelligenceServiceTracingStub>(std::move(stub));

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_INTERNAL_SIMULATOR_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_INTERNAL_SIMULATOR_TRACING_STUB_H
 
+#include "google/cloud/policysimulator/v1/internal/simulator_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/policysimulator/v1/internal/simulator_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,34 +39,34 @@ class SimulatorTracingStub : public SimulatorStub {
   explicit SimulatorTracingStub(std::shared_ptr<SimulatorStub> child);
 
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::policysimulator::v1::GetReplayRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::policysimulator::v1::GetReplayRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReplay(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request) override;
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateReplay(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
+      override;
 
-  StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse> ListReplayResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::policysimulator::v1::ListReplayResultsRequest const& request) override;
+  StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
+  ListReplayResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::policysimulator::v1::ListReplayResultsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -83,7 +83,8 @@ class SimulatorTracingStub : public SimulatorStub {
 
  private:
   std::shared_ptr<SimulatorStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

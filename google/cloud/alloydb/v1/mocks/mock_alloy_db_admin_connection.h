@@ -46,25 +46,27 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Cluster>),
-  ListClusters,
-  (google::cloud::alloydb::v1::ListClustersRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Cluster>), ListClusters,
+              (google::cloud::alloydb::v1::ListClustersRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Cluster>,
-  GetCluster,
-  (google::cloud::alloydb::v1::GetClusterRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Cluster>, GetCluster,
+              (google::cloud::alloydb::v1::GetClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::cloud::alloydb::v1::CreateClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateCluster(Matcher<google::cloud::alloydb::v1::CreateClusterRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  CreateCluster,
-  (google::cloud::alloydb::v1::CreateClusterRequest const& request), (override));
-
+              CreateCluster,
+              (google::cloud::alloydb::v1::CreateClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -72,33 +74,36 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::CreateClusterRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  CreateCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateCluster,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::CreateClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::cloud::alloydb::v1::UpdateClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  UpdateCluster,
-  (google::cloud::alloydb::v1::UpdateClusterRequest const& request), (override));
+              CreateCluster, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCluster(Matcher<google::cloud::alloydb::v1::UpdateClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
+              UpdateCluster,
+              (google::cloud::alloydb::v1::UpdateClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +111,37 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::UpdateClusterRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateCluster,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::UpdateClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  UpdateCluster, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateCluster, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportCluster(Matcher<google::cloud::alloydb::v1::ExportClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// ExportCluster(Matcher<google::cloud::alloydb::v1::ExportClusterRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>,
-  ExportCluster,
-  (google::cloud::alloydb::v1::ExportClusterRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>,
+      ExportCluster,
+      (google::cloud::alloydb::v1::ExportClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,33 +149,38 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  ExportCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::ExportClusterRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>,
-  ExportCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportCluster,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::ExportClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportCluster(Matcher<google::cloud::alloydb::v1::ImportClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock, ExportCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>,
-  ImportCluster,
-  (google::cloud::alloydb::v1::ImportClusterRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::ExportClusterResponse>>,
+      ExportCluster, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportCluster(Matcher<google::cloud::alloydb::v1::ImportClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>,
+      ImportCluster,
+      (google::cloud::alloydb::v1::ImportClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -174,33 +188,38 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  ImportCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::ImportClusterRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>,
-  ImportCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportCluster,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::ImportClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpgradeCluster(Matcher<google::cloud::alloydb::v1::UpgradeClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock, ImportCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>,
-  UpgradeCluster,
-  (google::cloud::alloydb::v1::UpgradeClusterRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::ImportClusterResponse>>,
+      ImportCluster, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpgradeCluster(Matcher<google::cloud::alloydb::v1::UpgradeClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>,
+      UpgradeCluster,
+      (google::cloud::alloydb::v1::UpgradeClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -208,33 +227,38 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpgradeCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpgradeCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::UpgradeClusterRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpgradeCluster,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::UpgradeClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpgradeCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpgradeCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>,
-  UpgradeCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::UpgradeClusterResponse>>,
+      UpgradeCluster, (google::longrunning::Operation const& operation),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::cloud::alloydb::v1::DeleteClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteCluster(Matcher<google::cloud::alloydb::v1::DeleteClusterRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-  DeleteCluster,
-  (google::cloud::alloydb::v1::DeleteClusterRequest const& request), (override));
-
+              DeleteCluster,
+              (google::cloud::alloydb::v1::DeleteClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -242,33 +266,36 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::DeleteClusterRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteCluster,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::DeleteClusterRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-  DeleteCluster, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteCluster, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PromoteCluster(Matcher<google::cloud::alloydb::v1::PromoteClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PromoteCluster(Matcher<google::cloud::alloydb::v1::PromoteClusterRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  PromoteCluster,
-  (google::cloud::alloydb::v1::PromoteClusterRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::Cluster>>, PromoteCluster,
+      (google::cloud::alloydb::v1::PromoteClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -276,33 +303,37 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PromoteCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  PromoteCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::PromoteClusterRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PromoteCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  PromoteCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, PromoteCluster,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::PromoteClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SwitchoverCluster(Matcher<google::cloud::alloydb::v1::SwitchoverClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock, PromoteCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  SwitchoverCluster,
-  (google::cloud::alloydb::v1::SwitchoverClusterRequest const& request), (override));
+              PromoteCluster, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SwitchoverCluster(Matcher<google::cloud::alloydb::v1::SwitchoverClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::Cluster>>, SwitchoverCluster,
+      (google::cloud::alloydb::v1::SwitchoverClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -310,33 +341,37 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SwitchoverCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  SwitchoverCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SwitchoverCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  SwitchoverCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SwitchoverCluster,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::SwitchoverClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreCluster(Matcher<google::cloud::alloydb::v1::RestoreClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SwitchoverCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  RestoreCluster,
-  (google::cloud::alloydb::v1::RestoreClusterRequest const& request), (override));
+              SwitchoverCluster,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreCluster(Matcher<google::cloud::alloydb::v1::RestoreClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::Cluster>>, RestoreCluster,
+      (google::cloud::alloydb::v1::RestoreClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -344,33 +379,38 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RestoreCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RestoreCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::RestoreClusterRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  RestoreCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RestoreCluster,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::RestoreClusterRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSecondaryCluster(Matcher<google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock, RestoreCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  CreateSecondaryCluster,
-  (google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request), (override));
+              RestoreCluster, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateSecondaryCluster(Matcher<google::cloud::alloydb::v1::CreateSecondaryClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
+              CreateSecondaryCluster,
+              (google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -378,41 +418,46 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateSecondaryCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateSecondaryCluster, (NoAwaitTag,
-    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSecondaryCluster,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSecondaryCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateSecondaryCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-  CreateSecondaryCluster, (
-    google::longrunning::Operation const& operation), (override));
+              CreateSecondaryCluster,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Instance>),
-  ListInstances,
-  (google::cloud::alloydb::v1::ListInstancesRequest request), (override));
+              ListInstances,
+              (google::cloud::alloydb::v1::ListInstancesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Instance>,
-  GetInstance,
-  (google::cloud::alloydb::v1::GetInstanceRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Instance>, GetInstance,
+              (google::cloud::alloydb::v1::GetInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::cloud::alloydb::v1::CreateInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateInstance(Matcher<google::cloud::alloydb::v1::CreateInstanceRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  CreateInstance,
-  (google::cloud::alloydb::v1::CreateInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::Instance>>, CreateInstance,
+      (google::cloud::alloydb::v1::CreateInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -420,33 +465,38 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateInstance, (NoAwaitTag,
-    google::cloud::alloydb::v1::CreateInstanceRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  CreateInstance, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::CreateInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSecondaryInstance(Matcher<google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  CreateSecondaryInstance,
-  (google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request), (override));
+              CreateInstance, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateSecondaryInstance(Matcher<google::cloud::alloydb::v1::CreateSecondaryInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
+              CreateSecondaryInstance,
+              (google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -454,33 +504,40 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateSecondaryInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateSecondaryInstance, (NoAwaitTag,
-    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSecondaryInstance,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSecondaryInstance(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateSecondaryInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  CreateSecondaryInstance, (
-    google::longrunning::Operation const& operation), (override));
+              CreateSecondaryInstance,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchCreateInstances(Matcher<google::cloud::alloydb::v1::BatchCreateInstancesRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateInstances(Matcher<google::cloud::alloydb::v1::BatchCreateInstancesRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>,
-  BatchCreateInstances,
-  (google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>,
+      BatchCreateInstances,
+      (google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -488,33 +545,39 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchCreateInstances(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  BatchCreateInstances, (NoAwaitTag,
-    google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchCreateInstances(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>,
-  BatchCreateInstances, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchCreateInstances,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::cloud::alloydb::v1::UpdateInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateInstances(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  UpdateInstance,
-  (google::cloud::alloydb::v1::UpdateInstanceRequest const& request), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>,
+      BatchCreateInstances, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateInstance(Matcher<google::cloud::alloydb::v1::UpdateInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::Instance>>, UpdateInstance,
+      (google::cloud::alloydb::v1::UpdateInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -522,33 +585,38 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateInstance, (NoAwaitTag,
-    google::cloud::alloydb::v1::UpdateInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstance,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::UpdateInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  UpdateInstance, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateInstance, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::cloud::alloydb::v1::DeleteInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstance(Matcher<google::cloud::alloydb::v1::DeleteInstanceRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-  DeleteInstance,
-  (google::cloud::alloydb::v1::DeleteInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
+      DeleteInstance,
+      (google::cloud::alloydb::v1::DeleteInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -556,33 +624,37 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteInstance, (NoAwaitTag,
-    google::cloud::alloydb::v1::DeleteInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteInstance,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::DeleteInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-  DeleteInstance, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteInstance, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, FailoverInstance(Matcher<google::cloud::alloydb::v1::FailoverInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// FailoverInstance(Matcher<google::cloud::alloydb::v1::FailoverInstanceRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  FailoverInstance,
-  (google::cloud::alloydb::v1::FailoverInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::Instance>>, FailoverInstance,
+      (google::cloud::alloydb::v1::FailoverInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -590,33 +662,37 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, FailoverInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  FailoverInstance, (NoAwaitTag,
-    google::cloud::alloydb::v1::FailoverInstanceRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, FailoverInstance(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  FailoverInstance, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, FailoverInstance,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::FailoverInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InjectFault(Matcher<google::cloud::alloydb::v1::InjectFaultRequest const&>(_)))
+  /// EXPECT_CALL(*mock, FailoverInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  InjectFault,
-  (google::cloud::alloydb::v1::InjectFaultRequest const& request), (override));
+              FailoverInstance,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InjectFault(Matcher<google::cloud::alloydb::v1::InjectFaultRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
+              InjectFault,
+              (google::cloud::alloydb::v1::InjectFaultRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -624,33 +700,36 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InjectFault(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  InjectFault, (NoAwaitTag,
-    google::cloud::alloydb::v1::InjectFaultRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InjectFault(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  InjectFault, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, InjectFault,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::InjectFaultRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestartInstance(Matcher<google::cloud::alloydb::v1::RestartInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock, InjectFault(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  RestartInstance,
-  (google::cloud::alloydb::v1::RestartInstanceRequest const& request), (override));
+              InjectFault, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestartInstance(Matcher<google::cloud::alloydb::v1::RestartInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::Instance>>, RestartInstance,
+      (google::cloud::alloydb::v1::RestartInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -658,45 +737,50 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RestartInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RestartInstance, (NoAwaitTag,
-    google::cloud::alloydb::v1::RestartInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RestartInstance,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::RestartInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestartInstance(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RestartInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-  RestartInstance, (
-    google::longrunning::Operation const& operation), (override));
+              RestartInstance,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>,
-  ExecuteSql,
-  (google::cloud::alloydb::v1::ExecuteSqlRequest const& request), (override));
+              ExecuteSql,
+              (google::cloud::alloydb::v1::ExecuteSqlRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Backup>),
-  ListBackups,
-  (google::cloud::alloydb::v1::ListBackupsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Backup>), ListBackups,
+              (google::cloud::alloydb::v1::ListBackupsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Backup>,
-  GetBackup,
-  (google::cloud::alloydb::v1::GetBackupRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::Backup>, GetBackup,
+              (google::cloud::alloydb::v1::GetBackupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateBackup(Matcher<google::cloud::alloydb::v1::CreateBackupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateBackup(Matcher<google::cloud::alloydb::v1::CreateBackupRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
-  CreateBackup,
-  (google::cloud::alloydb::v1::CreateBackupRequest const& request), (override));
-
+              CreateBackup,
+              (google::cloud::alloydb::v1::CreateBackupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -704,33 +788,36 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateBackup, (NoAwaitTag,
-    google::cloud::alloydb::v1::CreateBackupRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateBackup(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
-  CreateBackup, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBackup,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::CreateBackupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::cloud::alloydb::v1::UpdateBackupRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
-  UpdateBackup,
-  (google::cloud::alloydb::v1::UpdateBackupRequest const& request), (override));
+              CreateBackup, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackup(Matcher<google::cloud::alloydb::v1::UpdateBackupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
+              UpdateBackup,
+              (google::cloud::alloydb::v1::UpdateBackupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -738,33 +825,36 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateBackup, (NoAwaitTag,
-    google::cloud::alloydb::v1::UpdateBackupRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateBackup,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::UpdateBackupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
-  UpdateBackup, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateBackup, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::cloud::alloydb::v1::DeleteBackupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackup(Matcher<google::cloud::alloydb::v1::DeleteBackupRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-  DeleteBackup,
-  (google::cloud::alloydb::v1::DeleteBackupRequest const& request), (override));
-
+              DeleteBackup,
+              (google::cloud::alloydb::v1::DeleteBackupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -772,81 +862,88 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteBackup, (NoAwaitTag,
-    google::cloud::alloydb::v1::DeleteBackupRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteBackup,
+              (NoAwaitTag,
+               google::cloud::alloydb::v1::DeleteBackupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-  DeleteBackup, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteBackup, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>),
-  ListSupportedDatabaseFlags,
-  (google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>),
+      ListSupportedDatabaseFlags,
+      (google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>,
-  GenerateClientCertificate,
-  (google::cloud::alloydb::v1::GenerateClientCertificateRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>,
+      GenerateClientCertificate,
+      (google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::ConnectionInfo>,
-  GetConnectionInfo,
-  (google::cloud::alloydb::v1::GetConnectionInfoRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::alloydb::v1::ConnectionInfo>, GetConnectionInfo,
+      (google::cloud::alloydb::v1::GetConnectionInfoRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::User>),
-  ListUsers,
-  (google::cloud::alloydb::v1::ListUsersRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::User>), ListUsers,
+              (google::cloud::alloydb::v1::ListUsersRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>,
-  GetUser,
-  (google::cloud::alloydb::v1::GetUserRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>, GetUser,
+              (google::cloud::alloydb::v1::GetUserRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>,
-  CreateUser,
-  (google::cloud::alloydb::v1::CreateUserRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>, CreateUser,
+              (google::cloud::alloydb::v1::CreateUserRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>,
-  UpdateUser,
-  (google::cloud::alloydb::v1::UpdateUserRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::User>, UpdateUser,
+              (google::cloud::alloydb::v1::UpdateUserRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteUser,
-  (google::cloud::alloydb::v1::DeleteUserRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteUser,
+              (google::cloud::alloydb::v1::DeleteUserRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Database>),
-  ListDatabases,
-  (google::cloud::alloydb::v1::ListDatabasesRequest request), (override));
+              ListDatabases,
+              (google::cloud::alloydb::v1::ListDatabasesRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

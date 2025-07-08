@@ -42,41 +42,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockServiceHealthConnection : public servicehealth_v1::ServiceHealthConnection {
+class MockServiceHealthConnection
+    : public servicehealth_v1::ServiceHealthConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::servicehealth::v1::Event>),
-  ListEvents,
-  (google::cloud::servicehealth::v1::ListEventsRequest request), (override));
+              ListEvents,
+              (google::cloud::servicehealth::v1::ListEventsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicehealth::v1::Event>,
-  GetEvent,
-  (google::cloud::servicehealth::v1::GetEventRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::servicehealth::v1::Event>, GetEvent,
+      (google::cloud::servicehealth::v1::GetEventRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>),
-  ListOrganizationEvents,
-  (google::cloud::servicehealth::v1::ListOrganizationEventsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>),
+      ListOrganizationEvents,
+      (google::cloud::servicehealth::v1::ListOrganizationEventsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>,
-  GetOrganizationEvent,
-  (google::cloud::servicehealth::v1::GetOrganizationEventRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>,
+      GetOrganizationEvent,
+      (google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>),
-  ListOrganizationImpacts,
-  (google::cloud::servicehealth::v1::ListOrganizationImpactsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>),
+      ListOrganizationImpacts,
+      (google::cloud::servicehealth::v1::ListOrganizationImpactsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>,
-  GetOrganizationImpact,
-  (google::cloud::servicehealth::v1::GetOrganizationImpactRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>,
+      GetOrganizationImpact,
+      (google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

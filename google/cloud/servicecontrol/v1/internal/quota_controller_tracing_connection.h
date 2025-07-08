@@ -36,12 +36,13 @@ class QuotaControllerTracingConnection
   ~QuotaControllerTracingConnection() override = default;
 
   explicit QuotaControllerTracingConnection(
-    std::shared_ptr<servicecontrol_v1::QuotaControllerConnection> child);
+      std::shared_ptr<servicecontrol_v1::QuotaControllerConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const& request) override;
+  AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const&
+                    request) override;
 
  private:
   std::shared_ptr<servicecontrol_v1::QuotaControllerConnection> child_;

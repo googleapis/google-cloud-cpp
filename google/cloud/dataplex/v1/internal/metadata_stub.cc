@@ -32,236 +32,213 @@ MetadataServiceStub::~MetadataServiceStub() = default;
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::CreateEntity(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::CreateEntityRequest const& request) {
-    google::cloud::dataplex::v1::Entity response;
-    auto status =
-        grpc_stub_->CreateEntity(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::CreateEntityRequest const& request) {
+  google::cloud::dataplex::v1::Entity response;
+  auto status = grpc_stub_->CreateEntity(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::UpdateEntity(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
-    google::cloud::dataplex::v1::Entity response;
-    auto status =
-        grpc_stub_->UpdateEntity(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
+  google::cloud::dataplex::v1::Entity response;
+  auto status = grpc_stub_->UpdateEntity(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultMetadataServiceStub::DeleteEntity(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteEntity(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMetadataServiceStub::DeleteEntity(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteEntity(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::GetEntity(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetEntityRequest const& request) {
-    google::cloud::dataplex::v1::Entity response;
-    auto status =
-        grpc_stub_->GetEntity(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetEntityRequest const& request) {
+  google::cloud::dataplex::v1::Entity response;
+  auto status = grpc_stub_->GetEntity(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse>
 DefaultMetadataServiceStub::ListEntities(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
-    google::cloud::dataplex::v1::ListEntitiesResponse response;
-    auto status =
-        grpc_stub_->ListEntities(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
+  google::cloud::dataplex::v1::ListEntitiesResponse response;
+  auto status = grpc_stub_->ListEntities(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 DefaultMetadataServiceStub::CreatePartition(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
-    google::cloud::dataplex::v1::Partition response;
-    auto status =
-        grpc_stub_->CreatePartition(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
+  google::cloud::dataplex::v1::Partition response;
+  auto status = grpc_stub_->CreatePartition(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultMetadataServiceStub::DeletePartition(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeletePartition(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMetadataServiceStub::DeletePartition(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeletePartition(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 DefaultMetadataServiceStub::GetPartition(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetPartitionRequest const& request) {
-    google::cloud::dataplex::v1::Partition response;
-    auto status =
-        grpc_stub_->GetPartition(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetPartitionRequest const& request) {
+  google::cloud::dataplex::v1::Partition response;
+  auto status = grpc_stub_->GetPartition(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse>
 DefaultMetadataServiceStub::ListPartitions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
-    google::cloud::dataplex::v1::ListPartitionsResponse response;
-    auto status =
-        grpc_stub_->ListPartitions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
+  google::cloud::dataplex::v1::ListPartitionsResponse response;
+  auto status = grpc_stub_->ListPartitions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultMetadataServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultMetadataServiceStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultMetadataServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultMetadataServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultMetadataServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultMetadataServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultMetadataServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultMetadataServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultMetadataServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultMetadataServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMetadataServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultMetadataServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMetadataServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

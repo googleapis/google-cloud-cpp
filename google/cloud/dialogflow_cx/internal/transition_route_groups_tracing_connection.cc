@@ -34,77 +34,106 @@ TransitionRouteGroupsTracingConnection::TransitionRouteGroupsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsTracingConnection::ListTransitionRouteGroups(google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::ListTransitionRouteGroups");
+TransitionRouteGroupsTracingConnection::ListTransitionRouteGroups(
+    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "ListTransitionRouteGroups");
   internal::OTelScope scope(span);
   auto sr = child_->ListTransitionRouteGroups(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::TransitionRouteGroup>(std::move(span),
+                                                               std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsTracingConnection::GetTransitionRouteGroup(google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::GetTransitionRouteGroup");
+TransitionRouteGroupsTracingConnection::GetTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "GetTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTransitionRouteGroup(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsTracingConnection::CreateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::CreateTransitionRouteGroup");
+TransitionRouteGroupsTracingConnection::CreateTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "CreateTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTransitionRouteGroup(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-TransitionRouteGroupsTracingConnection::UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::UpdateTransitionRouteGroup");
+TransitionRouteGroupsTracingConnection::UpdateTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "UpdateTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTransitionRouteGroup(request));
 }
 
-Status
-TransitionRouteGroupsTracingConnection::DeleteTransitionRouteGroup(google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::DeleteTransitionRouteGroup");
+Status TransitionRouteGroupsTracingConnection::DeleteTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "DeleteTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTransitionRouteGroup(request));
 }
 
 StreamRange<google::cloud::location::Location>
-TransitionRouteGroupsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::ListLocations");
+TransitionRouteGroupsTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-TransitionRouteGroupsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::GetLocation");
+TransitionRouteGroupsTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-TransitionRouteGroupsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::ListOperations");
+TransitionRouteGroupsTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-TransitionRouteGroupsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::GetOperation");
+TransitionRouteGroupsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-TransitionRouteGroupsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_cx::TransitionRouteGroupsConnection::CancelOperation");
+Status TransitionRouteGroupsTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -116,7 +145,8 @@ MakeTransitionRouteGroupsTracingConnection(
     std::shared_ptr<dialogflow_cx::TransitionRouteGroupsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<TransitionRouteGroupsTracingConnection>(std::move(conn));
+    conn = std::make_shared<TransitionRouteGroupsTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

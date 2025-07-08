@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_VALIDATION_HELPER_V1_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_VALIDATION_HELPER_V1_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_retry_traits.h"
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_stub.h"
 #include "google/cloud/binaryauthorization/v1/validation_helper_v1_connection.h"
 #include "google/cloud/binaryauthorization/v1/validation_helper_v1_connection_idempotency_policy.h"
 #include "google/cloud/binaryauthorization/v1/validation_helper_v1_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,18 +42,23 @@ class ValidationHelperV1ConnectionImpl
   ~ValidationHelperV1ConnectionImpl() override = default;
 
   ValidationHelperV1ConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<binaryauthorization_v1_internal::ValidationHelperV1Stub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<binaryauthorization_v1_internal::ValidationHelperV1Stub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
-  ValidateAttestationOccurrence(google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::
+               ValidateAttestationOccurrenceResponse>
+  ValidateAttestationOccurrence(
+      google::cloud::binaryauthorization::v1::
+          ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<binaryauthorization_v1_internal::ValidationHelperV1Stub> stub_;
+  std::shared_ptr<binaryauthorization_v1_internal::ValidationHelperV1Stub>
+      stub_;
   Options options_;
 };
 

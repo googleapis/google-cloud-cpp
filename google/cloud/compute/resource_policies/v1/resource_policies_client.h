@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ResourcePoliciesClient {
  public:
-  explicit ResourcePoliciesClient(std::shared_ptr<ResourcePoliciesConnection> connection, Options opts = {});
+  explicit ResourcePoliciesClient(
+      std::shared_ptr<ResourcePoliciesConnection> connection,
+      Options opts = {});
   ~ResourcePoliciesClient();
 
   ///@{
@@ -77,10 +79,12 @@ class ResourcePoliciesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ResourcePoliciesClient const& a, ResourcePoliciesClient const& b) {
+  friend bool operator==(ResourcePoliciesClient const& a,
+                         ResourcePoliciesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ResourcePoliciesClient const& a, ResourcePoliciesClient const& b) {
+  friend bool operator!=(ResourcePoliciesClient const& a,
+                         ResourcePoliciesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,7 +123,8 @@ class ResourcePoliciesClient {
   /// [google.cloud.cpp.compute.v1.ResourcePoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L24}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
   AggregatedListResourcePolicies(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -161,8 +166,12 @@ class ResourcePoliciesClient {
   /// [google.cloud.cpp.compute.v1.ResourcePoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L24}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
-  AggregatedListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest request, Options opts = {});
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ResourcePoliciesScopedList>>
+  AggregatedListResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          AggregatedListResourcePoliciesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -196,7 +205,8 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicy(std::string const& project, std::string const& region, std::string const& resource_policy, Options opts = {});
+  DeleteResourcePolicy(std::string const& project, std::string const& region,
+                       std::string const& resource_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -209,8 +219,9 @@ class ResourcePoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteResourcePolicy(NoAwaitTag, std::string const& project, std::string const& region, std::string const& resource_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& resource_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -247,7 +258,9 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request, Options opts = {});
+  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                           DeleteResourcePolicyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +273,11 @@ class ResourcePoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteResourcePolicy(NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          DeleteResourcePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -273,7 +289,9 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteResourcePolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  DeleteResourcePolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -300,8 +318,9 @@ class ResourcePoliciesClient {
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L120}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-  GetResourcePolicy(std::string const& project, std::string const& region, std::string const& resource_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -331,8 +350,10 @@ class ResourcePoliciesClient {
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_114.proto#L120}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-  GetResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          GetResourcePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -360,8 +381,9 @@ class ResourcePoliciesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -392,8 +414,10 @@ class ResourcePoliciesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -427,7 +451,10 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicy(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::ResourcePolicy const& resource_policy_resource, Options opts = {});
+  InsertResourcePolicy(std::string const& project, std::string const& region,
+                       google::cloud::cpp::compute::v1::ResourcePolicy const&
+                           resource_policy_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -440,8 +467,11 @@ class ResourcePoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertResourcePolicy(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::ResourcePolicy const& resource_policy_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::ResourcePolicy const&
+          resource_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -478,7 +508,9 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request, Options opts = {});
+  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                           InsertResourcePolicyRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -491,8 +523,11 @@ class ResourcePoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertResourcePolicy(NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          InsertResourcePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -504,7 +539,9 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertResourcePolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  InsertResourcePolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -541,7 +578,8 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
-  ListResourcePolicies(std::string const& project, std::string const& region, Options opts = {});
+  ListResourcePolicies(std::string const& project, std::string const& region,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -582,7 +620,9 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
-  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest request, Options opts = {});
+  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
+                           ListResourcePoliciesRequest request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -618,7 +658,12 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicy(std::string const& project, std::string const& region, std::string const& resource_policy, std::string const& update_mask, google::cloud::cpp::compute::v1::ResourcePolicy const& resource_policy_resource, Options opts = {});
+  PatchResourcePolicy(std::string const& project, std::string const& region,
+                      std::string const& resource_policy,
+                      std::string const& update_mask,
+                      google::cloud::cpp::compute::v1::ResourcePolicy const&
+                          resource_policy_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -631,8 +676,12 @@ class ResourcePoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchResourcePolicy(NoAwaitTag, std::string const& project, std::string const& region, std::string const& resource_policy, std::string const& update_mask, google::cloud::cpp::compute::v1::ResourcePolicy const& resource_policy_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& resource_policy, std::string const& update_mask,
+      google::cloud::cpp::compute::v1::ResourcePolicy const&
+          resource_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -669,7 +718,9 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request, Options opts = {});
+  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
+                          PatchResourcePolicyRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -682,8 +733,11 @@ class ResourcePoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchResourcePolicy(NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -695,7 +749,9 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchResourcePolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  PatchResourcePolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -724,8 +780,12 @@ class ResourcePoliciesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+          region_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -756,8 +816,10 @@ class ResourcePoliciesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -786,7 +848,12 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -817,7 +884,9 @@ class ResourcePoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<ResourcePoliciesConnection> connection_;

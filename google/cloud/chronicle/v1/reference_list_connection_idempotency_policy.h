@@ -35,35 +35,36 @@ class ReferenceListServiceConnectionIdempotencyPolicy {
   virtual ~ReferenceListServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ReferenceListServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ReferenceListServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  GetReferenceList(google::cloud::chronicle::v1::GetReferenceListRequest const& request);
+  virtual google::cloud::Idempotency GetReferenceList(
+      google::cloud::chronicle::v1::GetReferenceListRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListReferenceLists(google::cloud::chronicle::v1::ListReferenceListsRequest request);
+  virtual google::cloud::Idempotency ListReferenceLists(
+      google::cloud::chronicle::v1::ListReferenceListsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateReferenceList(google::cloud::chronicle::v1::CreateReferenceListRequest const& request);
+  virtual google::cloud::Idempotency CreateReferenceList(
+      google::cloud::chronicle::v1::CreateReferenceListRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateReferenceList(google::cloud::chronicle::v1::UpdateReferenceListRequest const& request);
+  virtual google::cloud::Idempotency UpdateReferenceList(
+      google::cloud::chronicle::v1::UpdateReferenceListRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ReferenceListServiceConnectionIdempotencyPolicy>
-    MakeDefaultReferenceListServiceConnectionIdempotencyPolicy();
+MakeDefaultReferenceListServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace chronicle_v1

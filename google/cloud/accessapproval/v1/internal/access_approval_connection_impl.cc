@@ -32,54 +32,65 @@ namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<accessapproval_v1::AccessApprovalRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<accessapproval_v1::AccessApprovalRetryPolicyOption>()->clone();
+std::unique_ptr<accessapproval_v1::AccessApprovalRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<accessapproval_v1::AccessApprovalRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<accessapproval_v1::AccessApprovalBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<accessapproval_v1::AccessApprovalBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<accessapproval_v1::AccessApprovalConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<accessapproval_v1::AccessApprovalConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<accessapproval_v1::AccessApprovalConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 AccessApprovalConnectionImpl::AccessApprovalConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<accessapproval_v1_internal::AccessApprovalStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AccessApprovalConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      AccessApprovalConnection::options())) {}
 
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalConnectionImpl::ListApprovalRequests(google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
+AccessApprovalConnectionImpl::ListApprovalRequests(
+    google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListApprovalRequests(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListApprovalRequests(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<accessapproval_v1::AccessApprovalRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<accessapproval_v1::AccessApprovalRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::accessapproval::v1::ListApprovalRequestsMessage const& r) {
+          Options const& options,
+          google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::accessapproval::v1::ListApprovalRequestsMessage const& request) {
+                   google::cloud::accessapproval::v1::
+                       ListApprovalRequestsMessage const& request) {
               return stub->ListApprovalRequests(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::accessapproval::v1::ListApprovalRequestsResponse r) {
-        std::vector<google::cloud::accessapproval::v1::ApprovalRequest> result(r.approval_requests().size());
+        std::vector<google::cloud::accessapproval::v1::ApprovalRequest> result(
+            r.approval_requests().size());
         auto& messages = *r.mutable_approval_requests();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -87,105 +98,129 @@ AccessApprovalConnectionImpl::ListApprovalRequests(google::cloud::accessapproval
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalConnectionImpl::GetApprovalRequest(google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request) {
+AccessApprovalConnectionImpl::GetApprovalRequest(
+    google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetApprovalRequest(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request) {
+             google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
+                 request) {
         return stub_->GetApprovalRequest(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalConnectionImpl::ApproveApprovalRequest(google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request) {
+AccessApprovalConnectionImpl::ApproveApprovalRequest(
+    google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApproveApprovalRequest(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request) {
+             google::cloud::accessapproval::v1::
+                 ApproveApprovalRequestMessage const& request) {
         return stub_->ApproveApprovalRequest(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalConnectionImpl::DismissApprovalRequest(google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request) {
+AccessApprovalConnectionImpl::DismissApprovalRequest(
+    google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DismissApprovalRequest(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request) {
+             google::cloud::accessapproval::v1::
+                 DismissApprovalRequestMessage const& request) {
         return stub_->DismissApprovalRequest(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-AccessApprovalConnectionImpl::InvalidateApprovalRequest(google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request) {
+AccessApprovalConnectionImpl::InvalidateApprovalRequest(
+    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InvalidateApprovalRequest(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request) {
+             google::cloud::accessapproval::v1::
+                 InvalidateApprovalRequestMessage const& request) {
         return stub_->InvalidateApprovalRequest(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-AccessApprovalConnectionImpl::GetAccessApprovalSettings(google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request) {
+AccessApprovalConnectionImpl::GetAccessApprovalSettings(
+    google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAccessApprovalSettings(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request) {
+             google::cloud::accessapproval::v1::
+                 GetAccessApprovalSettingsMessage const& request) {
         return stub_->GetAccessApprovalSettings(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-AccessApprovalConnectionImpl::UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request) {
+AccessApprovalConnectionImpl::UpdateAccessApprovalSettings(
+    google::cloud::accessapproval::v1::
+        UpdateAccessApprovalSettingsMessage const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAccessApprovalSettings(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request) {
+             google::cloud::accessapproval::v1::
+                 UpdateAccessApprovalSettingsMessage const& request) {
         return stub_->UpdateAccessApprovalSettings(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-AccessApprovalConnectionImpl::DeleteAccessApprovalSettings(google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request) {
+Status AccessApprovalConnectionImpl::DeleteAccessApprovalSettings(
+    google::cloud::accessapproval::v1::
+        DeleteAccessApprovalSettingsMessage const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAccessApprovalSettings(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request) {
+             google::cloud::accessapproval::v1::
+                 DeleteAccessApprovalSettingsMessage const& request) {
         return stub_->DeleteAccessApprovalSettings(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
-AccessApprovalConnectionImpl::GetAccessApprovalServiceAccount(google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request) {
+AccessApprovalConnectionImpl::GetAccessApprovalServiceAccount(
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAccessApprovalServiceAccount(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request) {
-        return stub_->GetAccessApprovalServiceAccount(context, options, request);
+             google::cloud::accessapproval::v1::
+                 GetAccessApprovalServiceAccountMessage const& request) {
+        return stub_->GetAccessApprovalServiceAccount(context, options,
+                                                      request);
       },
       *current, request, __func__);
 }

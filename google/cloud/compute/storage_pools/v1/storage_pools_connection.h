@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/storage_pools/v1/internal/storage_pools_retry_traits.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class StoragePoolsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class StoragePoolsLimitedErrorCountRetryPolicy : public StoragePoolsRetryPolicy {
+class StoragePoolsLimitedErrorCountRetryPolicy
+    : public StoragePoolsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class StoragePoolsLimitedErrorCountRetryPolicy : public StoragePoolsRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit StoragePoolsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   StoragePoolsLimitedErrorCountRetryPolicy(
       StoragePoolsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : StoragePoolsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : StoragePoolsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   StoragePoolsLimitedErrorCountRetryPolicy(
       StoragePoolsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : StoragePoolsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : StoragePoolsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class StoragePoolsLimitedErrorCountRetryPolicy : public StoragePoolsRetryPolicy 
   using BaseType = StoragePoolsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_storage_pools_v1_internal::StoragePoolsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_storage_pools_v1_internal::StoragePoolsRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +133,14 @@ class StoragePoolsLimitedTimeRetryPolicy : public StoragePoolsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit StoragePoolsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  StoragePoolsLimitedTimeRetryPolicy(StoragePoolsLimitedTimeRetryPolicy&& rhs) noexcept
-    : StoragePoolsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  StoragePoolsLimitedTimeRetryPolicy(StoragePoolsLimitedTimeRetryPolicy const& rhs) noexcept
-    : StoragePoolsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StoragePoolsLimitedTimeRetryPolicy(
+      StoragePoolsLimitedTimeRetryPolicy&& rhs) noexcept
+      : StoragePoolsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StoragePoolsLimitedTimeRetryPolicy(
+      StoragePoolsLimitedTimeRetryPolicy const& rhs) noexcept
+      : StoragePoolsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +162,9 @@ class StoragePoolsLimitedTimeRetryPolicy : public StoragePoolsRetryPolicy {
   using BaseType = StoragePoolsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_storage_pools_v1_internal::StoragePoolsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_storage_pools_v1_internal::StoragePoolsRetryTraits>
+      impl_;
 };
 
 /**
@@ -170,7 +177,8 @@ class StoragePoolsLimitedTimeRetryPolicy : public StoragePoolsRetryPolicy {
  *
  * To create a concrete instance, see `MakeStoragePoolsConnection()`.
  *
- * For mocking, see `compute_storage_pools_v1_mocks::MockStoragePoolsConnection`.
+ * For mocking, see
+ * `compute_storage_pools_v1_mocks::MockStoragePoolsConnection`.
  */
 class StoragePoolsConnection {
  public:
@@ -178,53 +186,71 @@ class StoragePoolsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
-  AggregatedListStoragePools(google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
+  AggregatedListStoragePools(google::cloud::cpp::compute::storage_pools::v1::
+                                 AggregatedListStoragePoolsRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request);
+  DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        DeleteStoragePoolRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request);
+  DeleteStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                                    DeleteStoragePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteStoragePool( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteStoragePool(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePool>
-  GetStoragePool(google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
+      google::cloud::cpp::compute::storage_pools::v1::
+          GetStoragePoolRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request);
+  InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        InsertStoragePoolRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request);
+  InsertStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                                    InsertStoragePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertStoragePool( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertStoragePool(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::StoragePool>
-  ListStoragePools(google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest request);
+  ListStoragePools(
+      google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest
+          request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk>
-  ListDisks(google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request);
+  ListDisks(
+      google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::
+                         TestIamPermissionsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request);
+  UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        UpdateStoragePoolRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request);
+  UpdateStoragePool(NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                                    UpdateStoragePoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateStoragePool( google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateStoragePool(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

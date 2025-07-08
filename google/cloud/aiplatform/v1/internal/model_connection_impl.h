@@ -46,146 +46,174 @@ class ModelServiceConnectionImpl
   ~ModelServiceConnectionImpl() override = default;
 
   ModelServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::ModelServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<aiplatform_v1_internal::ModelServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-  UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request) override;
+  UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UploadModel(NoAwaitTag,
-      google::cloud::aiplatform::v1::UploadModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UploadModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UploadModelRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-  UploadModel(
-      google::longrunning::Operation const& operation) override;
+  UploadModel(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  GetModel(google::cloud::aiplatform::v1::GetModelRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
+      google::cloud::aiplatform::v1::GetModelRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModels(google::cloud::aiplatform::v1::ListModelsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Model> ListModels(
+      google::cloud::aiplatform::v1::ListModelsRequest request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModelVersions(google::cloud::aiplatform::v1::ListModelVersionsRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
+      google::cloud::aiplatform::v1::ListModelVersionsRequest request) override;
 
   StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
-  ListModelVersionCheckpoints(google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request) override;
+  ListModelVersionCheckpoints(
+      google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  UpdateModel(google::cloud::aiplatform::v1::UpdateModelRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
+      google::cloud::aiplatform::v1::UpdateModelRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-  UpdateExplanationDataset(google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request) override;
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  UpdateExplanationDataset(
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateExplanationDataset(NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
   UpdateExplanationDataset(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request) override;
+  DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteModelRequest const& request) override;
-
-  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModel(
-      google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteModelRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelVersion(google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteModelVersion(NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) override;
+  DeleteModel(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModelVersion(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  MergeVersionAliases(google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteModelVersion(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteModelVersion(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
+      google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-  ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request) override;
+  ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportModel(NoAwaitTag,
-      google::cloud::aiplatform::v1::ExportModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::ExportModelRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-  ExportModel(
-      google::longrunning::Operation const& operation) override;
+  ExportModel(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-  CopyModel(google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CopyModel(NoAwaitTag,
+  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
       google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-  CopyModel(
+  StatusOr<google::longrunning::Operation> CopyModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  ImportModelEvaluation(google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request) override;
+  ImportModelEvaluation(
+      google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
-  BatchImportModelEvaluationSlices(google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request) override;
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+  BatchImportModelEvaluationSlices(
+      google::cloud::aiplatform::v1::
+          BatchImportModelEvaluationSlicesRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
-  BatchImportEvaluatedAnnotations(google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request) override;
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
+  BatchImportEvaluatedAnnotations(
+      google::cloud::aiplatform::v1::
+          BatchImportEvaluatedAnnotationsRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  GetModelEvaluation(google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ModelEvaluation> GetModelEvaluation(
+      google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request)
+      override;
 
   StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
-  ListModelEvaluations(google::cloud::aiplatform::v1::ListModelEvaluationsRequest request) override;
+  ListModelEvaluations(
+      google::cloud::aiplatform::v1::ListModelEvaluationsRequest request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-  GetModelEvaluationSlice(google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request) override;
+  GetModelEvaluationSlice(
+      google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
+          request) override;
 
   StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-  ListModelEvaluationSlices(google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request) override;
+  ListModelEvaluationSlices(
+      google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -43,14 +43,14 @@ class AuthorizedDomainsConnectionImpl
   ~AuthorizedDomainsConnectionImpl() override = default;
 
   AuthorizedDomainsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_v1_internal::AuthorizedDomainsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_v1_internal::AuthorizedDomainsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::appengine::v1::AuthorizedDomain>
-  ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request) override;
+  StreamRange<google::appengine::v1::AuthorizedDomain> ListAuthorizedDomains(
+      google::appengine::v1::ListAuthorizedDomainsRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

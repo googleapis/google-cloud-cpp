@@ -35,23 +35,31 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ReservationServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_RESERVATION_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_RESERVATION_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_RESERVATION_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_RESERVATION_SERVICE_AUTHORITY",
       "bigqueryreservation.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<bigquery_reservation_v1::ReservationServiceRetryPolicyOption>()) {
+  if (!options.has<
+          bigquery_reservation_v1::ReservationServiceRetryPolicyOption>()) {
     options.set<bigquery_reservation_v1::ReservationServiceRetryPolicyOption>(
         bigquery_reservation_v1::ReservationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<bigquery_reservation_v1::ReservationServiceBackoffPolicyOption>()) {
+  if (!options.has<
+          bigquery_reservation_v1::ReservationServiceBackoffPolicyOption>()) {
     options.set<bigquery_reservation_v1::ReservationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<bigquery_reservation_v1::ReservationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquery_reservation_v1::ReservationServiceConnectionIdempotencyPolicyOption>(
-        bigquery_reservation_v1::MakeDefaultReservationServiceConnectionIdempotencyPolicy());
+  if (!options.has<bigquery_reservation_v1::
+                       ReservationServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<bigquery_reservation_v1::
+                    ReservationServiceConnectionIdempotencyPolicyOption>(
+        bigquery_reservation_v1::
+            MakeDefaultReservationServiceConnectionIdempotencyPolicy());
   }
 
   return options;

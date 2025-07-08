@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_OPERATIONS_V1_GLOBAL_OPERATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_OPERATIONS_V1_GLOBAL_OPERATIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/global_operations/v1/global_operations_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class GlobalOperationsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GlobalOperationsLimitedErrorCountRetryPolicy : public GlobalOperationsRetryPolicy {
+class GlobalOperationsLimitedErrorCountRetryPolicy
+    : public GlobalOperationsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class GlobalOperationsLimitedErrorCountRetryPolicy : public GlobalOperationsRetr
    *     @p maximum_failures == 0.
    */
   explicit GlobalOperationsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   GlobalOperationsLimitedErrorCountRetryPolicy(
       GlobalOperationsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : GlobalOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : GlobalOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GlobalOperationsLimitedErrorCountRetryPolicy(
       GlobalOperationsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : GlobalOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : GlobalOperationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class GlobalOperationsLimitedErrorCountRetryPolicy : public GlobalOperationsRetr
   using BaseType = GlobalOperationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_global_operations_v1_internal::GlobalOperationsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_global_operations_v1_internal::GlobalOperationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class GlobalOperationsLimitedErrorCountRetryPolicy : public GlobalOperationsRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class GlobalOperationsLimitedTimeRetryPolicy : public GlobalOperationsRetryPolicy {
+class GlobalOperationsLimitedTimeRetryPolicy
+    : public GlobalOperationsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class GlobalOperationsLimitedTimeRetryPolicy : public GlobalOperationsRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit GlobalOperationsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  GlobalOperationsLimitedTimeRetryPolicy(GlobalOperationsLimitedTimeRetryPolicy&& rhs) noexcept
-    : GlobalOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  GlobalOperationsLimitedTimeRetryPolicy(GlobalOperationsLimitedTimeRetryPolicy const& rhs) noexcept
-    : GlobalOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GlobalOperationsLimitedTimeRetryPolicy(
+      GlobalOperationsLimitedTimeRetryPolicy&& rhs) noexcept
+      : GlobalOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GlobalOperationsLimitedTimeRetryPolicy(
+      GlobalOperationsLimitedTimeRetryPolicy const& rhs) noexcept
+      : GlobalOperationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class GlobalOperationsLimitedTimeRetryPolicy : public GlobalOperationsRetryPolic
   using BaseType = GlobalOperationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_global_operations_v1_internal::GlobalOperationsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_global_operations_v1_internal::GlobalOperationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -167,7 +175,8 @@ class GlobalOperationsLimitedTimeRetryPolicy : public GlobalOperationsRetryPolic
  *
  * To create a concrete instance, see `MakeGlobalOperationsConnection()`.
  *
- * For mocking, see `compute_global_operations_v1_mocks::MockGlobalOperationsConnection`.
+ * For mocking, see
+ * `compute_global_operations_v1_mocks::MockGlobalOperationsConnection`.
  */
 class GlobalOperationsConnection {
  public:
@@ -175,20 +184,27 @@ class GlobalOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::OperationsScopedList>>
-  AggregatedListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::OperationsScopedList>>
+  AggregatedListGlobalOperations(
+      google::cloud::cpp::compute::global_operations::v1::
+          AggregatedListGlobalOperationsRequest request);
 
-  virtual Status
-  DeleteOperation(google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetOperation(google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
+      google::cloud::cpp::compute::global_operations::v1::
+          GetOperationRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest request);
+  ListGlobalOperations(google::cloud::cpp::compute::global_operations::v1::
+                           ListGlobalOperationsRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::global_operations::v1::WaitRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

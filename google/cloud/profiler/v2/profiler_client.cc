@@ -28,18 +28,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProfilerServiceClient::ProfilerServiceClient(
     std::shared_ptr<ProfilerServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProfilerServiceClient::~ProfilerServiceClient() = default;
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceClient::CreateProfile(google::devtools::cloudprofiler::v2::CreateProfileRequest const& request, Options opts) {
+ProfilerServiceClient::CreateProfile(
+    google::devtools::cloudprofiler::v2::CreateProfileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProfile(request);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceClient::CreateOfflineProfile(std::string const& parent, google::devtools::cloudprofiler::v2::Profile const& profile, Options opts) {
+ProfilerServiceClient::CreateOfflineProfile(
+    std::string const& parent,
+    google::devtools::cloudprofiler::v2::Profile const& profile, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest request;
   request.set_parent(parent);
@@ -48,13 +52,18 @@ ProfilerServiceClient::CreateOfflineProfile(std::string const& parent, google::d
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceClient::CreateOfflineProfile(google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request, Options opts) {
+ProfilerServiceClient::CreateOfflineProfile(
+    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateOfflineProfile(request);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceClient::UpdateProfile(google::devtools::cloudprofiler::v2::Profile const& profile, google::protobuf::FieldMask const& update_mask, Options opts) {
+ProfilerServiceClient::UpdateProfile(
+    google::devtools::cloudprofiler::v2::Profile const& profile,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudprofiler::v2::UpdateProfileRequest request;
   *request.mutable_profile() = profile;
@@ -63,7 +72,9 @@ ProfilerServiceClient::UpdateProfile(google::devtools::cloudprofiler::v2::Profil
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
-ProfilerServiceClient::UpdateProfile(google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request, Options opts) {
+ProfilerServiceClient::UpdateProfile(
+    google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProfile(request);
 }

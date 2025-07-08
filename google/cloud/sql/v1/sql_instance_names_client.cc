@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlInstanceNamesServiceClient::SqlInstanceNamesServiceClient(
     std::shared_ptr<SqlInstanceNamesServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SqlInstanceNamesServiceClient::~SqlInstanceNamesServiceClient() = default;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

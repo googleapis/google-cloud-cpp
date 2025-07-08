@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_PRODUCT_SEARCH_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_PRODUCT_SEARCH_TRACING_CONNECTION_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/vision/v1/product_search_connection.h"
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
@@ -36,85 +36,95 @@ class ProductSearchTracingConnection
   ~ProductSearchTracingConnection() override = default;
 
   explicit ProductSearchTracingConnection(
-    std::shared_ptr<vision_v1::ProductSearchConnection> child);
+      std::shared_ptr<vision_v1::ProductSearchConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  CreateProductSet(google::cloud::vision::v1::CreateProductSetRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
+      google::cloud::vision::v1::CreateProductSetRequest const& request)
+      override;
 
-  StreamRange<google::cloud::vision::v1::ProductSet>
-  ListProductSets(google::cloud::vision::v1::ListProductSetsRequest request) override;
+  StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
+      google::cloud::vision::v1::ListProductSetsRequest request) override;
 
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  GetProductSet(google::cloud::vision::v1::GetProductSetRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
+      google::cloud::vision::v1::GetProductSetRequest const& request) override;
 
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  UpdateProductSet(google::cloud::vision::v1::UpdateProductSetRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
+      google::cloud::vision::v1::UpdateProductSetRequest const& request)
+      override;
 
-  Status
-  DeleteProductSet(google::cloud::vision::v1::DeleteProductSetRequest const& request) override;
+  Status DeleteProductSet(
+      google::cloud::vision::v1::DeleteProductSetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::vision::v1::Product>
-  CreateProduct(google::cloud::vision::v1::CreateProductRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::Product> CreateProduct(
+      google::cloud::vision::v1::CreateProductRequest const& request) override;
 
-  StreamRange<google::cloud::vision::v1::Product>
-  ListProducts(google::cloud::vision::v1::ListProductsRequest request) override;
+  StreamRange<google::cloud::vision::v1::Product> ListProducts(
+      google::cloud::vision::v1::ListProductsRequest request) override;
 
-  StatusOr<google::cloud::vision::v1::Product>
-  GetProduct(google::cloud::vision::v1::GetProductRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::Product> GetProduct(
+      google::cloud::vision::v1::GetProductRequest const& request) override;
 
-  StatusOr<google::cloud::vision::v1::Product>
-  UpdateProduct(google::cloud::vision::v1::UpdateProductRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
+      google::cloud::vision::v1::UpdateProductRequest const& request) override;
 
-  Status
-  DeleteProduct(google::cloud::vision::v1::DeleteProductRequest const& request) override;
+  Status DeleteProduct(
+      google::cloud::vision::v1::DeleteProductRequest const& request) override;
 
-  StatusOr<google::cloud::vision::v1::ReferenceImage>
-  CreateReferenceImage(google::cloud::vision::v1::CreateReferenceImageRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
+      google::cloud::vision::v1::CreateReferenceImageRequest const& request)
+      override;
 
-  Status
-  DeleteReferenceImage(google::cloud::vision::v1::DeleteReferenceImageRequest const& request) override;
+  Status DeleteReferenceImage(
+      google::cloud::vision::v1::DeleteReferenceImageRequest const& request)
+      override;
 
-  StreamRange<google::cloud::vision::v1::ReferenceImage>
-  ListReferenceImages(google::cloud::vision::v1::ListReferenceImagesRequest request) override;
+  StreamRange<google::cloud::vision::v1::ReferenceImage> ListReferenceImages(
+      google::cloud::vision::v1::ListReferenceImagesRequest request) override;
 
-  StatusOr<google::cloud::vision::v1::ReferenceImage>
-  GetReferenceImage(google::cloud::vision::v1::GetReferenceImageRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
+      google::cloud::vision::v1::GetReferenceImageRequest const& request)
+      override;
 
-  Status
-  AddProductToProductSet(google::cloud::vision::v1::AddProductToProductSetRequest const& request) override;
+  Status AddProductToProductSet(
+      google::cloud::vision::v1::AddProductToProductSetRequest const& request)
+      override;
 
-  Status
-  RemoveProductFromProductSet(google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request) override;
+  Status RemoveProductFromProductSet(
+      google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
+          request) override;
 
-  StreamRange<google::cloud::vision::v1::Product>
-  ListProductsInProductSet(google::cloud::vision::v1::ListProductsInProductSetRequest request) override;
+  StreamRange<google::cloud::vision::v1::Product> ListProductsInProductSet(
+      google::cloud::vision::v1::ListProductsInProductSetRequest request)
+      override;
 
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const& request) override;
+  ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const&
+                        request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportProductSets(NoAwaitTag,
-      google::cloud::vision::v1::ImportProductSetsRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportProductSets(
+      NoAwaitTag,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-  PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  PurgeProducts(NoAwaitTag,
-      google::cloud::vision::v1::PurgeProductsRequest const& request) override;
+  ImportProductSets(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> PurgeProducts(
+      NoAwaitTag,
+      google::cloud::vision::v1::PurgeProductsRequest const& request) override;
+
+  future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
+  PurgeProducts(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<vision_v1::ProductSearchConnection> child_;

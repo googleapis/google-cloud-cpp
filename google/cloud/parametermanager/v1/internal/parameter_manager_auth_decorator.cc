@@ -31,108 +31,115 @@ ParameterManagerAuth::ParameterManagerAuth(
     std::shared_ptr<ParameterManagerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::parametermanager::v1::ListParametersResponse> ParameterManagerAuth::ListParameters(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::parametermanager::v1::ListParametersResponse>
+ParameterManagerAuth::ListParameters(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parametermanager::v1::ListParametersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListParameters(context, options, request);
 }
 
-StatusOr<google::cloud::parametermanager::v1::Parameter> ParameterManagerAuth::GetParameter(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::parametermanager::v1::Parameter>
+ParameterManagerAuth::GetParameter(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parametermanager::v1::GetParameterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetParameter(context, options, request);
 }
 
-StatusOr<google::cloud::parametermanager::v1::Parameter> ParameterManagerAuth::CreateParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::CreateParameterRequest const& request) {
+StatusOr<google::cloud::parametermanager::v1::Parameter>
+ParameterManagerAuth::CreateParameter(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateParameterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateParameter(context, options, request);
 }
 
-StatusOr<google::cloud::parametermanager::v1::Parameter> ParameterManagerAuth::UpdateParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::UpdateParameterRequest const& request) {
+StatusOr<google::cloud::parametermanager::v1::Parameter>
+ParameterManagerAuth::UpdateParameter(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateParameterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateParameter(context, options, request);
 }
 
 Status ParameterManagerAuth::DeleteParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::DeleteParameterRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteParameterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteParameter(context, options, request);
 }
 
-StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse> ParameterManagerAuth::ListParameterVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::ListParameterVersionsRequest const& request) {
+StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse>
+ParameterManagerAuth::ListParameterVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListParameterVersionsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListParameterVersions(context, options, request);
 }
 
-StatusOr<google::cloud::parametermanager::v1::ParameterVersion> ParameterManagerAuth::GetParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) {
+StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
+ParameterManagerAuth::GetParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetParameterVersionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetParameterVersion(context, options, request);
 }
 
-StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse> ParameterManagerAuth::RenderParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) {
+StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
+ParameterManagerAuth::RenderParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RenderParameterVersion(context, options, request);
 }
 
-StatusOr<google::cloud::parametermanager::v1::ParameterVersion> ParameterManagerAuth::CreateParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) {
+StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
+ParameterManagerAuth::CreateParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateParameterVersion(context, options, request);
 }
 
-StatusOr<google::cloud::parametermanager::v1::ParameterVersion> ParameterManagerAuth::UpdateParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) {
+StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
+ParameterManagerAuth::UpdateParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateParameterVersion(context, options, request);
 }
 
 Status ParameterManagerAuth::DeleteParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteParameterVersion(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ParameterManagerAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ParameterManagerAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -140,8 +147,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> ParameterManagerAuth::L
 }
 
 StatusOr<google::cloud::location::Location> ParameterManagerAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

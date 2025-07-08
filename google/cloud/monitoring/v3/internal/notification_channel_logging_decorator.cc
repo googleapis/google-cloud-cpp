@@ -32,48 +32,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NotificationChannelServiceLogging::NotificationChannelServiceLogging(
     std::shared_ptr<NotificationChannelServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
 NotificationChannelServiceLogging::ListNotificationChannelDescriptors(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::v3::ListNotificationChannelDescriptorsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::v3::ListNotificationChannelDescriptorsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::ListNotificationChannelDescriptorsRequest const& request) {
-        return child_->ListNotificationChannelDescriptors(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::
+                 ListNotificationChannelDescriptorsRequest const& request) {
+        return child_->ListNotificationChannelDescriptors(context, options,
+                                                          request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceLogging::GetNotificationChannelDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::v3::GetNotificationChannelDescriptorRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::GetNotificationChannelDescriptorRequest const& request) {
-        return child_->GetNotificationChannelDescriptor(context, options, request);
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
+              request) {
+        return child_->GetNotificationChannelDescriptor(context, options,
+                                                        request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ListNotificationChannelsResponse>
 NotificationChannelServiceLogging::ListNotificationChannels(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListNotificationChannelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::ListNotificationChannelsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::ListNotificationChannelsRequest const&
+                 request) {
         return child_->ListNotificationChannels(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +81,12 @@ NotificationChannelServiceLogging::ListNotificationChannels(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceLogging::GetNotificationChannel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetNotificationChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::GetNotificationChannelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::GetNotificationChannelRequest const&
+                 request) {
         return child_->GetNotificationChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +94,12 @@ NotificationChannelServiceLogging::GetNotificationChannel(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceLogging::CreateNotificationChannel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateNotificationChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::CreateNotificationChannelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::CreateNotificationChannelRequest const&
+                 request) {
         return child_->CreateNotificationChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,27 +107,24 @@ NotificationChannelServiceLogging::CreateNotificationChannel(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceLogging::UpdateNotificationChannel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateNotificationChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::UpdateNotificationChannelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::UpdateNotificationChannelRequest const&
+                 request) {
         return child_->UpdateNotificationChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-NotificationChannelServiceLogging::DeleteNotificationChannel(
-    grpc::ClientContext& context,
-    Options const& options,
+Status NotificationChannelServiceLogging::DeleteNotificationChannel(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteNotificationChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::DeleteNotificationChannelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::DeleteNotificationChannelRequest const&
+                 request) {
         return child_->DeleteNotificationChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,41 +132,43 @@ NotificationChannelServiceLogging::DeleteNotificationChannel(
 
 Status
 NotificationChannelServiceLogging::SendNotificationChannelVerificationCode(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::v3::SendNotificationChannelVerificationCodeRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::v3::
+        SendNotificationChannelVerificationCodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::SendNotificationChannelVerificationCodeRequest const& request) {
-        return child_->SendNotificationChannelVerificationCode(context, options, request);
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::monitoring::v3::
+              SendNotificationChannelVerificationCodeRequest const& request) {
+        return child_->SendNotificationChannelVerificationCode(context, options,
+                                                               request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
 NotificationChannelServiceLogging::GetNotificationChannelVerificationCode(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const& request) {
-        return child_->GetNotificationChannelVerificationCode(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::
+                 GetNotificationChannelVerificationCodeRequest const& request) {
+        return child_->GetNotificationChannelVerificationCode(context, options,
+                                                              request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceLogging::VerifyNotificationChannel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::VerifyNotificationChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::monitoring::v3::VerifyNotificationChannelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::v3::VerifyNotificationChannelRequest const&
+                 request) {
         return child_->VerifyNotificationChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

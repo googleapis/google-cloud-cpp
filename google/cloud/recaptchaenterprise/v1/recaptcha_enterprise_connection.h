@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_RECAPTCHA_ENTERPRISE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECAPTCHAENTERPRISE_V1_RECAPTCHA_ENTERPRISE_CONNECTION_H
 
+#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_retry_traits.h"
+#include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_retry_traits.h"
-#include "google/cloud/recaptchaenterprise/v1/recaptcha_enterprise_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -36,14 +36,17 @@ namespace recaptchaenterprise_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RecaptchaEnterpriseServiceConnection`.
-class RecaptchaEnterpriseServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class RecaptchaEnterpriseServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `RecaptchaEnterpriseServiceConnection` based on counting errors.
+ * A retry policy for `RecaptchaEnterpriseServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +55,8 @@ class RecaptchaEnterpriseServiceRetryPolicy : public ::google::cloud::RetryPolic
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy : public RecaptchaEnterpriseServiceRetryPolicy {
+class RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy
+    : public RecaptchaEnterpriseServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +65,19 @@ class RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy : public RecaptchaE
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy(
       RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy(
-      RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -80,8 +88,10 @@ class RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy : public RecaptchaE
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone() const override {
-    return std::make_unique<RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -89,11 +99,14 @@ class RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy : public RecaptchaE
   using BaseType = RecaptchaEnterpriseServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `RecaptchaEnterpriseServiceConnection` based on elapsed time.
+ * A retry policy for `RecaptchaEnterpriseServiceConnection` based on elapsed
+ * time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -102,7 +115,8 @@ class RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy : public RecaptchaE
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RecaptchaEnterpriseServiceLimitedTimeRetryPolicy : public RecaptchaEnterpriseServiceRetryPolicy {
+class RecaptchaEnterpriseServiceLimitedTimeRetryPolicy
+    : public RecaptchaEnterpriseServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +141,16 @@ class RecaptchaEnterpriseServiceLimitedTimeRetryPolicy : public RecaptchaEnterpr
   template <typename DurationRep, typename DurationPeriod>
   explicit RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(RecaptchaEnterpriseServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(RecaptchaEnterpriseServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(
+      RecaptchaEnterpriseServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(
+      RecaptchaEnterpriseServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : RecaptchaEnterpriseServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,7 +163,8 @@ class RecaptchaEnterpriseServiceLimitedTimeRetryPolicy : public RecaptchaEnterpr
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone()
+      const override {
     return std::make_unique<RecaptchaEnterpriseServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
@@ -154,20 +173,25 @@ class RecaptchaEnterpriseServiceLimitedTimeRetryPolicy : public RecaptchaEnterpr
   using BaseType = RecaptchaEnterpriseServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      recaptchaenterprise_v1_internal::RecaptchaEnterpriseServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `RecaptchaEnterpriseServiceConnection` object for `RecaptchaEnterpriseServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `RecaptchaEnterpriseServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `RecaptchaEnterpriseServiceConnection` object for
  * `RecaptchaEnterpriseServiceClient`.
  *
- * To create a concrete instance, see `MakeRecaptchaEnterpriseServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `RecaptchaEnterpriseServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `RecaptchaEnterpriseServiceClient`.
  *
- * For mocking, see `recaptchaenterprise_v1_mocks::MockRecaptchaEnterpriseServiceConnection`.
+ * To create a concrete instance, see
+ * `MakeRecaptchaEnterpriseServiceConnection()`.
+ *
+ * For mocking, see
+ * `recaptchaenterprise_v1_mocks::MockRecaptchaEnterpriseServiceConnection`.
  */
 class RecaptchaEnterpriseServiceConnection {
  public:
@@ -176,95 +200,132 @@ class RecaptchaEnterpriseServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
-  CreateAssessment(google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request);
+  CreateAssessment(
+      google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
-  AnnotateAssessment(google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request);
+  virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
+  AnnotateAssessment(
+      google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-  CreateKey(google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request);
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Key> CreateKey(
+      google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request);
 
-  virtual StreamRange<google::cloud::recaptchaenterprise::v1::Key>
-  ListKeys(google::cloud::recaptchaenterprise::v1::ListKeysRequest request);
+  virtual StreamRange<google::cloud::recaptchaenterprise::v1::Key> ListKeys(
+      google::cloud::recaptchaenterprise::v1::ListKeysRequest request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
-  RetrieveLegacySecretKey(google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request);
+  virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
+  RetrieveLegacySecretKey(google::cloud::recaptchaenterprise::v1::
+                              RetrieveLegacySecretKeyRequest const& request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-  GetKey(google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request);
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Key> GetKey(
+      google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-  UpdateKey(google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request);
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Key> UpdateKey(
+      google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request);
 
-  virtual Status
-  DeleteKey(google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request);
+  virtual Status DeleteKey(
+      google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Key>
-  MigrateKey(google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request);
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Key> MigrateKey(
+      google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
-  AddIpOverride(google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request);
+  virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+  AddIpOverride(
+      google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
-  RemoveIpOverride(google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request);
+  virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+  RemoveIpOverride(
+      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+          request);
 
   virtual StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
-  ListIpOverrides(google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request);
+  ListIpOverrides(
+      google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
-  GetMetrics(google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
+  virtual StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
+      google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
 
   virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  CreateFirewallPolicy(google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request);
+  CreateFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+          request);
 
   virtual StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  ListFirewallPolicies(google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest request);
+  ListFirewallPolicies(
+      google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest
+          request);
 
   virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  GetFirewallPolicy(google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request);
+  GetFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
-  UpdateFirewallPolicy(google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request);
+  UpdateFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+          request);
 
-  virtual Status
-  DeleteFirewallPolicy(google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request);
+  virtual Status DeleteFirewallPolicy(
+      google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
-  ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request);
+  virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::
+                              ReorderFirewallPoliciesRequest const& request);
 
-  virtual StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
-  ListRelatedAccountGroups(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest request);
+  virtual StreamRange<
+      google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
+  ListRelatedAccountGroups(
+      google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
+          request);
 
-  virtual StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-  ListRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest request);
+  virtual StreamRange<
+      google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+  ListRelatedAccountGroupMemberships(
+      google::cloud::recaptchaenterprise::v1::
+          ListRelatedAccountGroupMembershipsRequest request);
 
-  virtual StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
-  SearchRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest request);
+  virtual StreamRange<
+      google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>
+  SearchRelatedAccountGroupMemberships(
+      google::cloud::recaptchaenterprise::v1::
+          SearchRelatedAccountGroupMembershipsRequest request);
 };
 
 /**
- * A factory function to construct an object of type `RecaptchaEnterpriseServiceConnection`.
+ * A factory function to construct an object of type
+ * `RecaptchaEnterpriseServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of RecaptchaEnterpriseServiceClient.
+ * should be passed as an argument to the constructor of
+ * RecaptchaEnterpriseServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `RecaptchaEnterpriseServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `RecaptchaEnterpriseServiceConnection`. Expected options are any of
+ * the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::recaptchaenterprise_v1::RecaptchaEnterpriseServicePolicyOptionList`
+ * -
+ * `google::cloud::recaptchaenterprise_v1::RecaptchaEnterpriseServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `RecaptchaEnterpriseServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the
+ * `RecaptchaEnterpriseServiceConnection` created by this function.
  */
-std::shared_ptr<RecaptchaEnterpriseServiceConnection> MakeRecaptchaEnterpriseServiceConnection(
-    Options options = {});
+std::shared_ptr<RecaptchaEnterpriseServiceConnection>
+MakeRecaptchaEnterpriseServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recaptchaenterprise_v1

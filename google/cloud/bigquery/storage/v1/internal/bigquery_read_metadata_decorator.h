@@ -34,30 +34,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BigQueryReadMetadata : public BigQueryReadStub {
  public:
   ~BigQueryReadMetadata() override = default;
-  BigQueryReadMetadata(
-      std::shared_ptr<BigQueryReadStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  BigQueryReadMetadata(std::shared_ptr<BigQueryReadStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+          request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::bigquery::storage::v1::ReadRowsResponse>>
-  ReadRows(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) override;
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+  ReadRows(std::shared_ptr<grpc::ClientContext> context, Options const& options,
+           google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse> SplitReadStream(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+  SplitReadStream(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+          request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 
@@ -67,7 +66,7 @@ class BigQueryReadMetadata : public BigQueryReadStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1_internal
 }  // namespace cloud
 }  // namespace google

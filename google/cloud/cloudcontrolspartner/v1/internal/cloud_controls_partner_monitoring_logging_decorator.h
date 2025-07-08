@@ -31,22 +31,24 @@ namespace cloud {
 namespace cloudcontrolspartner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudControlsPartnerMonitoringLogging : public CloudControlsPartnerMonitoringStub {
+class CloudControlsPartnerMonitoringLogging
+    : public CloudControlsPartnerMonitoringStub {
  public:
   ~CloudControlsPartnerMonitoringLogging() override = default;
-  CloudControlsPartnerMonitoringLogging(std::shared_ptr<CloudControlsPartnerMonitoringStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  CloudControlsPartnerMonitoringLogging(
+      std::shared_ptr<CloudControlsPartnerMonitoringStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse> ListViolations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
+  ListViolations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
+          request) override;
 
  private:
   std::shared_ptr<CloudControlsPartnerMonitoringStub> child_;

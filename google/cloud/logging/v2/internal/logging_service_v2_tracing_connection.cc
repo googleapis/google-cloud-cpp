@@ -33,45 +33,54 @@ LoggingServiceV2TracingConnection::LoggingServiceV2TracingConnection(
     std::shared_ptr<logging_v2::LoggingServiceV2Connection> child)
     : child_(std::move(child)) {}
 
-Status
-LoggingServiceV2TracingConnection::DeleteLog(google::logging::v2::DeleteLogRequest const& request) {
-  auto span = internal::MakeSpan("logging_v2::LoggingServiceV2Connection::DeleteLog");
+Status LoggingServiceV2TracingConnection::DeleteLog(
+    google::logging::v2::DeleteLogRequest const& request) {
+  auto span =
+      internal::MakeSpan("logging_v2::LoggingServiceV2Connection::DeleteLog");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteLog(request));
 }
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
-LoggingServiceV2TracingConnection::WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request) {
-  auto span = internal::MakeSpan("logging_v2::LoggingServiceV2Connection::WriteLogEntries");
+LoggingServiceV2TracingConnection::WriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::LoggingServiceV2Connection::WriteLogEntries");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WriteLogEntries(request));
 }
 
 StreamRange<google::logging::v2::LogEntry>
-LoggingServiceV2TracingConnection::ListLogEntries(google::logging::v2::ListLogEntriesRequest request) {
-  auto span = internal::MakeSpan("logging_v2::LoggingServiceV2Connection::ListLogEntries");
+LoggingServiceV2TracingConnection::ListLogEntries(
+    google::logging::v2::ListLogEntriesRequest request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::LoggingServiceV2Connection::ListLogEntries");
   internal::OTelScope scope(span);
   auto sr = child_->ListLogEntries(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogEntry>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::api::MonitoredResourceDescriptor>
-LoggingServiceV2TracingConnection::ListMonitoredResourceDescriptors(google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
-  auto span = internal::MakeSpan("logging_v2::LoggingServiceV2Connection::ListMonitoredResourceDescriptors");
+LoggingServiceV2TracingConnection::ListMonitoredResourceDescriptors(
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::LoggingServiceV2Connection::"
+      "ListMonitoredResourceDescriptors");
   internal::OTelScope scope(span);
   auto sr = child_->ListMonitoredResourceDescriptors(std::move(request));
-  return internal::MakeTracedStreamRange<google::api::MonitoredResourceDescriptor>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::api::MonitoredResourceDescriptor>(std::move(span), std::move(sr));
 }
 
-StreamRange<std::string>
-LoggingServiceV2TracingConnection::ListLogs(google::logging::v2::ListLogsRequest request) {
-  auto span = internal::MakeSpan("logging_v2::LoggingServiceV2Connection::ListLogs");
+StreamRange<std::string> LoggingServiceV2TracingConnection::ListLogs(
+    google::logging::v2::ListLogsRequest request) {
+  auto span =
+      internal::MakeSpan("logging_v2::LoggingServiceV2Connection::ListLogs");
   internal::OTelScope scope(span);
   auto sr = child_->ListLogs(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(std::move(span),
+                                                      std::move(sr));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -82,34 +91,41 @@ LoggingServiceV2TracingConnection::AsyncTailLogEntries() {
 }
 
 StreamRange<google::longrunning::Operation>
-LoggingServiceV2TracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("logging_v2::LoggingServiceV2Connection::ListOperations");
+LoggingServiceV2TracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::LoggingServiceV2Connection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-LoggingServiceV2TracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("logging_v2::LoggingServiceV2Connection::GetOperation");
+LoggingServiceV2TracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::LoggingServiceV2Connection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-LoggingServiceV2TracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("logging_v2::LoggingServiceV2Connection::CancelOperation");
+Status LoggingServiceV2TracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::LoggingServiceV2Connection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-LoggingServiceV2TracingConnection::AsyncWriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request) {
+LoggingServiceV2TracingConnection::AsyncWriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const& request) {
   auto span = internal::MakeSpan(
       "logging_v2::LoggingServiceV2Connection::AsyncWriteLogEntries");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AsyncWriteLogEntries(request));
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncWriteLogEntries(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

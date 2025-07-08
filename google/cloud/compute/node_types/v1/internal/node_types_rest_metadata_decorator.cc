@@ -17,11 +17,11 @@
 // source: google/cloud/compute/node_types/v1/node_types.proto
 
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,8 +31,7 @@ namespace compute_node_types_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeTypesRestMetadata::NodeTypesRestMetadata(
-    std::shared_ptr<NodeTypesRestStub> child,
-    std::string api_client_header)
+    std::shared_ptr<NodeTypesRestStub> child, std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -41,33 +40,36 @@ NodeTypesRestMetadata::NodeTypesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
 NodeTypesRestMetadata::AggregatedListNodeTypes(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_types::v1::
+        AggregatedListNodeTypesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListNodeTypes(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
 NodeTypesRestMetadata::GetNodeType(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetNodeType(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeList>
 NodeTypesRestMetadata::ListNodeTypes(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ListNodeTypes(rest_context, options, request);
 }
 
 void NodeTypesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

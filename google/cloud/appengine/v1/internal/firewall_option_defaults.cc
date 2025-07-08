@@ -35,19 +35,20 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options FirewallDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FIREWALL_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FIREWALL_AUTHORITY",
-      "appengine.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_FIREWALL_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FIREWALL_AUTHORITY", "appengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::FirewallRetryPolicyOption>()) {
     options.set<appengine_v1::FirewallRetryPolicyOption>(
-        appengine_v1::FirewallLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        appengine_v1::FirewallLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<appengine_v1::FirewallBackoffPolicyOption>()) {
     options.set<appengine_v1::FirewallBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<appengine_v1::FirewallConnectionIdempotencyPolicyOption>()) {
     options.set<appengine_v1::FirewallConnectionIdempotencyPolicyOption>(

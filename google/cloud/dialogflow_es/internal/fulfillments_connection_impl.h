@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_FULFILLMENTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_FULFILLMENTS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/fulfillments_connection.h"
 #include "google/cloud/dialogflow_es/fulfillments_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/fulfillments_options.h"
 #include "google/cloud/dialogflow_es/internal/fulfillments_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/fulfillments_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,32 +43,34 @@ class FulfillmentsConnectionImpl
   ~FulfillmentsConnectionImpl() override = default;
 
   FulfillmentsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::FulfillmentsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dialogflow_es_internal::FulfillmentsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-  GetFulfillment(google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
+      google::cloud::dialogflow::v2::GetFulfillmentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-  UpdateFulfillment(google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Fulfillment> UpdateFulfillment(
+      google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

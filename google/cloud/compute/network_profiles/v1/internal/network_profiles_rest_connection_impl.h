@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_PROFILES_V1_INTERNAL_NETWORK_PROFILES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_PROFILES_V1_INTERNAL_NETWORK_PROFILES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_rest_stub.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_retry_traits.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_connection.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_connection_idempotency_policy.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,35 +43,49 @@ class NetworkProfilesRestConnectionImpl
   ~NetworkProfilesRestConnectionImpl() override = default;
 
   NetworkProfilesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_network_profiles_v1_internal::NetworkProfilesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_network_profiles_v1_internal::NetworkProfilesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
-  GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
+      google::cloud::cpp::compute::network_profiles::v1::
+          GetNetworkProfileRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
-  ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request) override;
+  ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::
+                          ListNetworkProfilesRequest request) override;
 
  private:
-  static std::unique_ptr<compute_network_profiles_v1::NetworkProfilesRetryPolicy>
+  static std::unique_ptr<
+      compute_network_profiles_v1::NetworkProfilesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>()->clone();
+    return options
+        .get<compute_network_profiles_v1::NetworkProfilesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_network_profiles_v1::NetworkProfilesBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_network_profiles_v1::NetworkProfilesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_network_profiles_v1::NetworkProfilesConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_network_profiles_v1::NetworkProfilesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_network_profiles_v1::NetworkProfilesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_network_profiles_v1::
+                 NetworkProfilesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_network_profiles_v1_internal::NetworkProfilesRestStub> stub_;
+  std::shared_ptr<compute_network_profiles_v1_internal::NetworkProfilesRestStub>
+      stub_;
   Options options_;
 };
 

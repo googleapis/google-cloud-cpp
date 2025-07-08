@@ -28,18 +28,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlConnectServiceClient::SqlConnectServiceClient(
     std::shared_ptr<SqlConnectServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SqlConnectServiceClient::~SqlConnectServiceClient() = default;
 
 StatusOr<google::cloud::sql::v1::ConnectSettings>
-SqlConnectServiceClient::GetConnectSettings(google::cloud::sql::v1::GetConnectSettingsRequest const& request, Options opts) {
+SqlConnectServiceClient::GetConnectSettings(
+    google::cloud::sql::v1::GetConnectSettingsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnectSettings(request);
 }
 
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-SqlConnectServiceClient::GenerateEphemeralCert(google::cloud::sql::v1::GenerateEphemeralCertRequest const& request, Options opts) {
+SqlConnectServiceClient::GenerateEphemeralCert(
+    google::cloud::sql::v1::GenerateEphemeralCertRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateEphemeralCert(request);
 }

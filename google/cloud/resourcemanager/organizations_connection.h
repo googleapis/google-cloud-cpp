@@ -33,10 +33,13 @@ using ::google::cloud::resourcemanager_v3::MakeOrganizationsConnection;
 /// @deprecated Use resourcemanager_v3::OrganizationsConnection directly.
 using ::google::cloud::resourcemanager_v3::OrganizationsConnection;
 
-/// @deprecated Use resourcemanager_v3::OrganizationsLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::resourcemanager_v3::OrganizationsLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// resourcemanager_v3::OrganizationsLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::resourcemanager_v3::
+    OrganizationsLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use resourcemanager_v3::OrganizationsLimitedTimeRetryPolicy directly.
+/// @deprecated Use resourcemanager_v3::OrganizationsLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::resourcemanager_v3::OrganizationsLimitedTimeRetryPolicy;
 
 /// @deprecated Use resourcemanager_v3::OrganizationsRetryPolicy directly.

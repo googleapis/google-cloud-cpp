@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_STORAGE_CONTROL_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_STORAGE_CONTROL_CONNECTION_H
 
+#include "google/cloud/storagecontrol/v2/internal/storage_control_retry_traits.h"
+#include "google/cloud/storagecontrol/v2/storage_control_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -26,12 +28,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storagecontrol/v2/internal/storage_control_retry_traits.h"
-#include "google/cloud/storagecontrol/v2/storage_control_connection_idempotency_policy.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/storage/control/v2/storage_control.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/storage/control/v2/storage_control.pb.h>
 #include <memory>
 
 namespace google {
@@ -60,7 +60,8 @@ class StorageControlRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class StorageControlLimitedErrorCountRetryPolicy : public StorageControlRetryPolicy {
+class StorageControlLimitedErrorCountRetryPolicy
+    : public StorageControlRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -70,14 +71,14 @@ class StorageControlLimitedErrorCountRetryPolicy : public StorageControlRetryPol
    *     @p maximum_failures == 0.
    */
   explicit StorageControlLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   StorageControlLimitedErrorCountRetryPolicy(
       StorageControlLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : StorageControlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : StorageControlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   StorageControlLimitedErrorCountRetryPolicy(
       StorageControlLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : StorageControlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : StorageControlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -97,7 +98,9 @@ class StorageControlLimitedErrorCountRetryPolicy : public StorageControlRetryPol
   using BaseType = StorageControlRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<storagecontrol_v2_internal::StorageControlRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      storagecontrol_v2_internal::StorageControlRetryTraits>
+      impl_;
 };
 
 /**
@@ -139,12 +142,14 @@ class StorageControlLimitedTimeRetryPolicy : public StorageControlRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit StorageControlLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  StorageControlLimitedTimeRetryPolicy(StorageControlLimitedTimeRetryPolicy&& rhs) noexcept
-    : StorageControlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  StorageControlLimitedTimeRetryPolicy(StorageControlLimitedTimeRetryPolicy const& rhs) noexcept
-    : StorageControlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StorageControlLimitedTimeRetryPolicy(
+      StorageControlLimitedTimeRetryPolicy&& rhs) noexcept
+      : StorageControlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StorageControlLimitedTimeRetryPolicy(
+      StorageControlLimitedTimeRetryPolicy const& rhs) noexcept
+      : StorageControlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -166,7 +171,9 @@ class StorageControlLimitedTimeRetryPolicy : public StorageControlRetryPolicy {
   using BaseType = StorageControlRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<storagecontrol_v2_internal::StorageControlRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      storagecontrol_v2_internal::StorageControlRetryTraits>
+      impl_;
 };
 
 /**
@@ -187,92 +194,118 @@ class StorageControlConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::storage::control::v2::Folder>
-  CreateFolder(google::storage::control::v2::CreateFolderRequest const& request);
+  virtual StatusOr<google::storage::control::v2::Folder> CreateFolder(
+      google::storage::control::v2::CreateFolderRequest const& request);
 
-  virtual Status
-  DeleteFolder(google::storage::control::v2::DeleteFolderRequest const& request);
+  virtual Status DeleteFolder(
+      google::storage::control::v2::DeleteFolderRequest const& request);
 
-  virtual StatusOr<google::storage::control::v2::Folder>
-  GetFolder(google::storage::control::v2::GetFolderRequest const& request);
+  virtual StatusOr<google::storage::control::v2::Folder> GetFolder(
+      google::storage::control::v2::GetFolderRequest const& request);
 
-  virtual StreamRange<google::storage::control::v2::Folder>
-  ListFolders(google::storage::control::v2::ListFoldersRequest request);
+  virtual StreamRange<google::storage::control::v2::Folder> ListFolders(
+      google::storage::control::v2::ListFoldersRequest request);
 
-  virtual future<StatusOr<google::storage::control::v2::Folder>>
-  RenameFolder(google::storage::control::v2::RenameFolderRequest const& request);
+  virtual future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
+      google::storage::control::v2::RenameFolderRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RenameFolder(NoAwaitTag, google::storage::control::v2::RenameFolderRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> RenameFolder(
+      NoAwaitTag,
+      google::storage::control::v2::RenameFolderRequest const& request);
 
-  virtual future<StatusOr<google::storage::control::v2::Folder>>
-  RenameFolder( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::storage::control::v2::StorageLayout>
-  GetStorageLayout(google::storage::control::v2::GetStorageLayoutRequest const& request);
+  GetStorageLayout(
+      google::storage::control::v2::GetStorageLayoutRequest const& request);
 
   virtual StatusOr<google::storage::control::v2::ManagedFolder>
-  CreateManagedFolder(google::storage::control::v2::CreateManagedFolderRequest const& request);
+  CreateManagedFolder(
+      google::storage::control::v2::CreateManagedFolderRequest const& request);
 
-  virtual Status
-  DeleteManagedFolder(google::storage::control::v2::DeleteManagedFolderRequest const& request);
+  virtual Status DeleteManagedFolder(
+      google::storage::control::v2::DeleteManagedFolderRequest const& request);
 
   virtual StatusOr<google::storage::control::v2::ManagedFolder>
-  GetManagedFolder(google::storage::control::v2::GetManagedFolderRequest const& request);
+  GetManagedFolder(
+      google::storage::control::v2::GetManagedFolderRequest const& request);
 
   virtual StreamRange<google::storage::control::v2::ManagedFolder>
-  ListManagedFolders(google::storage::control::v2::ListManagedFoldersRequest request);
+  ListManagedFolders(
+      google::storage::control::v2::ListManagedFoldersRequest request);
 
   virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
-  CreateAnywhereCache(google::storage::control::v2::CreateAnywhereCacheRequest const& request);
+  CreateAnywhereCache(
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAnywhereCache(NoAwaitTag, google::storage::control::v2::CreateAnywhereCacheRequest const& request);
-
-  virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
-  CreateAnywhereCache( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
-  UpdateAnywhereCache(google::storage::control::v2::UpdateAnywhereCacheRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAnywhereCache(NoAwaitTag, google::storage::control::v2::UpdateAnywhereCacheRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request);
 
   virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
-  UpdateAnywhereCache( google::longrunning::Operation const& operation);
+  CreateAnywhereCache(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request);
+
+  virtual future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::storage::control::v2::AnywhereCache>
-  DisableAnywhereCache(google::storage::control::v2::DisableAnywhereCacheRequest const& request);
+  DisableAnywhereCache(
+      google::storage::control::v2::DisableAnywhereCacheRequest const& request);
 
   virtual StatusOr<google::storage::control::v2::AnywhereCache>
-  PauseAnywhereCache(google::storage::control::v2::PauseAnywhereCacheRequest const& request);
+  PauseAnywhereCache(
+      google::storage::control::v2::PauseAnywhereCacheRequest const& request);
 
   virtual StatusOr<google::storage::control::v2::AnywhereCache>
-  ResumeAnywhereCache(google::storage::control::v2::ResumeAnywhereCacheRequest const& request);
+  ResumeAnywhereCache(
+      google::storage::control::v2::ResumeAnywhereCacheRequest const& request);
 
   virtual StatusOr<google::storage::control::v2::AnywhereCache>
-  GetAnywhereCache(google::storage::control::v2::GetAnywhereCacheRequest const& request);
+  GetAnywhereCache(
+      google::storage::control::v2::GetAnywhereCacheRequest const& request);
 
   virtual StreamRange<google::storage::control::v2::AnywhereCache>
-  ListAnywhereCaches(google::storage::control::v2::ListAnywhereCachesRequest request);
+  ListAnywhereCaches(
+      google::storage::control::v2::ListAnywhereCachesRequest request);
 
   virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
-  GetProjectIntelligenceConfig(google::storage::control::v2::GetProjectIntelligenceConfigRequest const& request);
+  GetProjectIntelligenceConfig(
+      google::storage::control::v2::GetProjectIntelligenceConfigRequest const&
+          request);
 
   virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
-  UpdateProjectIntelligenceConfig(google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const& request);
+  UpdateProjectIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateProjectIntelligenceConfigRequest const& request);
 
   virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
-  GetFolderIntelligenceConfig(google::storage::control::v2::GetFolderIntelligenceConfigRequest const& request);
+  GetFolderIntelligenceConfig(
+      google::storage::control::v2::GetFolderIntelligenceConfigRequest const&
+          request);
 
   virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
-  UpdateFolderIntelligenceConfig(google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const& request);
+  UpdateFolderIntelligenceConfig(
+      google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&
+          request);
 
   virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
-  GetOrganizationIntelligenceConfig(google::storage::control::v2::GetOrganizationIntelligenceConfigRequest const& request);
+  GetOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          GetOrganizationIntelligenceConfigRequest const& request);
 
   virtual StatusOr<google::storage::control::v2::IntelligenceConfig>
-  UpdateOrganizationIntelligenceConfig(google::storage::control::v2::UpdateOrganizationIntelligenceConfigRequest const& request);
+  UpdateOrganizationIntelligenceConfig(
+      google::storage::control::v2::
+          UpdateOrganizationIntelligenceConfigRequest const& request);
 };
 
 /**

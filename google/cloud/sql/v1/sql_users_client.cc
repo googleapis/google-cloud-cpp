@@ -28,36 +28,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlUsersServiceClient::SqlUsersServiceClient(
     std::shared_ptr<SqlUsersServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SqlUsersServiceClient::~SqlUsersServiceClient() = default;
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceClient::Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceClient::Delete(
+    google::cloud::sql::v1::SqlUsersDeleteRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Delete(request);
 }
 
-StatusOr<google::cloud::sql::v1::User>
-SqlUsersServiceClient::Get(google::cloud::sql::v1::SqlUsersGetRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceClient::Get(
+    google::cloud::sql::v1::SqlUsersGetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Get(request);
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceClient::Insert(google::cloud::sql::v1::SqlUsersInsertRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceClient::Insert(
+    google::cloud::sql::v1::SqlUsersInsertRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Insert(request);
 }
 
-StatusOr<google::cloud::sql::v1::UsersListResponse>
-SqlUsersServiceClient::List(google::cloud::sql::v1::SqlUsersListRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::UsersListResponse> SqlUsersServiceClient::List(
+    google::cloud::sql::v1::SqlUsersListRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->List(request);
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceClient::Update(google::cloud::sql::v1::SqlUsersUpdateRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceClient::Update(
+    google::cloud::sql::v1::SqlUsersUpdateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Update(request);
 }

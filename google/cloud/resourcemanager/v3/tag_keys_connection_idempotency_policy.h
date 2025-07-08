@@ -37,39 +37,40 @@ class TagKeysConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TagKeysConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListTagKeys(google::cloud::resourcemanager::v3::ListTagKeysRequest request);
+  virtual google::cloud::Idempotency ListTagKeys(
+      google::cloud::resourcemanager::v3::ListTagKeysRequest request);
 
-  virtual google::cloud::Idempotency
-  GetTagKey(google::cloud::resourcemanager::v3::GetTagKeyRequest const& request);
+  virtual google::cloud::Idempotency GetTagKey(
+      google::cloud::resourcemanager::v3::GetTagKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetNamespacedTagKey(google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request);
+  virtual google::cloud::Idempotency GetNamespacedTagKey(
+      google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateTagKey(google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request);
+  virtual google::cloud::Idempotency CreateTagKey(
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTagKey(google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request);
+  virtual google::cloud::Idempotency UpdateTagKey(
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTagKey(google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request);
+  virtual google::cloud::Idempotency DeleteTagKey(
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<TagKeysConnectionIdempotencyPolicy>
-    MakeDefaultTagKeysConnectionIdempotencyPolicy();
+MakeDefaultTagKeysConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_v3

@@ -31,7 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use tasks_v2::CloudTasksBackoffPolicyOption directly.
 using ::google::cloud::tasks_v2::CloudTasksBackoffPolicyOption;
 
-/// @deprecated Use tasks_v2::CloudTasksConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use tasks_v2::CloudTasksConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::tasks_v2::CloudTasksConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use tasks_v2::CloudTasksPolicyOptionList directly.

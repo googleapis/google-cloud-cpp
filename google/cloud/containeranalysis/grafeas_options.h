@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use containeranalysis_v1::GrafeasBackoffPolicyOption directly.
 using ::google::cloud::containeranalysis_v1::GrafeasBackoffPolicyOption;
 
-/// @deprecated Use containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// containeranalysis_v1::GrafeasConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::containeranalysis_v1::
+    GrafeasConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use containeranalysis_v1::GrafeasPolicyOptionList directly.
 using ::google::cloud::containeranalysis_v1::GrafeasPolicyOptionList;

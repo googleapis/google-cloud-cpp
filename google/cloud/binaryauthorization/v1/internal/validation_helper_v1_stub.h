@@ -35,25 +35,33 @@ class ValidationHelperV1Stub {
  public:
   virtual ~ValidationHelperV1Stub() = 0;
 
-  virtual StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse> ValidateAttestationOccurrence(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::binaryauthorization::v1::
+                       ValidateAttestationOccurrenceResponse>
+  ValidateAttestationOccurrence(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::
+          ValidateAttestationOccurrenceRequest const& request) = 0;
 };
 
 class DefaultValidationHelperV1Stub : public ValidationHelperV1Stub {
  public:
   explicit DefaultValidationHelperV1Stub(
-      std::unique_ptr<google::cloud::binaryauthorization::v1::ValidationHelperV1::StubInterface> grpc_stub)
+      std::unique_ptr<google::cloud::binaryauthorization::v1::
+                          ValidationHelperV1::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse> ValidateAttestationOccurrence(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::
+               ValidateAttestationOccurrenceResponse>
+  ValidateAttestationOccurrence(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::
+          ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::binaryauthorization::v1::ValidationHelperV1::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::binaryauthorization::v1::ValidationHelperV1::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

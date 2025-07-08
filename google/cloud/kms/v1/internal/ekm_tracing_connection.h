@@ -30,54 +30,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class EkmServiceTracingConnection
-    : public kms_v1::EkmServiceConnection {
+class EkmServiceTracingConnection : public kms_v1::EkmServiceConnection {
  public:
   ~EkmServiceTracingConnection() override = default;
 
   explicit EkmServiceTracingConnection(
-    std::shared_ptr<kms_v1::EkmServiceConnection> child);
+      std::shared_ptr<kms_v1::EkmServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::kms::v1::EkmConnection>
-  ListEkmConnections(google::cloud::kms::v1::ListEkmConnectionsRequest request) override;
+  StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
+      google::cloud::kms::v1::ListEkmConnectionsRequest request) override;
 
-  StatusOr<google::cloud::kms::v1::EkmConnection>
-  GetEkmConnection(google::cloud::kms::v1::GetEkmConnectionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
+      google::cloud::kms::v1::GetEkmConnectionRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::EkmConnection>
-  CreateEkmConnection(google::cloud::kms::v1::CreateEkmConnectionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
+      google::cloud::kms::v1::CreateEkmConnectionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::kms::v1::EkmConnection>
-  UpdateEkmConnection(google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
+      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::kms::v1::EkmConfig>
-  GetEkmConfig(google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::EkmConfig>
-  UpdateEkmConfig(google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-  VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const& request) override;
+  VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const&
+                         request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<kms_v1::EkmServiceConnection> child_;
@@ -91,8 +93,7 @@ class EkmServiceTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<kms_v1::EkmServiceConnection>
-MakeEkmServiceTracingConnection(
+std::shared_ptr<kms_v1::EkmServiceConnection> MakeEkmServiceTracingConnection(
     std::shared_ptr<kms_v1::EkmServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

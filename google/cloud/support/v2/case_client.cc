@@ -28,46 +28,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CaseServiceClient::CaseServiceClient(
     std::shared_ptr<CaseServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CaseServiceClient::~CaseServiceClient() = default;
 
-StatusOr<google::cloud::support::v2::Case>
-CaseServiceClient::GetCase(std::string const& name, Options opts) {
+StatusOr<google::cloud::support::v2::Case> CaseServiceClient::GetCase(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::support::v2::GetCaseRequest request;
   request.set_name(name);
   return connection_->GetCase(request);
 }
 
-StatusOr<google::cloud::support::v2::Case>
-CaseServiceClient::GetCase(google::cloud::support::v2::GetCaseRequest const& request, Options opts) {
+StatusOr<google::cloud::support::v2::Case> CaseServiceClient::GetCase(
+    google::cloud::support::v2::GetCaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCase(request);
 }
 
-StreamRange<google::cloud::support::v2::Case>
-CaseServiceClient::ListCases(std::string const& parent, Options opts) {
+StreamRange<google::cloud::support::v2::Case> CaseServiceClient::ListCases(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::support::v2::ListCasesRequest request;
   request.set_parent(parent);
   return connection_->ListCases(request);
 }
 
-StreamRange<google::cloud::support::v2::Case>
-CaseServiceClient::ListCases(google::cloud::support::v2::ListCasesRequest request, Options opts) {
+StreamRange<google::cloud::support::v2::Case> CaseServiceClient::ListCases(
+    google::cloud::support::v2::ListCasesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCases(std::move(request));
 }
 
-StreamRange<google::cloud::support::v2::Case>
-CaseServiceClient::SearchCases(google::cloud::support::v2::SearchCasesRequest request, Options opts) {
+StreamRange<google::cloud::support::v2::Case> CaseServiceClient::SearchCases(
+    google::cloud::support::v2::SearchCasesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchCases(std::move(request));
 }
 
-StatusOr<google::cloud::support::v2::Case>
-CaseServiceClient::CreateCase(std::string const& parent, google::cloud::support::v2::Case const& case_, Options opts) {
+StatusOr<google::cloud::support::v2::Case> CaseServiceClient::CreateCase(
+    std::string const& parent, google::cloud::support::v2::Case const& case_,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::support::v2::CreateCaseRequest request;
   request.set_parent(parent);
@@ -75,14 +76,16 @@ CaseServiceClient::CreateCase(std::string const& parent, google::cloud::support:
   return connection_->CreateCase(request);
 }
 
-StatusOr<google::cloud::support::v2::Case>
-CaseServiceClient::CreateCase(google::cloud::support::v2::CreateCaseRequest const& request, Options opts) {
+StatusOr<google::cloud::support::v2::Case> CaseServiceClient::CreateCase(
+    google::cloud::support::v2::CreateCaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCase(request);
 }
 
-StatusOr<google::cloud::support::v2::Case>
-CaseServiceClient::UpdateCase(google::cloud::support::v2::Case const& case_, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::support::v2::Case> CaseServiceClient::UpdateCase(
+    google::cloud::support::v2::Case const& case_,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::support::v2::UpdateCaseRequest request;
   *request.mutable_case_() = case_;
@@ -90,26 +93,30 @@ CaseServiceClient::UpdateCase(google::cloud::support::v2::Case const& case_, goo
   return connection_->UpdateCase(request);
 }
 
-StatusOr<google::cloud::support::v2::Case>
-CaseServiceClient::UpdateCase(google::cloud::support::v2::UpdateCaseRequest const& request, Options opts) {
+StatusOr<google::cloud::support::v2::Case> CaseServiceClient::UpdateCase(
+    google::cloud::support::v2::UpdateCaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCase(request);
 }
 
-StatusOr<google::cloud::support::v2::Case>
-CaseServiceClient::EscalateCase(google::cloud::support::v2::EscalateCaseRequest const& request, Options opts) {
+StatusOr<google::cloud::support::v2::Case> CaseServiceClient::EscalateCase(
+    google::cloud::support::v2::EscalateCaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EscalateCase(request);
 }
 
-StatusOr<google::cloud::support::v2::Case>
-CaseServiceClient::CloseCase(google::cloud::support::v2::CloseCaseRequest const& request, Options opts) {
+StatusOr<google::cloud::support::v2::Case> CaseServiceClient::CloseCase(
+    google::cloud::support::v2::CloseCaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CloseCase(request);
 }
 
 StreamRange<google::cloud::support::v2::CaseClassification>
-CaseServiceClient::SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest request, Options opts) {
+CaseServiceClient::SearchCaseClassifications(
+    google::cloud::support::v2::SearchCaseClassificationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchCaseClassifications(std::move(request));
 }

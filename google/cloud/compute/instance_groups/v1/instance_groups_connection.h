@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUPS_V1_INSTANCE_GROUPS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUPS_V1_INSTANCE_GROUPS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instance_groups/v1/instance_groups_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_groups/v1/internal/instance_groups_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class InstanceGroupsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InstanceGroupsLimitedErrorCountRetryPolicy : public InstanceGroupsRetryPolicy {
+class InstanceGroupsLimitedErrorCountRetryPolicy
+    : public InstanceGroupsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class InstanceGroupsLimitedErrorCountRetryPolicy : public InstanceGroupsRetryPol
    *     @p maximum_failures == 0.
    */
   explicit InstanceGroupsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   InstanceGroupsLimitedErrorCountRetryPolicy(
       InstanceGroupsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : InstanceGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstanceGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   InstanceGroupsLimitedErrorCountRetryPolicy(
       InstanceGroupsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : InstanceGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstanceGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class InstanceGroupsLimitedErrorCountRetryPolicy : public InstanceGroupsRetryPol
   using BaseType = InstanceGroupsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_instance_groups_v1_internal::InstanceGroupsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_instance_groups_v1_internal::InstanceGroupsRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +133,14 @@ class InstanceGroupsLimitedTimeRetryPolicy : public InstanceGroupsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit InstanceGroupsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  InstanceGroupsLimitedTimeRetryPolicy(InstanceGroupsLimitedTimeRetryPolicy&& rhs) noexcept
-    : InstanceGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  InstanceGroupsLimitedTimeRetryPolicy(InstanceGroupsLimitedTimeRetryPolicy const& rhs) noexcept
-    : InstanceGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceGroupsLimitedTimeRetryPolicy(
+      InstanceGroupsLimitedTimeRetryPolicy&& rhs) noexcept
+      : InstanceGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceGroupsLimitedTimeRetryPolicy(
+      InstanceGroupsLimitedTimeRetryPolicy const& rhs) noexcept
+      : InstanceGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +162,9 @@ class InstanceGroupsLimitedTimeRetryPolicy : public InstanceGroupsRetryPolicy {
   using BaseType = InstanceGroupsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_instance_groups_v1_internal::InstanceGroupsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_instance_groups_v1_internal::InstanceGroupsRetryTraits>
+      impl_;
 };
 
 /**
@@ -170,7 +177,8 @@ class InstanceGroupsLimitedTimeRetryPolicy : public InstanceGroupsRetryPolicy {
  *
  * To create a concrete instance, see `MakeInstanceGroupsConnection()`.
  *
- * For mocking, see `compute_instance_groups_v1_mocks::MockInstanceGroupsConnection`.
+ * For mocking, see
+ * `compute_instance_groups_v1_mocks::MockInstanceGroupsConnection`.
  */
 class InstanceGroupsConnection {
  public:
@@ -179,61 +187,82 @@ class InstanceGroupsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstances(google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request);
+  AddInstances(google::cloud::cpp::compute::instance_groups::v1::
+                   AddInstancesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
+      NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                      AddInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddInstances(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
+  AggregatedListInstanceGroups(
+      google::cloud::cpp::compute::instance_groups::v1::
+          AggregatedListInstanceGroupsRequest request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
+                          DeleteInstanceGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddInstances(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request);
+  DeleteInstanceGroup(NoAwaitTag,
+                      google::cloud::cpp::compute::instance_groups::v1::
+                          DeleteInstanceGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstances( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>
-  AggregatedListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceGroup(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceGroup( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteInstanceGroup(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest const& request);
+  GetInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
+                       GetInstanceGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request);
+  InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
+                          InsertInstanceGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstanceGroup(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request);
+  InsertInstanceGroup(NoAwaitTag,
+                      google::cloud::cpp::compute::instance_groups::v1::
+                          InsertInstanceGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceGroup( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertInstanceGroup(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
-  ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest request);
+  ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::
+                         ListInstanceGroupsRequest request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
-  ListInstances(google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest request);
+  ListInstances(
+      google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request);
+  RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::
+                      RemoveInstancesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveInstances(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstances( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetNamedPorts(NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
+      NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                      RemoveInstancesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetNamedPorts( google::cloud::cpp::compute::v1::Operation const& operation);
+  RemoveInstances(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::
+                    SetNamedPortsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                      SetNamedPortsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNamedPorts(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

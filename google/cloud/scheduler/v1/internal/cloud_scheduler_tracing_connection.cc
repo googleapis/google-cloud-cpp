@@ -34,75 +34,94 @@ CloudSchedulerTracingConnection::CloudSchedulerTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::scheduler::v1::Job>
-CloudSchedulerTracingConnection::ListJobs(google::cloud::scheduler::v1::ListJobsRequest request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::ListJobs");
+CloudSchedulerTracingConnection::ListJobs(
+    google::cloud::scheduler::v1::ListJobsRequest request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::ListJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::scheduler::v1::Job>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerTracingConnection::GetJob(google::cloud::scheduler::v1::GetJobRequest const& request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::GetJob");
+CloudSchedulerTracingConnection::GetJob(
+    google::cloud::scheduler::v1::GetJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerTracingConnection::CreateJob(google::cloud::scheduler::v1::CreateJobRequest const& request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::CreateJob");
+CloudSchedulerTracingConnection::CreateJob(
+    google::cloud::scheduler::v1::CreateJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateJob(request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerTracingConnection::UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const& request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::UpdateJob");
+CloudSchedulerTracingConnection::UpdateJob(
+    google::cloud::scheduler::v1::UpdateJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::UpdateJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateJob(request));
 }
 
-Status
-CloudSchedulerTracingConnection::DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const& request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::DeleteJob");
+Status CloudSchedulerTracingConnection::DeleteJob(
+    google::cloud::scheduler::v1::DeleteJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteJob(request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerTracingConnection::PauseJob(google::cloud::scheduler::v1::PauseJobRequest const& request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::PauseJob");
+CloudSchedulerTracingConnection::PauseJob(
+    google::cloud::scheduler::v1::PauseJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::PauseJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PauseJob(request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerTracingConnection::ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const& request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::ResumeJob");
+CloudSchedulerTracingConnection::ResumeJob(
+    google::cloud::scheduler::v1::ResumeJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::ResumeJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResumeJob(request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerTracingConnection::RunJob(google::cloud::scheduler::v1::RunJobRequest const& request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::RunJob");
+CloudSchedulerTracingConnection::RunJob(
+    google::cloud::scheduler::v1::RunJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::RunJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RunJob(request));
 }
 
 StreamRange<google::cloud::location::Location>
-CloudSchedulerTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::ListLocations");
+CloudSchedulerTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "scheduler_v1::CloudSchedulerConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-CloudSchedulerTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::GetLocation");
+CloudSchedulerTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("scheduler_v1::CloudSchedulerConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }

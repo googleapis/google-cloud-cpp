@@ -17,17 +17,17 @@
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
 #include "google/cloud/orgpolicy/v2/internal/org_policy_stub_factory.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_auth_decorator.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_logging_decorator.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_metadata_decorator.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_stub.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_auth_decorator.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_logging_decorator.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_metadata_decorator.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_stub.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_tracing_stub.h"
 #include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -37,28 +37,25 @@ namespace cloud {
 namespace orgpolicy_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<OrgPolicyStub>
-CreateDefaultOrgPolicyStub(
+std::shared_ptr<OrgPolicyStub> CreateDefaultOrgPolicyStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::orgpolicy::v2::OrgPolicy::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::orgpolicy::v2::OrgPolicy::NewStub(channel);
   std::shared_ptr<OrgPolicyStub> stub =
-    std::make_shared<DefaultOrgPolicyStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultOrgPolicyStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<OrgPolicyAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<OrgPolicyAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<OrgPolicyMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<OrgPolicyLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

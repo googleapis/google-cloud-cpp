@@ -17,16 +17,16 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/v1/image_annotator_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/vision/v1/image_annotator_options.h"
 #include "google/cloud/vision/v1/internal/image_annotator_connection_impl.h"
 #include "google/cloud/vision/v1/internal/image_annotator_option_defaults.h"
 #include "google/cloud/vision/v1/internal/image_annotator_stub_factory.h"
 #include "google/cloud/vision/v1/internal/image_annotator_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
 
@@ -53,8 +53,8 @@ future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorConnection::AsyncBatchAnnotateImages(
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -62,23 +62,23 @@ ImageAnnotatorConnection::AsyncBatchAnnotateImages(
     NoAwaitTag,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorConnection::AsyncBatchAnnotateImages(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -86,19 +86,18 @@ ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
     NoAwaitTag,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ImageAnnotatorConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ImageAnnotatorConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -106,17 +105,18 @@ ImageAnnotatorConnection::GetOperation(
 std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ImageAnnotatorPolicyOptionList>(options, __func__);
-  options = vision_v1_internal::ImageAnnotatorDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ImageAnnotatorPolicyOptionList>(options,
+                                                                 __func__);
+  options =
+      vision_v1_internal::ImageAnnotatorDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = vision_v1_internal::CreateDefaultImageAnnotatorStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return vision_v1_internal::MakeImageAnnotatorTracingConnection(
       std::make_shared<vision_v1_internal::ImageAnnotatorConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

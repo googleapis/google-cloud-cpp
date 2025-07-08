@@ -36,69 +36,72 @@ class SessionControllerTracingConnection
   ~SessionControllerTracingConnection() override = default;
 
   explicit SessionControllerTracingConnection(
-    std::shared_ptr<dataproc_v1::SessionControllerConnection> child);
+      std::shared_ptr<dataproc_v1::SessionControllerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  CreateSession(google::cloud::dataproc::v1::CreateSessionRequest const& request) override;
+  future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
+      google::cloud::dataproc::v1::CreateSessionRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateSession(NoAwaitTag,
-      google::cloud::dataproc::v1::CreateSessionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateSession(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  CreateSession(
+  future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::dataproc::v1::Session>
-  GetSession(google::cloud::dataproc::v1::GetSessionRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::Session> GetSession(
+      google::cloud::dataproc::v1::GetSessionRequest const& request) override;
 
-  StreamRange<google::cloud::dataproc::v1::Session>
-  ListSessions(google::cloud::dataproc::v1::ListSessionsRequest request) override;
+  StreamRange<google::cloud::dataproc::v1::Session> ListSessions(
+      google::cloud::dataproc::v1::ListSessionsRequest request) override;
 
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  TerminateSession(google::cloud::dataproc::v1::TerminateSessionRequest const& request) override;
+  future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  TerminateSession(NoAwaitTag,
-      google::cloud::dataproc::v1::TerminateSessionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> TerminateSession(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  TerminateSession(
+  future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  DeleteSession(google::cloud::dataproc::v1::DeleteSessionRequest const& request) override;
+  future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteSession(NoAwaitTag,
-      google::cloud::dataproc::v1::DeleteSessionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteSession(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  DeleteSession(
+  future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dataproc_v1::SessionControllerConnection> child_;

@@ -28,29 +28,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-AutokeyTracingStub::AutokeyTracingStub(
-    std::shared_ptr<AutokeyStub> child)
+AutokeyTracingStub::AutokeyTracingStub(std::shared_ptr<AutokeyStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 future<StatusOr<google::longrunning::Operation>>
 AutokeyTracingStub::AsyncCreateKeyHandle(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "CreateKeyHandle");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "CreateKeyHandle");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateKeyHandle(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateKeyHandle(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-AutokeyTracingStub::CreateKeyHandle(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "CreateKeyHandle");
+StatusOr<google::longrunning::Operation> AutokeyTracingStub::CreateKeyHandle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "CreateKeyHandle");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -58,32 +58,34 @@ AutokeyTracingStub::CreateKeyHandle(
 }
 
 StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyTracingStub::GetKeyHandle(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetKeyHandleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "GetKeyHandle");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "GetKeyHandle");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetKeyHandle(context, options, request));
 }
 
-StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse> AutokeyTracingStub::ListKeyHandles(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse>
+AutokeyTracingStub::ListKeyHandles(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListKeyHandlesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "ListKeyHandles");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "ListKeyHandles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListKeyHandles(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> AutokeyTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+AutokeyTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "ListLocations");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -91,10 +93,10 @@ StatusOr<google::cloud::location::ListLocationsResponse> AutokeyTracingStub::Lis
 }
 
 StatusOr<google::cloud::location::Location> AutokeyTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "GetLocation");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -102,10 +104,10 @@ StatusOr<google::cloud::location::Location> AutokeyTracingStub::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> AutokeyTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "SetIamPolicy");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -113,32 +115,33 @@ StatusOr<google::iam::v1::Policy> AutokeyTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> AutokeyTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "GetIamPolicy");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> AutokeyTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AutokeyTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey",
+                                     "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 StatusOr<google::longrunning::Operation> AutokeyTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "GetOperation");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.Autokey", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -155,8 +158,7 @@ AutokeyTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -169,8 +171,8 @@ future<Status> AutokeyTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

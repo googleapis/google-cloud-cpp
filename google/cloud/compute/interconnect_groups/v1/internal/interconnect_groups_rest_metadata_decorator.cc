@@ -17,11 +17,11 @@
 // source: google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto
 
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,124 +41,139 @@ InterconnectGroupsRestMetadata::InterconnectGroupsRestMetadata(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsRestMetadata::AsyncCreateMembers(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        CreateMembersRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCreateMembers(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncCreateMembers(cq, std::move(rest_context),
+                                    std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsRestMetadata::CreateMembers(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        CreateMembersRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->CreateMembers(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsRestMetadata::AsyncDeleteInterconnectGroup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        DeleteInterconnectGroupRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteInterconnectGroup(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncDeleteInterconnectGroup(cq, std::move(rest_context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsRestMetadata::DeleteInterconnectGroup(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        DeleteInterconnectGroupRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteInterconnectGroup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
 InterconnectGroupsRestMetadata::GetInterconnectGroup(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetInterconnectGroupRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetInterconnectGroup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InterconnectGroupsRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
+StatusOr<google::cloud::cpp::compute::v1::
+             InterconnectGroupsGetOperationalStatusResponse>
 InterconnectGroupsRestMetadata::GetOperationalStatus(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetOperationalStatusRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetOperationalStatus(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsRestMetadata::AsyncInsertInterconnectGroup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        InsertInterconnectGroupRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertInterconnectGroup(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncInsertInterconnectGroup(cq, std::move(rest_context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsRestMetadata::InsertInterconnectGroup(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        InsertInterconnectGroupRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertInterconnectGroup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsListResponse>
 InterconnectGroupsRestMetadata::ListInterconnectGroups(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        ListInterconnectGroupsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListInterconnectGroups(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsRestMetadata::AsyncPatchInterconnectGroup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        PatchInterconnectGroupRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchInterconnectGroup(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncPatchInterconnectGroup(cq, std::move(rest_context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsRestMetadata::PatchInterconnectGroup(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        PatchInterconnectGroupRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchInterconnectGroup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InterconnectGroupsRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        SetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InterconnectGroupsRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
@@ -168,28 +183,29 @@ InterconnectGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
-future<Status>
-InterconnectGroupsRestMetadata::AsyncCancelOperation(
+future<Status> InterconnectGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void InterconnectGroupsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

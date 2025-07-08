@@ -37,92 +37,94 @@ class DataprocMetastoreConnectionIdempotencyPolicy {
   virtual ~DataprocMetastoreConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DataprocMetastoreConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<DataprocMetastoreConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListServices(google::cloud::metastore::v1::ListServicesRequest request);
+  virtual google::cloud::Idempotency ListServices(
+      google::cloud::metastore::v1::ListServicesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetService(google::cloud::metastore::v1::GetServiceRequest const& request);
+  virtual google::cloud::Idempotency GetService(
+      google::cloud::metastore::v1::GetServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateService(google::cloud::metastore::v1::CreateServiceRequest const& request);
+  virtual google::cloud::Idempotency CreateService(
+      google::cloud::metastore::v1::CreateServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateService(google::cloud::metastore::v1::UpdateServiceRequest const& request);
+  virtual google::cloud::Idempotency UpdateService(
+      google::cloud::metastore::v1::UpdateServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteService(google::cloud::metastore::v1::DeleteServiceRequest const& request);
+  virtual google::cloud::Idempotency DeleteService(
+      google::cloud::metastore::v1::DeleteServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListMetadataImports(google::cloud::metastore::v1::ListMetadataImportsRequest request);
+  virtual google::cloud::Idempotency ListMetadataImports(
+      google::cloud::metastore::v1::ListMetadataImportsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetMetadataImport(google::cloud::metastore::v1::GetMetadataImportRequest const& request);
+  virtual google::cloud::Idempotency GetMetadataImport(
+      google::cloud::metastore::v1::GetMetadataImportRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateMetadataImport(google::cloud::metastore::v1::CreateMetadataImportRequest const& request);
+  virtual google::cloud::Idempotency CreateMetadataImport(
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateMetadataImport(google::cloud::metastore::v1::UpdateMetadataImportRequest const& request);
+  virtual google::cloud::Idempotency UpdateMetadataImport(
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportMetadata(google::cloud::metastore::v1::ExportMetadataRequest const& request);
+  virtual google::cloud::Idempotency ExportMetadata(
+      google::cloud::metastore::v1::ExportMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RestoreService(google::cloud::metastore::v1::RestoreServiceRequest const& request);
+  virtual google::cloud::Idempotency RestoreService(
+      google::cloud::metastore::v1::RestoreServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListBackups(google::cloud::metastore::v1::ListBackupsRequest request);
+  virtual google::cloud::Idempotency ListBackups(
+      google::cloud::metastore::v1::ListBackupsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetBackup(google::cloud::metastore::v1::GetBackupRequest const& request);
+  virtual google::cloud::Idempotency GetBackup(
+      google::cloud::metastore::v1::GetBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateBackup(google::cloud::metastore::v1::CreateBackupRequest const& request);
+  virtual google::cloud::Idempotency CreateBackup(
+      google::cloud::metastore::v1::CreateBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteBackup(google::cloud::metastore::v1::DeleteBackupRequest const& request);
+  virtual google::cloud::Idempotency DeleteBackup(
+      google::cloud::metastore::v1::DeleteBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  QueryMetadata(google::cloud::metastore::v1::QueryMetadataRequest const& request);
+  virtual google::cloud::Idempotency QueryMetadata(
+      google::cloud::metastore::v1::QueryMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency
-  MoveTableToDatabase(google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request);
+  virtual google::cloud::Idempotency MoveTableToDatabase(
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AlterMetadataResourceLocation(google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request);
+  virtual google::cloud::Idempotency AlterMetadataResourceLocation(
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DataprocMetastoreConnectionIdempotencyPolicy>
-    MakeDefaultDataprocMetastoreConnectionIdempotencyPolicy();
+MakeDefaultDataprocMetastoreConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace metastore_v1

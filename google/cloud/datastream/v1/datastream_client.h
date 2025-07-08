@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DatastreamClient {
  public:
-  explicit DatastreamClient(std::shared_ptr<DatastreamConnection> connection, Options opts = {});
+  explicit DatastreamClient(std::shared_ptr<DatastreamConnection> connection,
+                            Options opts = {});
   ~DatastreamClient();
 
   ///@{
@@ -158,7 +159,9 @@ class DatastreamClient {
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::ConnectionProfile>
-  ListConnectionProfiles(google::cloud::datastream::v1::ListConnectionProfilesRequest request, Options opts = {});
+  ListConnectionProfiles(
+      google::cloud::datastream::v1::ListConnectionProfilesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -213,7 +216,9 @@ class DatastreamClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::ConnectionProfile>
-  GetConnectionProfile(google::cloud::datastream::v1::GetConnectionProfileRequest const& request, Options opts = {});
+  GetConnectionProfile(
+      google::cloud::datastream::v1::GetConnectionProfileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -247,7 +252,11 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  CreateConnectionProfile(std::string const& parent, google::cloud::datastream::v1::ConnectionProfile const& connection_profile, std::string const& connection_profile_id, Options opts = {});
+  CreateConnectionProfile(
+      std::string const& parent,
+      google::cloud::datastream::v1::ConnectionProfile const&
+          connection_profile,
+      std::string const& connection_profile_id, Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +269,11 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateConnectionProfile(NoAwaitTag, std::string const& parent, google::cloud::datastream::v1::ConnectionProfile const& connection_profile, std::string const& connection_profile_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::datastream::v1::ConnectionProfile const&
+          connection_profile,
+      std::string const& connection_profile_id, Options opts = {});
 
   // clang-format off
   ///
@@ -298,7 +310,10 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  CreateConnectionProfile(google::cloud::datastream::v1::CreateConnectionProfileRequest const& request, Options opts = {});
+  CreateConnectionProfile(
+      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -311,8 +326,11 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::CreateConnectionProfileRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      NoAwaitTag,
+      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -324,7 +342,8 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  CreateConnectionProfile(google::longrunning::Operation const& operation, Options opts = {});
+  CreateConnectionProfile(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -361,7 +380,10 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  UpdateConnectionProfile(google::cloud::datastream::v1::ConnectionProfile const& connection_profile, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateConnectionProfile(
+      google::cloud::datastream::v1::ConnectionProfile const&
+          connection_profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -374,8 +396,11 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::ConnectionProfile const& connection_profile, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      NoAwaitTag,
+      google::cloud::datastream::v1::ConnectionProfile const&
+          connection_profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -412,7 +437,10 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  UpdateConnectionProfile(google::cloud::datastream::v1::UpdateConnectionProfileRequest const& request, Options opts = {});
+  UpdateConnectionProfile(
+      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +453,11 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::UpdateConnectionProfileRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      NoAwaitTag,
+      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -438,7 +469,8 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  UpdateConnectionProfile(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateConnectionProfile(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -483,8 +515,8 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteConnectionProfile(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -521,7 +553,10 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteConnectionProfile(google::cloud::datastream::v1::DeleteConnectionProfileRequest const& request, Options opts = {});
+  DeleteConnectionProfile(
+      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -534,8 +569,11 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::DeleteConnectionProfileRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      NoAwaitTag,
+      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -547,7 +585,8 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteConnectionProfile(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteConnectionProfile(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -580,7 +619,10 @@ class DatastreamClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
-  DiscoverConnectionProfile(google::cloud::datastream::v1::DiscoverConnectionProfileRequest const& request, Options opts = {});
+  DiscoverConnectionProfile(
+      google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -613,8 +655,8 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
-  StreamRange<google::cloud::datastream::v1::Stream>
-  ListStreams(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datastream::v1::Stream> ListStreams(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -652,8 +694,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
-  StreamRange<google::cloud::datastream::v1::Stream>
-  ListStreams(google::cloud::datastream::v1::ListStreamsRequest request, Options opts = {});
+  StreamRange<google::cloud::datastream::v1::Stream> ListStreams(
+      google::cloud::datastream::v1::ListStreamsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -677,8 +720,8 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
-  StatusOr<google::cloud::datastream::v1::Stream>
-  GetStream(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datastream::v1::Stream> GetStream(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -707,8 +750,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
-  StatusOr<google::cloud::datastream::v1::Stream>
-  GetStream(google::cloud::datastream::v1::GetStreamRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datastream::v1::Stream> GetStream(
+      google::cloud::datastream::v1::GetStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -741,8 +785,10 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Stream>>
-  CreateStream(std::string const& parent, google::cloud::datastream::v1::Stream const& stream, std::string const& stream_id, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
+      std::string const& parent,
+      google::cloud::datastream::v1::Stream const& stream,
+      std::string const& stream_id, Options opts = {});
 
   // clang-format off
   ///
@@ -755,8 +801,10 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateStream(NoAwaitTag, std::string const& parent, google::cloud::datastream::v1::Stream const& stream, std::string const& stream_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateStream(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::datastream::v1::Stream const& stream,
+      std::string const& stream_id, Options opts = {});
 
   // clang-format off
   ///
@@ -792,8 +840,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Stream>>
-  CreateStream(google::cloud::datastream::v1::CreateStreamRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
+      google::cloud::datastream::v1::CreateStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -806,8 +855,10 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateStream(NoAwaitTag, google::cloud::datastream::v1::CreateStreamRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::CreateStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -818,8 +869,8 @@ class DatastreamClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Stream>>
-  CreateStream(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -855,8 +906,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.UpdateStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L670}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Stream>>
-  UpdateStream(google::cloud::datastream::v1::Stream const& stream, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
+      google::cloud::datastream::v1::Stream const& stream,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -869,8 +921,9 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateStream(NoAwaitTag, google::cloud::datastream::v1::Stream const& stream, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateStream(
+      NoAwaitTag, google::cloud::datastream::v1::Stream const& stream,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -906,8 +959,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.UpdateStreamRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L670}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Stream>>
-  UpdateStream(google::cloud::datastream::v1::UpdateStreamRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
+      google::cloud::datastream::v1::UpdateStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -920,8 +974,10 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateStream(NoAwaitTag, google::cloud::datastream::v1::UpdateStreamRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::UpdateStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -932,8 +988,8 @@ class DatastreamClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Stream>>
-  UpdateStream(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -978,8 +1034,9 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteStream(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteStream(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1016,7 +1073,9 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteStream(google::cloud::datastream::v1::DeleteStreamRequest const& request, Options opts = {});
+  DeleteStream(
+      google::cloud::datastream::v1::DeleteStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1029,8 +1088,10 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteStream(NoAwaitTag, google::cloud::datastream::v1::DeleteStreamRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::DeleteStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1042,7 +1103,8 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteStream(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteStream(google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -1079,8 +1141,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Stream]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1228}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Stream>>
-  RunStream(google::cloud::datastream::v1::RunStreamRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
+      google::cloud::datastream::v1::RunStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1093,8 +1156,10 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RunStream(NoAwaitTag, google::cloud::datastream::v1::RunStreamRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RunStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::RunStreamRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1105,8 +1170,8 @@ class DatastreamClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Stream>>
-  RunStream(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1130,8 +1195,8 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
-  StatusOr<google::cloud::datastream::v1::StreamObject>
-  GetStreamObject(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1160,8 +1225,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
-  StatusOr<google::cloud::datastream::v1::StreamObject>
-  GetStreamObject(google::cloud::datastream::v1::GetStreamObjectRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
+      google::cloud::datastream::v1::GetStreamObjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1190,8 +1256,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
-  StatusOr<google::cloud::datastream::v1::StreamObject>
-  LookupStreamObject(google::cloud::datastream::v1::LookupStreamObjectRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datastream::v1::StreamObject> LookupStreamObject(
+      google::cloud::datastream::v1::LookupStreamObjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1224,8 +1291,8 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
-  StreamRange<google::cloud::datastream::v1::StreamObject>
-  ListStreamObjects(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datastream::v1::StreamObject> ListStreamObjects(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1263,8 +1330,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.StreamObject]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L1356}
   ///
   // clang-format on
-  StreamRange<google::cloud::datastream::v1::StreamObject>
-  ListStreamObjects(google::cloud::datastream::v1::ListStreamObjectsRequest request, Options opts = {});
+  StreamRange<google::cloud::datastream::v1::StreamObject> ListStreamObjects(
+      google::cloud::datastream::v1::ListStreamObjectsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1320,7 +1388,9 @@ class DatastreamClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
-  StartBackfillJob(google::cloud::datastream::v1::StartBackfillJobRequest const& request, Options opts = {});
+  StartBackfillJob(
+      google::cloud::datastream::v1::StartBackfillJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1376,7 +1446,9 @@ class DatastreamClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
-  StopBackfillJob(google::cloud::datastream::v1::StopBackfillJobRequest const& request, Options opts = {});
+  StopBackfillJob(
+      google::cloud::datastream::v1::StopBackfillJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1408,8 +1480,8 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.FetchStaticIpsRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L393}
   ///
   // clang-format on
-  StreamRange<std::string>
-  FetchStaticIps(std::string const& name, Options opts = {});
+  StreamRange<std::string> FetchStaticIps(std::string const& name,
+                                          Options opts = {});
 
   // clang-format off
   ///
@@ -1445,8 +1517,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.FetchStaticIpsRequest]: @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L393}
   ///
   // clang-format on
-  StreamRange<std::string>
-  FetchStaticIps(google::cloud::datastream::v1::FetchStaticIpsRequest request, Options opts = {});
+  StreamRange<std::string> FetchStaticIps(
+      google::cloud::datastream::v1::FetchStaticIpsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1480,7 +1553,11 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-  CreatePrivateConnection(std::string const& parent, google::cloud::datastream::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts = {});
+  CreatePrivateConnection(
+      std::string const& parent,
+      google::cloud::datastream::v1::PrivateConnection const&
+          private_connection,
+      std::string const& private_connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1493,8 +1570,11 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreatePrivateConnection(NoAwaitTag, std::string const& parent, google::cloud::datastream::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::datastream::v1::PrivateConnection const&
+          private_connection,
+      std::string const& private_connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1531,7 +1611,10 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-  CreatePrivateConnection(google::cloud::datastream::v1::CreatePrivateConnectionRequest const& request, Options opts = {});
+  CreatePrivateConnection(
+      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1544,8 +1627,11 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreatePrivateConnection(NoAwaitTag, google::cloud::datastream::v1::CreatePrivateConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      NoAwaitTag,
+      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1557,7 +1643,8 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-  CreatePrivateConnection(google::longrunning::Operation const& operation, Options opts = {});
+  CreatePrivateConnection(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1612,7 +1699,9 @@ class DatastreamClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datastream::v1::PrivateConnection>
-  GetPrivateConnection(google::cloud::datastream::v1::GetPrivateConnectionRequest const& request, Options opts = {});
+  GetPrivateConnection(
+      google::cloud::datastream::v1::GetPrivateConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1688,7 +1777,9 @@ class DatastreamClient {
   ///
   // clang-format on
   StreamRange<google::cloud::datastream::v1::PrivateConnection>
-  ListPrivateConnections(google::cloud::datastream::v1::ListPrivateConnectionsRequest request, Options opts = {});
+  ListPrivateConnections(
+      google::cloud::datastream::v1::ListPrivateConnectionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1733,8 +1824,8 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeletePrivateConnection(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1771,7 +1862,10 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeletePrivateConnection(google::cloud::datastream::v1::DeletePrivateConnectionRequest const& request, Options opts = {});
+  DeletePrivateConnection(
+      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1784,8 +1878,11 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeletePrivateConnection(NoAwaitTag, google::cloud::datastream::v1::DeletePrivateConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      NoAwaitTag,
+      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1797,7 +1894,8 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeletePrivateConnection(google::longrunning::Operation const& operation, Options opts = {});
+  DeletePrivateConnection(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1831,8 +1929,10 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Route>>
-  CreateRoute(std::string const& parent, google::cloud::datastream::v1::Route const& route, std::string const& route_id, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
+      std::string const& parent,
+      google::cloud::datastream::v1::Route const& route,
+      std::string const& route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1845,8 +1945,10 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRoute(NoAwaitTag, std::string const& parent, google::cloud::datastream::v1::Route const& route, std::string const& route_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRoute(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::datastream::v1::Route const& route,
+      std::string const& route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1883,8 +1985,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Route>>
-  CreateRoute(google::cloud::datastream::v1::CreateRouteRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
+      google::cloud::datastream::v1::CreateRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1897,8 +2000,10 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRoute(NoAwaitTag, google::cloud::datastream::v1::CreateRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRoute(
+      NoAwaitTag,
+      google::cloud::datastream::v1::CreateRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1909,8 +2014,8 @@ class DatastreamClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::datastream::v1::Route>>
-  CreateRoute(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1934,8 +2039,8 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
-  StatusOr<google::cloud::datastream::v1::Route>
-  GetRoute(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datastream::v1::Route> GetRoute(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1964,8 +2069,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
-  StatusOr<google::cloud::datastream::v1::Route>
-  GetRoute(google::cloud::datastream::v1::GetRouteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datastream::v1::Route> GetRoute(
+      google::cloud::datastream::v1::GetRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1999,8 +2105,8 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
-  StreamRange<google::cloud::datastream::v1::Route>
-  ListRoutes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datastream::v1::Route> ListRoutes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2039,8 +2145,9 @@ class DatastreamClient {
   /// [google.cloud.datastream.v1.Route]: @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L376}
   ///
   // clang-format on
-  StreamRange<google::cloud::datastream::v1::Route>
-  ListRoutes(google::cloud::datastream::v1::ListRoutesRequest request, Options opts = {});
+  StreamRange<google::cloud::datastream::v1::Route> ListRoutes(
+      google::cloud::datastream::v1::ListRoutesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2085,8 +2192,9 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRoute(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRoute(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -2123,7 +2231,8 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request, Options opts = {});
+  DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -2136,8 +2245,10 @@ class DatastreamClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRoute(NoAwaitTag, google::cloud::datastream::v1::DeleteRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRoute(
+      NoAwaitTag,
+      google::cloud::datastream::v1::DeleteRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2149,7 +2260,8 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteRoute(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteRoute(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -2187,8 +2299,8 @@ class DatastreamClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2217,8 +2329,9 @@ class DatastreamClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2253,8 +2366,8 @@ class DatastreamClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2293,8 +2406,8 @@ class DatastreamClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2320,8 +2433,8 @@ class DatastreamClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2352,8 +2465,9 @@ class DatastreamClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2377,8 +2491,7 @@ class DatastreamClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2407,8 +2520,9 @@ class DatastreamClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2442,8 +2556,7 @@ class DatastreamClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2482,8 +2595,9 @@ class DatastreamClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DatastreamConnection> connection_;

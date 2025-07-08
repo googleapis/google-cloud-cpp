@@ -28,11 +28,14 @@ namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerBackoffPolicyOption directly.
+/// @deprecated Use datacatalog_v1::PolicyTagManagerBackoffPolicyOption
+/// directly.
 using ::google::cloud::datacatalog_v1::PolicyTagManagerBackoffPolicyOption;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use datacatalog_v1::PolicyTagManagerPolicyOptionList directly.
 using ::google::cloud::datacatalog_v1::PolicyTagManagerPolicyOptionList;

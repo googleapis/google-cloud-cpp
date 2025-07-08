@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_ATTACHMENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_ATTACHMENT_CONNECTION_H
 
+#include "google/cloud/support/v2/case_attachment_connection_idempotency_policy.h"
+#include "google/cloud/support/v2/internal/case_attachment_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/support/v2/case_attachment_connection_idempotency_policy.h"
-#include "google/cloud/support/v2/internal/case_attachment_retry_traits.h"
 #include "google/cloud/version.h"
 #include <google/cloud/support/v2/attachment_service.pb.h>
 #include <memory>
@@ -43,7 +43,8 @@ class CaseAttachmentServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `CaseAttachmentServiceConnection` based on counting errors.
+ * A retry policy for `CaseAttachmentServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +53,8 @@ class CaseAttachmentServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CaseAttachmentServiceLimitedErrorCountRetryPolicy : public CaseAttachmentServiceRetryPolicy {
+class CaseAttachmentServiceLimitedErrorCountRetryPolicy
+    : public CaseAttachmentServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +63,18 @@ class CaseAttachmentServiceLimitedErrorCountRetryPolicy : public CaseAttachmentS
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit CaseAttachmentServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit CaseAttachmentServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   CaseAttachmentServiceLimitedErrorCountRetryPolicy(
       CaseAttachmentServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : CaseAttachmentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CaseAttachmentServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   CaseAttachmentServiceLimitedErrorCountRetryPolicy(
       CaseAttachmentServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : CaseAttachmentServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CaseAttachmentServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +94,9 @@ class CaseAttachmentServiceLimitedErrorCountRetryPolicy : public CaseAttachmentS
   using BaseType = CaseAttachmentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<support_v2_internal::CaseAttachmentServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      support_v2_internal::CaseAttachmentServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +109,8 @@ class CaseAttachmentServiceLimitedErrorCountRetryPolicy : public CaseAttachmentS
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CaseAttachmentServiceLimitedTimeRetryPolicy : public CaseAttachmentServiceRetryPolicy {
+class CaseAttachmentServiceLimitedTimeRetryPolicy
+    : public CaseAttachmentServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +135,14 @@ class CaseAttachmentServiceLimitedTimeRetryPolicy : public CaseAttachmentService
   template <typename DurationRep, typename DurationPeriod>
   explicit CaseAttachmentServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  CaseAttachmentServiceLimitedTimeRetryPolicy(CaseAttachmentServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : CaseAttachmentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CaseAttachmentServiceLimitedTimeRetryPolicy(CaseAttachmentServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : CaseAttachmentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CaseAttachmentServiceLimitedTimeRetryPolicy(
+      CaseAttachmentServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : CaseAttachmentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CaseAttachmentServiceLimitedTimeRetryPolicy(
+      CaseAttachmentServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : CaseAttachmentServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +164,19 @@ class CaseAttachmentServiceLimitedTimeRetryPolicy : public CaseAttachmentService
   using BaseType = CaseAttachmentServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<support_v2_internal::CaseAttachmentServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      support_v2_internal::CaseAttachmentServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `CaseAttachmentServiceConnection` object for `CaseAttachmentServiceClient`.
+ * The `CaseAttachmentServiceConnection` object for
+ * `CaseAttachmentServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `CaseAttachmentServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CaseAttachmentServiceClient`.
+ * sets in `CaseAttachmentServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CaseAttachmentServiceClient`.
  *
  * To create a concrete instance, see `MakeCaseAttachmentServiceConnection()`.
  *
@@ -175,19 +188,21 @@ class CaseAttachmentServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::support::v2::Attachment>
-  ListAttachments(google::cloud::support::v2::ListAttachmentsRequest request);
+  virtual StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
+      google::cloud::support::v2::ListAttachmentsRequest request);
 };
 
 /**
- * A factory function to construct an object of type `CaseAttachmentServiceConnection`.
+ * A factory function to construct an object of type
+ * `CaseAttachmentServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CaseAttachmentServiceClient.
+ * should be passed as an argument to the constructor of
+ * CaseAttachmentServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `CaseAttachmentServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `CaseAttachmentServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -197,11 +212,11 @@ class CaseAttachmentServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `CaseAttachmentServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `CaseAttachmentServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<CaseAttachmentServiceConnection> MakeCaseAttachmentServiceConnection(
-    Options options = {});
+std::shared_ptr<CaseAttachmentServiceConnection>
+MakeCaseAttachmentServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2

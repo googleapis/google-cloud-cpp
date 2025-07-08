@@ -35,37 +35,33 @@ class FirewallLogging : public FirewallStub {
  public:
   ~FirewallLogging() override = default;
   FirewallLogging(std::shared_ptr<FirewallStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                  TracingOptions tracing_options,
+                  std::set<std::string> const& components);
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListIngressRulesRequest const& request) override;
 
-  StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse> BatchUpdateIngressRules(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::BatchUpdateIngressRulesRequest const& request) override;
+  StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
+  BatchUpdateIngressRules(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::BatchUpdateIngressRulesRequest const& request)
+      override;
 
   StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::CreateIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::UpdateIngressRuleRequest const& request) override;
 
   Status DeleteIngressRule(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:

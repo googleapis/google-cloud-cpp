@@ -34,66 +34,81 @@ AutokeyAdminTracingConnection::AutokeyAdminTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminTracingConnection::UpdateAutokeyConfig(google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::UpdateAutokeyConfig");
+AutokeyAdminTracingConnection::UpdateAutokeyConfig(
+    google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::AutokeyAdminConnection::UpdateAutokeyConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateAutokeyConfig(request));
 }
 
 StatusOr<google::cloud::kms::v1::AutokeyConfig>
-AutokeyAdminTracingConnection::GetAutokeyConfig(google::cloud::kms::v1::GetAutokeyConfigRequest const& request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::GetAutokeyConfig");
+AutokeyAdminTracingConnection::GetAutokeyConfig(
+    google::cloud::kms::v1::GetAutokeyConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::AutokeyAdminConnection::GetAutokeyConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAutokeyConfig(request));
 }
 
 StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
-AutokeyAdminTracingConnection::ShowEffectiveAutokeyConfig(google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::ShowEffectiveAutokeyConfig");
+AutokeyAdminTracingConnection::ShowEffectiveAutokeyConfig(
+    google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "kms_v1::AutokeyAdminConnection::ShowEffectiveAutokeyConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ShowEffectiveAutokeyConfig(request));
 }
 
 StreamRange<google::cloud::location::Location>
-AutokeyAdminTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::ListLocations");
+AutokeyAdminTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span =
+      internal::MakeSpan("kms_v1::AutokeyAdminConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-AutokeyAdminTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+AutokeyAdminTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-AutokeyAdminTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy> AutokeyAdminTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::AutokeyAdminConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-AutokeyAdminTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy> AutokeyAdminTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::AutokeyAdminConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutokeyAdminTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::TestIamPermissions");
+AutokeyAdminTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::AutokeyAdminConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::longrunning::Operation>
-AutokeyAdminTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyAdminConnection::GetOperation");
+AutokeyAdminTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::AutokeyAdminConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

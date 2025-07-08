@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/deploy/v1/cloud_deploy_connection.h"
 #include "google/cloud/deploy/v1/cloud_deploy_connection_idempotency_policy.h"
 #include "google/cloud/deploy/v1/cloud_deploy_options.h"
 #include "google/cloud/deploy/v1/internal/cloud_deploy_retry_traits.h"
 #include "google/cloud/deploy/v1/internal/cloud_deploy_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,315 +40,342 @@ namespace cloud {
 namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudDeployConnectionImpl
-    : public deploy_v1::CloudDeployConnection {
+class CloudDeployConnectionImpl : public deploy_v1::CloudDeployConnection {
  public:
   ~CloudDeployConnectionImpl() override = default;
 
   CloudDeployConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<deploy_v1_internal::CloudDeployStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<deploy_v1_internal::CloudDeployStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::deploy::v1::DeliveryPipeline>
-  ListDeliveryPipelines(google::cloud::deploy::v1::ListDeliveryPipelinesRequest request) override;
+  ListDeliveryPipelines(
+      google::cloud::deploy::v1::ListDeliveryPipelinesRequest request) override;
 
-  StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
-  GetDeliveryPipeline(google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::DeliveryPipeline> GetDeliveryPipeline(
+      google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  CreateDeliveryPipeline(google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) override;
+  CreateDeliveryPipeline(
+      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDeliveryPipeline(NoAwaitTag,
-      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
+      NoAwaitTag,
+      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   CreateDeliveryPipeline(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  UpdateDeliveryPipeline(google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) override;
+  UpdateDeliveryPipeline(
+      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateDeliveryPipeline(NoAwaitTag,
-      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
+      NoAwaitTag,
+      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   UpdateDeliveryPipeline(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeliveryPipeline(google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) override;
+  DeleteDeliveryPipeline(
+      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteDeliveryPipeline(NoAwaitTag,
-      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
+      NoAwaitTag,
+      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteDeliveryPipeline(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::deploy::v1::Target>
-  ListTargets(google::cloud::deploy::v1::ListTargetsRequest request) override;
+  StreamRange<google::cloud::deploy::v1::Target> ListTargets(
+      google::cloud::deploy::v1::ListTargetsRequest request) override;
 
-  StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
-  RollbackTarget(google::cloud::deploy::v1::RollbackTargetRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::RollbackTargetResponse> RollbackTarget(
+      google::cloud::deploy::v1::RollbackTargetRequest const& request) override;
 
-  StatusOr<google::cloud::deploy::v1::Target>
-  GetTarget(google::cloud::deploy::v1::GetTargetRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::Target> GetTarget(
+      google::cloud::deploy::v1::GetTargetRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Target>>
-  CreateTarget(google::cloud::deploy::v1::CreateTargetRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateTarget(NoAwaitTag,
+  future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
       google::cloud::deploy::v1::CreateTargetRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Target>>
-  CreateTarget(
+  StatusOr<google::longrunning::Operation> CreateTarget(
+      NoAwaitTag,
+      google::cloud::deploy::v1::CreateTargetRequest const& request) override;
+
+  future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Target>>
-  UpdateTarget(google::cloud::deploy::v1::UpdateTargetRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateTarget(NoAwaitTag,
+  future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
       google::cloud::deploy::v1::UpdateTargetRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Target>>
-  UpdateTarget(
+  StatusOr<google::longrunning::Operation> UpdateTarget(
+      NoAwaitTag,
+      google::cloud::deploy::v1::UpdateTargetRequest const& request) override;
+
+  future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteTarget(google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteTarget(NoAwaitTag,
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
       google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteTarget(
+  StatusOr<google::longrunning::Operation> DeleteTarget(
+      NoAwaitTag,
+      google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::deploy::v1::CustomTargetType>
-  ListCustomTargetTypes(google::cloud::deploy::v1::ListCustomTargetTypesRequest request) override;
+  ListCustomTargetTypes(
+      google::cloud::deploy::v1::ListCustomTargetTypesRequest request) override;
 
-  StatusOr<google::cloud::deploy::v1::CustomTargetType>
-  GetCustomTargetType(google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::CustomTargetType> GetCustomTargetType(
+      google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  CreateCustomTargetType(google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) override;
+  CreateCustomTargetType(
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateCustomTargetType(NoAwaitTag,
-      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateCustomTargetType(
+      NoAwaitTag,
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
   CreateCustomTargetType(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  UpdateCustomTargetType(google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) override;
+  UpdateCustomTargetType(
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateCustomTargetType(NoAwaitTag,
-      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
+      NoAwaitTag,
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
   UpdateCustomTargetType(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteCustomTargetType(google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) override;
+  DeleteCustomTargetType(
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteCustomTargetType(NoAwaitTag,
-      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
+      NoAwaitTag,
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteCustomTargetType(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::deploy::v1::Release>
-  ListReleases(google::cloud::deploy::v1::ListReleasesRequest request) override;
+  StreamRange<google::cloud::deploy::v1::Release> ListReleases(
+      google::cloud::deploy::v1::ListReleasesRequest request) override;
 
-  StatusOr<google::cloud::deploy::v1::Release>
-  GetRelease(google::cloud::deploy::v1::GetReleaseRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::Release> GetRelease(
+      google::cloud::deploy::v1::GetReleaseRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Release>>
-  CreateRelease(google::cloud::deploy::v1::CreateReleaseRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateRelease(NoAwaitTag,
+  future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
       google::cloud::deploy::v1::CreateReleaseRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Release>>
-  CreateRelease(
+  StatusOr<google::longrunning::Operation> CreateRelease(
+      NoAwaitTag,
+      google::cloud::deploy::v1::CreateReleaseRequest const& request) override;
+
+  future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
-  AbandonRelease(google::cloud::deploy::v1::AbandonReleaseRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
+      google::cloud::deploy::v1::AbandonReleaseRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
-  CreateDeployPolicy(google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) override;
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> CreateDeployPolicy(
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDeployPolicy(NoAwaitTag,
-      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDeployPolicy(
+      NoAwaitTag,
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
-  CreateDeployPolicy(
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> CreateDeployPolicy(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
-  UpdateDeployPolicy(google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) override;
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> UpdateDeployPolicy(
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateDeployPolicy(NoAwaitTag,
-      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateDeployPolicy(
+      NoAwaitTag,
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
-  UpdateDeployPolicy(
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> UpdateDeployPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeployPolicy(google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) override;
+  DeleteDeployPolicy(google::cloud::deploy::v1::DeleteDeployPolicyRequest const&
+                         request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteDeployPolicy(NoAwaitTag,
-      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDeployPolicy(
+      NoAwaitTag,
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeployPolicy(
-      google::longrunning::Operation const& operation) override;
+  DeleteDeployPolicy(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::deploy::v1::DeployPolicy>
-  ListDeployPolicies(google::cloud::deploy::v1::ListDeployPoliciesRequest request) override;
+  StreamRange<google::cloud::deploy::v1::DeployPolicy> ListDeployPolicies(
+      google::cloud::deploy::v1::ListDeployPoliciesRequest request) override;
 
-  StatusOr<google::cloud::deploy::v1::DeployPolicy>
-  GetDeployPolicy(google::cloud::deploy::v1::GetDeployPolicyRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::DeployPolicy> GetDeployPolicy(
+      google::cloud::deploy::v1::GetDeployPolicyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
-  ApproveRollout(google::cloud::deploy::v1::ApproveRolloutRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
+      google::cloud::deploy::v1::ApproveRolloutRequest const& request) override;
 
-  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
-  AdvanceRollout(google::cloud::deploy::v1::AdvanceRolloutRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> AdvanceRollout(
+      google::cloud::deploy::v1::AdvanceRolloutRequest const& request) override;
 
-  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
-  CancelRollout(google::cloud::deploy::v1::CancelRolloutRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CancelRollout(
+      google::cloud::deploy::v1::CancelRolloutRequest const& request) override;
 
-  StreamRange<google::cloud::deploy::v1::Rollout>
-  ListRollouts(google::cloud::deploy::v1::ListRolloutsRequest request) override;
+  StreamRange<google::cloud::deploy::v1::Rollout> ListRollouts(
+      google::cloud::deploy::v1::ListRolloutsRequest request) override;
 
-  StatusOr<google::cloud::deploy::v1::Rollout>
-  GetRollout(google::cloud::deploy::v1::GetRolloutRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::Rollout> GetRollout(
+      google::cloud::deploy::v1::GetRolloutRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Rollout>>
-  CreateRollout(google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateRollout(NoAwaitTag,
+  future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
       google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Rollout>>
-  CreateRollout(
+  StatusOr<google::longrunning::Operation> CreateRollout(
+      NoAwaitTag,
+      google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
+
+  future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
-  IgnoreJob(google::cloud::deploy::v1::IgnoreJobRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
+      google::cloud::deploy::v1::IgnoreJobRequest const& request) override;
 
-  StatusOr<google::cloud::deploy::v1::RetryJobResponse>
-  RetryJob(google::cloud::deploy::v1::RetryJobRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
+      google::cloud::deploy::v1::RetryJobRequest const& request) override;
 
-  StreamRange<google::cloud::deploy::v1::JobRun>
-  ListJobRuns(google::cloud::deploy::v1::ListJobRunsRequest request) override;
+  StreamRange<google::cloud::deploy::v1::JobRun> ListJobRuns(
+      google::cloud::deploy::v1::ListJobRunsRequest request) override;
 
-  StatusOr<google::cloud::deploy::v1::JobRun>
-  GetJobRun(google::cloud::deploy::v1::GetJobRunRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(
+      google::cloud::deploy::v1::GetJobRunRequest const& request) override;
 
-  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
-  TerminateJobRun(google::cloud::deploy::v1::TerminateJobRunRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> TerminateJobRun(
+      google::cloud::deploy::v1::TerminateJobRunRequest const& request)
+      override;
 
-  StatusOr<google::cloud::deploy::v1::Config>
-  GetConfig(google::cloud::deploy::v1::GetConfigRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::Config> GetConfig(
+      google::cloud::deploy::v1::GetConfigRequest const& request) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Automation>>
-  CreateAutomation(google::cloud::deploy::v1::CreateAutomationRequest const& request) override;
+  future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
+      google::cloud::deploy::v1::CreateAutomationRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateAutomation(NoAwaitTag,
-      google::cloud::deploy::v1::CreateAutomationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateAutomation(
+      NoAwaitTag,
+      google::cloud::deploy::v1::CreateAutomationRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::deploy::v1::Automation>>
-  CreateAutomation(
+  future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::deploy::v1::Automation>>
-  UpdateAutomation(google::cloud::deploy::v1::UpdateAutomationRequest const& request) override;
+  future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
+      google::cloud::deploy::v1::UpdateAutomationRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateAutomation(NoAwaitTag,
-      google::cloud::deploy::v1::UpdateAutomationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateAutomation(
+      NoAwaitTag,
+      google::cloud::deploy::v1::UpdateAutomationRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::deploy::v1::Automation>>
-  UpdateAutomation(
+  future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteAutomation(google::cloud::deploy::v1::DeleteAutomationRequest const& request) override;
+  DeleteAutomation(google::cloud::deploy::v1::DeleteAutomationRequest const&
+                       request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteAutomation(NoAwaitTag,
-      google::cloud::deploy::v1::DeleteAutomationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteAutomation(
+      NoAwaitTag,
+      google::cloud::deploy::v1::DeleteAutomationRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteAutomation(
-      google::longrunning::Operation const& operation) override;
+  DeleteAutomation(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::deploy::v1::Automation>
-  GetAutomation(google::cloud::deploy::v1::GetAutomationRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
+      google::cloud::deploy::v1::GetAutomationRequest const& request) override;
 
-  StreamRange<google::cloud::deploy::v1::Automation>
-  ListAutomations(google::cloud::deploy::v1::ListAutomationsRequest request) override;
+  StreamRange<google::cloud::deploy::v1::Automation> ListAutomations(
+      google::cloud::deploy::v1::ListAutomationsRequest request) override;
 
-  StatusOr<google::cloud::deploy::v1::AutomationRun>
-  GetAutomationRun(google::cloud::deploy::v1::GetAutomationRunRequest const& request) override;
+  StatusOr<google::cloud::deploy::v1::AutomationRun> GetAutomationRun(
+      google::cloud::deploy::v1::GetAutomationRunRequest const& request)
+      override;
 
-  StreamRange<google::cloud::deploy::v1::AutomationRun>
-  ListAutomationRuns(google::cloud::deploy::v1::ListAutomationRunsRequest request) override;
+  StreamRange<google::cloud::deploy::v1::AutomationRun> ListAutomationRuns(
+      google::cloud::deploy::v1::ListAutomationRunsRequest request) override;
 
   StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
-  CancelAutomationRun(google::cloud::deploy::v1::CancelAutomationRunRequest const& request) override;
+  CancelAutomationRun(
+      google::cloud::deploy::v1::CancelAutomationRunRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

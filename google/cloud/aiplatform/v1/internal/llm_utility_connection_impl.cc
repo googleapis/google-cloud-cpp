@@ -32,34 +32,38 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::LlmUtilityServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<aiplatform_v1::LlmUtilityServiceRetryPolicyOption>()->clone();
+std::unique_ptr<aiplatform_v1::LlmUtilityServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::LlmUtilityServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<aiplatform_v1::LlmUtilityServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::LlmUtilityServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<aiplatform_v1::LlmUtilityServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<aiplatform_v1::LlmUtilityServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::LlmUtilityServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 LlmUtilityServiceConnectionImpl::LlmUtilityServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::LlmUtilityServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        LlmUtilityServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), LlmUtilityServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
-LlmUtilityServiceConnectionImpl::CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const& request) {
+LlmUtilityServiceConnectionImpl::CountTokens(
+    google::cloud::aiplatform::v1::CountTokensRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -72,40 +76,48 @@ LlmUtilityServiceConnectionImpl::CountTokens(google::cloud::aiplatform::v1::Coun
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
-LlmUtilityServiceConnectionImpl::ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
+LlmUtilityServiceConnectionImpl::ComputeTokens(
+    google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeTokens(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
         return stub_->ComputeTokens(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-LlmUtilityServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+LlmUtilityServiceConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::LlmUtilityServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::LlmUtilityServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -113,7 +125,8 @@ LlmUtilityServiceConnectionImpl::ListLocations(google::cloud::location::ListLoca
 }
 
 StatusOr<google::cloud::location::Location>
-LlmUtilityServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+LlmUtilityServiceConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -125,8 +138,8 @@ LlmUtilityServiceConnectionImpl::GetLocation(google::cloud::location::GetLocatio
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-LlmUtilityServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> LlmUtilityServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -138,8 +151,8 @@ LlmUtilityServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyReque
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-LlmUtilityServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> LlmUtilityServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -152,7 +165,8 @@ LlmUtilityServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyReque
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-LlmUtilityServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+LlmUtilityServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -165,17 +179,21 @@ LlmUtilityServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPerm
 }
 
 StreamRange<google::longrunning::Operation>
-LlmUtilityServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+LlmUtilityServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::LlmUtilityServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::LlmUtilityServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -185,7 +203,8 @@ LlmUtilityServiceConnectionImpl::ListOperations(google::longrunning::ListOperati
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -193,7 +212,8 @@ LlmUtilityServiceConnectionImpl::ListOperations(google::longrunning::ListOperati
 }
 
 StatusOr<google::longrunning::Operation>
-LlmUtilityServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+LlmUtilityServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -205,8 +225,8 @@ LlmUtilityServiceConnectionImpl::GetOperation(google::longrunning::GetOperationR
       *current, request, __func__);
 }
 
-Status
-LlmUtilityServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status LlmUtilityServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -218,8 +238,8 @@ LlmUtilityServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOper
       *current, request, __func__);
 }
 
-Status
-LlmUtilityServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status LlmUtilityServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -232,7 +252,8 @@ LlmUtilityServiceConnectionImpl::CancelOperation(google::longrunning::CancelOper
 }
 
 StatusOr<google::longrunning::Operation>
-LlmUtilityServiceConnectionImpl::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
+LlmUtilityServiceConnectionImpl::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

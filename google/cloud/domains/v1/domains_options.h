@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOMAINS_V1_DOMAINS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOMAINS_V1_DOMAINS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/domains/v1/domains_connection.h"
 #include "google/cloud/domains/v1/domains_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct DomainsPollingPolicyOption {
  * @ingroup google-cloud-domains-options
  */
 using DomainsPolicyOptionList =
-    OptionList<DomainsRetryPolicyOption,
-               DomainsBackoffPolicyOption,
+    OptionList<DomainsRetryPolicyOption, DomainsBackoffPolicyOption,
                DomainsPollingPolicyOption,
                DomainsConnectionIdempotencyPolicyOption>;
 

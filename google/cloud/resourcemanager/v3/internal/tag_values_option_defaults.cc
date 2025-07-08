@@ -17,11 +17,11 @@
 // source: google/cloud/resourcemanager/v3/tag_values.proto
 
 #include "google/cloud/resourcemanager/v3/internal/tag_values_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/resourcemanager/v3/tag_values_connection.h"
 #include "google/cloud/resourcemanager/v3/tag_values_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,31 +36,39 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TagValuesDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TAG_VALUES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TAG_VALUES_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TAG_VALUES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TAG_VALUES_AUTHORITY",
       // optional location tag for generating docs
-      absl::StrCat(location, location.empty() ? "" : "-", "cloudresourcemanager.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "cloudresourcemanager.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<resourcemanager_v3::TagValuesRetryPolicyOption>()) {
     options.set<resourcemanager_v3::TagValuesRetryPolicyOption>(
         resourcemanager_v3::TagValuesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<resourcemanager_v3::TagValuesBackoffPolicyOption>()) {
     options.set<resourcemanager_v3::TagValuesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<resourcemanager_v3::TagValuesPollingPolicyOption>()) {
     options.set<resourcemanager_v3::TagValuesPollingPolicyOption>(
         GenericPollingPolicy<
             resourcemanager_v3::TagValuesRetryPolicyOption::Type,
             resourcemanager_v3::TagValuesBackoffPolicyOption::Type>(
-            options.get<resourcemanager_v3::TagValuesRetryPolicyOption>()->clone(),
+            options.get<resourcemanager_v3::TagValuesRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<resourcemanager_v3::TagValuesConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          resourcemanager_v3::TagValuesConnectionIdempotencyPolicyOption>()) {
     options.set<resourcemanager_v3::TagValuesConnectionIdempotencyPolicyOption>(
         resourcemanager_v3::MakeDefaultTagValuesConnectionIdempotencyPolicy());
   }

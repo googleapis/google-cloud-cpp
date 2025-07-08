@@ -35,62 +35,63 @@ class PolicyTagManagerConnectionIdempotencyPolicy {
   virtual ~PolicyTagManagerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateTaxonomy(google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request);
+  virtual google::cloud::Idempotency CreateTaxonomy(
+      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTaxonomy(google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request);
+  virtual google::cloud::Idempotency DeleteTaxonomy(
+      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTaxonomy(google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request);
+  virtual google::cloud::Idempotency UpdateTaxonomy(
+      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTaxonomies(google::cloud::datacatalog::v1::ListTaxonomiesRequest request);
+  virtual google::cloud::Idempotency ListTaxonomies(
+      google::cloud::datacatalog::v1::ListTaxonomiesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetTaxonomy(google::cloud::datacatalog::v1::GetTaxonomyRequest const& request);
+  virtual google::cloud::Idempotency GetTaxonomy(
+      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreatePolicyTag(google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request);
+  virtual google::cloud::Idempotency CreatePolicyTag(
+      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeletePolicyTag(google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request);
+  virtual google::cloud::Idempotency DeletePolicyTag(
+      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdatePolicyTag(google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request);
+  virtual google::cloud::Idempotency UpdatePolicyTag(
+      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListPolicyTags(google::cloud::datacatalog::v1::ListPolicyTagsRequest request);
+  virtual google::cloud::Idempotency ListPolicyTags(
+      google::cloud::datacatalog::v1::ListPolicyTagsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetPolicyTag(google::cloud::datacatalog::v1::GetPolicyTagRequest const& request);
+  virtual google::cloud::Idempotency GetPolicyTag(
+      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy>
-    MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy();
+MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_v1

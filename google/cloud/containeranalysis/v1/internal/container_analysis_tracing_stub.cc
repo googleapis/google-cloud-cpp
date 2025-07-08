@@ -33,10 +33,10 @@ ContainerAnalysisTracingStub::ContainerAnalysisTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.containeranalysis.v1.ContainerAnalysis", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.containeranalysis.v1.ContainerAnalysis", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,43 +44,51 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.containeranalysis.v1.ContainerAnalysis", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.containeranalysis.v1.ContainerAnalysis", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> ContainerAnalysisTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ContainerAnalysisTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.containeranalysis.v1.ContainerAnalysis", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.containeranalysis.v1.ContainerAnalysis",
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary> ContainerAnalysisTracingStub::GetVulnerabilityOccurrencesSummary(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.containeranalysis.v1.ContainerAnalysis", "GetVulnerabilityOccurrencesSummary");
+StatusOr<
+    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+ContainerAnalysisTracingStub::GetVulnerabilityOccurrencesSummary(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::containeranalysis::v1::
+        GetVulnerabilityOccurrencesSummaryRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.containeranalysis.v1.ContainerAnalysis",
+      "GetVulnerabilityOccurrencesSummary");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetVulnerabilityOccurrencesSummary(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetVulnerabilityOccurrencesSummary(context, options, request));
 }
 
-StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse> ContainerAnalysisTracingStub::ExportSBOM(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+ContainerAnalysisTracingStub::ExportSBOM(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.containeranalysis.v1.ContainerAnalysis", "ExportSBOM");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.containeranalysis.v1.ContainerAnalysis", "ExportSBOM");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

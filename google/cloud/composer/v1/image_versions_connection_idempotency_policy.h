@@ -35,23 +35,25 @@ class ImageVersionsConnectionIdempotencyPolicy {
   virtual ~ImageVersionsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request);
+  virtual google::cloud::Idempotency ListImageVersions(
+      google::cloud::orchestration::airflow::service::v1::
+          ListImageVersionsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
-    MakeDefaultImageVersionsConnectionIdempotencyPolicy();
+MakeDefaultImageVersionsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_v1

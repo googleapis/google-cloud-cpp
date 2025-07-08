@@ -36,48 +36,57 @@ class CatalogServiceTracingConnection
   ~CatalogServiceTracingConnection() override = default;
 
   explicit CatalogServiceTracingConnection(
-    std::shared_ptr<retail_v2::CatalogServiceConnection> child);
+      std::shared_ptr<retail_v2::CatalogServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::retail::v2::Catalog>
-  ListCatalogs(google::cloud::retail::v2::ListCatalogsRequest request) override;
+  StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
+      google::cloud::retail::v2::ListCatalogsRequest request) override;
 
-  StatusOr<google::cloud::retail::v2::Catalog>
-  UpdateCatalog(google::cloud::retail::v2::UpdateCatalogRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
+      google::cloud::retail::v2::UpdateCatalogRequest const& request) override;
 
-  Status
-  SetDefaultBranch(google::cloud::retail::v2::SetDefaultBranchRequest const& request) override;
+  Status SetDefaultBranch(
+      google::cloud::retail::v2::SetDefaultBranchRequest const& request)
+      override;
 
   StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-  GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const& request) override;
+  GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const&
+                       request) override;
 
-  StatusOr<google::cloud::retail::v2::CompletionConfig>
-  GetCompletionConfig(google::cloud::retail::v2::GetCompletionConfigRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
+      google::cloud::retail::v2::GetCompletionConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::CompletionConfig>
-  UpdateCompletionConfig(google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
+      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  GetAttributesConfig(google::cloud::retail::v2::GetAttributesConfigRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
+      google::cloud::retail::v2::GetAttributesConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  UpdateAttributesConfig(google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
+      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  AddCatalogAttribute(google::cloud::retail::v2::AddCatalogAttributeRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::AttributesConfig> AddCatalogAttribute(
+      google::cloud::retail::v2::AddCatalogAttributeRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  RemoveCatalogAttribute(google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::AttributesConfig> RemoveCatalogAttribute(
+      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  ReplaceCatalogAttribute(google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::AttributesConfig> ReplaceCatalogAttribute(
+      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::CatalogServiceConnection> child_;

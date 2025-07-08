@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `OsConfigZonalServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `OsConfigZonalServiceClient`. To do so,
- * construct an object of type `OsConfigZonalServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `OsConfigZonalServiceClient`. To do
+ * so, construct an object of type `OsConfigZonalServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockOsConfigZonalServiceConnection : public osconfig_v1::OsConfigZonalServiceConnection {
+class MockOsConfigZonalServiceConnection
+    : public osconfig_v1::OsConfigZonalServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,16 @@ class MockOsConfigZonalServiceConnection : public osconfig_v1::OsConfigZonalServ
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
-  CreateOSPolicyAssignment,
-  (google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
+      CreateOSPolicyAssignment,
+      (google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,33 +69,41 @@ class MockOsConfigZonalServiceConnection : public osconfig_v1::OsConfigZonalServ
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateOSPolicyAssignment(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateOSPolicyAssignment, (NoAwaitTag,
-    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateOSPolicyAssignment(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
-  CreateOSPolicyAssignment, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateOSPolicyAssignment,
+      (NoAwaitTag,
+       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateOSPolicyAssignment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
-  UpdateOSPolicyAssignment,
-  (google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request), (override));
+              CreateOSPolicyAssignment,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
+      UpdateOSPolicyAssignment,
+      (google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -98,45 +111,61 @@ class MockOsConfigZonalServiceConnection : public osconfig_v1::OsConfigZonalServ
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateOSPolicyAssignment(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateOSPolicyAssignment, (NoAwaitTag,
-    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateOSPolicyAssignment,
+      (NoAwaitTag,
+       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateOSPolicyAssignment(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateOSPolicyAssignment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
-  UpdateOSPolicyAssignment, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateOSPolicyAssignment,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>,
-  GetOSPolicyAssignment,
-  (google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request), (override));
+              GetOSPolicyAssignment,
+              (google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>),
-  ListOSPolicyAssignments,
-  (google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>),
+      ListOSPolicyAssignments,
+      (google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>),
-  ListOSPolicyAssignmentRevisions,
-  (google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>),
+      ListOSPolicyAssignmentRevisions,
+      (google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,
-  DeleteOSPolicyAssignment,
-  (google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,
+      DeleteOSPolicyAssignment,
+      (google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -144,45 +173,62 @@ class MockOsConfigZonalServiceConnection : public osconfig_v1::OsConfigZonalServ
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteOSPolicyAssignment(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteOSPolicyAssignment, (NoAwaitTag,
-    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteOSPolicyAssignment,
+      (NoAwaitTag,
+       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteOSPolicyAssignment(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteOSPolicyAssignment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,
-  DeleteOSPolicyAssignment, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,
+      DeleteOSPolicyAssignment,
+      (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>,
-  GetOSPolicyAssignmentReport,
-  (google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>,
+      GetOSPolicyAssignmentReport,
+      (google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>),
-  ListOSPolicyAssignmentReports,
-  (google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>),
+      ListOSPolicyAssignmentReports,
+      (google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::Inventory>,
-  GetInventory,
-  (google::cloud::osconfig::v1::GetInventoryRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::Inventory>, GetInventory,
+              (google::cloud::osconfig::v1::GetInventoryRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::Inventory>),
-  ListInventories,
-  (google::cloud::osconfig::v1::ListInventoriesRequest request), (override));
+              ListInventories,
+              (google::cloud::osconfig::v1::ListInventoriesRequest request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>,
-  GetVulnerabilityReport,
-  (google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request), (override));
+              GetVulnerabilityReport,
+              (google::cloud::osconfig::v1::GetVulnerabilityReportRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>),
-  ListVulnerabilityReports,
-  (google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>),
+      ListVulnerabilityReports,
+      (google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

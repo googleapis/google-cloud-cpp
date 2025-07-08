@@ -31,10 +31,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `PrincipalAccessBoundaryPoliciesConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `PrincipalAccessBoundaryPoliciesClient`. To do so,
- * construct an object of type `PrincipalAccessBoundaryPoliciesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type
+ * `PrincipalAccessBoundaryPoliciesClient`. To do so, construct an object of
+ * type `PrincipalAccessBoundaryPoliciesClient` with an instance of this class.
+ * Then use the Google Test framework functions to program the behavior of this
+ * mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +43,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockPrincipalAccessBoundaryPoliciesConnection : public iam_v3::PrincipalAccessBoundaryPoliciesConnection {
+class MockPrincipalAccessBoundaryPoliciesConnection
+    : public iam_v3::PrincipalAccessBoundaryPoliciesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +53,16 @@ class MockPrincipalAccessBoundaryPoliciesConnection : public iam_v3::PrincipalAc
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreatePrincipalAccessBoundaryPolicy(Matcher<google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreatePrincipalAccessBoundaryPolicy(Matcher<google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>,
-  CreatePrincipalAccessBoundaryPolicy,
-  (google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>,
+      CreatePrincipalAccessBoundaryPolicy,
+      (google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,37 +70,48 @@ class MockPrincipalAccessBoundaryPoliciesConnection : public iam_v3::PrincipalAc
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreatePrincipalAccessBoundaryPolicy(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreatePrincipalAccessBoundaryPolicy, (NoAwaitTag,
-    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreatePrincipalAccessBoundaryPolicy(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>,
-  CreatePrincipalAccessBoundaryPolicy, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>,
-  GetPrincipalAccessBoundaryPolicy,
-  (google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      CreatePrincipalAccessBoundaryPolicy,
+      (NoAwaitTag,
+       google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdatePrincipalAccessBoundaryPolicy(Matcher<google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreatePrincipalAccessBoundaryPolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>,
-  UpdatePrincipalAccessBoundaryPolicy,
-  (google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request), (override));
+              CreatePrincipalAccessBoundaryPolicy,
+              (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(
+      StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>,
+      GetPrincipalAccessBoundaryPolicy,
+      (google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePrincipalAccessBoundaryPolicy(Matcher<google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>,
+      UpdatePrincipalAccessBoundaryPolicy,
+      (google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -102,33 +119,42 @@ class MockPrincipalAccessBoundaryPoliciesConnection : public iam_v3::PrincipalAc
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdatePrincipalAccessBoundaryPolicy(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdatePrincipalAccessBoundaryPolicy, (NoAwaitTag,
-    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      UpdatePrincipalAccessBoundaryPolicy,
+      (NoAwaitTag,
+       google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdatePrincipalAccessBoundaryPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdatePrincipalAccessBoundaryPolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>,
-  UpdatePrincipalAccessBoundaryPolicy, (
-    google::longrunning::Operation const& operation), (override));
+              UpdatePrincipalAccessBoundaryPolicy,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePrincipalAccessBoundaryPolicy(Matcher<google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeletePrincipalAccessBoundaryPolicy(Matcher<google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v3::OperationMetadata>>,
-  DeletePrincipalAccessBoundaryPolicy,
-  (google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::iam::v3::OperationMetadata>>,
+      DeletePrincipalAccessBoundaryPolicy,
+      (google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -136,33 +162,43 @@ class MockPrincipalAccessBoundaryPoliciesConnection : public iam_v3::PrincipalAc
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeletePrincipalAccessBoundaryPolicy(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeletePrincipalAccessBoundaryPolicy, (NoAwaitTag,
-    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      DeletePrincipalAccessBoundaryPolicy,
+      (NoAwaitTag,
+       google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePrincipalAccessBoundaryPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeletePrincipalAccessBoundaryPolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v3::OperationMetadata>>,
-  DeletePrincipalAccessBoundaryPolicy, (
-    google::longrunning::Operation const& operation), (override));
+              DeletePrincipalAccessBoundaryPolicy,
+              (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>),
-  ListPrincipalAccessBoundaryPolicies,
-  (google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>),
+      ListPrincipalAccessBoundaryPolicies,
+      (google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::iam::v3::PolicyBinding>),
-  SearchPrincipalAccessBoundaryPolicyBindings,
-  (google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::iam::v3::PolicyBinding>),
+      SearchPrincipalAccessBoundaryPolicyBindings,
+      (google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

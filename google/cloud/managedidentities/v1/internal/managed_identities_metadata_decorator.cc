@@ -49,45 +49,49 @@ ManagedIdentitiesServiceMetadata::AsyncCreateMicrosoftAdDomain(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateMicrosoftAdDomain(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMicrosoftAdDomain(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceMetadata::CreateMicrosoftAdDomain(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMicrosoftAdDomain(context, options, request);
 }
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceMetadata::ResetAdminPassword(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResetAdminPassword(context, options, request);
 }
 
 StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
 ManagedIdentitiesServiceMetadata::ListDomains(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDomains(context, options, request);
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceMetadata::GetDomain(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDomain(context, options, request);
 }
 
@@ -97,17 +101,20 @@ ManagedIdentitiesServiceMetadata::AsyncUpdateDomain(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("domain.name=", internal::UrlEncode(request.domain().name())));
-  return child_->AsyncUpdateDomain(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("domain.name=",
+                           internal::UrlEncode(request.domain().name())));
+  return child_->AsyncUpdateDomain(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceMetadata::UpdateDomain(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("domain.name=", internal::UrlEncode(request.domain().name())));
+  SetMetadata(context, options,
+              absl::StrCat("domain.name=",
+                           internal::UrlEncode(request.domain().name())));
   return child_->UpdateDomain(context, options, request);
 }
 
@@ -117,17 +124,18 @@ ManagedIdentitiesServiceMetadata::AsyncDeleteDomain(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteDomain(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDomain(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceMetadata::DeleteDomain(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDomain(context, options, request);
 }
 
@@ -137,17 +145,18 @@ ManagedIdentitiesServiceMetadata::AsyncAttachTrust(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncAttachTrust(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncAttachTrust(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceMetadata::AttachTrust(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AttachTrust(context, options, request);
 }
 
@@ -156,18 +165,21 @@ ManagedIdentitiesServiceMetadata::AsyncReconfigureTrust(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncReconfigureTrust(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncReconfigureTrust(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceMetadata::ReconfigureTrust(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::managedidentities::v1::ReconfigureTrustRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ReconfigureTrust(context, options, request);
 }
 
@@ -177,17 +189,18 @@ ManagedIdentitiesServiceMetadata::AsyncDetachTrust(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDetachTrust(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDetachTrust(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceMetadata::DetachTrust(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DetachTrust(context, options, request);
 }
 
@@ -197,17 +210,18 @@ ManagedIdentitiesServiceMetadata::AsyncValidateTrust(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncValidateTrust(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncValidateTrust(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceMetadata::ValidateTrust(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ValidateTrust(context, options, request);
 }
 
@@ -219,8 +233,8 @@ ManagedIdentitiesServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ManagedIdentitiesServiceMetadata::AsyncCancelOperation(
@@ -230,21 +244,21 @@ future<Status> ManagedIdentitiesServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void ManagedIdentitiesServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void ManagedIdentitiesServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ManagedIdentitiesServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                                   Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -41,23 +41,30 @@ class RoutineServiceRestMetadata : public RoutineServiceRestStub {
 
   StatusOr<google::cloud::bigquery::v2::Routine> GetRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetRoutineRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::GetRoutineRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::Routine> InsertRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::InsertRoutineRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::InsertRoutineRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::v2::Routine> UpdateRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::UpdateRoutineRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::UpdateRoutineRequest const& request)
+      override;
 
-  Status DeleteRoutine(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::DeleteRoutineRequest const& request) override;
+  Status DeleteRoutine(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::bigquery::v2::DeleteRoutineRequest const&
+                           request) override;
 
   StatusOr<google::cloud::bigquery::v2::ListRoutinesResponse> ListRoutines(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::ListRoutinesRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::ListRoutinesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

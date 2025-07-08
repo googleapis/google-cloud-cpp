@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_PRIVILEGED_ACCESS_MANAGER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_PRIVILEGED_ACCESS_MANAGER_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection.h"
 #include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,7 +55,8 @@ struct PrivilegedAccessManagerBackoffPolicyOption {
  * @ingroup google-cloud-privilegedaccessmanager-options
  */
 struct PrivilegedAccessManagerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<PrivilegedAccessManagerConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<PrivilegedAccessManagerConnectionIdempotencyPolicy>;
 };
 
 /**

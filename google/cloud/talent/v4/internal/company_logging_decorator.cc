@@ -31,34 +31,27 @@ namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompanyServiceLogging::CompanyServiceLogging(
-    std::shared_ptr<CompanyServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<CompanyServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceLogging::CreateCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::CreateCompanyRequest const& request) {
         return child_->CreateCompany(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::talent::v4::Company>
-CompanyServiceLogging::GetCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::talent::v4::Company> CompanyServiceLogging::GetCompany(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::GetCompanyRequest const& request) {
         return child_->GetCompany(context, options, request);
       },
@@ -67,26 +60,21 @@ CompanyServiceLogging::GetCompany(
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceLogging::UpdateCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::UpdateCompanyRequest const& request) {
         return child_->UpdateCompany(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-CompanyServiceLogging::DeleteCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CompanyServiceLogging::DeleteCompany(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::DeleteCompanyRequest const& request) {
         return child_->DeleteCompany(context, options, request);
       },
@@ -95,26 +83,21 @@ CompanyServiceLogging::DeleteCompany(
 
 StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 CompanyServiceLogging::ListCompanies(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::ListCompaniesRequest const& request) {
         return child_->ListCompanies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-CompanyServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> CompanyServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },

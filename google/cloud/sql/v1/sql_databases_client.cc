@@ -28,42 +28,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlDatabasesServiceClient::SqlDatabasesServiceClient(
     std::shared_ptr<SqlDatabasesServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SqlDatabasesServiceClient::~SqlDatabasesServiceClient() = default;
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlDatabasesServiceClient::Delete(google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlDatabasesServiceClient::Delete(
+    google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Delete(request);
 }
 
-StatusOr<google::cloud::sql::v1::Database>
-SqlDatabasesServiceClient::Get(google::cloud::sql::v1::SqlDatabasesGetRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Database> SqlDatabasesServiceClient::Get(
+    google::cloud::sql::v1::SqlDatabasesGetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Get(request);
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlDatabasesServiceClient::Insert(google::cloud::sql::v1::SqlDatabasesInsertRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlDatabasesServiceClient::Insert(
+    google::cloud::sql::v1::SqlDatabasesInsertRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Insert(request);
 }
 
 StatusOr<google::cloud::sql::v1::DatabasesListResponse>
-SqlDatabasesServiceClient::List(google::cloud::sql::v1::SqlDatabasesListRequest const& request, Options opts) {
+SqlDatabasesServiceClient::List(
+    google::cloud::sql::v1::SqlDatabasesListRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->List(request);
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlDatabasesServiceClient::Patch(google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlDatabasesServiceClient::Patch(
+    google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Patch(request);
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlDatabasesServiceClient::Update(google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlDatabasesServiceClient::Update(
+    google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Update(request);
 }

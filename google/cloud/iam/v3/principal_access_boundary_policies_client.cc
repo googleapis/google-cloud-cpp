@@ -26,52 +26,75 @@ namespace iam_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PrincipalAccessBoundaryPoliciesClient::PrincipalAccessBoundaryPoliciesClient(
-    std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection> connection, Options opts)
+    std::shared_ptr<PrincipalAccessBoundaryPoliciesConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
-PrincipalAccessBoundaryPoliciesClient::~PrincipalAccessBoundaryPoliciesClient() = default;
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
+PrincipalAccessBoundaryPoliciesClient::
+    ~PrincipalAccessBoundaryPoliciesClient() = default;
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(std::string const& parent, google::iam::v3::PrincipalAccessBoundaryPolicy const& principal_access_boundary_policy, std::string const& principal_access_boundary_policy_id, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(
+    std::string const& parent,
+    google::iam::v3::PrincipalAccessBoundaryPolicy const&
+        principal_access_boundary_policy,
+    std::string const& principal_access_boundary_policy_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest request;
   request.set_parent(parent);
-  *request.mutable_principal_access_boundary_policy() = principal_access_boundary_policy;
-  request.set_principal_access_boundary_policy_id(principal_access_boundary_policy_id);
+  *request.mutable_principal_access_boundary_policy() =
+      principal_access_boundary_policy;
+  request.set_principal_access_boundary_policy_id(
+      principal_access_boundary_policy_id);
   return connection_->CreatePrincipalAccessBoundaryPolicy(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(NoAwaitTag, std::string const& parent, google::iam::v3::PrincipalAccessBoundaryPolicy const& principal_access_boundary_policy, std::string const& principal_access_boundary_policy_id, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(
+    NoAwaitTag, std::string const& parent,
+    google::iam::v3::PrincipalAccessBoundaryPolicy const&
+        principal_access_boundary_policy,
+    std::string const& principal_access_boundary_policy_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest request;
   request.set_parent(parent);
-  *request.mutable_principal_access_boundary_policy() = principal_access_boundary_policy;
-  request.set_principal_access_boundary_policy_id(principal_access_boundary_policy_id);
-  return connection_->CreatePrincipalAccessBoundaryPolicy(NoAwaitTag{}, request);
+  *request.mutable_principal_access_boundary_policy() =
+      principal_access_boundary_policy;
+  request.set_principal_access_boundary_policy_id(
+      principal_access_boundary_policy_id);
+  return connection_->CreatePrincipalAccessBoundaryPolicy(NoAwaitTag{},
+                                                          request);
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(
+    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrincipalAccessBoundaryPolicy(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(
+    NoAwaitTag,
+    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreatePrincipalAccessBoundaryPolicy(NoAwaitTag{}, request);
+  return connection_->CreatePrincipalAccessBoundaryPolicy(NoAwaitTag{},
+                                                          request);
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(google::longrunning::Operation const& operation, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::CreatePrincipalAccessBoundaryPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrincipalAccessBoundaryPolicy(operation);
 }
 
 StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesClient::GetPrincipalAccessBoundaryPolicy(std::string const& name, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::GetPrincipalAccessBoundaryPolicy(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest request;
   request.set_name(name);
@@ -79,49 +102,69 @@ PrincipalAccessBoundaryPoliciesClient::GetPrincipalAccessBoundaryPolicy(std::str
 }
 
 StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesClient::GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::GetPrincipalAccessBoundaryPolicy(
+    google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPrincipalAccessBoundaryPolicy(request);
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::PrincipalAccessBoundaryPolicy const& principal_access_boundary_policy, google::protobuf::FieldMask const& update_mask, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(
+    google::iam::v3::PrincipalAccessBoundaryPolicy const&
+        principal_access_boundary_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest request;
-  *request.mutable_principal_access_boundary_policy() = principal_access_boundary_policy;
+  *request.mutable_principal_access_boundary_policy() =
+      principal_access_boundary_policy;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdatePrincipalAccessBoundaryPolicy(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::PrincipalAccessBoundaryPolicy const& principal_access_boundary_policy, google::protobuf::FieldMask const& update_mask, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(
+    NoAwaitTag,
+    google::iam::v3::PrincipalAccessBoundaryPolicy const&
+        principal_access_boundary_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest request;
-  *request.mutable_principal_access_boundary_policy() = principal_access_boundary_policy;
+  *request.mutable_principal_access_boundary_policy() =
+      principal_access_boundary_policy;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag{}, request);
+  return connection_->UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag{},
+                                                          request);
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(
+    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePrincipalAccessBoundaryPolicy(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(
+    NoAwaitTag,
+    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag{}, request);
+  return connection_->UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag{},
+                                                          request);
 }
 
 future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(google::longrunning::Operation const& operation, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::UpdatePrincipalAccessBoundaryPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePrincipalAccessBoundaryPolicy(operation);
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(std::string const& name, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest request;
   request.set_name(name);
@@ -129,33 +172,43 @@ PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(std::
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(NoAwaitTag, std::string const& name, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest request;
   request.set_name(name);
-  return connection_->DeletePrincipalAccessBoundaryPolicy(NoAwaitTag{}, request);
+  return connection_->DeletePrincipalAccessBoundaryPolicy(NoAwaitTag{},
+                                                          request);
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(
+    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrincipalAccessBoundaryPolicy(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(NoAwaitTag, google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(
+    NoAwaitTag,
+    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePrincipalAccessBoundaryPolicy(NoAwaitTag{}, request);
+  return connection_->DeletePrincipalAccessBoundaryPolicy(NoAwaitTag{},
+                                                          request);
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(google::longrunning::Operation const& operation, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::DeletePrincipalAccessBoundaryPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrincipalAccessBoundaryPolicy(operation);
 }
 
 StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesClient::ListPrincipalAccessBoundaryPolicies(std::string const& parent, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::ListPrincipalAccessBoundaryPolicies(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request;
   request.set_parent(parent);
@@ -163,13 +216,17 @@ PrincipalAccessBoundaryPoliciesClient::ListPrincipalAccessBoundaryPolicies(std::
 }
 
 StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-PrincipalAccessBoundaryPoliciesClient::ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::ListPrincipalAccessBoundaryPolicies(
+    google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPrincipalAccessBoundaryPolicies(std::move(request));
 }
 
 StreamRange<google::iam::v3::PolicyBinding>
-PrincipalAccessBoundaryPoliciesClient::SearchPrincipalAccessBoundaryPolicyBindings(std::string const& name, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::
+    SearchPrincipalAccessBoundaryPolicyBindings(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request;
   request.set_name(name);
@@ -177,13 +234,19 @@ PrincipalAccessBoundaryPoliciesClient::SearchPrincipalAccessBoundaryPolicyBindin
 }
 
 StreamRange<google::iam::v3::PolicyBinding>
-PrincipalAccessBoundaryPoliciesClient::SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::
+    SearchPrincipalAccessBoundaryPolicyBindings(
+        google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
+            request,
+        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SearchPrincipalAccessBoundaryPolicyBindings(std::move(request));
+  return connection_->SearchPrincipalAccessBoundaryPolicyBindings(
+      std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesClient::GetOperation(std::string const& name, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::GetOperation(std::string const& name,
+                                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -191,7 +254,8 @@ PrincipalAccessBoundaryPoliciesClient::GetOperation(std::string const& name, Opt
 }
 
 StatusOr<google::longrunning::Operation>
-PrincipalAccessBoundaryPoliciesClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+PrincipalAccessBoundaryPoliciesClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

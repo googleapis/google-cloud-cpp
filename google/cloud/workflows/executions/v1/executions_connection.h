@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_EXECUTIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_EXECUTIONS_CONNECTION_H
 
+#include "google/cloud/workflows/executions/v1/executions_connection_idempotency_policy.h"
+#include "google/cloud/workflows/executions/v1/internal/executions_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/workflows/executions/v1/executions_connection_idempotency_policy.h"
-#include "google/cloud/workflows/executions/v1/internal/executions_retry_traits.h"
 #include <google/cloud/workflows/executions/v1/executions.pb.h>
 #include <memory>
 
@@ -62,14 +62,14 @@ class ExecutionsLimitedErrorCountRetryPolicy : public ExecutionsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ExecutionsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ExecutionsLimitedErrorCountRetryPolicy(
       ExecutionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ExecutionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ExecutionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ExecutionsLimitedErrorCountRetryPolicy(
       ExecutionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ExecutionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ExecutionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +89,9 @@ class ExecutionsLimitedErrorCountRetryPolicy : public ExecutionsRetryPolicy {
   using BaseType = ExecutionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<workflows_executions_v1_internal::ExecutionsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      workflows_executions_v1_internal::ExecutionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +129,14 @@ class ExecutionsLimitedTimeRetryPolicy : public ExecutionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ExecutionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ExecutionsLimitedTimeRetryPolicy(ExecutionsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ExecutionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ExecutionsLimitedTimeRetryPolicy(ExecutionsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ExecutionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExecutionsLimitedTimeRetryPolicy(
+      ExecutionsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ExecutionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ExecutionsLimitedTimeRetryPolicy(
+      ExecutionsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ExecutionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +158,9 @@ class ExecutionsLimitedTimeRetryPolicy : public ExecutionsRetryPolicy {
   using BaseType = ExecutionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<workflows_executions_v1_internal::ExecutionsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      workflows_executions_v1_internal::ExecutionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,16 +182,23 @@ class ExecutionsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::workflows::executions::v1::Execution>
-  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request);
+  ListExecutions(
+      google::cloud::workflows::executions::v1::ListExecutionsRequest request);
 
   virtual StatusOr<google::cloud::workflows::executions::v1::Execution>
-  CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request);
+  CreateExecution(
+      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+          request);
 
   virtual StatusOr<google::cloud::workflows::executions::v1::Execution>
-  GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request);
+  GetExecution(
+      google::cloud::workflows::executions::v1::GetExecutionRequest const&
+          request);
 
   virtual StatusOr<google::cloud::workflows::executions::v1::Execution>
-  CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request);
+  CancelExecution(
+      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+          request);
 };
 
 /**

@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RankServiceClient {
  public:
-  explicit RankServiceClient(std::shared_ptr<RankServiceConnection> connection, Options opts = {});
+  explicit RankServiceClient(std::shared_ptr<RankServiceConnection> connection,
+                             Options opts = {});
   ~RankServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class RankServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RankServiceClient const& a, RankServiceClient const& b) {
+  friend bool operator==(RankServiceClient const& a,
+                         RankServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RankServiceClient const& a, RankServiceClient const& b) {
+  friend bool operator!=(RankServiceClient const& a,
+                         RankServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,8 +113,9 @@ class RankServiceClient {
   /// [google.cloud.discoveryengine.v1.RankResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/rank_service.proto#L130}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::RankResponse>
-  Rank(google::cloud::discoveryengine::v1::RankRequest const& request, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::RankResponse> Rank(
+      google::cloud::discoveryengine::v1::RankRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -146,8 +150,8 @@ class RankServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +190,8 @@ class RankServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +217,8 @@ class RankServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -245,8 +249,9 @@ class RankServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -280,8 +285,7 @@ class RankServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -320,8 +324,9 @@ class RankServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RankServiceConnection> connection_;

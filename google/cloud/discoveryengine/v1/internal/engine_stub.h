@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/discoveryengine/v1/engine_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -42,58 +42,56 @@ class EngineServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request) = 0;
+      google::cloud::discoveryengine::v1::CreateEngineRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateEngine(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEngine(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) = 0;
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteEngine(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateEngineRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Engine> GetEngine(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetEngineRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::ListEnginesResponse> ListEngines(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListEnginesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::discoveryengine::v1::ListEnginesResponse>
+  ListEngines(grpc::ClientContext& context, Options const& options,
+              google::cloud::discoveryengine::v1::ListEnginesRequest const&
+                  request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -106,8 +104,11 @@ class EngineServiceStub {
 class DefaultEngineServiceStub : public EngineServiceStub {
  public:
   DefaultEngineServiceStub(
-      std::unique_ptr<google::cloud::discoveryengine::v1::EngineService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::cloud::discoveryengine::v1::EngineService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -115,52 +116,51 @@ class DefaultEngineServiceStub : public EngineServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request) override;
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateEngine(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEngine(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) override;
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteEngine(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Engine> GetEngine(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetEngineRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetEngineRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListEnginesResponse> ListEngines(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListEnginesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::ListEnginesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -176,8 +176,11 @@ class DefaultEngineServiceStub : public EngineServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::discoveryengine::v1::EngineService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<
+      google::cloud::discoveryengine::v1::EngineService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -35,25 +35,29 @@ class CaseAttachmentServiceStub {
  public:
   virtual ~CaseAttachmentServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
+  ListAttachments(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListAttachmentsRequest const& request) = 0;
 };
 
 class DefaultCaseAttachmentServiceStub : public CaseAttachmentServiceStub {
  public:
   explicit DefaultCaseAttachmentServiceStub(
-      std::unique_ptr<google::cloud::support::v2::CaseAttachmentService::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::support::v2::CaseAttachmentService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::support::v2::ListAttachmentsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::ListAttachmentsRequest const& request)
+      override;
 
  private:
-  std::unique_ptr<google::cloud::support::v2::CaseAttachmentService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::support::v2::CaseAttachmentService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

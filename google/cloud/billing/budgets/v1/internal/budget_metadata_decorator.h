@@ -34,39 +34,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class BudgetServiceMetadata : public BudgetServiceStub {
  public:
   ~BudgetServiceMetadata() override = default;
-  BudgetServiceMetadata(
-      std::shared_ptr<BudgetServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  BudgetServiceMetadata(std::shared_ptr<BudgetServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request)
+      override;
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request)
+      override;
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::billing::budgets::v1::GetBudgetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::billing::budgets::v1::GetBudgetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse> ListBudgets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) override;
+  StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
+  ListBudgets(grpc::ClientContext& context, Options const& options,
+              google::cloud::billing::budgets::v1::ListBudgetsRequest const&
+                  request) override;
 
   Status DeleteBudget(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request)
+      override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

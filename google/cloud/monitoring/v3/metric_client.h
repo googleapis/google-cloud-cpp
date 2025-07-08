@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_METRIC_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_METRIC_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MetricServiceClient {
  public:
-  explicit MetricServiceClient(std::shared_ptr<MetricServiceConnection> connection, Options opts = {});
+  explicit MetricServiceClient(
+      std::shared_ptr<MetricServiceConnection> connection, Options opts = {});
   ~MetricServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class MetricServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MetricServiceClient const& a, MetricServiceClient const& b) {
+  friend bool operator==(MetricServiceClient const& a,
+                         MetricServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MetricServiceClient const& a, MetricServiceClient const& b) {
+  friend bool operator!=(MetricServiceClient const& a,
+                         MetricServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -158,7 +161,9 @@ class MetricServiceClient {
   ///
   // clang-format on
   StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request, Options opts = {});
+  ListMonitoredResourceDescriptors(
+      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -218,7 +223,10 @@ class MetricServiceClient {
   ///
   // clang-format on
   StatusOr<google::api::MonitoredResourceDescriptor>
-  GetMonitoredResourceDescriptor(google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request, Options opts = {});
+  GetMonitoredResourceDescriptor(
+      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -255,8 +263,8 @@ class MetricServiceClient {
   /// [google.monitoring.v3.ListMetricDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L242}
   ///
   // clang-format on
-  StreamRange<google::api::MetricDescriptor>
-  ListMetricDescriptors(std::string const& name, Options opts = {});
+  StreamRange<google::api::MetricDescriptor> ListMetricDescriptors(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -294,8 +302,9 @@ class MetricServiceClient {
   /// [google.monitoring.v3.ListMetricDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L242}
   ///
   // clang-format on
-  StreamRange<google::api::MetricDescriptor>
-  ListMetricDescriptors(google::monitoring::v3::ListMetricDescriptorsRequest request, Options opts = {});
+  StreamRange<google::api::MetricDescriptor> ListMetricDescriptors(
+      google::monitoring::v3::ListMetricDescriptorsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -325,8 +334,8 @@ class MetricServiceClient {
   /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L302}
   ///
   // clang-format on
-  StatusOr<google::api::MetricDescriptor>
-  GetMetricDescriptor(std::string const& name, Options opts = {});
+  StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -355,8 +364,9 @@ class MetricServiceClient {
   /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L302}
   ///
   // clang-format on
-  StatusOr<google::api::MetricDescriptor>
-  GetMetricDescriptor(google::monitoring::v3::GetMetricDescriptorRequest const& request, Options opts = {});
+  StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
+      google::monitoring::v3::GetMetricDescriptorRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -391,8 +401,10 @@ class MetricServiceClient {
   /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L319}
   ///
   // clang-format on
-  StatusOr<google::api::MetricDescriptor>
-  CreateMetricDescriptor(std::string const& name, google::api::MetricDescriptor const& metric_descriptor, Options opts = {});
+  StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
+      std::string const& name,
+      google::api::MetricDescriptor const& metric_descriptor,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -426,8 +438,9 @@ class MetricServiceClient {
   /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L319}
   ///
   // clang-format on
-  StatusOr<google::api::MetricDescriptor>
-  CreateMetricDescriptor(google::monitoring::v3::CreateMetricDescriptorRequest const& request, Options opts = {});
+  StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
+      google::monitoring::v3::CreateMetricDescriptorRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -456,8 +469,7 @@ class MetricServiceClient {
   /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L339}
   ///
   // clang-format on
-  Status
-  DeleteMetricDescriptor(std::string const& name, Options opts = {});
+  Status DeleteMetricDescriptor(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -485,8 +497,9 @@ class MetricServiceClient {
   /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L339}
   ///
   // clang-format on
-  Status
-  DeleteMetricDescriptor(google::monitoring::v3::DeleteMetricDescriptorRequest const& request, Options opts = {});
+  Status DeleteMetricDescriptor(
+      google::monitoring::v3::DeleteMetricDescriptorRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -537,8 +550,11 @@ class MetricServiceClient {
   /// [google.monitoring.v3.TimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L53}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::TimeSeries>
-  ListTimeSeries(std::string const& name, std::string const& filter, google::monitoring::v3::TimeInterval const& interval, google::monitoring::v3::ListTimeSeriesRequest::TimeSeriesView view, Options opts = {});
+  StreamRange<google::monitoring::v3::TimeSeries> ListTimeSeries(
+      std::string const& name, std::string const& filter,
+      google::monitoring::v3::TimeInterval const& interval,
+      google::monitoring::v3::ListTimeSeriesRequest::TimeSeriesView view,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -576,8 +592,8 @@ class MetricServiceClient {
   /// [google.monitoring.v3.TimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L53}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::TimeSeries>
-  ListTimeSeries(google::monitoring::v3::ListTimeSeriesRequest request, Options opts = {});
+  StreamRange<google::monitoring::v3::TimeSeries> ListTimeSeries(
+      google::monitoring::v3::ListTimeSeriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -615,8 +631,10 @@ class MetricServiceClient {
   /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   ///
   // clang-format on
-  Status
-  CreateTimeSeries(std::string const& name, std::vector<google::monitoring::v3::TimeSeries> const& time_series, Options opts = {});
+  Status CreateTimeSeries(
+      std::string const& name,
+      std::vector<google::monitoring::v3::TimeSeries> const& time_series,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -648,8 +666,9 @@ class MetricServiceClient {
   /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   ///
   // clang-format on
-  Status
-  CreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request, Options opts = {});
+  Status CreateTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -690,8 +709,10 @@ class MetricServiceClient {
   /// [google.monitoring.v3.MetricService.CreateTimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L154}
   ///
   // clang-format on
-  Status
-  CreateServiceTimeSeries(std::string const& name, std::vector<google::monitoring::v3::TimeSeries> const& time_series, Options opts = {});
+  Status CreateServiceTimeSeries(
+      std::string const& name,
+      std::vector<google::monitoring::v3::TimeSeries> const& time_series,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -726,8 +747,9 @@ class MetricServiceClient {
   /// [google.monitoring.v3.MetricService.CreateTimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L154}
   ///
   // clang-format on
-  Status
-  CreateServiceTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request, Options opts = {});
+  Status CreateServiceTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -765,8 +787,10 @@ class MetricServiceClient {
   /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   ///
   // clang-format on
-  future<Status>
-  AsyncCreateTimeSeries(std::string const& name, std::vector<google::monitoring::v3::TimeSeries> const& time_series, Options opts = {});
+  future<Status> AsyncCreateTimeSeries(
+      std::string const& name,
+      std::vector<google::monitoring::v3::TimeSeries> const& time_series,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -798,8 +822,9 @@ class MetricServiceClient {
   /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   ///
   // clang-format on
-  future<Status>
-  AsyncCreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request, Options opts = {});
+  future<Status> AsyncCreateTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<MetricServiceConnection> connection_;

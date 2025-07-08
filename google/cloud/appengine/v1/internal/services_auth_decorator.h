@@ -40,13 +40,11 @@ class ServicesAuth : public ServicesStub {
       std::shared_ptr<ServicesStub> child);
 
   StatusOr<google::appengine::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Service> GetService(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(
@@ -56,8 +54,7 @@ class ServicesAuth : public ServicesStub {
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
@@ -67,8 +64,7 @@ class ServicesAuth : public ServicesStub {
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

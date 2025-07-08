@@ -28,25 +28,27 @@ namespace compute_firewalls_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FirewallsRestLogging::FirewallsRestLogging(
-    std::shared_ptr<FirewallsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<FirewallsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncDeleteFirewall(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const& request) {
-        return child_->AsyncDeleteFirewall(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::firewalls::v1::
+                 DeleteFirewallRequest const& request) {
+        return child_->AsyncDeleteFirewall(cq, std::move(rest_context),
+                                           std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -54,13 +56,13 @@ FirewallsRestLogging::AsyncDeleteFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestLogging::DeleteFirewall(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 DeleteFirewallRequest const& request) {
         return child_->DeleteFirewall(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -68,13 +70,14 @@ FirewallsRestLogging::DeleteFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
 FirewallsRestLogging::GetFirewall(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
+              request) {
         return child_->GetFirewall(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -82,17 +85,19 @@ FirewallsRestLogging::GetFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncInsertFirewall(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const& request) {
-        return child_->AsyncInsertFirewall(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::firewalls::v1::
+                 InsertFirewallRequest const& request) {
+        return child_->AsyncInsertFirewall(cq, std::move(rest_context),
+                                           std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -100,13 +105,13 @@ FirewallsRestLogging::AsyncInsertFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestLogging::InsertFirewall(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 InsertFirewallRequest const& request) {
         return child_->InsertFirewall(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -114,13 +119,13 @@ FirewallsRestLogging::InsertFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
 FirewallsRestLogging::ListFirewalls(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 ListFirewallsRequest const& request) {
         return child_->ListFirewalls(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -128,17 +133,19 @@ FirewallsRestLogging::ListFirewalls(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncPatchFirewall(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const& request) {
-        return child_->AsyncPatchFirewall(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::firewalls::v1::
+                 PatchFirewallRequest const& request) {
+        return child_->AsyncPatchFirewall(cq, std::move(rest_context),
+                                          std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -146,13 +153,13 @@ FirewallsRestLogging::AsyncPatchFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestLogging::PatchFirewall(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 PatchFirewallRequest const& request) {
         return child_->PatchFirewall(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -160,17 +167,19 @@ FirewallsRestLogging::PatchFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncUpdateFirewall(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const& request) {
-        return child_->AsyncUpdateFirewall(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::firewalls::v1::
+                 UpdateFirewallRequest const& request) {
+        return child_->AsyncUpdateFirewall(cq, std::move(rest_context),
+                                           std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -178,13 +187,13 @@ FirewallsRestLogging::AsyncUpdateFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestLogging::UpdateFirewall(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 UpdateFirewallRequest const& request) {
         return child_->UpdateFirewall(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -195,32 +204,35 @@ FirewallsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-FirewallsRestLogging::AsyncCancelOperation(
+future<Status> FirewallsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_VERSIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_VERSIONS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/versions_connection.h"
 #include "google/cloud/dialogflow_es/versions_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct VersionsConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-dialogflow_es-options
  */
 using VersionsPolicyOptionList =
-    OptionList<VersionsRetryPolicyOption,
-               VersionsBackoffPolicyOption,
+    OptionList<VersionsRetryPolicyOption, VersionsBackoffPolicyOption,
                VersionsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

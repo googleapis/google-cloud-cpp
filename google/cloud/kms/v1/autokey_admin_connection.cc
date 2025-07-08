@@ -17,17 +17,17 @@
 // source: google/cloud/kms/v1/autokey_admin.proto
 
 #include "google/cloud/kms/v1/autokey_admin_connection.h"
+#include "google/cloud/kms/v1/autokey_admin_options.h"
+#include "google/cloud/kms/v1/internal/autokey_admin_connection_impl.h"
+#include "google/cloud/kms/v1/internal/autokey_admin_option_defaults.h"
+#include "google/cloud/kms/v1/internal/autokey_admin_stub_factory.h"
+#include "google/cloud/kms/v1/internal/autokey_admin_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/kms/v1/autokey_admin_options.h"
-#include "google/cloud/kms/v1/internal/autokey_admin_connection_impl.h"
-#include "google/cloud/kms/v1/internal/autokey_admin_option_defaults.h"
-#include "google/cloud/kms/v1/internal/autokey_admin_stub_factory.h"
-#include "google/cloud/kms/v1/internal/autokey_admin_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -56,26 +56,25 @@ AutokeyAdminConnection::ShowEffectiveAutokeyConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> AutokeyAdminConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+AutokeyAdminConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-AutokeyAdminConnection::GetLocation(
+StatusOr<google::cloud::location::Location> AutokeyAdminConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-AutokeyAdminConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> AutokeyAdminConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-AutokeyAdminConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> AutokeyAdminConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -86,8 +85,7 @@ AutokeyAdminConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation>
-AutokeyAdminConnection::GetOperation(
+StatusOr<google::longrunning::Operation> AutokeyAdminConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -95,17 +93,17 @@ AutokeyAdminConnection::GetOperation(
 std::shared_ptr<AutokeyAdminConnection> MakeAutokeyAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AutokeyAdminPolicyOptionList>(options, __func__);
-  options = kms_v1_internal::AutokeyAdminDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AutokeyAdminPolicyOptionList>(options,
+                                                               __func__);
+  options = kms_v1_internal::AutokeyAdminDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = kms_v1_internal::CreateDefaultAutokeyAdminStub(
-    std::move(auth), options);
+  auto stub =
+      kms_v1_internal::CreateDefaultAutokeyAdminStub(std::move(auth), options);
   return kms_v1_internal::MakeAutokeyAdminTracingConnection(
       std::make_shared<kms_v1_internal::AutokeyAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

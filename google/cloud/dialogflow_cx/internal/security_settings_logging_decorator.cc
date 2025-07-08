@@ -32,20 +32,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecuritySettingsServiceLogging::SecuritySettingsServiceLogging(
     std::shared_ptr<SecuritySettingsServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceLogging::CreateSecuritySettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::
+                 CreateSecuritySettingsRequest const& request) {
         return child_->CreateSecuritySettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +51,14 @@ SecuritySettingsServiceLogging::CreateSecuritySettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceLogging::GetSecuritySettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
+              request) {
         return child_->GetSecuritySettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +66,13 @@ SecuritySettingsServiceLogging::GetSecuritySettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceLogging::UpdateSecuritySettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::
+                 UpdateSecuritySettingsRequest const& request) {
         return child_->UpdateSecuritySettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +80,27 @@ SecuritySettingsServiceLogging::UpdateSecuritySettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse>
 SecuritySettingsServiceLogging::ListSecuritySettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
+              request) {
         return child_->ListSecuritySettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SecuritySettingsServiceLogging::DeleteSecuritySettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request) {
+Status SecuritySettingsServiceLogging::DeleteSecuritySettings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::
+                 DeleteSecuritySettingsRequest const& request) {
         return child_->DeleteSecuritySettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,12 +108,10 @@ SecuritySettingsServiceLogging::DeleteSecuritySettings(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecuritySettingsServiceLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -123,12 +120,10 @@ SecuritySettingsServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 SecuritySettingsServiceLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -137,12 +132,10 @@ SecuritySettingsServiceLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SecuritySettingsServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -151,26 +144,21 @@ SecuritySettingsServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 SecuritySettingsServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SecuritySettingsServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SecuritySettingsServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

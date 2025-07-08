@@ -42,25 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockInstantSnapshotsConnection : public compute_instant_snapshots_v1::InstantSnapshotsConnection {
+class MockInstantSnapshotsConnection
+    : public compute_instant_snapshots_v1::InstantSnapshotsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>),
-  AggregatedListInstantSnapshots,
-  (google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              InstantSnapshotsScopedList>>),
+      AggregatedListInstantSnapshots,
+      (google::cloud::cpp::compute::instant_snapshots::v1::
+           AggregatedListInstantSnapshotsRequest request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstantSnapshot(Matcher<google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstantSnapshot(Matcher<google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteInstantSnapshot,
-  (google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request), (override));
-
+              DeleteInstantSnapshot,
+              (google::cloud::cpp::compute::instant_snapshots::v1::
+                   DeleteInstantSnapshotRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -69,40 +77,50 @@ class MockInstantSnapshotsConnection : public compute_instant_snapshots_v1::Inst
   /// EXPECT_CALL(*mock, DeleteInstantSnapshot(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteInstantSnapshot, (NoAwaitTag,
-    google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request), (override));
-
+              DeleteInstantSnapshot,
+              (NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                               DeleteInstantSnapshotRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstantSnapshot(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstantSnapshot(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteInstantSnapshot, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              DeleteInstantSnapshot,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>,
-  GetInstantSnapshot,
-  (google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request), (override));
+              GetInstantSnapshot,
+              (google::cloud::cpp::compute::instant_snapshots::v1::
+                   GetInstantSnapshotRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::instant_snapshots::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertInstantSnapshot(Matcher<google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertInstantSnapshot(Matcher<google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertInstantSnapshot,
-  (google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request), (override));
-
+              InsertInstantSnapshot,
+              (google::cloud::cpp::compute::instant_snapshots::v1::
+                   InsertInstantSnapshotRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -111,40 +129,50 @@ class MockInstantSnapshotsConnection : public compute_instant_snapshots_v1::Inst
   /// EXPECT_CALL(*mock, InsertInstantSnapshot(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertInstantSnapshot, (NoAwaitTag,
-    google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request), (override));
-
+              InsertInstantSnapshot,
+              (NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                               InsertInstantSnapshotRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertInstantSnapshot(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertInstantSnapshot(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertInstantSnapshot, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              InsertInstantSnapshot,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>),
-  ListInstantSnapshots,
-  (google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest request), (override));
+              ListInstantSnapshots,
+              (google::cloud::cpp::compute::instant_snapshots::v1::
+                   ListInstantSnapshotsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::instant_snapshots::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetLabels(Matcher<google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetLabels,
-  (google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request), (override));
-
+              SetLabels,
+              (google::cloud::cpp::compute::instant_snapshots::v1::
+                   SetLabelsRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -152,25 +180,30 @@ class MockInstantSnapshotsConnection : public compute_instant_snapshots_v1::Inst
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetLabels(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetLabels, (NoAwaitTag,
-    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+              (NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                               SetLabelsRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetLabels, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              SetLabels,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::instant_snapshots::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

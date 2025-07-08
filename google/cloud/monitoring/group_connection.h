@@ -33,7 +33,8 @@ using ::google::cloud::monitoring_v3::MakeGroupServiceConnection;
 /// @deprecated Use monitoring_v3::GroupServiceConnection directly.
 using ::google::cloud::monitoring_v3::GroupServiceConnection;
 
-/// @deprecated Use monitoring_v3::GroupServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use monitoring_v3::GroupServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::monitoring_v3::GroupServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use monitoring_v3::GroupServiceLimitedTimeRetryPolicy directly.

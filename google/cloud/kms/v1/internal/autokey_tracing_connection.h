@@ -30,50 +30,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class AutokeyTracingConnection
-    : public kms_v1::AutokeyConnection {
+class AutokeyTracingConnection : public kms_v1::AutokeyConnection {
  public:
   ~AutokeyTracingConnection() override = default;
 
   explicit AutokeyTracingConnection(
-    std::shared_ptr<kms_v1::AutokeyConnection> child);
+      std::shared_ptr<kms_v1::AutokeyConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-  CreateKeyHandle(google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateKeyHandle(NoAwaitTag,
+  future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
       google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
 
-  future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-  CreateKeyHandle(
+  StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      NoAwaitTag,
+      google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
+
+  future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::kms::v1::KeyHandle>
-  GetKeyHandle(google::cloud::kms::v1::GetKeyHandleRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
+      google::cloud::kms::v1::GetKeyHandleRequest const& request) override;
 
-  StreamRange<google::cloud::kms::v1::KeyHandle>
-  ListKeyHandles(google::cloud::kms::v1::ListKeyHandlesRequest request) override;
+  StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
+      google::cloud::kms::v1::ListKeyHandlesRequest request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<kms_v1::AutokeyConnection> child_;
@@ -87,8 +85,7 @@ class AutokeyTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<kms_v1::AutokeyConnection>
-MakeAutokeyTracingConnection(
+std::shared_ptr<kms_v1::AutokeyConnection> MakeAutokeyTracingConnection(
     std::shared_ptr<kms_v1::AutokeyConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

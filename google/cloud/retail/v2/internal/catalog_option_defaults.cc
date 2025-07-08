@@ -17,10 +17,10 @@
 // source: google/cloud/retail/v2/catalog_service.proto
 
 #include "google/cloud/retail/v2/internal/catalog_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/retail/v2/catalog_connection.h"
 #include "google/cloud/retail/v2/catalog_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,21 +35,24 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CatalogServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CATALOG_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CATALOG_SERVICE_AUTHORITY",
-      "retail.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CATALOG_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CATALOG_SERVICE_AUTHORITY", "retail.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<retail_v2::CatalogServiceRetryPolicyOption>()) {
     options.set<retail_v2::CatalogServiceRetryPolicyOption>(
         retail_v2::CatalogServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<retail_v2::CatalogServiceBackoffPolicyOption>()) {
     options.set<retail_v2::CatalogServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<retail_v2::CatalogServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<retail_v2::CatalogServiceConnectionIdempotencyPolicyOption>()) {
     options.set<retail_v2::CatalogServiceConnectionIdempotencyPolicyOption>(
         retail_v2::MakeDefaultCatalogServiceConnectionIdempotencyPolicy());
   }

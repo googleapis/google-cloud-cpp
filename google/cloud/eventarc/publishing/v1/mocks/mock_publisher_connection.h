@@ -42,21 +42,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockPublisherConnection : public eventarc_publishing_v1::PublisherConnection {
+class MockPublisherConnection
+    : public eventarc_publishing_v1::PublisherConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>,
-  PublishChannelConnectionEvents,
-  (google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::eventarc::publishing::v1::
+                           PublishChannelConnectionEventsResponse>,
+              PublishChannelConnectionEvents,
+              (google::cloud::eventarc::publishing::v1::
+                   PublishChannelConnectionEventsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>,
-  PublishEvents,
-  (google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>,
+      PublishEvents,
+      (google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>,
-  Publish,
-  (google::cloud::eventarc::publishing::v1::PublishRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>,
+      Publish,
+      (google::cloud::eventarc::publishing::v1::PublishRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

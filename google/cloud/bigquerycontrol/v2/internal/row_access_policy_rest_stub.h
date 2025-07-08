@@ -36,63 +36,92 @@ class RowAccessPolicyServiceRestStub {
  public:
   virtual ~RowAccessPolicyServiceRestStub() = default;
 
-  virtual StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse> ListRowAccessPolicies(
+  virtual StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>
+  ListRowAccessPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) = 0;
+      Options const& options,
+      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> GetRowAccessPolicy(
+  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  GetRowAccessPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) = 0;
+      Options const& options,
+      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> CreateRowAccessPolicy(
+  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  CreateRowAccessPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) = 0;
+      Options const& options,
+      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> UpdateRowAccessPolicy(
+  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  UpdateRowAccessPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) = 0;
+      Options const& options,
+      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&
+          request) = 0;
 
   virtual Status DeleteRowAccessPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) = 0;
+      Options const& options,
+      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&
+          request) = 0;
 
   virtual Status BatchDeleteRowAccessPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request) = 0;
+      Options const& options,
+      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+          request) = 0;
 };
 
-class DefaultRowAccessPolicyServiceRestStub : public RowAccessPolicyServiceRestStub {
+class DefaultRowAccessPolicyServiceRestStub
+    : public RowAccessPolicyServiceRestStub {
  public:
   ~DefaultRowAccessPolicyServiceRestStub() override = default;
 
   explicit DefaultRowAccessPolicyServiceRestStub(Options options);
   DefaultRowAccessPolicyServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse> ListRowAccessPolicies(
+  StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>
+  ListRowAccessPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> GetRowAccessPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> CreateRowAccessPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> UpdateRowAccessPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request)
+      override;
 
   Status DeleteRowAccessPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request)
+      override;
 
   Status BatchDeleteRowAccessPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -30,8 +30,10 @@ namespace cloud {
 namespace datacatalog_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datacatalog_v1_mocks::MockPolicyTagManagerSerializationConnection directly.
-using ::google::cloud::datacatalog_v1_mocks::MockPolicyTagManagerSerializationConnection;
+/// @deprecated Use
+/// datacatalog_v1_mocks::MockPolicyTagManagerSerializationConnection directly.
+using ::google::cloud::datacatalog_v1_mocks::
+    MockPolicyTagManagerSerializationConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_mocks

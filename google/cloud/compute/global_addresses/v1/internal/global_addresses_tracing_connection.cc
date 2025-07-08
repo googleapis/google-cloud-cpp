@@ -30,11 +30,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GlobalAddressesTracingConnection::GlobalAddressesTracingConnection(
-    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection> child)
+    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
+        child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesTracingConnection::DeleteAddress(google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request) {
+GlobalAddressesTracingConnection::DeleteAddress(
+    google::cloud::cpp::compute::global_addresses::v1::
+        DeleteAddressRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::DeleteAddress");
   internal::OTelScope scope(span);
@@ -43,12 +46,12 @@ GlobalAddressesTracingConnection::DeleteAddress(google::cloud::cpp::compute::glo
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesTracingConnection::DeleteAddress(
-    NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                    DeleteAddressRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::DeleteAddress");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteAddress(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteAddress(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -57,19 +60,23 @@ GlobalAddressesTracingConnection::DeleteAddress(
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::DeleteAddress");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteAddress(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteAddress(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesTracingConnection::GetAddress(google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const& request) {
-  auto span = internal::MakeSpan("compute_global_addresses_v1::GlobalAddressesConnection::GetAddress");
+GlobalAddressesTracingConnection::GetAddress(
+    google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::GetAddress");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAddress(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesTracingConnection::InsertAddress(google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request) {
+GlobalAddressesTracingConnection::InsertAddress(
+    google::cloud::cpp::compute::global_addresses::v1::
+        InsertAddressRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
   internal::OTelScope scope(span);
@@ -78,12 +85,12 @@ GlobalAddressesTracingConnection::InsertAddress(google::cloud::cpp::compute::glo
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesTracingConnection::InsertAddress(
-    NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                    InsertAddressRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertAddress(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertAddress(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -92,21 +99,26 @@ GlobalAddressesTracingConnection::InsertAddress(
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->InsertAddress(operation));
+  return internal::EndSpan(std::move(span), child_->InsertAddress(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>
-GlobalAddressesTracingConnection::ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::ListGlobalAddressesRequest request) {
-  auto span = internal::MakeSpan("compute_global_addresses_v1::GlobalAddressesConnection::ListGlobalAddresses");
+GlobalAddressesTracingConnection::ListGlobalAddresses(
+    google::cloud::cpp::compute::global_addresses::v1::
+        ListGlobalAddressesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::"
+      "ListGlobalAddresses");
   internal::OTelScope scope(span);
   auto sr = child_->ListGlobalAddresses(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Address>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Address>(std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesTracingConnection::Move(google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request) {
+GlobalAddressesTracingConnection::Move(
+    google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::Move");
   internal::OTelScope scope(span);
@@ -115,12 +127,13 @@ GlobalAddressesTracingConnection::Move(google::cloud::cpp::compute::global_addre
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesTracingConnection::Move(
-    NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::MoveRequest const& request) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::Move");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->Move(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->Move(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -129,12 +142,13 @@ GlobalAddressesTracingConnection::Move(
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::Move");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->Move(operation));
+  return internal::EndSpan(std::move(span), child_->Move(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-GlobalAddressesTracingConnection::SetLabels(google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) {
+GlobalAddressesTracingConnection::SetLabels(
+    google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::SetLabels");
   internal::OTelScope scope(span);
@@ -143,12 +157,13 @@ GlobalAddressesTracingConnection::SetLabels(google::cloud::cpp::compute::global_
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesTracingConnection::SetLabels(
-    NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const& request) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetLabels(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -157,15 +172,15 @@ GlobalAddressesTracingConnection::SetLabels(
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->SetLabels(operation));
+  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
 MakeGlobalAddressesTracingConnection(
-    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection> conn) {
+    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<GlobalAddressesTracingConnection>(std::move(conn));

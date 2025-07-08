@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_PRODUCT_SEARCH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_PRODUCT_SEARCH_CONNECTION_H
 
+#include "google/cloud/vision/v1/internal/product_search_retry_traits.h"
+#include "google/cloud/vision/v1/product_search_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -28,8 +30,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vision/v1/internal/product_search_retry_traits.h"
-#include "google/cloud/vision/v1/product_search_connection_idempotency_policy.h"
 #include <google/cloud/vision/v1/product_search_service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -56,7 +56,8 @@ class ProductSearchRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ProductSearchLimitedErrorCountRetryPolicy : public ProductSearchRetryPolicy {
+class ProductSearchLimitedErrorCountRetryPolicy
+    : public ProductSearchRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ProductSearchLimitedErrorCountRetryPolicy : public ProductSearchRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit ProductSearchLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ProductSearchLimitedErrorCountRetryPolicy(
       ProductSearchLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ProductSearchLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProductSearchLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ProductSearchLimitedErrorCountRetryPolicy(
       ProductSearchLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ProductSearchLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProductSearchLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ProductSearchLimitedErrorCountRetryPolicy : public ProductSearchRetryPolic
   using BaseType = ProductSearchRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<vision_v1_internal::ProductSearchRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      vision_v1_internal::ProductSearchRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class ProductSearchLimitedTimeRetryPolicy : public ProductSearchRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ProductSearchLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ProductSearchLimitedTimeRetryPolicy(ProductSearchLimitedTimeRetryPolicy&& rhs) noexcept
-    : ProductSearchLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ProductSearchLimitedTimeRetryPolicy(ProductSearchLimitedTimeRetryPolicy const& rhs) noexcept
-    : ProductSearchLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProductSearchLimitedTimeRetryPolicy(
+      ProductSearchLimitedTimeRetryPolicy&& rhs) noexcept
+      : ProductSearchLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProductSearchLimitedTimeRetryPolicy(
+      ProductSearchLimitedTimeRetryPolicy const& rhs) noexcept
+      : ProductSearchLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class ProductSearchLimitedTimeRetryPolicy : public ProductSearchRetryPolicy {
   using BaseType = ProductSearchRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<vision_v1_internal::ProductSearchRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      vision_v1_internal::ProductSearchRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,77 +186,84 @@ class ProductSearchConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::vision::v1::ProductSet>
-  CreateProductSet(google::cloud::vision::v1::CreateProductSetRequest const& request);
+  virtual StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
+      google::cloud::vision::v1::CreateProductSetRequest const& request);
 
-  virtual StreamRange<google::cloud::vision::v1::ProductSet>
-  ListProductSets(google::cloud::vision::v1::ListProductSetsRequest request);
+  virtual StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
+      google::cloud::vision::v1::ListProductSetsRequest request);
 
-  virtual StatusOr<google::cloud::vision::v1::ProductSet>
-  GetProductSet(google::cloud::vision::v1::GetProductSetRequest const& request);
+  virtual StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
+      google::cloud::vision::v1::GetProductSetRequest const& request);
 
-  virtual StatusOr<google::cloud::vision::v1::ProductSet>
-  UpdateProductSet(google::cloud::vision::v1::UpdateProductSetRequest const& request);
+  virtual StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
+      google::cloud::vision::v1::UpdateProductSetRequest const& request);
 
-  virtual Status
-  DeleteProductSet(google::cloud::vision::v1::DeleteProductSetRequest const& request);
+  virtual Status DeleteProductSet(
+      google::cloud::vision::v1::DeleteProductSetRequest const& request);
 
-  virtual StatusOr<google::cloud::vision::v1::Product>
-  CreateProduct(google::cloud::vision::v1::CreateProductRequest const& request);
+  virtual StatusOr<google::cloud::vision::v1::Product> CreateProduct(
+      google::cloud::vision::v1::CreateProductRequest const& request);
 
-  virtual StreamRange<google::cloud::vision::v1::Product>
-  ListProducts(google::cloud::vision::v1::ListProductsRequest request);
+  virtual StreamRange<google::cloud::vision::v1::Product> ListProducts(
+      google::cloud::vision::v1::ListProductsRequest request);
 
-  virtual StatusOr<google::cloud::vision::v1::Product>
-  GetProduct(google::cloud::vision::v1::GetProductRequest const& request);
+  virtual StatusOr<google::cloud::vision::v1::Product> GetProduct(
+      google::cloud::vision::v1::GetProductRequest const& request);
 
-  virtual StatusOr<google::cloud::vision::v1::Product>
-  UpdateProduct(google::cloud::vision::v1::UpdateProductRequest const& request);
+  virtual StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
+      google::cloud::vision::v1::UpdateProductRequest const& request);
 
-  virtual Status
-  DeleteProduct(google::cloud::vision::v1::DeleteProductRequest const& request);
+  virtual Status DeleteProduct(
+      google::cloud::vision::v1::DeleteProductRequest const& request);
 
   virtual StatusOr<google::cloud::vision::v1::ReferenceImage>
-  CreateReferenceImage(google::cloud::vision::v1::CreateReferenceImageRequest const& request);
+  CreateReferenceImage(
+      google::cloud::vision::v1::CreateReferenceImageRequest const& request);
 
-  virtual Status
-  DeleteReferenceImage(google::cloud::vision::v1::DeleteReferenceImageRequest const& request);
+  virtual Status DeleteReferenceImage(
+      google::cloud::vision::v1::DeleteReferenceImageRequest const& request);
 
   virtual StreamRange<google::cloud::vision::v1::ReferenceImage>
-  ListReferenceImages(google::cloud::vision::v1::ListReferenceImagesRequest request);
+  ListReferenceImages(
+      google::cloud::vision::v1::ListReferenceImagesRequest request);
 
-  virtual StatusOr<google::cloud::vision::v1::ReferenceImage>
-  GetReferenceImage(google::cloud::vision::v1::GetReferenceImageRequest const& request);
+  virtual StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
+      google::cloud::vision::v1::GetReferenceImageRequest const& request);
 
-  virtual Status
-  AddProductToProductSet(google::cloud::vision::v1::AddProductToProductSetRequest const& request);
+  virtual Status AddProductToProductSet(
+      google::cloud::vision::v1::AddProductToProductSetRequest const& request);
 
-  virtual Status
-  RemoveProductFromProductSet(google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request);
+  virtual Status RemoveProductFromProductSet(
+      google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
+          request);
 
   virtual StreamRange<google::cloud::vision::v1::Product>
-  ListProductsInProductSet(google::cloud::vision::v1::ListProductsInProductSetRequest request);
+  ListProductsInProductSet(
+      google::cloud::vision::v1::ListProductsInProductSetRequest request);
 
   virtual future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const& request);
+  ImportProductSets(
+      google::cloud::vision::v1::ImportProductSetsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportProductSets(NoAwaitTag, google::cloud::vision::v1::ImportProductSetsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ImportProductSets(
+      NoAwaitTag,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request);
 
   virtual future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets( google::longrunning::Operation const& operation);
+  ImportProductSets(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  PurgeProducts(NoAwaitTag, google::cloud::vision::v1::PurgeProductsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> PurgeProducts(
+      NoAwaitTag,
+      google::cloud::vision::v1::PurgeProductsRequest const& request);
 
   virtual future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-  PurgeProducts( google::longrunning::Operation const& operation);
+  PurgeProducts(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

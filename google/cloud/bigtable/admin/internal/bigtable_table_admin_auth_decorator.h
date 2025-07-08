@@ -40,18 +40,15 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
       std::shared_ptr<BigtableTableAdminStub> child);
 
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::CreateTableRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::ListTablesResponse> ListTables(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::ListTablesRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::Table> GetTable(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::GetTableRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTable(
@@ -61,82 +58,84 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTable(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
   Status DeleteTable(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::DeleteTableRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteTable(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::bigtable::admin::v2::UndeleteTableRequest const& request) override;
+      google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UndeleteTable(
-      grpc::ClientContext& context,
-      Options options,
-      google::bigtable::admin::v2::UndeleteTableRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAuthorizedView(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) override;
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      grpc::ClientContext& context,
-      Options options,
-      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
+      override;
 
-  StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse> ListAuthorizedViews(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+  ListAuthorizedViews(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request)
+      override;
 
   StatusOr<google::bigtable::admin::v2::AuthorizedView> GetAuthorizedView(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAuthorizedView(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) override;
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      grpc::ClientContext& context,
-      Options options,
-      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
+      override;
 
   Status DeleteAuthorizedView(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request)
+      override;
 
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request)
+      override;
 
   Status DropRowRange(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::DropRowRangeRequest const& request) override;
 
-  StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse> GenerateConsistencyToken(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
+  GenerateConsistencyToken(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
+          request) override;
 
-  StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse> CheckConsistency(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::CheckConsistencyRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
+  CheckConsistency(grpc::ClientContext& context, Options const& options,
+                   google::bigtable::admin::v2::CheckConsistencyRequest const&
+                       request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
@@ -145,28 +144,23 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::GetBackupRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::UpdateBackupRequest const& request) override;
 
   Status DeleteBackup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::DeleteBackupRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::ListBackupsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreTable(
@@ -176,8 +170,7 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RestoreTable(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
@@ -187,67 +180,67 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
       google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CopyBackup(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSchemaBundle(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) override;
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateSchemaBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSchemaBundle(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) override;
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateSchemaBundle(
-      grpc::ClientContext& context,
-      Options options,
-      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request)
+      override;
 
   StatusOr<google::bigtable::admin::v2::SchemaBundle> GetSchemaBundle(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::GetSchemaBundleRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetSchemaBundleRequest const& request)
+      override;
 
-  StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse> ListSchemaBundles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::ListSchemaBundlesRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::ListSchemaBundlesResponse>
+  ListSchemaBundles(grpc::ClientContext& context, Options const& options,
+                    google::bigtable::admin::v2::ListSchemaBundlesRequest const&
+                        request) override;
 
   Status DeleteSchemaBundle(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request)
+      override;
 
-  future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>> AsyncCheckConsistency(
+  future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
+  AsyncCheckConsistency(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::bigtable::admin::v2::CheckConsistencyRequest const& request) override;
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

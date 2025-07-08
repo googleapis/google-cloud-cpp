@@ -17,14 +17,14 @@
 // source: google/cloud/sql/v1/cloud_sql_users.proto
 
 #include "google/cloud/sql/v1/sql_users_connection.h"
+#include "google/cloud/sql/v1/internal/sql_users_option_defaults.h"
+#include "google/cloud/sql/v1/internal/sql_users_tracing_connection.h"
+#include "google/cloud/sql/v1/sql_users_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/sql/v1/internal/sql_users_option_defaults.h"
-#include "google/cloud/sql/v1/internal/sql_users_tracing_connection.h"
-#include "google/cloud/sql/v1/sql_users_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,20 +35,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlUsersServiceConnection::~SqlUsersServiceConnection() = default;
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceConnection::Delete(
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceConnection::Delete(
     google::cloud::sql::v1::SqlUsersDeleteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::sql::v1::User>
-SqlUsersServiceConnection::Get(
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceConnection::Get(
     google::cloud::sql::v1::SqlUsersGetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceConnection::Insert(
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceConnection::Insert(
     google::cloud::sql::v1::SqlUsersInsertRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -59,8 +56,7 @@ SqlUsersServiceConnection::List(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceConnection::Update(
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceConnection::Update(
     google::cloud::sql::v1::SqlUsersUpdateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

@@ -40,213 +40,292 @@ DefaultRegionUrlMapsRestStub::DefaultRegionUrlMapsRestStub(Options options)
 
 DefaultRegionUrlMapsRestStub::DefaultRegionUrlMapsRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionUrlMapsRestStub::AsyncDeleteUrlMap(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](
-          auto p, auto service, auto request, auto rest_context, auto options) {
-      std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          false,
-          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps", "/", request.url_map()), std::move(query_params)));
-    },
-    std::move(p), service_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request, false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/", "urlMaps",
+                             "/", request.url_map()),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionUrlMapsRestStub::DeleteUrlMap(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
+        request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps", "/", request.url_map()), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "urlMaps", "/", request.url_map()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 DefaultRegionUrlMapsRestStub::GetUrlMap(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+        request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps", "/", request.url_map()), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "urlMaps", "/", request.url_map()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionUrlMapsRestStub::AsyncInsertUrlMap(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](
-          auto p, auto service, auto request, auto rest_context, auto options) {
-      std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.url_map_resource(),
-          false,
-          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps"), std::move(query_params)));
-    },
-    std::move(p), service_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.url_map_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/", "urlMaps"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionUrlMapsRestStub::InsertUrlMap(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
+        request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.url_map_resource(), false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps"), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "urlMaps"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_url_maps::v1::
+        ListRegionUrlMapsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back({"max_results", std::to_string(request.max_results())});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps"), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "urlMaps"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionUrlMapsRestStub::AsyncPatchUrlMap(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](
-          auto p, auto service, auto request, auto rest_context, auto options) {
-      std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-      p.set_value(rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.url_map_resource(),
-          false,
-          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps", "/", request.url_map()), std::move(query_params)));
-    },
-    std::move(p), service_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.url_map_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/", "urlMaps",
+                             "/", request.url_map()),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionUrlMapsRestStub::PatchUrlMap(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
+        request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.url_map_resource(), false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps", "/", request.url_map()), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "urlMaps", "/", request.url_map()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionUrlMapsRestStub::AsyncUpdateUrlMap(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
+        request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](
-          auto p, auto service, auto request, auto rest_context, auto options) {
-      std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-      p.set_value(rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.url_map_resource(),
-          false,
-          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps", "/", request.url_map()), std::move(query_params)));
-    },
-    std::move(p), service_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.url_map_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/", "urlMaps",
+                             "/", request.url_map()),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionUrlMapsRestStub::UpdateUrlMap(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
+        request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.url_map_resource(), false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps", "/", request.url_map()), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "urlMaps", "/", request.url_map()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
 DefaultRegionUrlMapsRestStub::Validate(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
+        request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  return rest_internal::Post<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
-      *service_, rest_context, request.region_url_maps_validate_request_resource(), false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "urlMaps", "/", request.url_map(), "/", "validate"), std::move(query_params));
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
+      *service_, rest_context,
+      request.region_url_maps_validate_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "urlMaps", "/", request.url_map(),
+                   "/", "validate"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -254,51 +333,59 @@ DefaultRegionUrlMapsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request, false,
-          absl::StrCat("/compute/",
-                              rest_internal::DetermineApiVersion("v1", *options),
-                              "/projects/", request.project(),
-                              "/regions/", request.region(),
-                              "/operations/", request.operation())));
-    },
-    std::move(p), operations_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request, false,
+                absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/projects/", request.project(), "/regions/",
+                             request.region(), "/operations/",
+                             request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultRegionUrlMapsRestStub::AsyncCancelOperation(
+future<Status> DefaultRegionUrlMapsRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request, false,
-          absl::StrCat("/compute/",
-                              rest_internal::DetermineApiVersion("v1", *options),
-                              "/projects/", request.project(),
-                              "/regions/", request.region(),
-                              "/operations/", request.operation())));
-    },
-    std::move(p), operations_, request, std::move(rest_context),
-    std::move(options)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request, false,
+            absl::StrCat(
+                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
+                "/projects/", request.project(), "/regions/", request.region(),
+                "/operations/", request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

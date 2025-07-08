@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use container_v1::ClusterManagerBackoffPolicyOption directly.
 using ::google::cloud::container_v1::ClusterManagerBackoffPolicyOption;
 
-/// @deprecated Use container_v1::ClusterManagerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::container_v1::ClusterManagerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// container_v1::ClusterManagerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::container_v1::
+    ClusterManagerConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use container_v1::ClusterManagerPolicyOptionList directly.
 using ::google::cloud::container_v1::ClusterManagerPolicyOptionList;

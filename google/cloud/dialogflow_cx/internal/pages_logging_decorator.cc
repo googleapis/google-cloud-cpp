@@ -30,78 +30,66 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PagesLogging::PagesLogging(
-    std::shared_ptr<PagesStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+PagesLogging::PagesLogging(std::shared_ptr<PagesStub> child,
+                           TracingOptions tracing_options,
+                           std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
 PagesLogging::ListPages(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
         return child_->ListPages(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page>
-PagesLogging::GetPage(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesLogging::GetPage(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
         return child_->GetPage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page>
-PagesLogging::CreatePage(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesLogging::CreatePage(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
         return child_->CreatePage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Page>
-PagesLogging::UpdatePage(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesLogging::UpdatePage(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
         return child_->UpdatePage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-PagesLogging::DeletePage(
-    grpc::ClientContext& context,
-    Options const& options,
+Status PagesLogging::DeletePage(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
         return child_->DeletePage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,26 +97,21 @@ PagesLogging::DeletePage(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 PagesLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-PagesLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> PagesLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -137,40 +120,32 @@ PagesLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 PagesLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-PagesLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> PagesLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-PagesLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status PagesLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

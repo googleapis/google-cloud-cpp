@@ -32,8 +32,7 @@ TraceServiceAuth::TraceServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 Status TraceServiceAuth::BatchWriteSpans(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +40,7 @@ Status TraceServiceAuth::BatchWriteSpans(
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span> TraceServiceAuth::CreateSpan(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::Span const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

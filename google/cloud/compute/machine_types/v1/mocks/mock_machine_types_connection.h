@@ -42,21 +42,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockMachineTypesConnection : public compute_machine_types_v1::MachineTypesConnection {
+class MockMachineTypesConnection
+    : public compute_machine_types_v1::MachineTypesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>),
-  AggregatedListMachineTypes,
-  (google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::MachineTypesScopedList>>),
+      AggregatedListMachineTypes,
+      (google::cloud::cpp::compute::machine_types::v1::
+           AggregatedListMachineTypesRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::MachineType>,
-  GetMachineType,
-  (google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const& request), (override));
+              GetMachineType,
+              (google::cloud::cpp::compute::machine_types::v1::
+                   GetMachineTypeRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::MachineType>),
-  ListMachineTypes,
-  (google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cpp::compute::v1::MachineType>),
+      ListMachineTypes,
+      (google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

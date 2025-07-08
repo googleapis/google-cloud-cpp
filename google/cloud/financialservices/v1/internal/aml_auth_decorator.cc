@@ -31,9 +31,9 @@ AMLAuth::AMLAuth(
     std::shared_ptr<AMLStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::financialservices::v1::ListInstancesResponse> AMLAuth::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::financialservices::v1::ListInstancesResponse>
+AMLAuth::ListInstances(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::financialservices::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,96 +41,95 @@ StatusOr<google::cloud::financialservices::v1::ListInstancesResponse> AMLAuth::L
 }
 
 StatusOr<google::cloud::financialservices::v1::Instance> AMLAuth::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::financialservices::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetInstance(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncCreateInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::CreateInstanceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::CreateInstanceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateInstance(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncUpdateInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::UpdateInstanceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::UpdateInstanceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInstance(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncDeleteInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::DeleteInstanceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::DeleteInstanceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteInstance(context, options, request);
@@ -138,28 +137,29 @@ AMLAuth::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncImportRegisteredParties(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportRegisteredParties(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncImportRegisteredParties(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::ImportRegisteredParties(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::ImportRegisteredParties(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportRegisteredParties(context, options, request);
@@ -167,36 +167,37 @@ AMLAuth::ImportRegisteredParties(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncExportRegisteredParties(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportRegisteredParties(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncExportRegisteredParties(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::ExportRegisteredParties(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::ExportRegisteredParties(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportRegisteredParties(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse> AMLAuth::ListDatasets(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse>
+AMLAuth::ListDatasets(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::financialservices::v1::ListDatasetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -204,104 +205,97 @@ StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse> AMLAuth::Li
 }
 
 StatusOr<google::cloud::financialservices::v1::Dataset> AMLAuth::GetDataset(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::financialservices::v1::GetDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataset(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncCreateDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncCreateDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDataset(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDataset(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::CreateDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataset(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncUpdateDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncUpdateDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDataset(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateDataset(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::UpdateDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::UpdateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataset(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncDeleteDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncDeleteDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDataset(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDataset(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::DeleteDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataset(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::ListModelsResponse> AMLAuth::ListModels(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::financialservices::v1::ListModelsResponse>
+AMLAuth::ListModels(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::financialservices::v1::ListModelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -309,67 +303,62 @@ StatusOr<google::cloud::financialservices::v1::ListModelsResponse> AMLAuth::List
 }
 
 StatusOr<google::cloud::financialservices::v1::Model> AMLAuth::GetModel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::financialservices::v1::GetModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetModel(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncCreateModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateModelRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncCreateModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::CreateModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateModel(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateModel(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::CreateModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateModelRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::CreateModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateModel(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncUpdateModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncUpdateModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateModel(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateModel(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::UpdateModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::UpdateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateModel(context, options, request);
@@ -377,75 +366,76 @@ AMLAuth::UpdateModel(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncExportModelMetadata(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportModelMetadata(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncExportModelMetadata(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::ExportModelMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::ExportModelMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportModelMetadata(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncDeleteModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncDeleteModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteModel(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteModel(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::DeleteModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteModel(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::ListEngineConfigsResponse> AMLAuth::ListEngineConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::financialservices::v1::ListEngineConfigsRequest const& request) {
+StatusOr<google::cloud::financialservices::v1::ListEngineConfigsResponse>
+AMLAuth::ListEngineConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::financialservices::v1::ListEngineConfigsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEngineConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::EngineConfig> AMLAuth::GetEngineConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::financialservices::v1::GetEngineConfigRequest const& request) {
+StatusOr<google::cloud::financialservices::v1::EngineConfig>
+AMLAuth::GetEngineConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::financialservices::v1::GetEngineConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetEngineConfig(context, options, request);
@@ -453,28 +443,29 @@ StatusOr<google::cloud::financialservices::v1::EngineConfig> AMLAuth::GetEngineC
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncCreateEngineConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateEngineConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateEngineConfig(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::CreateEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::CreateEngineConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateEngineConfig(context, options, request);
@@ -482,28 +473,29 @@ AMLAuth::CreateEngineConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncUpdateEngineConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateEngineConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateEngineConfig(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::UpdateEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::UpdateEngineConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateEngineConfig(context, options, request);
@@ -511,14 +503,16 @@ AMLAuth::UpdateEngineConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncExportEngineConfigMetadata(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::
+        ExportEngineConfigMetadataRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -528,11 +522,10 @@ AMLAuth::AsyncExportEngineConfigMetadata(
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::ExportEngineConfigMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::ExportEngineConfigMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::
+        ExportEngineConfigMetadataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportEngineConfigMetadata(context, options, request);
@@ -540,64 +533,69 @@ AMLAuth::ExportEngineConfigMetadata(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncDeleteEngineConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteEngineConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteEngineConfig(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::DeleteEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::DeleteEngineConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteEngineConfig(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::EngineVersion> AMLAuth::GetEngineVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::financialservices::v1::GetEngineVersionRequest const& request) {
+StatusOr<google::cloud::financialservices::v1::EngineVersion>
+AMLAuth::GetEngineVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::financialservices::v1::GetEngineVersionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetEngineVersion(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::ListEngineVersionsResponse> AMLAuth::ListEngineVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::financialservices::v1::ListEngineVersionsRequest const& request) {
+StatusOr<google::cloud::financialservices::v1::ListEngineVersionsResponse>
+AMLAuth::ListEngineVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::financialservices::v1::ListEngineVersionsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEngineVersions(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::ListPredictionResultsResponse> AMLAuth::ListPredictionResults(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::financialservices::v1::ListPredictionResultsRequest const& request) {
+StatusOr<google::cloud::financialservices::v1::ListPredictionResultsResponse>
+AMLAuth::ListPredictionResults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::financialservices::v1::ListPredictionResultsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPredictionResults(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::PredictionResult> AMLAuth::GetPredictionResult(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::financialservices::v1::GetPredictionResultRequest const& request) {
+StatusOr<google::cloud::financialservices::v1::PredictionResult>
+AMLAuth::GetPredictionResult(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::financialservices::v1::GetPredictionResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPredictionResult(context, options, request);
@@ -605,28 +603,29 @@ StatusOr<google::cloud::financialservices::v1::PredictionResult> AMLAuth::GetPre
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncCreatePredictionResult(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreatePredictionResult(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreatePredictionResult(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::CreatePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::CreatePredictionResult(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreatePredictionResult(context, options, request);
@@ -634,28 +633,29 @@ AMLAuth::CreatePredictionResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncUpdatePredictionResult(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdatePredictionResult(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdatePredictionResult(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::UpdatePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::UpdatePredictionResult(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdatePredictionResult(context, options, request);
@@ -663,14 +663,16 @@ AMLAuth::UpdatePredictionResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncExportPredictionResultMetadata(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::
+        ExportPredictionResultMetadataRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -682,9 +684,9 @@ AMLAuth::AsyncExportPredictionResultMetadata(
 
 StatusOr<google::longrunning::Operation>
 AMLAuth::ExportPredictionResultMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::
+        ExportPredictionResultMetadataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportPredictionResultMetadata(context, options, request);
@@ -692,46 +694,49 @@ AMLAuth::ExportPredictionResultMetadata(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncDeletePredictionResult(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeletePredictionResult(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeletePredictionResult(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::DeletePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::DeletePredictionResult(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePredictionResult(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::ListBacktestResultsResponse> AMLAuth::ListBacktestResults(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::financialservices::v1::ListBacktestResultsRequest const& request) {
+StatusOr<google::cloud::financialservices::v1::ListBacktestResultsResponse>
+AMLAuth::ListBacktestResults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::financialservices::v1::ListBacktestResultsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListBacktestResults(context, options, request);
 }
 
-StatusOr<google::cloud::financialservices::v1::BacktestResult> AMLAuth::GetBacktestResult(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::financialservices::v1::GetBacktestResultRequest const& request) {
+StatusOr<google::cloud::financialservices::v1::BacktestResult>
+AMLAuth::GetBacktestResult(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::financialservices::v1::GetBacktestResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBacktestResult(context, options, request);
@@ -739,28 +744,29 @@ StatusOr<google::cloud::financialservices::v1::BacktestResult> AMLAuth::GetBackt
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncCreateBacktestResult(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateBacktestResult(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateBacktestResult(cq, *std::move(context),
+                                                std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::CreateBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::CreateBacktestResult(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBacktestResult(context, options, request);
@@ -768,28 +774,29 @@ AMLAuth::CreateBacktestResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncUpdateBacktestResult(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateBacktestResult(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateBacktestResult(cq, *std::move(context),
+                                                std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::UpdateBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::UpdateBacktestResult(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateBacktestResult(context, options, request);
@@ -797,14 +804,16 @@ AMLAuth::UpdateBacktestResult(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncExportBacktestResultMetadata(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::
+        ExportBacktestResultMetadataRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -814,11 +823,10 @@ AMLAuth::AsyncExportBacktestResultMetadata(
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::ExportBacktestResultMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::ExportBacktestResultMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::
+        ExportBacktestResultMetadataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportBacktestResultMetadata(context, options, request);
@@ -826,36 +834,36 @@ AMLAuth::ExportBacktestResultMetadata(
 
 future<StatusOr<google::longrunning::Operation>>
 AMLAuth::AsyncDeleteBacktestResult(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteBacktestResult(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteBacktestResult(cq, *std::move(context),
+                                                std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AMLAuth::DeleteBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+StatusOr<google::longrunning::Operation> AMLAuth::DeleteBacktestResult(
+    grpc::ClientContext& context, Options options,
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBacktestResult(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse> AMLAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -863,8 +871,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> AMLAuth::ListLocations(
 }
 
 StatusOr<google::cloud::location::Location> AMLAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -872,8 +879,7 @@ StatusOr<google::cloud::location::Location> AMLAuth::GetLocation(
 }
 
 StatusOr<google::longrunning::ListOperationsResponse> AMLAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -881,8 +887,7 @@ StatusOr<google::longrunning::ListOperationsResponse> AMLAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> AMLAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -890,8 +895,7 @@ StatusOr<google::longrunning::Operation> AMLAuth::GetOperation(
 }
 
 Status AMLAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -899,30 +903,29 @@ Status AMLAuth::DeleteOperation(
 }
 
 Status AMLAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelOperation(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AMLAuth::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>> AMLAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -931,13 +934,14 @@ future<Status> AMLAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

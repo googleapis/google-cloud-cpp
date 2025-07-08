@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_WORKFLOW_TEMPLATE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_WORKFLOW_TEMPLATE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/workflow_template_connection.h"
 #include "google/cloud/dataproc/v1/workflow_template_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct WorkflowTemplateServiceBackoffPolicyOption {
  * @ingroup google-cloud-dataproc-options
  */
 struct WorkflowTemplateServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>;
 };
 
 /**

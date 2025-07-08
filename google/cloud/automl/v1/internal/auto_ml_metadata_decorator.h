@@ -35,10 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AutoMlMetadata : public AutoMlStub {
  public:
   ~AutoMlMetadata() override = default;
-  AutoMlMetadata(
-      std::shared_ptr<AutoMlStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  AutoMlMetadata(std::shared_ptr<AutoMlStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata,
+                 std::string api_client_header = "");
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDataset(
       google::cloud::CompletionQueue& cq,
@@ -47,23 +46,19 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDataset(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::GetDatasetRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::ListDatasetsResponse> ListDatasets(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::ListDatasetsRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::UpdateDatasetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataset(
@@ -73,8 +68,7 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataset(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportData(
@@ -84,8 +78,7 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::ImportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportData(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::ImportDataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportData(
@@ -95,14 +88,13 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportData(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::automl::v1::GetAnnotationSpecRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::automl::v1::GetAnnotationSpecRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateModel(
       google::cloud::CompletionQueue& cq,
@@ -111,18 +103,15 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::CreateModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Model> GetModel(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::ListModelsResponse> ListModels(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::ListModelsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
@@ -132,13 +121,11 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteModel(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::UpdateModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeployModel(
@@ -148,8 +135,7 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::DeployModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeployModel(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::DeployModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeployModel(
@@ -159,8 +145,7 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::UndeployModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeployModel(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::UndeployModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportModel(
@@ -170,19 +155,19 @@ class AutoMlMetadata : public AutoMlStub {
       google::cloud::automl::v1::ExportModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportModel(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::ExportModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::automl::v1::GetModelEvaluationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::automl::v1::GetModelEvaluationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse> ListModelEvaluations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::automl::v1::ListModelEvaluationsRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
+  ListModelEvaluations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::automl::v1::ListModelEvaluationsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -197,8 +182,7 @@ class AutoMlMetadata : public AutoMlStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

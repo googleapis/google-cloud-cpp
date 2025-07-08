@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/intent.proto
 
 #include "google/cloud/dialogflow_es/intents_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/intents_options.h"
 #include "google/cloud/dialogflow_es/internal/intents_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/intents_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/intents_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/intents_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,32 +38,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IntentsConnection::~IntentsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::v2::Intent> IntentsConnection::ListIntents(
-    google::cloud::dialogflow::v2::ListIntentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::Intent>
+IntentsConnection::ListIntents(
+    google::cloud::dialogflow::v2::
+        ListIntentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Intent>>();
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent>
-IntentsConnection::GetIntent(
+StatusOr<google::cloud::dialogflow::v2::Intent> IntentsConnection::GetIntent(
     google::cloud::dialogflow::v2::GetIntentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent>
-IntentsConnection::CreateIntent(
+StatusOr<google::cloud::dialogflow::v2::Intent> IntentsConnection::CreateIntent(
     google::cloud::dialogflow::v2::CreateIntentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent>
-IntentsConnection::UpdateIntent(
+StatusOr<google::cloud::dialogflow::v2::Intent> IntentsConnection::UpdateIntent(
     google::cloud::dialogflow::v2::UpdateIntentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-IntentsConnection::DeleteIntent(
+Status IntentsConnection::DeleteIntent(
     google::cloud::dialogflow::v2::DeleteIntentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -72,76 +70,69 @@ future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
 IntentsConnection::BatchUpdateIntents(
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-IntentsConnection::BatchUpdateIntents(
+StatusOr<google::longrunning::Operation> IntentsConnection::BatchUpdateIntents(
     NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-IntentsConnection::BatchUpdateIntents(
-    google::longrunning::Operation const&) {
+IntentsConnection::BatchUpdateIntents(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 IntentsConnection::BatchDeleteIntents(
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::protobuf::Struct>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-IntentsConnection::BatchDeleteIntents(
+StatusOr<google::longrunning::Operation> IntentsConnection::BatchDeleteIntents(
     NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::protobuf::Struct>>
-IntentsConnection::BatchDeleteIntents(
-    google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::protobuf::Struct>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+IntentsConnection::BatchDeleteIntents(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::location::Location> IntentsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-IntentsConnection::GetLocation(
+StatusOr<google::cloud::location::Location> IntentsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> IntentsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-IntentsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> IntentsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-IntentsConnection::CancelOperation(
+Status IntentsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -149,21 +140,20 @@ IntentsConnection::CancelOperation(
 std::shared_ptr<IntentsConnection> MakeIntentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      IntentsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::IntentsDefaultOptions(
-      location, std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 IntentsPolicyOptionList>(options, __func__);
+  options = dialogflow_es_internal::IntentsDefaultOptions(location,
+                                                          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = dialogflow_es_internal::CreateDefaultIntentsStub(
-    std::move(auth), options);
+  auto stub = dialogflow_es_internal::CreateDefaultIntentsStub(std::move(auth),
+                                                               options);
   return dialogflow_es_internal::MakeIntentsTracingConnection(
       std::make_shared<dialogflow_es_internal::IntentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<IntentsConnection> MakeIntentsConnection(
-    Options options) {
+std::shared_ptr<IntentsConnection> MakeIntentsConnection(Options options) {
   return MakeIntentsConnection(std::string{}, std::move(options));
 }
 

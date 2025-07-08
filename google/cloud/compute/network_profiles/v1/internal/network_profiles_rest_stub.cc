@@ -36,37 +36,49 @@ DefaultNetworkProfilesRestStub::DefaultNetworkProfilesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultNetworkProfilesRestStub::DefaultNetworkProfilesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
 DefaultNetworkProfilesRestStub::GetNetworkProfile(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_profiles::v1::
+        GetNetworkProfileRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkProfile>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "networkProfiles", "/", request.network_profile()), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "networkProfiles", "/", request.network_profile()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse>
 DefaultNetworkProfilesRestStub::ListNetworkProfiles(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_profiles::v1::
+        ListNetworkProfilesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back({"max_results", std::to_string(request.max_results())});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-  return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkProfilesListResponse>(
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::NetworkProfilesListResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "global", "/", "networkProfiles"), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "networkProfiles"),
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

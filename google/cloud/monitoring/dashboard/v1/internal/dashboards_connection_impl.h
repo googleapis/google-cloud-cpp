@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_INTERNAL_DASHBOARDS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_INTERNAL_DASHBOARDS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/dashboard/v1/dashboards_connection.h"
 #include "google/cloud/monitoring/dashboard/v1/dashboards_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/dashboard/v1/dashboards_options.h"
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_retry_traits.h"
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,30 +43,37 @@ class DashboardsServiceConnectionImpl
   ~DashboardsServiceConnectionImpl() override = default;
 
   DashboardsServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<monitoring_dashboard_v1_internal::DashboardsServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<monitoring_dashboard_v1_internal::DashboardsServiceStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  CreateDashboard(google::monitoring::dashboard::v1::CreateDashboardRequest const& request) override;
+  StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
+      google::monitoring::dashboard::v1::CreateDashboardRequest const& request)
+      override;
 
-  StreamRange<google::monitoring::dashboard::v1::Dashboard>
-  ListDashboards(google::monitoring::dashboard::v1::ListDashboardsRequest request) override;
+  StreamRange<google::monitoring::dashboard::v1::Dashboard> ListDashboards(
+      google::monitoring::dashboard::v1::ListDashboardsRequest request)
+      override;
 
-  StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  GetDashboard(google::monitoring::dashboard::v1::GetDashboardRequest const& request) override;
+  StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
+      google::monitoring::dashboard::v1::GetDashboardRequest const& request)
+      override;
 
-  Status
-  DeleteDashboard(google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) override;
+  Status DeleteDashboard(
+      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request)
+      override;
 
-  StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  UpdateDashboard(google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) override;
+  StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
+      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<monitoring_dashboard_v1_internal::DashboardsServiceStub> stub_;
+  std::shared_ptr<monitoring_dashboard_v1_internal::DashboardsServiceStub>
+      stub_;
   Options options_;
 };
 

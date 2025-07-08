@@ -32,28 +32,30 @@ KeyTrackingServiceStub::~KeyTrackingServiceStub() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 DefaultKeyTrackingServiceStub::GetProtectedResourcesSummary(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) {
-    google::cloud::kms::inventory::v1::ProtectedResourcesSummary response;
-    auto status =
-        grpc_stub_->GetProtectedResourcesSummary(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::kms::inventory::v1::
+        GetProtectedResourcesSummaryRequest const& request) {
+  google::cloud::kms::inventory::v1::ProtectedResourcesSummary response;
+  auto status =
+      grpc_stub_->GetProtectedResourcesSummary(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
 DefaultKeyTrackingServiceStub::SearchProtectedResources(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) {
-    google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse response;
-    auto status =
-        grpc_stub_->SearchProtectedResources(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
+        request) {
+  google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse response;
+  auto status =
+      grpc_stub_->SearchProtectedResources(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

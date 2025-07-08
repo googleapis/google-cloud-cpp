@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `DocumentSchemaServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DocumentSchemaServiceClient`. To do so,
- * construct an object of type `DocumentSchemaServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `DocumentSchemaServiceClient`. To do
+ * so, construct an object of type `DocumentSchemaServiceClient` with an
+ * instance of this class. Then use the Google Test framework functions to
+ * program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,33 +42,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDocumentSchemaServiceConnection : public contentwarehouse_v1::DocumentSchemaServiceConnection {
+class MockDocumentSchemaServiceConnection
+    : public contentwarehouse_v1::DocumentSchemaServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
-  CreateDocumentSchema,
-  (google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
+      CreateDocumentSchema,
+      (google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
-  UpdateDocumentSchema,
-  (google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
+      UpdateDocumentSchema,
+      (google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
-  GetDocumentSchema,
-  (google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>,
+      GetDocumentSchema,
+      (google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteDocumentSchema,
-  (google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteDocumentSchema,
+      (google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>),
-  ListDocumentSchemas,
-  (google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>),
+      ListDocumentSchemas,
+      (google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

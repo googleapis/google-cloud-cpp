@@ -19,19 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CONNECTION_H
 
+#include "google/cloud/spanner/admin/instance_admin_connection_idempotency_policy.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/spanner/admin/instance_admin_connection_idempotency_policy.h"
-#include "google/cloud/spanner/admin/internal/instance_admin_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
 #include <memory>
 
 namespace google {
@@ -56,7 +56,8 @@ class InstanceAdminRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InstanceAdminLimitedErrorCountRetryPolicy : public InstanceAdminRetryPolicy {
+class InstanceAdminLimitedErrorCountRetryPolicy
+    : public InstanceAdminRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class InstanceAdminLimitedErrorCountRetryPolicy : public InstanceAdminRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit InstanceAdminLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   InstanceAdminLimitedErrorCountRetryPolicy(
       InstanceAdminLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : InstanceAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstanceAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   InstanceAdminLimitedErrorCountRetryPolicy(
       InstanceAdminLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : InstanceAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstanceAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class InstanceAdminLimitedErrorCountRetryPolicy : public InstanceAdminRetryPolic
   using BaseType = InstanceAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<spanner_admin_internal::InstanceAdminRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      spanner_admin_internal::InstanceAdminRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class InstanceAdminLimitedTimeRetryPolicy : public InstanceAdminRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit InstanceAdminLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  InstanceAdminLimitedTimeRetryPolicy(InstanceAdminLimitedTimeRetryPolicy&& rhs) noexcept
-    : InstanceAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  InstanceAdminLimitedTimeRetryPolicy(InstanceAdminLimitedTimeRetryPolicy const& rhs) noexcept
-    : InstanceAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceAdminLimitedTimeRetryPolicy(
+      InstanceAdminLimitedTimeRetryPolicy&& rhs) noexcept
+      : InstanceAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceAdminLimitedTimeRetryPolicy(
+      InstanceAdminLimitedTimeRetryPolicy const& rhs) noexcept
+      : InstanceAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class InstanceAdminLimitedTimeRetryPolicy : public InstanceAdminRetryPolicy {
   using BaseType = InstanceAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<spanner_admin_internal::InstanceAdminRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      spanner_admin_internal::InstanceAdminRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,121 +187,164 @@ class InstanceAdminConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-  ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest request);
+  ListInstanceConfigs(
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest request);
 
   virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request);
+  GetInstanceConfig(
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request);
 
   virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  CreateInstanceConfig(google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request);
+  CreateInstanceConfig(
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateInstanceConfig(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request);
-
-  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  CreateInstanceConfig( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  UpdateInstanceConfig(google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateInstanceConfig(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request);
 
   virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  UpdateInstanceConfig( google::longrunning::Operation const& operation);
+  CreateInstanceConfig(google::longrunning::Operation const& operation);
 
-  virtual Status
-  DeleteInstanceConfig(google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request);
+  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(google::longrunning::Operation const& operation);
+
+  virtual Status DeleteInstanceConfig(
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request);
 
   virtual StreamRange<google::longrunning::Operation>
-  ListInstanceConfigOperations(google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest request);
+  ListInstanceConfigOperations(
+      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
+          request);
 
   virtual StreamRange<google::spanner::admin::instance::v1::Instance>
-  ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest request);
+  ListInstances(
+      google::spanner::admin::instance::v1::ListInstancesRequest request);
 
   virtual StreamRange<google::spanner::admin::instance::v1::InstancePartition>
-  ListInstancePartitions(google::spanner::admin::instance::v1::ListInstancePartitionsRequest request);
+  ListInstancePartitions(
+      google::spanner::admin::instance::v1::ListInstancePartitionsRequest
+          request);
 
-  virtual StatusOr<google::spanner::admin::instance::v1::Instance>
-  GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstanceRequest const& request);
+  virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
+      google::spanner::admin::instance::v1::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance( google::longrunning::Operation const& operation);
+  CreateInstance(
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request);
 
   virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstanceRequest const& request);
+  CreateInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance( google::longrunning::Operation const& operation);
+  UpdateInstance(
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request);
 
-  virtual Status
-  DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  UpdateInstance(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual Status DeleteInstance(
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+          request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
   virtual StatusOr<google::spanner::admin::instance::v1::InstancePartition>
-  GetInstancePartition(google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request);
+  GetInstancePartition(
+      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+          request);
 
-  virtual future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  CreateInstancePartition(google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request);
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  CreateInstancePartition(google::spanner::admin::instance::v1::
+                              CreateInstancePartitionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateInstancePartition(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      NoAwaitTag, google::spanner::admin::instance::v1::
+                      CreateInstancePartitionRequest const& request);
 
-  virtual future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  CreateInstancePartition( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  CreateInstancePartition(google::longrunning::Operation const& operation);
 
-  virtual Status
-  DeleteInstancePartition(google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request);
+  virtual Status DeleteInstancePartition(
+      google::spanner::admin::instance::v1::
+          DeleteInstancePartitionRequest const& request);
 
-  virtual future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  UpdateInstancePartition(google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request);
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  UpdateInstancePartition(google::spanner::admin::instance::v1::
+                              UpdateInstancePartitionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateInstancePartition(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      NoAwaitTag, google::spanner::admin::instance::v1::
+                      UpdateInstancePartitionRequest const& request);
 
-  virtual future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  UpdateInstancePartition( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  UpdateInstancePartition(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::longrunning::Operation>
-  ListInstancePartitionOperations(google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest request);
+  ListInstancePartitionOperations(
+      google::spanner::admin::instance::v1::
+          ListInstancePartitionOperationsRequest request);
 
-  virtual future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
-  MoveInstance(google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+  MoveInstance(
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  MoveInstance(NoAwaitTag, google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> MoveInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
 
-  virtual future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
-  MoveInstance( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+  MoveInstance(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -322,7 +372,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

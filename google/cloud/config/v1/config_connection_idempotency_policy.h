@@ -39,105 +39,106 @@ class ConfigConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ConfigConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListDeployments(google::cloud::config::v1::ListDeploymentsRequest request);
+  virtual google::cloud::Idempotency ListDeployments(
+      google::cloud::config::v1::ListDeploymentsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDeployment(google::cloud::config::v1::GetDeploymentRequest const& request);
+  virtual google::cloud::Idempotency GetDeployment(
+      google::cloud::config::v1::GetDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateDeployment(google::cloud::config::v1::CreateDeploymentRequest const& request);
+  virtual google::cloud::Idempotency CreateDeployment(
+      google::cloud::config::v1::CreateDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateDeployment(google::cloud::config::v1::UpdateDeploymentRequest const& request);
+  virtual google::cloud::Idempotency UpdateDeployment(
+      google::cloud::config::v1::UpdateDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteDeployment(google::cloud::config::v1::DeleteDeploymentRequest const& request);
+  virtual google::cloud::Idempotency DeleteDeployment(
+      google::cloud::config::v1::DeleteDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListRevisions(google::cloud::config::v1::ListRevisionsRequest request);
+  virtual google::cloud::Idempotency ListRevisions(
+      google::cloud::config::v1::ListRevisionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetRevision(google::cloud::config::v1::GetRevisionRequest const& request);
+  virtual google::cloud::Idempotency GetRevision(
+      google::cloud::config::v1::GetRevisionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetResource(google::cloud::config::v1::GetResourceRequest const& request);
+  virtual google::cloud::Idempotency GetResource(
+      google::cloud::config::v1::GetResourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListResources(google::cloud::config::v1::ListResourcesRequest request);
+  virtual google::cloud::Idempotency ListResources(
+      google::cloud::config::v1::ListResourcesRequest request);
 
-  virtual google::cloud::Idempotency
-  ExportDeploymentStatefile(google::cloud::config::v1::ExportDeploymentStatefileRequest const& request);
+  virtual google::cloud::Idempotency ExportDeploymentStatefile(
+      google::cloud::config::v1::ExportDeploymentStatefileRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ExportRevisionStatefile(google::cloud::config::v1::ExportRevisionStatefileRequest const& request);
+  virtual google::cloud::Idempotency ExportRevisionStatefile(
+      google::cloud::config::v1::ExportRevisionStatefileRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportStatefile(google::cloud::config::v1::ImportStatefileRequest const& request);
+  virtual google::cloud::Idempotency ImportStatefile(
+      google::cloud::config::v1::ImportStatefileRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteStatefile(google::cloud::config::v1::DeleteStatefileRequest const& request);
+  virtual google::cloud::Idempotency DeleteStatefile(
+      google::cloud::config::v1::DeleteStatefileRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LockDeployment(google::cloud::config::v1::LockDeploymentRequest const& request);
+  virtual google::cloud::Idempotency LockDeployment(
+      google::cloud::config::v1::LockDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UnlockDeployment(google::cloud::config::v1::UnlockDeploymentRequest const& request);
+  virtual google::cloud::Idempotency UnlockDeployment(
+      google::cloud::config::v1::UnlockDeploymentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportLockInfo(google::cloud::config::v1::ExportLockInfoRequest const& request);
+  virtual google::cloud::Idempotency ExportLockInfo(
+      google::cloud::config::v1::ExportLockInfoRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreatePreview(google::cloud::config::v1::CreatePreviewRequest const& request);
+  virtual google::cloud::Idempotency CreatePreview(
+      google::cloud::config::v1::CreatePreviewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetPreview(google::cloud::config::v1::GetPreviewRequest const& request);
+  virtual google::cloud::Idempotency GetPreview(
+      google::cloud::config::v1::GetPreviewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListPreviews(google::cloud::config::v1::ListPreviewsRequest request);
+  virtual google::cloud::Idempotency ListPreviews(
+      google::cloud::config::v1::ListPreviewsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeletePreview(google::cloud::config::v1::DeletePreviewRequest const& request);
+  virtual google::cloud::Idempotency DeletePreview(
+      google::cloud::config::v1::DeletePreviewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportPreviewResult(google::cloud::config::v1::ExportPreviewResultRequest const& request);
+  virtual google::cloud::Idempotency ExportPreviewResult(
+      google::cloud::config::v1::ExportPreviewResultRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTerraformVersions(google::cloud::config::v1::ListTerraformVersionsRequest request);
+  virtual google::cloud::Idempotency ListTerraformVersions(
+      google::cloud::config::v1::ListTerraformVersionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetTerraformVersion(google::cloud::config::v1::GetTerraformVersionRequest const& request);
+  virtual google::cloud::Idempotency GetTerraformVersion(
+      google::cloud::config::v1::GetTerraformVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ConfigConnectionIdempotencyPolicy>
-    MakeDefaultConfigConnectionIdempotencyPolicy();
+MakeDefaultConfigConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace config_v1

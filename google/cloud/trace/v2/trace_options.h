@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_TRACE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_TRACE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/trace/v2/trace_connection.h"
 #include "google/cloud/trace/v2/trace_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,8 +64,7 @@ struct TraceServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-trace-options
  */
 using TraceServicePolicyOptionList =
-    OptionList<TraceServiceRetryPolicyOption,
-               TraceServiceBackoffPolicyOption,
+    OptionList<TraceServiceRetryPolicyOption, TraceServiceBackoffPolicyOption,
                TraceServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

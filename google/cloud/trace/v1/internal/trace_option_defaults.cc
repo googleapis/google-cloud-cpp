@@ -17,10 +17,10 @@
 // source: google/devtools/cloudtrace/v1/trace.proto
 
 #include "google/cloud/trace/v1/internal/trace_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/trace/v1/trace_connection.h"
 #include "google/cloud/trace/v1/trace_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,19 +35,20 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TraceServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TRACE_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TRACE_SERVICE_AUTHORITY",
-      "cloudtrace.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_TRACE_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TRACE_SERVICE_AUTHORITY", "cloudtrace.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<trace_v1::TraceServiceRetryPolicyOption>()) {
     options.set<trace_v1::TraceServiceRetryPolicyOption>(
-        trace_v1::TraceServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        trace_v1::TraceServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<trace_v1::TraceServiceBackoffPolicyOption>()) {
     options.set<trace_v1::TraceServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>()) {
     options.set<trace_v1::TraceServiceConnectionIdempotencyPolicyOption>(

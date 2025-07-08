@@ -36,18 +36,24 @@ class CloudControlsPartnerMonitoringTracingConnection
   ~CloudControlsPartnerMonitoringTracingConnection() override = default;
 
   explicit CloudControlsPartnerMonitoringTracingConnection(
-    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection> child);
+      std::shared_ptr<
+          cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>
-  ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request) override;
+  ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest
+                     request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
-  GetViolation(google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
+      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection> child_;
+  std::shared_ptr<
+      cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -58,9 +64,12 @@ class CloudControlsPartnerMonitoringTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
+std::shared_ptr<
+    cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
 MakeCloudControlsPartnerMonitoringTracingConnection(
-    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection> conn);
+    std::shared_ptr<
+        cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1_internal

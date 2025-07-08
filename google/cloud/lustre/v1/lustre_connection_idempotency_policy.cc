@@ -26,67 +26,81 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-LustreConnectionIdempotencyPolicy::~LustreConnectionIdempotencyPolicy() = default;
+LustreConnectionIdempotencyPolicy::~LustreConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<LustreConnectionIdempotencyPolicy>
 LustreConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LustreConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::ListInstances(google::cloud::lustre::v1::ListInstancesRequest) {  // NOLINT
+Idempotency LustreConnectionIdempotencyPolicy::ListInstances(
+    google::cloud::lustre::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::GetInstance(google::cloud::lustre::v1::GetInstanceRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::GetInstance(
+    google::cloud::lustre::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::CreateInstance(google::cloud::lustre::v1::CreateInstanceRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::CreateInstance(
+    google::cloud::lustre::v1::CreateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::UpdateInstance(google::cloud::lustre::v1::UpdateInstanceRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::UpdateInstance(
+    google::cloud::lustre::v1::UpdateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::DeleteInstance(google::cloud::lustre::v1::DeleteInstanceRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::DeleteInstance(
+    google::cloud::lustre::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::ImportData(google::cloud::lustre::v1::ImportDataRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::ImportData(
+    google::cloud::lustre::v1::ImportDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::ExportData(google::cloud::lustre::v1::ExportDataRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::ExportData(
+    google::cloud::lustre::v1::ExportDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency LustreConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency LustreConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LustreConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency LustreConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<LustreConnectionIdempotencyPolicy>
-    MakeDefaultLustreConnectionIdempotencyPolicy() {
+MakeDefaultLustreConnectionIdempotencyPolicy() {
   return std::make_unique<LustreConnectionIdempotencyPolicy>();
 }
 

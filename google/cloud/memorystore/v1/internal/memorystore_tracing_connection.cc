@@ -34,23 +34,28 @@ MemorystoreTracingConnection::MemorystoreTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::memorystore::v1::Instance>
-MemorystoreTracingConnection::ListInstances(google::cloud::memorystore::v1::ListInstancesRequest request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::ListInstances");
+MemorystoreTracingConnection::ListInstances(
+    google::cloud::memorystore::v1::ListInstancesRequest request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::ListInstances");
   internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::memorystore::v1::Instance>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::memorystore::v1::Instance>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::memorystore::v1::Instance>
-MemorystoreTracingConnection::GetInstance(google::cloud::memorystore::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetInstance");
+MemorystoreTracingConnection::GetInstance(
+    google::cloud::memorystore::v1::GetInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
-MemorystoreTracingConnection::CreateInstance(google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+MemorystoreTracingConnection::CreateInstance(
+    google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::CreateInstance");
   internal::OTelScope scope(span);
@@ -59,12 +64,13 @@ MemorystoreTracingConnection::CreateInstance(google::cloud::memorystore::v1::Cre
 
 StatusOr<google::longrunning::Operation>
 MemorystoreTracingConnection::CreateInstance(
-    NoAwaitTag, google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -73,12 +79,12 @@ MemorystoreTracingConnection::CreateInstance(
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::CreateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateInstance(operation));
+  return internal::EndSpan(std::move(span), child_->CreateInstance(operation));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
-MemorystoreTracingConnection::UpdateInstance(google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+MemorystoreTracingConnection::UpdateInstance(
+    google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::UpdateInstance");
   internal::OTelScope scope(span);
@@ -87,12 +93,13 @@ MemorystoreTracingConnection::UpdateInstance(google::cloud::memorystore::v1::Upd
 
 StatusOr<google::longrunning::Operation>
 MemorystoreTracingConnection::UpdateInstance(
-    NoAwaitTag, google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::UpdateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -101,12 +108,12 @@ MemorystoreTracingConnection::UpdateInstance(
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::UpdateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->UpdateInstance(operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(operation));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-MemorystoreTracingConnection::DeleteInstance(google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+MemorystoreTracingConnection::DeleteInstance(
+    google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::DeleteInstance");
   internal::OTelScope scope(span);
@@ -115,12 +122,13 @@ MemorystoreTracingConnection::DeleteInstance(google::cloud::memorystore::v1::Del
 
 StatusOr<google::longrunning::Operation>
 MemorystoreTracingConnection::DeleteInstance(
-    NoAwaitTag, google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::DeleteInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
@@ -129,33 +137,40 @@ MemorystoreTracingConnection::DeleteInstance(
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::DeleteInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteInstance(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(operation));
 }
 
 StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
-MemorystoreTracingConnection::GetCertificateAuthority(google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetCertificateAuthority");
+MemorystoreTracingConnection::GetCertificateAuthority(
+    google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::GetCertificateAuthority");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCertificateAuthority(request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
-MemorystoreTracingConnection::RescheduleMaintenance(google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
+MemorystoreTracingConnection::RescheduleMaintenance(
+    google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::RescheduleMaintenance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RescheduleMaintenance(request));
+  return internal::EndSpan(std::move(span),
+                           child_->RescheduleMaintenance(request));
 }
 
 StatusOr<google::longrunning::Operation>
 MemorystoreTracingConnection::RescheduleMaintenance(
-    NoAwaitTag, google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::RescheduleMaintenance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RescheduleMaintenance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->RescheduleMaintenance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -165,99 +180,109 @@ MemorystoreTracingConnection::RescheduleMaintenance(
       "memorystore_v1::MemorystoreConnection::RescheduleMaintenance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->RescheduleMaintenance(operation));
+                           child_->RescheduleMaintenance(operation));
 }
 
 StreamRange<google::cloud::memorystore::v1::BackupCollection>
-MemorystoreTracingConnection::ListBackupCollections(google::cloud::memorystore::v1::ListBackupCollectionsRequest request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::ListBackupCollections");
+MemorystoreTracingConnection::ListBackupCollections(
+    google::cloud::memorystore::v1::ListBackupCollectionsRequest request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::ListBackupCollections");
   internal::OTelScope scope(span);
   auto sr = child_->ListBackupCollections(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::memorystore::v1::BackupCollection>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::memorystore::v1::BackupCollection>(std::move(span),
+                                                        std::move(sr));
 }
 
 StatusOr<google::cloud::memorystore::v1::BackupCollection>
-MemorystoreTracingConnection::GetBackupCollection(google::cloud::memorystore::v1::GetBackupCollectionRequest const& request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetBackupCollection");
+MemorystoreTracingConnection::GetBackupCollection(
+    google::cloud::memorystore::v1::GetBackupCollectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::GetBackupCollection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBackupCollection(request));
 }
 
 StreamRange<google::cloud::memorystore::v1::Backup>
-MemorystoreTracingConnection::ListBackups(google::cloud::memorystore::v1::ListBackupsRequest request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::ListBackups");
+MemorystoreTracingConnection::ListBackups(
+    google::cloud::memorystore::v1::ListBackupsRequest request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::ListBackups");
   internal::OTelScope scope(span);
   auto sr = child_->ListBackups(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::memorystore::v1::Backup>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::memorystore::v1::Backup>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::memorystore::v1::Backup>
-MemorystoreTracingConnection::GetBackup(google::cloud::memorystore::v1::GetBackupRequest const& request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetBackup");
+MemorystoreTracingConnection::GetBackup(
+    google::cloud::memorystore::v1::GetBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetBackup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBackup(request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-MemorystoreTracingConnection::DeleteBackup(google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
-  auto span = internal::MakeSpan(
-      "memorystore_v1::MemorystoreConnection::DeleteBackup");
+MemorystoreTracingConnection::DeleteBackup(
+    google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::DeleteBackup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteBackup(request));
 }
 
 StatusOr<google::longrunning::Operation>
 MemorystoreTracingConnection::DeleteBackup(
-    NoAwaitTag, google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
-  auto span = internal::MakeSpan(
-      "memorystore_v1::MemorystoreConnection::DeleteBackup");
+    NoAwaitTag,
+    google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::DeleteBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteBackup(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
 MemorystoreTracingConnection::DeleteBackup(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "memorystore_v1::MemorystoreConnection::DeleteBackup");
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::DeleteBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteBackup(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteBackup(operation));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Backup>>
-MemorystoreTracingConnection::ExportBackup(google::cloud::memorystore::v1::ExportBackupRequest const& request) {
-  auto span = internal::MakeSpan(
-      "memorystore_v1::MemorystoreConnection::ExportBackup");
+MemorystoreTracingConnection::ExportBackup(
+    google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::ExportBackup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportBackup(request));
 }
 
 StatusOr<google::longrunning::Operation>
 MemorystoreTracingConnection::ExportBackup(
-    NoAwaitTag, google::cloud::memorystore::v1::ExportBackupRequest const& request) {
-  auto span = internal::MakeSpan(
-      "memorystore_v1::MemorystoreConnection::ExportBackup");
+    NoAwaitTag,
+    google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::ExportBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportBackup(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ExportBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Backup>>
 MemorystoreTracingConnection::ExportBackup(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "memorystore_v1::MemorystoreConnection::ExportBackup");
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::ExportBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->ExportBackup(operation));
+  return internal::EndSpan(std::move(span), child_->ExportBackup(operation));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
-MemorystoreTracingConnection::BackupInstance(google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+MemorystoreTracingConnection::BackupInstance(
+    google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::BackupInstance");
   internal::OTelScope scope(span);
@@ -266,12 +291,13 @@ MemorystoreTracingConnection::BackupInstance(google::cloud::memorystore::v1::Bac
 
 StatusOr<google::longrunning::Operation>
 MemorystoreTracingConnection::BackupInstance(
-    NoAwaitTag, google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::BackupInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BackupInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BackupInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
@@ -280,52 +306,61 @@ MemorystoreTracingConnection::BackupInstance(
   auto span = internal::MakeSpan(
       "memorystore_v1::MemorystoreConnection::BackupInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->BackupInstance(operation));
+  return internal::EndSpan(std::move(span), child_->BackupInstance(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-MemorystoreTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::ListLocations");
+MemorystoreTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-MemorystoreTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetLocation");
+MemorystoreTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-MemorystoreTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::ListOperations");
+MemorystoreTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-MemorystoreTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetOperation");
+MemorystoreTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("memorystore_v1::MemorystoreConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-MemorystoreTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::DeleteOperation");
+Status MemorystoreTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-MemorystoreTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("memorystore_v1::MemorystoreConnection::CancelOperation");
+Status MemorystoreTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "memorystore_v1::MemorystoreConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

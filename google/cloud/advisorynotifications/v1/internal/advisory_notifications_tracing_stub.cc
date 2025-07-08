@@ -28,48 +28,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-AdvisoryNotificationsServiceTracingStub::AdvisoryNotificationsServiceTracingStub(
-    std::shared_ptr<AdvisoryNotificationsServiceStub> child)
+AdvisoryNotificationsServiceTracingStub::
+    AdvisoryNotificationsServiceTracingStub(
+        std::shared_ptr<AdvisoryNotificationsServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse> AdvisoryNotificationsServiceTracingStub::ListNotifications(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.advisorynotifications.v1.AdvisoryNotificationsService", "ListNotifications");
+StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
+AdvisoryNotificationsServiceTracingStub::ListNotifications(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.advisorynotifications.v1.AdvisoryNotificationsService",
+      "ListNotifications");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListNotifications(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListNotifications(context, options, request));
 }
 
-StatusOr<google::cloud::advisorynotifications::v1::Notification> AdvisoryNotificationsServiceTracingStub::GetNotification(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.advisorynotifications.v1.AdvisoryNotificationsService", "GetNotification");
+StatusOr<google::cloud::advisorynotifications::v1::Notification>
+AdvisoryNotificationsServiceTracingStub::GetNotification(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.advisorynotifications.v1.AdvisoryNotificationsService",
+      "GetNotification");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetNotification(context, options, request));
 }
 
-StatusOr<google::cloud::advisorynotifications::v1::Settings> AdvisoryNotificationsServiceTracingStub::GetSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.advisorynotifications.v1.AdvisoryNotificationsService", "GetSettings");
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceTracingStub::GetSettings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.advisorynotifications.v1.AdvisoryNotificationsService",
+      "GetSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSettings(context, options, request));
 }
 
-StatusOr<google::cloud::advisorynotifications::v1::Settings> AdvisoryNotificationsServiceTracingStub::UpdateSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.advisorynotifications.v1.AdvisoryNotificationsService", "UpdateSettings");
+StatusOr<google::cloud::advisorynotifications::v1::Settings>
+AdvisoryNotificationsServiceTracingStub::UpdateSettings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.advisorynotifications.v1.AdvisoryNotificationsService",
+      "UpdateSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -78,10 +91,12 @@ StatusOr<google::cloud::advisorynotifications::v1::Settings> AdvisoryNotificatio
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<AdvisoryNotificationsServiceStub> MakeAdvisoryNotificationsServiceTracingStub(
+std::shared_ptr<AdvisoryNotificationsServiceStub>
+MakeAdvisoryNotificationsServiceTracingStub(
     std::shared_ptr<AdvisoryNotificationsServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<AdvisoryNotificationsServiceTracingStub>(std::move(stub));
+  return std::make_shared<AdvisoryNotificationsServiceTracingStub>(
+      std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

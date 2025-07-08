@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_TEXT_TO_SPEECH_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_TEXT_TO_SPEECH_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_connection.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,8 +64,7 @@ struct TextToSpeechConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-texttospeech-options
  */
 using TextToSpeechPolicyOptionList =
-    OptionList<TextToSpeechRetryPolicyOption,
-               TextToSpeechBackoffPolicyOption,
+    OptionList<TextToSpeechRetryPolicyOption, TextToSpeechBackoffPolicyOption,
                TextToSpeechConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

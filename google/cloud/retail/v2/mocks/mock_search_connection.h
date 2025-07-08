@@ -46,17 +46,16 @@ class MockSearchServiceConnection : public retail_v2::SearchServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>),
-  Search,
-  (google::cloud::retail::v2::SearchRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>),
+      Search, (google::cloud::retail::v2::SearchRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

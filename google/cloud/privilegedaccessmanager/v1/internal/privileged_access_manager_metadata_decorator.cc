@@ -44,39 +44,44 @@ PrivilegedAccessManagerMetadata::PrivilegedAccessManagerMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+StatusOr<
+    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
 PrivilegedAccessManagerMetadata::CheckOnboardingStatus(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::
+        CheckOnboardingStatusRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CheckOnboardingStatus(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse>
 PrivilegedAccessManagerMetadata::ListEntitlements(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEntitlements(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse>
 PrivilegedAccessManagerMetadata::SearchEntitlements(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SearchEntitlements(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
 PrivilegedAccessManagerMetadata::GetEntitlement(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEntitlement(context, options, request);
 }
 
@@ -85,18 +90,21 @@ PrivilegedAccessManagerMetadata::AsyncCreateEntitlement(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEntitlement(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateEntitlement(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerMetadata::CreateEntitlement(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEntitlement(context, options, request);
 }
 
@@ -105,18 +113,21 @@ PrivilegedAccessManagerMetadata::AsyncDeleteEntitlement(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteEntitlement(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteEntitlement(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerMetadata::DeleteEntitlement(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEntitlement(context, options, request);
 }
 
@@ -125,72 +136,83 @@ PrivilegedAccessManagerMetadata::AsyncUpdateEntitlement(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("entitlement.name=", internal::UrlEncode(request.entitlement().name())));
-  return child_->AsyncUpdateEntitlement(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("entitlement.name=",
+                           internal::UrlEncode(request.entitlement().name())));
+  return child_->AsyncUpdateEntitlement(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerMetadata::UpdateEntitlement(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("entitlement.name=", internal::UrlEncode(request.entitlement().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("entitlement.name=",
+                           internal::UrlEncode(request.entitlement().name())));
   return child_->UpdateEntitlement(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse>
 PrivilegedAccessManagerMetadata::ListGrants(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGrants(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse>
 PrivilegedAccessManagerMetadata::SearchGrants(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SearchGrants(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 PrivilegedAccessManagerMetadata::GetGrant(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGrant(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 PrivilegedAccessManagerMetadata::CreateGrant(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateGrant(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 PrivilegedAccessManagerMetadata::ApproveGrant(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ApproveGrant(context, options, request);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 PrivilegedAccessManagerMetadata::DenyGrant(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DenyGrant(context, options, request);
 }
 
@@ -199,63 +221,65 @@ PrivilegedAccessManagerMetadata::AsyncRevokeGrant(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRevokeGrant(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRevokeGrant(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerMetadata::RevokeGrant(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RevokeGrant(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 PrivilegedAccessManagerMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 PrivilegedAccessManagerMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 PrivilegedAccessManagerMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-PrivilegedAccessManagerMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status PrivilegedAccessManagerMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
@@ -267,8 +291,8 @@ PrivilegedAccessManagerMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> PrivilegedAccessManagerMetadata::AsyncCancelOperation(
@@ -278,21 +302,21 @@ future<Status> PrivilegedAccessManagerMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void PrivilegedAccessManagerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void PrivilegedAccessManagerMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void PrivilegedAccessManagerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                                  Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

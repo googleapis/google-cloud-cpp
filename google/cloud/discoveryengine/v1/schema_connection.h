@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_SCHEMA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_SCHEMA_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/schema_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/schema_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class SchemaServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SchemaServiceLimitedErrorCountRetryPolicy : public SchemaServiceRetryPolicy {
+class SchemaServiceLimitedErrorCountRetryPolicy
+    : public SchemaServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class SchemaServiceLimitedErrorCountRetryPolicy : public SchemaServiceRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit SchemaServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SchemaServiceLimitedErrorCountRetryPolicy(
       SchemaServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SchemaServiceLimitedErrorCountRetryPolicy(
       SchemaServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class SchemaServiceLimitedErrorCountRetryPolicy : public SchemaServiceRetryPolic
   using BaseType = SchemaServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::SchemaServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      discoveryengine_v1_internal::SchemaServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class SchemaServiceLimitedTimeRetryPolicy : public SchemaServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SchemaServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SchemaServiceLimitedTimeRetryPolicy(SchemaServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SchemaServiceLimitedTimeRetryPolicy(SchemaServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SchemaServiceLimitedTimeRetryPolicy(
+      SchemaServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SchemaServiceLimitedTimeRetryPolicy(
+      SchemaServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class SchemaServiceLimitedTimeRetryPolicy : public SchemaServiceRetryPolicy {
   using BaseType = SchemaServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::SchemaServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      discoveryengine_v1_internal::SchemaServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,47 +186,55 @@ class SchemaServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Schema>
-  GetSchema(google::cloud::discoveryengine::v1::GetSchemaRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Schema> GetSchema(
+      google::cloud::discoveryengine::v1::GetSchemaRequest const& request);
 
-  virtual StreamRange<google::cloud::discoveryengine::v1::Schema>
-  ListSchemas(google::cloud::discoveryengine::v1::ListSchemasRequest request);
-
-  virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  CreateSchema(google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateSchema(NoAwaitTag, google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
+  virtual StreamRange<google::cloud::discoveryengine::v1::Schema> ListSchemas(
+      google::cloud::discoveryengine::v1::ListSchemasRequest request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  CreateSchema( google::longrunning::Operation const& operation);
+  CreateSchema(
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  UpdateSchema(google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateSchema(NoAwaitTag, google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
+  CreateSchema(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  UpdateSchema( google::longrunning::Operation const& operation);
+  UpdateSchema(
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
 
-  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteSchema(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
+  UpdateSchema(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
+  DeleteSchema(
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeleteSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
+  DeleteSchema(google::longrunning::Operation const& operation);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

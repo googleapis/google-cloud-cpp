@@ -26,47 +26,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NodeTemplatesConnectionIdempotencyPolicy::~NodeTemplatesConnectionIdempotencyPolicy() = default;
+NodeTemplatesConnectionIdempotencyPolicy::
+    ~NodeTemplatesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<NodeTemplatesConnectionIdempotencyPolicy>
 NodeTemplatesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<NodeTemplatesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::AggregatedListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest) {  // NOLINT
+Idempotency
+NodeTemplatesConnectionIdempotencyPolicy::AggregatedListNodeTemplates(
+    google::cloud::cpp::compute::node_templates::v1::
+        AggregatedListNodeTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const&) {
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::DeleteNodeTemplate(
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::GetNodeTemplate(google::cloud::cpp::compute::node_templates::v1::GetNodeTemplateRequest const&) {
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::GetNodeTemplate(
+    google::cloud::cpp::compute::node_templates::v1::
+        GetNodeTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const&) {
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::node_templates::v1::
+        GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const&) {
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::InsertNodeTemplate(
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::ListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest) {  // NOLINT
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::ListNodeTemplates(
+    google::cloud::cpp::compute::node_templates::v1::
+        ListNodeTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const&) {
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::node_templates::v1::
+        SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeTemplatesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const&) {
+Idempotency NodeTemplatesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::node_templates::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<NodeTemplatesConnectionIdempotencyPolicy>
-    MakeDefaultNodeTemplatesConnectionIdempotencyPolicy() {
+MakeDefaultNodeTemplatesConnectionIdempotencyPolicy() {
   return std::make_unique<NodeTemplatesConnectionIdempotencyPolicy>();
 }
 

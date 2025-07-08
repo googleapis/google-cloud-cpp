@@ -31,135 +31,138 @@ MetastoreServiceAuth::MetastoreServiceAuth(
     std::shared_ptr<MetastoreServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::bigquery::biglake::v1::Catalog> MetastoreServiceAuth::CreateCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+MetastoreServiceAuth::CreateCatalog(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCatalog(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Catalog> MetastoreServiceAuth::DeleteCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+MetastoreServiceAuth::DeleteCatalog(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCatalog(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Catalog> MetastoreServiceAuth::GetCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+MetastoreServiceAuth::GetCatalog(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCatalog(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse> MetastoreServiceAuth::ListCatalogs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse>
+MetastoreServiceAuth::ListCatalogs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListCatalogs(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceAuth::CreateDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request) {
+StatusOr<google::cloud::bigquery::biglake::v1::Database>
+MetastoreServiceAuth::CreateDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDatabase(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceAuth::DeleteDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request) {
+StatusOr<google::cloud::bigquery::biglake::v1::Database>
+MetastoreServiceAuth::DeleteDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDatabase(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceAuth::UpdateDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request) {
+StatusOr<google::cloud::bigquery::biglake::v1::Database>
+MetastoreServiceAuth::UpdateDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDatabase(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceAuth::GetDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Database>
+MetastoreServiceAuth::GetDatabase(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDatabase(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse> MetastoreServiceAuth::ListDatabases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse>
+MetastoreServiceAuth::ListDatabases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDatabases(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceAuth::CreateTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceAuth::CreateTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTable(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceAuth::DeleteTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceAuth::DeleteTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTable(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceAuth::UpdateTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceAuth::UpdateTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateTable(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceAuth::RenameTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceAuth::RenameTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RenameTable(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceAuth::GetTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceAuth::GetTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTable(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse> MetastoreServiceAuth::ListTables(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse>
+MetastoreServiceAuth::ListTables(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListTablesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

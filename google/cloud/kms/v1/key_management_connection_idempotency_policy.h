@@ -37,113 +37,115 @@ class KeyManagementServiceConnectionIdempotencyPolicy {
   virtual ~KeyManagementServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ListKeyRings(google::cloud::kms::v1::ListKeyRingsRequest request);
+  virtual google::cloud::Idempotency ListKeyRings(
+      google::cloud::kms::v1::ListKeyRingsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListCryptoKeys(google::cloud::kms::v1::ListCryptoKeysRequest request);
+  virtual google::cloud::Idempotency ListCryptoKeys(
+      google::cloud::kms::v1::ListCryptoKeysRequest request);
 
-  virtual google::cloud::Idempotency
-  ListCryptoKeyVersions(google::cloud::kms::v1::ListCryptoKeyVersionsRequest request);
+  virtual google::cloud::Idempotency ListCryptoKeyVersions(
+      google::cloud::kms::v1::ListCryptoKeyVersionsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListImportJobs(google::cloud::kms::v1::ListImportJobsRequest request);
+  virtual google::cloud::Idempotency ListImportJobs(
+      google::cloud::kms::v1::ListImportJobsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetKeyRing(google::cloud::kms::v1::GetKeyRingRequest const& request);
+  virtual google::cloud::Idempotency GetKeyRing(
+      google::cloud::kms::v1::GetKeyRingRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetCryptoKey(google::cloud::kms::v1::GetCryptoKeyRequest const& request);
+  virtual google::cloud::Idempotency GetCryptoKey(
+      google::cloud::kms::v1::GetCryptoKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetCryptoKeyVersion(google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request);
+  virtual google::cloud::Idempotency GetCryptoKeyVersion(
+      google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetPublicKey(google::cloud::kms::v1::GetPublicKeyRequest const& request);
+  virtual google::cloud::Idempotency GetPublicKey(
+      google::cloud::kms::v1::GetPublicKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetImportJob(google::cloud::kms::v1::GetImportJobRequest const& request);
+  virtual google::cloud::Idempotency GetImportJob(
+      google::cloud::kms::v1::GetImportJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateKeyRing(google::cloud::kms::v1::CreateKeyRingRequest const& request);
+  virtual google::cloud::Idempotency CreateKeyRing(
+      google::cloud::kms::v1::CreateKeyRingRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateCryptoKey(google::cloud::kms::v1::CreateCryptoKeyRequest const& request);
+  virtual google::cloud::Idempotency CreateCryptoKey(
+      google::cloud::kms::v1::CreateCryptoKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateCryptoKeyVersion(google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request);
+  virtual google::cloud::Idempotency CreateCryptoKeyVersion(
+      google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportCryptoKeyVersion(google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request);
+  virtual google::cloud::Idempotency ImportCryptoKeyVersion(
+      google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateImportJob(google::cloud::kms::v1::CreateImportJobRequest const& request);
+  virtual google::cloud::Idempotency CreateImportJob(
+      google::cloud::kms::v1::CreateImportJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateCryptoKey(google::cloud::kms::v1::UpdateCryptoKeyRequest const& request);
+  virtual google::cloud::Idempotency UpdateCryptoKey(
+      google::cloud::kms::v1::UpdateCryptoKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateCryptoKeyVersion(google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request);
+  virtual google::cloud::Idempotency UpdateCryptoKeyVersion(
+      google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateCryptoKeyPrimaryVersion(google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request);
+  virtual google::cloud::Idempotency UpdateCryptoKeyPrimaryVersion(
+      google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DestroyCryptoKeyVersion(google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request);
+  virtual google::cloud::Idempotency DestroyCryptoKeyVersion(
+      google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RestoreCryptoKeyVersion(google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request);
+  virtual google::cloud::Idempotency RestoreCryptoKeyVersion(
+      google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Encrypt(google::cloud::kms::v1::EncryptRequest const& request);
+  virtual google::cloud::Idempotency Encrypt(
+      google::cloud::kms::v1::EncryptRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Decrypt(google::cloud::kms::v1::DecryptRequest const& request);
+  virtual google::cloud::Idempotency Decrypt(
+      google::cloud::kms::v1::DecryptRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RawEncrypt(google::cloud::kms::v1::RawEncryptRequest const& request);
+  virtual google::cloud::Idempotency RawEncrypt(
+      google::cloud::kms::v1::RawEncryptRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RawDecrypt(google::cloud::kms::v1::RawDecryptRequest const& request);
+  virtual google::cloud::Idempotency RawDecrypt(
+      google::cloud::kms::v1::RawDecryptRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AsymmetricSign(google::cloud::kms::v1::AsymmetricSignRequest const& request);
+  virtual google::cloud::Idempotency AsymmetricSign(
+      google::cloud::kms::v1::AsymmetricSignRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AsymmetricDecrypt(google::cloud::kms::v1::AsymmetricDecryptRequest const& request);
+  virtual google::cloud::Idempotency AsymmetricDecrypt(
+      google::cloud::kms::v1::AsymmetricDecryptRequest const& request);
 
-  virtual google::cloud::Idempotency
-  MacSign(google::cloud::kms::v1::MacSignRequest const& request);
+  virtual google::cloud::Idempotency MacSign(
+      google::cloud::kms::v1::MacSignRequest const& request);
 
-  virtual google::cloud::Idempotency
-  MacVerify(google::cloud::kms::v1::MacVerifyRequest const& request);
+  virtual google::cloud::Idempotency MacVerify(
+      google::cloud::kms::v1::MacVerifyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const& request);
+  virtual google::cloud::Idempotency GenerateRandomBytes(
+      google::cloud::kms::v1::GenerateRandomBytesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
-    MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy();
+MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1

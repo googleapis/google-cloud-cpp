@@ -34,53 +34,65 @@ RuleServiceTracingConnection::RuleServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceTracingConnection::CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::CreateRule");
+RuleServiceTracingConnection::CreateRule(
+    google::cloud::chronicle::v1::CreateRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::CreateRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateRule(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceTracingConnection::GetRule(google::cloud::chronicle::v1::GetRuleRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::GetRule");
+RuleServiceTracingConnection::GetRule(
+    google::cloud::chronicle::v1::GetRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::GetRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRule(request));
 }
 
 StreamRange<google::cloud::chronicle::v1::Rule>
-RuleServiceTracingConnection::ListRules(google::cloud::chronicle::v1::ListRulesRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::ListRules");
+RuleServiceTracingConnection::ListRules(
+    google::cloud::chronicle::v1::ListRulesRequest request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::ListRules");
   internal::OTelScope scope(span);
   auto sr = child_->ListRules(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::chronicle::v1::Rule>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceTracingConnection::UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::UpdateRule");
+RuleServiceTracingConnection::UpdateRule(
+    google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::UpdateRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateRule(request));
 }
 
-Status
-RuleServiceTracingConnection::DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::DeleteRule");
+Status RuleServiceTracingConnection::DeleteRule(
+    google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::DeleteRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteRule(request));
 }
 
 StreamRange<google::cloud::chronicle::v1::Rule>
-RuleServiceTracingConnection::ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::ListRuleRevisions");
+RuleServiceTracingConnection::ListRuleRevisions(
+    google::cloud::chronicle::v1::ListRuleRevisionsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::RuleServiceConnection::ListRuleRevisions");
   internal::OTelScope scope(span);
   auto sr = child_->ListRuleRevisions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::chronicle::v1::Rule>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-RuleServiceTracingConnection::CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+RuleServiceTracingConnection::CreateRetrohunt(
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
   auto span = internal::MakeSpan(
       "chronicle_v1::RuleServiceConnection::CreateRetrohunt");
   internal::OTelScope scope(span);
@@ -89,12 +101,13 @@ RuleServiceTracingConnection::CreateRetrohunt(google::cloud::chronicle::v1::Crea
 
 StatusOr<google::longrunning::Operation>
 RuleServiceTracingConnection::CreateRetrohunt(
-    NoAwaitTag, google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+    NoAwaitTag,
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
   auto span = internal::MakeSpan(
       "chronicle_v1::RuleServiceConnection::CreateRetrohunt");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateRetrohunt(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateRetrohunt(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
@@ -103,75 +116,91 @@ RuleServiceTracingConnection::CreateRetrohunt(
   auto span = internal::MakeSpan(
       "chronicle_v1::RuleServiceConnection::CreateRetrohunt");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateRetrohunt(operation));
+  return internal::EndSpan(std::move(span), child_->CreateRetrohunt(operation));
 }
 
 StatusOr<google::cloud::chronicle::v1::Retrohunt>
-RuleServiceTracingConnection::GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::GetRetrohunt");
+RuleServiceTracingConnection::GetRetrohunt(
+    google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::GetRetrohunt");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRetrohunt(request));
 }
 
 StreamRange<google::cloud::chronicle::v1::Retrohunt>
-RuleServiceTracingConnection::ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::ListRetrohunts");
+RuleServiceTracingConnection::ListRetrohunts(
+    google::cloud::chronicle::v1::ListRetrohuntsRequest request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::ListRetrohunts");
   internal::OTelScope scope(span);
   auto sr = child_->ListRetrohunts(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::chronicle::v1::Retrohunt>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::chronicle::v1::Retrohunt>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceTracingConnection::GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::GetRuleDeployment");
+RuleServiceTracingConnection::GetRuleDeployment(
+    google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::RuleServiceConnection::GetRuleDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRuleDeployment(request));
 }
 
 StreamRange<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceTracingConnection::ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::ListRuleDeployments");
+RuleServiceTracingConnection::ListRuleDeployments(
+    google::cloud::chronicle::v1::ListRuleDeploymentsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::RuleServiceConnection::ListRuleDeployments");
   internal::OTelScope scope(span);
   auto sr = child_->ListRuleDeployments(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::chronicle::v1::RuleDeployment>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::chronicle::v1::RuleDeployment>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceTracingConnection::UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::UpdateRuleDeployment");
+RuleServiceTracingConnection::UpdateRuleDeployment(
+    google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::RuleServiceConnection::UpdateRuleDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateRuleDeployment(request));
 }
 
 StreamRange<google::longrunning::Operation>
-RuleServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::ListOperations");
+RuleServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-RuleServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::GetOperation");
+RuleServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("chronicle_v1::RuleServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-RuleServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::DeleteOperation");
+Status RuleServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::RuleServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-RuleServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::RuleServiceConnection::CancelOperation");
+Status RuleServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::RuleServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

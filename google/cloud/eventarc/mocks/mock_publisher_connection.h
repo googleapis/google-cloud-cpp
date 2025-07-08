@@ -30,7 +30,8 @@ namespace cloud {
 namespace eventarc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use eventarc_publishing_v1_mocks::MockPublisherConnection directly.
+/// @deprecated Use eventarc_publishing_v1_mocks::MockPublisherConnection
+/// directly.
 using ::google::cloud::eventarc_publishing_v1_mocks::MockPublisherConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

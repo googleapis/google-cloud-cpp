@@ -34,8 +34,10 @@ using ::google::cloud::vision_v1::ImageAnnotatorPollingPolicyOption;
 /// @deprecated Use vision_v1::ImageAnnotatorBackoffPolicyOption directly.
 using ::google::cloud::vision_v1::ImageAnnotatorBackoffPolicyOption;
 
-/// @deprecated Use vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption;
+/// @deprecated Use vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::vision_v1::
+    ImageAnnotatorConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use vision_v1::ImageAnnotatorPolicyOptionList directly.
 using ::google::cloud::vision_v1::ImageAnnotatorPolicyOptionList;

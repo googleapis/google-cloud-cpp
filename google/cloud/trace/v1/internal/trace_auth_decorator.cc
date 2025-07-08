@@ -31,9 +31,9 @@ TraceServiceAuth::TraceServiceAuth(
     std::shared_ptr<TraceServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> TraceServiceAuth::ListTraces(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
+TraceServiceAuth::ListTraces(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> TraceServiceAuth:
 }
 
 StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceAuth::GetTrace(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +49,7 @@ StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceAuth::GetTrace(
 }
 
 Status TraceServiceAuth::PatchTraces(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

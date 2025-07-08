@@ -31,52 +31,54 @@ namespace cloud {
 namespace iap_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IdentityAwareProxyOAuthServiceLogging : public IdentityAwareProxyOAuthServiceStub {
+class IdentityAwareProxyOAuthServiceLogging
+    : public IdentityAwareProxyOAuthServiceStub {
  public:
   ~IdentityAwareProxyOAuthServiceLogging() override = default;
-  IdentityAwareProxyOAuthServiceLogging(std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  IdentityAwareProxyOAuthServiceLogging(
+      std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::ListBrandsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::CreateBrandRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::Brand> GetBrand(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::GetBrandRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient> CreateIdentityAwareProxyClient(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
+  CreateIdentityAwareProxyClient(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
+          request) override;
 
-  StatusOr<google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse> ListIdentityAwareProxyClients(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>
+  ListIdentityAwareProxyClients(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient> GetIdentityAwareProxyClient(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
+  GetIdentityAwareProxyClient(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request)
+      override;
 
-  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient> ResetIdentityAwareProxyClientSecret(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
+  ResetIdentityAwareProxyClientSecret(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
+          request) override;
 
   Status DeleteIdentityAwareProxyClient(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
+          request) override;
 
  private:
   std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child_;

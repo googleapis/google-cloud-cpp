@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ModelServiceClient::ModelServiceClient(
     std::shared_ptr<ModelServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ModelServiceClient::~ModelServiceClient() = default;
 
 future<StatusOr<google::cloud::retail::v2::Model>>
-ModelServiceClient::CreateModel(std::string const& parent, google::cloud::retail::v2::Model const& model, Options opts) {
+ModelServiceClient::CreateModel(std::string const& parent,
+                                google::cloud::retail::v2::Model const& model,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::CreateModelRequest request;
   request.set_parent(parent);
@@ -41,8 +43,9 @@ ModelServiceClient::CreateModel(std::string const& parent, google::cloud::retail
   return connection_->CreateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceClient::CreateModel(NoAwaitTag, std::string const& parent, google::cloud::retail::v2::Model const& model, Options opts) {
+StatusOr<google::longrunning::Operation> ModelServiceClient::CreateModel(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::retail::v2::Model const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::CreateModelRequest request;
   request.set_parent(parent);
@@ -51,95 +54,101 @@ ModelServiceClient::CreateModel(NoAwaitTag, std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::retail::v2::Model>>
-ModelServiceClient::CreateModel(google::cloud::retail::v2::CreateModelRequest const& request, Options opts) {
+ModelServiceClient::CreateModel(
+    google::cloud::retail::v2::CreateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceClient::CreateModel(NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ModelServiceClient::CreateModel(
+    NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::Model>>
-ModelServiceClient::CreateModel(google::longrunning::Operation const& operation, Options opts) {
+ModelServiceClient::CreateModel(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(operation);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceClient::GetModel(std::string const& name, Options opts) {
+StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::GetModel(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetModelRequest request;
   request.set_name(name);
   return connection_->GetModel(request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceClient::GetModel(google::cloud::retail::v2::GetModelRequest const& request, Options opts) {
+StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::GetModel(
+    google::cloud::retail::v2::GetModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModel(request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceClient::PauseModel(std::string const& name, Options opts) {
+StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::PauseModel(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::PauseModelRequest request;
   request.set_name(name);
   return connection_->PauseModel(request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceClient::PauseModel(google::cloud::retail::v2::PauseModelRequest const& request, Options opts) {
+StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::PauseModel(
+    google::cloud::retail::v2::PauseModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PauseModel(request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceClient::ResumeModel(std::string const& name, Options opts) {
+StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::ResumeModel(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::ResumeModelRequest request;
   request.set_name(name);
   return connection_->ResumeModel(request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceClient::ResumeModel(google::cloud::retail::v2::ResumeModelRequest const& request, Options opts) {
+StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::ResumeModel(
+    google::cloud::retail::v2::ResumeModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeModel(request);
 }
 
-Status
-ModelServiceClient::DeleteModel(std::string const& name, Options opts) {
+Status ModelServiceClient::DeleteModel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::DeleteModelRequest request;
   request.set_name(name);
   return connection_->DeleteModel(request);
 }
 
-Status
-ModelServiceClient::DeleteModel(google::cloud::retail::v2::DeleteModelRequest const& request, Options opts) {
+Status ModelServiceClient::DeleteModel(
+    google::cloud::retail::v2::DeleteModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(request);
 }
 
-StreamRange<google::cloud::retail::v2::Model>
-ModelServiceClient::ListModels(std::string const& parent, Options opts) {
+StreamRange<google::cloud::retail::v2::Model> ModelServiceClient::ListModels(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::ListModelsRequest request;
   request.set_parent(parent);
   return connection_->ListModels(request);
 }
 
-StreamRange<google::cloud::retail::v2::Model>
-ModelServiceClient::ListModels(google::cloud::retail::v2::ListModelsRequest request, Options opts) {
+StreamRange<google::cloud::retail::v2::Model> ModelServiceClient::ListModels(
+    google::cloud::retail::v2::ListModelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModels(std::move(request));
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceClient::UpdateModel(google::cloud::retail::v2::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::UpdateModel(
+    google::cloud::retail::v2::Model const& model,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateModelRequest request;
   *request.mutable_model() = model;
@@ -147,8 +156,9 @@ ModelServiceClient::UpdateModel(google::cloud::retail::v2::Model const& model, g
   return connection_->UpdateModel(request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceClient::UpdateModel(google::cloud::retail::v2::UpdateModelRequest const& request, Options opts) {
+StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::UpdateModel(
+    google::cloud::retail::v2::UpdateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModel(request);
 }
@@ -161,8 +171,8 @@ ModelServiceClient::TuneModel(std::string const& name, Options opts) {
   return connection_->TuneModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceClient::TuneModel(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ModelServiceClient::TuneModel(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::TuneModelRequest request;
   request.set_name(name);
@@ -170,25 +180,28 @@ ModelServiceClient::TuneModel(NoAwaitTag, std::string const& name, Options opts)
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
-ModelServiceClient::TuneModel(google::cloud::retail::v2::TuneModelRequest const& request, Options opts) {
+ModelServiceClient::TuneModel(
+    google::cloud::retail::v2::TuneModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TuneModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceClient::TuneModel(NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ModelServiceClient::TuneModel(
+    NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TuneModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
-ModelServiceClient::TuneModel(google::longrunning::Operation const& operation, Options opts) {
+ModelServiceClient::TuneModel(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TuneModel(operation);
 }
 
-StreamRange<google::longrunning::Operation>
-ModelServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> ModelServiceClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -196,22 +209,22 @@ ModelServiceClient::ListOperations(std::string const& name, std::string const& f
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-ModelServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> ModelServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ModelServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ModelServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

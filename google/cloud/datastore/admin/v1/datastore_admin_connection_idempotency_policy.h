@@ -35,41 +35,42 @@ class DatastoreAdminConnectionIdempotencyPolicy {
   virtual ~DatastoreAdminConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DatastoreAdminConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<DatastoreAdminConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const& request);
+  virtual google::cloud::Idempotency ExportEntities(
+      google::datastore::admin::v1::ExportEntitiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const& request);
+  virtual google::cloud::Idempotency ImportEntities(
+      google::datastore::admin::v1::ImportEntitiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateIndex(google::datastore::admin::v1::CreateIndexRequest const& request);
+  virtual google::cloud::Idempotency CreateIndex(
+      google::datastore::admin::v1::CreateIndexRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteIndex(google::datastore::admin::v1::DeleteIndexRequest const& request);
+  virtual google::cloud::Idempotency DeleteIndex(
+      google::datastore::admin::v1::DeleteIndexRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIndex(google::datastore::admin::v1::GetIndexRequest const& request);
+  virtual google::cloud::Idempotency GetIndex(
+      google::datastore::admin::v1::GetIndexRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListIndexes(google::datastore::admin::v1::ListIndexesRequest request);
+  virtual google::cloud::Idempotency ListIndexes(
+      google::datastore::admin::v1::ListIndexesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DatastoreAdminConnectionIdempotencyPolicy>
-    MakeDefaultDatastoreAdminConnectionIdempotencyPolicy();
+MakeDefaultDatastoreAdminConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastore_admin_v1

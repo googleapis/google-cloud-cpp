@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_CONTACT_CENTER_INSIGHTS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_CONTACT_CENTER_INSIGHTS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection.h"
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct ContactCenterInsightsBackoffPolicyOption {
  * @ingroup google-cloud-contactcenterinsights-options
  */
 struct ContactCenterInsightsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>;
 };
 
 /**

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_INSTANCE_NAMES_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_INSTANCE_NAMES_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_instance_names_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
-#include "google/cloud/sql/v1/internal/sql_instance_names_rest_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_instance_names.pb.h>
@@ -34,12 +34,13 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SqlInstanceNamesServiceRestLogging : public SqlInstanceNamesServiceRestStub {
+class SqlInstanceNamesServiceRestLogging
+    : public SqlInstanceNamesServiceRestStub {
  public:
   ~SqlInstanceNamesServiceRestLogging() override = default;
-  SqlInstanceNamesServiceRestLogging(std::shared_ptr<SqlInstanceNamesServiceRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+  SqlInstanceNamesServiceRestLogging(
+      std::shared_ptr<SqlInstanceNamesServiceRestStub> child,
+      TracingOptions tracing_options, std::set<std::string> components);
 
  private:
   std::shared_ptr<SqlInstanceNamesServiceRestStub> child_;

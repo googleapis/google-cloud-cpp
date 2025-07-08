@@ -32,20 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyTagManagerSerializationLogging::PolicyTagManagerSerializationLogging(
     std::shared_ptr<PolicyTagManagerSerializationStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationLogging::ReplaceTaxonomy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&
+                 request) {
         return child_->ReplaceTaxonomy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ PolicyTagManagerSerializationLogging::ReplaceTaxonomy(
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationLogging::ImportTaxonomies(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&
+                 request) {
         return child_->ImportTaxonomies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ PolicyTagManagerSerializationLogging::ImportTaxonomies(
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationLogging::ExportTaxonomies(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&
+                 request) {
         return child_->ExportTaxonomies(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,12 +76,10 @@ PolicyTagManagerSerializationLogging::ExportTaxonomies(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 PolicyTagManagerSerializationLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -95,40 +88,32 @@ PolicyTagManagerSerializationLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 PolicyTagManagerSerializationLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-PolicyTagManagerSerializationLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status PolicyTagManagerSerializationLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-PolicyTagManagerSerializationLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status PolicyTagManagerSerializationLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

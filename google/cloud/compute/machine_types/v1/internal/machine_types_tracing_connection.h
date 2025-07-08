@@ -36,18 +36,23 @@ class MachineTypesTracingConnection
   ~MachineTypesTracingConnection() override = default;
 
   explicit MachineTypesTracingConnection(
-    std::shared_ptr<compute_machine_types_v1::MachineTypesConnection> child);
+      std::shared_ptr<compute_machine_types_v1::MachineTypesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>
-  AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>
+  AggregatedListMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::
+          AggregatedListMachineTypesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineType>
-  GetMachineType(google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
+      google::cloud::cpp::compute::machine_types::v1::
+          GetMachineTypeRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::MachineType>
-  ListMachineTypes(google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
+          request) override;
 
  private:
   std::shared_ptr<compute_machine_types_v1::MachineTypesConnection> child_;

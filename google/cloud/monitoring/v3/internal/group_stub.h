@@ -36,74 +36,65 @@ class GroupServiceStub {
   virtual ~GroupServiceStub() = 0;
 
   virtual StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListGroupsRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::Group> GetGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetGroupRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::Group> CreateGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateGroupRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::Group> UpdateGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateGroupRequest const& request) = 0;
 
   virtual Status DeleteGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteGroupRequest const& request) = 0;
 
-  virtual StatusOr<google::monitoring::v3::ListGroupMembersResponse> ListGroupMembers(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::monitoring::v3::ListGroupMembersResponse>
+  ListGroupMembers(
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListGroupMembersRequest const& request) = 0;
 };
 
 class DefaultGroupServiceStub : public GroupServiceStub {
  public:
   explicit DefaultGroupServiceStub(
-      std::unique_ptr<google::monitoring::v3::GroupService::StubInterface> grpc_stub)
+      std::unique_ptr<google::monitoring::v3::GroupService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::v3::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListGroupsRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> GetGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> CreateGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateGroupRequest const& request) override;
 
   Status DeleteGroup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteGroupRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListGroupMembersResponse> ListGroupMembers(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListGroupMembersRequest const& request) override;
 
  private:
-  std::unique_ptr<google::monitoring::v3::GroupService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::monitoring::v3::GroupService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

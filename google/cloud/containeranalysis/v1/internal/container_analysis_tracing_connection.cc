@@ -33,36 +33,50 @@ ContainerAnalysisTracingConnection::ContainerAnalysisTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::iam::v1::Policy>
-ContainerAnalysisTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("containeranalysis_v1::ContainerAnalysisConnection::SetIamPolicy");
+ContainerAnalysisTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "containeranalysis_v1::ContainerAnalysisConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-ContainerAnalysisTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("containeranalysis_v1::ContainerAnalysisConnection::GetIamPolicy");
+ContainerAnalysisTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "containeranalysis_v1::ContainerAnalysisConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContainerAnalysisTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("containeranalysis_v1::ContainerAnalysisConnection::TestIamPermissions");
+ContainerAnalysisTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "containeranalysis_v1::ContainerAnalysisConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-ContainerAnalysisTracingConnection::GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
-  auto span = internal::MakeSpan("containeranalysis_v1::ContainerAnalysisConnection::GetVulnerabilityOccurrencesSummary");
+StatusOr<
+    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+ContainerAnalysisTracingConnection::GetVulnerabilityOccurrencesSummary(
+    google::devtools::containeranalysis::v1::
+        GetVulnerabilityOccurrencesSummaryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "containeranalysis_v1::ContainerAnalysisConnection::"
+      "GetVulnerabilityOccurrencesSummary");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetVulnerabilityOccurrencesSummary(request));
+  return internal::EndSpan(*span,
+                           child_->GetVulnerabilityOccurrencesSummary(request));
 }
 
 StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
-ContainerAnalysisTracingConnection::ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
-  auto span = internal::MakeSpan("containeranalysis_v1::ContainerAnalysisConnection::ExportSBOM");
+ContainerAnalysisTracingConnection::ExportSBOM(
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+  auto span = internal::MakeSpan(
+      "containeranalysis_v1::ContainerAnalysisConnection::ExportSBOM");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ExportSBOM(request));
 }
@@ -74,7 +88,8 @@ MakeContainerAnalysisTracingConnection(
     std::shared_ptr<containeranalysis_v1::ContainerAnalysisConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ContainerAnalysisTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<ContainerAnalysisTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

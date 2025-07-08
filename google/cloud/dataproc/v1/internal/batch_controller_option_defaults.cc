@@ -19,9 +19,9 @@
 #include "google/cloud/dataproc/v1/internal/batch_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/batch_controller_connection.h"
 #include "google/cloud/dataproc/v1/batch_controller_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,32 +34,41 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options BatchControllerDefaultOptions(std::string const& location, Options options) {
+Options BatchControllerDefaultOptions(std::string const& location,
+                                      Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_BATCH_CONTROLLER_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_BATCH_CONTROLLER_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dataproc.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_BATCH_CONTROLLER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BATCH_CONTROLLER_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dataproc.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::BatchControllerRetryPolicyOption>()) {
     options.set<dataproc_v1::BatchControllerRetryPolicyOption>(
         dataproc_v1::BatchControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dataproc_v1::BatchControllerBackoffPolicyOption>()) {
     options.set<dataproc_v1::BatchControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<dataproc_v1::BatchControllerPollingPolicyOption>()) {
     options.set<dataproc_v1::BatchControllerPollingPolicyOption>(
         GenericPollingPolicy<
             dataproc_v1::BatchControllerRetryPolicyOption::Type,
             dataproc_v1::BatchControllerBackoffPolicyOption::Type>(
-            options.get<dataproc_v1::BatchControllerRetryPolicyOption>()->clone(),
+            options.get<dataproc_v1::BatchControllerRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption>()) {
     options.set<dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption>(
         dataproc_v1::MakeDefaultBatchControllerConnectionIdempotencyPolicy());
   }

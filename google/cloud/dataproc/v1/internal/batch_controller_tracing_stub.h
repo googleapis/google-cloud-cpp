@@ -36,7 +36,8 @@ class BatchControllerTracingStub : public BatchControllerStub {
  public:
   ~BatchControllerTracingStub() override = default;
 
-  explicit BatchControllerTracingStub(std::shared_ptr<BatchControllerStub> child);
+  explicit BatchControllerTracingStub(
+      std::shared_ptr<BatchControllerStub> child);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBatch(
       google::cloud::CompletionQueue& cq,
@@ -45,58 +46,47 @@ class BatchControllerTracingStub : public BatchControllerStub {
       google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBatch(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetBatchRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListBatchesResponse> ListBatches(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListBatchesRequest const& request) override;
 
   Status DeleteBatch(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteBatchRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -113,7 +103,8 @@ class BatchControllerTracingStub : public BatchControllerStub {
 
  private:
   std::shared_ptr<BatchControllerStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

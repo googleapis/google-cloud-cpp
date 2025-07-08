@@ -29,38 +29,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InstantSnapshotsRestLogging::InstantSnapshotsRestLogging(
     std::shared_ptr<InstantSnapshotsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotAggregatedList>
 InstantSnapshotsRestLogging::AggregatedListInstantSnapshots(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        AggregatedListInstantSnapshotsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest const& request) {
-        return child_->AggregatedListInstantSnapshots(rest_context, options, request);
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 AggregatedListInstantSnapshotsRequest const& request) {
+        return child_->AggregatedListInstantSnapshots(rest_context, options,
+                                                      request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsRestLogging::AsyncDeleteInstantSnapshot(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        DeleteInstantSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) {
-        return child_->AsyncDeleteInstantSnapshot(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 DeleteInstantSnapshotRequest const& request) {
+        return child_->AsyncDeleteInstantSnapshot(cq, std::move(rest_context),
+                                                  std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -68,13 +71,13 @@ InstantSnapshotsRestLogging::AsyncDeleteInstantSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsRestLogging::DeleteInstantSnapshot(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        DeleteInstantSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 DeleteInstantSnapshotRequest const& request) {
         return child_->DeleteInstantSnapshot(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -82,13 +85,13 @@ InstantSnapshotsRestLogging::DeleteInstantSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
 InstantSnapshotsRestLogging::GetInstantSnapshot(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        GetInstantSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 GetInstantSnapshotRequest const& request) {
         return child_->GetInstantSnapshot(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -96,13 +99,13 @@ InstantSnapshotsRestLogging::GetInstantSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstantSnapshotsRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -110,17 +113,19 @@ InstantSnapshotsRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsRestLogging::AsyncInsertInstantSnapshot(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        InsertInstantSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) {
-        return child_->AsyncInsertInstantSnapshot(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 InsertInstantSnapshotRequest const& request) {
+        return child_->AsyncInsertInstantSnapshot(cq, std::move(rest_context),
+                                                  std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -128,13 +133,13 @@ InstantSnapshotsRestLogging::AsyncInsertInstantSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsRestLogging::InsertInstantSnapshot(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        InsertInstantSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 InsertInstantSnapshotRequest const& request) {
         return child_->InsertInstantSnapshot(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -142,13 +147,13 @@ InstantSnapshotsRestLogging::InsertInstantSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::InstantSnapshotList>
 InstantSnapshotsRestLogging::ListInstantSnapshots(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        ListInstantSnapshotsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 ListInstantSnapshotsRequest const& request) {
         return child_->ListInstantSnapshots(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -156,13 +161,13 @@ InstantSnapshotsRestLogging::ListInstantSnapshots(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstantSnapshotsRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -170,17 +175,19 @@ InstantSnapshotsRestLogging::SetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsRestLogging::AsyncSetLabels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) {
-        return child_->AsyncSetLabels(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 SetLabelsRequest const& request) {
+        return child_->AsyncSetLabels(cq, std::move(rest_context),
+                                      std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -188,13 +195,13 @@ InstantSnapshotsRestLogging::AsyncSetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsRestLogging::SetLabels(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 SetLabelsRequest const& request) {
         return child_->SetLabels(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -202,13 +209,13 @@ InstantSnapshotsRestLogging::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstantSnapshotsRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instant_snapshots::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -219,32 +226,35 @@ InstantSnapshotsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-InstantSnapshotsRestLogging::AsyncCancelOperation(
+future<Status> InstantSnapshotsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

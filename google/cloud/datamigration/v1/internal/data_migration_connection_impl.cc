@@ -17,9 +17,9 @@
 // source: google/cloud/clouddms/v1/clouddms.proto
 
 #include "google/cloud/datamigration/v1/internal/data_migration_connection_impl.h"
+#include "google/cloud/datamigration/v1/internal/data_migration_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/datamigration/v1/internal/data_migration_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,58 +33,73 @@ namespace datamigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()->clone();
+std::unique_ptr<datamigration_v1::DataMigrationServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicy>
+std::unique_ptr<
+    datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<datamigration_v1::
+               DataMigrationServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<datamigration_v1::DataMigrationServicePollingPolicyOption>()->clone();
+  return options
+      .get<datamigration_v1::DataMigrationServicePollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 DataMigrationServiceConnectionImpl::DataMigrationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<datamigration_v1_internal::DataMigrationServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        DataMigrationServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), DataMigrationServiceConnection::options())) {}
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
-DataMigrationServiceConnectionImpl::ListMigrationJobs(google::cloud::clouddms::v1::ListMigrationJobsRequest request) {
+DataMigrationServiceConnectionImpl::ListMigrationJobs(
+    google::cloud::clouddms::v1::ListMigrationJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListMigrationJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::clouddms::v1::MigrationJob>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::clouddms::v1::MigrationJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::clouddms::v1::ListMigrationJobsRequest const& r) {
+          Options const& options,
+          google::cloud::clouddms::v1::ListMigrationJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::clouddms::v1::ListMigrationJobsRequest const& request) {
+                   google::cloud::clouddms::v1::ListMigrationJobsRequest const&
+                       request) {
               return stub->ListMigrationJobs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListMigrationJobsResponse r) {
-        std::vector<google::cloud::clouddms::v1::MigrationJob> result(r.migration_jobs().size());
+        std::vector<google::cloud::clouddms::v1::MigrationJob> result(
+            r.migration_jobs().size());
         auto& messages = *r.mutable_migration_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -92,62 +107,71 @@ DataMigrationServiceConnectionImpl::ListMigrationJobs(google::cloud::clouddms::v
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
-DataMigrationServiceConnectionImpl::GetMigrationJob(google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::GetMigrationJob(
+    google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMigrationJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
         return stub_->GetMigrationJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceConnectionImpl::CreateMigrationJob(google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::CreateMigrationJob(
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
-     return stub->AsyncCreateMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::CreateMigrationJobRequest const&
+              request) {
+        return stub->AsyncCreateMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CreateMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateMigrationJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::CreateMigrationJobRequest const&
+                 request) {
         return stub_->CreateMigrationJob(context, options, request);
       },
       *current, request, __func__);
@@ -155,78 +179,92 @@ DataMigrationServiceConnectionImpl::CreateMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::CreateMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceConnectionImpl::UpdateMigrationJob(google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::UpdateMigrationJob(
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
-     return stub->AsyncUpdateMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::UpdateMigrationJobRequest const&
+              request) {
+        return stub->AsyncUpdateMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::UpdateMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateMigrationJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::UpdateMigrationJobRequest const&
+                 request) {
         return stub_->UpdateMigrationJob(context, options, request);
       },
       *current, request, __func__);
@@ -234,78 +272,92 @@ DataMigrationServiceConnectionImpl::UpdateMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::UpdateMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceConnectionImpl::DeleteMigrationJob(google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::DeleteMigrationJob(
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
-     return stub->AsyncDeleteMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::clouddms::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::DeleteMigrationJobRequest const&
+              request) {
+        return stub->AsyncDeleteMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::clouddms::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::DeleteMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteMigrationJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::DeleteMigrationJobRequest const&
+                 request) {
         return stub_->DeleteMigrationJob(context, options, request);
       },
       *current, request, __func__);
@@ -313,78 +365,92 @@ DataMigrationServiceConnectionImpl::DeleteMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnectionImpl::DeleteMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::clouddms::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::clouddms::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceConnectionImpl::StartMigrationJob(google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::StartMigrationJob(
+    google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->StartMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
-     return stub->AsyncStartMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::StartMigrationJobRequest const&
+              request) {
+        return stub->AsyncStartMigrationJob(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::StartMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->StartMigrationJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::StartMigrationJobRequest const&
+                 request) {
         return stub_->StartMigrationJob(context, options, request);
       },
       *current, request, __func__);
@@ -392,71 +458,84 @@ DataMigrationServiceConnectionImpl::StartMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::StartMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-        internal::InvalidArgumentError("operation does not correspond to StartMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceConnectionImpl::StopMigrationJob(google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::StopMigrationJob(
+    google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->StopMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
-     return stub->AsyncStopMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+        return stub->AsyncStopMigrationJob(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::StopMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -471,78 +550,92 @@ DataMigrationServiceConnectionImpl::StopMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::StopMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-        internal::InvalidArgumentError("operation does not correspond to StopMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StopMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceConnectionImpl::ResumeMigrationJob(google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::ResumeMigrationJob(
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ResumeMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
-     return stub->AsyncResumeMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::ResumeMigrationJobRequest const&
+              request) {
+        return stub->AsyncResumeMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::ResumeMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResumeMigrationJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::ResumeMigrationJobRequest const&
+                 request) {
         return stub_->ResumeMigrationJob(context, options, request);
       },
       *current, request, __func__);
@@ -550,78 +643,92 @@ DataMigrationServiceConnectionImpl::ResumeMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::ResumeMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-        internal::InvalidArgumentError("operation does not correspond to ResumeMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResumeMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceConnectionImpl::PromoteMigrationJob(google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::PromoteMigrationJob(
+    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->PromoteMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
-     return stub->AsyncPromoteMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::PromoteMigrationJobRequest const&
+              request) {
+        return stub->AsyncPromoteMigrationJob(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::PromoteMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PromoteMigrationJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::PromoteMigrationJobRequest const&
+                 request) {
         return stub_->PromoteMigrationJob(context, options, request);
       },
       *current, request, __func__);
@@ -629,78 +736,92 @@ DataMigrationServiceConnectionImpl::PromoteMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::PromoteMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-        internal::InvalidArgumentError("operation does not correspond to PromoteMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PromoteMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceConnectionImpl::VerifyMigrationJob(google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::VerifyMigrationJob(
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->VerifyMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
-     return stub->AsyncVerifyMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::VerifyMigrationJobRequest const&
+              request) {
+        return stub->AsyncVerifyMigrationJob(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::VerifyMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->VerifyMigrationJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::VerifyMigrationJobRequest const&
+                 request) {
         return stub_->VerifyMigrationJob(context, options, request);
       },
       *current, request, __func__);
@@ -708,78 +829,92 @@ DataMigrationServiceConnectionImpl::VerifyMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::VerifyMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-        internal::InvalidArgumentError("operation does not correspond to VerifyMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to VerifyMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-DataMigrationServiceConnectionImpl::RestartMigrationJob(google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
+DataMigrationServiceConnectionImpl::RestartMigrationJob(
+    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RestartMigrationJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
-     return stub->AsyncRestartMigrationJob(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::RestartMigrationJobRequest const&
+              request) {
+        return stub->AsyncRestartMigrationJob(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::RestartMigrationJob(
-      NoAwaitTag, google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RestartMigrationJob(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::RestartMigrationJobRequest const&
+                 request) {
         return stub_->RestartMigrationJob(context, options, request);
       },
       *current, request, __func__);
@@ -787,82 +922,101 @@ DataMigrationServiceConnectionImpl::RestartMigrationJob(
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::RestartMigrationJob(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
-        internal::InvalidArgumentError("operation does not correspond to RestartMigrationJob",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::MigrationJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RestartMigrationJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::MigrationJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::MigrationJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::MigrationJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::MigrationJob>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
-DataMigrationServiceConnectionImpl::GenerateSshScript(google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
+DataMigrationServiceConnectionImpl::GenerateSshScript(
+    google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateSshScript(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
+             google::cloud::clouddms::v1::GenerateSshScriptRequest const&
+                 request) {
         return stub_->GenerateSshScript(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
-DataMigrationServiceConnectionImpl::GenerateTcpProxyScript(google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+DataMigrationServiceConnectionImpl::GenerateTcpProxyScript(
+    google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateTcpProxyScript(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
+             google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&
+                 request) {
         return stub_->GenerateTcpProxyScript(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-DataMigrationServiceConnectionImpl::ListConnectionProfiles(google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
+DataMigrationServiceConnectionImpl::ListConnectionProfiles(
+    google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListConnectionProfiles(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListConnectionProfiles(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::clouddms::v1::ListConnectionProfilesRequest const& r) {
+          Options const& options,
+          google::cloud::clouddms::v1::ListConnectionProfilesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::clouddms::v1::ListConnectionProfilesRequest const& request) {
+                   google::cloud::clouddms::v1::
+                       ListConnectionProfilesRequest const& request) {
               return stub->ListConnectionProfiles(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListConnectionProfilesResponse r) {
-        std::vector<google::cloud::clouddms::v1::ConnectionProfile> result(r.connection_profiles().size());
+        std::vector<google::cloud::clouddms::v1::ConnectionProfile> result(
+            r.connection_profiles().size());
         auto& messages = *r.mutable_connection_profiles();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -870,62 +1024,73 @@ DataMigrationServiceConnectionImpl::ListConnectionProfiles(google::cloud::cloudd
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
-DataMigrationServiceConnectionImpl::GetConnectionProfile(google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
+DataMigrationServiceConnectionImpl::GetConnectionProfile(
+    google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnectionProfile(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
+             google::cloud::clouddms::v1::GetConnectionProfileRequest const&
+                 request) {
         return stub_->GetConnectionProfile(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-DataMigrationServiceConnectionImpl::CreateConnectionProfile(google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request) {
+DataMigrationServiceConnectionImpl::CreateConnectionProfile(
+    google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateConnectionProfile(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConnectionProfile>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request) {
-     return stub->AsyncCreateConnectionProfile(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConnectionProfile>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConnectionProfile>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+              request) {
+        return stub->AsyncCreateConnectionProfile(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConnectionProfile>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CreateConnectionProfile(
-      NoAwaitTag, google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateConnectionProfile(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+                 request) {
         return stub_->CreateConnectionProfile(context, options, request);
       },
       *current, request, __func__);
@@ -933,78 +1098,94 @@ DataMigrationServiceConnectionImpl::CreateConnectionProfile(
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceConnectionImpl::CreateConnectionProfile(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateConnectionProfile",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateConnectionProfile",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConnectionProfile>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConnectionProfile>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConnectionProfile>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConnectionProfile>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-DataMigrationServiceConnectionImpl::UpdateConnectionProfile(google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request) {
+DataMigrationServiceConnectionImpl::UpdateConnectionProfile(
+    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateConnectionProfile(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConnectionProfile>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request) {
-     return stub->AsyncUpdateConnectionProfile(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConnectionProfile>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConnectionProfile>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+              request) {
+        return stub->AsyncUpdateConnectionProfile(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConnectionProfile>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::UpdateConnectionProfile(
-      NoAwaitTag, google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateConnectionProfile(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+                 request) {
         return stub_->UpdateConnectionProfile(context, options, request);
       },
       *current, request, __func__);
@@ -1012,78 +1193,94 @@ DataMigrationServiceConnectionImpl::UpdateConnectionProfile(
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceConnectionImpl::UpdateConnectionProfile(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateConnectionProfile",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateConnectionProfile",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConnectionProfile>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConnectionProfile>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConnectionProfile>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConnectionProfile>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceConnectionImpl::DeleteConnectionProfile(google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request) {
+DataMigrationServiceConnectionImpl::DeleteConnectionProfile(
+    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteConnectionProfile(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request) {
-     return stub->AsyncDeleteConnectionProfile(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::clouddms::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+              request) {
+        return stub->AsyncDeleteConnectionProfile(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::clouddms::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::DeleteConnectionProfile(
-      NoAwaitTag, google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteConnectionProfile(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+                 request) {
         return stub_->DeleteConnectionProfile(context, options, request);
       },
       *current, request, __func__);
@@ -1091,78 +1288,94 @@ DataMigrationServiceConnectionImpl::DeleteConnectionProfile(
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnectionImpl::DeleteConnectionProfile(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteConnectionProfile",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteConnectionProfile",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::clouddms::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::clouddms::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-DataMigrationServiceConnectionImpl::CreatePrivateConnection(google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request) {
+DataMigrationServiceConnectionImpl::CreatePrivateConnection(
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreatePrivateConnection(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::PrivateConnection>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request) {
-     return stub->AsyncCreatePrivateConnection(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::PrivateConnection>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::PrivateConnection>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+              request) {
+        return stub->AsyncCreatePrivateConnection(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::PrivateConnection>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CreatePrivateConnection(
-      NoAwaitTag, google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePrivateConnection(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+                 request) {
         return stub_->CreatePrivateConnection(context, options, request);
       },
       *current, request, __func__);
@@ -1170,69 +1383,86 @@ DataMigrationServiceConnectionImpl::CreatePrivateConnection(
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
 DataMigrationServiceConnectionImpl::CreatePrivateConnection(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>(
-        internal::InvalidArgumentError("operation does not correspond to CreatePrivateConnection",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::PrivateConnection>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePrivateConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::PrivateConnection>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::PrivateConnection>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::PrivateConnection>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::PrivateConnection>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
-DataMigrationServiceConnectionImpl::GetPrivateConnection(google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
+DataMigrationServiceConnectionImpl::GetPrivateConnection(
+    google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPrivateConnection(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
+             google::cloud::clouddms::v1::GetPrivateConnectionRequest const&
+                 request) {
         return stub_->GetPrivateConnection(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::PrivateConnection>
-DataMigrationServiceConnectionImpl::ListPrivateConnections(google::cloud::clouddms::v1::ListPrivateConnectionsRequest request) {
+DataMigrationServiceConnectionImpl::ListPrivateConnections(
+    google::cloud::clouddms::v1::ListPrivateConnectionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListPrivateConnections(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListPrivateConnections(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::clouddms::v1::PrivateConnection>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::clouddms::v1::PrivateConnection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& r) {
+          Options const& options,
+          google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request) {
+                   google::cloud::clouddms::v1::
+                       ListPrivateConnectionsRequest const& request) {
               return stub->ListPrivateConnections(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListPrivateConnectionsResponse r) {
-        std::vector<google::cloud::clouddms::v1::PrivateConnection> result(r.private_connections().size());
+        std::vector<google::cloud::clouddms::v1::PrivateConnection> result(
+            r.private_connections().size());
         auto& messages = *r.mutable_private_connections();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1240,49 +1470,58 @@ DataMigrationServiceConnectionImpl::ListPrivateConnections(google::cloud::cloudd
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceConnectionImpl::DeletePrivateConnection(google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request) {
+DataMigrationServiceConnectionImpl::DeletePrivateConnection(
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeletePrivateConnection(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request) {
-     return stub->AsyncDeletePrivateConnection(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::clouddms::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+              request) {
+        return stub->AsyncDeletePrivateConnection(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::clouddms::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::DeletePrivateConnection(
-      NoAwaitTag, google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePrivateConnection(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+                 request) {
         return stub_->DeletePrivateConnection(context, options, request);
       },
       *current, request, __func__);
@@ -1290,69 +1529,87 @@ DataMigrationServiceConnectionImpl::DeletePrivateConnection(
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnectionImpl::DeletePrivateConnection(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeletePrivateConnection",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePrivateConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::clouddms::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::clouddms::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
-DataMigrationServiceConnectionImpl::GetConversionWorkspace(google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::GetConversionWorkspace(
+    google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConversionWorkspace(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
+             google::cloud::clouddms::v1::GetConversionWorkspaceRequest const&
+                 request) {
         return stub_->GetConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
-DataMigrationServiceConnectionImpl::ListConversionWorkspaces(google::cloud::clouddms::v1::ListConversionWorkspacesRequest request) {
+DataMigrationServiceConnectionImpl::ListConversionWorkspaces(
+    google::cloud::clouddms::v1::ListConversionWorkspacesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListConversionWorkspaces(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListConversionWorkspaces(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::clouddms::v1::ListConversionWorkspacesRequest const& r) {
+          Options const& options,
+          google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::clouddms::v1::ListConversionWorkspacesRequest const& request) {
+                   google::cloud::clouddms::v1::
+                       ListConversionWorkspacesRequest const& request) {
               return stub->ListConversionWorkspaces(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListConversionWorkspacesResponse r) {
-        std::vector<google::cloud::clouddms::v1::ConversionWorkspace> result(r.conversion_workspaces().size());
+        std::vector<google::cloud::clouddms::v1::ConversionWorkspace> result(
+            r.conversion_workspaces().size());
         auto& messages = *r.mutable_conversion_workspaces();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1360,49 +1617,59 @@ DataMigrationServiceConnectionImpl::ListConversionWorkspaces(google::cloud::clou
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceConnectionImpl::CreateConversionWorkspace(google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::CreateConversionWorkspace(
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateConversionWorkspace(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request) {
-     return stub->AsyncCreateConversionWorkspace(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+              request) {
+        return stub->AsyncCreateConversionWorkspace(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CreateConversionWorkspace(
-      NoAwaitTag, google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateConversionWorkspace(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request) {
+          google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+              request) {
         return stub_->CreateConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
@@ -1410,78 +1677,95 @@ DataMigrationServiceConnectionImpl::CreateConversionWorkspace(
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnectionImpl::CreateConversionWorkspace(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateConversionWorkspace",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateConversionWorkspace",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceConnectionImpl::UpdateConversionWorkspace(google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::UpdateConversionWorkspace(
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateConversionWorkspace(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request) {
-     return stub->AsyncUpdateConversionWorkspace(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+              request) {
+        return stub->AsyncUpdateConversionWorkspace(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::UpdateConversionWorkspace(
-      NoAwaitTag, google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateConversionWorkspace(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request) {
+          google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+              request) {
         return stub_->UpdateConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
@@ -1489,78 +1773,95 @@ DataMigrationServiceConnectionImpl::UpdateConversionWorkspace(
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnectionImpl::UpdateConversionWorkspace(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateConversionWorkspace",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateConversionWorkspace",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-DataMigrationServiceConnectionImpl::DeleteConversionWorkspace(google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::DeleteConversionWorkspace(
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteConversionWorkspace(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request) {
-     return stub->AsyncDeleteConversionWorkspace(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::clouddms::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+              request) {
+        return stub->AsyncDeleteConversionWorkspace(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::clouddms::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::DeleteConversionWorkspace(
-      NoAwaitTag, google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteConversionWorkspace(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request) {
+          google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+              request) {
         return stub_->DeleteConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
@@ -1568,82 +1869,99 @@ DataMigrationServiceConnectionImpl::DeleteConversionWorkspace(
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnectionImpl::DeleteConversionWorkspace(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteConversionWorkspace",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteConversionWorkspace",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::clouddms::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::clouddms::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceConnectionImpl::CreateMappingRule(google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+DataMigrationServiceConnectionImpl::CreateMappingRule(
+    google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateMappingRule(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
+             google::cloud::clouddms::v1::CreateMappingRuleRequest const&
+                 request) {
         return stub_->CreateMappingRule(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataMigrationServiceConnectionImpl::DeleteMappingRule(google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+Status DataMigrationServiceConnectionImpl::DeleteMappingRule(
+    google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteMappingRule(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
+             google::cloud::clouddms::v1::DeleteMappingRuleRequest const&
+                 request) {
         return stub_->DeleteMappingRule(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceConnectionImpl::ListMappingRules(google::cloud::clouddms::v1::ListMappingRulesRequest request) {
+DataMigrationServiceConnectionImpl::ListMappingRules(
+    google::cloud::clouddms::v1::ListMappingRulesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListMappingRules(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::clouddms::v1::MappingRule>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::clouddms::v1::MappingRule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::clouddms::v1::ListMappingRulesRequest const& r) {
+          Options const& options,
+          google::cloud::clouddms::v1::ListMappingRulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
+                   google::cloud::clouddms::v1::ListMappingRulesRequest const&
+                       request) {
               return stub->ListMappingRules(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListMappingRulesResponse r) {
-        std::vector<google::cloud::clouddms::v1::MappingRule> result(r.mapping_rules().size());
+        std::vector<google::cloud::clouddms::v1::MappingRule> result(
+            r.mapping_rules().size());
         auto& messages = *r.mutable_mapping_rules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1651,62 +1969,73 @@ DataMigrationServiceConnectionImpl::ListMappingRules(google::cloud::clouddms::v1
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
-DataMigrationServiceConnectionImpl::GetMappingRule(google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+DataMigrationServiceConnectionImpl::GetMappingRule(
+    google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMappingRule(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
         return stub_->GetMappingRule(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceConnectionImpl::SeedConversionWorkspace(google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::SeedConversionWorkspace(
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->SeedConversionWorkspace(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request) {
-     return stub->AsyncSeedConversionWorkspace(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+              request) {
+        return stub->AsyncSeedConversionWorkspace(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::SeedConversionWorkspace(
-      NoAwaitTag, google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SeedConversionWorkspace(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+                 request) {
         return stub_->SeedConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
@@ -1714,78 +2043,92 @@ DataMigrationServiceConnectionImpl::SeedConversionWorkspace(
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnectionImpl::SeedConversionWorkspace(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-        internal::InvalidArgumentError("operation does not correspond to SeedConversionWorkspace",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SeedConversionWorkspace",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceConnectionImpl::ImportMappingRules(google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+DataMigrationServiceConnectionImpl::ImportMappingRules(
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ImportMappingRules(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
-     return stub->AsyncImportMappingRules(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::ImportMappingRulesRequest const&
+              request) {
+        return stub->AsyncImportMappingRules(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::ImportMappingRules(
-      NoAwaitTag, google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportMappingRules(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::ImportMappingRulesRequest const&
+                 request) {
         return stub_->ImportMappingRules(context, options, request);
       },
       *current, request, __func__);
@@ -1793,78 +2136,95 @@ DataMigrationServiceConnectionImpl::ImportMappingRules(
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnectionImpl::ImportMappingRules(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-        internal::InvalidArgumentError("operation does not correspond to ImportMappingRules",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportMappingRules",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceConnectionImpl::ConvertConversionWorkspace(google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::ConvertConversionWorkspace(
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ConvertConversionWorkspace(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request) {
-     return stub->AsyncConvertConversionWorkspace(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+              request) {
+        return stub->AsyncConvertConversionWorkspace(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::ConvertConversionWorkspace(
-      NoAwaitTag, google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ConvertConversionWorkspace(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request) {
+          google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+              request) {
         return stub_->ConvertConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
@@ -1872,78 +2232,95 @@ DataMigrationServiceConnectionImpl::ConvertConversionWorkspace(
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnectionImpl::ConvertConversionWorkspace(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-        internal::InvalidArgumentError("operation does not correspond to ConvertConversionWorkspace",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ConvertConversionWorkspace",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceConnectionImpl::CommitConversionWorkspace(google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::CommitConversionWorkspace(
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CommitConversionWorkspace(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request) {
-     return stub->AsyncCommitConversionWorkspace(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+              request) {
+        return stub->AsyncCommitConversionWorkspace(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CommitConversionWorkspace(
-      NoAwaitTag, google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CommitConversionWorkspace(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request) {
+          google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+              request) {
         return stub_->CommitConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
@@ -1951,78 +2328,95 @@ DataMigrationServiceConnectionImpl::CommitConversionWorkspace(
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnectionImpl::CommitConversionWorkspace(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-        internal::InvalidArgumentError("operation does not correspond to CommitConversionWorkspace",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CommitConversionWorkspace",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceConnectionImpl::RollbackConversionWorkspace(google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::RollbackConversionWorkspace(
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RollbackConversionWorkspace(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request) {
-     return stub->AsyncRollbackConversionWorkspace(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+              request) {
+        return stub->AsyncRollbackConversionWorkspace(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::RollbackConversionWorkspace(
-      NoAwaitTag, google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RollbackConversionWorkspace(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request) {
+          google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+              request) {
         return stub_->RollbackConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
@@ -2030,78 +2424,94 @@ DataMigrationServiceConnectionImpl::RollbackConversionWorkspace(
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnectionImpl::RollbackConversionWorkspace(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-        internal::InvalidArgumentError("operation does not correspond to RollbackConversionWorkspace",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RollbackConversionWorkspace",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-DataMigrationServiceConnectionImpl::ApplyConversionWorkspace(google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request) {
+DataMigrationServiceConnectionImpl::ApplyConversionWorkspace(
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ApplyConversionWorkspace(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request) {
-     return stub->AsyncApplyConversionWorkspace(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+              request) {
+        return stub->AsyncApplyConversionWorkspace(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::ApplyConversionWorkspace(
-      NoAwaitTag, google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApplyConversionWorkspace(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+                 request) {
         return stub_->ApplyConversionWorkspace(context, options, request);
       },
       *current, request, __func__);
@@ -2109,56 +2519,72 @@ DataMigrationServiceConnectionImpl::ApplyConversionWorkspace(
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceConnectionImpl::ApplyConversionWorkspace(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
-        internal::InvalidArgumentError("operation does not correspond to ApplyConversionWorkspace",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::clouddms::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ApplyConversionWorkspace",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::clouddms::v1::ConversionWorkspace>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::clouddms::v1::ConversionWorkspace>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::clouddms::v1::ConversionWorkspace>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::clouddms::v1::ConversionWorkspace>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
-DataMigrationServiceConnectionImpl::DescribeDatabaseEntities(google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request) {
+DataMigrationServiceConnectionImpl::DescribeDatabaseEntities(
+    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->DescribeDatabaseEntities(request);
+  auto idempotency =
+      idempotency_policy(*current)->DescribeDatabaseEntities(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::clouddms::v1::DatabaseEntity>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::clouddms::v1::DatabaseEntity>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const& r) {
+          Options const& options,
+          google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const& request) {
+                   google::cloud::clouddms::v1::
+                       DescribeDatabaseEntitiesRequest const& request) {
               return stub->DescribeDatabaseEntities(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse r) {
-        std::vector<google::cloud::clouddms::v1::DatabaseEntity> result(r.database_entities().size());
+        std::vector<google::cloud::clouddms::v1::DatabaseEntity> result(
+            r.database_entities().size());
         auto& messages = *r.mutable_database_entities();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -2166,33 +2592,41 @@ DataMigrationServiceConnectionImpl::DescribeDatabaseEntities(google::cloud::clou
 }
 
 StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
-DataMigrationServiceConnectionImpl::SearchBackgroundJobs(google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
+DataMigrationServiceConnectionImpl::SearchBackgroundJobs(
+    google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchBackgroundJobs(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
+             google::cloud::clouddms::v1::SearchBackgroundJobsRequest const&
+                 request) {
         return stub_->SearchBackgroundJobs(context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
-DataMigrationServiceConnectionImpl::DescribeConversionWorkspaceRevisions(google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsRequest const& request) {
+StatusOr<
+    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+DataMigrationServiceConnectionImpl::DescribeConversionWorkspaceRevisions(
+    google::cloud::clouddms::v1::
+        DescribeConversionWorkspaceRevisionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DescribeConversionWorkspaceRevisions(request),
+      idempotency_policy(*current)->DescribeConversionWorkspaceRevisions(
+          request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsRequest const& request) {
-        return stub_->DescribeConversionWorkspaceRevisions(context, options, request);
+             google::cloud::clouddms::v1::
+                 DescribeConversionWorkspaceRevisionsRequest const& request) {
+        return stub_->DescribeConversionWorkspaceRevisions(context, options,
+                                                           request);
       },
       *current, request, __func__);
 }
 
-StreamRange<std::string>
-DataMigrationServiceConnectionImpl::FetchStaticIps(google::cloud::clouddms::v1::FetchStaticIpsRequest request) {
+StreamRange<std::string> DataMigrationServiceConnectionImpl::FetchStaticIps(
+    google::cloud::clouddms::v1::FetchStaticIpsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->FetchStaticIps(request);
@@ -2200,13 +2634,17 @@ DataMigrationServiceConnectionImpl::FetchStaticIps(google::cloud::clouddms::v1::
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::clouddms::v1::FetchStaticIpsRequest const& r) {
+          Options const& options,
+          google::cloud::clouddms::v1::FetchStaticIpsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::clouddms::v1::FetchStaticIpsRequest const& request) {
+                   google::cloud::clouddms::v1::FetchStaticIpsRequest const&
+                       request) {
               return stub->FetchStaticIps(context, options, request);
             },
             options, r, function_name);
@@ -2220,27 +2658,34 @@ DataMigrationServiceConnectionImpl::FetchStaticIps(google::cloud::clouddms::v1::
 }
 
 StreamRange<google::cloud::location::Location>
-DataMigrationServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+DataMigrationServiceConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -2248,7 +2693,8 @@ DataMigrationServiceConnectionImpl::ListLocations(google::cloud::location::ListL
 }
 
 StatusOr<google::cloud::location::Location>
-DataMigrationServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+DataMigrationServiceConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2261,7 +2707,8 @@ DataMigrationServiceConnectionImpl::GetLocation(google::cloud::location::GetLoca
 }
 
 StatusOr<google::iam::v1::Policy>
-DataMigrationServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+DataMigrationServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2274,7 +2721,8 @@ DataMigrationServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRe
 }
 
 StatusOr<google::iam::v1::Policy>
-DataMigrationServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+DataMigrationServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2287,7 +2735,8 @@ DataMigrationServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRe
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataMigrationServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+DataMigrationServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2300,17 +2749,22 @@ DataMigrationServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamP
 }
 
 StreamRange<google::longrunning::Operation>
-DataMigrationServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+DataMigrationServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -2320,7 +2774,8 @@ DataMigrationServiceConnectionImpl::ListOperations(google::longrunning::ListOper
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -2328,7 +2783,8 @@ DataMigrationServiceConnectionImpl::ListOperations(google::longrunning::ListOper
 }
 
 StatusOr<google::longrunning::Operation>
-DataMigrationServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+DataMigrationServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2340,8 +2796,8 @@ DataMigrationServiceConnectionImpl::GetOperation(google::longrunning::GetOperati
       *current, request, __func__);
 }
 
-Status
-DataMigrationServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status DataMigrationServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2353,8 +2809,8 @@ DataMigrationServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteO
       *current, request, __func__);
 }
 
-Status
-DataMigrationServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status DataMigrationServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

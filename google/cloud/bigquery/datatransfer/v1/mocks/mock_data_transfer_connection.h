@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `DataTransferServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DataTransferServiceClient`. To do so,
- * construct an object of type `DataTransferServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `DataTransferServiceClient`. To do
+ * so, construct an object of type `DataTransferServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,81 +42,123 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDataTransferServiceConnection : public bigquery_datatransfer_v1::DataTransferServiceConnection {
+class MockDataTransferServiceConnection
+    : public bigquery_datatransfer_v1::DataTransferServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>,
-  GetDataSource,
-  (google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>,
+      GetDataSource,
+      (google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>),
-  ListDataSources,
-  (google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>),
+      ListDataSources,
+      (google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
-  CreateTransferConfig,
-  (google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
+      CreateTransferConfig,
+      (google::cloud::bigquery::datatransfer::v1::
+           CreateTransferConfigRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
-  UpdateTransferConfig,
-  (google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
+      UpdateTransferConfig,
+      (google::cloud::bigquery::datatransfer::v1::
+           UpdateTransferConfigRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteTransferConfig,
-  (google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteTransferConfig,
+              (google::cloud::bigquery::datatransfer::v1::
+                   DeleteTransferConfigRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
-  GetTransferConfig,
-  (google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>,
+      GetTransferConfig,
+      (google::cloud::bigquery::datatransfer::v1::
+           GetTransferConfigRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>),
-  ListTransferConfigs,
-  (google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>),
+      ListTransferConfigs,
+      (google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>,
-  ScheduleTransferRuns,
-  (google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::
+                           ScheduleTransferRunsResponse>,
+              ScheduleTransferRuns,
+              (google::cloud::bigquery::datatransfer::v1::
+                   ScheduleTransferRunsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>,
-  StartManualTransferRuns,
-  (google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::
+                           StartManualTransferRunsResponse>,
+              StartManualTransferRuns,
+              (google::cloud::bigquery::datatransfer::v1::
+                   StartManualTransferRunsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>,
-  GetTransferRun,
-  (google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>,
+      GetTransferRun,
+      (google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteTransferRun,
-  (google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteTransferRun,
+              (google::cloud::bigquery::datatransfer::v1::
+                   DeleteTransferRunRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>),
-  ListTransferRuns,
-  (google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>),
+      ListTransferRuns,
+      (google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>),
-  ListTransferLogs,
-  (google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>),
+      ListTransferLogs,
+      (google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>,
-  CheckValidCreds,
-  (google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>,
+      CheckValidCreds,
+      (google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  EnrollDataSources,
-  (google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request), (override));
+  MOCK_METHOD(Status, EnrollDataSources,
+              (google::cloud::bigquery::datatransfer::v1::
+                   EnrollDataSourcesRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  UnenrollDataSources,
-  (google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request), (override));
+  MOCK_METHOD(Status, UnenrollDataSources,
+              (google::cloud::bigquery::datatransfer::v1::
+                   UnenrollDataSourcesRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

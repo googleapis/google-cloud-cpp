@@ -27,8 +27,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/operation.pb.h>
 #include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <memory>
 
 namespace google {
@@ -63,14 +63,14 @@ class FirewallLimitedErrorCountRetryPolicy : public FirewallRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit FirewallLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   FirewallLimitedErrorCountRetryPolicy(
       FirewallLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : FirewallLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FirewallLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FirewallLimitedErrorCountRetryPolicy(
       FirewallLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : FirewallLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FirewallLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +90,9 @@ class FirewallLimitedErrorCountRetryPolicy : public FirewallRetryPolicy {
   using BaseType = FirewallRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<appengine_v1_internal::FirewallRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      appengine_v1_internal::FirewallRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +130,13 @@ class FirewallLimitedTimeRetryPolicy : public FirewallRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit FirewallLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   FirewallLimitedTimeRetryPolicy(FirewallLimitedTimeRetryPolicy&& rhs) noexcept
-    : FirewallLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  FirewallLimitedTimeRetryPolicy(FirewallLimitedTimeRetryPolicy const& rhs) noexcept
-    : FirewallLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : FirewallLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FirewallLimitedTimeRetryPolicy(
+      FirewallLimitedTimeRetryPolicy const& rhs) noexcept
+      : FirewallLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -147,15 +150,16 @@ class FirewallLimitedTimeRetryPolicy : public FirewallRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<FirewallRetryPolicy> clone() const override {
-    return std::make_unique<FirewallLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<FirewallLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = FirewallRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<appengine_v1_internal::FirewallRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      appengine_v1_internal::FirewallRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,23 +180,24 @@ class FirewallConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::appengine::v1::FirewallRule>
-  ListIngressRules(google::appengine::v1::ListIngressRulesRequest request);
+  virtual StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
+      google::appengine::v1::ListIngressRulesRequest request);
 
   virtual StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
-  BatchUpdateIngressRules(google::appengine::v1::BatchUpdateIngressRulesRequest const& request);
+  BatchUpdateIngressRules(
+      google::appengine::v1::BatchUpdateIngressRulesRequest const& request);
 
-  virtual StatusOr<google::appengine::v1::FirewallRule>
-  CreateIngressRule(google::appengine::v1::CreateIngressRuleRequest const& request);
+  virtual StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
+      google::appengine::v1::CreateIngressRuleRequest const& request);
 
-  virtual StatusOr<google::appengine::v1::FirewallRule>
-  GetIngressRule(google::appengine::v1::GetIngressRuleRequest const& request);
+  virtual StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
+      google::appengine::v1::GetIngressRuleRequest const& request);
 
-  virtual StatusOr<google::appengine::v1::FirewallRule>
-  UpdateIngressRule(google::appengine::v1::UpdateIngressRuleRequest const& request);
+  virtual StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
+      google::appengine::v1::UpdateIngressRuleRequest const& request);
 
-  virtual Status
-  DeleteIngressRule(google::appengine::v1::DeleteIngressRuleRequest const& request);
+  virtual Status DeleteIngressRule(
+      google::appengine::v1::DeleteIngressRuleRequest const& request);
 };
 
 /**

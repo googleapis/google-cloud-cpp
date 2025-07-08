@@ -26,8 +26,10 @@ namespace cloud {
 namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use trace_v2::MakeDefaultTraceServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::trace_v2::MakeDefaultTraceServiceConnectionIdempotencyPolicy;
+/// @deprecated Use trace_v2::MakeDefaultTraceServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::trace_v2::
+    MakeDefaultTraceServiceConnectionIdempotencyPolicy;
 
 /// @deprecated Use trace_v2::TraceServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::trace_v2::TraceServiceConnectionIdempotencyPolicy;

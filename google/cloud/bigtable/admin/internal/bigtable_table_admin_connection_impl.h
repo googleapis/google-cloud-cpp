@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_INTERNAL_BIGTABLE_TABLE_ADMIN_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_INTERNAL_BIGTABLE_TABLE_ADMIN_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection_idempotency_policy.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_retry_traits.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,176 +46,193 @@ class BigtableTableAdminConnectionImpl
   ~BigtableTableAdminConnectionImpl() override = default;
 
   BigtableTableAdminConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::bigtable::admin::v2::Table>
-  CreateTable(google::bigtable::admin::v2::CreateTableRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::Table> CreateTable(
+      google::bigtable::admin::v2::CreateTableRequest const& request) override;
 
-  StreamRange<google::bigtable::admin::v2::Table>
-  ListTables(google::bigtable::admin::v2::ListTablesRequest request) override;
+  StreamRange<google::bigtable::admin::v2::Table> ListTables(
+      google::bigtable::admin::v2::ListTablesRequest request) override;
 
-  StatusOr<google::bigtable::admin::v2::Table>
-  GetTable(google::bigtable::admin::v2::GetTableRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::Table> GetTable(
+      google::bigtable::admin::v2::GetTableRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Table>>
-  UpdateTable(google::bigtable::admin::v2::UpdateTableRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateTable(NoAwaitTag,
+  future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Table>>
-  UpdateTable(
+  StatusOr<google::longrunning::Operation> UpdateTable(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateTableRequest const& request) override;
+
+  future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
       google::longrunning::Operation const& operation) override;
 
-  Status
-  DeleteTable(google::bigtable::admin::v2::DeleteTableRequest const& request) override;
+  Status DeleteTable(
+      google::bigtable::admin::v2::DeleteTableRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Table>>
-  UndeleteTable(google::bigtable::admin::v2::UndeleteTableRequest const& request) override;
+  future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
+      google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UndeleteTable(NoAwaitTag,
-      google::bigtable::admin::v2::UndeleteTableRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UndeleteTable(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
 
-  future<StatusOr<google::bigtable::admin::v2::Table>>
-  UndeleteTable(
+  future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) override;
+  CreateAuthorizedView(
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateAuthorizedView(NoAwaitTag,
-      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateAuthorizedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
+      override;
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
   CreateAuthorizedView(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::bigtable::admin::v2::AuthorizedView>
-  ListAuthorizedViews(google::bigtable::admin::v2::ListAuthorizedViewsRequest request) override;
+  StreamRange<google::bigtable::admin::v2::AuthorizedView> ListAuthorizedViews(
+      google::bigtable::admin::v2::ListAuthorizedViewsRequest request) override;
 
-  StatusOr<google::bigtable::admin::v2::AuthorizedView>
-  GetAuthorizedView(google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::AuthorizedView> GetAuthorizedView(
+      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request)
+      override;
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) override;
+  UpdateAuthorizedView(
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateAuthorizedView(NoAwaitTag,
-      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
+      override;
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
   UpdateAuthorizedView(
       google::longrunning::Operation const& operation) override;
 
-  Status
-  DeleteAuthorizedView(google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) override;
+  Status DeleteAuthorizedView(
+      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request)
+      override;
 
-  StatusOr<google::bigtable::admin::v2::Table>
-  ModifyColumnFamilies(google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
+      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request)
+      override;
 
-  Status
-  DropRowRange(google::bigtable::admin::v2::DropRowRangeRequest const& request) override;
+  Status DropRowRange(
+      google::bigtable::admin::v2::DropRowRangeRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
-  GenerateConsistencyToken(google::bigtable::admin::v2::GenerateConsistencyTokenRequest const& request) override;
+  GenerateConsistencyToken(
+      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
+          request) override;
 
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
-  CheckConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request) override;
+  CheckConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const&
+                       request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Backup>>
-  CreateBackup(google::bigtable::admin::v2::CreateBackupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateBackup(NoAwaitTag,
+  future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Backup>>
-  CreateBackup(
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateBackupRequest const& request) override;
+
+  future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::bigtable::admin::v2::Backup>
-  GetBackup(google::bigtable::admin::v2::GetBackupRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
+      google::bigtable::admin::v2::GetBackupRequest const& request) override;
 
-  StatusOr<google::bigtable::admin::v2::Backup>
-  UpdateBackup(google::bigtable::admin::v2::UpdateBackupRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
+      google::bigtable::admin::v2::UpdateBackupRequest const& request) override;
 
-  Status
-  DeleteBackup(google::bigtable::admin::v2::DeleteBackupRequest const& request) override;
+  Status DeleteBackup(
+      google::bigtable::admin::v2::DeleteBackupRequest const& request) override;
 
-  StreamRange<google::bigtable::admin::v2::Backup>
-  ListBackups(google::bigtable::admin::v2::ListBackupsRequest request) override;
+  StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
+      google::bigtable::admin::v2::ListBackupsRequest request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Table>>
-  RestoreTable(google::bigtable::admin::v2::RestoreTableRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  RestoreTable(NoAwaitTag,
+  future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Table>>
-  RestoreTable(
+  StatusOr<google::longrunning::Operation> RestoreTable(
+      NoAwaitTag,
+      google::bigtable::admin::v2::RestoreTableRequest const& request) override;
+
+  future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Backup>>
-  CopyBackup(google::bigtable::admin::v2::CopyBackupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CopyBackup(NoAwaitTag,
+  future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
       google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
-  future<StatusOr<google::bigtable::admin::v2::Backup>>
-  CopyBackup(
+  StatusOr<google::longrunning::Operation> CopyBackup(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CopyBackupRequest const& request) override;
+
+  future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
-
-  future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
-  CreateSchemaBundle(google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateSchemaBundle(NoAwaitTag,
-      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
   CreateSchemaBundle(
-      google::longrunning::Operation const& operation) override;
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateSchemaBundle(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateSchemaBundleRequest const& request)
+      override;
 
   future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
-  UpdateSchemaBundle(google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateSchemaBundle(NoAwaitTag,
-      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request) override;
+  CreateSchemaBundle(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
   UpdateSchemaBundle(
-      google::longrunning::Operation const& operation) override;
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request)
+      override;
 
-  StatusOr<google::bigtable::admin::v2::SchemaBundle>
-  GetSchemaBundle(google::bigtable::admin::v2::GetSchemaBundleRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateSchemaBundle(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateSchemaBundleRequest const& request)
+      override;
 
-  StreamRange<google::bigtable::admin::v2::SchemaBundle>
-  ListSchemaBundles(google::bigtable::admin::v2::ListSchemaBundlesRequest request) override;
+  future<StatusOr<google::bigtable::admin::v2::SchemaBundle>>
+  UpdateSchemaBundle(google::longrunning::Operation const& operation) override;
 
-  Status
-  DeleteSchemaBundle(google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request) override;
+  StatusOr<google::bigtable::admin::v2::SchemaBundle> GetSchemaBundle(
+      google::bigtable::admin::v2::GetSchemaBundleRequest const& request)
+      override;
+
+  StreamRange<google::bigtable::admin::v2::SchemaBundle> ListSchemaBundles(
+      google::bigtable::admin::v2::ListSchemaBundlesRequest request) override;
+
+  Status DeleteSchemaBundle(
+      google::bigtable::admin::v2::DeleteSchemaBundleRequest const& request)
+      override;
 
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-  AsyncCheckConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request) override;
+  AsyncCheckConsistency(
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

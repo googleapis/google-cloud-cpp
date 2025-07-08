@@ -35,32 +35,44 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CompletionServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_COMPLETION_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_COMPLETION_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_COMPLETION_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_COMPLETION_SERVICE_AUTHORITY",
       "discoveryengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<discoveryengine_v1::CompletionServiceRetryPolicyOption>()) {
     options.set<discoveryengine_v1::CompletionServiceRetryPolicyOption>(
         discoveryengine_v1::CompletionServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<discoveryengine_v1::CompletionServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<discoveryengine_v1::CompletionServiceBackoffPolicyOption>()) {
     options.set<discoveryengine_v1::CompletionServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<discoveryengine_v1::CompletionServicePollingPolicyOption>()) {
+  if (!options
+           .has<discoveryengine_v1::CompletionServicePollingPolicyOption>()) {
     options.set<discoveryengine_v1::CompletionServicePollingPolicyOption>(
         GenericPollingPolicy<
             discoveryengine_v1::CompletionServiceRetryPolicyOption::Type,
             discoveryengine_v1::CompletionServiceBackoffPolicyOption::Type>(
-            options.get<discoveryengine_v1::CompletionServiceRetryPolicyOption>()->clone(),
+            options
+                .get<discoveryengine_v1::CompletionServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<discoveryengine_v1::CompletionServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<discoveryengine_v1::CompletionServiceConnectionIdempotencyPolicyOption>(
-        discoveryengine_v1::MakeDefaultCompletionServiceConnectionIdempotencyPolicy());
+  if (!options.has<discoveryengine_v1::
+                       CompletionServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        discoveryengine_v1::CompletionServiceConnectionIdempotencyPolicyOption>(
+        discoveryengine_v1::
+            MakeDefaultCompletionServiceConnectionIdempotencyPolicy());
   }
 
   return options;

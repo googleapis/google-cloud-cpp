@@ -34,50 +34,57 @@ class WebSecurityScannerConnectionIdempotencyPolicy {
   virtual ~WebSecurityScannerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateScanConfig(google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request);
+  virtual google::cloud::Idempotency CreateScanConfig(
+      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteScanConfig(google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request);
+  virtual google::cloud::Idempotency DeleteScanConfig(
+      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetScanConfig(google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request);
+  virtual google::cloud::Idempotency GetScanConfig(
+      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest request);
+  virtual google::cloud::Idempotency ListScanConfigs(
+      google::cloud::websecurityscanner::v1::ListScanConfigsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateScanConfig(google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request);
+  virtual google::cloud::Idempotency UpdateScanConfig(
+      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  StartScanRun(google::cloud::websecurityscanner::v1::StartScanRunRequest const& request);
+  virtual google::cloud::Idempotency StartScanRun(
+      google::cloud::websecurityscanner::v1::StartScanRunRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetScanRun(google::cloud::websecurityscanner::v1::GetScanRunRequest const& request);
+  virtual google::cloud::Idempotency GetScanRun(
+      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListScanRuns(google::cloud::websecurityscanner::v1::ListScanRunsRequest request);
+  virtual google::cloud::Idempotency ListScanRuns(
+      google::cloud::websecurityscanner::v1::ListScanRunsRequest request);
 
-  virtual google::cloud::Idempotency
-  StopScanRun(google::cloud::websecurityscanner::v1::StopScanRunRequest const& request);
+  virtual google::cloud::Idempotency StopScanRun(
+      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request);
+  virtual google::cloud::Idempotency ListCrawledUrls(
+      google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetFinding(google::cloud::websecurityscanner::v1::GetFindingRequest const& request);
+  virtual google::cloud::Idempotency GetFinding(
+      google::cloud::websecurityscanner::v1::GetFindingRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListFindings(google::cloud::websecurityscanner::v1::ListFindingsRequest request);
+  virtual google::cloud::Idempotency ListFindings(
+      google::cloud::websecurityscanner::v1::ListFindingsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListFindingTypeStats(google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request);
+  virtual google::cloud::Idempotency ListFindingTypeStats(
+      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
+          request);
 };
 
 std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
-    MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy();
+MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_v1

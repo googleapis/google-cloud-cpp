@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_TELCO_AUTOMATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_TELCO_AUTOMATION_CONNECTION_H
 
+#include "google/cloud/telcoautomation/v1/internal/telco_automation_retry_traits.h"
+#include "google/cloud/telcoautomation/v1/telco_automation_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,8 +29,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/telcoautomation/v1/internal/telco_automation_retry_traits.h"
-#include "google/cloud/telcoautomation/v1/telco_automation_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/telcoautomation/v1/telcoautomation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -56,7 +56,8 @@ class TelcoAutomationRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TelcoAutomationLimitedErrorCountRetryPolicy : public TelcoAutomationRetryPolicy {
+class TelcoAutomationLimitedErrorCountRetryPolicy
+    : public TelcoAutomationRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class TelcoAutomationLimitedErrorCountRetryPolicy : public TelcoAutomationRetryP
    *     @p maximum_failures == 0.
    */
   explicit TelcoAutomationLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TelcoAutomationLimitedErrorCountRetryPolicy(
       TelcoAutomationLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TelcoAutomationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TelcoAutomationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TelcoAutomationLimitedErrorCountRetryPolicy(
       TelcoAutomationLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TelcoAutomationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TelcoAutomationLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class TelcoAutomationLimitedErrorCountRetryPolicy : public TelcoAutomationRetryP
   using BaseType = TelcoAutomationRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<telcoautomation_v1_internal::TelcoAutomationRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      telcoautomation_v1_internal::TelcoAutomationRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class TelcoAutomationLimitedErrorCountRetryPolicy : public TelcoAutomationRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TelcoAutomationLimitedTimeRetryPolicy : public TelcoAutomationRetryPolicy {
+class TelcoAutomationLimitedTimeRetryPolicy
+    : public TelcoAutomationRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class TelcoAutomationLimitedTimeRetryPolicy : public TelcoAutomationRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit TelcoAutomationLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TelcoAutomationLimitedTimeRetryPolicy(TelcoAutomationLimitedTimeRetryPolicy&& rhs) noexcept
-    : TelcoAutomationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TelcoAutomationLimitedTimeRetryPolicy(TelcoAutomationLimitedTimeRetryPolicy const& rhs) noexcept
-    : TelcoAutomationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TelcoAutomationLimitedTimeRetryPolicy(
+      TelcoAutomationLimitedTimeRetryPolicy&& rhs) noexcept
+      : TelcoAutomationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TelcoAutomationLimitedTimeRetryPolicy(
+      TelcoAutomationLimitedTimeRetryPolicy const& rhs) noexcept
+      : TelcoAutomationLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +164,9 @@ class TelcoAutomationLimitedTimeRetryPolicy : public TelcoAutomationRetryPolicy 
   using BaseType = TelcoAutomationRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<telcoautomation_v1_internal::TelcoAutomationRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      telcoautomation_v1_internal::TelcoAutomationRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,165 +188,237 @@ class TelcoAutomationConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>
-  ListOrchestrationClusters(google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest request);
+  ListOrchestrationClusters(
+      google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
-  GetOrchestrationCluster(google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request);
+  GetOrchestrationCluster(
+      google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-  CreateOrchestrationCluster(google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
+  CreateOrchestrationCluster(
+      google::cloud::telcoautomation::v1::
+          CreateOrchestrationClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateOrchestrationCluster(NoAwaitTag, google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
+      NoAwaitTag, google::cloud::telcoautomation::v1::
+                      CreateOrchestrationClusterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-  CreateOrchestrationCluster( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
+  CreateOrchestrationCluster(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteOrchestrationCluster(google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+  DeleteOrchestrationCluster(
+      google::cloud::telcoautomation::v1::
+          DeleteOrchestrationClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteOrchestrationCluster(NoAwaitTag, google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
+      NoAwaitTag, google::cloud::telcoautomation::v1::
+                      DeleteOrchestrationClusterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteOrchestrationCluster( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+  DeleteOrchestrationCluster(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
-  ListEdgeSlms(google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request);
+  virtual StreamRange<google::cloud::telcoautomation::v1::EdgeSlm> ListEdgeSlms(
+      google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request);
 
-  virtual StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
-  GetEdgeSlm(google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request);
+  virtual StatusOr<google::cloud::telcoautomation::v1::EdgeSlm> GetEdgeSlm(
+      google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request);
 
   virtual future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
-  CreateEdgeSlm(google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request);
+  CreateEdgeSlm(
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateEdgeSlm(NoAwaitTag, google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateEdgeSlm(
+      NoAwaitTag,
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request);
 
   virtual future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
-  CreateEdgeSlm( google::longrunning::Operation const& operation);
+  CreateEdgeSlm(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteEdgeSlm(google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+  DeleteEdgeSlm(
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteEdgeSlm(NoAwaitTag, google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
+      NoAwaitTag,
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request);
 
-  virtual future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteEdgeSlm( google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-  CreateBlueprint(google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request);
-
-  virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-  UpdateBlueprint(google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+  DeleteEdgeSlm(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-  GetBlueprint(google::cloud::telcoautomation::v1::GetBlueprintRequest const& request);
+  CreateBlueprint(
+      google::cloud::telcoautomation::v1::CreateBlueprintRequest const&
+          request);
 
-  virtual Status
-  DeleteBlueprint(google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request);
+  virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint>
+  UpdateBlueprint(
+      google::cloud::telcoautomation::v1::UpdateBlueprintRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint> GetBlueprint(
+      google::cloud::telcoautomation::v1::GetBlueprintRequest const& request);
+
+  virtual Status DeleteBlueprint(
+      google::cloud::telcoautomation::v1::DeleteBlueprintRequest const&
+          request);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-  ListBlueprints(google::cloud::telcoautomation::v1::ListBlueprintsRequest request);
+  ListBlueprints(
+      google::cloud::telcoautomation::v1::ListBlueprintsRequest request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-  ApproveBlueprint(google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request);
+  ApproveBlueprint(
+      google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-  ProposeBlueprint(google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request);
+  ProposeBlueprint(
+      google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint>
-  RejectBlueprint(google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request);
+  RejectBlueprint(
+      google::cloud::telcoautomation::v1::RejectBlueprintRequest const&
+          request);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-  ListBlueprintRevisions(google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest request);
+  ListBlueprintRevisions(
+      google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest
+          request);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::Blueprint>
-  SearchBlueprintRevisions(google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest request);
+  SearchBlueprintRevisions(
+      google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest
+          request);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::Deployment>
-  SearchDeploymentRevisions(google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest request);
+  SearchDeploymentRevisions(
+      google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest
+          request);
 
-  virtual StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
-  DiscardBlueprintChanges(google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request);
+  virtual StatusOr<
+      google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
+  DiscardBlueprintChanges(
+      google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
+          request);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>
-  ListPublicBlueprints(google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request);
+  ListPublicBlueprints(
+      google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
-  GetPublicBlueprint(google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request);
+  GetPublicBlueprint(
+      google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Deployment>
-  CreateDeployment(google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request);
+  CreateDeployment(
+      google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Deployment>
-  UpdateDeployment(google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request);
+  UpdateDeployment(
+      google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Deployment>
-  GetDeployment(google::cloud::telcoautomation::v1::GetDeploymentRequest const& request);
+  GetDeployment(
+      google::cloud::telcoautomation::v1::GetDeploymentRequest const& request);
 
-  virtual Status
-  RemoveDeployment(google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request);
+  virtual Status RemoveDeployment(
+      google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
+          request);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::Deployment>
-  ListDeployments(google::cloud::telcoautomation::v1::ListDeploymentsRequest request);
+  ListDeployments(
+      google::cloud::telcoautomation::v1::ListDeploymentsRequest request);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::Deployment>
-  ListDeploymentRevisions(google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest request);
+  ListDeploymentRevisions(
+      google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest
+          request);
 
-  virtual StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
-  DiscardDeploymentChanges(google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request);
+  virtual StatusOr<
+      google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
+  DiscardDeploymentChanges(
+      google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Deployment>
-  ApplyDeployment(google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request);
+  ApplyDeployment(
+      google::cloud::telcoautomation::v1::ApplyDeploymentRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
-  ComputeDeploymentStatus(google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request);
+  virtual StatusOr<
+      google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
+  ComputeDeploymentStatus(
+      google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Deployment>
-  RollbackDeployment(google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request);
+  RollbackDeployment(
+      google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-  GetHydratedDeployment(google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request);
+  GetHydratedDeployment(
+      google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
+          request);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>
-  ListHydratedDeployments(google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest request);
+  ListHydratedDeployments(
+      google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-  UpdateHydratedDeployment(google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request);
+  UpdateHydratedDeployment(
+      google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
-  ApplyHydratedDeployment(google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request);
+  ApplyHydratedDeployment(
+      google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `TelcoAutomationConnection`.
+ * A factory function to construct an object of type
+ * `TelcoAutomationConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of TelcoAutomationClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `TelcoAutomationConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `TelcoAutomationConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -348,8 +428,8 @@ class TelcoAutomationConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `TelcoAutomationConnection` created by
- * this function.
+ * @param options (optional) Configure the `TelcoAutomationConnection` created
+ * by this function.
  */
 std::shared_ptr<TelcoAutomationConnection> MakeTelcoAutomationConnection(
     Options options = {});

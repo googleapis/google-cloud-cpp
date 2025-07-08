@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudChannelServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_CHANNEL_SERVICE_AUTHORITY",
       "cloudchannel.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<channel_v1::CloudChannelServiceRetryPolicyOption>()) {
     options.set<channel_v1::CloudChannelServiceRetryPolicyOption>(
         channel_v1::CloudChannelServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<channel_v1::CloudChannelServiceBackoffPolicyOption>()) {
     options.set<channel_v1::CloudChannelServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<channel_v1::CloudChannelServicePollingPolicyOption>()) {
     options.set<channel_v1::CloudChannelServicePollingPolicyOption>(
         GenericPollingPolicy<
             channel_v1::CloudChannelServiceRetryPolicyOption::Type,
             channel_v1::CloudChannelServiceBackoffPolicyOption::Type>(
-            options.get<channel_v1::CloudChannelServiceRetryPolicyOption>()->clone(),
+            options.get<channel_v1::CloudChannelServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption>(
-        channel_v1::MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption>(
+            channel_v1::
+                MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy());
   }
 
   return options;

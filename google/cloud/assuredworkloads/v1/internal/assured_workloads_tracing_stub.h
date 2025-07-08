@@ -36,67 +36,71 @@ class AssuredWorkloadsServiceTracingStub : public AssuredWorkloadsServiceStub {
  public:
   ~AssuredWorkloadsServiceTracingStub() override = default;
 
-  explicit AssuredWorkloadsServiceTracingStub(std::shared_ptr<AssuredWorkloadsServiceStub> child);
+  explicit AssuredWorkloadsServiceTracingStub(
+      std::shared_ptr<AssuredWorkloadsServiceStub> child);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) override;
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
+      override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request)
+      override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse> RestrictAllowedResources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request) override;
+  StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::
+          RestrictAllowedResourcesRequest const& request) override;
 
   Status DeleteWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request)
+      override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request)
+      override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse> ListWorkloads(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) override;
+  StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
+  ListWorkloads(grpc::ClientContext& context, Options const& options,
+                google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&
+                    request) override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse> ListViolations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) override;
+  StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+  ListViolations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::ListViolationsRequest const& request)
+      override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::GetViolationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse> AcknowledgeViolation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request) override;
+  StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -113,7 +117,8 @@ class AssuredWorkloadsServiceTracingStub : public AssuredWorkloadsServiceStub {
 
  private:
   std::shared_ptr<AssuredWorkloadsServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -124,7 +129,8 @@ class AssuredWorkloadsServiceTracingStub : public AssuredWorkloadsServiceStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<AssuredWorkloadsServiceStub> MakeAssuredWorkloadsServiceTracingStub(
+std::shared_ptr<AssuredWorkloadsServiceStub>
+MakeAssuredWorkloadsServiceTracingStub(
     std::shared_ptr<AssuredWorkloadsServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

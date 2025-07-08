@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/retail/v2/analytics_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,31 +38,31 @@ class AnalyticsServiceStub {
  public:
   virtual ~AnalyticsServiceStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportAnalyticsMetrics(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportAnalyticsMetrics(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) = 0;
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -75,8 +75,11 @@ class AnalyticsServiceStub {
 class DefaultAnalyticsServiceStub : public AnalyticsServiceStub {
  public:
   DefaultAnalyticsServiceStub(
-      std::unique_ptr<google::cloud::retail::v2::AnalyticsService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::cloud::retail::v2::AnalyticsService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -84,21 +87,20 @@ class DefaultAnalyticsServiceStub : public AnalyticsServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -114,8 +116,10 @@ class DefaultAnalyticsServiceStub : public AnalyticsServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::retail::v2::AnalyticsService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::retail::v2::AnalyticsService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

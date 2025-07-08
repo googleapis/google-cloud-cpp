@@ -36,15 +36,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<TableServiceConnection> MakeTableServiceConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      TableServicePolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, TableServicePolicyOptionList>(
+      options, __func__);
   options = bigquerycontrol_v2_internal::TableServiceDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = bigquerycontrol_v2_internal::CreateDefaultTableServiceRestStub(
-      options);
+  auto stub =
+      bigquerycontrol_v2_internal::CreateDefaultTableServiceRestStub(options);
   return bigquerycontrol_v2_internal::MakeTableServiceTracingConnection(
       std::make_shared<
           bigquerycontrol_v2_internal::TableServiceRestConnectionImpl>(

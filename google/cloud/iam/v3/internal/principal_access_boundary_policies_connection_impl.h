@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_INTERNAL_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V3_INTERNAL_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_retry_traits.h"
 #include "google/cloud/iam/v3/internal/principal_access_boundary_policies_stub.h"
 #include "google/cloud/iam/v3/principal_access_boundary_policies_connection.h"
 #include "google/cloud/iam/v3/principal_access_boundary_policies_connection_idempotency_policy.h"
 #include "google/cloud/iam/v3/principal_access_boundary_policies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,56 +46,72 @@ class PrincipalAccessBoundaryPoliciesConnectionImpl
   ~PrincipalAccessBoundaryPoliciesConnectionImpl() override = default;
 
   PrincipalAccessBoundaryPoliciesConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_v3_internal::PrincipalAccessBoundaryPoliciesStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<iam_v3_internal::PrincipalAccessBoundaryPoliciesStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
+  CreatePrincipalAccessBoundaryPolicy(
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreatePrincipalAccessBoundaryPolicy(NoAwaitTag,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreatePrincipalAccessBoundaryPolicy(
+      NoAwaitTag,
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
   CreatePrincipalAccessBoundaryPolicy(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) override;
+  GetPrincipalAccessBoundaryPolicy(
+      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request)
+      override;
 
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
+  UpdatePrincipalAccessBoundaryPolicy(
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdatePrincipalAccessBoundaryPolicy(
+      NoAwaitTag,
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
   UpdatePrincipalAccessBoundaryPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
+  DeletePrincipalAccessBoundaryPolicy(
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeletePrincipalAccessBoundaryPolicy(NoAwaitTag,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeletePrincipalAccessBoundaryPolicy(
+      NoAwaitTag,
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::iam::v3::OperationMetadata>>
   DeletePrincipalAccessBoundaryPolicy(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request) override;
+  ListPrincipalAccessBoundaryPolicies(
+      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request)
+      override;
 
   StreamRange<google::iam::v3::PolicyBinding>
-  SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request) override;
+  SearchPrincipalAccessBoundaryPolicyBindings(
+      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

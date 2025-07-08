@@ -34,211 +34,264 @@ ConversationModelsTracingStub::ConversationModelsTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsTracingStub::AsyncCreateConversationModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "CreateConversationModel");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "CreateConversationModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateConversationModel(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateConversationModel(cq, context, std::move(options),
+                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingStub::CreateConversationModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "CreateConversationModel");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "CreateConversationModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateConversationModel(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateConversationModel(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::ConversationModel> ConversationModelsTracingStub::GetConversationModel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ConversationModel>
+ConversationModelsTracingStub::GetConversationModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "GetConversationModel");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.ConversationModels", "GetConversationModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConversationModel(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetConversationModel(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse> ConversationModelsTracingStub::ListConversationModels(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::ListConversationModelsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "ListConversationModels");
+StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
+ConversationModelsTracingStub::ListConversationModels(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::ListConversationModelsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "ListConversationModels");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConversationModels(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListConversationModels(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsTracingStub::AsyncDeleteConversationModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "DeleteConversationModel");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "DeleteConversationModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteConversationModel(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteConversationModel(cq, context, std::move(options),
+                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingStub::DeleteConversationModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "DeleteConversationModel");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "DeleteConversationModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteConversationModel(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteConversationModel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsTracingStub::AsyncDeployConversationModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "DeployConversationModel");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "DeployConversationModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeployConversationModel(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeployConversationModel(cq, context, std::move(options),
+                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingStub::DeployConversationModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "DeployConversationModel");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "DeployConversationModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeployConversationModel(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeployConversationModel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsTracingStub::AsyncUndeployConversationModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "UndeployConversationModel");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "UndeployConversationModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUndeployConversationModel(cq, context, std::move(options), request);
+  auto f = child_->AsyncUndeployConversationModel(cq, context,
+                                                  std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingStub::UndeployConversationModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "UndeployConversationModel");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "UndeployConversationModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UndeployConversationModel(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UndeployConversationModel(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation> ConversationModelsTracingStub::GetConversationModelEvaluation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "GetConversationModelEvaluation");
+StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
+ConversationModelsTracingStub::GetConversationModelEvaluation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "GetConversationModelEvaluation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConversationModelEvaluation(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetConversationModelEvaluation(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse> ConversationModelsTracingStub::ListConversationModelEvaluations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "ListConversationModelEvaluations");
+StatusOr<
+    google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
+ConversationModelsTracingStub::ListConversationModelEvaluations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::
+        ListConversationModelEvaluationsRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "ListConversationModelEvaluations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConversationModelEvaluations(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListConversationModelEvaluations(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsTracingStub::AsyncCreateConversationModelEvaluation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "CreateConversationModelEvaluation");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::
+        CreateConversationModelEvaluationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "CreateConversationModelEvaluation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateConversationModelEvaluation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateConversationModelEvaluation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingStub::CreateConversationModelEvaluation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "CreateConversationModelEvaluation");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::
+        CreateConversationModelEvaluationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "CreateConversationModelEvaluation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateConversationModelEvaluation(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateConversationModelEvaluation(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ConversationModelsTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ConversationModelsTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.ConversationModels", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> ConversationModelsTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+ConversationModelsTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.ConversationModels", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ConversationModelsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ConversationModelsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.ConversationModels", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> ConversationModelsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+ConversationModelsTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.ConversationModels", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -246,10 +299,10 @@ StatusOr<google::longrunning::Operation> ConversationModelsTracingStub::GetOpera
 }
 
 Status ConversationModelsTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.ConversationModels", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -266,8 +319,7 @@ ConversationModelsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -280,8 +332,8 @@ future<Status> ConversationModelsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

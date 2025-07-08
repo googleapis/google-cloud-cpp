@@ -38,90 +38,90 @@ class ConversationalSearchServiceAuth : public ConversationalSearchServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<ConversationalSearchServiceStub> child);
 
-  StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse> ConverseConversation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
+  ConverseConversation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+          request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::CreateConversationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CreateConversationRequest const&
+          request) override;
 
   Status DeleteConversation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+          request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+          request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetConversationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetConversationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse> ListConversations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListConversationsRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
+  ListConversations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::ListConversationsRequest const&
+          request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>>
   StreamAnswerQuery(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) override;
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetAnswerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetAnswerRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::CreateSessionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CreateSessionRequest const& request)
+      override;
 
   Status DeleteSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetSessionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetSessionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListSessionsRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
+  ListSessions(grpc::ClientContext& context, Options const& options,
+               google::cloud::discoveryengine::v1::ListSessionsRequest const&
+                   request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

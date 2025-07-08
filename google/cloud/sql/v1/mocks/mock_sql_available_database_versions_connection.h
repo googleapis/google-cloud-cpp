@@ -31,8 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `SqlAvailableDatabaseVersionsServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `SqlAvailableDatabaseVersionsServiceClient`. To do so,
- * construct an object of type `SqlAvailableDatabaseVersionsServiceClient` with an instance of this
+ * including errors, from an object of type
+ * `SqlAvailableDatabaseVersionsServiceClient`. To do so, construct an object of
+ * type `SqlAvailableDatabaseVersionsServiceClient` with an instance of this
  * class. Then use the Google Test framework functions to program the behavior
  * of this mock.
  *
@@ -42,7 +43,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSqlAvailableDatabaseVersionsServiceConnection : public sql_v1::SqlAvailableDatabaseVersionsServiceConnection {
+class MockSqlAvailableDatabaseVersionsServiceConnection
+    : public sql_v1::SqlAvailableDatabaseVersionsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 };

@@ -36,15 +36,15 @@ class ServiceControllerTracingConnection
   ~ServiceControllerTracingConnection() override = default;
 
   explicit ServiceControllerTracingConnection(
-    std::shared_ptr<servicecontrol_v2::ServiceControllerConnection> child);
+      std::shared_ptr<servicecontrol_v2::ServiceControllerConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::api::servicecontrol::v2::CheckResponse>
-  Check(google::api::servicecontrol::v2::CheckRequest const& request) override;
+  StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
+      google::api::servicecontrol::v2::CheckRequest const& request) override;
 
-  StatusOr<google::api::servicecontrol::v2::ReportResponse>
-  Report(google::api::servicecontrol::v2::ReportRequest const& request) override;
+  StatusOr<google::api::servicecontrol::v2::ReportResponse> Report(
+      google::api::servicecontrol::v2::ReportRequest const& request) override;
 
  private:
   std::shared_ptr<servicecontrol_v2::ServiceControllerConnection> child_;

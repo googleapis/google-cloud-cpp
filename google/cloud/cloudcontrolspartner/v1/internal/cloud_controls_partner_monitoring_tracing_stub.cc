@@ -28,26 +28,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-CloudControlsPartnerMonitoringTracingStub::CloudControlsPartnerMonitoringTracingStub(
-    std::shared_ptr<CloudControlsPartnerMonitoringStub> child)
+CloudControlsPartnerMonitoringTracingStub::
+    CloudControlsPartnerMonitoringTracingStub(
+        std::shared_ptr<CloudControlsPartnerMonitoringStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse> CloudControlsPartnerMonitoringTracingStub::ListViolations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerMonitoring", "ListViolations");
+StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
+CloudControlsPartnerMonitoringTracingStub::ListViolations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerMonitoring",
+      "ListViolations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListViolations(context, options, request));
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> CloudControlsPartnerMonitoringTracingStub::GetViolation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerMonitoring", "GetViolation");
+StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
+CloudControlsPartnerMonitoringTracingStub::GetViolation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.cloudcontrolspartner.v1.CloudControlsPartnerMonitoring",
+      "GetViolation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,10 +63,12 @@ StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> CloudControlsPartne
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<CloudControlsPartnerMonitoringStub> MakeCloudControlsPartnerMonitoringTracingStub(
+std::shared_ptr<CloudControlsPartnerMonitoringStub>
+MakeCloudControlsPartnerMonitoringTracingStub(
     std::shared_ptr<CloudControlsPartnerMonitoringStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<CloudControlsPartnerMonitoringTracingStub>(std::move(stub));
+  return std::make_shared<CloudControlsPartnerMonitoringTracingStub>(
+      std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

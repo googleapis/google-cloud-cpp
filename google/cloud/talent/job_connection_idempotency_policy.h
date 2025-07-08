@@ -26,8 +26,10 @@ namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use talent_v4::MakeDefaultJobServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::talent_v4::MakeDefaultJobServiceConnectionIdempotencyPolicy;
+/// @deprecated Use talent_v4::MakeDefaultJobServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::talent_v4::
+    MakeDefaultJobServiceConnectionIdempotencyPolicy;
 
 /// @deprecated Use talent_v4::JobServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::talent_v4::JobServiceConnectionIdempotencyPolicy;

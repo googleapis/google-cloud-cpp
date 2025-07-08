@@ -37,21 +37,21 @@ class TagHoldsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TagHoldsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateTagHold(google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request);
+  virtual google::cloud::Idempotency CreateTagHold(
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request);
+  virtual google::cloud::Idempotency DeleteTagHold(
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTagHolds(google::cloud::resourcemanager::v3::ListTagHoldsRequest request);
+  virtual google::cloud::Idempotency ListTagHolds(
+      google::cloud::resourcemanager::v3::ListTagHoldsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<TagHoldsConnectionIdempotencyPolicy>
-    MakeDefaultTagHoldsConnectionIdempotencyPolicy();
+MakeDefaultTagHoldsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_v3

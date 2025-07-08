@@ -17,17 +17,17 @@
 // source: google/cloud/servicehealth/v1/event_service.proto
 
 #include "google/cloud/servicehealth/v1/service_health_connection.h"
+#include "google/cloud/servicehealth/v1/internal/service_health_connection_impl.h"
+#include "google/cloud/servicehealth/v1/internal/service_health_option_defaults.h"
+#include "google/cloud/servicehealth/v1/internal/service_health_stub_factory.h"
+#include "google/cloud/servicehealth/v1/internal/service_health_tracing_connection.h"
+#include "google/cloud/servicehealth/v1/service_health_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/servicehealth/v1/internal/service_health_connection_impl.h"
-#include "google/cloud/servicehealth/v1/internal/service_health_option_defaults.h"
-#include "google/cloud/servicehealth/v1/internal/service_health_stub_factory.h"
-#include "google/cloud/servicehealth/v1/internal/service_health_tracing_connection.h"
-#include "google/cloud/servicehealth/v1/service_health_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceHealthConnection::~ServiceHealthConnection() = default;
 
-StreamRange<google::cloud::servicehealth::v1::Event> ServiceHealthConnection::ListEvents(
-    google::cloud::servicehealth::v1::ListEventsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::servicehealth::v1::Event>
+ServiceHealthConnection::ListEvents(
+    google::cloud::servicehealth::v1::
+        ListEventsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicehealth::v1::Event>>();
 }
@@ -50,8 +52,10 @@ ServiceHealthConnection::GetEvent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::servicehealth::v1::OrganizationEvent> ServiceHealthConnection::ListOrganizationEvents(
-    google::cloud::servicehealth::v1::ListOrganizationEventsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>
+ServiceHealthConnection::ListOrganizationEvents(
+    google::cloud::servicehealth::v1::
+        ListOrganizationEventsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>>();
 }
@@ -62,8 +66,10 @@ ServiceHealthConnection::GetOrganizationEvent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::servicehealth::v1::OrganizationImpact> ServiceHealthConnection::ListOrganizationImpacts(
-    google::cloud::servicehealth::v1::ListOrganizationImpactsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>
+ServiceHealthConnection::ListOrganizationImpacts(
+    google::cloud::servicehealth::v1::
+        ListOrganizationImpactsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>>();
 }
@@ -74,8 +80,10 @@ ServiceHealthConnection::GetOrganizationImpact(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> ServiceHealthConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ServiceHealthConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -89,17 +97,18 @@ ServiceHealthConnection::GetLocation(
 std::shared_ptr<ServiceHealthConnection> MakeServiceHealthConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ServiceHealthPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ServiceHealthPolicyOptionList>(options,
+                                                                __func__);
   options = servicehealth_v1_internal::ServiceHealthDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = servicehealth_v1_internal::CreateDefaultServiceHealthStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return servicehealth_v1_internal::MakeServiceHealthTracingConnection(
       std::make_shared<servicehealth_v1_internal::ServiceHealthConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

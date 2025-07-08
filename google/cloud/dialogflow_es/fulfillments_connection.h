@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_FULFILLMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_FULFILLMENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/fulfillments_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/fulfillments_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -53,7 +53,8 @@ class FulfillmentsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FulfillmentsLimitedErrorCountRetryPolicy : public FulfillmentsRetryPolicy {
+class FulfillmentsLimitedErrorCountRetryPolicy
+    : public FulfillmentsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,14 @@ class FulfillmentsLimitedErrorCountRetryPolicy : public FulfillmentsRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit FulfillmentsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   FulfillmentsLimitedErrorCountRetryPolicy(
       FulfillmentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : FulfillmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FulfillmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FulfillmentsLimitedErrorCountRetryPolicy(
       FulfillmentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : FulfillmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FulfillmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +91,9 @@ class FulfillmentsLimitedErrorCountRetryPolicy : public FulfillmentsRetryPolicy 
   using BaseType = FulfillmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::FulfillmentsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::FulfillmentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +131,14 @@ class FulfillmentsLimitedTimeRetryPolicy : public FulfillmentsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit FulfillmentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  FulfillmentsLimitedTimeRetryPolicy(FulfillmentsLimitedTimeRetryPolicy&& rhs) noexcept
-    : FulfillmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  FulfillmentsLimitedTimeRetryPolicy(FulfillmentsLimitedTimeRetryPolicy const& rhs) noexcept
-    : FulfillmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FulfillmentsLimitedTimeRetryPolicy(
+      FulfillmentsLimitedTimeRetryPolicy&& rhs) noexcept
+      : FulfillmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FulfillmentsLimitedTimeRetryPolicy(
+      FulfillmentsLimitedTimeRetryPolicy const& rhs) noexcept
+      : FulfillmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,7 +160,9 @@ class FulfillmentsLimitedTimeRetryPolicy : public FulfillmentsRetryPolicy {
   using BaseType = FulfillmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::FulfillmentsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::FulfillmentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,26 +183,27 @@ class FulfillmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-  GetFulfillment(google::cloud::dialogflow::v2::GetFulfillmentRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
+      google::cloud::dialogflow::v2::GetFulfillmentRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-  UpdateFulfillment(google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request);
+  UpdateFulfillment(
+      google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

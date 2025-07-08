@@ -36,63 +36,81 @@ class NetworkAttachmentsTracingConnection
   ~NetworkAttachmentsTracingConnection() override = default;
 
   explicit NetworkAttachmentsTracingConnection(
-    std::shared_ptr<compute_network_attachments_v1::NetworkAttachmentsConnection> child);
+      std::shared_ptr<
+          compute_network_attachments_v1::NetworkAttachmentsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
-  AggregatedListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::AggregatedListNetworkAttachmentsRequest request) override;
+  StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>
+  AggregatedListNetworkAttachments(
+      google::cloud::cpp::compute::network_attachments::v1::
+          AggregatedListNetworkAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request) override;
+  DeleteNetworkAttachment(
+      google::cloud::cpp::compute::network_attachments::v1::
+          DeleteNetworkAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNetworkAttachment(NoAwaitTag,
-      google::cloud::cpp::compute::network_attachments::v1::DeleteNetworkAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
+      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                      DeleteNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::GetNetworkAttachmentRequest const& request) override;
+  GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
+                           GetNetworkAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::network_attachments::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request) override;
+  InsertNetworkAttachment(
+      google::cloud::cpp::compute::network_attachments::v1::
+          InsertNetworkAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNetworkAttachment(NoAwaitTag,
-      google::cloud::cpp::compute::network_attachments::v1::InsertNetworkAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
+      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                      InsertNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::ListNetworkAttachmentsRequest request) override;
+  ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
+                             ListNetworkAttachmentsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request) override;
+  PatchNetworkAttachment(
+      google::cloud::cpp::compute::network_attachments::v1::
+          PatchNetworkAttachmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchNetworkAttachment(NoAwaitTag,
-      google::cloud::cpp::compute::network_attachments::v1::PatchNetworkAttachmentRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
+      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                      PatchNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkAttachment(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::network_attachments::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::network_attachments::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::network_attachments::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_network_attachments_v1::NetworkAttachmentsConnection> child_;
+  std::shared_ptr<compute_network_attachments_v1::NetworkAttachmentsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -105,7 +123,9 @@ class NetworkAttachmentsTracingConnection
  */
 std::shared_ptr<compute_network_attachments_v1::NetworkAttachmentsConnection>
 MakeNetworkAttachmentsTracingConnection(
-    std::shared_ptr<compute_network_attachments_v1::NetworkAttachmentsConnection> conn);
+    std::shared_ptr<
+        compute_network_attachments_v1::NetworkAttachmentsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_network_attachments_v1_internal

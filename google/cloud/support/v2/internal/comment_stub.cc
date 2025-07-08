@@ -32,28 +32,26 @@ CommentServiceStub::~CommentServiceStub() = default;
 
 StatusOr<google::cloud::support::v2::ListCommentsResponse>
 DefaultCommentServiceStub::ListComments(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::support::v2::ListCommentsRequest const& request) {
-    google::cloud::support::v2::ListCommentsResponse response;
-    auto status =
-        grpc_stub_->ListComments(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::support::v2::ListCommentsRequest const& request) {
+  google::cloud::support::v2::ListCommentsResponse response;
+  auto status = grpc_stub_->ListComments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::support::v2::Comment>
 DefaultCommentServiceStub::CreateComment(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::support::v2::CreateCommentRequest const& request) {
-    google::cloud::support::v2::Comment response;
-    auto status =
-        grpc_stub_->CreateComment(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::support::v2::CreateCommentRequest const& request) {
+  google::cloud::support::v2::Comment response;
+  auto status = grpc_stub_->CreateComment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

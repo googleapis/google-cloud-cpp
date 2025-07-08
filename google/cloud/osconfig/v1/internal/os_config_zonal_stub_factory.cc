@@ -17,17 +17,17 @@
 // source: google/cloud/osconfig/v1/osconfig_zonal_service.proto
 
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_stub_factory.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_auth_decorator.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_logging_decorator.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_metadata_decorator.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_stub.h"
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_auth_decorator.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_logging_decorator.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_metadata_decorator.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_stub.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_tracing_stub.h"
 #include <google/cloud/osconfig/v1/osconfig_zonal_service.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -37,30 +37,28 @@ namespace cloud {
 namespace osconfig_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<OsConfigZonalServiceStub>
-CreateDefaultOsConfigZonalServiceStub(
+std::shared_ptr<OsConfigZonalServiceStub> CreateDefaultOsConfigZonalServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::osconfig::v1::OsConfigZonalService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::osconfig::v1::OsConfigZonalService::NewStub(channel);
   std::shared_ptr<OsConfigZonalServiceStub> stub =
-    std::make_shared<DefaultOsConfigZonalServiceStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultOsConfigZonalServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<OsConfigZonalServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<OsConfigZonalServiceAuth>(std::move(auth),
+                                                      std::move(stub));
   }
   stub = std::make_shared<OsConfigZonalServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<OsConfigZonalServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

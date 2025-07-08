@@ -33,16 +33,20 @@ ConversationDatasetsStub::~ConversationDatasetsStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationDatasetsStub::AsyncCreateConversationDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::v2::CreateConversationDatasetRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateConversationDataset(context, request, cq);
       },
       request, std::move(context));
@@ -50,56 +54,62 @@ DefaultConversationDatasetsStub::AsyncCreateConversationDataset(
 
 StatusOr<google::longrunning::Operation>
 DefaultConversationDatasetsStub::CreateConversationDataset(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateConversationDataset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateConversationDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 DefaultConversationDatasetsStub::GetConversationDataset(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dialogflow::v2::GetConversationDatasetRequest const& request) {
-    google::cloud::dialogflow::v2::ConversationDataset response;
-    auto status =
-        grpc_stub_->GetConversationDataset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
+        request) {
+  google::cloud::dialogflow::v2::ConversationDataset response;
+  auto status =
+      grpc_stub_->GetConversationDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
 DefaultConversationDatasetsStub::ListConversationDatasets(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dialogflow::v2::ListConversationDatasetsRequest const& request) {
-    google::cloud::dialogflow::v2::ListConversationDatasetsResponse response;
-    auto status =
-        grpc_stub_->ListConversationDatasets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
+        request) {
+  google::cloud::dialogflow::v2::ListConversationDatasetsResponse response;
+  auto status =
+      grpc_stub_->ListConversationDatasets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationDatasetsStub::AsyncDeleteConversationDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::v2::DeleteConversationDatasetRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteConversationDataset(context, request, cq);
       },
       request, std::move(context));
@@ -107,29 +117,32 @@ DefaultConversationDatasetsStub::AsyncDeleteConversationDataset(
 
 StatusOr<google::longrunning::Operation>
 DefaultConversationDatasetsStub::DeleteConversationDataset(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteConversationDataset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteConversationDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultConversationDatasetsStub::AsyncImportConversationData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dialogflow::v2::ImportConversationDataRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dialogflow::v2::ImportConversationDataRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dialogflow::v2::ImportConversationDataRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dialogflow::v2::ImportConversationDataRequest const& request,
+             google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncImportConversationData(context, request, cq);
       },
@@ -138,81 +151,75 @@ DefaultConversationDatasetsStub::AsyncImportConversationData(
 
 StatusOr<google::longrunning::Operation>
 DefaultConversationDatasetsStub::ImportConversationData(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dialogflow::v2::ImportConversationDataRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ImportConversationData(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ImportConversationData(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConversationDatasetsStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultConversationDatasetsStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultConversationDatasetsStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultConversationDatasetsStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultConversationDatasetsStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultConversationDatasetsStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -241,13 +248,14 @@ future<Status> DefaultConversationDatasetsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

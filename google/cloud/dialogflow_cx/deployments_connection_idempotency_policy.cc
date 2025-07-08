@@ -26,43 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DeploymentsConnectionIdempotencyPolicy::~DeploymentsConnectionIdempotencyPolicy() = default;
+DeploymentsConnectionIdempotencyPolicy::
+    ~DeploymentsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DeploymentsConnectionIdempotencyPolicy>
 DeploymentsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DeploymentsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DeploymentsConnectionIdempotencyPolicy::ListDeployments(google::cloud::dialogflow::cx::v3::ListDeploymentsRequest) {  // NOLINT
+Idempotency DeploymentsConnectionIdempotencyPolicy::ListDeployments(
+    google::cloud::dialogflow::cx::v3::ListDeploymentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentsConnectionIdempotencyPolicy::GetDeployment(google::cloud::dialogflow::cx::v3::GetDeploymentRequest const&) {
+Idempotency DeploymentsConnectionIdempotencyPolicy::GetDeployment(
+    google::cloud::dialogflow::cx::v3::GetDeploymentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DeploymentsConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency DeploymentsConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DeploymentsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DeploymentsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DeploymentsConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DeploymentsConnectionIdempotencyPolicy>
-    MakeDefaultDeploymentsConnectionIdempotencyPolicy() {
+MakeDefaultDeploymentsConnectionIdempotencyPolicy() {
   return std::make_unique<DeploymentsConnectionIdempotencyPolicy>();
 }
 

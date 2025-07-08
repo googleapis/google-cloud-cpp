@@ -30,67 +30,72 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class IntentsTracingConnection
-    : public dialogflow_cx::IntentsConnection {
+class IntentsTracingConnection : public dialogflow_cx::IntentsConnection {
  public:
   ~IntentsTracingConnection() override = default;
 
   explicit IntentsTracingConnection(
-    std::shared_ptr<dialogflow_cx::IntentsConnection> child);
+      std::shared_ptr<dialogflow_cx::IntentsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Intent>
-  ListIntents(google::cloud::dialogflow::cx::v3::ListIntentsRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
+      google::cloud::dialogflow::cx::v3::ListIntentsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Intent>
-  GetIntent(google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Intent> GetIntent(
+      google::cloud::dialogflow::cx::v3::GetIntentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Intent>
-  CreateIntent(google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Intent> CreateIntent(
+      google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Intent>
-  UpdateIntent(google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
+      google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request)
+      override;
 
-  Status
-  DeleteIntent(google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request) override;
-
-  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
-  ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ImportIntents(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) override;
+  Status DeleteIntent(
+      google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
-  ImportIntents(
-      google::longrunning::Operation const& operation) override;
+  ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
+                    request) override;
+
+  StatusOr<google::longrunning::Operation> ImportIntents(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+  ImportIntents(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
-  ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) override;
+  ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportIntents(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportIntents(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
-  ExportIntents(
-      google::longrunning::Operation const& operation) override;
+  ExportIntents(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::IntentsConnection> child_;
@@ -104,8 +109,7 @@ class IntentsTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<dialogflow_cx::IntentsConnection>
-MakeIntentsTracingConnection(
+std::shared_ptr<dialogflow_cx::IntentsConnection> MakeIntentsTracingConnection(
     std::shared_ptr<dialogflow_cx::IntentsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

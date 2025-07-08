@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATA_SCAN_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_DATA_SCAN_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/data_scan_connection.h"
 #include "google/cloud/dataplex/v1/data_scan_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/data_scan_options.h"
 #include "google/cloud/dataplex/v1/internal/data_scan_retry_traits.h"
 #include "google/cloud/dataplex/v1/internal/data_scan_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,89 +46,95 @@ class DataScanServiceConnectionImpl
   ~DataScanServiceConnectionImpl() override = default;
 
   DataScanServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dataplex_v1_internal::DataScanServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dataplex_v1_internal::DataScanServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  CreateDataScan(google::cloud::dataplex::v1::CreateDataScanRequest const& request) override;
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDataScan(NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataScanRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  CreateDataScan(
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  UpdateDataScan(google::cloud::dataplex::v1::UpdateDataScanRequest const& request) override;
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateDataScan(NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataScanRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  UpdateDataScan(
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan(google::cloud::dataplex::v1::DeleteDataScanRequest const& request) override;
+  DeleteDataScan(google::cloud::dataplex::v1::DeleteDataScanRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteDataScan(NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataScanRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan(
-      google::longrunning::Operation const& operation) override;
+  DeleteDataScan(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::dataplex::v1::DataScan>
-  GetDataScan(google::cloud::dataplex::v1::GetDataScanRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
+      google::cloud::dataplex::v1::GetDataScanRequest const& request) override;
 
-  StreamRange<google::cloud::dataplex::v1::DataScan>
-  ListDataScans(google::cloud::dataplex::v1::ListDataScansRequest request) override;
+  StreamRange<google::cloud::dataplex::v1::DataScan> ListDataScans(
+      google::cloud::dataplex::v1::ListDataScansRequest request) override;
 
-  StatusOr<google::cloud::dataplex::v1::RunDataScanResponse>
-  RunDataScan(google::cloud::dataplex::v1::RunDataScanRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> RunDataScan(
+      google::cloud::dataplex::v1::RunDataScanRequest const& request) override;
 
-  StatusOr<google::cloud::dataplex::v1::DataScanJob>
-  GetDataScanJob(google::cloud::dataplex::v1::GetDataScanJobRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
+      google::cloud::dataplex::v1::GetDataScanJobRequest const& request)
+      override;
 
-  StreamRange<google::cloud::dataplex::v1::DataScanJob>
-  ListDataScanJobs(google::cloud::dataplex::v1::ListDataScanJobsRequest request) override;
+  StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
+      google::cloud::dataplex::v1::ListDataScanJobsRequest request) override;
 
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
-  GenerateDataQualityRules(google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const& request) override;
+  GenerateDataQualityRules(
+      google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

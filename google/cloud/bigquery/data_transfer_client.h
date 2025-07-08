@@ -25,12 +25,13 @@
 namespace google {
 namespace cloud {
 /// @deprecated This namespace exists for backwards compatibility. Use the
-///     types defined in bigquery_datatransfer_v1 instead of the aliases defined in
-///     this namespace.
+///     types defined in bigquery_datatransfer_v1 instead of the aliases defined
+///     in this namespace.
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceClient directly.
+/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceClient
+/// directly.
 using ::google::cloud::bigquery_datatransfer_v1::DataTransferServiceClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_EVENT_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_EVENT_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/talent/v4/event_connection.h"
 #include "google/cloud/talent/v4/event_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,8 +64,7 @@ struct EventServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-talent-options
  */
 using EventServicePolicyOptionList =
-    OptionList<EventServiceRetryPolicyOption,
-               EventServiceBackoffPolicyOption,
+    OptionList<EventServiceRetryPolicyOption, EventServiceBackoffPolicyOption,
                EventServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

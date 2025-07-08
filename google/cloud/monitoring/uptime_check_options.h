@@ -28,11 +28,14 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_v3::UptimeCheckServiceBackoffPolicyOption directly.
+/// @deprecated Use monitoring_v3::UptimeCheckServiceBackoffPolicyOption
+/// directly.
 using ::google::cloud::monitoring_v3::UptimeCheckServiceBackoffPolicyOption;
 
-/// @deprecated Use monitoring_v3::UptimeCheckServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::monitoring_v3::UptimeCheckServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// monitoring_v3::UptimeCheckServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::monitoring_v3::
+    UptimeCheckServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use monitoring_v3::UptimeCheckServicePolicyOptionList directly.
 using ::google::cloud::monitoring_v3::UptimeCheckServicePolicyOptionList;

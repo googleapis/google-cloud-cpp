@@ -35,28 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GkeHubDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_GKE_HUB_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_GKE_HUB_AUTHORITY",
-      "gkehub.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_GKE_HUB_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_GKE_HUB_AUTHORITY", "gkehub.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<gkehub_v1::GkeHubRetryPolicyOption>()) {
     options.set<gkehub_v1::GkeHubRetryPolicyOption>(
-        gkehub_v1::GkeHubLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        gkehub_v1::GkeHubLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<gkehub_v1::GkeHubBackoffPolicyOption>()) {
     options.set<gkehub_v1::GkeHubBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<gkehub_v1::GkeHubPollingPolicyOption>()) {
     options.set<gkehub_v1::GkeHubPollingPolicyOption>(
-        GenericPollingPolicy<
-            gkehub_v1::GkeHubRetryPolicyOption::Type,
-            gkehub_v1::GkeHubBackoffPolicyOption::Type>(
+        GenericPollingPolicy<gkehub_v1::GkeHubRetryPolicyOption::Type,
+                             gkehub_v1::GkeHubBackoffPolicyOption::Type>(
             options.get<gkehub_v1::GkeHubRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>()) {
     options.set<gkehub_v1::GkeHubConnectionIdempotencyPolicyOption>(

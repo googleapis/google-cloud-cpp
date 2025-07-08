@@ -34,7 +34,8 @@ ServiceUsageTracingConnection::ServiceUsageTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-ServiceUsageTracingConnection::EnableService(google::api::serviceusage::v1::EnableServiceRequest const& request) {
+ServiceUsageTracingConnection::EnableService(
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::EnableService");
   internal::OTelScope scope(span);
@@ -43,12 +44,12 @@ ServiceUsageTracingConnection::EnableService(google::api::serviceusage::v1::Enab
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageTracingConnection::EnableService(
-    NoAwaitTag, google::api::serviceusage::v1::EnableServiceRequest const& request) {
+    NoAwaitTag,
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::EnableService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->EnableService(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->EnableService(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
@@ -57,12 +58,12 @@ ServiceUsageTracingConnection::EnableService(
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::EnableService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->EnableService(operation));
+  return internal::EndSpan(std::move(span), child_->EnableService(operation));
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-ServiceUsageTracingConnection::DisableService(google::api::serviceusage::v1::DisableServiceRequest const& request) {
+ServiceUsageTracingConnection::DisableService(
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::DisableService");
   internal::OTelScope scope(span);
@@ -71,12 +72,13 @@ ServiceUsageTracingConnection::DisableService(google::api::serviceusage::v1::Dis
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageTracingConnection::DisableService(
-    NoAwaitTag, google::api::serviceusage::v1::DisableServiceRequest const& request) {
+    NoAwaitTag,
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::DisableService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DisableService(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DisableService(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
@@ -85,42 +87,48 @@ ServiceUsageTracingConnection::DisableService(
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::DisableService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DisableService(operation));
+  return internal::EndSpan(std::move(span), child_->DisableService(operation));
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
-ServiceUsageTracingConnection::GetService(google::api::serviceusage::v1::GetServiceRequest const& request) {
-  auto span = internal::MakeSpan("serviceusage_v1::ServiceUsageConnection::GetService");
+ServiceUsageTracingConnection::GetService(
+    google::api::serviceusage::v1::GetServiceRequest const& request) {
+  auto span =
+      internal::MakeSpan("serviceusage_v1::ServiceUsageConnection::GetService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetService(request));
 }
 
 StreamRange<google::api::serviceusage::v1::Service>
-ServiceUsageTracingConnection::ListServices(google::api::serviceusage::v1::ListServicesRequest request) {
-  auto span = internal::MakeSpan("serviceusage_v1::ServiceUsageConnection::ListServices");
+ServiceUsageTracingConnection::ListServices(
+    google::api::serviceusage::v1::ListServicesRequest request) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::ListServices");
   internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
-  return internal::MakeTracedStreamRange<google::api::serviceusage::v1::Service>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::api::serviceusage::v1::Service>(std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-ServiceUsageTracingConnection::BatchEnableServices(google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+ServiceUsageTracingConnection::BatchEnableServices(
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::BatchEnableServices");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchEnableServices(request));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchEnableServices(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageTracingConnection::BatchEnableServices(
-    NoAwaitTag, google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+    NoAwaitTag,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::BatchEnableServices");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchEnableServices(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchEnableServices(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
@@ -130,28 +138,34 @@ ServiceUsageTracingConnection::BatchEnableServices(
       "serviceusage_v1::ServiceUsageConnection::BatchEnableServices");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->BatchEnableServices(operation));
+                           child_->BatchEnableServices(operation));
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-ServiceUsageTracingConnection::BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
-  auto span = internal::MakeSpan("serviceusage_v1::ServiceUsageConnection::BatchGetServices");
+ServiceUsageTracingConnection::BatchGetServices(
+    google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::BatchGetServices");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->BatchGetServices(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ServiceUsageTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("serviceusage_v1::ServiceUsageConnection::ListOperations");
+ServiceUsageTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ServiceUsageTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("serviceusage_v1::ServiceUsageConnection::GetOperation");
+ServiceUsageTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

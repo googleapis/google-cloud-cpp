@@ -32,8 +32,7 @@ TenantServiceAuth::TenantServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::CreateTenant(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +40,7 @@ StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::CreateTenant(
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::GetTenant(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetTenantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +48,7 @@ StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::GetTenant(
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::UpdateTenant(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,17 +56,16 @@ StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::UpdateTenant(
 }
 
 Status TenantServiceAuth::DeleteTenant(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTenant(context, options, request);
 }
 
-StatusOr<google::cloud::talent::v4::ListTenantsResponse> TenantServiceAuth::ListTenants(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::talent::v4::ListTenantsResponse>
+TenantServiceAuth::ListTenants(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +73,7 @@ StatusOr<google::cloud::talent::v4::ListTenantsResponse> TenantServiceAuth::List
 }
 
 StatusOr<google::longrunning::Operation> TenantServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

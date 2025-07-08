@@ -33,16 +33,18 @@ DataTaxonomyServiceStub::~DataTaxonomyServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncCreateDataTaxonomy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateDataTaxonomyRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateDataTaxonomyRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateDataTaxonomy(context, request, cq);
       },
       request, std::move(context));
@@ -50,30 +52,30 @@ DefaultDataTaxonomyServiceStub::AsyncCreateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::CreateDataTaxonomy(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateDataTaxonomy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDataTaxonomy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncUpdateDataTaxonomy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateDataTaxonomyRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateDataTaxonomy(context, request, cq);
       },
       request, std::move(context));
@@ -81,30 +83,30 @@ DefaultDataTaxonomyServiceStub::AsyncUpdateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::UpdateDataTaxonomy(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateDataTaxonomy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDataTaxonomy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncDeleteDataTaxonomy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteDataTaxonomyRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteDataTaxonomy(context, request, cq);
       },
       request, std::move(context));
@@ -112,174 +114,189 @@ DefaultDataTaxonomyServiceStub::AsyncDeleteDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::DeleteDataTaxonomy(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteDataTaxonomy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataTaxonomy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataTaxonomiesResponse>
 DefaultDataTaxonomyServiceStub::ListDataTaxonomies(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListDataTaxonomiesRequest const& request) {
-    google::cloud::dataplex::v1::ListDataTaxonomiesResponse response;
-    auto status =
-        grpc_stub_->ListDataTaxonomies(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListDataTaxonomiesRequest const& request) {
+  google::cloud::dataplex::v1::ListDataTaxonomiesResponse response;
+  auto status = grpc_stub_->ListDataTaxonomies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::DataTaxonomy>
 DefaultDataTaxonomyServiceStub::GetDataTaxonomy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request) {
-    google::cloud::dataplex::v1::DataTaxonomy response;
-    auto status =
-        grpc_stub_->GetDataTaxonomy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request) {
+  google::cloud::dataplex::v1::DataTaxonomy response;
+  auto status = grpc_stub_->GetDataTaxonomy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncCreateDataAttributeBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateDataAttributeBindingRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncCreateDataAttributeBinding(context, request, cq);
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDataAttributeBinding(context, request,
+                                                           cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::CreateDataAttributeBinding(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateDataAttributeBinding(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateDataAttributeBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncUpdateDataAttributeBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncUpdateDataAttributeBinding(context, request, cq);
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateDataAttributeBinding(context, request,
+                                                           cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::UpdateDataAttributeBinding(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateDataAttributeBinding(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateDataAttributeBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncDeleteDataAttributeBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteDataAttributeBinding(context, request, cq);
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDataAttributeBinding(context, request,
+                                                           cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::DeleteDataAttributeBinding(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteDataAttributeBinding(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteDataAttributeBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributeBindingsResponse>
 DefaultDataTaxonomyServiceStub::ListDataAttributeBindings(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListDataAttributeBindingsRequest const& request) {
-    google::cloud::dataplex::v1::ListDataAttributeBindingsResponse response;
-    auto status =
-        grpc_stub_->ListDataAttributeBindings(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListDataAttributeBindingsRequest const&
+        request) {
+  google::cloud::dataplex::v1::ListDataAttributeBindingsResponse response;
+  auto status =
+      grpc_stub_->ListDataAttributeBindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
 DefaultDataTaxonomyServiceStub::GetDataAttributeBinding(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetDataAttributeBindingRequest const& request) {
-    google::cloud::dataplex::v1::DataAttributeBinding response;
-    auto status =
-        grpc_stub_->GetDataAttributeBinding(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&
+        request) {
+  google::cloud::dataplex::v1::DataAttributeBinding response;
+  auto status =
+      grpc_stub_->GetDataAttributeBinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncCreateDataAttribute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateDataAttributeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateDataAttributeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
+             google::cloud::dataplex::v1::CreateDataAttributeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateDataAttribute(context, request, cq);
       },
@@ -288,29 +305,29 @@ DefaultDataTaxonomyServiceStub::AsyncCreateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::CreateDataAttribute(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateDataAttribute(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDataAttribute(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncUpdateDataAttribute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateDataAttributeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateDataAttributeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
+             google::cloud::dataplex::v1::UpdateDataAttributeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateDataAttribute(context, request, cq);
       },
@@ -319,29 +336,29 @@ DefaultDataTaxonomyServiceStub::AsyncUpdateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::UpdateDataAttribute(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateDataAttribute(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDataAttribute(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataTaxonomyServiceStub::AsyncDeleteDataAttribute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteDataAttributeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteDataAttributeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
+             google::cloud::dataplex::v1::DeleteDataAttributeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteDataAttribute(context, request, cq);
       },
@@ -350,159 +367,143 @@ DefaultDataTaxonomyServiceStub::AsyncDeleteDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::DeleteDataAttribute(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteDataAttribute(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataAttribute(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributesResponse>
 DefaultDataTaxonomyServiceStub::ListDataAttributes(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListDataAttributesRequest const& request) {
-    google::cloud::dataplex::v1::ListDataAttributesResponse response;
-    auto status =
-        grpc_stub_->ListDataAttributes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListDataAttributesRequest const& request) {
+  google::cloud::dataplex::v1::ListDataAttributesResponse response;
+  auto status = grpc_stub_->ListDataAttributes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::DataAttribute>
 DefaultDataTaxonomyServiceStub::GetDataAttribute(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetDataAttributeRequest const& request) {
-    google::cloud::dataplex::v1::DataAttribute response;
-    auto status =
-        grpc_stub_->GetDataAttribute(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetDataAttributeRequest const& request) {
+  google::cloud::dataplex::v1::DataAttribute response;
+  auto status = grpc_stub_->GetDataAttribute(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDataTaxonomyServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultDataTaxonomyServiceStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultDataTaxonomyServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultDataTaxonomyServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultDataTaxonomyServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultDataTaxonomyServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDataTaxonomyServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDataTaxonomyServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataTaxonomyServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDataTaxonomyServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataTaxonomyServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultDataTaxonomyServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataTaxonomyServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -531,13 +532,14 @@ future<Status> DefaultDataTaxonomyServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

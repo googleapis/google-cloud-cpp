@@ -17,17 +17,17 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/v1/internal/cloud_shell_stub_factory.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_auth_decorator.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_logging_decorator.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_metadata_decorator.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
+#include "google/cloud/shell/v1/internal/cloud_shell_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_auth_decorator.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_logging_decorator.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_metadata_decorator.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
-#include "google/cloud/shell/v1/internal/cloud_shell_tracing_stub.h"
 #include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -37,30 +37,28 @@ namespace cloud {
 namespace shell_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CloudShellServiceStub>
-CreateDefaultCloudShellServiceStub(
+std::shared_ptr<CloudShellServiceStub> CreateDefaultCloudShellServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::shell::v1::CloudShellService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::shell::v1::CloudShellService::NewStub(channel);
   std::shared_ptr<CloudShellServiceStub> stub =
-    std::make_shared<DefaultCloudShellServiceStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultCloudShellServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<CloudShellServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<CloudShellServiceAuth>(std::move(auth),
+                                                   std::move(stub));
   }
   stub = std::make_shared<CloudShellServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudShellServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

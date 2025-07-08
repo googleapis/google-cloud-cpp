@@ -44,21 +44,20 @@ EventarcMetadata::EventarcMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::eventarc::v1::Trigger>
-EventarcMetadata::GetTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::eventarc::v1::Trigger> EventarcMetadata::GetTrigger(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetTriggerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTrigger(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListTriggersResponse>
 EventarcMetadata::ListTriggers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListTriggersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTriggers(context, options, request);
 }
 
@@ -68,17 +67,17 @@ EventarcMetadata::AsyncCreateTrigger(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateTrigger(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateTrigger(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::CreateTrigger(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::CreateTrigger(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTrigger(context, options, request);
 }
 
@@ -88,17 +87,19 @@ EventarcMetadata::AsyncUpdateTrigger(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("trigger.name=", internal::UrlEncode(request.trigger().name())));
-  return child_->AsyncUpdateTrigger(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("trigger.name=",
+                           internal::UrlEncode(request.trigger().name())));
+  return child_->AsyncUpdateTrigger(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::UpdateTrigger(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::UpdateTrigger(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("trigger.name=", internal::UrlEncode(request.trigger().name())));
+  SetMetadata(context, options,
+              absl::StrCat("trigger.name=",
+                           internal::UrlEncode(request.trigger().name())));
   return child_->UpdateTrigger(context, options, request);
 }
 
@@ -108,35 +109,34 @@ EventarcMetadata::AsyncDeleteTrigger(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTrigger(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteTrigger(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::DeleteTrigger(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::DeleteTrigger(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTrigger(context, options, request);
 }
 
-StatusOr<google::cloud::eventarc::v1::Channel>
-EventarcMetadata::GetChannel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::eventarc::v1::Channel> EventarcMetadata::GetChannel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetChannelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetChannel(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListChannelsResponse>
 EventarcMetadata::ListChannels(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListChannelsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListChannels(context, options, request);
 }
 
@@ -146,17 +146,17 @@ EventarcMetadata::AsyncCreateChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateChannel(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateChannel(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::CreateChannel(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::CreateChannel(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateChannel(context, options, request);
 }
 
@@ -166,17 +166,19 @@ EventarcMetadata::AsyncUpdateChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("channel.name=", internal::UrlEncode(request.channel().name())));
-  return child_->AsyncUpdateChannel(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("channel.name=",
+                           internal::UrlEncode(request.channel().name())));
+  return child_->AsyncUpdateChannel(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::UpdateChannel(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::UpdateChannel(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("channel.name=", internal::UrlEncode(request.channel().name())));
+  SetMetadata(context, options,
+              absl::StrCat("channel.name=",
+                           internal::UrlEncode(request.channel().name())));
   return child_->UpdateChannel(context, options, request);
 }
 
@@ -186,53 +188,52 @@ EventarcMetadata::AsyncDeleteChannel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteChannel(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteChannel(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::DeleteChannel(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::DeleteChannel(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteChannel(context, options, request);
 }
 
-StatusOr<google::cloud::eventarc::v1::Provider>
-EventarcMetadata::GetProvider(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcMetadata::GetProvider(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetProviderRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProvider(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
 EventarcMetadata::ListProviders(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListProvidersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListProviders(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcMetadata::GetChannelConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetChannelConnection(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
 EventarcMetadata::ListChannelConnections(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListChannelConnections(context, options, request);
 }
 
@@ -241,18 +242,21 @@ EventarcMetadata::AsyncCreateChannelConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateChannelConnection(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateChannelConnection(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EventarcMetadata::CreateChannelConnection(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateChannelConnection(context, options, request);
 }
 
@@ -261,63 +265,70 @@ EventarcMetadata::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteChannelConnection(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteChannelConnection(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EventarcMetadata::DeleteChannelConnection(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteChannelConnection(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 EventarcMetadata::GetGoogleChannelConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGoogleChannelConfig(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 EventarcMetadata::UpdateGoogleChannelConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("google_channel_config.name=", internal::UrlEncode(request.google_channel_config().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat(
+                  "google_channel_config.name=",
+                  internal::UrlEncode(request.google_channel_config().name())));
   return child_->UpdateGoogleChannelConfig(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::MessageBus>
 EventarcMetadata::GetMessageBus(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetMessageBusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMessageBus(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListMessageBusesResponse>
 EventarcMetadata::ListMessageBuses(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListMessageBusesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMessageBuses(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
 EventarcMetadata::ListMessageBusEnrollments(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMessageBusEnrollments(context, options, request);
 }
 
@@ -327,17 +338,17 @@ EventarcMetadata::AsyncCreateMessageBus(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateMessageBus(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMessageBus(cq, std::move(context),
+                                       std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::CreateMessageBus(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::CreateMessageBus(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMessageBus(context, options, request);
 }
 
@@ -347,17 +358,19 @@ EventarcMetadata::AsyncUpdateMessageBus(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("message_bus.name=", internal::UrlEncode(request.message_bus().name())));
-  return child_->AsyncUpdateMessageBus(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("message_bus.name=",
+                           internal::UrlEncode(request.message_bus().name())));
+  return child_->AsyncUpdateMessageBus(cq, std::move(context),
+                                       std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::UpdateMessageBus(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::UpdateMessageBus(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("message_bus.name=", internal::UrlEncode(request.message_bus().name())));
+  SetMetadata(context, options,
+              absl::StrCat("message_bus.name=",
+                           internal::UrlEncode(request.message_bus().name())));
   return child_->UpdateMessageBus(context, options, request);
 }
 
@@ -367,35 +380,35 @@ EventarcMetadata::AsyncDeleteMessageBus(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteMessageBus(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteMessageBus(cq, std::move(context),
+                                       std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::DeleteMessageBus(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::DeleteMessageBus(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMessageBus(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::Enrollment>
 EventarcMetadata::GetEnrollment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetEnrollmentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEnrollment(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListEnrollmentsResponse>
 EventarcMetadata::ListEnrollments(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListEnrollmentsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEnrollments(context, options, request);
 }
 
@@ -405,17 +418,17 @@ EventarcMetadata::AsyncCreateEnrollment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEnrollment(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateEnrollment(cq, std::move(context),
+                                       std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::CreateEnrollment(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::CreateEnrollment(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEnrollment(context, options, request);
 }
 
@@ -425,17 +438,19 @@ EventarcMetadata::AsyncUpdateEnrollment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("enrollment.name=", internal::UrlEncode(request.enrollment().name())));
-  return child_->AsyncUpdateEnrollment(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("enrollment.name=",
+                           internal::UrlEncode(request.enrollment().name())));
+  return child_->AsyncUpdateEnrollment(cq, std::move(context),
+                                       std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::UpdateEnrollment(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::UpdateEnrollment(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("enrollment.name=", internal::UrlEncode(request.enrollment().name())));
+  SetMetadata(context, options,
+              absl::StrCat("enrollment.name=",
+                           internal::UrlEncode(request.enrollment().name())));
   return child_->UpdateEnrollment(context, options, request);
 }
 
@@ -445,35 +460,34 @@ EventarcMetadata::AsyncDeleteEnrollment(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteEnrollment(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteEnrollment(cq, std::move(context),
+                                       std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::DeleteEnrollment(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::DeleteEnrollment(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEnrollment(context, options, request);
 }
 
-StatusOr<google::cloud::eventarc::v1::Pipeline>
-EventarcMetadata::GetPipeline(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::eventarc::v1::Pipeline> EventarcMetadata::GetPipeline(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetPipelineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPipeline(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListPipelinesResponse>
 EventarcMetadata::ListPipelines(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListPipelinesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPipelines(context, options, request);
 }
 
@@ -483,17 +497,17 @@ EventarcMetadata::AsyncCreatePipeline(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreatePipeline(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreatePipeline(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::CreatePipeline(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::CreatePipeline(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePipeline(context, options, request);
 }
 
@@ -503,17 +517,19 @@ EventarcMetadata::AsyncUpdatePipeline(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("pipeline.name=", internal::UrlEncode(request.pipeline().name())));
-  return child_->AsyncUpdatePipeline(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("pipeline.name=",
+                           internal::UrlEncode(request.pipeline().name())));
+  return child_->AsyncUpdatePipeline(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::UpdatePipeline(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::UpdatePipeline(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("pipeline.name=", internal::UrlEncode(request.pipeline().name())));
+  SetMetadata(context, options,
+              absl::StrCat("pipeline.name=",
+                           internal::UrlEncode(request.pipeline().name())));
   return child_->UpdatePipeline(context, options, request);
 }
 
@@ -523,35 +539,35 @@ EventarcMetadata::AsyncDeletePipeline(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePipeline(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeletePipeline(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::DeletePipeline(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::DeletePipeline(
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePipeline(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleApiSource>
 EventarcMetadata::GetGoogleApiSource(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGoogleApiSource(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::ListGoogleApiSourcesResponse>
 EventarcMetadata::ListGoogleApiSources(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGoogleApiSources(context, options, request);
 }
 
@@ -561,17 +577,18 @@ EventarcMetadata::AsyncCreateGoogleApiSource(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateGoogleApiSource(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateGoogleApiSource(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EventarcMetadata::CreateGoogleApiSource(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateGoogleApiSource(context, options, request);
 }
 
@@ -581,17 +598,22 @@ EventarcMetadata::AsyncUpdateGoogleApiSource(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("google_api_source.name=", internal::UrlEncode(request.google_api_source().name())));
-  return child_->AsyncUpdateGoogleApiSource(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("google_api_source.name=",
+                   internal::UrlEncode(request.google_api_source().name())));
+  return child_->AsyncUpdateGoogleApiSource(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EventarcMetadata::UpdateGoogleApiSource(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("google_api_source.name=", internal::UrlEncode(request.google_api_source().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("google_api_source.name=",
+                   internal::UrlEncode(request.google_api_source().name())));
   return child_->UpdateGoogleApiSource(context, options, request);
 }
 
@@ -601,98 +623,96 @@ EventarcMetadata::AsyncDeleteGoogleApiSource(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteGoogleApiSource(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteGoogleApiSource(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 EventarcMetadata::DeleteGoogleApiSource(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteGoogleApiSource(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 EventarcMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-EventarcMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> EventarcMetadata::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-EventarcMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> EventarcMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-EventarcMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> EventarcMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 EventarcMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EventarcMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> EventarcMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-EventarcMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EventarcMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-EventarcMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EventarcMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -704,8 +724,8 @@ EventarcMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> EventarcMetadata::AsyncCancelOperation(
@@ -715,21 +735,21 @@ future<Status> EventarcMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void EventarcMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                   Options const& options,
+                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void EventarcMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                   Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

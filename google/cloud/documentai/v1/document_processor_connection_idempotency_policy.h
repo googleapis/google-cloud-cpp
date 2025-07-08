@@ -36,92 +36,99 @@ class DocumentProcessorServiceConnectionIdempotencyPolicy {
   virtual ~DocumentProcessorServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ProcessDocument(google::cloud::documentai::v1::ProcessRequest const& request);
+  virtual google::cloud::Idempotency ProcessDocument(
+      google::cloud::documentai::v1::ProcessRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BatchProcessDocuments(google::cloud::documentai::v1::BatchProcessRequest const& request);
+  virtual google::cloud::Idempotency BatchProcessDocuments(
+      google::cloud::documentai::v1::BatchProcessRequest const& request);
 
-  virtual google::cloud::Idempotency
-  FetchProcessorTypes(google::cloud::documentai::v1::FetchProcessorTypesRequest const& request);
+  virtual google::cloud::Idempotency FetchProcessorTypes(
+      google::cloud::documentai::v1::FetchProcessorTypesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListProcessorTypes(google::cloud::documentai::v1::ListProcessorTypesRequest request);
+  virtual google::cloud::Idempotency ListProcessorTypes(
+      google::cloud::documentai::v1::ListProcessorTypesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetProcessorType(google::cloud::documentai::v1::GetProcessorTypeRequest const& request);
+  virtual google::cloud::Idempotency GetProcessorType(
+      google::cloud::documentai::v1::GetProcessorTypeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListProcessors(google::cloud::documentai::v1::ListProcessorsRequest request);
+  virtual google::cloud::Idempotency ListProcessors(
+      google::cloud::documentai::v1::ListProcessorsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetProcessor(google::cloud::documentai::v1::GetProcessorRequest const& request);
+  virtual google::cloud::Idempotency GetProcessor(
+      google::cloud::documentai::v1::GetProcessorRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TrainProcessorVersion(google::cloud::documentai::v1::TrainProcessorVersionRequest const& request);
+  virtual google::cloud::Idempotency TrainProcessorVersion(
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetProcessorVersion(google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
+  virtual google::cloud::Idempotency GetProcessorVersion(
+      google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListProcessorVersions(google::cloud::documentai::v1::ListProcessorVersionsRequest request);
+  virtual google::cloud::Idempotency ListProcessorVersions(
+      google::cloud::documentai::v1::ListProcessorVersionsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteProcessorVersion(google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request);
+  virtual google::cloud::Idempotency DeleteProcessorVersion(
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeployProcessorVersion(google::cloud::documentai::v1::DeployProcessorVersionRequest const& request);
+  virtual google::cloud::Idempotency DeployProcessorVersion(
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UndeployProcessorVersion(google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request);
+  virtual google::cloud::Idempotency UndeployProcessorVersion(
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateProcessor(google::cloud::documentai::v1::CreateProcessorRequest const& request);
+  virtual google::cloud::Idempotency CreateProcessor(
+      google::cloud::documentai::v1::CreateProcessorRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteProcessor(google::cloud::documentai::v1::DeleteProcessorRequest const& request);
+  virtual google::cloud::Idempotency DeleteProcessor(
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request);
 
-  virtual google::cloud::Idempotency
-  EnableProcessor(google::cloud::documentai::v1::EnableProcessorRequest const& request);
+  virtual google::cloud::Idempotency EnableProcessor(
+      google::cloud::documentai::v1::EnableProcessorRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DisableProcessor(google::cloud::documentai::v1::DisableProcessorRequest const& request);
+  virtual google::cloud::Idempotency DisableProcessor(
+      google::cloud::documentai::v1::DisableProcessorRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetDefaultProcessorVersion(google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request);
+  virtual google::cloud::Idempotency SetDefaultProcessorVersion(
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ReviewDocument(google::cloud::documentai::v1::ReviewDocumentRequest const& request);
+  virtual google::cloud::Idempotency ReviewDocument(
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  EvaluateProcessorVersion(google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request);
+  virtual google::cloud::Idempotency EvaluateProcessorVersion(
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetEvaluation(google::cloud::documentai::v1::GetEvaluationRequest const& request);
+  virtual google::cloud::Idempotency GetEvaluation(
+      google::cloud::documentai::v1::GetEvaluationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListEvaluations(google::cloud::documentai::v1::ListEvaluationsRequest request);
+  virtual google::cloud::Idempotency ListEvaluations(
+      google::cloud::documentai::v1::ListEvaluationsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
-    MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy();
+MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_v1

@@ -17,17 +17,17 @@
 // source: google/cloud/kms/inventory/v1/key_tracking_service.proto
 
 #include "google/cloud/kms/inventory/v1/key_tracking_connection.h"
+#include "google/cloud/kms/inventory/v1/internal/key_tracking_connection_impl.h"
+#include "google/cloud/kms/inventory/v1/internal/key_tracking_option_defaults.h"
+#include "google/cloud/kms/inventory/v1/internal/key_tracking_stub_factory.h"
+#include "google/cloud/kms/inventory/v1/internal/key_tracking_tracing_connection.h"
+#include "google/cloud/kms/inventory/v1/key_tracking_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/kms/inventory/v1/internal/key_tracking_connection_impl.h"
-#include "google/cloud/kms/inventory/v1/internal/key_tracking_option_defaults.h"
-#include "google/cloud/kms/inventory/v1/internal/key_tracking_stub_factory.h"
-#include "google/cloud/kms/inventory/v1/internal/key_tracking_tracing_connection.h"
-#include "google/cloud/kms/inventory/v1/key_tracking_options.h"
 #include <memory>
 #include <utility>
 
@@ -40,12 +40,15 @@ KeyTrackingServiceConnection::~KeyTrackingServiceConnection() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 KeyTrackingServiceConnection::GetProtectedResourcesSummary(
-    google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const&) {
+    google::cloud::kms::inventory::v1::
+        GetProtectedResourcesSummaryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::kms::inventory::v1::ProtectedResource> KeyTrackingServiceConnection::SearchProtectedResources(
-    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
+KeyTrackingServiceConnection::SearchProtectedResources(
+    google::cloud::kms::inventory::v1::
+        SearchProtectedResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>>();
 }
@@ -53,17 +56,19 @@ StreamRange<google::cloud::kms::inventory::v1::ProtectedResource> KeyTrackingSer
 std::shared_ptr<KeyTrackingServiceConnection> MakeKeyTrackingServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      KeyTrackingServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 KeyTrackingServicePolicyOptionList>(options,
+                                                                     __func__);
   options = kms_inventory_v1_internal::KeyTrackingServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = kms_inventory_v1_internal::CreateDefaultKeyTrackingServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return kms_inventory_v1_internal::MakeKeyTrackingServiceTracingConnection(
-      std::make_shared<kms_inventory_v1_internal::KeyTrackingServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          kms_inventory_v1_internal::KeyTrackingServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

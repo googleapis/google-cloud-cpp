@@ -34,18 +34,22 @@ JobControllerTracingConnection::JobControllerTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::dataproc::v1::Job>
-JobControllerTracingConnection::SubmitJob(google::cloud::dataproc::v1::SubmitJobRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::SubmitJob");
+JobControllerTracingConnection::SubmitJob(
+    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::SubmitJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SubmitJob(request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
-JobControllerTracingConnection::SubmitJobAsOperation(google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+JobControllerTracingConnection::SubmitJobAsOperation(
+    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::JobControllerConnection::SubmitJobAsOperation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->SubmitJobAsOperation(request));
+  return internal::EndSpan(std::move(span),
+                           child_->SubmitJobAsOperation(request));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -54,8 +58,8 @@ JobControllerTracingConnection::SubmitJobAsOperation(
   auto span = internal::MakeSpan(
       "dataproc_v1::JobControllerConnection::SubmitJobAsOperation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SubmitJobAsOperation(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->SubmitJobAsOperation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
@@ -65,93 +69,112 @@ JobControllerTracingConnection::SubmitJobAsOperation(
       "dataproc_v1::JobControllerConnection::SubmitJobAsOperation");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->SubmitJobAsOperation(operation));
+                           child_->SubmitJobAsOperation(operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job>
-JobControllerTracingConnection::GetJob(google::cloud::dataproc::v1::GetJobRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::GetJob");
+JobControllerTracingConnection::GetJob(
+    google::cloud::dataproc::v1::GetJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::Job>
-JobControllerTracingConnection::ListJobs(google::cloud::dataproc::v1::ListJobsRequest request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::ListJobs");
+JobControllerTracingConnection::ListJobs(
+    google::cloud::dataproc::v1::ListJobsRequest request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::ListJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::Job>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job>
-JobControllerTracingConnection::UpdateJob(google::cloud::dataproc::v1::UpdateJobRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::UpdateJob");
+JobControllerTracingConnection::UpdateJob(
+    google::cloud::dataproc::v1::UpdateJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::UpdateJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateJob(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job>
-JobControllerTracingConnection::CancelJob(google::cloud::dataproc::v1::CancelJobRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::CancelJob");
+JobControllerTracingConnection::CancelJob(
+    google::cloud::dataproc::v1::CancelJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::CancelJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelJob(request));
 }
 
-Status
-JobControllerTracingConnection::DeleteJob(google::cloud::dataproc::v1::DeleteJobRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::DeleteJob");
+Status JobControllerTracingConnection::DeleteJob(
+    google::cloud::dataproc::v1::DeleteJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteJob(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-JobControllerTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy> JobControllerTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-JobControllerTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy> JobControllerTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-JobControllerTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::TestIamPermissions");
+JobControllerTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::JobControllerConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-JobControllerTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::ListOperations");
+JobControllerTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::JobControllerConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-JobControllerTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::GetOperation");
+JobControllerTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::JobControllerConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-JobControllerTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::DeleteOperation");
+Status JobControllerTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::JobControllerConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-JobControllerTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::JobControllerConnection::CancelOperation");
+Status JobControllerTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::JobControllerConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

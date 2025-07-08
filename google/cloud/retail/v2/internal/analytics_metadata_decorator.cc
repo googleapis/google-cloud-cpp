@@ -50,35 +50,35 @@ AnalyticsServiceMetadata::AsyncExportAnalyticsMetrics(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
-  return child_->AsyncExportAnalyticsMetrics(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
+  return child_->AsyncExportAnalyticsMetrics(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsServiceMetadata::ExportAnalyticsMetrics(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
+  SetMetadata(context, options,
+              absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
   return child_->ExportAnalyticsMetrics(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AnalyticsServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-AnalyticsServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> AnalyticsServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -90,8 +90,8 @@ AnalyticsServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> AnalyticsServiceMetadata::AsyncCancelOperation(
@@ -101,21 +101,21 @@ future<Status> AnalyticsServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void AnalyticsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                           Options const& options,
+                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AnalyticsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                           Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

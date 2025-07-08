@@ -30,43 +30,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PublisherStub::~PublisherStub() = default;
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
+StatusOr<google::cloud::eventarc::publishing::v1::
+             PublishChannelConnectionEventsResponse>
 DefaultPublisherStub::PublishChannelConnectionEvents(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
-    google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse response;
-    auto status =
-        grpc_stub_->PublishChannelConnectionEvents(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::publishing::v1::
+        PublishChannelConnectionEventsRequest const& request) {
+  google::cloud::eventarc::publishing::v1::
+      PublishChannelConnectionEventsResponse response;
+  auto status =
+      grpc_stub_->PublishChannelConnectionEvents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 DefaultPublisherStub::PublishEvents(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) {
-    google::cloud::eventarc::publishing::v1::PublishEventsResponse response;
-    auto status =
-        grpc_stub_->PublishEvents(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+        request) {
+  google::cloud::eventarc::publishing::v1::PublishEventsResponse response;
+  auto status = grpc_stub_->PublishEvents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
 DefaultPublisherStub::Publish(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
-    google::cloud::eventarc::publishing::v1::PublishResponse response;
-    auto status =
-        grpc_stub_->Publish(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
+  google::cloud::eventarc::publishing::v1::PublishResponse response;
+  auto status = grpc_stub_->Publish(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

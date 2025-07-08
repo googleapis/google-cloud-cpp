@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_CLUSTER_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_CLUSTER_MANAGER_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/container/v1/cluster_manager_connection_idempotency_policy.h"
 #include "google/cloud/container/v1/internal/cluster_manager_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class ClusterManagerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ClusterManagerLimitedErrorCountRetryPolicy : public ClusterManagerRetryPolicy {
+class ClusterManagerLimitedErrorCountRetryPolicy
+    : public ClusterManagerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class ClusterManagerLimitedErrorCountRetryPolicy : public ClusterManagerRetryPol
    *     @p maximum_failures == 0.
    */
   explicit ClusterManagerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ClusterManagerLimitedErrorCountRetryPolicy(
       ClusterManagerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ClusterManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ClusterManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ClusterManagerLimitedErrorCountRetryPolicy(
       ClusterManagerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ClusterManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ClusterManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class ClusterManagerLimitedErrorCountRetryPolicy : public ClusterManagerRetryPol
   using BaseType = ClusterManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<container_v1_internal::ClusterManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      container_v1_internal::ClusterManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class ClusterManagerLimitedTimeRetryPolicy : public ClusterManagerRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ClusterManagerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ClusterManagerLimitedTimeRetryPolicy(ClusterManagerLimitedTimeRetryPolicy&& rhs) noexcept
-    : ClusterManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ClusterManagerLimitedTimeRetryPolicy(ClusterManagerLimitedTimeRetryPolicy const& rhs) noexcept
-    : ClusterManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ClusterManagerLimitedTimeRetryPolicy(
+      ClusterManagerLimitedTimeRetryPolicy&& rhs) noexcept
+      : ClusterManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ClusterManagerLimitedTimeRetryPolicy(
+      ClusterManagerLimitedTimeRetryPolicy const& rhs) noexcept
+      : ClusterManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class ClusterManagerLimitedTimeRetryPolicy : public ClusterManagerRetryPolicy {
   using BaseType = ClusterManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<container_v1_internal::ClusterManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      container_v1_internal::ClusterManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,113 +182,117 @@ class ClusterManagerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::container::v1::ListClustersResponse>
-  ListClusters(google::container::v1::ListClustersRequest const& request);
+  virtual StatusOr<google::container::v1::ListClustersResponse> ListClusters(
+      google::container::v1::ListClustersRequest const& request);
 
-  virtual StatusOr<google::container::v1::Cluster>
-  GetCluster(google::container::v1::GetClusterRequest const& request);
+  virtual StatusOr<google::container::v1::Cluster> GetCluster(
+      google::container::v1::GetClusterRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  CreateCluster(google::container::v1::CreateClusterRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> CreateCluster(
+      google::container::v1::CreateClusterRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  UpdateCluster(google::container::v1::UpdateClusterRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> UpdateCluster(
+      google::container::v1::UpdateClusterRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  UpdateNodePool(google::container::v1::UpdateNodePoolRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> UpdateNodePool(
+      google::container::v1::UpdateNodePoolRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetNodePoolAutoscaling(google::container::v1::SetNodePoolAutoscalingRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetNodePoolAutoscaling(
+      google::container::v1::SetNodePoolAutoscalingRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetLoggingService(google::container::v1::SetLoggingServiceRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetLoggingService(
+      google::container::v1::SetLoggingServiceRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetMonitoringService(google::container::v1::SetMonitoringServiceRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetMonitoringService(
+      google::container::v1::SetMonitoringServiceRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetAddonsConfig(google::container::v1::SetAddonsConfigRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetAddonsConfig(
+      google::container::v1::SetAddonsConfigRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetLocations(google::container::v1::SetLocationsRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetLocations(
+      google::container::v1::SetLocationsRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  UpdateMaster(google::container::v1::UpdateMasterRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> UpdateMaster(
+      google::container::v1::UpdateMasterRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetMasterAuth(google::container::v1::SetMasterAuthRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetMasterAuth(
+      google::container::v1::SetMasterAuthRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  DeleteCluster(google::container::v1::DeleteClusterRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> DeleteCluster(
+      google::container::v1::DeleteClusterRequest const& request);
 
   virtual StatusOr<google::container::v1::ListOperationsResponse>
   ListOperations(google::container::v1::ListOperationsRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  GetOperation(google::container::v1::GetOperationRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> GetOperation(
+      google::container::v1::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::container::v1::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::container::v1::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::container::v1::ServerConfig>
-  GetServerConfig(google::container::v1::GetServerConfigRequest const& request);
+  virtual StatusOr<google::container::v1::ServerConfig> GetServerConfig(
+      google::container::v1::GetServerConfigRequest const& request);
 
   virtual StatusOr<google::container::v1::GetJSONWebKeysResponse>
   GetJSONWebKeys(google::container::v1::GetJSONWebKeysRequest const& request);
 
-  virtual StatusOr<google::container::v1::ListNodePoolsResponse>
-  ListNodePools(google::container::v1::ListNodePoolsRequest const& request);
+  virtual StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
+      google::container::v1::ListNodePoolsRequest const& request);
 
-  virtual StatusOr<google::container::v1::NodePool>
-  GetNodePool(google::container::v1::GetNodePoolRequest const& request);
+  virtual StatusOr<google::container::v1::NodePool> GetNodePool(
+      google::container::v1::GetNodePoolRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  CreateNodePool(google::container::v1::CreateNodePoolRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> CreateNodePool(
+      google::container::v1::CreateNodePoolRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  DeleteNodePool(google::container::v1::DeleteNodePoolRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> DeleteNodePool(
+      google::container::v1::DeleteNodePoolRequest const& request);
 
-  virtual Status
-  CompleteNodePoolUpgrade(google::container::v1::CompleteNodePoolUpgradeRequest const& request);
+  virtual Status CompleteNodePoolUpgrade(
+      google::container::v1::CompleteNodePoolUpgradeRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  RollbackNodePoolUpgrade(google::container::v1::RollbackNodePoolUpgradeRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
+      google::container::v1::RollbackNodePoolUpgradeRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetNodePoolManagement(google::container::v1::SetNodePoolManagementRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetNodePoolManagement(
+      google::container::v1::SetNodePoolManagementRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetLabels(google::container::v1::SetLabelsRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetLabels(
+      google::container::v1::SetLabelsRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetLegacyAbac(google::container::v1::SetLegacyAbacRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetLegacyAbac(
+      google::container::v1::SetLegacyAbacRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  StartIPRotation(google::container::v1::StartIPRotationRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> StartIPRotation(
+      google::container::v1::StartIPRotationRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  CompleteIPRotation(google::container::v1::CompleteIPRotationRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> CompleteIPRotation(
+      google::container::v1::CompleteIPRotationRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetNodePoolSize(google::container::v1::SetNodePoolSizeRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetNodePoolSize(
+      google::container::v1::SetNodePoolSizeRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetNetworkPolicy(google::container::v1::SetNetworkPolicyRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetNetworkPolicy(
+      google::container::v1::SetNetworkPolicyRequest const& request);
 
-  virtual StatusOr<google::container::v1::Operation>
-  SetMaintenancePolicy(google::container::v1::SetMaintenancePolicyRequest const& request);
+  virtual StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
+      google::container::v1::SetMaintenancePolicyRequest const& request);
 
   virtual StreamRange<google::container::v1::UsableSubnetwork>
-  ListUsableSubnetworks(google::container::v1::ListUsableSubnetworksRequest request);
+  ListUsableSubnetworks(
+      google::container::v1::ListUsableSubnetworksRequest request);
 
   virtual StatusOr<google::container::v1::CheckAutopilotCompatibilityResponse>
-  CheckAutopilotCompatibility(google::container::v1::CheckAutopilotCompatibilityRequest const& request);
+  CheckAutopilotCompatibility(
+      google::container::v1::CheckAutopilotCompatibilityRequest const& request);
 
   virtual StatusOr<google::container::v1::ClusterUpgradeInfo>
-  FetchClusterUpgradeInfo(google::container::v1::FetchClusterUpgradeInfoRequest const& request);
+  FetchClusterUpgradeInfo(
+      google::container::v1::FetchClusterUpgradeInfoRequest const& request);
 
   virtual StatusOr<google::container::v1::NodePoolUpgradeInfo>
-  FetchNodePoolUpgradeInfo(google::container::v1::FetchNodePoolUpgradeInfoRequest const& request);
+  FetchNodePoolUpgradeInfo(
+      google::container::v1::FetchNodePoolUpgradeInfoRequest const& request);
 };
 
 /**

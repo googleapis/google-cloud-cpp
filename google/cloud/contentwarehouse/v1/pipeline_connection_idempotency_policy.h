@@ -35,17 +35,18 @@ class PipelineServiceConnectionIdempotencyPolicy {
   virtual ~PipelineServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
+  virtual google::cloud::Idempotency RunPipeline(
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>
-    MakeDefaultPipelineServiceConnectionIdempotencyPolicy();
+MakeDefaultPipelineServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1

@@ -38,64 +38,61 @@ class EnvironmentsTracingStub : public EnvironmentsStub {
 
   explicit EnvironmentsTracingStub(std::shared_ptr<EnvironmentsStub> child);
 
-  StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse> ListEnvironments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListEnvironmentsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
+  ListEnvironments(grpc::ClientContext& context, Options const& options,
+                   google::cloud::dialogflow::v2::ListEnvironmentsRequest const&
+                       request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Environment> GetEnvironment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GetEnvironmentRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::Environment> CreateEnvironment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::Environment> UpdateEnvironment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request)
+      override;
 
   Status DeleteEnvironment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::EnvironmentHistory> GetEnvironmentHistory(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::EnvironmentHistory>
+  GetEnvironmentHistory(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<EnvironmentsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

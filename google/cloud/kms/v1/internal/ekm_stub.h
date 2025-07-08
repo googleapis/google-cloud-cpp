@@ -22,10 +22,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,157 +38,141 @@ class EkmServiceStub {
  public:
   virtual ~EkmServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse> ListEkmConnections(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
+  ListEkmConnections(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::ListEkmConnectionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConnectionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateEkmConnectionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse> VerifyConnectivity(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+  VerifyConnectivity(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::VerifyConnectivityRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultEkmServiceStub : public EkmServiceStub {
  public:
   explicit DefaultEkmServiceStub(
-      std::unique_ptr<google::cloud::kms::v1::EkmService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
-,
-      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub
-,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub
-)
+      std::unique_ptr<google::cloud::kms::v1::EkmService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub,
+      std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)) {}
 
-  StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse> ListEkmConnections(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::v1::ListEkmConnectionsRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
+  ListEkmConnections(grpc::ClientContext& context, Options const& options,
+                     google::cloud::kms::v1::ListEkmConnectionsRequest const&
+                         request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConnectionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::v1::CreateEkmConnectionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::CreateEkmConnectionRequest const& request)
+      override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
+      override;
 
   StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse> VerifyConnectivity(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::v1::VerifyConnectivityRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+  VerifyConnectivity(grpc::ClientContext& context, Options const& options,
+                     google::cloud::kms::v1::VerifyConnectivityRequest const&
+                         request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::kms::v1::EkmService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

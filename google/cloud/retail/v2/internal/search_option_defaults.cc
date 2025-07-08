@@ -17,10 +17,10 @@
 // source: google/cloud/retail/v2/search_service.proto
 
 #include "google/cloud/retail/v2/internal/search_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/retail/v2/search_connection.h"
 #include "google/cloud/retail/v2/search_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,21 +35,23 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SearchServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SEARCH_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SEARCH_SERVICE_AUTHORITY",
-      "retail.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_SEARCH_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SEARCH_SERVICE_AUTHORITY", "retail.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<retail_v2::SearchServiceRetryPolicyOption>()) {
     options.set<retail_v2::SearchServiceRetryPolicyOption>(
-        retail_v2::SearchServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        retail_v2::SearchServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<retail_v2::SearchServiceBackoffPolicyOption>()) {
     options.set<retail_v2::SearchServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<retail_v2::SearchServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<retail_v2::SearchServiceConnectionIdempotencyPolicyOption>()) {
     options.set<retail_v2::SearchServiceConnectionIdempotencyPolicyOption>(
         retail_v2::MakeDefaultSearchServiceConnectionIdempotencyPolicy());
   }

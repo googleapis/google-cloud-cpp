@@ -35,19 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AMLDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_AML_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_AML_AUTHORITY",
-      "financialservices.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_AML_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_AML_AUTHORITY", "financialservices.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<financialservices_v1::AMLRetryPolicyOption>()) {
     options.set<financialservices_v1::AMLRetryPolicyOption>(
         financialservices_v1::AMLLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<financialservices_v1::AMLBackoffPolicyOption>()) {
     options.set<financialservices_v1::AMLBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<financialservices_v1::AMLPollingPolicyOption>()) {
     options.set<financialservices_v1::AMLPollingPolicyOption>(
@@ -56,9 +58,12 @@ Options AMLDefaultOptions(Options options) {
             financialservices_v1::AMLBackoffPolicyOption::Type>(
             options.get<financialservices_v1::AMLRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<financialservices_v1::AMLConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<financialservices_v1::AMLConnectionIdempotencyPolicyOption>()) {
     options.set<financialservices_v1::AMLConnectionIdempotencyPolicyOption>(
         financialservices_v1::MakeDefaultAMLConnectionIdempotencyPolicy());
   }

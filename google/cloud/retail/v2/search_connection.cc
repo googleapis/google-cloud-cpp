@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/search_service.proto
 
 #include "google/cloud/retail/v2/search_connection.h"
+#include "google/cloud/retail/v2/internal/search_connection_impl.h"
+#include "google/cloud/retail/v2/internal/search_option_defaults.h"
+#include "google/cloud/retail/v2/internal/search_stub_factory.h"
+#include "google/cloud/retail/v2/internal/search_tracing_connection.h"
+#include "google/cloud/retail/v2/search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/retail/v2/internal/search_connection_impl.h"
-#include "google/cloud/retail/v2/internal/search_option_defaults.h"
-#include "google/cloud/retail/v2/internal/search_stub_factory.h"
-#include "google/cloud/retail/v2/internal/search_tracing_connection.h"
-#include "google/cloud/retail/v2/search_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,20 +38,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SearchServiceConnection::~SearchServiceConnection() = default;
 
-StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> SearchServiceConnection::Search(
-    google::cloud::retail::v2::SearchRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
+SearchServiceConnection::Search(
+    google::cloud::retail::v2::
+        SearchRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>();
 }
 
-StreamRange<google::longrunning::Operation> SearchServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+SearchServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-SearchServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> SearchServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -59,17 +62,17 @@ SearchServiceConnection::GetOperation(
 std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      SearchServicePolicyOptionList>(options, __func__);
-  options = retail_v2_internal::SearchServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 SearchServicePolicyOptionList>(options,
+                                                                __func__);
+  options = retail_v2_internal::SearchServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = retail_v2_internal::CreateDefaultSearchServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return retail_v2_internal::MakeSearchServiceTracingConnection(
       std::make_shared<retail_v2_internal::SearchServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

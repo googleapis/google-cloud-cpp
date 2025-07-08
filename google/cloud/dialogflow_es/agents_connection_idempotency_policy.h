@@ -38,51 +38,51 @@ class AgentsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AgentsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  GetAgent(google::cloud::dialogflow::v2::GetAgentRequest const& request);
+  virtual google::cloud::Idempotency GetAgent(
+      google::cloud::dialogflow::v2::GetAgentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetAgent(google::cloud::dialogflow::v2::SetAgentRequest const& request);
+  virtual google::cloud::Idempotency SetAgent(
+      google::cloud::dialogflow::v2::SetAgentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteAgent(google::cloud::dialogflow::v2::DeleteAgentRequest const& request);
+  virtual google::cloud::Idempotency DeleteAgent(
+      google::cloud::dialogflow::v2::DeleteAgentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SearchAgents(google::cloud::dialogflow::v2::SearchAgentsRequest request);
+  virtual google::cloud::Idempotency SearchAgents(
+      google::cloud::dialogflow::v2::SearchAgentsRequest request);
 
-  virtual google::cloud::Idempotency
-  TrainAgent(google::cloud::dialogflow::v2::TrainAgentRequest const& request);
+  virtual google::cloud::Idempotency TrainAgent(
+      google::cloud::dialogflow::v2::TrainAgentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request);
+  virtual google::cloud::Idempotency ExportAgent(
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportAgent(google::cloud::dialogflow::v2::ImportAgentRequest const& request);
+  virtual google::cloud::Idempotency ImportAgent(
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RestoreAgent(google::cloud::dialogflow::v2::RestoreAgentRequest const& request);
+  virtual google::cloud::Idempotency RestoreAgent(
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetValidationResult(google::cloud::dialogflow::v2::GetValidationResultRequest const& request);
+  virtual google::cloud::Idempotency GetValidationResult(
+      google::cloud::dialogflow::v2::GetValidationResultRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>
-    MakeDefaultAgentsConnectionIdempotencyPolicy();
+MakeDefaultAgentsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

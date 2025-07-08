@@ -35,43 +35,44 @@ class OsLoginServiceLogging : public OsLoginServiceStub {
  public:
   ~OsLoginServiceLogging() override = default;
   OsLoginServiceLogging(std::shared_ptr<OsLoginServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                        TracingOptions tracing_options,
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
 
   Status DeletePosixAccount(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
+      override;
 
   Status DeleteSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request)
+      override;
 
   StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::GetLoginProfileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::GetLoginProfileRequest const& request)
+      override;
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse> ImportSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
+  ImportSshPublicKey(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request)
+      override;
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request)
+      override;
 
  private:
   std::shared_ptr<OsLoginServiceStub> child_;

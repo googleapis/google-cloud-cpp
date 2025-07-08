@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_ADMIN_V1_INTERNAL_IAM_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_ADMIN_V1_INTERNAL_IAM_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iam/admin/v1/iam_connection.h"
 #include "google/cloud/iam/admin/v1/iam_connection_idempotency_policy.h"
 #include "google/cloud/iam/admin/v1/iam_options.h"
 #include "google/cloud/iam/admin/v1/internal/iam_retry_traits.h"
 #include "google/cloud/iam/admin/v1/internal/iam_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,101 +37,116 @@ namespace cloud {
 namespace iam_admin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IAMConnectionImpl
-    : public iam_admin_v1::IAMConnection {
+class IAMConnectionImpl : public iam_admin_v1::IAMConnection {
  public:
   ~IAMConnectionImpl() override = default;
 
   IAMConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_admin_v1_internal::IAMStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<iam_admin_v1_internal::IAMStub> stub, Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::iam::admin::v1::ServiceAccount>
-  ListServiceAccounts(google::iam::admin::v1::ListServiceAccountsRequest request) override;
+  StreamRange<google::iam::admin::v1::ServiceAccount> ListServiceAccounts(
+      google::iam::admin::v1::ListServiceAccountsRequest request) override;
 
-  StatusOr<google::iam::admin::v1::ServiceAccount>
-  GetServiceAccount(google::iam::admin::v1::GetServiceAccountRequest const& request) override;
+  StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
+      google::iam::admin::v1::GetServiceAccountRequest const& request) override;
 
-  StatusOr<google::iam::admin::v1::ServiceAccount>
-  CreateServiceAccount(google::iam::admin::v1::CreateServiceAccountRequest const& request) override;
+  StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
+      google::iam::admin::v1::CreateServiceAccountRequest const& request)
+      override;
 
-  StatusOr<google::iam::admin::v1::ServiceAccount>
-  PatchServiceAccount(google::iam::admin::v1::PatchServiceAccountRequest const& request) override;
+  StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
+      google::iam::admin::v1::PatchServiceAccountRequest const& request)
+      override;
 
-  Status
-  DeleteServiceAccount(google::iam::admin::v1::DeleteServiceAccountRequest const& request) override;
+  Status DeleteServiceAccount(
+      google::iam::admin::v1::DeleteServiceAccountRequest const& request)
+      override;
 
   StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
-  UndeleteServiceAccount(google::iam::admin::v1::UndeleteServiceAccountRequest const& request) override;
+  UndeleteServiceAccount(
+      google::iam::admin::v1::UndeleteServiceAccountRequest const& request)
+      override;
 
-  Status
-  EnableServiceAccount(google::iam::admin::v1::EnableServiceAccountRequest const& request) override;
+  Status EnableServiceAccount(
+      google::iam::admin::v1::EnableServiceAccountRequest const& request)
+      override;
 
-  Status
-  DisableServiceAccount(google::iam::admin::v1::DisableServiceAccountRequest const& request) override;
+  Status DisableServiceAccount(
+      google::iam::admin::v1::DisableServiceAccountRequest const& request)
+      override;
 
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(google::iam::admin::v1::ListServiceAccountKeysRequest const& request) override;
+  ListServiceAccountKeys(
+      google::iam::admin::v1::ListServiceAccountKeysRequest const& request)
+      override;
 
-  StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  GetServiceAccountKey(google::iam::admin::v1::GetServiceAccountKeyRequest const& request) override;
+  StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
+      google::iam::admin::v1::GetServiceAccountKeyRequest const& request)
+      override;
 
-  StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  CreateServiceAccountKey(google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) override;
+  StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
+      google::iam::admin::v1::CreateServiceAccountKeyRequest const& request)
+      override;
 
-  StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  UploadServiceAccountKey(google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) override;
+  StatusOr<google::iam::admin::v1::ServiceAccountKey> UploadServiceAccountKey(
+      google::iam::admin::v1::UploadServiceAccountKeyRequest const& request)
+      override;
 
-  Status
-  DeleteServiceAccountKey(google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) override;
+  Status DeleteServiceAccountKey(
+      google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request)
+      override;
 
-  Status
-  DisableServiceAccountKey(google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) override;
+  Status DisableServiceAccountKey(
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request)
+      override;
 
-  Status
-  EnableServiceAccountKey(google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) override;
+  Status EnableServiceAccountKey(
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::iam::admin::v1::Role>
-  QueryGrantableRoles(google::iam::admin::v1::QueryGrantableRolesRequest request) override;
+  StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
+      google::iam::admin::v1::QueryGrantableRolesRequest request) override;
 
-  StreamRange<google::iam::admin::v1::Role>
-  ListRoles(google::iam::admin::v1::ListRolesRequest request) override;
+  StreamRange<google::iam::admin::v1::Role> ListRoles(
+      google::iam::admin::v1::ListRolesRequest request) override;
 
-  StatusOr<google::iam::admin::v1::Role>
-  GetRole(google::iam::admin::v1::GetRoleRequest const& request) override;
+  StatusOr<google::iam::admin::v1::Role> GetRole(
+      google::iam::admin::v1::GetRoleRequest const& request) override;
 
-  StatusOr<google::iam::admin::v1::Role>
-  CreateRole(google::iam::admin::v1::CreateRoleRequest const& request) override;
+  StatusOr<google::iam::admin::v1::Role> CreateRole(
+      google::iam::admin::v1::CreateRoleRequest const& request) override;
 
-  StatusOr<google::iam::admin::v1::Role>
-  UpdateRole(google::iam::admin::v1::UpdateRoleRequest const& request) override;
+  StatusOr<google::iam::admin::v1::Role> UpdateRole(
+      google::iam::admin::v1::UpdateRoleRequest const& request) override;
 
-  StatusOr<google::iam::admin::v1::Role>
-  DeleteRole(google::iam::admin::v1::DeleteRoleRequest const& request) override;
+  StatusOr<google::iam::admin::v1::Role> DeleteRole(
+      google::iam::admin::v1::DeleteRoleRequest const& request) override;
 
-  StatusOr<google::iam::admin::v1::Role>
-  UndeleteRole(google::iam::admin::v1::UndeleteRoleRequest const& request) override;
+  StatusOr<google::iam::admin::v1::Role> UndeleteRole(
+      google::iam::admin::v1::UndeleteRoleRequest const& request) override;
 
-  StreamRange<google::iam::admin::v1::Permission>
-  QueryTestablePermissions(google::iam::admin::v1::QueryTestablePermissionsRequest request) override;
+  StreamRange<google::iam::admin::v1::Permission> QueryTestablePermissions(
+      google::iam::admin::v1::QueryTestablePermissionsRequest request) override;
 
   StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
-  QueryAuditableServices(google::iam::admin::v1::QueryAuditableServicesRequest const& request) override;
+  QueryAuditableServices(
+      google::iam::admin::v1::QueryAuditableServicesRequest const& request)
+      override;
 
-  StatusOr<google::iam::admin::v1::LintPolicyResponse>
-  LintPolicy(google::iam::admin::v1::LintPolicyRequest const& request) override;
+  StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
+      google::iam::admin::v1::LintPolicyRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
@@ -140,7 +155,7 @@ class IAMConnectionImpl
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_admin_v1_internal
 }  // namespace cloud
 }  // namespace google

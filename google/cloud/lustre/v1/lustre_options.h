@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_LUSTRE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_LUSTRE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/lustre/v1/lustre_connection.h"
 #include "google/cloud/lustre/v1/lustre_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct LustrePollingPolicyOption {
  * @ingroup google-cloud-lustre-options
  */
 using LustrePolicyOptionList =
-    OptionList<LustreRetryPolicyOption,
-               LustreBackoffPolicyOption,
+    OptionList<LustreRetryPolicyOption, LustreBackoffPolicyOption,
                LustrePollingPolicyOption,
                LustreConnectionIdempotencyPolicyOption>;
 

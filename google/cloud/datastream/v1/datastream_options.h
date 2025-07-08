@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_DATASTREAM_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_DATASTREAM_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datastream/v1/datastream_connection.h"
 #include "google/cloud/datastream/v1/datastream_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct DatastreamPollingPolicyOption {
  * @ingroup google-cloud-datastream-options
  */
 using DatastreamPolicyOptionList =
-    OptionList<DatastreamRetryPolicyOption,
-               DatastreamBackoffPolicyOption,
+    OptionList<DatastreamRetryPolicyOption, DatastreamBackoffPolicyOption,
                DatastreamPollingPolicyOption,
                DatastreamConnectionIdempotencyPolicyOption>;
 

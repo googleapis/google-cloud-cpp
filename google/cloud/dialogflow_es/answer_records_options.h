@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ANSWER_RECORDS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ANSWER_RECORDS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/answer_records_connection.h"
 #include "google/cloud/dialogflow_es/answer_records_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct AnswerRecordsConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-dialogflow_es-options
  */
 using AnswerRecordsPolicyOptionList =
-    OptionList<AnswerRecordsRetryPolicyOption,
-               AnswerRecordsBackoffPolicyOption,
+    OptionList<AnswerRecordsRetryPolicyOption, AnswerRecordsBackoffPolicyOption,
                AnswerRecordsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

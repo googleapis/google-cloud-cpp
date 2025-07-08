@@ -34,14 +34,15 @@ class ConnectionServiceConnectionIdempotencyPolicy {
   virtual ~ConnectionServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListConnections(google::cloud::apigeeconnect::v1::ListConnectionsRequest request);
+  virtual google::cloud::Idempotency ListConnections(
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest request);
 };
 
 std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
-    MakeDefaultConnectionServiceConnectionIdempotencyPolicy();
+MakeDefaultConnectionServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_v1

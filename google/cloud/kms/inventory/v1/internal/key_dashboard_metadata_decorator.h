@@ -39,14 +39,13 @@ class KeyDashboardServiceMetadata : public KeyDashboardServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse> ListCryptoKeys(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) override;
+  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
+                 google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
+                     request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -36,27 +36,31 @@ class SqlDatabasesServiceTracingConnection
   ~SqlDatabasesServiceTracingConnection() override = default;
 
   explicit SqlDatabasesServiceTracingConnection(
-    std::shared_ptr<sql_v1::SqlDatabasesServiceConnection> child);
+      std::shared_ptr<sql_v1::SqlDatabasesServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Delete(google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Delete(
+      google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Database>
-  Get(google::cloud::sql::v1::SqlDatabasesGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Database> Get(
+      google::cloud::sql::v1::SqlDatabasesGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Insert(google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Insert(
+      google::cloud::sql::v1::SqlDatabasesInsertRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::DatabasesListResponse>
-  List(google::cloud::sql::v1::SqlDatabasesListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::DatabasesListResponse> List(
+      google::cloud::sql::v1::SqlDatabasesListRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Patch(google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Patch(
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Update(google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Update(
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request)
+      override;
 
  private:
   std::shared_ptr<sql_v1::SqlDatabasesServiceConnection> child_;

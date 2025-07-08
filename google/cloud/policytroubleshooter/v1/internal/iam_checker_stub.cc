@@ -32,15 +32,16 @@ IamCheckerStub::~IamCheckerStub() = default;
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 DefaultIamCheckerStub::TroubleshootIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
-    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse response;
-    auto status =
-        grpc_stub_->TroubleshootIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
+        request) {
+  google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse
+      response;
+  auto status = grpc_stub_->TroubleshootIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

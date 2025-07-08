@@ -29,12 +29,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-AssuredWorkloadsServiceTracingConnection::AssuredWorkloadsServiceTracingConnection(
-    std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection> child)
+AssuredWorkloadsServiceTracingConnection::
+    AssuredWorkloadsServiceTracingConnection(
+        std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-AssuredWorkloadsServiceTracingConnection::CreateWorkload(google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+AssuredWorkloadsServiceTracingConnection::CreateWorkload(
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::CreateWorkload");
   internal::OTelScope scope(span);
@@ -43,12 +46,13 @@ AssuredWorkloadsServiceTracingConnection::CreateWorkload(google::cloud::assuredw
 
 StatusOr<google::longrunning::Operation>
 AssuredWorkloadsServiceTracingConnection::CreateWorkload(
-    NoAwaitTag, google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+    NoAwaitTag,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::CreateWorkload");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateWorkload(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateWorkload(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
@@ -57,82 +61,106 @@ AssuredWorkloadsServiceTracingConnection::CreateWorkload(
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::CreateWorkload");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateWorkload(operation));
+  return internal::EndSpan(std::move(span), child_->CreateWorkload(operation));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceTracingConnection::UpdateWorkload(google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::UpdateWorkload");
+AssuredWorkloadsServiceTracingConnection::UpdateWorkload(
+    google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::UpdateWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateWorkload(request));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
-AssuredWorkloadsServiceTracingConnection::RestrictAllowedResources(google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::RestrictAllowedResources");
+AssuredWorkloadsServiceTracingConnection::RestrictAllowedResources(
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::"
+      "RestrictAllowedResources");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RestrictAllowedResources(request));
 }
 
-Status
-AssuredWorkloadsServiceTracingConnection::DeleteWorkload(google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::DeleteWorkload");
+Status AssuredWorkloadsServiceTracingConnection::DeleteWorkload(
+    google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::DeleteWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteWorkload(request));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceTracingConnection::GetWorkload(google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::GetWorkload");
+AssuredWorkloadsServiceTracingConnection::GetWorkload(
+    google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::GetWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetWorkload(request));
 }
 
 StreamRange<google::cloud::assuredworkloads::v1::Workload>
-AssuredWorkloadsServiceTracingConnection::ListWorkloads(google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListWorkloads");
+AssuredWorkloadsServiceTracingConnection::ListWorkloads(
+    google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListWorkloads");
   internal::OTelScope scope(span);
   auto sr = child_->ListWorkloads(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::assuredworkloads::v1::Workload>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::assuredworkloads::v1::Workload>(std::move(span),
+                                                     std::move(sr));
 }
 
 StreamRange<google::cloud::assuredworkloads::v1::Violation>
-AssuredWorkloadsServiceTracingConnection::ListViolations(google::cloud::assuredworkloads::v1::ListViolationsRequest request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListViolations");
+AssuredWorkloadsServiceTracingConnection::ListViolations(
+    google::cloud::assuredworkloads::v1::ListViolationsRequest request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListViolations");
   internal::OTelScope scope(span);
   auto sr = child_->ListViolations(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::assuredworkloads::v1::Violation>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::assuredworkloads::v1::Violation>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Violation>
-AssuredWorkloadsServiceTracingConnection::GetViolation(google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::GetViolation");
+AssuredWorkloadsServiceTracingConnection::GetViolation(
+    google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::GetViolation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetViolation(request));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
-AssuredWorkloadsServiceTracingConnection::AcknowledgeViolation(google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::AcknowledgeViolation");
+AssuredWorkloadsServiceTracingConnection::AcknowledgeViolation(
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::"
+      "AcknowledgeViolation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AcknowledgeViolation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-AssuredWorkloadsServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListOperations");
+AssuredWorkloadsServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AssuredWorkloadsServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("assuredworkloads_v1::AssuredWorkloadsServiceConnection::GetOperation");
+AssuredWorkloadsServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
@@ -141,10 +169,12 @@ AssuredWorkloadsServiceTracingConnection::GetOperation(google::longrunning::GetO
 
 std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceTracingConnection(
-    std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection> conn) {
+    std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<AssuredWorkloadsServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<AssuredWorkloadsServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

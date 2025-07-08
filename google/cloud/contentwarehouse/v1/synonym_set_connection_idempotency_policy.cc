@@ -26,39 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SynonymSetServiceConnectionIdempotencyPolicy::~SynonymSetServiceConnectionIdempotencyPolicy() = default;
+SynonymSetServiceConnectionIdempotencyPolicy::
+    ~SynonymSetServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SynonymSetServiceConnectionIdempotencyPolicy>
 SynonymSetServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SynonymSetServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SynonymSetServiceConnectionIdempotencyPolicy::CreateSynonymSet(google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&) {
+Idempotency SynonymSetServiceConnectionIdempotencyPolicy::CreateSynonymSet(
+    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SynonymSetServiceConnectionIdempotencyPolicy::GetSynonymSet(google::cloud::contentwarehouse::v1::GetSynonymSetRequest const&) {
+Idempotency SynonymSetServiceConnectionIdempotencyPolicy::GetSynonymSet(
+    google::cloud::contentwarehouse::v1::GetSynonymSetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SynonymSetServiceConnectionIdempotencyPolicy::UpdateSynonymSet(google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&) {
+Idempotency SynonymSetServiceConnectionIdempotencyPolicy::UpdateSynonymSet(
+    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SynonymSetServiceConnectionIdempotencyPolicy::DeleteSynonymSet(google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&) {
+Idempotency SynonymSetServiceConnectionIdempotencyPolicy::DeleteSynonymSet(
+    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SynonymSetServiceConnectionIdempotencyPolicy::ListSynonymSets(google::cloud::contentwarehouse::v1::ListSynonymSetsRequest) {  // NOLINT
+Idempotency SynonymSetServiceConnectionIdempotencyPolicy::ListSynonymSets(
+    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SynonymSetServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency SynonymSetServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SynonymSetServiceConnectionIdempotencyPolicy>
-    MakeDefaultSynonymSetServiceConnectionIdempotencyPolicy() {
+MakeDefaultSynonymSetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SynonymSetServiceConnectionIdempotencyPolicy>();
 }
 

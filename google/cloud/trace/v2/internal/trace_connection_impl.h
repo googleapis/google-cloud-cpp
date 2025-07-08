@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_INTERNAL_TRACE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_INTERNAL_TRACE_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/trace/v2/internal/trace_retry_traits.h"
 #include "google/cloud/trace/v2/internal/trace_stub.h"
 #include "google/cloud/trace/v2/trace_connection.h"
 #include "google/cloud/trace/v2/trace_connection_idempotency_policy.h"
 #include "google/cloud/trace/v2/trace_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,23 +36,23 @@ namespace cloud {
 namespace trace_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TraceServiceConnectionImpl
-    : public trace_v2::TraceServiceConnection {
+class TraceServiceConnectionImpl : public trace_v2::TraceServiceConnection {
  public:
   ~TraceServiceConnectionImpl() override = default;
 
   TraceServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<trace_v2_internal::TraceServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<trace_v2_internal::TraceServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  Status
-  BatchWriteSpans(google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) override;
+  Status BatchWriteSpans(
+      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
+      override;
 
-  StatusOr<google::devtools::cloudtrace::v2::Span>
-  CreateSpan(google::devtools::cloudtrace::v2::Span const& request) override;
+  StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
+      google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

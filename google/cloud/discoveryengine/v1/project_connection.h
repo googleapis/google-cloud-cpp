@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_PROJECT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_PROJECT_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/project_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/project_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class ProjectServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ProjectServiceLimitedErrorCountRetryPolicy : public ProjectServiceRetryPolicy {
+class ProjectServiceLimitedErrorCountRetryPolicy
+    : public ProjectServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ProjectServiceLimitedErrorCountRetryPolicy : public ProjectServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit ProjectServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ProjectServiceLimitedErrorCountRetryPolicy(
       ProjectServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ProjectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProjectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ProjectServiceLimitedErrorCountRetryPolicy(
       ProjectServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ProjectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProjectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ProjectServiceLimitedErrorCountRetryPolicy : public ProjectServiceRetryPol
   using BaseType = ProjectServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::ProjectServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      discoveryengine_v1_internal::ProjectServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class ProjectServiceLimitedTimeRetryPolicy : public ProjectServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ProjectServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ProjectServiceLimitedTimeRetryPolicy(ProjectServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ProjectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ProjectServiceLimitedTimeRetryPolicy(ProjectServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ProjectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProjectServiceLimitedTimeRetryPolicy(
+      ProjectServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ProjectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProjectServiceLimitedTimeRetryPolicy(
+      ProjectServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ProjectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class ProjectServiceLimitedTimeRetryPolicy : public ProjectServiceRetryPolicy {
   using BaseType = ProjectServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::ProjectServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      discoveryengine_v1_internal::ProjectServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,22 +187,26 @@ class ProjectServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request);
+  ProvisionProject(
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ProvisionProject(NoAwaitTag, google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ProvisionProject(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject( google::longrunning::Operation const& operation);
+  ProvisionProject(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

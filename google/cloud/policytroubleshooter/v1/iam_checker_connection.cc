@@ -17,16 +17,16 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/v1/iam_checker_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/policytroubleshooter/v1/iam_checker_options.h"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_connection_impl.h"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_option_defaults.h"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_stub_factory.h"
 #include "google/cloud/policytroubleshooter/v1/internal/iam_checker_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
 
@@ -39,24 +39,26 @@ IamCheckerConnection::~IamCheckerConnection() = default;
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerConnection::TroubleshootIamPolicy(
-    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&) {
+    google::cloud::policytroubleshooter::v1::
+        TroubleshootIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      IamCheckerPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 IamCheckerPolicyOptionList>(options, __func__);
   options = policytroubleshooter_v1_internal::IamCheckerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = policytroubleshooter_v1_internal::CreateDefaultIamCheckerStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return policytroubleshooter_v1_internal::MakeIamCheckerTracingConnection(
-      std::make_shared<policytroubleshooter_v1_internal::IamCheckerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          policytroubleshooter_v1_internal::IamCheckerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

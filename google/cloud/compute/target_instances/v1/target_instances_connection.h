@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_TARGET_INSTANCES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_TARGET_INSTANCES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_retry_traits.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class TargetInstancesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetInstancesLimitedErrorCountRetryPolicy : public TargetInstancesRetryPolicy {
+class TargetInstancesLimitedErrorCountRetryPolicy
+    : public TargetInstancesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class TargetInstancesLimitedErrorCountRetryPolicy : public TargetInstancesRetryP
    *     @p maximum_failures == 0.
    */
   explicit TargetInstancesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TargetInstancesLimitedErrorCountRetryPolicy(
       TargetInstancesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TargetInstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TargetInstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TargetInstancesLimitedErrorCountRetryPolicy(
       TargetInstancesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TargetInstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TargetInstancesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class TargetInstancesLimitedErrorCountRetryPolicy : public TargetInstancesRetryP
   using BaseType = TargetInstancesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_target_instances_v1_internal::TargetInstancesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_target_instances_v1_internal::TargetInstancesRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class TargetInstancesLimitedErrorCountRetryPolicy : public TargetInstancesRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetInstancesLimitedTimeRetryPolicy : public TargetInstancesRetryPolicy {
+class TargetInstancesLimitedTimeRetryPolicy
+    : public TargetInstancesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class TargetInstancesLimitedTimeRetryPolicy : public TargetInstancesRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit TargetInstancesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TargetInstancesLimitedTimeRetryPolicy(TargetInstancesLimitedTimeRetryPolicy&& rhs) noexcept
-    : TargetInstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TargetInstancesLimitedTimeRetryPolicy(TargetInstancesLimitedTimeRetryPolicy const& rhs) noexcept
-    : TargetInstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetInstancesLimitedTimeRetryPolicy(
+      TargetInstancesLimitedTimeRetryPolicy&& rhs) noexcept
+      : TargetInstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetInstancesLimitedTimeRetryPolicy(
+      TargetInstancesLimitedTimeRetryPolicy const& rhs) noexcept
+      : TargetInstancesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +163,9 @@ class TargetInstancesLimitedTimeRetryPolicy : public TargetInstancesRetryPolicy 
   using BaseType = TargetInstancesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_target_instances_v1_internal::TargetInstancesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_target_instances_v1_internal::TargetInstancesRetryTraits>
+      impl_;
 };
 
 /**
@@ -170,7 +178,8 @@ class TargetInstancesLimitedTimeRetryPolicy : public TargetInstancesRetryPolicy 
  *
  * To create a concrete instance, see `MakeTargetInstancesConnection()`.
  *
- * For mocking, see `compute_target_instances_v1_mocks::MockTargetInstancesConnection`.
+ * For mocking, see
+ * `compute_target_instances_v1_mocks::MockTargetInstancesConnection`.
  */
 class TargetInstancesConnection {
  public:
@@ -178,41 +187,58 @@ class TargetInstancesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
-  AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
+  AggregatedListTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          AggregatedListTargetInstancesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request);
+  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           DeleteTargetInstanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetInstance(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request);
+  DeleteTargetInstance(NoAwaitTag,
+                       google::cloud::cpp::compute::target_instances::v1::
+                           DeleteTargetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstance( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteTargetInstance(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstance(google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest const& request);
+  GetTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                        GetTargetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request);
+  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           InsertTargetInstanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetInstance(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request);
+  InsertTargetInstance(NoAwaitTag,
+                       google::cloud::cpp::compute::target_instances::v1::
+                           InsertTargetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstance( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertTargetInstance(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request);
+  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                          ListTargetInstancesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request);
+  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::
+                        SetSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request);
+  SetSecurityPolicy(NoAwaitTag,
+                    google::cloud::cpp::compute::target_instances::v1::
+                        SetSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
+  SetSecurityPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

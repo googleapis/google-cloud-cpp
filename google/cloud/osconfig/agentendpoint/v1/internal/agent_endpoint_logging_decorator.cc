@@ -33,29 +33,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AgentEndpointServiceLogging::AgentEndpointServiceLogging(
     std::shared_ptr<AgentEndpointServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>>
+    google::cloud::osconfig::agentendpoint::v1::
+        ReceiveTaskNotificationResponse>>
 AgentEndpointServiceLogging::ReceiveTaskNotification(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) {
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::
+        ReceiveTaskNotificationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](std::shared_ptr<grpc::ClientContext> context,
              Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request)
+             google::cloud::osconfig::agentendpoint::v1::
+                 ReceiveTaskNotificationRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-              google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>> {
-        auto stream = child_->ReceiveTaskNotification(std::move(context), options, request);
+              google::cloud::osconfig::agentendpoint::v1::
+                  ReceiveTaskNotificationResponse>> {
+        auto stream = child_->ReceiveTaskNotification(std::move(context),
+                                                      options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
-                  google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>>(
+                  google::cloud::osconfig::agentendpoint::v1::
+                      ReceiveTaskNotificationResponse>>(
                   std::move(stream), tracing_options_,
                   google::cloud::internal::RequestIdForLogging());
         }
@@ -66,13 +70,13 @@ AgentEndpointServiceLogging::ReceiveTaskNotification(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 AgentEndpointServiceLogging::StartNextTask(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::agentendpoint::v1::
+                 StartNextTaskRequest const& request) {
         return child_->StartNextTask(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -80,13 +84,13 @@ AgentEndpointServiceLogging::StartNextTask(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 AgentEndpointServiceLogging::ReportTaskProgress(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::agentendpoint::v1::
+                 ReportTaskProgressRequest const& request) {
         return child_->ReportTaskProgress(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -94,13 +98,13 @@ AgentEndpointServiceLogging::ReportTaskProgress(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 AgentEndpointServiceLogging::ReportTaskComplete(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::agentendpoint::v1::
+                 ReportTaskCompleteRequest const& request) {
         return child_->ReportTaskComplete(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -108,13 +112,13 @@ AgentEndpointServiceLogging::ReportTaskComplete(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 AgentEndpointServiceLogging::RegisterAgent(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::agentendpoint::v1::
+                 RegisterAgentRequest const& request) {
         return child_->RegisterAgent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -122,13 +126,13 @@ AgentEndpointServiceLogging::RegisterAgent(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 AgentEndpointServiceLogging::ReportInventory(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::agentendpoint::v1::
+                 ReportInventoryRequest const& request) {
         return child_->ReportInventory(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

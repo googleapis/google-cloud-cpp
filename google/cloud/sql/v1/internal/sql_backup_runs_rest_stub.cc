@@ -30,62 +30,75 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultSqlBackupRunsServiceRestStub::DefaultSqlBackupRunsServiceRestStub(Options options)
+DefaultSqlBackupRunsServiceRestStub::DefaultSqlBackupRunsServiceRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultSqlBackupRunsServiceRestStub::DefaultSqlBackupRunsServiceRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlBackupRunsServiceRestStub::Delete(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "backupRuns", "/", request.id()), std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "backupRuns", "/", request.id()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::BackupRun>
 DefaultSqlBackupRunsServiceRestStub::Get(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::BackupRun>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "backupRuns", "/", request.id()), std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "backupRuns", "/", request.id()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 DefaultSqlBackupRunsServiceRestStub::Insert(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "backupRuns"), std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "backupRuns"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
 DefaultSqlBackupRunsServiceRestStub::List(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::sql::v1::SqlBackupRunsListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"max_results", std::to_string(request.max_results())});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"page_token", request.page_token()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::BackupRunsListResponse>(
       *service_, rest_context, request, true,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "backupRuns"), std::move(query_params));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "instances", "/",
+                   request.instance(), "/", "backupRuns"),
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

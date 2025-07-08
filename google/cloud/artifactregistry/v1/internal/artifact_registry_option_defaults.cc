@@ -35,32 +35,44 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ArtifactRegistryDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_AUTHORITY",
       "artifactregistry.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()) {
     options.set<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>(
         artifactregistry_v1::ArtifactRegistryLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()) {
+  if (!options
+           .has<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()) {
     options.set<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()) {
+  if (!options
+           .has<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()) {
     options.set<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>(
         GenericPollingPolicy<
             artifactregistry_v1::ArtifactRegistryRetryPolicyOption::Type,
             artifactregistry_v1::ArtifactRegistryBackoffPolicyOption::Type>(
-            options.get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()->clone(),
+            options
+                .get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
-    options.set<artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicyOption>(
-        artifactregistry_v1::MakeDefaultArtifactRegistryConnectionIdempotencyPolicy());
+  if (!options.has<artifactregistry_v1::
+                       ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicyOption>(
+        artifactregistry_v1::
+            MakeDefaultArtifactRegistryConnectionIdempotencyPolicy());
   }
 
   return options;

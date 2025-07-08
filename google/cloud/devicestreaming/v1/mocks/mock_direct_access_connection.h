@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `DirectAccessServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DirectAccessServiceClient`. To do so,
- * construct an object of type `DirectAccessServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `DirectAccessServiceClient`. To do
+ * so, construct an object of type `DirectAccessServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,34 +42,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDirectAccessServiceConnection : public devicestreaming_v1::DirectAccessServiceConnection {
+class MockDirectAccessServiceConnection
+    : public devicestreaming_v1::DirectAccessServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::devicestreaming::v1::DeviceSession>,
-  CreateDeviceSession,
-  (google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::devicestreaming::v1::DeviceSession>,
+      CreateDeviceSession,
+      (google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::devicestreaming::v1::DeviceSession>),
-  ListDeviceSessions,
-  (google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::devicestreaming::v1::DeviceSession>),
+      ListDeviceSessions,
+      (google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::devicestreaming::v1::DeviceSession>,
-  GetDeviceSession,
-  (google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::devicestreaming::v1::DeviceSession>,
+      GetDeviceSession,
+      (google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  CancelDeviceSession,
-  (google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request), (override));
+  MOCK_METHOD(
+      Status, CancelDeviceSession,
+      (google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::devicestreaming::v1::DeviceSession>,
-  UpdateDeviceSession,
-  (google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::devicestreaming::v1::DeviceSession>,
+      UpdateDeviceSession,
+      (google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((std::unique_ptr<
-      ::google::cloud::AsyncStreamingReadWriteRpc<
-          google::cloud::devicestreaming::v1::AdbMessage, google::cloud::devicestreaming::v1::DeviceMessage>>),
-      AsyncAdbConnect, (), (override));
+  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+                   google::cloud::devicestreaming::v1::AdbMessage,
+                   google::cloud::devicestreaming::v1::DeviceMessage>>),
+              AsyncAdbConnect, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

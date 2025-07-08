@@ -17,12 +17,12 @@
 // source: google/cloud/compute/machine_types/v1/machine_types.proto
 
 #include "google/cloud/compute/machine_types/v1/machine_types_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_option_defaults.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_rest_connection_impl.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_rest_stub_factory.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_tracing_connection.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,15 +36,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<MachineTypesConnection> MakeMachineTypesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      MachineTypesPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, MachineTypesPolicyOptionList>(
+      options, __func__);
   options = compute_machine_types_v1_internal::MachineTypesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_machine_types_v1_internal::CreateDefaultMachineTypesRestStub(
-      options);
+  auto stub =
+      compute_machine_types_v1_internal::CreateDefaultMachineTypesRestStub(
+          options);
   return compute_machine_types_v1_internal::MakeMachineTypesTracingConnection(
       std::make_shared<
           compute_machine_types_v1_internal::MachineTypesRestConnectionImpl>(

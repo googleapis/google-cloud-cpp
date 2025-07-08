@@ -25,12 +25,13 @@
 namespace google {
 namespace cloud {
 /// @deprecated This namespace exists for backwards compatibility. Use the
-///     types defined in beyondcorp_appconnectors_v1 instead of the aliases defined in
-///     this namespace.
+///     types defined in beyondcorp_appconnectors_v1 instead of the aliases
+///     defined in this namespace.
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceClient directly.
+/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceClient
+/// directly.
 using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

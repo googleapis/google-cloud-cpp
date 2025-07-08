@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_MODELS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_MODELS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/conversation_models_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -57,7 +57,8 @@ class ConversationModelsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConversationModelsLimitedErrorCountRetryPolicy : public ConversationModelsRetryPolicy {
+class ConversationModelsLimitedErrorCountRetryPolicy
+    : public ConversationModelsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,16 @@ class ConversationModelsLimitedErrorCountRetryPolicy : public ConversationModels
    *     @p maximum_failures == 0.
    */
   explicit ConversationModelsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ConversationModelsLimitedErrorCountRetryPolicy(
       ConversationModelsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ConversationModelsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConversationModelsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
   ConversationModelsLimitedErrorCountRetryPolicy(
       ConversationModelsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ConversationModelsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConversationModelsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +97,9 @@ class ConversationModelsLimitedErrorCountRetryPolicy : public ConversationModels
   using BaseType = ConversationModelsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::ConversationModelsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::ConversationModelsRetryTraits>
+      impl_;
 };
 
 /**
@@ -107,7 +112,8 @@ class ConversationModelsLimitedErrorCountRetryPolicy : public ConversationModels
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConversationModelsLimitedTimeRetryPolicy : public ConversationModelsRetryPolicy {
+class ConversationModelsLimitedTimeRetryPolicy
+    : public ConversationModelsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +138,14 @@ class ConversationModelsLimitedTimeRetryPolicy : public ConversationModelsRetryP
   template <typename DurationRep, typename DurationPeriod>
   explicit ConversationModelsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ConversationModelsLimitedTimeRetryPolicy(ConversationModelsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ConversationModelsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConversationModelsLimitedTimeRetryPolicy(ConversationModelsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ConversationModelsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConversationModelsLimitedTimeRetryPolicy(
+      ConversationModelsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ConversationModelsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConversationModelsLimitedTimeRetryPolicy(
+      ConversationModelsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ConversationModelsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,16 +167,18 @@ class ConversationModelsLimitedTimeRetryPolicy : public ConversationModelsRetryP
   using BaseType = ConversationModelsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::ConversationModelsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::ConversationModelsRetryTraits>
+      impl_;
 };
 
 /**
  * The `ConversationModelsConnection` object for `ConversationModelsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ConversationModelsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ConversationModelsClient`.
+ * sets in `ConversationModelsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ConversationModelsClient`.
  *
  * To create a concrete instance, see `MakeConversationModelsConnection()`.
  *
@@ -181,87 +191,126 @@ class ConversationModelsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(google::cloud::dialogflow::v2::CreateConversationModelRequest const& request);
+  CreateConversationModel(
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateConversationModel(NoAwaitTag, google::cloud::dialogflow::v2::CreateConversationModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateConversationModel(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel( google::longrunning::Operation const& operation);
+  CreateConversationModel(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationModel>
-  GetConversationModel(google::cloud::dialogflow::v2::GetConversationModelRequest const& request);
+  GetConversationModel(
+      google::cloud::dialogflow::v2::GetConversationModelRequest const&
+          request);
 
   virtual StreamRange<google::cloud::dialogflow::v2::ConversationModel>
-  ListConversationModels(google::cloud::dialogflow::v2::ListConversationModelsRequest request);
+  ListConversationModels(
+      google::cloud::dialogflow::v2::ListConversationModelsRequest request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel(google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  DeleteConversationModel(
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteConversationModel(NoAwaitTag, google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteConversationModel(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  DeleteConversationModel(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel(google::cloud::dialogflow::v2::DeployConversationModelRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  DeployConversationModel(
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeployConversationModel(NoAwaitTag, google::cloud::dialogflow::v2::DeployConversationModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeployConversationModel(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  DeployConversationModel(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel(google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::
+                              UndeployConversationModelOperationMetadata>>
+  UndeployConversationModel(
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UndeployConversationModel(NoAwaitTag, google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UndeployConversationModel(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dialogflow::v2::
+                              UndeployConversationModelOperationMetadata>>
+  UndeployConversationModel(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  GetConversationModelEvaluation(google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const& request);
+  GetConversationModelEvaluation(
+      google::cloud::dialogflow::v2::
+          GetConversationModelEvaluationRequest const& request);
 
-  virtual StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  ListConversationModelEvaluations(google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest request);
+  virtual StreamRange<
+      google::cloud::dialogflow::v2::ConversationModelEvaluation>
+  ListConversationModelEvaluations(
+      google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
+          request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
-  CreateConversationModelEvaluation(google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateConversationModelEvaluation(NoAwaitTag, google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
-  CreateConversationModelEvaluation( google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
-
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
-
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
+  CreateConversationModelEvaluation(
+      google::cloud::dialogflow::v2::
+          CreateConversationModelEvaluationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  CreateConversationModelEvaluation(
+      NoAwaitTag, google::cloud::dialogflow::v2::
+                      CreateConversationModelEvaluationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
+  CreateConversationModelEvaluation(
+      google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ConversationModelsConnection`.
+ * A factory function to construct an object of type
+ * `ConversationModelsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ConversationModelsClient.
+ * should be passed as an argument to the constructor of
+ * ConversationModelsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ConversationModelsConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ConversationModelsConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -272,8 +321,8 @@ class ConversationModelsConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `ConversationModelsConnection` created by
- * this function.
+ * @param options (optional) Configure the `ConversationModelsConnection`
+ * created by this function.
  */
 std::shared_ptr<ConversationModelsConnection> MakeConversationModelsConnection(
     std::string const& location, Options options = {});

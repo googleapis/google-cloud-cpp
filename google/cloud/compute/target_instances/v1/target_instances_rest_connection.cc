@@ -17,12 +17,12 @@
 // source: google/cloud/compute/target_instances/v1/target_instances.proto
 
 #include "google/cloud/compute/target_instances/v1/target_instances_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_option_defaults.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_rest_connection_impl.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_rest_stub_factory.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_tracing_connection.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,19 +36,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<TargetInstancesConnection> MakeTargetInstancesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      TargetInstancesPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, TargetInstancesPolicyOptionList>(
+      options, __func__);
   options = compute_target_instances_v1_internal::TargetInstancesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_target_instances_v1_internal::CreateDefaultTargetInstancesRestStub(
-      options);
-  return compute_target_instances_v1_internal::MakeTargetInstancesTracingConnection(
-      std::make_shared<
-          compute_target_instances_v1_internal::TargetInstancesRestConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_target_instances_v1_internal::
+      CreateDefaultTargetInstancesRestStub(options);
+  return compute_target_instances_v1_internal::
+      MakeTargetInstancesTracingConnection(
+          std::make_shared<compute_target_instances_v1_internal::
+                               TargetInstancesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

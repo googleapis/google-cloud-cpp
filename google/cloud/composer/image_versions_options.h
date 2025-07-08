@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use composer_v1::ImageVersionsBackoffPolicyOption directly.
 using ::google::cloud::composer_v1::ImageVersionsBackoffPolicyOption;
 
-/// @deprecated Use composer_v1::ImageVersionsConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::composer_v1::ImageVersionsConnectionIdempotencyPolicyOption;
+/// @deprecated Use composer_v1::ImageVersionsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::composer_v1::
+    ImageVersionsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use composer_v1::ImageVersionsPolicyOptionList directly.
 using ::google::cloud::composer_v1::ImageVersionsPolicyOptionList;

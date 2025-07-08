@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_GENERATORS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_GENERATORS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/generators_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/generators_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -63,14 +63,14 @@ class GeneratorsLimitedErrorCountRetryPolicy : public GeneratorsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit GeneratorsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   GeneratorsLimitedErrorCountRetryPolicy(
       GeneratorsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : GeneratorsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : GeneratorsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   GeneratorsLimitedErrorCountRetryPolicy(
       GeneratorsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : GeneratorsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : GeneratorsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +90,9 @@ class GeneratorsLimitedErrorCountRetryPolicy : public GeneratorsRetryPolicy {
   using BaseType = GeneratorsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::GeneratorsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_cx_internal::GeneratorsRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +130,14 @@ class GeneratorsLimitedTimeRetryPolicy : public GeneratorsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit GeneratorsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  GeneratorsLimitedTimeRetryPolicy(GeneratorsLimitedTimeRetryPolicy&& rhs) noexcept
-    : GeneratorsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  GeneratorsLimitedTimeRetryPolicy(GeneratorsLimitedTimeRetryPolicy const& rhs) noexcept
-    : GeneratorsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GeneratorsLimitedTimeRetryPolicy(
+      GeneratorsLimitedTimeRetryPolicy&& rhs) noexcept
+      : GeneratorsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  GeneratorsLimitedTimeRetryPolicy(
+      GeneratorsLimitedTimeRetryPolicy const& rhs) noexcept
+      : GeneratorsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,7 +159,9 @@ class GeneratorsLimitedTimeRetryPolicy : public GeneratorsRetryPolicy {
   using BaseType = GeneratorsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::GeneratorsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_cx_internal::GeneratorsRetryTraits>
+      impl_;
 };
 
 /**
@@ -177,34 +183,37 @@ class GeneratorsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::Generator>
-  ListGenerators(google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request);
+  ListGenerators(
+      google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request);
+
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Generator> GetGenerator(
+      google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-  GetGenerator(google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request);
+  CreateGenerator(
+      google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-  CreateGenerator(google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request);
+  UpdateGenerator(
+      google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-  UpdateGenerator(google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request);
+  virtual Status DeleteGenerator(
+      google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request);
 
-  virtual Status
-  DeleteGenerator(google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
-
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

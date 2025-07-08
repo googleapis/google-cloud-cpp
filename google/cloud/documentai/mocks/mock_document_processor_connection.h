@@ -30,8 +30,10 @@ namespace cloud {
 namespace documentai_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use documentai_v1_mocks::MockDocumentProcessorServiceConnection directly.
-using ::google::cloud::documentai_v1_mocks::MockDocumentProcessorServiceConnection;
+/// @deprecated Use documentai_v1_mocks::MockDocumentProcessorServiceConnection
+/// directly.
+using ::google::cloud::documentai_v1_mocks::
+    MockDocumentProcessorServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_mocks

@@ -32,20 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EssentialContactsServiceLogging::EssentialContactsServiceLogging(
     std::shared_ptr<EssentialContactsServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceLogging::CreateContact(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::essentialcontacts::v1::CreateContactRequest const&
+                 request) {
         return child_->CreateContact(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ EssentialContactsServiceLogging::CreateContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceLogging::UpdateContact(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::essentialcontacts::v1::UpdateContactRequest const&
+                 request) {
         return child_->UpdateContact(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ EssentialContactsServiceLogging::UpdateContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
 EssentialContactsServiceLogging::ListContacts(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::essentialcontacts::v1::ListContactsRequest const&
+                 request) {
         return child_->ListContacts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +76,24 @@ EssentialContactsServiceLogging::ListContacts(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceLogging::GetContact(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::essentialcontacts::v1::GetContactRequest const&
+                 request) {
         return child_->GetContact(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EssentialContactsServiceLogging::DeleteContact(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EssentialContactsServiceLogging::DeleteContact(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::essentialcontacts::v1::DeleteContactRequest const&
+                 request) {
         return child_->DeleteContact(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,27 +101,26 @@ EssentialContactsServiceLogging::DeleteContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
 EssentialContactsServiceLogging::ComputeContacts(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::essentialcontacts::v1::ComputeContactsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::essentialcontacts::v1::ComputeContactsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
+                 request) {
         return child_->ComputeContacts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EssentialContactsServiceLogging::SendTestMessage(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request) {
+Status EssentialContactsServiceLogging::SendTestMessage(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
+                 request) {
         return child_->SendTestMessage(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

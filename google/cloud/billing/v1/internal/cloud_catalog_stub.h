@@ -35,35 +35,34 @@ class CloudCatalogStub {
  public:
   virtual ~CloudCatalogStub() = 0;
 
-  virtual StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::billing::v1::ListServicesResponse>
+  ListServices(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListServicesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListSkusRequest const& request) = 0;
 };
 
 class DefaultCloudCatalogStub : public CloudCatalogStub {
  public:
   explicit DefaultCloudCatalogStub(
-      std::unique_ptr<google::cloud::billing::v1::CloudCatalog::StubInterface> grpc_stub)
+      std::unique_ptr<google::cloud::billing::v1::CloudCatalog::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::cloud::billing::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListSkusRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::billing::v1::CloudCatalog::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::billing::v1::CloudCatalog::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

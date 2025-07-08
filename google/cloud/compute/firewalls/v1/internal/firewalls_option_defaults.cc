@@ -35,32 +35,40 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options FirewallsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FIREWALLS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FIREWALLS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_FIREWALLS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FIREWALLS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_firewalls_v1::FirewallsRetryPolicyOption>()) {
     options.set<compute_firewalls_v1::FirewallsRetryPolicyOption>(
         compute_firewalls_v1::FirewallsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_firewalls_v1::FirewallsBackoffPolicyOption>()) {
     options.set<compute_firewalls_v1::FirewallsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<compute_firewalls_v1::FirewallsPollingPolicyOption>()) {
     options.set<compute_firewalls_v1::FirewallsPollingPolicyOption>(
         GenericPollingPolicy<
             compute_firewalls_v1::FirewallsRetryPolicyOption::Type,
             compute_firewalls_v1::FirewallsBackoffPolicyOption::Type>(
-            options.get<compute_firewalls_v1::FirewallsRetryPolicyOption>()->clone(),
+            options.get<compute_firewalls_v1::FirewallsRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_firewalls_v1::FirewallsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_firewalls_v1::FirewallsConnectionIdempotencyPolicyOption>(
-        compute_firewalls_v1::MakeDefaultFirewallsConnectionIdempotencyPolicy());
+  if (!options.has<
+          compute_firewalls_v1::FirewallsConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<compute_firewalls_v1::FirewallsConnectionIdempotencyPolicyOption>(
+            compute_firewalls_v1::
+                MakeDefaultFirewallsConnectionIdempotencyPolicy());
   }
 
   return options;

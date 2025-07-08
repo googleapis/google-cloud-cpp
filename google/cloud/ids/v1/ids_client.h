@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/ids/v1/ids_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IDSClient {
  public:
-  explicit IDSClient(std::shared_ptr<IDSConnection> connection, Options opts = {});
+  explicit IDSClient(std::shared_ptr<IDSConnection> connection,
+                     Options opts = {});
   ~IDSClient();
 
   ///@{
@@ -116,8 +117,8 @@ class IDSClient {
   /// [google.cloud.ids.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L158}
   ///
   // clang-format on
-  StreamRange<google::cloud::ids::v1::Endpoint>
-  ListEndpoints(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -155,8 +156,8 @@ class IDSClient {
   /// [google.cloud.ids.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L158}
   ///
   // clang-format on
-  StreamRange<google::cloud::ids::v1::Endpoint>
-  ListEndpoints(google::cloud::ids::v1::ListEndpointsRequest request, Options opts = {});
+  StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
+      google::cloud::ids::v1::ListEndpointsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -181,8 +182,8 @@ class IDSClient {
   /// [google.cloud.ids.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L199}
   ///
   // clang-format on
-  StatusOr<google::cloud::ids::v1::Endpoint>
-  GetEndpoint(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -211,8 +212,9 @@ class IDSClient {
   /// [google.cloud.ids.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L199}
   ///
   // clang-format on
-  StatusOr<google::cloud::ids::v1::Endpoint>
-  GetEndpoint(google::cloud::ids::v1::GetEndpointRequest const& request, Options opts = {});
+  StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
+      google::cloud::ids::v1::GetEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -250,8 +252,10 @@ class IDSClient {
   /// [google.cloud.ids.v1.Endpoint]: @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::ids::v1::Endpoint>>
-  CreateEndpoint(std::string const& parent, google::cloud::ids::v1::Endpoint const& endpoint, std::string const& endpoint_id, Options opts = {});
+  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
+      std::string const& parent,
+      google::cloud::ids::v1::Endpoint const& endpoint,
+      std::string const& endpoint_id, Options opts = {});
 
   // clang-format off
   ///
@@ -264,8 +268,10 @@ class IDSClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEndpoint(NoAwaitTag, std::string const& parent, google::cloud::ids::v1::Endpoint const& endpoint, std::string const& endpoint_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::ids::v1::Endpoint const& endpoint,
+      std::string const& endpoint_id, Options opts = {});
 
   // clang-format off
   ///
@@ -301,8 +307,9 @@ class IDSClient {
   /// [google.cloud.ids.v1.Endpoint]: @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::ids::v1::Endpoint>>
-  CreateEndpoint(google::cloud::ids::v1::CreateEndpointRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
+      google::cloud::ids::v1::CreateEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -315,8 +322,9 @@ class IDSClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEndpoint(NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -327,8 +335,8 @@ class IDSClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::ids::v1::Endpoint>>
-  CreateEndpoint(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +367,8 @@ class IDSClient {
   /// [google.cloud.ids.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L272}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-  DeleteEndpoint(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +381,8 @@ class IDSClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEndpoint(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -410,8 +418,9 @@ class IDSClient {
   /// [google.cloud.ids.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L272}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-  DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
+      google::cloud::ids::v1::DeleteEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +433,9 @@ class IDSClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEndpoint(NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -436,8 +446,8 @@ class IDSClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-  DeleteEndpoint(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<IDSConnection> connection_;

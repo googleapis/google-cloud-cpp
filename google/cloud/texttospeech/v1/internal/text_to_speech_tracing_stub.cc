@@ -33,22 +33,24 @@ TextToSpeechTracingStub::TextToSpeechTracingStub(
     std::shared_ptr<TextToSpeechStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> TextToSpeechTracingStub::ListVoices(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
+TextToSpeechTracingStub::ListVoices(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.texttospeech.v1.TextToSpeech", "ListVoices");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.texttospeech.v1.TextToSpeech", "ListVoices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListVoices(context, options, request));
 }
 
-StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse> TextToSpeechTracingStub::SynthesizeSpeech(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
+TextToSpeechTracingStub::SynthesizeSpeech(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.texttospeech.v1.TextToSpeech", "SynthesizeSpeech");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.texttospeech.v1.TextToSpeech", "SynthesizeSpeech");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -61,21 +63,24 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 TextToSpeechTracingStub::AsyncStreamingSynthesize(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.texttospeech.v1.TextToSpeech", "StreamingSynthesize");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.texttospeech.v1.TextToSpeech", "StreamingSynthesize");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingSynthesize(cq, context, std::move(options));
+  auto stream =
+      child_->AsyncStreamingSynthesize(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
       google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> TextToSpeechTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+TextToSpeechTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.texttospeech.v1.TextToSpeech", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.texttospeech.v1.TextToSpeech", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -83,10 +88,10 @@ StatusOr<google::longrunning::ListOperationsResponse> TextToSpeechTracingStub::L
 }
 
 StatusOr<google::longrunning::Operation> TextToSpeechTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.texttospeech.v1.TextToSpeech", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.texttospeech.v1.TextToSpeech", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

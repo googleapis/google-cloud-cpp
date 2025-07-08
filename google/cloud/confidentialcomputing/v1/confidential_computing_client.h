@@ -62,23 +62,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConfidentialComputingClient {
  public:
-  explicit ConfidentialComputingClient(std::shared_ptr<ConfidentialComputingConnection> connection, Options opts = {});
+  explicit ConfidentialComputingClient(
+      std::shared_ptr<ConfidentialComputingConnection> connection,
+      Options opts = {});
   ~ConfidentialComputingClient();
 
   ///@{
   /// @name Copy and move support
   ConfidentialComputingClient(ConfidentialComputingClient const&) = default;
-  ConfidentialComputingClient& operator=(ConfidentialComputingClient const&) = default;
+  ConfidentialComputingClient& operator=(ConfidentialComputingClient const&) =
+      default;
   ConfidentialComputingClient(ConfidentialComputingClient&&) = default;
-  ConfidentialComputingClient& operator=(ConfidentialComputingClient&&) = default;
+  ConfidentialComputingClient& operator=(ConfidentialComputingClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConfidentialComputingClient const& a, ConfidentialComputingClient const& b) {
+  friend bool operator==(ConfidentialComputingClient const& a,
+                         ConfidentialComputingClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConfidentialComputingClient const& a, ConfidentialComputingClient const& b) {
+  friend bool operator!=(ConfidentialComputingClient const& a,
+                         ConfidentialComputingClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -108,8 +114,10 @@ class ConfidentialComputingClient {
   /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
-  CreateChallenge(std::string const& parent, google::cloud::confidentialcomputing::v1::Challenge const& challenge, Options opts = {});
+  StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
+      std::string const& parent,
+      google::cloud::confidentialcomputing::v1::Challenge const& challenge,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +146,10 @@ class ConfidentialComputingClient {
   /// [google.cloud.confidentialcomputing.v1.CreateChallengeRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
-  CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
+      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -169,7 +179,10 @@ class ConfidentialComputingClient {
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-  VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request, Options opts = {});
+  VerifyAttestation(
+      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -207,8 +220,8 @@ class ConfidentialComputingClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -237,8 +250,9 @@ class ConfidentialComputingClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConfidentialComputingConnection> connection_;

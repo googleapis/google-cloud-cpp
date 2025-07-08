@@ -25,99 +25,103 @@ namespace cloud {
 namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AgentsClient::AgentsClient(
-    std::shared_ptr<AgentsConnection> connection, Options opts)
+AgentsClient::AgentsClient(std::shared_ptr<AgentsConnection> connection,
+                           Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AgentsClient::~AgentsClient() = default;
 
-StatusOr<google::cloud::dialogflow::v2::Agent>
-AgentsClient::GetAgent(std::string const& parent, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Agent> AgentsClient::GetAgent(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetAgentRequest request;
   request.set_parent(parent);
   return connection_->GetAgent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Agent>
-AgentsClient::GetAgent(google::cloud::dialogflow::v2::GetAgentRequest const& request, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Agent> AgentsClient::GetAgent(
+    google::cloud::dialogflow::v2::GetAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAgent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Agent>
-AgentsClient::SetAgent(google::cloud::dialogflow::v2::Agent const& agent, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Agent> AgentsClient::SetAgent(
+    google::cloud::dialogflow::v2::Agent const& agent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::SetAgentRequest request;
   *request.mutable_agent() = agent;
   return connection_->SetAgent(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Agent>
-AgentsClient::SetAgent(google::cloud::dialogflow::v2::SetAgentRequest const& request, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Agent> AgentsClient::SetAgent(
+    google::cloud::dialogflow::v2::SetAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetAgent(request);
 }
 
-Status
-AgentsClient::DeleteAgent(std::string const& parent, Options opts) {
+Status AgentsClient::DeleteAgent(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteAgentRequest request;
   request.set_parent(parent);
   return connection_->DeleteAgent(request);
 }
 
-Status
-AgentsClient::DeleteAgent(google::cloud::dialogflow::v2::DeleteAgentRequest const& request, Options opts) {
+Status AgentsClient::DeleteAgent(
+    google::cloud::dialogflow::v2::DeleteAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAgent(request);
 }
 
-StreamRange<google::cloud::dialogflow::v2::Agent>
-AgentsClient::SearchAgents(std::string const& parent, Options opts) {
+StreamRange<google::cloud::dialogflow::v2::Agent> AgentsClient::SearchAgents(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::SearchAgentsRequest request;
   request.set_parent(parent);
   return connection_->SearchAgents(request);
 }
 
-StreamRange<google::cloud::dialogflow::v2::Agent>
-AgentsClient::SearchAgents(google::cloud::dialogflow::v2::SearchAgentsRequest request, Options opts) {
+StreamRange<google::cloud::dialogflow::v2::Agent> AgentsClient::SearchAgents(
+    google::cloud::dialogflow::v2::SearchAgentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchAgents(std::move(request));
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsClient::TrainAgent(std::string const& parent, Options opts) {
+future<StatusOr<google::protobuf::Struct>> AgentsClient::TrainAgent(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::TrainAgentRequest request;
   request.set_parent(parent);
   return connection_->TrainAgent(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsClient::TrainAgent(NoAwaitTag, std::string const& parent, Options opts) {
+StatusOr<google::longrunning::Operation> AgentsClient::TrainAgent(
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::TrainAgentRequest request;
   request.set_parent(parent);
   return connection_->TrainAgent(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsClient::TrainAgent(google::cloud::dialogflow::v2::TrainAgentRequest const& request, Options opts) {
+future<StatusOr<google::protobuf::Struct>> AgentsClient::TrainAgent(
+    google::cloud::dialogflow::v2::TrainAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TrainAgent(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsClient::TrainAgent(NoAwaitTag, google::cloud::dialogflow::v2::TrainAgentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AgentsClient::TrainAgent(
+    NoAwaitTag, google::cloud::dialogflow::v2::TrainAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TrainAgent(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsClient::TrainAgent(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::protobuf::Struct>> AgentsClient::TrainAgent(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TrainAgent(operation);
 }
@@ -130,8 +134,8 @@ AgentsClient::ExportAgent(std::string const& parent, Options opts) {
   return connection_->ExportAgent(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsClient::ExportAgent(NoAwaitTag, std::string const& parent, Options opts) {
+StatusOr<google::longrunning::Operation> AgentsClient::ExportAgent(
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ExportAgentRequest request;
   request.set_parent(parent);
@@ -139,79 +143,92 @@ AgentsClient::ExportAgent(NoAwaitTag, std::string const& parent, Options opts) {
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
-AgentsClient::ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request, Options opts) {
+AgentsClient::ExportAgent(
+    google::cloud::dialogflow::v2::ExportAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAgent(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsClient::ExportAgent(NoAwaitTag, google::cloud::dialogflow::v2::ExportAgentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AgentsClient::ExportAgent(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::ExportAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAgent(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
-AgentsClient::ExportAgent(google::longrunning::Operation const& operation, Options opts) {
+AgentsClient::ExportAgent(google::longrunning::Operation const& operation,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAgent(operation);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsClient::ImportAgent(google::cloud::dialogflow::v2::ImportAgentRequest const& request, Options opts) {
+future<StatusOr<google::protobuf::Struct>> AgentsClient::ImportAgent(
+    google::cloud::dialogflow::v2::ImportAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportAgent(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsClient::ImportAgent(NoAwaitTag, google::cloud::dialogflow::v2::ImportAgentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AgentsClient::ImportAgent(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::ImportAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportAgent(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsClient::ImportAgent(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::protobuf::Struct>> AgentsClient::ImportAgent(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportAgent(operation);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsClient::RestoreAgent(google::cloud::dialogflow::v2::RestoreAgentRequest const& request, Options opts) {
+future<StatusOr<google::protobuf::Struct>> AgentsClient::RestoreAgent(
+    google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreAgent(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsClient::RestoreAgent(NoAwaitTag, google::cloud::dialogflow::v2::RestoreAgentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AgentsClient::RestoreAgent(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreAgent(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-AgentsClient::RestoreAgent(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::protobuf::Struct>> AgentsClient::RestoreAgent(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreAgent(operation);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>
-AgentsClient::GetValidationResult(google::cloud::dialogflow::v2::GetValidationResultRequest const& request, Options opts) {
+AgentsClient::GetValidationResult(
+    google::cloud::dialogflow::v2::GetValidationResultRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetValidationResult(request);
 }
 
-StreamRange<google::cloud::location::Location>
-AgentsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> AgentsClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-AgentsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> AgentsClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-AgentsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> AgentsClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -219,36 +236,35 @@ AgentsClient::ListOperations(std::string const& name, std::string const& filter,
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-AgentsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> AgentsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AgentsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AgentsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-AgentsClient::CancelOperation(std::string const& name, Options opts) {
+Status AgentsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-AgentsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status AgentsClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

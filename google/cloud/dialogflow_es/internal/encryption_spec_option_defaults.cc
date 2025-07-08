@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/encryption_spec_option_defaults.h"
 #include "google/cloud/dialogflow_es/encryption_spec_connection.h"
 #include "google/cloud/dialogflow_es/encryption_spec_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,34 +34,47 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options EncryptionSpecServiceDefaultOptions(std::string const& location, Options options) {
+Options EncryptionSpecServiceDefaultOptions(std::string const& location,
+                                            Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ENCRYPTION_SPEC_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_ENCRYPTION_SPEC_SERVICE_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::EncryptionSpecServiceRetryPolicyOption>()) {
     options.set<dialogflow_es::EncryptionSpecServiceRetryPolicyOption>(
         dialogflow_es::EncryptionSpecServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dialogflow_es::EncryptionSpecServiceBackoffPolicyOption>()) {
     options.set<dialogflow_es::EncryptionSpecServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<dialogflow_es::EncryptionSpecServicePollingPolicyOption>()) {
     options.set<dialogflow_es::EncryptionSpecServicePollingPolicyOption>(
         GenericPollingPolicy<
             dialogflow_es::EncryptionSpecServiceRetryPolicyOption::Type,
             dialogflow_es::EncryptionSpecServiceBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::EncryptionSpecServiceRetryPolicyOption>()->clone(),
+            options
+                .get<dialogflow_es::EncryptionSpecServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<dialogflow_es::EncryptionSpecServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<dialogflow_es::EncryptionSpecServiceConnectionIdempotencyPolicyOption>(
-        dialogflow_es::MakeDefaultEncryptionSpecServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<dialogflow_es::
+                    EncryptionSpecServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        dialogflow_es::EncryptionSpecServiceConnectionIdempotencyPolicyOption>(
+        dialogflow_es::
+            MakeDefaultEncryptionSpecServiceConnectionIdempotencyPolicy());
   }
 
   return options;

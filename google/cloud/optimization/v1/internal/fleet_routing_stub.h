@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,31 +38,32 @@ class FleetRoutingStub {
  public:
   virtual ~FleetRoutingStub() = 0;
 
-  virtual StatusOr<google::cloud::optimization::v1::OptimizeToursResponse> OptimizeTours(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
+  OptimizeTours(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::optimization::v1::OptimizeToursRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchOptimizeTours(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchOptimizeTours(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) = 0;
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -75,30 +76,33 @@ class FleetRoutingStub {
 class DefaultFleetRoutingStub : public FleetRoutingStub {
  public:
   DefaultFleetRoutingStub(
-      std::unique_ptr<google::cloud::optimization::v1::FleetRouting::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::cloud::optimization::v1::FleetRouting::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse> OptimizeTours(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::optimization::v1::OptimizeToursRequest const& request) override;
+  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
+  OptimizeTours(grpc::ClientContext& context, Options const& options,
+                google::cloud::optimization::v1::OptimizeToursRequest const&
+                    request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchOptimizeTours(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -114,8 +118,10 @@ class DefaultFleetRoutingStub : public FleetRoutingStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::optimization::v1::FleetRouting::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::optimization::v1::FleetRouting::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

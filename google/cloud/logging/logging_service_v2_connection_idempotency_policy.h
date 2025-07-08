@@ -26,10 +26,13 @@ namespace cloud {
 namespace logging {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use logging_v2::MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy directly.
-using ::google::cloud::logging_v2::MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// logging_v2::MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy directly.
+using ::google::cloud::logging_v2::
+    MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy;
 
-/// @deprecated Use logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy directly.
+/// @deprecated Use logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

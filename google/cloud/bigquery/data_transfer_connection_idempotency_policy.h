@@ -26,11 +26,17 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_datatransfer_v1::MakeDefaultDataTransferServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::bigquery_datatransfer_v1::MakeDefaultDataTransferServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// bigquery_datatransfer_v1::MakeDefaultDataTransferServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    MakeDefaultDataTransferServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    DataTransferServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

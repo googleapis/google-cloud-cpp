@@ -32,110 +32,133 @@ AutoscalingPolicyServiceTracingStub::AutoscalingPolicyServiceTracingStub(
     std::shared_ptr<AutoscalingPolicyServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> AutoscalingPolicyServiceTracingStub::CreateAutoscalingPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "CreateAutoscalingPolicy");
+StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
+AutoscalingPolicyServiceTracingStub::CreateAutoscalingPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService",
+      "CreateAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateAutoscalingPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateAutoscalingPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> AutoscalingPolicyServiceTracingStub::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "UpdateAutoscalingPolicy");
+StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
+AutoscalingPolicyServiceTracingStub::UpdateAutoscalingPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService",
+      "UpdateAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateAutoscalingPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateAutoscalingPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> AutoscalingPolicyServiceTracingStub::GetAutoscalingPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
+AutoscalingPolicyServiceTracingStub::GetAutoscalingPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "GetAutoscalingPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService",
+      "GetAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAutoscalingPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAutoscalingPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse> AutoscalingPolicyServiceTracingStub::ListAutoscalingPolicies(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "ListAutoscalingPolicies");
+StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
+AutoscalingPolicyServiceTracingStub::ListAutoscalingPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService",
+      "ListAutoscalingPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAutoscalingPolicies(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAutoscalingPolicies(context, options, request));
 }
 
 Status AutoscalingPolicyServiceTracingStub::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "DeleteAutoscalingPolicy");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService",
+      "DeleteAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteAutoscalingPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteAutoscalingPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy> AutoscalingPolicyServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy>
+AutoscalingPolicyServiceTracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy> AutoscalingPolicyServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy>
+AutoscalingPolicyServiceTracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> AutoscalingPolicyServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AutoscalingPolicyServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService",
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> AutoscalingPolicyServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+AutoscalingPolicyServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> AutoscalingPolicyServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+AutoscalingPolicyServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -143,10 +166,10 @@ StatusOr<google::longrunning::Operation> AutoscalingPolicyServiceTracingStub::Ge
 }
 
 Status AutoscalingPolicyServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -154,10 +177,10 @@ Status AutoscalingPolicyServiceTracingStub::DeleteOperation(
 }
 
 Status AutoscalingPolicyServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.AutoscalingPolicyService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.AutoscalingPolicyService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -166,7 +189,8 @@ Status AutoscalingPolicyServiceTracingStub::CancelOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<AutoscalingPolicyServiceStub> MakeAutoscalingPolicyServiceTracingStub(
+std::shared_ptr<AutoscalingPolicyServiceStub>
+MakeAutoscalingPolicyServiceTracingStub(
     std::shared_ptr<AutoscalingPolicyServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<AutoscalingPolicyServiceTracingStub>(std::move(stub));

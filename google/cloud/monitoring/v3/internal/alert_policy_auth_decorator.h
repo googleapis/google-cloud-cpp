@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_ALERT_POLICY_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_ALERT_POLICY_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/monitoring/v3/internal/alert_policy_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,28 +39,23 @@ class AlertPolicyServiceAuth : public AlertPolicyServiceStub {
       std::shared_ptr<AlertPolicyServiceStub> child);
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListAlertPoliciesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
 
   Status DeleteAlertPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
 
  private:

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_INTERNAL_TELCO_AUTOMATION_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_INTERNAL_TELCO_AUTOMATION_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/telcoautomation/v1/internal/telco_automation_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -39,238 +39,257 @@ class TelcoAutomationAuth : public TelcoAutomationStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<TelcoAutomationStub> child);
 
-  StatusOr<google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse> ListOrchestrationClusters(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest const& request) override;
+  StatusOr<
+      google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse>
+  ListOrchestrationClusters(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::
+          ListOrchestrationClustersRequest const& request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster> GetOrchestrationCluster(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
+  GetOrchestrationCluster(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateOrchestrationCluster(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateOrchestrationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) override;
+      google::cloud::telcoautomation::v1::
+          CreateOrchestrationClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::telcoautomation::v1::
+          CreateOrchestrationClusterRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteOrchestrationCluster(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteOrchestrationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) override;
+      google::cloud::telcoautomation::v1::
+          DeleteOrchestrationClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::telcoautomation::v1::
+          DeleteOrchestrationClusterRequest const& request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse> ListEdgeSlms(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
+  ListEdgeSlms(grpc::ClientContext& context, Options const& options,
+               google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::telcoautomation::v1::EdgeSlm> GetEdgeSlm(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEdgeSlm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) override;
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateEdgeSlm(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEdgeSlm(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) override;
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request)
+      override;
 
   StatusOr<google::cloud::telcoautomation::v1::Blueprint> CreateBlueprint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request)
+      override;
 
   StatusOr<google::cloud::telcoautomation::v1::Blueprint> UpdateBlueprint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request)
+      override;
 
   StatusOr<google::cloud::telcoautomation::v1::Blueprint> GetBlueprint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::GetBlueprintRequest const& request)
+      override;
 
   Status DeleteBlueprint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request)
+      override;
 
-  StatusOr<google::cloud::telcoautomation::v1::ListBlueprintsResponse> ListBlueprints(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ListBlueprintsRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::ListBlueprintsResponse>
+  ListBlueprints(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ListBlueprintsRequest const& request)
+      override;
 
   StatusOr<google::cloud::telcoautomation::v1::Blueprint> ApproveBlueprint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ApproveBlueprintRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
+          request) override;
 
   StatusOr<google::cloud::telcoautomation::v1::Blueprint> ProposeBlueprint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ProposeBlueprintRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
+          request) override;
 
   StatusOr<google::cloud::telcoautomation::v1::Blueprint> RejectBlueprint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request)
+      override;
 
-  StatusOr<google::cloud::telcoautomation::v1::ListBlueprintRevisionsResponse> ListBlueprintRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::ListBlueprintRevisionsResponse>
+  ListBlueprintRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse> SearchBlueprintRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse>
+  SearchBlueprintRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse> SearchDeploymentRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest const& request) override;
+  StatusOr<
+      google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse>
+  SearchDeploymentRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::
+          SearchDeploymentRevisionsRequest const& request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse> DiscardBlueprintChanges(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
+  DiscardBlueprintChanges(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::ListPublicBlueprintsResponse> ListPublicBlueprints(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::ListPublicBlueprintsResponse>
+  ListPublicBlueprints(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint> GetPublicBlueprint(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
+  GetPublicBlueprint(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
+          request) override;
 
   StatusOr<google::cloud::telcoautomation::v1::Deployment> CreateDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::CreateDeploymentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
+          request) override;
 
   StatusOr<google::cloud::telcoautomation::v1::Deployment> UpdateDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::UpdateDeploymentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
+          request) override;
 
   StatusOr<google::cloud::telcoautomation::v1::Deployment> GetDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::GetDeploymentRequest const& request)
+      override;
 
   Status RemoveDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::RemoveDeploymentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::ListDeploymentsResponse> ListDeployments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ListDeploymentsRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::ListDeploymentsResponse>
+  ListDeployments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ListDeploymentsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse> ListDeploymentRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse>
+  ListDeploymentRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse> DiscardDeploymentChanges(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
+  DiscardDeploymentChanges(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
+          request) override;
 
   StatusOr<google::cloud::telcoautomation::v1::Deployment> ApplyDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse> ComputeDeploymentStatus(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
+  ComputeDeploymentStatus(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
+          request) override;
 
   StatusOr<google::cloud::telcoautomation::v1::Deployment> RollbackDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::RollbackDeploymentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment> GetHydratedDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
+  GetHydratedDeployment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse> ListHydratedDeployments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse>
+  ListHydratedDeployments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment> UpdateHydratedDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
+  UpdateHydratedDeployment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment> ApplyHydratedDeployment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const& request) override;
+  StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
+  ApplyHydratedDeployment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

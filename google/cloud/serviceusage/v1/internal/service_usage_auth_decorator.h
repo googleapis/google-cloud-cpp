@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_INTERNAL_SERVICE_USAGE_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_INTERNAL_SERVICE_USAGE_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/serviceusage/v1/internal/service_usage_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -43,58 +43,58 @@ class ServiceUsageAuth : public ServiceUsageStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::serviceusage::v1::EnableServiceRequest const& request) override;
+      google::api::serviceusage::v1::EnableServiceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> EnableService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::serviceusage::v1::EnableServiceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::api::serviceusage::v1::EnableServiceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDisableService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::serviceusage::v1::DisableServiceRequest const& request) override;
+      google::api::serviceusage::v1::DisableServiceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DisableService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::serviceusage::v1::DisableServiceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::api::serviceusage::v1::DisableServiceRequest const& request)
+      override;
 
   StatusOr<google::api::serviceusage::v1::Service> GetService(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::GetServiceRequest const& request) override;
 
   StatusOr<google::api::serviceusage::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::serviceusage::v1::ListServicesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::api::serviceusage::v1::ListServicesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchEnableServices(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::api::serviceusage::v1::BatchEnableServicesRequest const& request) override;
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchEnableServices(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::serviceusage::v1::BatchEnableServicesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
+      override;
 
-  StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse> BatchGetServices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::serviceusage::v1::BatchGetServicesRequest const& request) override;
+  StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
+  BatchGetServices(grpc::ClientContext& context, Options const& options,
+                   google::api::serviceusage::v1::BatchGetServicesRequest const&
+                       request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

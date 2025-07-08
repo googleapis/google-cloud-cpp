@@ -26,11 +26,16 @@ namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use containeranalysis_v1::MakeDefaultContainerAnalysisConnectionIdempotencyPolicy directly.
-using ::google::cloud::containeranalysis_v1::MakeDefaultContainerAnalysisConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// containeranalysis_v1::MakeDefaultContainerAnalysisConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::containeranalysis_v1::
+    MakeDefaultContainerAnalysisConnectionIdempotencyPolicy;
 
-/// @deprecated Use containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy directly.
-using ::google::cloud::containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy directly.
+using ::google::cloud::containeranalysis_v1::
+    ContainerAnalysisConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis

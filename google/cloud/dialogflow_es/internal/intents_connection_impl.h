@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_INTENTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_INTENTS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/intents_connection.h"
 #include "google/cloud/dialogflow_es/intents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/intents_options.h"
 #include "google/cloud/dialogflow_es/internal/intents_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/intents_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,69 +40,73 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IntentsConnectionImpl
-    : public dialogflow_es::IntentsConnection {
+class IntentsConnectionImpl : public dialogflow_es::IntentsConnection {
  public:
   ~IntentsConnectionImpl() override = default;
 
   IntentsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::IntentsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dialogflow_es_internal::IntentsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::dialogflow::v2::Intent>
-  ListIntents(google::cloud::dialogflow::v2::ListIntentsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Intent> ListIntents(
+      google::cloud::dialogflow::v2::ListIntentsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Intent>
-  GetIntent(google::cloud::dialogflow::v2::GetIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
+      google::cloud::dialogflow::v2::GetIntentRequest const& request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::Intent>
-  CreateIntent(google::cloud::dialogflow::v2::CreateIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
+      google::cloud::dialogflow::v2::CreateIntentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::Intent>
-  UpdateIntent(google::cloud::dialogflow::v2::UpdateIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
+      google::cloud::dialogflow::v2::UpdateIntentRequest const& request)
+      override;
 
-  Status
-  DeleteIntent(google::cloud::dialogflow::v2::DeleteIntentRequest const& request) override;
-
-  future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-  BatchUpdateIntents(google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  BatchUpdateIntents(NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) override;
+  Status DeleteIntent(google::cloud::dialogflow::v2::DeleteIntentRequest const&
+                          request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
   BatchUpdateIntents(
+      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchUpdateIntents(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
+  BatchUpdateIntents(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
+      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteIntents(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::protobuf::Struct>>
-  BatchDeleteIntents(google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  BatchDeleteIntents(NoAwaitTag,
-      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  future<StatusOr<google::protobuf::Struct>>
-  BatchDeleteIntents(
-      google::longrunning::Operation const& operation) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
-
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
-
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

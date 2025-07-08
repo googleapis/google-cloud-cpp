@@ -36,17 +36,15 @@ class ServicesLogging : public ServicesStub {
  public:
   ~ServicesLogging() override = default;
   ServicesLogging(std::shared_ptr<ServicesStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                  TracingOptions tracing_options,
+                  std::set<std::string> const& components);
 
   StatusOr<google::appengine::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Service> GetService(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(
@@ -56,8 +54,7 @@ class ServicesLogging : public ServicesStub {
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
@@ -67,8 +64,7 @@ class ServicesLogging : public ServicesStub {
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_TIERS_REST_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_TIERS_REST_STUB_FACTORY_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_tiers_rest_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 

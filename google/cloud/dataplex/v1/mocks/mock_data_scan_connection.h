@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDataScanServiceConnection : public dataplex_v1::DataScanServiceConnection {
+class MockDataScanServiceConnection
+    : public dataplex_v1::DataScanServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,14 @@ class MockDataScanServiceConnection : public dataplex_v1::DataScanServiceConnect
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDataScan(Matcher<google::cloud::dataplex::v1::CreateDataScanRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateDataScan(Matcher<google::cloud::dataplex::v1::CreateDataScanRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
-  CreateDataScan,
-  (google::cloud::dataplex::v1::CreateDataScanRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::DataScan>>, CreateDataScan,
+      (google::cloud::dataplex::v1::CreateDataScanRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,33 +67,37 @@ class MockDataScanServiceConnection : public dataplex_v1::DataScanServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateDataScan(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateDataScan, (NoAwaitTag,
-    google::cloud::dataplex::v1::CreateDataScanRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDataScan(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
-  CreateDataScan, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDataScan,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::CreateDataScanRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDataScan(Matcher<google::cloud::dataplex::v1::UpdateDataScanRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateDataScan(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
-  UpdateDataScan,
-  (google::cloud::dataplex::v1::UpdateDataScanRequest const& request), (override));
+              CreateDataScan, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDataScan(Matcher<google::cloud::dataplex::v1::UpdateDataScanRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::DataScan>>, UpdateDataScan,
+      (google::cloud::dataplex::v1::UpdateDataScanRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -98,33 +105,38 @@ class MockDataScanServiceConnection : public dataplex_v1::DataScanServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateDataScan(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateDataScan, (NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateDataScanRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDataScan,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::UpdateDataScanRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDataScan(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateDataScan(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
-  UpdateDataScan, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateDataScan, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDataScan(Matcher<google::cloud::dataplex::v1::DeleteDataScanRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteDataScan(Matcher<google::cloud::dataplex::v1::DeleteDataScanRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteDataScan,
-  (google::cloud::dataplex::v1::DeleteDataScanRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
+      DeleteDataScan,
+      (google::cloud::dataplex::v1::DeleteDataScanRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -132,81 +144,90 @@ class MockDataScanServiceConnection : public dataplex_v1::DataScanServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteDataScan(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteDataScan, (NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteDataScanRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDataScan,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::DeleteDataScanRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDataScan(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteDataScan(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteDataScan, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteDataScan, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::DataScan>,
-  GetDataScan,
-  (google::cloud::dataplex::v1::GetDataScanRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::DataScan>, GetDataScan,
+              (google::cloud::dataplex::v1::GetDataScanRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::DataScan>),
-  ListDataScans,
-  (google::cloud::dataplex::v1::ListDataScansRequest request), (override));
+              ListDataScans,
+              (google::cloud::dataplex::v1::ListDataScansRequest request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::RunDataScanResponse>,
-  RunDataScan,
-  (google::cloud::dataplex::v1::RunDataScanRequest const& request), (override));
+              RunDataScan,
+              (google::cloud::dataplex::v1::RunDataScanRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::DataScanJob>,
-  GetDataScanJob,
-  (google::cloud::dataplex::v1::GetDataScanJobRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::DataScanJob>, GetDataScanJob,
+      (google::cloud::dataplex::v1::GetDataScanJobRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::DataScanJob>),
-  ListDataScanJobs,
-  (google::cloud::dataplex::v1::ListDataScanJobsRequest request), (override));
+              ListDataScanJobs,
+              (google::cloud::dataplex::v1::ListDataScanJobsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>,
-  GenerateDataQualityRules,
-  (google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>,
+      GenerateDataQualityRules,
+      (google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

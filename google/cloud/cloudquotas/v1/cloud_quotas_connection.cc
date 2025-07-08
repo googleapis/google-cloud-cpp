@@ -17,12 +17,12 @@
 // source: google/api/cloudquotas/v1/cloudquotas.proto
 
 #include "google/cloud/cloudquotas/v1/cloud_quotas_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_options.h"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_connection_impl.h"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_option_defaults.h"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_stub_factory.h"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudQuotasConnection::~CloudQuotasConnection() = default;
 
-StreamRange<google::api::cloudquotas::v1::QuotaInfo> CloudQuotasConnection::ListQuotaInfos(
-    google::api::cloudquotas::v1::ListQuotaInfosRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::cloudquotas::v1::QuotaInfo>
+CloudQuotasConnection::ListQuotaInfos(
+    google::api::cloudquotas::v1::
+        ListQuotaInfosRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::cloudquotas::v1::QuotaInfo>>();
 }
@@ -50,8 +52,10 @@ CloudQuotasConnection::GetQuotaInfo(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::api::cloudquotas::v1::QuotaPreference> CloudQuotasConnection::ListQuotaPreferences(
-    google::api::cloudquotas::v1::ListQuotaPreferencesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::api::cloudquotas::v1::QuotaPreference>
+CloudQuotasConnection::ListQuotaPreferences(
+    google::api::cloudquotas::v1::
+        ListQuotaPreferencesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::cloudquotas::v1::QuotaPreference>>();
 }
@@ -77,17 +81,18 @@ CloudQuotasConnection::UpdateQuotaPreference(
 std::shared_ptr<CloudQuotasConnection> MakeCloudQuotasConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      CloudQuotasPolicyOptionList>(options, __func__);
-  options = cloudquotas_v1_internal::CloudQuotasDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 CloudQuotasPolicyOptionList>(options,
+                                                              __func__);
+  options =
+      cloudquotas_v1_internal::CloudQuotasDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = cloudquotas_v1_internal::CreateDefaultCloudQuotasStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return cloudquotas_v1_internal::MakeCloudQuotasTracingConnection(
       std::make_shared<cloudquotas_v1_internal::CloudQuotasConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,26 +28,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-RevisionsTracingStub::RevisionsTracingStub(
-    std::shared_ptr<RevisionsStub> child)
+RevisionsTracingStub::RevisionsTracingStub(std::shared_ptr<RevisionsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsTracingStub::GetRevision(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetRevisionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "GetRevision");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "GetRevision");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetRevision(context, options, request));
 }
 
-StatusOr<google::cloud::run::v2::ListRevisionsResponse> RevisionsTracingStub::ListRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::run::v2::ListRevisionsResponse>
+RevisionsTracingStub::ListRevisions(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "ListRevisions");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "ListRevisions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,34 +56,36 @@ StatusOr<google::cloud::run::v2::ListRevisionsResponse> RevisionsTracingStub::Li
 
 future<StatusOr<google::longrunning::Operation>>
 RevisionsTracingStub::AsyncDeleteRevision(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::run::v2::DeleteRevisionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "DeleteRevision");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "DeleteRevision");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteRevision(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteRevision(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-RevisionsTracingStub::DeleteRevision(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::run::v2::DeleteRevisionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "DeleteRevision");
+StatusOr<google::longrunning::Operation> RevisionsTracingStub::DeleteRevision(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "DeleteRevision");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteRevision(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> RevisionsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+RevisionsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "ListOperations");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -91,10 +93,10 @@ StatusOr<google::longrunning::ListOperationsResponse> RevisionsTracingStub::List
 }
 
 StatusOr<google::longrunning::Operation> RevisionsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "GetOperation");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -102,10 +104,10 @@ StatusOr<google::longrunning::Operation> RevisionsTracingStub::GetOperation(
 }
 
 Status RevisionsTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions",
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -113,10 +115,10 @@ Status RevisionsTracingStub::DeleteOperation(
 }
 
 StatusOr<google::longrunning::Operation> RevisionsTracingStub::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "WaitOperation");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -133,8 +135,7 @@ RevisionsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -147,8 +148,8 @@ future<Status> RevisionsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

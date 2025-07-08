@@ -26,47 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MetricsServiceV2ConnectionIdempotencyPolicy::~MetricsServiceV2ConnectionIdempotencyPolicy() = default;
+MetricsServiceV2ConnectionIdempotencyPolicy::
+    ~MetricsServiceV2ConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MetricsServiceV2ConnectionIdempotencyPolicy>
 MetricsServiceV2ConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MetricsServiceV2ConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::ListLogMetrics(google::logging::v2::ListLogMetricsRequest) {  // NOLINT
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::ListLogMetrics(
+    google::logging::v2::ListLogMetricsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::GetLogMetric(google::logging::v2::GetLogMetricRequest const&) {
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::GetLogMetric(
+    google::logging::v2::GetLogMetricRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::CreateLogMetric(google::logging::v2::CreateLogMetricRequest const&) {
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::CreateLogMetric(
+    google::logging::v2::CreateLogMetricRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const&) {
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::UpdateLogMetric(
+    google::logging::v2::UpdateLogMetricRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const&) {
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::DeleteLogMetric(
+    google::logging::v2::DeleteLogMetricRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MetricsServiceV2ConnectionIdempotencyPolicy>
-    MakeDefaultMetricsServiceV2ConnectionIdempotencyPolicy() {
+MakeDefaultMetricsServiceV2ConnectionIdempotencyPolicy() {
   return std::make_unique<MetricsServiceV2ConnectionIdempotencyPolicy>();
 }
 

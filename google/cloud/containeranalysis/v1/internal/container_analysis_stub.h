@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <grafeas/v1/grafeas.pb.h>
 #include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
+#include <grafeas/v1/grafeas.pb.h>
 #include <memory>
 #include <utility>
 
@@ -37,64 +37,67 @@ class ContainerAnalysisStub {
   virtual ~ContainerAnalysisStub() = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary> GetVulnerabilityOccurrencesSummary(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) = 0;
+  virtual StatusOr<
+      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+  GetVulnerabilityOccurrencesSummary(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::containeranalysis::v1::
+          GetVulnerabilityOccurrencesSummaryRequest const& request) = 0;
 
-  virtual StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse> ExportSBOM(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) = 0;
+  virtual StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(grpc::ClientContext& context, Options const& options,
+             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) = 0;
 };
 
 class DefaultContainerAnalysisStub : public ContainerAnalysisStub {
  public:
   explicit DefaultContainerAnalysisStub(
-      std::unique_ptr<google::devtools::containeranalysis::v1::ContainerAnalysis::StubInterface> grpc_stub)
+      std::unique_ptr<google::devtools::containeranalysis::v1::
+                          ContainerAnalysis::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary> GetVulnerabilityOccurrencesSummary(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) override;
+  StatusOr<
+      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+  GetVulnerabilityOccurrencesSummary(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::containeranalysis::v1::
+          GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
-  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse> ExportSBOM(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) override;
+  StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+  ExportSBOM(grpc::ClientContext& context, Options const& options,
+             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) override;
 
  private:
-  std::unique_ptr<google::devtools::containeranalysis::v1::ContainerAnalysis::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::devtools::containeranalysis::v1::ContainerAnalysis::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

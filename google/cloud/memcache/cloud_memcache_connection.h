@@ -33,7 +33,8 @@ using ::google::cloud::memcache_v1::MakeCloudMemcacheConnection;
 /// @deprecated Use memcache_v1::CloudMemcacheConnection directly.
 using ::google::cloud::memcache_v1::CloudMemcacheConnection;
 
-/// @deprecated Use memcache_v1::CloudMemcacheLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use memcache_v1::CloudMemcacheLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::memcache_v1::CloudMemcacheLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use memcache_v1::CloudMemcacheLimitedTimeRetryPolicy directly.

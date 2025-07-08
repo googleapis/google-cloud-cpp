@@ -30,8 +30,10 @@ namespace cloud {
 namespace beyondcorp_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use beyondcorp_appgateways_v1_mocks::MockAppGatewaysServiceConnection directly.
-using ::google::cloud::beyondcorp_appgateways_v1_mocks::MockAppGatewaysServiceConnection;
+/// @deprecated Use
+/// beyondcorp_appgateways_v1_mocks::MockAppGatewaysServiceConnection directly.
+using ::google::cloud::beyondcorp_appgateways_v1_mocks::
+    MockAppGatewaysServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_mocks

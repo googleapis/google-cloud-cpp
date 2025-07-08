@@ -36,41 +36,43 @@ class SynonymSetServiceTracingStub : public SynonymSetServiceStub {
  public:
   ~SynonymSetServiceTracingStub() override = default;
 
-  explicit SynonymSetServiceTracingStub(std::shared_ptr<SynonymSetServiceStub> child);
+  explicit SynonymSetServiceTracingStub(
+      std::shared_ptr<SynonymSetServiceStub> child);
 
   StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> CreateSynonymSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
+          request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> GetSynonymSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request)
+      override;
 
   StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> UpdateSynonymSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
+          request) override;
 
   Status DeleteSynonymSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
+          request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse> ListSynonymSets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
+  ListSynonymSets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<SynonymSetServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

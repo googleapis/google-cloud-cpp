@@ -17,10 +17,10 @@
 // source: google/cloud/metastore/v1/metastore_federation.proto
 
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/metastore/v1/dataproc_metastore_federation_connection.h"
 #include "google/cloud/metastore/v1/dataproc_metastore_federation_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,49 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataprocMetastoreFederationDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATAPROC_METASTORE_FEDERATION_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DATAPROC_METASTORE_FEDERATION_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_DATAPROC_METASTORE_FEDERATION_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DATAPROC_METASTORE_FEDERATION_AUTHORITY",
       "metastore.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<metastore_v1::DataprocMetastoreFederationRetryPolicyOption>()) {
+  if (!options
+           .has<metastore_v1::DataprocMetastoreFederationRetryPolicyOption>()) {
     options.set<metastore_v1::DataprocMetastoreFederationRetryPolicyOption>(
         metastore_v1::DataprocMetastoreFederationLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<metastore_v1::DataprocMetastoreFederationBackoffPolicyOption>()) {
+  if (!options.has<
+          metastore_v1::DataprocMetastoreFederationBackoffPolicyOption>()) {
     options.set<metastore_v1::DataprocMetastoreFederationBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<metastore_v1::DataprocMetastoreFederationPollingPolicyOption>()) {
+  if (!options.has<
+          metastore_v1::DataprocMetastoreFederationPollingPolicyOption>()) {
     options.set<metastore_v1::DataprocMetastoreFederationPollingPolicyOption>(
         GenericPollingPolicy<
             metastore_v1::DataprocMetastoreFederationRetryPolicyOption::Type,
             metastore_v1::DataprocMetastoreFederationBackoffPolicyOption::Type>(
-            options.get<metastore_v1::DataprocMetastoreFederationRetryPolicyOption>()->clone(),
+            options
+                .get<metastore_v1::
+                         DataprocMetastoreFederationRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<metastore_v1::DataprocMetastoreFederationConnectionIdempotencyPolicyOption>()) {
-    options.set<metastore_v1::DataprocMetastoreFederationConnectionIdempotencyPolicyOption>(
-        metastore_v1::MakeDefaultDataprocMetastoreFederationConnectionIdempotencyPolicy());
+  if (!options.has<
+          metastore_v1::
+              DataprocMetastoreFederationConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        metastore_v1::
+            DataprocMetastoreFederationConnectionIdempotencyPolicyOption>(
+        metastore_v1::
+            MakeDefaultDataprocMetastoreFederationConnectionIdempotencyPolicy());
   }
 
   return options;

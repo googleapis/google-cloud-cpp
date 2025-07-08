@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_QUERY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_QUERY_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/monitoring/v3/query_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class QueryServiceClient {
  public:
-  explicit QueryServiceClient(std::shared_ptr<QueryServiceConnection> connection, Options opts = {});
+  explicit QueryServiceClient(
+      std::shared_ptr<QueryServiceConnection> connection, Options opts = {});
   ~QueryServiceClient();
 
   ///@{
@@ -76,10 +77,12 @@ class QueryServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(QueryServiceClient const& a, QueryServiceClient const& b) {
+  friend bool operator==(QueryServiceClient const& a,
+                         QueryServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(QueryServiceClient const& a, QueryServiceClient const& b) {
+  friend bool operator!=(QueryServiceClient const& a,
+                         QueryServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -126,8 +129,9 @@ class QueryServiceClient {
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StreamRange<google::monitoring::v3::TimeSeriesData>
-  QueryTimeSeries(google::monitoring::v3::QueryTimeSeriesRequest request, Options opts = {});
+  StreamRange<google::monitoring::v3::TimeSeriesData> QueryTimeSeries(
+      google::monitoring::v3::QueryTimeSeriesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<QueryServiceConnection> connection_;

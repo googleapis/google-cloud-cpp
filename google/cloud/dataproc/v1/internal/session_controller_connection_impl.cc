@@ -17,9 +17,9 @@
 // source: google/cloud/dataproc/v1/sessions.proto
 
 #include "google/cloud/dataproc/v1/internal/session_controller_connection_impl.h"
+#include "google/cloud/dataproc/v1/internal/session_controller_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/dataproc/v1/internal/session_controller_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,80 +33,89 @@ namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataproc_v1::SessionControllerRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<dataproc_v1::SessionControllerRetryPolicyOption>()->clone();
+std::unique_ptr<dataproc_v1::SessionControllerRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dataproc_v1::SessionControllerRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<dataproc_v1::SessionControllerBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dataproc_v1::SessionControllerBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<dataproc_v1::SessionControllerConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<dataproc_v1::SessionControllerConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<dataproc_v1::SessionControllerConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<dataproc_v1::SessionControllerPollingPolicyOption>()->clone();
+  return options.get<dataproc_v1::SessionControllerPollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 SessionControllerConnectionImpl::SessionControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dataproc_v1_internal::SessionControllerStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SessionControllerConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), SessionControllerConnection::options())) {}
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
-SessionControllerConnectionImpl::CreateSession(google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+SessionControllerConnectionImpl::CreateSession(
+    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateSession(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataproc::v1::Session>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::dataproc::v1::CreateSessionRequest const& request) {
-     return stub->AsyncCreateSession(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataproc::v1::Session>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataproc::v1::Session>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+        return stub->AsyncCreateSession(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Session>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::CreateSession(
-      NoAwaitTag, google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSession(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::CreateSessionRequest const& request) {
         return stub_->CreateSession(context, options, request);
       },
       *current, request, __func__);
@@ -114,36 +123,44 @@ SessionControllerConnectionImpl::CreateSession(
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnectionImpl::CreateSession(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::dataproc::v1::SessionOperationMetadata>()) {
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   SessionOperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataproc::v1::Session>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateSession",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateSession",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataproc::v1::Session>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataproc::v1::Session>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::Session>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Session>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::dataproc::v1::Session>
-SessionControllerConnectionImpl::GetSession(google::cloud::dataproc::v1::GetSessionRequest const& request) {
+SessionControllerConnectionImpl::GetSession(
+    google::cloud::dataproc::v1::GetSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -156,27 +173,33 @@ SessionControllerConnectionImpl::GetSession(google::cloud::dataproc::v1::GetSess
 }
 
 StreamRange<google::cloud::dataproc::v1::Session>
-SessionControllerConnectionImpl::ListSessions(google::cloud::dataproc::v1::ListSessionsRequest request) {
+SessionControllerConnectionImpl::ListSessions(
+    google::cloud::dataproc::v1::ListSessionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSessions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataproc::v1::Session>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataproc::v1::Session>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataproc_v1::SessionControllerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataproc_v1::SessionControllerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataproc::v1::ListSessionsRequest const& r) {
+          Options const& options,
+          google::cloud::dataproc::v1::ListSessionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataproc::v1::ListSessionsRequest const& request) {
+                   google::cloud::dataproc::v1::ListSessionsRequest const&
+                       request) {
               return stub->ListSessions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataproc::v1::ListSessionsResponse r) {
-        std::vector<google::cloud::dataproc::v1::Session> result(r.sessions().size());
+        std::vector<google::cloud::dataproc::v1::Session> result(
+            r.sessions().size());
         auto& messages = *r.mutable_sessions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -184,42 +207,48 @@ SessionControllerConnectionImpl::ListSessions(google::cloud::dataproc::v1::ListS
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
-SessionControllerConnectionImpl::TerminateSession(google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+SessionControllerConnectionImpl::TerminateSession(
+    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->TerminateSession(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataproc::v1::Session>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
-     return stub->AsyncTerminateSession(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataproc::v1::Session>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataproc::v1::Session>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+        return stub->AsyncTerminateSession(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Session>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::TerminateSession(
-      NoAwaitTag, google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -234,78 +263,90 @@ SessionControllerConnectionImpl::TerminateSession(
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnectionImpl::TerminateSession(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::dataproc::v1::SessionOperationMetadata>()) {
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   SessionOperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataproc::v1::Session>>(
-        internal::InvalidArgumentError("operation does not correspond to TerminateSession",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+        internal::InvalidArgumentError(
+            "operation does not correspond to TerminateSession",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataproc::v1::Session>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataproc::v1::Session>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::Session>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Session>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
-SessionControllerConnectionImpl::DeleteSession(google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+SessionControllerConnectionImpl::DeleteSession(
+    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteSession(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dataproc::v1::Session>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
-     return stub->AsyncDeleteSession(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataproc::v1::Session>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dataproc::v1::Session>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+        return stub->AsyncDeleteSession(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Session>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::DeleteSession(
-      NoAwaitTag, google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSession(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
         return stub_->DeleteSession(context, options, request);
       },
       *current, request, __func__);
@@ -313,36 +354,43 @@ SessionControllerConnectionImpl::DeleteSession(
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnectionImpl::DeleteSession(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::dataproc::v1::SessionOperationMetadata>()) {
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   SessionOperationMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::dataproc::v1::Session>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteSession",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteSession",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dataproc::v1::Session>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dataproc::v1::Session>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::Session>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Session>,
+      polling_policy(*current), __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-SessionControllerConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> SessionControllerConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -354,8 +402,8 @@ SessionControllerConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyReque
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-SessionControllerConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> SessionControllerConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -368,7 +416,8 @@ SessionControllerConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyReque
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SessionControllerConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+SessionControllerConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -381,17 +430,21 @@ SessionControllerConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPerm
 }
 
 StreamRange<google::longrunning::Operation>
-SessionControllerConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+SessionControllerConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataproc_v1::SessionControllerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataproc_v1::SessionControllerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -401,7 +454,8 @@ SessionControllerConnectionImpl::ListOperations(google::longrunning::ListOperati
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -409,7 +463,8 @@ SessionControllerConnectionImpl::ListOperations(google::longrunning::ListOperati
 }
 
 StatusOr<google::longrunning::Operation>
-SessionControllerConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+SessionControllerConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -421,8 +476,8 @@ SessionControllerConnectionImpl::GetOperation(google::longrunning::GetOperationR
       *current, request, __func__);
 }
 
-Status
-SessionControllerConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status SessionControllerConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -434,8 +489,8 @@ SessionControllerConnectionImpl::DeleteOperation(google::longrunning::DeleteOper
       *current, request, __func__);
 }
 
-Status
-SessionControllerConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status SessionControllerConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

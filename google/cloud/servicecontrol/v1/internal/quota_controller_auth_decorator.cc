@@ -31,9 +31,9 @@ QuotaControllerAuth::QuotaControllerAuth(
     std::shared_ptr<QuotaControllerStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse> QuotaControllerAuth::AllocateQuota(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
+QuotaControllerAuth::AllocateQuota(
+    grpc::ClientContext& context, Options const& options,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

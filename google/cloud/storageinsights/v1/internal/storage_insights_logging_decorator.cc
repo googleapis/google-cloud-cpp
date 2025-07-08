@@ -31,21 +31,19 @@ namespace storageinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageInsightsLogging::StorageInsightsLogging(
-    std::shared_ptr<StorageInsightsStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<StorageInsightsStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
 StorageInsightsLogging::ListReportConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListReportConfigsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::ListReportConfigsRequest const&
+                 request) {
         return child_->ListReportConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +51,12 @@ StorageInsightsLogging::ListReportConfigs(
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsLogging::GetReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::GetReportConfigRequest const&
+                 request) {
         return child_->GetReportConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +64,14 @@ StorageInsightsLogging::GetReportConfig(
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsLogging::CreateReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+              request) {
         return child_->CreateReportConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +79,28 @@ StorageInsightsLogging::CreateReportConfig(
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsLogging::UpdateReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+              request) {
         return child_->UpdateReportConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-StorageInsightsLogging::DeleteReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
+Status StorageInsightsLogging::DeleteReportConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+              request) {
         return child_->DeleteReportConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +108,13 @@ StorageInsightsLogging::DeleteReportConfig(
 
 StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
 StorageInsightsLogging::ListReportDetails(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListReportDetailsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::ListReportDetailsRequest const&
+                 request) {
         return child_->ListReportDetails(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,13 +122,12 @@ StorageInsightsLogging::ListReportDetails(
 
 StatusOr<google::cloud::storageinsights::v1::ReportDetail>
 StorageInsightsLogging::GetReportDetail(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::GetReportDetailRequest const&
+                 request) {
         return child_->GetReportDetail(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,13 +135,14 @@ StorageInsightsLogging::GetReportDetail(
 
 StatusOr<google::cloud::storageinsights::v1::ListDatasetConfigsResponse>
 StorageInsightsLogging::ListDatasetConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::ListDatasetConfigsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::ListDatasetConfigsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::ListDatasetConfigsRequest const&
+              request) {
         return child_->ListDatasetConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,13 +150,13 @@ StorageInsightsLogging::ListDatasetConfigs(
 
 StatusOr<google::cloud::storageinsights::v1::DatasetConfig>
 StorageInsightsLogging::GetDatasetConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+                 request) {
         return child_->GetDatasetConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -165,17 +164,20 @@ StorageInsightsLogging::GetDatasetConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsLogging::AsyncCreateDatasetConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
-        return child_->AsyncCreateDatasetConfig(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+              request) {
+        return child_->AsyncCreateDatasetConfig(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -183,13 +185,14 @@ StorageInsightsLogging::AsyncCreateDatasetConfig(
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsLogging::CreateDatasetConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+              request) {
         return child_->CreateDatasetConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -197,17 +200,20 @@ StorageInsightsLogging::CreateDatasetConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsLogging::AsyncUpdateDatasetConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
-        return child_->AsyncUpdateDatasetConfig(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+              request) {
+        return child_->AsyncUpdateDatasetConfig(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -215,13 +221,14 @@ StorageInsightsLogging::AsyncUpdateDatasetConfig(
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsLogging::UpdateDatasetConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+              request) {
         return child_->UpdateDatasetConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -229,17 +236,20 @@ StorageInsightsLogging::UpdateDatasetConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsLogging::AsyncDeleteDatasetConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
-        return child_->AsyncDeleteDatasetConfig(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+              request) {
+        return child_->AsyncDeleteDatasetConfig(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -247,13 +257,14 @@ StorageInsightsLogging::AsyncDeleteDatasetConfig(
 
 StatusOr<google::longrunning::Operation>
 StorageInsightsLogging::DeleteDatasetConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+              request) {
         return child_->DeleteDatasetConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -261,31 +272,30 @@ StorageInsightsLogging::DeleteDatasetConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsLogging::AsyncLinkDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
-        return child_->AsyncLinkDataset(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::storageinsights::v1::LinkDatasetRequest const&
+                 request) {
+        return child_->AsyncLinkDataset(cq, std::move(context),
+                                        std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-StorageInsightsLogging::LinkDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> StorageInsightsLogging::LinkDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::LinkDatasetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::LinkDatasetRequest const&
+                 request) {
         return child_->LinkDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -293,31 +303,30 @@ StorageInsightsLogging::LinkDataset(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageInsightsLogging::AsyncUnlinkDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
-        return child_->AsyncUnlinkDataset(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
+                 request) {
+        return child_->AsyncUnlinkDataset(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-StorageInsightsLogging::UnlinkDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+StatusOr<google::longrunning::Operation> StorageInsightsLogging::UnlinkDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::storageinsights::v1::UnlinkDatasetRequest const&
+                 request) {
         return child_->UnlinkDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -325,26 +334,21 @@ StorageInsightsLogging::UnlinkDataset(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 StorageInsightsLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-StorageInsightsLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> StorageInsightsLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -353,54 +357,43 @@ StorageInsightsLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 StorageInsightsLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-StorageInsightsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> StorageInsightsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-StorageInsightsLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status StorageInsightsLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-StorageInsightsLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status StorageInsightsLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -418,8 +411,8 @@ StorageInsightsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -435,8 +428,8 @@ future<Status> StorageInsightsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

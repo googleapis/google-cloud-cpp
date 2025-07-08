@@ -30,8 +30,10 @@ namespace cloud {
 namespace containeranalysis_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use containeranalysis_v1_mocks::MockContainerAnalysisConnection directly.
-using ::google::cloud::containeranalysis_v1_mocks::MockContainerAnalysisConnection;
+/// @deprecated Use containeranalysis_v1_mocks::MockContainerAnalysisConnection
+/// directly.
+using ::google::cloud::containeranalysis_v1_mocks::
+    MockContainerAnalysisConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_mocks

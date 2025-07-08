@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_URL_MAPS_V1_REGION_URL_MAPS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_URL_MAPS_V1_REGION_URL_MAPS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_retry_traits.h"
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class RegionUrlMapsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionUrlMapsLimitedErrorCountRetryPolicy : public RegionUrlMapsRetryPolicy {
+class RegionUrlMapsLimitedErrorCountRetryPolicy
+    : public RegionUrlMapsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class RegionUrlMapsLimitedErrorCountRetryPolicy : public RegionUrlMapsRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit RegionUrlMapsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RegionUrlMapsLimitedErrorCountRetryPolicy(
       RegionUrlMapsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RegionUrlMapsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RegionUrlMapsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionUrlMapsLimitedErrorCountRetryPolicy(
       RegionUrlMapsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RegionUrlMapsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RegionUrlMapsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class RegionUrlMapsLimitedErrorCountRetryPolicy : public RegionUrlMapsRetryPolic
   using BaseType = RegionUrlMapsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_region_url_maps_v1_internal::RegionUrlMapsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_region_url_maps_v1_internal::RegionUrlMapsRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +133,14 @@ class RegionUrlMapsLimitedTimeRetryPolicy : public RegionUrlMapsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionUrlMapsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RegionUrlMapsLimitedTimeRetryPolicy(RegionUrlMapsLimitedTimeRetryPolicy&& rhs) noexcept
-    : RegionUrlMapsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionUrlMapsLimitedTimeRetryPolicy(RegionUrlMapsLimitedTimeRetryPolicy const& rhs) noexcept
-    : RegionUrlMapsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionUrlMapsLimitedTimeRetryPolicy(
+      RegionUrlMapsLimitedTimeRetryPolicy&& rhs) noexcept
+      : RegionUrlMapsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionUrlMapsLimitedTimeRetryPolicy(
+      RegionUrlMapsLimitedTimeRetryPolicy const& rhs) noexcept
+      : RegionUrlMapsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +162,9 @@ class RegionUrlMapsLimitedTimeRetryPolicy : public RegionUrlMapsRetryPolicy {
   using BaseType = RegionUrlMapsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_region_url_maps_v1_internal::RegionUrlMapsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_region_url_maps_v1_internal::RegionUrlMapsRetryTraits>
+      impl_;
 };
 
 /**
@@ -170,7 +177,8 @@ class RegionUrlMapsLimitedTimeRetryPolicy : public RegionUrlMapsRetryPolicy {
  *
  * To create a concrete instance, see `MakeRegionUrlMapsConnection()`.
  *
- * For mocking, see `compute_region_url_maps_v1_mocks::MockRegionUrlMapsConnection`.
+ * For mocking, see
+ * `compute_region_url_maps_v1_mocks::MockRegionUrlMapsConnection`.
  */
 class RegionUrlMapsConnection {
  public:
@@ -179,49 +187,62 @@ class RegionUrlMapsConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteUrlMap(google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request);
+  DeleteUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   DeleteUrlMapRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteUrlMap(NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteUrlMap( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-  GetUrlMap(google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
+                      DeleteUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertUrlMap(google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request);
+  DeleteUrlMap(google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertUrlMap(NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertUrlMap( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   InsertUrlMapRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
+                      InsertUrlMapRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertUrlMap(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-  ListRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest request);
+  ListRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchUrlMap(google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request);
+  PatchUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                  PatchUrlMapRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchUrlMap(NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchUrlMap( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateUrlMap(google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateUrlMap(NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
+                      PatchUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateUrlMap( google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchUrlMap(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateUrlMap(google::cloud::cpp::compute::region_url_maps::v1::
+                   UpdateUrlMapRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
+                      UpdateUrlMapRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateUrlMap(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-  Validate(google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request);
+  Validate(
+      google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

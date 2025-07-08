@@ -26,38 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-JobControllerConnectionIdempotencyPolicy::~JobControllerConnectionIdempotencyPolicy() = default;
+JobControllerConnectionIdempotencyPolicy::
+    ~JobControllerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<JobControllerConnectionIdempotencyPolicy>
 JobControllerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<JobControllerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::SubmitJob(google::cloud::dataproc::v1::SubmitJobRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::SubmitJob(
+    google::cloud::dataproc::v1::SubmitJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::SubmitJobAsOperation(google::cloud::dataproc::v1::SubmitJobRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::SubmitJobAsOperation(
+    google::cloud::dataproc::v1::SubmitJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::GetJob(google::cloud::dataproc::v1::GetJobRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::GetJob(
+    google::cloud::dataproc::v1::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::ListJobs(google::cloud::dataproc::v1::ListJobsRequest) {  // NOLINT
+Idempotency JobControllerConnectionIdempotencyPolicy::ListJobs(
+    google::cloud::dataproc::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::UpdateJob(google::cloud::dataproc::v1::UpdateJobRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::UpdateJob(
+    google::cloud::dataproc::v1::UpdateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::CancelJob(google::cloud::dataproc::v1::CancelJobRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::CancelJob(
+    google::cloud::dataproc::v1::CancelJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::DeleteJob(google::cloud::dataproc::v1::DeleteJobRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::DeleteJob(
+    google::cloud::dataproc::v1::DeleteJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -67,32 +75,38 @@ Idempotency JobControllerConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency JobControllerConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobControllerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency JobControllerConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<JobControllerConnectionIdempotencyPolicy>
-    MakeDefaultJobControllerConnectionIdempotencyPolicy() {
+MakeDefaultJobControllerConnectionIdempotencyPolicy() {
   return std::make_unique<JobControllerConnectionIdempotencyPolicy>();
 }
 

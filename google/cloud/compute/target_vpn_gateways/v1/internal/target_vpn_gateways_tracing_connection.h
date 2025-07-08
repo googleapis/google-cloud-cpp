@@ -36,54 +36,67 @@ class TargetVpnGatewaysTracingConnection
   ~TargetVpnGatewaysTracingConnection() override = default;
 
   explicit TargetVpnGatewaysTracingConnection(
-    std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection> child);
+      std::shared_ptr<
+          compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
-  AggregatedListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest request) override;
+  StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>
+  AggregatedListTargetVpnGateways(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          AggregatedListTargetVpnGatewaysRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request) override;
+  DeleteTargetVpnGateway(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          DeleteTargetVpnGatewayRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetVpnGateway(NoAwaitTag,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateway(
+      NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
+                      DeleteTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetVpnGateway(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewayRequest const& request) override;
+  GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
+                          GetTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request) override;
+  InsertTargetVpnGateway(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          InsertTargetVpnGatewayRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetVpnGateway(NoAwaitTag,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateway(
+      NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
+                      InsertTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetVpnGateway(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest request) override;
+  ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
+                            ListTargetVpnGatewaysRequest request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
+                      SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection> child_;
+  std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -96,7 +109,8 @@ class TargetVpnGatewaysTracingConnection
  */
 std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection>
 MakeTargetVpnGatewaysTracingConnection(
-    std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection> conn);
+    std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_vpn_gateways_v1_internal

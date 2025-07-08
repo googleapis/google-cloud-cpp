@@ -41,11 +41,15 @@ class NetworkProfilesRestMetadata : public NetworkProfilesRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::network_profiles::v1::
+          GetNetworkProfileRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse> ListNetworkProfiles(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse>
+  ListNetworkProfiles(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
+                      google::cloud::cpp::compute::network_profiles::v1::
+                          ListNetworkProfilesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

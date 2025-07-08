@@ -32,22 +32,24 @@ TraceServiceTracingStub::TraceServiceTracingStub(
     std::shared_ptr<TraceServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> TraceServiceTracingStub::ListTraces(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
+TraceServiceTracingStub::ListTraces(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.cloudtrace.v1.TraceService", "ListTraces");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudtrace.v1.TraceService", "ListTraces");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTraces(context, options, request));
 }
 
-StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceTracingStub::GetTrace(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudtrace::v1::Trace>
+TraceServiceTracingStub::GetTrace(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.cloudtrace.v1.TraceService", "GetTrace");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudtrace.v1.TraceService", "GetTrace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -55,10 +57,10 @@ StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceTracingStub::GetTr
 }
 
 Status TraceServiceTracingStub::PatchTraces(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.cloudtrace.v1.TraceService", "PatchTraces");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudtrace.v1.TraceService", "PatchTraces");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

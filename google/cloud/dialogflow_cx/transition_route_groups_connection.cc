@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/transition_route_group.proto
 
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TransitionRouteGroupsConnection::~TransitionRouteGroupsConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> TransitionRouteGroupsConnection::ListTransitionRouteGroups(
-    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+TransitionRouteGroupsConnection::ListTransitionRouteGroups(
+    google::cloud::dialogflow::cx::v3::
+        ListTransitionRouteGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>>();
 }
@@ -52,24 +54,28 @@ TransitionRouteGroupsConnection::GetTransitionRouteGroup(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsConnection::CreateTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&) {
+    google::cloud::dialogflow::cx::v3::
+        CreateTransitionRouteGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsConnection::UpdateTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&) {
+    google::cloud::dialogflow::cx::v3::
+        UpdateTransitionRouteGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TransitionRouteGroupsConnection::DeleteTransitionRouteGroup(
-    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&) {
+Status TransitionRouteGroupsConnection::DeleteTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::
+        DeleteTransitionRouteGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> TransitionRouteGroupsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+TransitionRouteGroupsConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -80,8 +86,10 @@ TransitionRouteGroupsConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> TransitionRouteGroupsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+TransitionRouteGroupsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -92,30 +100,32 @@ TransitionRouteGroupsConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TransitionRouteGroupsConnection::CancelOperation(
+Status TransitionRouteGroupsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<TransitionRouteGroupsConnection> MakeTransitionRouteGroupsConnection(
-    std::string const& location, Options options) {
+std::shared_ptr<TransitionRouteGroupsConnection>
+MakeTransitionRouteGroupsConnection(std::string const& location,
+                                    Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TransitionRouteGroupsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 TransitionRouteGroupsPolicyOptionList>(
+      options, __func__);
   options = dialogflow_cx_internal::TransitionRouteGroupsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_cx_internal::CreateDefaultTransitionRouteGroupsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dialogflow_cx_internal::MakeTransitionRouteGroupsTracingConnection(
-      std::make_shared<dialogflow_cx_internal::TransitionRouteGroupsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          dialogflow_cx_internal::TransitionRouteGroupsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<TransitionRouteGroupsConnection> MakeTransitionRouteGroupsConnection(
-    Options options) {
+std::shared_ptr<TransitionRouteGroupsConnection>
+MakeTransitionRouteGroupsConnection(Options options) {
   return MakeTransitionRouteGroupsConnection(std::string{}, std::move(options));
 }
 

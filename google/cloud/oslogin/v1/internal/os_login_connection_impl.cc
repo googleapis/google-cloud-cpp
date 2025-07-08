@@ -17,11 +17,11 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/v1/internal/os_login_connection_impl.h"
+#include "google/cloud/oslogin/v1/internal/os_login_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/oslogin/v1/internal/os_login_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -31,118 +31,131 @@ namespace oslogin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<oslogin_v1::OsLoginServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<oslogin_v1::OsLoginServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<oslogin_v1::OsLoginServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<oslogin_v1::OsLoginServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<oslogin_v1::OsLoginServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 OsLoginServiceConnectionImpl::OsLoginServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<oslogin_v1_internal::OsLoginServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        OsLoginServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      OsLoginServiceConnection::options())) {}
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceConnectionImpl::CreateSshPublicKey(google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+OsLoginServiceConnectionImpl::CreateSshPublicKey(
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSshPublicKey(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+             google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&
+                 request) {
         return stub_->CreateSshPublicKey(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-OsLoginServiceConnectionImpl::DeletePosixAccount(google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
+Status OsLoginServiceConnectionImpl::DeletePosixAccount(
+    google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePosixAccount(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
+             google::cloud::oslogin::v1::DeletePosixAccountRequest const&
+                 request) {
         return stub_->DeletePosixAccount(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-OsLoginServiceConnectionImpl::DeleteSshPublicKey(google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
+Status OsLoginServiceConnectionImpl::DeleteSshPublicKey(
+    google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSshPublicKey(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
+             google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const&
+                 request) {
         return stub_->DeleteSshPublicKey(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::oslogin::v1::LoginProfile>
-OsLoginServiceConnectionImpl::GetLoginProfile(google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
+OsLoginServiceConnectionImpl::GetLoginProfile(
+    google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLoginProfile(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
         return stub_->GetLoginProfile(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceConnectionImpl::GetSshPublicKey(google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
+OsLoginServiceConnectionImpl::GetSshPublicKey(
+    google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSshPublicKey(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
         return stub_->GetSshPublicKey(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-OsLoginServiceConnectionImpl::ImportSshPublicKey(google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
+OsLoginServiceConnectionImpl::ImportSshPublicKey(
+    google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportSshPublicKey(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
+             google::cloud::oslogin::v1::ImportSshPublicKeyRequest const&
+                 request) {
         return stub_->ImportSshPublicKey(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceConnectionImpl::UpdateSshPublicKey(google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
+OsLoginServiceConnectionImpl::UpdateSshPublicKey(
+    google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSshPublicKey(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
+             google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const&
+                 request) {
         return stub_->UpdateSshPublicKey(context, options, request);
       },
       *current, request, __func__);

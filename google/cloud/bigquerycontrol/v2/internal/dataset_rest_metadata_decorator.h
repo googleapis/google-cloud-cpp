@@ -41,31 +41,42 @@ class DatasetServiceRestMetadata : public DatasetServiceRestStub {
 
   StatusOr<google::cloud::bigquery::v2::Dataset> GetDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::GetDatasetRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::Dataset> InsertDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::InsertDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::InsertDatasetRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::v2::Dataset> PatchDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::v2::Dataset> UpdateDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request)
+      override;
 
-  Status DeleteDataset(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::DeleteDatasetRequest const& request) override;
+  Status DeleteDataset(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::bigquery::v2::DeleteDatasetRequest const&
+                           request) override;
 
   StatusOr<google::cloud::bigquery::v2::DatasetList> ListDatasets(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::ListDatasetsRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::ListDatasetsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::Dataset> UndeleteDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::UndeleteDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::UndeleteDatasetRequest const& request)
+      override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SnapshotSettingsClient {
  public:
-  explicit SnapshotSettingsClient(std::shared_ptr<SnapshotSettingsConnection> connection, Options opts = {});
+  explicit SnapshotSettingsClient(
+      std::shared_ptr<SnapshotSettingsConnection> connection,
+      Options opts = {});
   ~SnapshotSettingsClient();
 
   ///@{
@@ -76,10 +78,12 @@ class SnapshotSettingsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SnapshotSettingsClient const& a, SnapshotSettingsClient const& b) {
+  friend bool operator==(SnapshotSettingsClient const& a,
+                         SnapshotSettingsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SnapshotSettingsClient const& a, SnapshotSettingsClient const& b) {
+  friend bool operator!=(SnapshotSettingsClient const& a,
+                         SnapshotSettingsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -139,7 +143,9 @@ class SnapshotSettingsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
-  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request, Options opts = {});
+  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::
+                          GetSnapshotSettingsRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -173,7 +179,11 @@ class SnapshotSettingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSnapshotSettings(std::string const& project, std::string const& update_mask, google::cloud::cpp::compute::v1::SnapshotSettings const& snapshot_settings_resource, Options opts = {});
+  PatchSnapshotSettings(std::string const& project,
+                        std::string const& update_mask,
+                        google::cloud::cpp::compute::v1::SnapshotSettings const&
+                            snapshot_settings_resource,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +196,11 @@ class SnapshotSettingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSnapshotSettings(NoAwaitTag, std::string const& project, std::string const& update_mask, google::cloud::cpp::compute::v1::SnapshotSettings const& snapshot_settings_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
+      NoAwaitTag, std::string const& project, std::string const& update_mask,
+      google::cloud::cpp::compute::v1::SnapshotSettings const&
+          snapshot_settings_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -224,7 +237,9 @@ class SnapshotSettingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request, Options opts = {});
+  PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::
+                            PatchSnapshotSettingsRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -237,8 +252,11 @@ class SnapshotSettingsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSnapshotSettings(NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
+      NoAwaitTag,
+      google::cloud::cpp::compute::snapshot_settings::v1::
+          PatchSnapshotSettingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -250,7 +268,9 @@ class SnapshotSettingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSnapshotSettings(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  PatchSnapshotSettings(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<SnapshotSettingsConnection> connection_;

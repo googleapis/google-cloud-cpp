@@ -34,41 +34,45 @@ class ServiceMonitoringServiceConnectionIdempotencyPolicy {
   virtual ~ServiceMonitoringServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateService(google::monitoring::v3::CreateServiceRequest const& request);
+  virtual google::cloud::Idempotency CreateService(
+      google::monitoring::v3::CreateServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetService(google::monitoring::v3::GetServiceRequest const& request);
+  virtual google::cloud::Idempotency GetService(
+      google::monitoring::v3::GetServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListServices(google::monitoring::v3::ListServicesRequest request);
+  virtual google::cloud::Idempotency ListServices(
+      google::monitoring::v3::ListServicesRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateService(google::monitoring::v3::UpdateServiceRequest const& request);
+  virtual google::cloud::Idempotency UpdateService(
+      google::monitoring::v3::UpdateServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteService(google::monitoring::v3::DeleteServiceRequest const& request);
+  virtual google::cloud::Idempotency DeleteService(
+      google::monitoring::v3::DeleteServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateServiceLevelObjective(google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request);
+  virtual google::cloud::Idempotency CreateServiceLevelObjective(
+      google::monitoring::v3::CreateServiceLevelObjectiveRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetServiceLevelObjective(google::monitoring::v3::GetServiceLevelObjectiveRequest const& request);
+  virtual google::cloud::Idempotency GetServiceLevelObjective(
+      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListServiceLevelObjectives(google::monitoring::v3::ListServiceLevelObjectivesRequest request);
+  virtual google::cloud::Idempotency ListServiceLevelObjectives(
+      google::monitoring::v3::ListServiceLevelObjectivesRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateServiceLevelObjective(google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request);
+  virtual google::cloud::Idempotency UpdateServiceLevelObjective(
+      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteServiceLevelObjective(google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request);
+  virtual google::cloud::Idempotency DeleteServiceLevelObjective(
+      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&
+          request);
 };
 
 std::unique_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy>
-    MakeDefaultServiceMonitoringServiceConnectionIdempotencyPolicy();
+MakeDefaultServiceMonitoringServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3

@@ -30,191 +30,161 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-JobsLogging::JobsLogging(
-    std::shared_ptr<JobsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+JobsLogging::JobsLogging(std::shared_ptr<JobsStub> child,
+                         TracingOptions tracing_options,
+                         std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-future<StatusOr<google::longrunning::Operation>>
-JobsLogging::AsyncCreateJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::run::v2::CreateJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncCreateJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::run::v2::CreateJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::run::v2::CreateJobRequest const& request) {
-        return child_->AsyncCreateJob(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCreateJob(cq, std::move(context),
+                                      std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-JobsLogging::CreateJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::run::v2::CreateJobRequest const& request) {
+StatusOr<google::longrunning::Operation> JobsLogging::CreateJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CreateJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::CreateJobRequest const& request) {
         return child_->CreateJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::run::v2::Job>
-JobsLogging::GetJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::run::v2::Job> JobsLogging::GetJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::GetJobRequest const& request) {
         return child_->GetJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::run::v2::ListJobsResponse>
-JobsLogging::ListJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::run::v2::ListJobsResponse> JobsLogging::ListJobs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::ListJobsRequest const& request) {
         return child_->ListJobs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsLogging::AsyncUpdateJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::run::v2::UpdateJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncUpdateJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::run::v2::UpdateJobRequest const& request) {
-        return child_->AsyncUpdateJob(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUpdateJob(cq, std::move(context),
+                                      std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-JobsLogging::UpdateJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::run::v2::UpdateJobRequest const& request) {
+StatusOr<google::longrunning::Operation> JobsLogging::UpdateJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::UpdateJobRequest const& request) {
         return child_->UpdateJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsLogging::AsyncDeleteJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::run::v2::DeleteJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncDeleteJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::run::v2::DeleteJobRequest const& request) {
-        return child_->AsyncDeleteJob(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteJob(cq, std::move(context),
+                                      std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-JobsLogging::DeleteJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::run::v2::DeleteJobRequest const& request) {
+StatusOr<google::longrunning::Operation> JobsLogging::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::DeleteJobRequest const& request) {
         return child_->DeleteJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsLogging::AsyncRunJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::run::v2::RunJobRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncRunJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::run::v2::RunJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::run::v2::RunJobRequest const& request) {
-        return child_->AsyncRunJob(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncRunJob(cq, std::move(context), std::move(options),
+                                   request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-JobsLogging::RunJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::run::v2::RunJobRequest const& request) {
+StatusOr<google::longrunning::Operation> JobsLogging::RunJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::RunJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::RunJobRequest const& request) {
         return child_->RunJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> JobsLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-JobsLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> JobsLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -223,12 +193,10 @@ JobsLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 JobsLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -237,62 +205,50 @@ JobsLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 JobsLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-JobsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> JobsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-JobsLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status JobsLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-JobsLogging::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> JobsLogging::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::WaitOperationRequest const& request) {
         return child_->WaitOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-JobsLogging::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
@@ -302,8 +258,8 @@ JobsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -319,8 +275,8 @@ future<Status> JobsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

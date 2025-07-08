@@ -17,10 +17,10 @@
 // source: google/cloud/tpu/v2/cloud_tpu.proto
 
 #include "google/cloud/tpu/v2/internal/tpu_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/tpu/v2/tpu_connection.h"
 #include "google/cloud/tpu/v2/tpu_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,28 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TpuDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TPU_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TPU_AUTHORITY",
-      "tpu.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_TPU_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TPU_AUTHORITY", "tpu.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<tpu_v2::TpuRetryPolicyOption>()) {
     options.set<tpu_v2::TpuRetryPolicyOption>(
-        tpu_v2::TpuLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        tpu_v2::TpuLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
   }
   if (!options.has<tpu_v2::TpuBackoffPolicyOption>()) {
     options.set<tpu_v2::TpuBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<tpu_v2::TpuPollingPolicyOption>()) {
     options.set<tpu_v2::TpuPollingPolicyOption>(
-        GenericPollingPolicy<
-            tpu_v2::TpuRetryPolicyOption::Type,
-            tpu_v2::TpuBackoffPolicyOption::Type>(
+        GenericPollingPolicy<tpu_v2::TpuRetryPolicyOption::Type,
+                             tpu_v2::TpuBackoffPolicyOption::Type>(
             options.get<tpu_v2::TpuRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<tpu_v2::TpuConnectionIdempotencyPolicyOption>()) {
     options.set<tpu_v2::TpuConnectionIdempotencyPolicyOption>(

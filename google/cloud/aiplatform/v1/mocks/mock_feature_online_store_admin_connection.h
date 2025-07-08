@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `FeatureOnlineStoreAdminServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `FeatureOnlineStoreAdminServiceClient`. To do so,
- * construct an object of type `FeatureOnlineStoreAdminServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type
+ * `FeatureOnlineStoreAdminServiceClient`. To do so, construct an object of type
+ * `FeatureOnlineStoreAdminServiceClient` with an instance of this class. Then
+ * use the Google Test framework functions to program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::FeatureOnlineStoreAdminServiceConnection {
+class MockFeatureOnlineStoreAdminServiceConnection
+    : public aiplatform_v1::FeatureOnlineStoreAdminServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,16 @@ class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::Featu
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateFeatureOnlineStore(Matcher<google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateFeatureOnlineStore(Matcher<google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
-  CreateFeatureOnlineStore,
-  (google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
+      CreateFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,41 +69,55 @@ class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::Featu
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateFeatureOnlineStore(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateFeatureOnlineStore, (NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateFeatureOnlineStore(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
-  CreateFeatureOnlineStore, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>,
-  GetFeatureOnlineStore,
-  (google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>),
-  ListFeatureOnlineStores,
-  (google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateFeatureOnlineStore,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateFeatureOnlineStore(Matcher<google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateFeatureOnlineStore(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
-  UpdateFeatureOnlineStore,
-  (google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
+      CreateFeatureOnlineStore,
+      (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>,
+      GetFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>),
+      ListFeatureOnlineStores,
+      (google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateFeatureOnlineStore(Matcher<google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
+      UpdateFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +125,42 @@ class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::Featu
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateFeatureOnlineStore(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateFeatureOnlineStore, (NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateFeatureOnlineStore(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
-  UpdateFeatureOnlineStore, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateFeatureOnlineStore,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteFeatureOnlineStore(Matcher<google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateFeatureOnlineStore(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteFeatureOnlineStore,
-  (google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
+      UpdateFeatureOnlineStore,
+      (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFeatureOnlineStore(Matcher<google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,33 +168,41 @@ class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::Featu
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteFeatureOnlineStore(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteFeatureOnlineStore, (NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteFeatureOnlineStore(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteFeatureOnlineStore, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteFeatureOnlineStore,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateFeatureView(Matcher<google::cloud::aiplatform::v1::CreateFeatureViewRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteFeatureOnlineStore(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
-  CreateFeatureView,
-  (google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeatureOnlineStore,
+      (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateFeatureView(Matcher<google::cloud::aiplatform::v1::CreateFeatureViewRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
+      CreateFeatureView,
+      (google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -174,41 +210,48 @@ class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::Featu
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateFeatureView(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateFeatureView, (NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateFeatureView,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateFeatureView(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateFeatureView(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
-  CreateFeatureView, (
-    google::longrunning::Operation const& operation), (override));
+              CreateFeatureView,
+              (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::FeatureView>,
-  GetFeatureView,
-  (google::cloud::aiplatform::v1::GetFeatureViewRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::FeatureView>, GetFeatureView,
+      (google::cloud::aiplatform::v1::GetFeatureViewRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::FeatureView>),
-  ListFeatureViews,
-  (google::cloud::aiplatform::v1::ListFeatureViewsRequest request), (override));
+              ListFeatureViews,
+              (google::cloud::aiplatform::v1::ListFeatureViewsRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateFeatureView(Matcher<google::cloud::aiplatform::v1::UpdateFeatureViewRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateFeatureView(Matcher<google::cloud::aiplatform::v1::UpdateFeatureViewRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
-  UpdateFeatureView,
-  (google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
+      UpdateFeatureView,
+      (google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -216,33 +259,38 @@ class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::Featu
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateFeatureView(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateFeatureView, (NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateFeatureView,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateFeatureView(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateFeatureView(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
-  UpdateFeatureView, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateFeatureView,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteFeatureView(Matcher<google::cloud::aiplatform::v1::DeleteFeatureViewRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteFeatureView(Matcher<google::cloud::aiplatform::v1::DeleteFeatureViewRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteFeatureView,
-  (google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeatureView,
+      (google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -250,73 +298,82 @@ class MockFeatureOnlineStoreAdminServiceConnection : public aiplatform_v1::Featu
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteFeatureView(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteFeatureView, (NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteFeatureView,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteFeatureView(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteFeatureView(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteFeatureView, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeatureView, (google::longrunning::Operation const& operation),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>,
-  SyncFeatureView,
-  (google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>,
+      SyncFeatureView,
+      (google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>,
-  GetFeatureViewSync,
-  (google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>,
+      GetFeatureViewSync,
+      (google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>),
-  ListFeatureViewSyncs,
-  (google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>),
+      ListFeatureViewSyncs,
+      (google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  WaitOperation,
-  (google::longrunning::WaitOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
+              (google::longrunning::WaitOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

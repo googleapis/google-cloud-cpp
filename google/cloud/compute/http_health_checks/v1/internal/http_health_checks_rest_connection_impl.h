@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTP_HEALTH_CHECKS_V1_INTERNAL_HTTP_HEALTH_CHECKS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTP_HEALTH_CHECKS_V1_INTERNAL_HTTP_HEALTH_CHECKS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/http_health_checks/v1/http_health_checks_connection.h"
 #include "google/cloud/compute/http_health_checks/v1/http_health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/http_health_checks/v1/http_health_checks_options.h"
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_rest_stub.h"
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,83 +44,109 @@ class HttpHealthChecksRestConnectionImpl
   ~HttpHealthChecksRestConnectionImpl() override = default;
 
   HttpHealthChecksRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_http_health_checks_v1_internal::HttpHealthChecksRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_http_health_checks_v1_internal::HttpHealthChecksRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::DeleteHttpHealthCheckRequest const& request) override;
+  DeleteHttpHealthCheck(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          DeleteHttpHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHttpHealthCheck(NoAwaitTag,
-      google::cloud::cpp::compute::http_health_checks::v1::DeleteHttpHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthCheck(
+      NoAwaitTag, google::cloud::cpp::compute::http_health_checks::v1::
+                      DeleteHttpHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHttpHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  GetHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::GetHttpHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck> GetHttpHealthCheck(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          GetHttpHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::InsertHttpHealthCheckRequest const& request) override;
+  InsertHttpHealthCheck(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          InsertHttpHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHttpHealthCheck(NoAwaitTag,
-      google::cloud::cpp::compute::http_health_checks::v1::InsertHttpHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthCheck(
+      NoAwaitTag, google::cloud::cpp::compute::http_health_checks::v1::
+                      InsertHttpHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHttpHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::ListHttpHealthChecksRequest request) override;
+  ListHttpHealthChecks(google::cloud::cpp::compute::http_health_checks::v1::
+                           ListHttpHealthChecksRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::PatchHttpHealthCheckRequest const& request) override;
+  PatchHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::
+                           PatchHttpHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchHttpHealthCheck(NoAwaitTag,
-      google::cloud::cpp::compute::http_health_checks::v1::PatchHttpHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthCheck(
+      NoAwaitTag, google::cloud::cpp::compute::http_health_checks::v1::
+                      PatchHttpHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchHttpHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpHealthCheck(google::cloud::cpp::compute::http_health_checks::v1::UpdateHttpHealthCheckRequest const& request) override;
+  UpdateHttpHealthCheck(
+      google::cloud::cpp::compute::http_health_checks::v1::
+          UpdateHttpHealthCheckRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHttpHealthCheck(NoAwaitTag,
-      google::cloud::cpp::compute::http_health_checks::v1::UpdateHttpHealthCheckRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthCheck(
+      NoAwaitTag, google::cloud::cpp::compute::http_health_checks::v1::
+                      UpdateHttpHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHttpHealthCheck(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<compute_http_health_checks_v1::HttpHealthChecksRetryPolicy>
+  static std::unique_ptr<
+      compute_http_health_checks_v1::HttpHealthChecksRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_http_health_checks_v1::HttpHealthChecksRetryPolicyOption>()->clone();
+    return options
+        .get<compute_http_health_checks_v1::HttpHealthChecksRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_http_health_checks_v1::HttpHealthChecksBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_http_health_checks_v1::
+                 HttpHealthChecksBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_http_health_checks_v1::HttpHealthChecksConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_http_health_checks_v1::
+                             HttpHealthChecksConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_http_health_checks_v1::HttpHealthChecksConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_http_health_checks_v1::
+                 HttpHealthChecksConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_http_health_checks_v1::HttpHealthChecksPollingPolicyOption>()->clone();
+    return options
+        .get<compute_http_health_checks_v1::
+                 HttpHealthChecksPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_http_health_checks_v1_internal::HttpHealthChecksRestStub> stub_;
+  std::shared_ptr<
+      compute_http_health_checks_v1_internal::HttpHealthChecksRestStub>
+      stub_;
   Options options_;
 };
 

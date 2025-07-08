@@ -17,11 +17,11 @@
 // source: google/cloud/compute/subnetworks/v1/subnetworks.proto
 
 #include "google/cloud/compute/subnetworks/v1/subnetworks_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_option_defaults.h"
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_tracing_connection.h"
 #include "google/cloud/compute/subnetworks/v1/subnetworks_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,58 +36,64 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubnetworksConnection::~SubnetworksConnection() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>> SubnetworksConnection::AggregatedListSubnetworks(
-    google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>>();
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::SubnetworksScopedList>>
+SubnetworksConnection::AggregatedListSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        AggregatedListSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::SubnetworksScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::DeleteSubnetwork(
-    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        DeleteSubnetworkRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksConnection::DeleteSubnetwork(
-    NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    DeleteSubnetworkRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::DeleteSubnetwork(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::ExpandIpCidrRange(
-    google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const&) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksConnection::ExpandIpCidrRange(
-    NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    ExpandIpCidrRangeRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::ExpandIpCidrRange(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
@@ -104,62 +110,68 @@ SubnetworksConnection::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::InsertSubnetwork(
-    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        InsertSubnetworkRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksConnection::InsertSubnetwork(
-    NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    InsertSubnetworkRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::InsertSubnetwork(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Subnetwork> SubnetworksConnection::ListSubnetworks(
-    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
+SubnetworksConnection::ListSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        ListSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Subnetwork>>();
 }
 
-StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> SubnetworksConnection::ListUsable(
-    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>
+SubnetworksConnection::ListUsable(
+    google::cloud::cpp::compute::subnetworks::v1::
+        ListUsableRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::PatchSubnetwork(
-    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        PatchSubnetworkRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksConnection::PatchSubnetwork(
-    NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    PatchSubnetworkRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::PatchSubnetwork(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -170,31 +182,33 @@ SubnetworksConnection::SetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::SetPrivateIpGoogleAccess(
-    google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const&) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksConnection::SetPrivateIpGoogleAccess(
-    NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    SetPrivateIpGoogleAccessRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksConnection::SetPrivateIpGoogleAccess(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 SubnetworksConnection::TestIamPermissions(
-    google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

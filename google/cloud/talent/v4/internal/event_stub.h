@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/talent/v4/event_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -37,38 +37,38 @@ class EventServiceStub {
   virtual ~EventServiceStub() = 0;
 
   virtual StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateClientEventRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultEventServiceStub : public EventServiceStub {
  public:
   explicit DefaultEventServiceStub(
-      std::unique_ptr<google::cloud::talent::v4::EventService::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
-)
+      std::unique_ptr<google::cloud::talent::v4::EventService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::talent::v4::CreateClientEventRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::talent::v4::CreateClientEventRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::talent::v4::EventService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::talent::v4::EventService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

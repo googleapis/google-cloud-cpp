@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `CloudControlsPartnerCoreConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudControlsPartnerCoreClient`. To do so,
- * construct an object of type `CloudControlsPartnerCoreClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `CloudControlsPartnerCoreClient`. To
+ * do so, construct an object of type `CloudControlsPartnerCoreClient` with an
+ * instance of this class. Then use the Google Test framework functions to
+ * program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,53 +42,82 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCloudControlsPartnerCoreConnection : public cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection {
+class MockCloudControlsPartnerCoreConnection
+    : public cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>,
-  GetWorkload,
-  (google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>, GetWorkload,
+      (google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>),
-  ListWorkloads,
-  (google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>),
+      ListWorkloads,
+      (google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>,
-  GetCustomer,
-  (google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>, GetCustomer,
+      (google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>),
-  ListCustomers,
-  (google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>),
+      ListCustomers,
+      (google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>,
-  GetEkmConnections,
-  (google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>,
+      GetEkmConnections,
+      (google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>,
-  GetPartnerPermissions,
-  (google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>,
+      GetPartnerPermissions,
+      (google::cloud::cloudcontrolspartner::v1::
+           GetPartnerPermissionsRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>),
-  ListAccessApprovalRequests,
-  (google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>),
+      ListAccessApprovalRequests,
+      (google::cloud::cloudcontrolspartner::v1::
+           ListAccessApprovalRequestsRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>,
-  GetPartner,
-  (google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request), (override));
+              GetPartner,
+              (google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>,
-  CreateCustomer,
-  (google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>,
+      CreateCustomer,
+      (google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>,
-  UpdateCustomer,
-  (google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>,
+      UpdateCustomer,
+      (google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteCustomer,
-  (google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteCustomer,
+      (google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

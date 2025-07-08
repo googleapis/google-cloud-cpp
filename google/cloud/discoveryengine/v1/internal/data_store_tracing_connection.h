@@ -36,49 +36,56 @@ class DataStoreServiceTracingConnection
   ~DataStoreServiceTracingConnection() override = default;
 
   explicit DataStoreServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::DataStoreServiceConnection> child);
+      std::shared_ptr<discoveryengine_v1::DataStoreServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
-  CreateDataStore(google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) override;
+  CreateDataStore(
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDataStore(NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDataStore(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
-  CreateDataStore(
-      google::longrunning::Operation const& operation) override;
+  CreateDataStore(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::DataStore>
-  GetDataStore(google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
+      google::cloud::discoveryengine::v1::GetDataStoreRequest const& request)
+      override;
 
-  StreamRange<google::cloud::discoveryengine::v1::DataStore>
-  ListDataStores(google::cloud::discoveryengine::v1::ListDataStoresRequest request) override;
-
-  future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
-  DeleteDataStore(google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteDataStore(NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) override;
+  StreamRange<google::cloud::discoveryengine::v1::DataStore> ListDataStores(
+      google::cloud::discoveryengine::v1::ListDataStoresRequest request)
+      override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
   DeleteDataStore(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::DataStore>
-  UpdateDataStore(google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDataStore(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
+  DeleteDataStore(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::DataStore> UpdateDataStore(
+      google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request)
+      override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::DataStoreServiceConnection> child_;

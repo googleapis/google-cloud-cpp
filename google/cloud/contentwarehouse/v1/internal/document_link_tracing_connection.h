@@ -36,24 +36,32 @@ class DocumentLinkServiceTracingConnection
   ~DocumentLinkServiceTracingConnection() override = default;
 
   explicit DocumentLinkServiceTracingConnection(
-    std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceConnection> child);
+      std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
-  ListLinkedTargets(google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) override;
+  ListLinkedTargets(
+      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
+          request) override;
 
   StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
-  ListLinkedSources(google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request) override;
+  ListLinkedSources(
+      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest request)
+      override;
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
-  CreateDocumentLink(google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) override;
+  CreateDocumentLink(
+      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
+          request) override;
 
-  Status
-  DeleteDocumentLink(google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) override;
+  Status DeleteDocumentLink(
+      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceConnection> child_;

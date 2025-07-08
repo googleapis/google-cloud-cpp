@@ -31,21 +31,18 @@ namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentServiceLogging::DocumentServiceLogging(
-    std::shared_ptr<DocumentServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<DocumentServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceLogging::GetDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::GetDocumentRequest const&
+                 request) {
         return child_->GetDocument(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ DocumentServiceLogging::GetDocument(
 
 StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
 DocumentServiceLogging::ListDocuments(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ListDocumentsRequest const&
+                 request) {
         return child_->ListDocuments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ DocumentServiceLogging::ListDocuments(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceLogging::CreateDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateDocumentRequest const&
+                 request) {
         return child_->CreateDocument(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +76,24 @@ DocumentServiceLogging::CreateDocument(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceLogging::UpdateDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateDocumentRequest const&
+                 request) {
         return child_->UpdateDocument(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DocumentServiceLogging::DeleteDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DocumentServiceLogging::DeleteDocument(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteDocumentRequest const&
+                 request) {
         return child_->DeleteDocument(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,17 +101,18 @@ DocumentServiceLogging::DeleteDocument(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceLogging::AsyncImportDocuments(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
-        return child_->AsyncImportDocuments(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
+                 request) {
+        return child_->AsyncImportDocuments(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -127,13 +120,12 @@ DocumentServiceLogging::AsyncImportDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentServiceLogging::ImportDocuments(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
+                 request) {
         return child_->ImportDocuments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -141,31 +133,30 @@ DocumentServiceLogging::ImportDocuments(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceLogging::AsyncPurgeDocuments(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
-        return child_->AsyncPurgeDocuments(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
+                 request) {
+        return child_->AsyncPurgeDocuments(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentServiceLogging::PurgeDocuments(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+StatusOr<google::longrunning::Operation> DocumentServiceLogging::PurgeDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
+                 request) {
         return child_->PurgeDocuments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -173,13 +164,13 @@ DocumentServiceLogging::PurgeDocuments(
 
 StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
 DocumentServiceLogging::BatchGetDocumentsMetadata(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 BatchGetDocumentsMetadataRequest const& request) {
         return child_->BatchGetDocumentsMetadata(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -187,40 +178,32 @@ DocumentServiceLogging::BatchGetDocumentsMetadata(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DocumentServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> DocumentServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DocumentServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DocumentServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -238,8 +221,8 @@ DocumentServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -255,8 +238,8 @@ future<Status> DocumentServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

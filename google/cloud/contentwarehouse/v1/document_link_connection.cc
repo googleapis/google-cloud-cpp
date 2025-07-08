@@ -17,13 +17,13 @@
 // source: google/cloud/contentwarehouse/v1/document_link_service.proto
 
 #include "google/cloud/contentwarehouse/v1/document_link_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/contentwarehouse/v1/document_link_options.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_link_connection_impl.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_link_option_defaults.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_link_stub_factory.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_link_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -44,8 +44,10 @@ DocumentLinkServiceConnection::ListLinkedTargets(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contentwarehouse::v1::DocumentLink> DocumentLinkServiceConnection::ListLinkedSources(
-    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
+DocumentLinkServiceConnection::ListLinkedSources(
+    google::cloud::contentwarehouse::v1::
+        ListLinkedSourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>>();
 }
@@ -56,8 +58,7 @@ DocumentLinkServiceConnection::CreateDocumentLink(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DocumentLinkServiceConnection::DeleteDocumentLink(
+Status DocumentLinkServiceConnection::DeleteDocumentLink(
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -68,20 +69,23 @@ DocumentLinkServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DocumentLinkServiceConnection> MakeDocumentLinkServiceConnection(
-    Options options) {
+std::shared_ptr<DocumentLinkServiceConnection>
+MakeDocumentLinkServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DocumentLinkServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 DocumentLinkServicePolicyOptionList>(options,
+                                                                      __func__);
   options = contentwarehouse_v1_internal::DocumentLinkServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = contentwarehouse_v1_internal::CreateDefaultDocumentLinkServiceStub(
-    std::move(auth), options);
+  auto stub =
+      contentwarehouse_v1_internal::CreateDefaultDocumentLinkServiceStub(
+          std::move(auth), options);
   return contentwarehouse_v1_internal::MakeDocumentLinkServiceTracingConnection(
-      std::make_shared<contentwarehouse_v1_internal::DocumentLinkServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          contentwarehouse_v1_internal::DocumentLinkServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

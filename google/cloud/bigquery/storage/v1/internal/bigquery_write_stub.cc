@@ -33,15 +33,15 @@ BigQueryWriteStub::~BigQueryWriteStub() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 DefaultBigQueryWriteStub::CreateWriteStream(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request) {
-    google::cloud::bigquery::storage::v1::WriteStream response;
-    auto status =
-        grpc_stub_->CreateWriteStream(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
+        request) {
+  google::cloud::bigquery::storage::v1::WriteStream response;
+  auto status = grpc_stub_->CreateWriteStream(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -51,7 +51,9 @@ DefaultBigQueryWriteStub::AsyncAppendRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingReadWriteRpc<google::cloud::bigquery::storage::v1::AppendRowsRequest, google::cloud::bigquery::storage::v1::AppendRowsResponse>(
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::bigquery::storage::v1::AppendRowsRequest,
+      google::cloud::bigquery::storage::v1::AppendRowsResponse>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncAppendRows(context, cq);
@@ -60,54 +62,55 @@ DefaultBigQueryWriteStub::AsyncAppendRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 DefaultBigQueryWriteStub::GetWriteStream(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request) {
-    google::cloud::bigquery::storage::v1::WriteStream response;
-    auto status =
-        grpc_stub_->GetWriteStream(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
+        request) {
+  google::cloud::bigquery::storage::v1::WriteStream response;
+  auto status = grpc_stub_->GetWriteStream(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
 DefaultBigQueryWriteStub::FinalizeWriteStream(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request) {
-    google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse response;
-    auto status =
-        grpc_stub_->FinalizeWriteStream(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
+        request) {
+  google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse response;
+  auto status = grpc_stub_->FinalizeWriteStream(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
 DefaultBigQueryWriteStub::BatchCommitWriteStreams(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request) {
-    google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse response;
-    auto status =
-        grpc_stub_->BatchCommitWriteStreams(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
+        request) {
+  google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse
+      response;
+  auto status =
+      grpc_stub_->BatchCommitWriteStreams(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
 DefaultBigQueryWriteStub::FlushRows(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
-    google::cloud::bigquery::storage::v1::FlushRowsResponse response;
-    auto status =
-        grpc_stub_->FlushRows(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
+  google::cloud::bigquery::storage::v1::FlushRowsResponse response;
+  auto status = grpc_stub_->FlushRows(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

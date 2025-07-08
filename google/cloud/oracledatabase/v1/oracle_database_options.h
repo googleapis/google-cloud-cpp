@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_ORACLE_DATABASE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_ORACLE_DATABASE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/oracledatabase/v1/oracle_database_connection.h"
 #include "google/cloud/oracledatabase/v1/oracle_database_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 

@@ -17,17 +17,17 @@
 // source: google/cloud/run/v2/task.proto
 
 #include "google/cloud/run/v2/tasks_connection.h"
+#include "google/cloud/run/v2/internal/tasks_connection_impl.h"
+#include "google/cloud/run/v2/internal/tasks_option_defaults.h"
+#include "google/cloud/run/v2/internal/tasks_stub_factory.h"
+#include "google/cloud/run/v2/internal/tasks_tracing_connection.h"
+#include "google/cloud/run/v2/tasks_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/run/v2/internal/tasks_connection_impl.h"
-#include "google/cloud/run/v2/internal/tasks_option_defaults.h"
-#include "google/cloud/run/v2/internal/tasks_stub_factory.h"
-#include "google/cloud/run/v2/internal/tasks_tracing_connection.h"
-#include "google/cloud/run/v2/tasks_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,56 +38,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TasksConnection::~TasksConnection() = default;
 
-StatusOr<google::cloud::run::v2::Task>
-TasksConnection::GetTask(
+StatusOr<google::cloud::run::v2::Task> TasksConnection::GetTask(
     google::cloud::run::v2::GetTaskRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::run::v2::Task> TasksConnection::ListTasks(
-    google::cloud::run::v2::ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::run::v2::
+        ListTasksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::run::v2::Task>>();
 }
 
 StreamRange<google::longrunning::Operation> TasksConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-TasksConnection::GetOperation(
+StatusOr<google::longrunning::Operation> TasksConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TasksConnection::DeleteOperation(
+Status TasksConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation>
-TasksConnection::WaitOperation(
+StatusOr<google::longrunning::Operation> TasksConnection::WaitOperation(
     google::longrunning::WaitOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<TasksConnection> MakeTasksConnection(
-    Options options) {
+std::shared_ptr<TasksConnection> MakeTasksConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TasksPolicyOptionList>(options, __func__);
-  options = run_v2_internal::TasksDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TasksPolicyOptionList>(options, __func__);
+  options = run_v2_internal::TasksDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = run_v2_internal::CreateDefaultTasksStub(
-    std::move(auth), options);
+  auto stub = run_v2_internal::CreateDefaultTasksStub(std::move(auth), options);
   return run_v2_internal::MakeTasksTracingConnection(
       std::make_shared<run_v2_internal::TasksConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

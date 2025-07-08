@@ -35,23 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DirectAccessServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DIRECT_ACCESS_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DIRECT_ACCESS_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_DIRECT_ACCESS_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DIRECT_ACCESS_SERVICE_AUTHORITY",
       "devicestreaming.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<devicestreaming_v1::DirectAccessServiceRetryPolicyOption>()) {
+  if (!options
+           .has<devicestreaming_v1::DirectAccessServiceRetryPolicyOption>()) {
     options.set<devicestreaming_v1::DirectAccessServiceRetryPolicyOption>(
         devicestreaming_v1::DirectAccessServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<devicestreaming_v1::DirectAccessServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<devicestreaming_v1::DirectAccessServiceBackoffPolicyOption>()) {
     options.set<devicestreaming_v1::DirectAccessServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<devicestreaming_v1::DirectAccessServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<devicestreaming_v1::DirectAccessServiceConnectionIdempotencyPolicyOption>(
-        devicestreaming_v1::MakeDefaultDirectAccessServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<devicestreaming_v1::
+                    DirectAccessServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<devicestreaming_v1::
+                    DirectAccessServiceConnectionIdempotencyPolicyOption>(
+        devicestreaming_v1::
+            MakeDefaultDirectAccessServiceConnectionIdempotencyPolicy());
   }
 
   return options;

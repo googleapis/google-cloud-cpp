@@ -34,44 +34,55 @@ DocumentServiceTracingConnection::DocumentServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
-DocumentServiceTracingConnection::GetDocument(google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::GetDocument");
+DocumentServiceTracingConnection::GetDocument(
+    google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDocument(request));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Document>
-DocumentServiceTracingConnection::ListDocuments(google::cloud::discoveryengine::v1::ListDocumentsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::ListDocuments");
+DocumentServiceTracingConnection::ListDocuments(
+    google::cloud::discoveryengine::v1::ListDocumentsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::ListDocuments");
   internal::OTelScope scope(span);
   auto sr = child_->ListDocuments(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::Document>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::Document>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
-DocumentServiceTracingConnection::CreateDocument(google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::CreateDocument");
+DocumentServiceTracingConnection::CreateDocument(
+    google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::CreateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDocument(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
-DocumentServiceTracingConnection::UpdateDocument(google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::UpdateDocument");
+DocumentServiceTracingConnection::UpdateDocument(
+    google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::UpdateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDocument(request));
 }
 
-Status
-DocumentServiceTracingConnection::DeleteDocument(google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::DeleteDocument");
+Status DocumentServiceTracingConnection::DeleteDocument(
+    google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::DeleteDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDocument(request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-DocumentServiceTracingConnection::ImportDocuments(google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+DocumentServiceTracingConnection::ImportDocuments(
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::ImportDocuments");
   internal::OTelScope scope(span);
@@ -80,12 +91,13 @@ DocumentServiceTracingConnection::ImportDocuments(google::cloud::discoveryengine
 
 StatusOr<google::longrunning::Operation>
 DocumentServiceTracingConnection::ImportDocuments(
-    NoAwaitTag, google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::ImportDocuments");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ImportDocuments(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ImportDocuments(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
@@ -94,12 +106,12 @@ DocumentServiceTracingConnection::ImportDocuments(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::ImportDocuments");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->ImportDocuments(operation));
+  return internal::EndSpan(std::move(span), child_->ImportDocuments(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-DocumentServiceTracingConnection::PurgeDocuments(google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+DocumentServiceTracingConnection::PurgeDocuments(
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::PurgeDocuments");
   internal::OTelScope scope(span);
@@ -108,12 +120,13 @@ DocumentServiceTracingConnection::PurgeDocuments(google::cloud::discoveryengine:
 
 StatusOr<google::longrunning::Operation>
 DocumentServiceTracingConnection::PurgeDocuments(
-    NoAwaitTag, google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::PurgeDocuments");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PurgeDocuments(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->PurgeDocuments(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
@@ -122,36 +135,44 @@ DocumentServiceTracingConnection::PurgeDocuments(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::PurgeDocuments");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->PurgeDocuments(operation));
+  return internal::EndSpan(std::move(span), child_->PurgeDocuments(operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
-DocumentServiceTracingConnection::BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::BatchGetDocumentsMetadata");
+DocumentServiceTracingConnection::BatchGetDocumentsMetadata(
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::"
+      "BatchGetDocumentsMetadata");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->BatchGetDocumentsMetadata(request));
 }
 
 StreamRange<google::longrunning::Operation>
-DocumentServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::ListOperations");
+DocumentServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::GetOperation");
+DocumentServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-DocumentServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::DocumentServiceConnection::CancelOperation");
+Status DocumentServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `CloudShellServiceClient`. To do so,
- * construct an object of type `CloudShellServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `CloudShellServiceClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,25 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCloudShellServiceConnection : public shell_v1::CloudShellServiceConnection {
+class MockCloudShellServiceConnection
+    : public shell_v1::CloudShellServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::shell::v1::Environment>,
-  GetEnvironment,
-  (google::cloud::shell::v1::GetEnvironmentRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::shell::v1::Environment>, GetEnvironment,
+              (google::cloud::shell::v1::GetEnvironmentRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartEnvironment(Matcher<google::cloud::shell::v1::StartEnvironmentRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// StartEnvironment(Matcher<google::cloud::shell::v1::StartEnvironmentRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
-  StartEnvironment,
-  (google::cloud::shell::v1::StartEnvironmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
+      StartEnvironment,
+      (google::cloud::shell::v1::StartEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -68,33 +72,39 @@ class MockCloudShellServiceConnection : public shell_v1::CloudShellServiceConnec
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, StartEnvironment(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  StartEnvironment, (NoAwaitTag,
-    google::cloud::shell::v1::StartEnvironmentRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartEnvironment(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
-  StartEnvironment, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartEnvironment,
+      (NoAwaitTag,
+       google::cloud::shell::v1::StartEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AuthorizeEnvironment(Matcher<google::cloud::shell::v1::AuthorizeEnvironmentRequest const&>(_)))
+  /// EXPECT_CALL(*mock, StartEnvironment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
-  AuthorizeEnvironment,
-  (google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
+      StartEnvironment, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AuthorizeEnvironment(Matcher<google::cloud::shell::v1::AuthorizeEnvironmentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
+      AuthorizeEnvironment,
+      (google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -102,33 +112,38 @@ class MockCloudShellServiceConnection : public shell_v1::CloudShellServiceConnec
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AuthorizeEnvironment(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  AuthorizeEnvironment, (NoAwaitTag,
-    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, AuthorizeEnvironment,
+      (NoAwaitTag,
+       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AuthorizeEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AuthorizeEnvironment(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
-  AuthorizeEnvironment, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
+      AuthorizeEnvironment, (google::longrunning::Operation const& operation),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AddPublicKey(Matcher<google::cloud::shell::v1::AddPublicKeyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AddPublicKey(Matcher<google::cloud::shell::v1::AddPublicKeyRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>,
-  AddPublicKey,
-  (google::cloud::shell::v1::AddPublicKeyRequest const& request), (override));
-
+              AddPublicKey,
+              (google::cloud::shell::v1::AddPublicKeyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -136,33 +151,37 @@ class MockCloudShellServiceConnection : public shell_v1::CloudShellServiceConnec
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AddPublicKey(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  AddPublicKey, (NoAwaitTag,
-    google::cloud::shell::v1::AddPublicKeyRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, AddPublicKey,
+              (NoAwaitTag,
+               google::cloud::shell::v1::AddPublicKeyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AddPublicKey(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, AddPublicKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>,
-  AddPublicKey, (
-    google::longrunning::Operation const& operation), (override));
+              AddPublicKey, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RemovePublicKey(Matcher<google::cloud::shell::v1::RemovePublicKeyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// RemovePublicKey(Matcher<google::cloud::shell::v1::RemovePublicKeyRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
-  RemovePublicKey,
-  (google::cloud::shell::v1::RemovePublicKeyRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
+      RemovePublicKey,
+      (google::cloud::shell::v1::RemovePublicKeyRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -170,21 +189,23 @@ class MockCloudShellServiceConnection : public shell_v1::CloudShellServiceConnec
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RemovePublicKey(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RemovePublicKey, (NoAwaitTag,
-    google::cloud::shell::v1::RemovePublicKeyRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RemovePublicKey,
+              (NoAwaitTag,
+               google::cloud::shell::v1::RemovePublicKeyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RemovePublicKey(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RemovePublicKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
-  RemovePublicKey, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
+      RemovePublicKey, (google::longrunning::Operation const& operation),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

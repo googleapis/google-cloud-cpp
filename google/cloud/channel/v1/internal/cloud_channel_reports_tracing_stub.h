@@ -32,11 +32,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class CloudChannelReportsServiceTracingStub : public CloudChannelReportsServiceStub {
+class CloudChannelReportsServiceTracingStub
+    : public CloudChannelReportsServiceStub {
  public:
   ~CloudChannelReportsServiceTracingStub() override = default;
 
-  explicit CloudChannelReportsServiceTracingStub(std::shared_ptr<CloudChannelReportsServiceStub> child);
+  explicit CloudChannelReportsServiceTracingStub(
+      std::shared_ptr<CloudChannelReportsServiceStub> child);
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunReportJob(
       google::cloud::CompletionQueue& cq,
@@ -45,38 +47,33 @@ class CloudChannelReportsServiceTracingStub : public CloudChannelReportsServiceS
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunReportJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
-  StatusOr<google::cloud::channel::v1::FetchReportResultsResponse> FetchReportResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::channel::v1::FetchReportResultsRequest const& request) override;
+  StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
+  FetchReportResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::channel::v1::FetchReportResultsRequest const& request)
+      override;
 
   StatusOr<google::cloud::channel::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListReportsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -93,7 +90,8 @@ class CloudChannelReportsServiceTracingStub : public CloudChannelReportsServiceS
 
  private:
   std::shared_ptr<CloudChannelReportsServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -104,7 +102,8 @@ class CloudChannelReportsServiceTracingStub : public CloudChannelReportsServiceS
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<CloudChannelReportsServiceStub> MakeCloudChannelReportsServiceTracingStub(
+std::shared_ptr<CloudChannelReportsServiceStub>
+MakeCloudChannelReportsServiceTracingStub(
     std::shared_ptr<CloudChannelReportsServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

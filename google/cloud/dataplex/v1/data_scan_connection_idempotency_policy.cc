@@ -26,54 +26,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataScanServiceConnectionIdempotencyPolicy::~DataScanServiceConnectionIdempotencyPolicy() = default;
+DataScanServiceConnectionIdempotencyPolicy::
+    ~DataScanServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataScanServiceConnectionIdempotencyPolicy>
 DataScanServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DataScanServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::CreateDataScan(google::cloud::dataplex::v1::CreateDataScanRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::CreateDataScan(
+    google::cloud::dataplex::v1::CreateDataScanRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::UpdateDataScan(google::cloud::dataplex::v1::UpdateDataScanRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::UpdateDataScan(
+    google::cloud::dataplex::v1::UpdateDataScanRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::DeleteDataScan(google::cloud::dataplex::v1::DeleteDataScanRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::DeleteDataScan(
+    google::cloud::dataplex::v1::DeleteDataScanRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::GetDataScan(google::cloud::dataplex::v1::GetDataScanRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::GetDataScan(
+    google::cloud::dataplex::v1::GetDataScanRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::ListDataScans(google::cloud::dataplex::v1::ListDataScansRequest) {  // NOLINT
+Idempotency DataScanServiceConnectionIdempotencyPolicy::ListDataScans(
+    google::cloud::dataplex::v1::ListDataScansRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::RunDataScan(google::cloud::dataplex::v1::RunDataScanRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::RunDataScan(
+    google::cloud::dataplex::v1::RunDataScanRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::GetDataScanJob(google::cloud::dataplex::v1::GetDataScanJobRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::GetDataScanJob(
+    google::cloud::dataplex::v1::GetDataScanJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::ListDataScanJobs(google::cloud::dataplex::v1::ListDataScanJobsRequest) {  // NOLINT
+Idempotency DataScanServiceConnectionIdempotencyPolicy::ListDataScanJobs(
+    google::cloud::dataplex::v1::ListDataScanJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::GenerateDataQualityRules(google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&) {
+Idempotency
+DataScanServiceConnectionIdempotencyPolicy::GenerateDataQualityRules(
+    google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DataScanServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -83,32 +96,38 @@ Idempotency DataScanServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DataScanServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataScanServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DataScanServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataScanServiceConnectionIdempotencyPolicy>
-    MakeDefaultDataScanServiceConnectionIdempotencyPolicy() {
+MakeDefaultDataScanServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataScanServiceConnectionIdempotencyPolicy>();
 }
 

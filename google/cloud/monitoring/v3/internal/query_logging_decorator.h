@@ -35,12 +35,11 @@ class QueryServiceLogging : public QueryServiceStub {
  public:
   ~QueryServiceLogging() override = default;
   QueryServiceLogging(std::shared_ptr<QueryServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                      TracingOptions tracing_options,
+                      std::set<std::string> const& components);
 
   StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::QueryTimeSeriesRequest const& request) override;
 
  private:

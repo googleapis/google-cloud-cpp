@@ -47,16 +47,19 @@ class MockTraceServiceConnection : public trace_v1::TraceServiceConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::devtools::cloudtrace::v1::Trace>),
-  ListTraces,
-  (google::devtools::cloudtrace::v1::ListTracesRequest request), (override));
+              ListTraces,
+              (google::devtools::cloudtrace::v1::ListTracesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::cloudtrace::v1::Trace>,
-  GetTrace,
-  (google::devtools::cloudtrace::v1::GetTraceRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudtrace::v1::Trace>, GetTrace,
+      (google::devtools::cloudtrace::v1::GetTraceRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  PatchTraces,
-  (google::devtools::cloudtrace::v1::PatchTracesRequest const& request), (override));
+  MOCK_METHOD(
+      Status, PatchTraces,
+      (google::devtools::cloudtrace::v1::PatchTracesRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

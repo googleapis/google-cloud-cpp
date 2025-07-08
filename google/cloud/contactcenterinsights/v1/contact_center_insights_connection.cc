@@ -17,13 +17,13 @@
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_options.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_connection_impl.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_option_defaults.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub_factory.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -40,37 +40,40 @@ ContactCenterInsightsConnection::~ContactCenterInsightsConnection() = default;
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnection::CreateConversation(
-    google::cloud::contactcenterinsights::v1::CreateConversationRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        CreateConversationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
 ContactCenterInsightsConnection::UploadConversation(
-    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        UploadConversationRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::UploadConversation(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    UploadConversationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
 ContactCenterInsightsConnection::UploadConversation(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnection::UpdateConversation(
-    google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        UpdateConversationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -80,15 +83,17 @@ ContactCenterInsightsConnection::GetConversation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::Conversation> ContactCenterInsightsConnection::ListConversations(
-    google::cloud::contactcenterinsights::v1::ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
+ContactCenterInsightsConnection::ListConversations(
+    google::cloud::contactcenterinsights::v1::
+        ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::Conversation>>();
 }
 
-Status
-ContactCenterInsightsConnection::DeleteConversation(
-    google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&) {
+Status ContactCenterInsightsConnection::DeleteConversation(
+    google::cloud::contactcenterinsights::v1::
+        DeleteConversationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -96,8 +101,8 @@ future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
 ContactCenterInsightsConnection::CreateAnalysis(
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -105,15 +110,15 @@ ContactCenterInsightsConnection::CreateAnalysis(
     NoAwaitTag,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
 ContactCenterInsightsConnection::CreateAnalysis(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
@@ -122,120 +127,137 @@ ContactCenterInsightsConnection::GetAnalysis(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ContactCenterInsightsConnection::ListAnalyses(
-    google::cloud::contactcenterinsights::v1::ListAnalysesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
+ContactCenterInsightsConnection::ListAnalyses(
+    google::cloud::contactcenterinsights::v1::
+        ListAnalysesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::Analysis>>();
 }
 
-Status
-ContactCenterInsightsConnection::DeleteAnalysis(
+Status ContactCenterInsightsConnection::DeleteAnalysis(
     google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
 ContactCenterInsightsConnection::BulkAnalyzeConversations(
-    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkAnalyzeConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::BulkAnalyzeConversations(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    BulkAnalyzeConversationsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
 ContactCenterInsightsConnection::BulkAnalyzeConversations(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkAnalyzeConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
 ContactCenterInsightsConnection::BulkDeleteConversations(
-    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkDeleteConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::BulkDeleteConversations(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    BulkDeleteConversationsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
 ContactCenterInsightsConnection::BulkDeleteConversations(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkDeleteConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsConnection::IngestConversations(
-    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::contactcenterinsights::v1::
+        IngestConversationsRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::IngestConversations(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    IngestConversationsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsConnection::IngestConversations(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsConnection::ExportInsightsData(
-    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::contactcenterinsights::v1::
+        ExportInsightsDataRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::ExportInsightsData(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    ExportInsightsDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsConnection::ExportInsightsData(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsConnection::CreateIssueModel(
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -243,15 +265,15 @@ ContactCenterInsightsConnection::CreateIssueModel(
     NoAwaitTag,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsConnection::CreateIssueModel(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -272,12 +294,13 @@ ContactCenterInsightsConnection::ListIssueModels(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
 ContactCenterInsightsConnection::DeleteIssueModel(
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -285,23 +308,25 @@ ContactCenterInsightsConnection::DeleteIssueModel(
     NoAwaitTag,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
 ContactCenterInsightsConnection::DeleteIssueModel(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
 ContactCenterInsightsConnection::DeployIssueModel(
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -309,47 +334,52 @@ ContactCenterInsightsConnection::DeployIssueModel(
     NoAwaitTag,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
 ContactCenterInsightsConnection::DeployIssueModel(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
 ContactCenterInsightsConnection::UndeployIssueModel(
-    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::contactcenterinsights::v1::
+        UndeployIssueModelRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::UndeployIssueModel(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    UndeployIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
 ContactCenterInsightsConnection::UndeployIssueModel(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
 ContactCenterInsightsConnection::ExportIssueModel(
     google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -357,23 +387,25 @@ ContactCenterInsightsConnection::ExportIssueModel(
     NoAwaitTag,
     google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
 ContactCenterInsightsConnection::ExportIssueModel(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
 ContactCenterInsightsConnection::ImportIssueModel(
     google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -381,15 +413,16 @@ ContactCenterInsightsConnection::ImportIssueModel(
     NoAwaitTag,
     google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
 ContactCenterInsightsConnection::ImportIssueModel(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
@@ -410,21 +443,23 @@ ContactCenterInsightsConnection::UpdateIssue(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContactCenterInsightsConnection::DeleteIssue(
+Status ContactCenterInsightsConnection::DeleteIssue(
     google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
+StatusOr<
+    google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
 ContactCenterInsightsConnection::CalculateIssueModelStats(
-    google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        CalculateIssueModelStatsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsConnection::CreatePhraseMatcher(
-    google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        CreatePhraseMatcherRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -434,21 +469,24 @@ ContactCenterInsightsConnection::GetPhraseMatcher(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher> ContactCenterInsightsConnection::ListPhraseMatchers(
-    google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
+ContactCenterInsightsConnection::ListPhraseMatchers(
+    google::cloud::contactcenterinsights::v1::
+        ListPhraseMatchersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>>();
 }
 
-Status
-ContactCenterInsightsConnection::DeletePhraseMatcher(
-    google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&) {
+Status ContactCenterInsightsConnection::DeletePhraseMatcher(
+    google::cloud::contactcenterinsights::v1::
+        DeletePhraseMatcherRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsConnection::UpdatePhraseMatcher(
-    google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        UpdatePhraseMatcherRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -472,7 +510,8 @@ ContactCenterInsightsConnection::UpdateSettings(
 
 StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
 ContactCenterInsightsConnection::CreateAnalysisRule(
-    google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        CreateAnalysisRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -482,21 +521,24 @@ ContactCenterInsightsConnection::GetAnalysisRule(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule> ContactCenterInsightsConnection::ListAnalysisRules(
-    google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>
+ContactCenterInsightsConnection::ListAnalysisRules(
+    google::cloud::contactcenterinsights::v1::
+        ListAnalysisRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>>();
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
 ContactCenterInsightsConnection::UpdateAnalysisRule(
-    google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        UpdateAnalysisRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContactCenterInsightsConnection::DeleteAnalysisRule(
-    google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&) {
+Status ContactCenterInsightsConnection::DeleteAnalysisRule(
+    google::cloud::contactcenterinsights::v1::
+        DeleteAnalysisRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -506,28 +548,33 @@ ContactCenterInsightsConnection::GetEncryptionSpec(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
 ContactCenterInsightsConnection::InitializeEncryptionSpec(
-    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   InitializeEncryptionSpecResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::InitializeEncryptionSpec(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    InitializeEncryptionSpecRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
 ContactCenterInsightsConnection::InitializeEncryptionSpec(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   InitializeEncryptionSpecResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
@@ -542,8 +589,10 @@ ContactCenterInsightsConnection::GetView(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::View> ContactCenterInsightsConnection::ListViews(
-    google::cloud::contactcenterinsights::v1::ListViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::View>
+ContactCenterInsightsConnection::ListViews(
+    google::cloud::contactcenterinsights::v1::
+        ListViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::View>>();
 }
@@ -554,8 +603,7 @@ ContactCenterInsightsConnection::UpdateView(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContactCenterInsightsConnection::DeleteView(
+Status ContactCenterInsightsConnection::DeleteView(
     google::cloud::contactcenterinsights::v1::DeleteViewRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -564,8 +612,8 @@ future<StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
 ContactCenterInsightsConnection::QueryMetrics(
     google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -573,15 +621,15 @@ ContactCenterInsightsConnection::QueryMetrics(
     NoAwaitTag,
     google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
 ContactCenterInsightsConnection::QueryMetrics(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
@@ -602,14 +650,15 @@ ContactCenterInsightsConnection::UpdateQaQuestion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContactCenterInsightsConnection::DeleteQaQuestion(
+Status ContactCenterInsightsConnection::DeleteQaQuestion(
     google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion> ContactCenterInsightsConnection::ListQaQuestions(
-    google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>
+ContactCenterInsightsConnection::ListQaQuestions(
+    google::cloud::contactcenterinsights::v1::
+        ListQaQuestionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>>();
 }
@@ -632,86 +681,101 @@ ContactCenterInsightsConnection::UpdateQaScorecard(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContactCenterInsightsConnection::DeleteQaScorecard(
+Status ContactCenterInsightsConnection::DeleteQaScorecard(
     google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard> ContactCenterInsightsConnection::ListQaScorecards(
-    google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>
+ContactCenterInsightsConnection::ListQaScorecards(
+    google::cloud::contactcenterinsights::v1::
+        ListQaScorecardsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>>();
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
 ContactCenterInsightsConnection::CreateQaScorecardRevision(
-    google::cloud::contactcenterinsights::v1::CreateQaScorecardRevisionRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        CreateQaScorecardRevisionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
 ContactCenterInsightsConnection::GetQaScorecardRevision(
-    google::cloud::contactcenterinsights::v1::GetQaScorecardRevisionRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        GetQaScorecardRevisionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
 ContactCenterInsightsConnection::TuneQaScorecardRevision(
-    google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        TuneQaScorecardRevisionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   TuneQaScorecardRevisionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::TuneQaScorecardRevision(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    TuneQaScorecardRevisionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
 ContactCenterInsightsConnection::TuneQaScorecardRevision(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   TuneQaScorecardRevisionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
 ContactCenterInsightsConnection::DeployQaScorecardRevision(
-    google::cloud::contactcenterinsights::v1::DeployQaScorecardRevisionRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        DeployQaScorecardRevisionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
 ContactCenterInsightsConnection::UndeployQaScorecardRevision(
-    google::cloud::contactcenterinsights::v1::UndeployQaScorecardRevisionRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        UndeployQaScorecardRevisionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContactCenterInsightsConnection::DeleteQaScorecardRevision(
-    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRevisionRequest const&) {
+Status ContactCenterInsightsConnection::DeleteQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        DeleteQaScorecardRevisionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision> ContactCenterInsightsConnection::ListQaScorecardRevisions(
-    google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision>>();
+StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+ContactCenterInsightsConnection::ListQaScorecardRevisions(
+    google::cloud::contactcenterinsights::v1::
+        ListQaScorecardRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::contactcenterinsights::v1::QaScorecardRevision>>();
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
 ContactCenterInsightsConnection::CreateFeedbackLabel(
-    google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        CreateFeedbackLabelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel> ContactCenterInsightsConnection::ListFeedbackLabels(
-    google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+ContactCenterInsightsConnection::ListFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::
+        ListFeedbackLabelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>>();
 }
@@ -724,72 +788,87 @@ ContactCenterInsightsConnection::GetFeedbackLabel(
 
 StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
 ContactCenterInsightsConnection::UpdateFeedbackLabel(
-    google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        UpdateFeedbackLabelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContactCenterInsightsConnection::DeleteFeedbackLabel(
-    google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const&) {
+Status ContactCenterInsightsConnection::DeleteFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::
+        DeleteFeedbackLabelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel> ContactCenterInsightsConnection::ListAllFeedbackLabels(
-    google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+ContactCenterInsightsConnection::ListAllFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::
+        ListAllFeedbackLabelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>>();
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
 ContactCenterInsightsConnection::BulkUploadFeedbackLabels(
-    google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        BulkUploadFeedbackLabelsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkUploadFeedbackLabelsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::BulkUploadFeedbackLabels(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    BulkUploadFeedbackLabelsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
 ContactCenterInsightsConnection::BulkUploadFeedbackLabels(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkUploadFeedbackLabelsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>
+future<StatusOr<google::cloud::contactcenterinsights::v1::
+                    BulkDownloadFeedbackLabelsResponse>>
 ContactCenterInsightsConnection::BulkDownloadFeedbackLabels(
-    google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const&) {
+    google::cloud::contactcenterinsights::v1::
+        BulkDownloadFeedbackLabelsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkDownloadFeedbackLabelsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::BulkDownloadFeedbackLabels(
-    NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const&) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    BulkDownloadFeedbackLabelsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>
+future<StatusOr<google::cloud::contactcenterinsights::v1::
+                    BulkDownloadFeedbackLabelsResponse>>
 ContactCenterInsightsConnection::BulkDownloadFeedbackLabels(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkDownloadFeedbackLabelsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation> ContactCenterInsightsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ContactCenterInsightsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -800,26 +879,30 @@ ContactCenterInsightsConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ContactCenterInsightsConnection::CancelOperation(
+Status ContactCenterInsightsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ContactCenterInsightsConnection> MakeContactCenterInsightsConnection(
-    Options options) {
+std::shared_ptr<ContactCenterInsightsConnection>
+MakeContactCenterInsightsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ContactCenterInsightsPolicyOptionList>(options, __func__);
-  options = contactcenterinsights_v1_internal::ContactCenterInsightsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ContactCenterInsightsPolicyOptionList>(
+      options, __func__);
+  options =
+      contactcenterinsights_v1_internal::ContactCenterInsightsDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = contactcenterinsights_v1_internal::CreateDefaultContactCenterInsightsStub(
-    std::move(auth), options);
-  return contactcenterinsights_v1_internal::MakeContactCenterInsightsTracingConnection(
-      std::make_shared<contactcenterinsights_v1_internal::ContactCenterInsightsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      contactcenterinsights_v1_internal::CreateDefaultContactCenterInsightsStub(
+          std::move(auth), options);
+  return contactcenterinsights_v1_internal::
+      MakeContactCenterInsightsTracingConnection(
+          std::make_shared<contactcenterinsights_v1_internal::
+                               ContactCenterInsightsConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

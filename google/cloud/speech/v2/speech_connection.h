@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V2_SPEECH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V2_SPEECH_CONNECTION_H
 
+#include "google/cloud/speech/v2/internal/speech_retry_traits.h"
+#include "google/cloud/speech/v2/speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
@@ -26,8 +28,6 @@
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/speech/v2/internal/speech_retry_traits.h"
-#include "google/cloud/speech/v2/speech_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -68,14 +68,14 @@ class SpeechLimitedErrorCountRetryPolicy : public SpeechRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit SpeechLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SpeechLimitedErrorCountRetryPolicy(
       SpeechLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SpeechLimitedErrorCountRetryPolicy(
       SpeechLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SpeechLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,7 +95,9 @@ class SpeechLimitedErrorCountRetryPolicy : public SpeechRetryPolicy {
   using BaseType = SpeechRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<speech_v2_internal::SpeechRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      speech_v2_internal::SpeechRetryTraits>
+      impl_;
 };
 
 /**
@@ -133,12 +135,12 @@ class SpeechLimitedTimeRetryPolicy : public SpeechRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SpeechLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   SpeechLimitedTimeRetryPolicy(SpeechLimitedTimeRetryPolicy&& rhs) noexcept
-    : SpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : SpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   SpeechLimitedTimeRetryPolicy(SpeechLimitedTimeRetryPolicy const& rhs) noexcept
-    : SpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : SpeechLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,15 +154,16 @@ class SpeechLimitedTimeRetryPolicy : public SpeechRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<SpeechRetryPolicy> clone() const override {
-    return std::make_unique<SpeechLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<SpeechLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = SpeechRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<speech_v2_internal::SpeechRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      speech_v2_internal::SpeechRetryTraits>
+      impl_;
 };
 
 /**
@@ -182,49 +185,57 @@ class SpeechConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
-  CreateRecognizer(google::cloud::speech::v2::CreateRecognizerRequest const& request);
+  CreateRecognizer(
+      google::cloud::speech::v2::CreateRecognizerRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateRecognizer(NoAwaitTag, google::cloud::speech::v2::CreateRecognizerRequest const& request);
-
-  virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
-  CreateRecognizer( google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::speech::v2::Recognizer>
-  ListRecognizers(google::cloud::speech::v2::ListRecognizersRequest request);
-
-  virtual StatusOr<google::cloud::speech::v2::Recognizer>
-  GetRecognizer(google::cloud::speech::v2::GetRecognizerRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateRecognizer(
+      NoAwaitTag,
+      google::cloud::speech::v2::CreateRecognizerRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
-  UpdateRecognizer(google::cloud::speech::v2::UpdateRecognizerRequest const& request);
+  CreateRecognizer(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateRecognizer(NoAwaitTag, google::cloud::speech::v2::UpdateRecognizerRequest const& request);
+  virtual StreamRange<google::cloud::speech::v2::Recognizer> ListRecognizers(
+      google::cloud::speech::v2::ListRecognizersRequest request);
 
-  virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
-  UpdateRecognizer( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
-  DeleteRecognizer(google::cloud::speech::v2::DeleteRecognizerRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteRecognizer(NoAwaitTag, google::cloud::speech::v2::DeleteRecognizerRequest const& request);
+  virtual StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
+      google::cloud::speech::v2::GetRecognizerRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
-  DeleteRecognizer( google::longrunning::Operation const& operation);
+  UpdateRecognizer(
+      google::cloud::speech::v2::UpdateRecognizerRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateRecognizer(
+      NoAwaitTag,
+      google::cloud::speech::v2::UpdateRecognizerRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
-  UndeleteRecognizer(google::cloud::speech::v2::UndeleteRecognizerRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UndeleteRecognizer(NoAwaitTag, google::cloud::speech::v2::UndeleteRecognizerRequest const& request);
+  UpdateRecognizer(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
-  UndeleteRecognizer( google::longrunning::Operation const& operation);
+  DeleteRecognizer(
+      google::cloud::speech::v2::DeleteRecognizerRequest const& request);
 
-  virtual StatusOr<google::cloud::speech::v2::RecognizeResponse>
-  Recognize(google::cloud::speech::v2::RecognizeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteRecognizer(
+      NoAwaitTag,
+      google::cloud::speech::v2::DeleteRecognizerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  DeleteRecognizer(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  UndeleteRecognizer(
+      google::cloud::speech::v2::UndeleteRecognizerRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UndeleteRecognizer(
+      NoAwaitTag,
+      google::cloud::speech::v2::UndeleteRecognizerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::speech::v2::Recognizer>>
+  UndeleteRecognizer(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
+      google::cloud::speech::v2::RecognizeRequest const& request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v2::StreamingRecognizeRequest,
@@ -232,121 +243,139 @@ class SpeechConnection {
   AsyncStreamingRecognize();
 
   virtual future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-  BatchRecognize(google::cloud::speech::v2::BatchRecognizeRequest const& request);
+  BatchRecognize(
+      google::cloud::speech::v2::BatchRecognizeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchRecognize(NoAwaitTag, google::cloud::speech::v2::BatchRecognizeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchRecognize(
+      NoAwaitTag,
+      google::cloud::speech::v2::BatchRecognizeRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-  BatchRecognize( google::longrunning::Operation const& operation);
+  BatchRecognize(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::speech::v2::Config>
-  GetConfig(google::cloud::speech::v2::GetConfigRequest const& request);
+  virtual StatusOr<google::cloud::speech::v2::Config> GetConfig(
+      google::cloud::speech::v2::GetConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::speech::v2::Config>
-  UpdateConfig(google::cloud::speech::v2::UpdateConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
-  CreateCustomClass(google::cloud::speech::v2::CreateCustomClassRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateCustomClass(NoAwaitTag, google::cloud::speech::v2::CreateCustomClassRequest const& request);
+  virtual StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
+      google::cloud::speech::v2::UpdateConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
-  CreateCustomClass( google::longrunning::Operation const& operation);
+  CreateCustomClass(
+      google::cloud::speech::v2::CreateCustomClassRequest const& request);
 
-  virtual StreamRange<google::cloud::speech::v2::CustomClass>
-  ListCustomClasses(google::cloud::speech::v2::ListCustomClassesRequest request);
-
-  virtual StatusOr<google::cloud::speech::v2::CustomClass>
-  GetCustomClass(google::cloud::speech::v2::GetCustomClassRequest const& request);
-
-  virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
-  UpdateCustomClass(google::cloud::speech::v2::UpdateCustomClassRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateCustomClass(NoAwaitTag, google::cloud::speech::v2::UpdateCustomClassRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateCustomClass(
+      NoAwaitTag,
+      google::cloud::speech::v2::CreateCustomClassRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
-  UpdateCustomClass( google::longrunning::Operation const& operation);
+  CreateCustomClass(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
+      google::cloud::speech::v2::ListCustomClassesRequest request);
+
+  virtual StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
+      google::cloud::speech::v2::GetCustomClassRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
-  DeleteCustomClass(google::cloud::speech::v2::DeleteCustomClassRequest const& request);
+  UpdateCustomClass(
+      google::cloud::speech::v2::UpdateCustomClassRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteCustomClass(NoAwaitTag, google::cloud::speech::v2::DeleteCustomClassRequest const& request);
-
-  virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
-  DeleteCustomClass( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
-  UndeleteCustomClass(google::cloud::speech::v2::UndeleteCustomClassRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UndeleteCustomClass(NoAwaitTag, google::cloud::speech::v2::UndeleteCustomClassRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateCustomClass(
+      NoAwaitTag,
+      google::cloud::speech::v2::UpdateCustomClassRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
-  UndeleteCustomClass( google::longrunning::Operation const& operation);
+  UpdateCustomClass(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  DeleteCustomClass(
+      google::cloud::speech::v2::DeleteCustomClassRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCustomClass(
+      NoAwaitTag,
+      google::cloud::speech::v2::DeleteCustomClassRequest const& request);
+
+  virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  DeleteCustomClass(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  UndeleteCustomClass(
+      google::cloud::speech::v2::UndeleteCustomClassRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UndeleteCustomClass(
+      NoAwaitTag,
+      google::cloud::speech::v2::UndeleteCustomClassRequest const& request);
+
+  virtual future<StatusOr<google::cloud::speech::v2::CustomClass>>
+  UndeleteCustomClass(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-  CreatePhraseSet(google::cloud::speech::v2::CreatePhraseSetRequest const& request);
+  CreatePhraseSet(
+      google::cloud::speech::v2::CreatePhraseSetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreatePhraseSet(NoAwaitTag, google::cloud::speech::v2::CreatePhraseSetRequest const& request);
-
-  virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-  CreatePhraseSet( google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::speech::v2::PhraseSet>
-  ListPhraseSets(google::cloud::speech::v2::ListPhraseSetsRequest request);
-
-  virtual StatusOr<google::cloud::speech::v2::PhraseSet>
-  GetPhraseSet(google::cloud::speech::v2::GetPhraseSetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreatePhraseSet(
+      NoAwaitTag,
+      google::cloud::speech::v2::CreatePhraseSetRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-  UpdatePhraseSet(google::cloud::speech::v2::UpdatePhraseSetRequest const& request);
+  CreatePhraseSet(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdatePhraseSet(NoAwaitTag, google::cloud::speech::v2::UpdatePhraseSetRequest const& request);
+  virtual StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
+      google::cloud::speech::v2::ListPhraseSetsRequest request);
 
-  virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-  UpdatePhraseSet( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-  DeletePhraseSet(google::cloud::speech::v2::DeletePhraseSetRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeletePhraseSet(NoAwaitTag, google::cloud::speech::v2::DeletePhraseSetRequest const& request);
+  virtual StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
+      google::cloud::speech::v2::GetPhraseSetRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-  DeletePhraseSet( google::longrunning::Operation const& operation);
+  UpdatePhraseSet(
+      google::cloud::speech::v2::UpdatePhraseSetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdatePhraseSet(
+      NoAwaitTag,
+      google::cloud::speech::v2::UpdatePhraseSetRequest const& request);
 
   virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-  UndeletePhraseSet(google::cloud::speech::v2::UndeletePhraseSetRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UndeletePhraseSet(NoAwaitTag, google::cloud::speech::v2::UndeletePhraseSetRequest const& request);
+  UpdatePhraseSet(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
-  UndeletePhraseSet( google::longrunning::Operation const& operation);
+  DeletePhraseSet(
+      google::cloud::speech::v2::DeletePhraseSetRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeletePhraseSet(
+      NoAwaitTag,
+      google::cloud::speech::v2::DeletePhraseSetRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  DeletePhraseSet(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  UndeletePhraseSet(
+      google::cloud::speech::v2::UndeletePhraseSetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UndeletePhraseSet(
+      NoAwaitTag,
+      google::cloud::speech::v2::UndeletePhraseSetRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual future<StatusOr<google::cloud::speech::v2::PhraseSet>>
+  UndeletePhraseSet(google::longrunning::Operation const& operation);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -381,8 +410,7 @@ std::shared_ptr<SpeechConnection> MakeSpeechConnection(
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<SpeechConnection> MakeSpeechConnection(
-    Options options = {});
+std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2

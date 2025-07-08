@@ -33,7 +33,8 @@ using ::google::cloud::shell_v1::MakeCloudShellServiceConnection;
 /// @deprecated Use shell_v1::CloudShellServiceConnection directly.
 using ::google::cloud::shell_v1::CloudShellServiceConnection;
 
-/// @deprecated Use shell_v1::CloudShellServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use shell_v1::CloudShellServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::shell_v1::CloudShellServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use shell_v1::CloudShellServiceLimitedTimeRetryPolicy directly.

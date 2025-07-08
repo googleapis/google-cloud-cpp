@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use monitoring_v3::QueryServiceBackoffPolicyOption directly.
 using ::google::cloud::monitoring_v3::QueryServiceBackoffPolicyOption;
 
-/// @deprecated Use monitoring_v3::QueryServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::monitoring_v3::QueryServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use monitoring_v3::QueryServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::monitoring_v3::
+    QueryServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use monitoring_v3::QueryServicePolicyOptionList directly.
 using ::google::cloud::monitoring_v3::QueryServicePolicyOptionList;

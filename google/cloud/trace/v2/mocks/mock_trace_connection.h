@@ -46,13 +46,14 @@ class MockTraceServiceConnection : public trace_v2::TraceServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status,
-  BatchWriteSpans,
-  (google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request), (override));
+  MOCK_METHOD(
+      Status, BatchWriteSpans,
+      (google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::devtools::cloudtrace::v2::Span>,
-  CreateSpan,
-  (google::devtools::cloudtrace::v2::Span const& request), (override));
+  MOCK_METHOD(StatusOr<google::devtools::cloudtrace::v2::Span>, CreateSpan,
+              (google::devtools::cloudtrace::v2::Span const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

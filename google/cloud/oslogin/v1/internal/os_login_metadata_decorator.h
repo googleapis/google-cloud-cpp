@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_INTERNAL_OS_LOGIN_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_INTERNAL_OS_LOGIN_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/oslogin/v1/internal/os_login_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,49 +34,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class OsLoginServiceMetadata : public OsLoginServiceStub {
  public:
   ~OsLoginServiceMetadata() override = default;
-  OsLoginServiceMetadata(
-      std::shared_ptr<OsLoginServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  OsLoginServiceMetadata(std::shared_ptr<OsLoginServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
 
   Status DeletePosixAccount(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
+      override;
 
   Status DeleteSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request)
+      override;
 
   StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::GetLoginProfileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::GetLoginProfileRequest const& request)
+      override;
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse> ImportSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
+  ImportSshPublicKey(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request)
+      override;
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request)
+      override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

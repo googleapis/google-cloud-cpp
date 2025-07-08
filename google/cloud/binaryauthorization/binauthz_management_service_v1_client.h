@@ -25,13 +25,15 @@
 namespace google {
 namespace cloud {
 /// @deprecated This namespace exists for backwards compatibility. Use the
-///     types defined in binaryauthorization_v1 instead of the aliases defined in
-///     this namespace.
+///     types defined in binaryauthorization_v1 instead of the aliases defined
+///     in this namespace.
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1Client directly.
-using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1Client;
+/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1Client
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1Client;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

@@ -27,19 +27,27 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_v3::MakeNotificationChannelServiceConnection directly.
+/// @deprecated Use monitoring_v3::MakeNotificationChannelServiceConnection
+/// directly.
 using ::google::cloud::monitoring_v3::MakeNotificationChannelServiceConnection;
 
-/// @deprecated Use monitoring_v3::NotificationChannelServiceConnection directly.
+/// @deprecated Use monitoring_v3::NotificationChannelServiceConnection
+/// directly.
 using ::google::cloud::monitoring_v3::NotificationChannelServiceConnection;
 
-/// @deprecated Use monitoring_v3::NotificationChannelServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::monitoring_v3::NotificationChannelServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// monitoring_v3::NotificationChannelServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::
+    NotificationChannelServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use monitoring_v3::NotificationChannelServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::monitoring_v3::NotificationChannelServiceLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// monitoring_v3::NotificationChannelServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::monitoring_v3::
+    NotificationChannelServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use monitoring_v3::NotificationChannelServiceRetryPolicy directly.
+/// @deprecated Use monitoring_v3::NotificationChannelServiceRetryPolicy
+/// directly.
 using ::google::cloud::monitoring_v3::NotificationChannelServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

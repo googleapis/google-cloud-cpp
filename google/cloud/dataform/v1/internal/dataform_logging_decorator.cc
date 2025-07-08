@@ -30,22 +30,19 @@ namespace cloud {
 namespace dataform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DataformLogging::DataformLogging(
-    std::shared_ptr<DataformStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+DataformLogging::DataformLogging(std::shared_ptr<DataformStub> child,
+                                 TracingOptions tracing_options,
+                                 std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
 DataformLogging::ListRepositories(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListRepositoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ListRepositoriesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::ListRepositoriesRequest const& request) {
         return child_->ListRepositories(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,12 +50,10 @@ DataformLogging::ListRepositories(
 
 StatusOr<google::cloud::dataform::v1::Repository>
 DataformLogging::GetRepository(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::GetRepositoryRequest const& request) {
         return child_->GetRepository(context, options, request);
       },
@@ -67,13 +62,12 @@ DataformLogging::GetRepository(
 
 StatusOr<google::cloud::dataform::v1::Repository>
 DataformLogging::CreateRepository(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
         return child_->CreateRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +75,24 @@ DataformLogging::CreateRepository(
 
 StatusOr<google::cloud::dataform::v1::Repository>
 DataformLogging::UpdateRepository(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
         return child_->UpdateRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataformLogging::DeleteRepository(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataformLogging::DeleteRepository(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
         return child_->DeleteRepository(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +100,13 @@ DataformLogging::DeleteRepository(
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
 DataformLogging::CommitRepositoryChanges(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
+                 request) {
         return child_->CommitRepositoryChanges(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,13 +114,12 @@ DataformLogging::CommitRepositoryChanges(
 
 StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
 DataformLogging::ReadRepositoryFile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ReadRepositoryFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ReadRepositoryFileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::ReadRepositoryFileRequest const&
+                 request) {
         return child_->ReadRepositoryFile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,55 +127,56 @@ DataformLogging::ReadRepositoryFile(
 
 StatusOr<google::cloud::dataform::v1::QueryRepositoryDirectoryContentsResponse>
 DataformLogging::QueryRepositoryDirectoryContents(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const& request) {
-        return child_->QueryRepositoryDirectoryContents(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::
+                 QueryRepositoryDirectoryContentsRequest const& request) {
+        return child_->QueryRepositoryDirectoryContents(context, options,
+                                                        request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchRepositoryHistoryResponse>
 DataformLogging::FetchRepositoryHistory(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchRepositoryHistoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::FetchRepositoryHistoryRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::FetchRepositoryHistoryRequest const&
+                 request) {
         return child_->FetchRepositoryHistory(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
+StatusOr<
+    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
 DataformLogging::ComputeRepositoryAccessTokenStatus(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::
+        ComputeRepositoryAccessTokenStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request) {
-        return child_->ComputeRepositoryAccessTokenStatus(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::
+                 ComputeRepositoryAccessTokenStatusRequest const& request) {
+        return child_->ComputeRepositoryAccessTokenStatus(context, options,
+                                                          request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
 DataformLogging::FetchRemoteBranches(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::FetchRemoteBranchesRequest const&
+                 request) {
         return child_->FetchRemoteBranches(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -193,26 +184,22 @@ DataformLogging::FetchRemoteBranches(
 
 StatusOr<google::cloud::dataform::v1::ListWorkspacesResponse>
 DataformLogging::ListWorkspaces(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListWorkspacesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ListWorkspacesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::ListWorkspacesRequest const& request) {
         return child_->ListWorkspaces(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dataform::v1::Workspace>
-DataformLogging::GetWorkspace(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::Workspace> DataformLogging::GetWorkspace(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetWorkspaceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::GetWorkspaceRequest const& request) {
         return child_->GetWorkspace(context, options, request);
       },
@@ -221,27 +208,24 @@ DataformLogging::GetWorkspace(
 
 StatusOr<google::cloud::dataform::v1::Workspace>
 DataformLogging::CreateWorkspace(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
         return child_->CreateWorkspace(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataformLogging::DeleteWorkspace(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataformLogging::DeleteWorkspace(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
         return child_->DeleteWorkspace(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -249,13 +233,12 @@ DataformLogging::DeleteWorkspace(
 
 StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
 DataformLogging::InstallNpmPackages(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::InstallNpmPackagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::InstallNpmPackagesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::InstallNpmPackagesRequest const&
+                 request) {
         return child_->InstallNpmPackages(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -263,13 +246,12 @@ DataformLogging::InstallNpmPackages(
 
 StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse>
 DataformLogging::PullGitCommits(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
         return child_->PullGitCommits(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -277,13 +259,12 @@ DataformLogging::PullGitCommits(
 
 StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse>
 DataformLogging::PushGitCommits(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
         return child_->PushGitCommits(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -291,13 +272,12 @@ DataformLogging::PushGitCommits(
 
 StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
 DataformLogging::FetchFileGitStatuses(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::FetchFileGitStatusesRequest const&
+                 request) {
         return child_->FetchFileGitStatuses(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -305,13 +285,12 @@ DataformLogging::FetchFileGitStatuses(
 
 StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
 DataformLogging::FetchGitAheadBehind(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::FetchGitAheadBehindRequest const&
+                 request) {
         return child_->FetchGitAheadBehind(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -319,13 +298,12 @@ DataformLogging::FetchGitAheadBehind(
 
 StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
 DataformLogging::CommitWorkspaceChanges(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CommitWorkspaceChangesRequest const&
+                 request) {
         return child_->CommitWorkspaceChanges(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -333,13 +311,12 @@ DataformLogging::CommitWorkspaceChanges(
 
 StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
 DataformLogging::ResetWorkspaceChanges(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::ResetWorkspaceChangesRequest const&
+                 request) {
         return child_->ResetWorkspaceChanges(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -347,12 +324,10 @@ DataformLogging::ResetWorkspaceChanges(
 
 StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse>
 DataformLogging::FetchFileDiff(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchFileDiffRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::FetchFileDiffRequest const& request) {
         return child_->FetchFileDiff(context, options, request);
       },
@@ -361,13 +336,12 @@ DataformLogging::FetchFileDiff(
 
 StatusOr<google::cloud::dataform::v1::QueryDirectoryContentsResponse>
 DataformLogging::QueryDirectoryContents(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::QueryDirectoryContentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::QueryDirectoryContentsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::QueryDirectoryContentsRequest const&
+                 request) {
         return child_->QueryDirectoryContents(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -375,12 +349,10 @@ DataformLogging::QueryDirectoryContents(
 
 StatusOr<google::cloud::dataform::v1::SearchFilesResponse>
 DataformLogging::SearchFiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::SearchFilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::SearchFilesRequest const& request) {
         return child_->SearchFiles(context, options, request);
       },
@@ -389,12 +361,10 @@ DataformLogging::SearchFiles(
 
 StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse>
 DataformLogging::MakeDirectory(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::MakeDirectoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::MakeDirectoryRequest const& request) {
         return child_->MakeDirectory(context, options, request);
       },
@@ -403,13 +373,12 @@ DataformLogging::MakeDirectory(
 
 StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
 DataformLogging::RemoveDirectory(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
         return child_->RemoveDirectory(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -417,12 +386,10 @@ DataformLogging::RemoveDirectory(
 
 StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse>
 DataformLogging::MoveDirectory(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::MoveDirectoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::MoveDirectoryRequest const& request) {
         return child_->MoveDirectory(context, options, request);
       },
@@ -431,12 +398,10 @@ DataformLogging::MoveDirectory(
 
 StatusOr<google::cloud::dataform::v1::ReadFileResponse>
 DataformLogging::ReadFile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ReadFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::ReadFileRequest const& request) {
         return child_->ReadFile(context, options, request);
       },
@@ -445,12 +410,10 @@ DataformLogging::ReadFile(
 
 StatusOr<google::cloud::dataform::v1::RemoveFileResponse>
 DataformLogging::RemoveFile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::RemoveFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::RemoveFileRequest const& request) {
         return child_->RemoveFile(context, options, request);
       },
@@ -459,12 +422,10 @@ DataformLogging::RemoveFile(
 
 StatusOr<google::cloud::dataform::v1::MoveFileResponse>
 DataformLogging::MoveFile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::MoveFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::MoveFileRequest const& request) {
         return child_->MoveFile(context, options, request);
       },
@@ -473,12 +434,10 @@ DataformLogging::MoveFile(
 
 StatusOr<google::cloud::dataform::v1::WriteFileResponse>
 DataformLogging::WriteFile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::WriteFileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::WriteFileRequest const& request) {
         return child_->WriteFile(context, options, request);
       },
@@ -487,13 +446,12 @@ DataformLogging::WriteFile(
 
 StatusOr<google::cloud::dataform::v1::ListReleaseConfigsResponse>
 DataformLogging::ListReleaseConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListReleaseConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ListReleaseConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::ListReleaseConfigsRequest const&
+                 request) {
         return child_->ListReleaseConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -501,13 +459,12 @@ DataformLogging::ListReleaseConfigs(
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
 DataformLogging::GetReleaseConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
         return child_->GetReleaseConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -515,13 +472,12 @@ DataformLogging::GetReleaseConfig(
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
 DataformLogging::CreateReleaseConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CreateReleaseConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CreateReleaseConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CreateReleaseConfigRequest const&
+                 request) {
         return child_->CreateReleaseConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -529,27 +485,24 @@ DataformLogging::CreateReleaseConfig(
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
 DataformLogging::UpdateReleaseConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::UpdateReleaseConfigRequest const&
+                 request) {
         return child_->UpdateReleaseConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataformLogging::DeleteReleaseConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataformLogging::DeleteReleaseConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::DeleteReleaseConfigRequest const&
+                 request) {
         return child_->DeleteReleaseConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -557,13 +510,12 @@ DataformLogging::DeleteReleaseConfig(
 
 StatusOr<google::cloud::dataform::v1::ListCompilationResultsResponse>
 DataformLogging::ListCompilationResults(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListCompilationResultsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ListCompilationResultsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::ListCompilationResultsRequest const&
+                 request) {
         return child_->ListCompilationResults(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -571,13 +523,12 @@ DataformLogging::ListCompilationResults(
 
 StatusOr<google::cloud::dataform::v1::CompilationResult>
 DataformLogging::GetCompilationResult(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetCompilationResultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::GetCompilationResultRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::GetCompilationResultRequest const&
+                 request) {
         return child_->GetCompilationResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -585,13 +536,13 @@ DataformLogging::GetCompilationResult(
 
 StatusOr<google::cloud::dataform::v1::CompilationResult>
 DataformLogging::CreateCompilationResult(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::CreateCompilationResultRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CreateCompilationResultRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CreateCompilationResultRequest const&
+                 request) {
         return child_->CreateCompilationResult(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -599,13 +550,13 @@ DataformLogging::CreateCompilationResult(
 
 StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse>
 DataformLogging::QueryCompilationResultActions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::QueryCompilationResultActionsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryCompilationResultActionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::QueryCompilationResultActionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::
+                 QueryCompilationResultActionsRequest const& request) {
         return child_->QueryCompilationResultActions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -613,13 +564,12 @@ DataformLogging::QueryCompilationResultActions(
 
 StatusOr<google::cloud::dataform::v1::ListWorkflowConfigsResponse>
 DataformLogging::ListWorkflowConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListWorkflowConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ListWorkflowConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::ListWorkflowConfigsRequest const&
+                 request) {
         return child_->ListWorkflowConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -627,13 +577,12 @@ DataformLogging::ListWorkflowConfigs(
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
 DataformLogging::GetWorkflowConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetWorkflowConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::GetWorkflowConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::GetWorkflowConfigRequest const&
+                 request) {
         return child_->GetWorkflowConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -641,13 +590,12 @@ DataformLogging::GetWorkflowConfig(
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
 DataformLogging::CreateWorkflowConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CreateWorkflowConfigRequest const&
+                 request) {
         return child_->CreateWorkflowConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -655,27 +603,24 @@ DataformLogging::CreateWorkflowConfig(
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
 DataformLogging::UpdateWorkflowConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::UpdateWorkflowConfigRequest const&
+                 request) {
         return child_->UpdateWorkflowConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataformLogging::DeleteWorkflowConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataformLogging::DeleteWorkflowConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::DeleteWorkflowConfigRequest const&
+                 request) {
         return child_->DeleteWorkflowConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -683,13 +628,13 @@ DataformLogging::DeleteWorkflowConfig(
 
 StatusOr<google::cloud::dataform::v1::ListWorkflowInvocationsResponse>
 DataformLogging::ListWorkflowInvocations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::ListWorkflowInvocationsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::ListWorkflowInvocationsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::ListWorkflowInvocationsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::ListWorkflowInvocationsRequest const&
+                 request) {
         return child_->ListWorkflowInvocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -697,13 +642,12 @@ DataformLogging::ListWorkflowInvocations(
 
 StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
 DataformLogging::GetWorkflowInvocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::GetWorkflowInvocationRequest const&
+                 request) {
         return child_->GetWorkflowInvocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -711,27 +655,26 @@ DataformLogging::GetWorkflowInvocation(
 
 StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
 DataformLogging::CreateWorkflowInvocation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
+                 request) {
         return child_->CreateWorkflowInvocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataformLogging::DeleteWorkflowInvocation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request) {
+Status DataformLogging::DeleteWorkflowInvocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
+                 request) {
         return child_->DeleteWorkflowInvocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -739,13 +682,13 @@ DataformLogging::DeleteWorkflowInvocation(
 
 StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
 DataformLogging::CancelWorkflowInvocation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
+                 request) {
         return child_->CancelWorkflowInvocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -753,40 +696,35 @@ DataformLogging::CancelWorkflowInvocation(
 
 StatusOr<google::cloud::dataform::v1::QueryWorkflowInvocationActionsResponse>
 DataformLogging::QueryWorkflowInvocationActions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const& request) {
-        return child_->QueryWorkflowInvocationActions(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataform::v1::
+                 QueryWorkflowInvocationActionsRequest const& request) {
+        return child_->QueryWorkflowInvocationActions(context, options,
+                                                      request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformLogging::GetConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::Config> DataformLogging::GetConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::GetConfigRequest const& request) {
         return child_->GetConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformLogging::UpdateConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::Config> DataformLogging::UpdateConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::UpdateConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataform::v1::UpdateConfigRequest const& request) {
         return child_->UpdateConfig(context, options, request);
       },
@@ -795,54 +733,43 @@ DataformLogging::UpdateConfig(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataformLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-DataformLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> DataformLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataformLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DataformLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataformLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DataformLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -851,12 +778,10 @@ DataformLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataformLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },

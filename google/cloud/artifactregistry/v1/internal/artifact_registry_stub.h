@@ -25,8 +25,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/devtools/artifactregistry/v1/service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,330 +39,368 @@ class ArtifactRegistryStub {
  public:
   virtual ~ArtifactRegistryStub() = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse> ListDockerImages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListDockerImagesRequest const& request) = 0;
+  virtual StatusOr<
+      google::devtools::artifactregistry::v1::ListDockerImagesResponse>
+  ListDockerImages(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetDockerImageRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::DockerImage>
+  GetDockerImage(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse> ListMavenArtifacts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const& request) = 0;
+  virtual StatusOr<
+      google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
+  ListMavenArtifacts(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::MavenArtifact> GetMavenArtifact(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+  GetMavenArtifact(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse> ListNpmPackages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListNpmPackagesRequest const& request) = 0;
+  virtual StatusOr<
+      google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
+  ListNpmPackages(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+  GetNpmPackage(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse> ListPythonPackages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListPythonPackagesRequest const& request) = 0;
+  virtual StatusOr<
+      google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
+  ListPythonPackages(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::PythonPackage> GetPythonPackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+  GetPythonPackage(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportAptArtifacts(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncImportAptArtifacts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ImportAptArtifacts(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportYumArtifacts(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncImportYumArtifacts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ImportYumArtifacts(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse> ListRepositories(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListRepositoriesRequest const& request) = 0;
+  virtual StatusOr<
+      google::devtools::artifactregistry::v1::ListRepositoriesResponse>
+  ListRepositories(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::Repository>
+  GetRepository(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateRepository(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateRepository(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateRepository(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::Repository>
+  UpdateRepository(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRepository(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteRepository(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse> ListPackages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListPackagesRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
+  ListPackages(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListPackagesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetPackageRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetPackageRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeletePackage(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeletePackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListVersionsRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
+  ListVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListVersionsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetVersionRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetVersionRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteVersion(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteVersions(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchDeleteVersions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> BatchDeleteVersions(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateVersionRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::Version>
+  UpdateVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse> ListFiles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListFilesRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
+  ListFiles(grpc::ClientContext& context, Options const& options,
+            google::devtools::artifactregistry::v1::ListFilesRequest const&
+                request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetFileRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetFileRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFile(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::DeleteFileRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteFile(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const&
+          request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateFileRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateFileRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse> ListTags(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListTagsRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
+  ListTags(grpc::ClientContext& context, Options const& options,
+           google::devtools::artifactregistry::v1::ListTagsRequest const&
+               request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetTagRequest const& request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::CreateTagRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::CreateTagRequest const&
+          request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateTagRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateTagRequest const&
+          request) = 0;
 
   virtual Status DeleteTag(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::DeleteTagRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::DeleteTagRequest const&
+          request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::CreateRuleRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::CreateRuleRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse> ListRules(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListRulesRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse>
+  ListRules(grpc::ClientContext& context, Options const& options,
+            google::devtools::artifactregistry::v1::ListRulesRequest const&
+                request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetRuleRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetRuleRequest const&
+          request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateRuleRequest const&
+          request) = 0;
 
   virtual Status DeleteRule(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::DeleteRuleRequest const&
+          request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings> GetProjectSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+  GetProjectSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings> UpdateProjectSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+  UpdateProjectSettings(grpc::ClientContext& context, Options const& options,
+                        google::devtools::artifactregistry::v1::
+                            UpdateProjectSettingsRequest const& request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> GetVPCSCConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  GetVPCSCConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> UpdateVPCSCConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  UpdateVPCSCConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdatePackageRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::Package>
+  UpdatePackage(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListAttachmentsRequest const& request) = 0;
+  virtual StatusOr<
+      google::devtools::artifactregistry::v1::ListAttachmentsResponse>
+  ListAttachments(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetAttachmentRequest const& request) = 0;
+  virtual StatusOr<google::devtools::artifactregistry::v1::Attachment>
+  GetAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAttachment(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAttachment(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) = 0;
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -375,331 +413,352 @@ class ArtifactRegistryStub {
 class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
  public:
   DefaultArtifactRegistryStub(
-      std::unique_ptr<google::devtools::artifactregistry::v1::ArtifactRegistry::StubInterface> grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::devtools::artifactregistry::v1::ArtifactRegistry::
+                          StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse> ListDockerImages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListDockerImagesRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
+  ListDockerImages(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetDockerImageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse> ListMavenArtifacts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
+  ListMavenArtifacts(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::MavenArtifact> GetMavenArtifact(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+  GetMavenArtifact(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse> ListNpmPackages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListNpmPackagesRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
+  ListNpmPackages(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse> ListPythonPackages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListPythonPackagesRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
+  ListPythonPackages(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::PythonPackage> GetPythonPackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+  GetPythonPackage(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportAptArtifacts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) override;
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> ImportAptArtifacts(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportYumArtifacts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) override;
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> ImportYumArtifacts(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse> ListRepositories(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListRepositoriesRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
+  ListRepositories(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRepository(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) override;
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateRepository(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) override;
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse> ListPackages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListPackagesRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
+  ListPackages(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListPackagesRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetPackageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetPackageRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePackage(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) override;
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeletePackage(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListVersionsRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
+  ListVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListVersionsRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetVersionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetVersionRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) override;
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVersion(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteVersions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) override;
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> BatchDeleteVersions(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateVersionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse> ListFiles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListFilesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListFilesRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetFileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetFileRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFile(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) override;
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteFile(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateFileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateFileRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse> ListTags(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListTagsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListTagsRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetTagRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetTagRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::CreateTagRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::CreateTagRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateTagRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateTagRequest const& request)
+      override;
 
   Status DeleteTag(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::DeleteTagRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::DeleteTagRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::CreateRuleRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::CreateRuleRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse> ListRules(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListRulesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListRulesRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetRuleRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetRuleRequest const& request)
+      override;
 
   StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request)
+      override;
 
   Status DeleteRule(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ProjectSettings> GetProjectSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+  GetProjectSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ProjectSettings> UpdateProjectSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+  UpdateProjectSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::
+          UpdateProjectSettingsRequest const& request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> GetVPCSCConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> UpdateVPCSCConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  UpdateVPCSCConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::UpdatePackageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+          request) override;
 
-  StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::ListAttachmentsRequest const& request) override;
+  StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse>
+  ListAttachments(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+          request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::artifactregistry::v1::GetAttachmentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) override;
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) override;
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -715,9 +774,13 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::devtools::artifactregistry::v1::ArtifactRegistry::StubInterface> grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<
+      google::devtools::artifactregistry::v1::ArtifactRegistry::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

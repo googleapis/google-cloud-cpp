@@ -42,37 +42,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockMigrationServiceConnection : public bigquery_migration_v2::MigrationServiceConnection {
+class MockMigrationServiceConnection
+    : public bigquery_migration_v2::MigrationServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
-  CreateMigrationWorkflow,
-  (google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
+      CreateMigrationWorkflow,
+      (google::cloud::bigquery::migration::v2::
+           CreateMigrationWorkflowRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
-  GetMigrationWorkflow,
-  (google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
+      GetMigrationWorkflow,
+      (google::cloud::bigquery::migration::v2::
+           GetMigrationWorkflowRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>),
-  ListMigrationWorkflows,
-  (google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>),
+      ListMigrationWorkflows,
+      (google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteMigrationWorkflow,
-  (google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteMigrationWorkflow,
+              (google::cloud::bigquery::migration::v2::
+                   DeleteMigrationWorkflowRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  StartMigrationWorkflow,
-  (google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request), (override));
+  MOCK_METHOD(Status, StartMigrationWorkflow,
+              (google::cloud::bigquery::migration::v2::
+                   StartMigrationWorkflowRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>,
-  GetMigrationSubtask,
-  (google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>,
+      GetMigrationSubtask,
+      (google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>),
-  ListMigrationSubtasks,
-  (google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>),
+      ListMigrationSubtasks,
+      (google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

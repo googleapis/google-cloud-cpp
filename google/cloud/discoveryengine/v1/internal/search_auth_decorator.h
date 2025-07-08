@@ -39,28 +39,25 @@ class SearchServiceAuth : public SearchServiceStub {
       std::shared_ptr<SearchServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::SearchRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::SearchRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> SearchLite(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::SearchRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::SearchRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

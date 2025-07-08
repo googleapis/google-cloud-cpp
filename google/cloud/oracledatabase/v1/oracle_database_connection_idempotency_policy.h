@@ -36,104 +36,124 @@ class OracleDatabaseConnectionIdempotencyPolicy {
   virtual ~OracleDatabaseConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<OracleDatabaseConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<OracleDatabaseConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListCloudExadataInfrastructures(google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest request);
+  virtual google::cloud::Idempotency ListCloudExadataInfrastructures(
+      google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  GetCloudExadataInfrastructure(google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request);
+  virtual google::cloud::Idempotency GetCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          GetCloudExadataInfrastructureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateCloudExadataInfrastructure(google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request);
+  virtual google::cloud::Idempotency CreateCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          CreateCloudExadataInfrastructureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteCloudExadataInfrastructure(google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request);
+  virtual google::cloud::Idempotency DeleteCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          DeleteCloudExadataInfrastructureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListCloudVmClusters(google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request);
+  virtual google::cloud::Idempotency ListCloudVmClusters(
+      google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request);
 
-  virtual google::cloud::Idempotency
-  GetCloudVmCluster(google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request);
+  virtual google::cloud::Idempotency GetCloudVmCluster(
+      google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateCloudVmCluster(google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request);
+  virtual google::cloud::Idempotency CreateCloudVmCluster(
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteCloudVmCluster(google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request);
+  virtual google::cloud::Idempotency DeleteCloudVmCluster(
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListEntitlements(google::cloud::oracledatabase::v1::ListEntitlementsRequest request);
+  virtual google::cloud::Idempotency ListEntitlements(
+      google::cloud::oracledatabase::v1::ListEntitlementsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListDbServers(google::cloud::oracledatabase::v1::ListDbServersRequest request);
+  virtual google::cloud::Idempotency ListDbServers(
+      google::cloud::oracledatabase::v1::ListDbServersRequest request);
 
-  virtual google::cloud::Idempotency
-  ListDbNodes(google::cloud::oracledatabase::v1::ListDbNodesRequest request);
+  virtual google::cloud::Idempotency ListDbNodes(
+      google::cloud::oracledatabase::v1::ListDbNodesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListGiVersions(google::cloud::oracledatabase::v1::ListGiVersionsRequest request);
+  virtual google::cloud::Idempotency ListGiVersions(
+      google::cloud::oracledatabase::v1::ListGiVersionsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListDbSystemShapes(google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request);
+  virtual google::cloud::Idempotency ListDbSystemShapes(
+      google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListAutonomousDatabases(google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest request);
+  virtual google::cloud::Idempotency ListAutonomousDatabases(
+      google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  GetAutonomousDatabase(google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request);
+  virtual google::cloud::Idempotency GetAutonomousDatabase(
+      google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateAutonomousDatabase(google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request);
+  virtual google::cloud::Idempotency CreateAutonomousDatabase(
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteAutonomousDatabase(google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request);
+  virtual google::cloud::Idempotency DeleteAutonomousDatabase(
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RestoreAutonomousDatabase(google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request);
+  virtual google::cloud::Idempotency RestoreAutonomousDatabase(
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GenerateAutonomousDatabaseWallet(google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request);
+  virtual google::cloud::Idempotency GenerateAutonomousDatabaseWallet(
+      google::cloud::oracledatabase::v1::
+          GenerateAutonomousDatabaseWalletRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListAutonomousDbVersions(google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest request);
+  virtual google::cloud::Idempotency ListAutonomousDbVersions(
+      google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  ListAutonomousDatabaseCharacterSets(google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest request);
+  virtual google::cloud::Idempotency ListAutonomousDatabaseCharacterSets(
+      google::cloud::oracledatabase::v1::
+          ListAutonomousDatabaseCharacterSetsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListAutonomousDatabaseBackups(google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest request);
+  virtual google::cloud::Idempotency ListAutonomousDatabaseBackups(
+      google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  StopAutonomousDatabase(google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request);
+  virtual google::cloud::Idempotency StopAutonomousDatabase(
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  StartAutonomousDatabase(google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request);
+  virtual google::cloud::Idempotency StartAutonomousDatabase(
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RestartAutonomousDatabase(google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request);
+  virtual google::cloud::Idempotency RestartAutonomousDatabase(
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<OracleDatabaseConnectionIdempotencyPolicy>
-    MakeDefaultOracleDatabaseConnectionIdempotencyPolicy();
+MakeDefaultOracleDatabaseConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oracledatabase_v1

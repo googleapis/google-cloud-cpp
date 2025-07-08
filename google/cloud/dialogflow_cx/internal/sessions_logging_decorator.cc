@@ -32,23 +32,21 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SessionsLogging::SessionsLogging(
-    std::shared_ptr<SessionsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
+SessionsLogging::SessionsLogging(std::shared_ptr<SessionsStub> child,
+                                 TracingOptions tracing_options,
+                                 std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsLogging::DetectIntent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
+                 request) {
         return child_->DetectIntent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -57,16 +55,16 @@ SessionsLogging::DetectIntent(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
 SessionsLogging::ServerStreamingDetectIntent(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+      [this](
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::cloud::dialogflow::cx::v3::DetectIntentResponse>> {
-        auto stream = child_->ServerStreamingDetectIntent(std::move(context), options, request);
+        auto stream = child_->ServerStreamingDetectIntent(std::move(context),
+                                                          options, request);
         if (stream_logging_) {
           stream =
               std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
@@ -87,12 +85,14 @@ SessionsLogging::AsyncStreamingDetectIntent(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest, google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>;
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
+          google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamingDetectIntent(
-      cq, std::move(context), std::move(options));
+  auto stream = child_->AsyncStreamingDetectIntent(cq, std::move(context),
+                                                   std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -102,13 +102,12 @@ SessionsLogging::AsyncStreamingDetectIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsLogging::MatchIntent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::MatchIntentRequest const&
+                 request) {
         return child_->MatchIntent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -116,13 +115,12 @@ SessionsLogging::MatchIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsLogging::FulfillIntent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
+                 request) {
         return child_->FulfillIntent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -130,13 +128,14 @@ SessionsLogging::FulfillIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
 SessionsLogging::SubmitAnswerFeedback(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+              request) {
         return child_->SubmitAnswerFeedback(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -144,26 +143,21 @@ SessionsLogging::SubmitAnswerFeedback(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 SessionsLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-SessionsLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> SessionsLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -172,40 +166,32 @@ SessionsLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SessionsLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SessionsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> SessionsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SessionsLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SessionsLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

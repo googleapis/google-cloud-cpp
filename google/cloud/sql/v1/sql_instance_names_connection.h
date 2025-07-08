@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCE_NAMES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCE_NAMES_CONNECTION_H
 
+#include "google/cloud/sql/v1/internal/sql_instance_names_retry_traits.h"
+#include "google/cloud/sql/v1/sql_instance_names_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/sql/v1/internal/sql_instance_names_retry_traits.h"
-#include "google/cloud/sql/v1/sql_instance_names_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_instance_names.pb.h>
@@ -42,7 +42,8 @@ class SqlInstanceNamesServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `SqlInstanceNamesServiceConnection` based on counting errors.
+ * A retry policy for `SqlInstanceNamesServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -51,7 +52,8 @@ class SqlInstanceNamesServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlInstanceNamesServiceLimitedErrorCountRetryPolicy : public SqlInstanceNamesServiceRetryPolicy {
+class SqlInstanceNamesServiceLimitedErrorCountRetryPolicy
+    : public SqlInstanceNamesServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -60,15 +62,18 @@ class SqlInstanceNamesServiceLimitedErrorCountRetryPolicy : public SqlInstanceNa
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit SqlInstanceNamesServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit SqlInstanceNamesServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   SqlInstanceNamesServiceLimitedErrorCountRetryPolicy(
       SqlInstanceNamesServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SqlInstanceNamesServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlInstanceNamesServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   SqlInstanceNamesServiceLimitedErrorCountRetryPolicy(
       SqlInstanceNamesServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SqlInstanceNamesServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlInstanceNamesServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -80,7 +85,8 @@ class SqlInstanceNamesServiceLimitedErrorCountRetryPolicy : public SqlInstanceNa
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<SqlInstanceNamesServiceRetryPolicy> clone() const override {
-    return std::make_unique<SqlInstanceNamesServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<
+        SqlInstanceNamesServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -88,7 +94,9 @@ class SqlInstanceNamesServiceLimitedErrorCountRetryPolicy : public SqlInstanceNa
   using BaseType = SqlInstanceNamesServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlInstanceNamesServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      sql_v1_internal::SqlInstanceNamesServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -101,7 +109,8 @@ class SqlInstanceNamesServiceLimitedErrorCountRetryPolicy : public SqlInstanceNa
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlInstanceNamesServiceLimitedTimeRetryPolicy : public SqlInstanceNamesServiceRetryPolicy {
+class SqlInstanceNamesServiceLimitedTimeRetryPolicy
+    : public SqlInstanceNamesServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +135,14 @@ class SqlInstanceNamesServiceLimitedTimeRetryPolicy : public SqlInstanceNamesSer
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlInstanceNamesServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SqlInstanceNamesServiceLimitedTimeRetryPolicy(SqlInstanceNamesServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SqlInstanceNamesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlInstanceNamesServiceLimitedTimeRetryPolicy(SqlInstanceNamesServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SqlInstanceNamesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlInstanceNamesServiceLimitedTimeRetryPolicy(
+      SqlInstanceNamesServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SqlInstanceNamesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlInstanceNamesServiceLimitedTimeRetryPolicy(
+      SqlInstanceNamesServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SqlInstanceNamesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,16 +164,19 @@ class SqlInstanceNamesServiceLimitedTimeRetryPolicy : public SqlInstanceNamesSer
   using BaseType = SqlInstanceNamesServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlInstanceNamesServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      sql_v1_internal::SqlInstanceNamesServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `SqlInstanceNamesServiceConnection` object for `SqlInstanceNamesServiceClient`.
+ * The `SqlInstanceNamesServiceConnection` object for
+ * `SqlInstanceNamesServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SqlInstanceNamesServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `SqlInstanceNamesServiceClient`.
+ * sets in `SqlInstanceNamesServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `SqlInstanceNamesServiceClient`.
  *
  * To create a concrete instance, see `MakeSqlInstanceNamesServiceConnection()`.
  *

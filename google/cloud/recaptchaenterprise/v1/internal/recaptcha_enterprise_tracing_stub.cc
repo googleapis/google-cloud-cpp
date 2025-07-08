@@ -32,77 +32,96 @@ RecaptchaEnterpriseServiceTracingStub::RecaptchaEnterpriseServiceTracingStub(
     std::shared_ptr<RecaptchaEnterpriseServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::recaptchaenterprise::v1::Assessment> RecaptchaEnterpriseServiceTracingStub::CreateAssessment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "CreateAssessment");
+StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
+RecaptchaEnterpriseServiceTracingStub::CreateAssessment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "CreateAssessment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateAssessment(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse> RecaptchaEnterpriseServiceTracingStub::AnnotateAssessment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "AnnotateAssessment");
+StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
+RecaptchaEnterpriseServiceTracingStub::AnnotateAssessment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "AnnotateAssessment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->AnnotateAssessment(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->AnnotateAssessment(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::Key> RecaptchaEnterpriseServiceTracingStub::CreateKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+RecaptchaEnterpriseServiceTracingStub::CreateKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "CreateKey");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "CreateKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateKey(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::ListKeysResponse> RecaptchaEnterpriseServiceTracingStub::ListKeys(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::recaptchaenterprise::v1::ListKeysResponse>
+RecaptchaEnterpriseServiceTracingStub::ListKeys(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::ListKeysRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "ListKeys");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "ListKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListKeys(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse> RecaptchaEnterpriseServiceTracingStub::RetrieveLegacySecretKey(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "RetrieveLegacySecretKey");
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
+RecaptchaEnterpriseServiceTracingStub::RetrieveLegacySecretKey(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::
+        RetrieveLegacySecretKeyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "RetrieveLegacySecretKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RetrieveLegacySecretKey(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->RetrieveLegacySecretKey(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::Key> RecaptchaEnterpriseServiceTracingStub::GetKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+RecaptchaEnterpriseServiceTracingStub::GetKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "GetKey");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "GetKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetKey(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::Key> RecaptchaEnterpriseServiceTracingStub::UpdateKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+RecaptchaEnterpriseServiceTracingStub::UpdateKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "UpdateKey");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "UpdateKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -110,176 +129,226 @@ StatusOr<google::cloud::recaptchaenterprise::v1::Key> RecaptchaEnterpriseService
 }
 
 Status RecaptchaEnterpriseServiceTracingStub::DeleteKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "DeleteKey");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "DeleteKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteKey(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::Key> RecaptchaEnterpriseServiceTracingStub::MigrateKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::recaptchaenterprise::v1::Key>
+RecaptchaEnterpriseServiceTracingStub::MigrateKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "MigrateKey");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "MigrateKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MigrateKey(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse> RecaptchaEnterpriseServiceTracingStub::AddIpOverride(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "AddIpOverride");
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceTracingStub::AddIpOverride(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "AddIpOverride");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->AddIpOverride(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse> RecaptchaEnterpriseServiceTracingStub::RemoveIpOverride(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "RemoveIpOverride");
+StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+RecaptchaEnterpriseServiceTracingStub::RemoveIpOverride(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "RemoveIpOverride");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RemoveIpOverride(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::ListIpOverridesResponse> RecaptchaEnterpriseServiceTracingStub::ListIpOverrides(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "ListIpOverrides");
+StatusOr<google::cloud::recaptchaenterprise::v1::ListIpOverridesResponse>
+RecaptchaEnterpriseServiceTracingStub::ListIpOverrides(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "ListIpOverrides");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListIpOverrides(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> RecaptchaEnterpriseServiceTracingStub::GetMetrics(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
+RecaptchaEnterpriseServiceTracingStub::GetMetrics(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "GetMetrics");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "GetMetrics");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetMetrics(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy> RecaptchaEnterpriseServiceTracingStub::CreateFirewallPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "CreateFirewallPolicy");
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceTracingStub::CreateFirewallPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "CreateFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateFirewallPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateFirewallPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse> RecaptchaEnterpriseServiceTracingStub::ListFirewallPolicies(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "ListFirewallPolicies");
+StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceTracingStub::ListFirewallPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "ListFirewallPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListFirewallPolicies(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListFirewallPolicies(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy> RecaptchaEnterpriseServiceTracingStub::GetFirewallPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "GetFirewallPolicy");
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceTracingStub::GetFirewallPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "GetFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetFirewallPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetFirewallPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy> RecaptchaEnterpriseServiceTracingStub::UpdateFirewallPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "UpdateFirewallPolicy");
+StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
+RecaptchaEnterpriseServiceTracingStub::UpdateFirewallPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "UpdateFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateFirewallPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateFirewallPolicy(context, options, request));
 }
 
 Status RecaptchaEnterpriseServiceTracingStub::DeleteFirewallPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "DeleteFirewallPolicy");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "DeleteFirewallPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteFirewallPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteFirewallPolicy(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse> RecaptchaEnterpriseServiceTracingStub::ReorderFirewallPolicies(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "ReorderFirewallPolicies");
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceTracingStub::ReorderFirewallPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "ReorderFirewallPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ReorderFirewallPolicies(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ReorderFirewallPolicies(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse> RecaptchaEnterpriseServiceTracingStub::ListRelatedAccountGroups(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "ListRelatedAccountGroups");
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
+RecaptchaEnterpriseServiceTracingStub::ListRelatedAccountGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::
+        ListRelatedAccountGroupsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "ListRelatedAccountGroups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListRelatedAccountGroups(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListRelatedAccountGroups(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsResponse> RecaptchaEnterpriseServiceTracingStub::ListRelatedAccountGroupMemberships(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "ListRelatedAccountGroupMemberships");
+StatusOr<google::cloud::recaptchaenterprise::v1::
+             ListRelatedAccountGroupMembershipsResponse>
+RecaptchaEnterpriseServiceTracingStub::ListRelatedAccountGroupMemberships(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::
+        ListRelatedAccountGroupMembershipsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "ListRelatedAccountGroupMemberships");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListRelatedAccountGroupMemberships(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListRelatedAccountGroupMemberships(context, options, request));
 }
 
-StatusOr<google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsResponse> RecaptchaEnterpriseServiceTracingStub::SearchRelatedAccountGroupMemberships(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService", "SearchRelatedAccountGroupMemberships");
+StatusOr<google::cloud::recaptchaenterprise::v1::
+             SearchRelatedAccountGroupMembershipsResponse>
+RecaptchaEnterpriseServiceTracingStub::SearchRelatedAccountGroupMemberships(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::
+        SearchRelatedAccountGroupMembershipsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "SearchRelatedAccountGroupMemberships");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SearchRelatedAccountGroupMemberships(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->SearchRelatedAccountGroupMemberships(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<RecaptchaEnterpriseServiceStub> MakeRecaptchaEnterpriseServiceTracingStub(
+std::shared_ptr<RecaptchaEnterpriseServiceStub>
+MakeRecaptchaEnterpriseServiceTracingStub(
     std::shared_ptr<RecaptchaEnterpriseServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<RecaptchaEnterpriseServiceTracingStub>(std::move(stub));
+  return std::make_shared<RecaptchaEnterpriseServiceTracingStub>(
+      std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

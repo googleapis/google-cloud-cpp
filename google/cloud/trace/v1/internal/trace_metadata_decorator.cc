@@ -46,42 +46,45 @@ TraceServiceMetadata::TraceServiceMetadata(
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceMetadata::ListTraces(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->ListTraces(context, options, request);
 }
 
 StatusOr<google::devtools::cloudtrace::v1::Trace>
 TraceServiceMetadata::GetTrace(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","trace_id=", internal::UrlEncode(request.trace_id())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "trace_id=", internal::UrlEncode(request.trace_id())));
   return child_->GetTrace(context, options, request);
 }
 
-Status
-TraceServiceMetadata::PatchTraces(
-    grpc::ClientContext& context,
-    Options const& options,
+Status TraceServiceMetadata::PatchTraces(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->PatchTraces(context, options, request);
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                       Options const& options,
+                                       std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                       Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

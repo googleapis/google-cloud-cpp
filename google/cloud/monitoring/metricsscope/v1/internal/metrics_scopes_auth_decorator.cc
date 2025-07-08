@@ -31,19 +31,22 @@ MetricsScopesAuth::MetricsScopesAuth(
     std::shared_ptr<MetricsScopesStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::monitoring::metricsscope::v1::MetricsScope> MetricsScopesAuth::GetMetricsScope(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) {
+StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
+MetricsScopesAuth::GetMetricsScope(
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetMetricsScope(context, options, request);
 }
 
-StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse> MetricsScopesAuth::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) {
+StatusOr<google::monitoring::metricsscope::v1::
+             ListMetricsScopesByMonitoredProjectResponse>
+MetricsScopesAuth::ListMetricsScopesByMonitoredProject(
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::metricsscope::v1::
+        ListMetricsScopesByMonitoredProjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListMetricsScopesByMonitoredProject(context, options, request);
@@ -51,28 +54,30 @@ StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProje
 
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesAuth::AsyncCreateMonitoredProject(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateMonitoredProject(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateMonitoredProject(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesAuth::CreateMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateMonitoredProject(context, options, request);
@@ -80,28 +85,30 @@ MetricsScopesAuth::CreateMonitoredProject(
 
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesAuth::AsyncDeleteMonitoredProject(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteMonitoredProject(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteMonitoredProject(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesAuth::DeleteMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteMonitoredProject(context, options, request);
@@ -114,15 +121,16 @@ MetricsScopesAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -131,13 +139,14 @@ future<Status> MetricsScopesAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

@@ -36,24 +36,34 @@ class AdvisoryNotificationsServiceTracingConnection
   ~AdvisoryNotificationsServiceTracingConnection() override = default;
 
   explicit AdvisoryNotificationsServiceTracingConnection(
-    std::shared_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceConnection> child);
+      std::shared_ptr<
+          advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
-  ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest request) override;
+  ListNotifications(
+      google::cloud::advisorynotifications::v1::ListNotificationsRequest
+          request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
-  GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) override;
+  GetNotification(
+      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+          request) override;
 
-  StatusOr<google::cloud::advisorynotifications::v1::Settings>
-  GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::advisorynotifications::v1::Settings>
-  UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceConnection> child_;
+  std::shared_ptr<
+      advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -64,9 +74,12 @@ class AdvisoryNotificationsServiceTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
+std::shared_ptr<
+    advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
 MakeAdvisoryNotificationsServiceTracingConnection(
-    std::shared_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceConnection> conn);
+    std::shared_ptr<
+        advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace advisorynotifications_v1_internal

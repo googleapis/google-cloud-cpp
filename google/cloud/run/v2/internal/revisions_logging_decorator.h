@@ -36,17 +36,15 @@ class RevisionsLogging : public RevisionsStub {
  public:
   ~RevisionsLogging() override = default;
   RevisionsLogging(std::shared_ptr<RevisionsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                   TracingOptions tracing_options,
+                   std::set<std::string> const& components);
 
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetRevisionRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListRevisionsResponse> ListRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListRevisionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRevision(
@@ -56,28 +54,23 @@ class RevisionsLogging : public RevisionsStub {
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRevision(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

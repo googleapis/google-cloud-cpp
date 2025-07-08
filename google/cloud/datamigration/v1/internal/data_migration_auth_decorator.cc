@@ -31,18 +31,18 @@ DataMigrationServiceAuth::DataMigrationServiceAuth(
     std::shared_ptr<DataMigrationServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse> DataMigrationServiceAuth::ListMigrationJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
+DataMigrationServiceAuth::ListMigrationJobs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListMigrationJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListMigrationJobs(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::MigrationJob> DataMigrationServiceAuth::GetMigrationJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::MigrationJob>
+DataMigrationServiceAuth::GetMigrationJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +51,28 @@ StatusOr<google::cloud::clouddms::v1::MigrationJob> DataMigrationServiceAuth::Ge
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncCreateMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateMigrationJob(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::CreateMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateMigrationJob(context, options, request);
@@ -80,28 +80,28 @@ DataMigrationServiceAuth::CreateMigrationJob(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncUpdateMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateMigrationJob(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::UpdateMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateMigrationJob(context, options, request);
@@ -109,28 +109,28 @@ DataMigrationServiceAuth::UpdateMigrationJob(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncDeleteMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteMigrationJob(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::DeleteMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteMigrationJob(context, options, request);
@@ -138,28 +138,28 @@ DataMigrationServiceAuth::DeleteMigrationJob(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncStartMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStartMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStartMigrationJob(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::StartMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartMigrationJob(context, options, request);
@@ -167,28 +167,28 @@ DataMigrationServiceAuth::StartMigrationJob(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncStopMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStopMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStopMigrationJob(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::StopMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StopMigrationJob(context, options, request);
@@ -196,28 +196,28 @@ DataMigrationServiceAuth::StopMigrationJob(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncResumeMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncResumeMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncResumeMigrationJob(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::ResumeMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ResumeMigrationJob(context, options, request);
@@ -225,28 +225,28 @@ DataMigrationServiceAuth::ResumeMigrationJob(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncPromoteMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncPromoteMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncPromoteMigrationJob(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::PromoteMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PromoteMigrationJob(context, options, request);
@@ -254,28 +254,28 @@ DataMigrationServiceAuth::PromoteMigrationJob(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncVerifyMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncVerifyMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncVerifyMigrationJob(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::VerifyMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->VerifyMigrationJob(context, options, request);
@@ -283,63 +283,63 @@ DataMigrationServiceAuth::VerifyMigrationJob(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncRestartMigrationJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestartMigrationJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRestartMigrationJob(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::RestartMigrationJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestartMigrationJob(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::SshScript> DataMigrationServiceAuth::GenerateSshScript(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::SshScript>
+DataMigrationServiceAuth::GenerateSshScript(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateSshScript(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::TcpProxyScript> DataMigrationServiceAuth::GenerateTcpProxyScript(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
+DataMigrationServiceAuth::GenerateTcpProxyScript(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateTcpProxyScript(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse> DataMigrationServiceAuth::ListConnectionProfiles(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
+DataMigrationServiceAuth::ListConnectionProfiles(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListConnectionProfilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConnectionProfiles(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::ConnectionProfile> DataMigrationServiceAuth::GetConnectionProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
+DataMigrationServiceAuth::GetConnectionProfile(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -348,28 +348,30 @@ StatusOr<google::cloud::clouddms::v1::ConnectionProfile> DataMigrationServiceAut
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncCreateConnectionProfile(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateConnectionProfile(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateConnectionProfile(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::CreateConnectionProfile(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::CreateConnectionProfileRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConnectionProfile(context, options, request);
@@ -377,28 +379,30 @@ DataMigrationServiceAuth::CreateConnectionProfile(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncUpdateConnectionProfile(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateConnectionProfile(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateConnectionProfile(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::UpdateConnectionProfile(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::UpdateConnectionProfileRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConnectionProfile(context, options, request);
@@ -406,28 +410,30 @@ DataMigrationServiceAuth::UpdateConnectionProfile(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncDeleteConnectionProfile(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteConnectionProfile(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteConnectionProfile(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::DeleteConnectionProfile(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::DeleteConnectionProfileRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConnectionProfile(context, options, request);
@@ -435,45 +441,47 @@ DataMigrationServiceAuth::DeleteConnectionProfile(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncCreatePrivateConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreatePrivateConnection(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreatePrivateConnection(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::CreatePrivateConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreatePrivateConnection(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::PrivateConnection> DataMigrationServiceAuth::GetPrivateConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceAuth::GetPrivateConnection(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPrivateConnection(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse> DataMigrationServiceAuth::ListPrivateConnections(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse>
+DataMigrationServiceAuth::ListPrivateConnections(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -482,46 +490,49 @@ StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse> DataMigrat
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncDeletePrivateConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeletePrivateConnection(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeletePrivateConnection(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::DeletePrivateConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePrivateConnection(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::ConversionWorkspace> DataMigrationServiceAuth::GetConversionWorkspace(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceAuth::GetConversionWorkspace(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConversionWorkspace(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse> DataMigrationServiceAuth::ListConversionWorkspaces(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::clouddms::v1::ListConversionWorkspacesRequest const& request) {
+StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse>
+DataMigrationServiceAuth::ListConversionWorkspaces(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConversionWorkspaces(context, options, request);
@@ -529,14 +540,16 @@ StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse> DataMigr
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncCreateConversionWorkspace(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -548,9 +561,9 @@ DataMigrationServiceAuth::AsyncCreateConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::CreateConversionWorkspace(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConversionWorkspace(context, options, request);
@@ -558,14 +571,16 @@ DataMigrationServiceAuth::CreateConversionWorkspace(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncUpdateConversionWorkspace(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -577,9 +592,9 @@ DataMigrationServiceAuth::AsyncUpdateConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::UpdateConversionWorkspace(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConversionWorkspace(context, options, request);
@@ -587,14 +602,16 @@ DataMigrationServiceAuth::UpdateConversionWorkspace(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncDeleteConversionWorkspace(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -606,17 +623,17 @@ DataMigrationServiceAuth::AsyncDeleteConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::DeleteConversionWorkspace(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConversionWorkspace(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::MappingRule> DataMigrationServiceAuth::CreateMappingRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceAuth::CreateMappingRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -624,26 +641,25 @@ StatusOr<google::cloud::clouddms::v1::MappingRule> DataMigrationServiceAuth::Cre
 }
 
 Status DataMigrationServiceAuth::DeleteMappingRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteMappingRule(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse> DataMigrationServiceAuth::ListMappingRules(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
+DataMigrationServiceAuth::ListMappingRules(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListMappingRules(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::MappingRule> DataMigrationServiceAuth::GetMappingRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::MappingRule>
+DataMigrationServiceAuth::GetMappingRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -652,28 +668,30 @@ StatusOr<google::cloud::clouddms::v1::MappingRule> DataMigrationServiceAuth::Get
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncSeedConversionWorkspace(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncSeedConversionWorkspace(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncSeedConversionWorkspace(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::SeedConversionWorkspace(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SeedConversionWorkspace(context, options, request);
@@ -681,28 +699,28 @@ DataMigrationServiceAuth::SeedConversionWorkspace(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncImportMappingRules(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportMappingRules(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncImportMappingRules(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::ImportMappingRules(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportMappingRules(context, options, request);
@@ -710,14 +728,16 @@ DataMigrationServiceAuth::ImportMappingRules(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncConvertConversionWorkspace(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -729,9 +749,9 @@ DataMigrationServiceAuth::AsyncConvertConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::ConvertConversionWorkspace(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ConvertConversionWorkspace(context, options, request);
@@ -739,14 +759,16 @@ DataMigrationServiceAuth::ConvertConversionWorkspace(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncCommitConversionWorkspace(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -758,9 +780,9 @@ DataMigrationServiceAuth::AsyncCommitConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::CommitConversionWorkspace(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CommitConversionWorkspace(context, options, request);
@@ -768,14 +790,16 @@ DataMigrationServiceAuth::CommitConversionWorkspace(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncRollbackConversionWorkspace(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -787,9 +811,9 @@ DataMigrationServiceAuth::AsyncRollbackConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::RollbackConversionWorkspace(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RollbackConversionWorkspace(context, options, request);
@@ -797,14 +821,16 @@ DataMigrationServiceAuth::RollbackConversionWorkspace(
 
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceAuth::AsyncApplyConversionWorkspace(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -816,62 +842,66 @@ DataMigrationServiceAuth::AsyncApplyConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceAuth::ApplyConversionWorkspace(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ApplyConversionWorkspace(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse> DataMigrationServiceAuth::DescribeDatabaseEntities(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const& request) {
+StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>
+DataMigrationServiceAuth::DescribeDatabaseEntities(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DescribeDatabaseEntities(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse> DataMigrationServiceAuth::SearchBackgroundJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
+DataMigrationServiceAuth::SearchBackgroundJobs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchBackgroundJobs(context, options, request);
 }
 
-StatusOr<google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse> DataMigrationServiceAuth::DescribeConversionWorkspaceRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsRequest const& request) {
+StatusOr<
+    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+DataMigrationServiceAuth::DescribeConversionWorkspaceRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::clouddms::v1::
+        DescribeConversionWorkspaceRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DescribeConversionWorkspaceRevisions(context, options, request);
+  return child_->DescribeConversionWorkspaceRevisions(context, options,
+                                                      request);
 }
 
-StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse> DataMigrationServiceAuth::FetchStaticIps(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse>
+DataMigrationServiceAuth::FetchStaticIps(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::FetchStaticIpsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FetchStaticIps(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> DataMigrationServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DataMigrationServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> DataMigrationServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+DataMigrationServiceAuth::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -879,8 +909,7 @@ StatusOr<google::cloud::location::Location> DataMigrationServiceAuth::GetLocatio
 }
 
 StatusOr<google::iam::v1::Policy> DataMigrationServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -888,26 +917,25 @@ StatusOr<google::iam::v1::Policy> DataMigrationServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataMigrationServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> DataMigrationServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataMigrationServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DataMigrationServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DataMigrationServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -915,8 +943,7 @@ StatusOr<google::longrunning::ListOperationsResponse> DataMigrationServiceAuth::
 }
 
 StatusOr<google::longrunning::Operation> DataMigrationServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -924,8 +951,7 @@ StatusOr<google::longrunning::Operation> DataMigrationServiceAuth::GetOperation(
 }
 
 Status DataMigrationServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -933,8 +959,7 @@ Status DataMigrationServiceAuth::DeleteOperation(
 }
 
 Status DataMigrationServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -948,15 +973,16 @@ DataMigrationServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -965,13 +991,14 @@ future<Status> DataMigrationServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

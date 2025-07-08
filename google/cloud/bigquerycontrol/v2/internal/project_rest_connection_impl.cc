@@ -34,19 +34,21 @@ ProjectServiceRestConnectionImpl::ProjectServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquerycontrol_v2_internal::ProjectServiceRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ProjectServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ProjectServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
-ProjectServiceRestConnectionImpl::GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
+ProjectServiceRestConnectionImpl::GetServiceAccount(
+    google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServiceAccount(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::GetServiceAccountRequest const&
+                 request) {
         return stub_->GetServiceAccount(rest_context, options, request);
       },
       *current, request, __func__);

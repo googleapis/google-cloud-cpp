@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_ADAPTATION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_ADAPTATION_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/speech/v1/adaptation_connection.h"
 #include "google/cloud/speech/v1/adaptation_connection_idempotency_policy.h"
 #include "google/cloud/speech/v1/adaptation_options.h"
 #include "google/cloud/speech/v1/internal/adaptation_retry_traits.h"
 #include "google/cloud/speech/v1/internal/adaptation_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,53 +37,58 @@ namespace cloud {
 namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AdaptationConnectionImpl
-    : public speech_v1::AdaptationConnection {
+class AdaptationConnectionImpl : public speech_v1::AdaptationConnection {
  public:
   ~AdaptationConnectionImpl() override = default;
 
   AdaptationConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<speech_v1_internal::AdaptationStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<speech_v1_internal::AdaptationStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::speech::v1::PhraseSet>
-  CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
+      google::cloud::speech::v1::CreatePhraseSetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::speech::v1::PhraseSet>
-  GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::PhraseSet> GetPhraseSet(
+      google::cloud::speech::v1::GetPhraseSetRequest const& request) override;
 
-  StreamRange<google::cloud::speech::v1::PhraseSet>
-  ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest request) override;
+  StreamRange<google::cloud::speech::v1::PhraseSet> ListPhraseSet(
+      google::cloud::speech::v1::ListPhraseSetRequest request) override;
 
-  StatusOr<google::cloud::speech::v1::PhraseSet>
-  UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::PhraseSet> UpdatePhraseSet(
+      google::cloud::speech::v1::UpdatePhraseSetRequest const& request)
+      override;
 
-  Status
-  DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const& request) override;
+  Status DeletePhraseSet(
+      google::cloud::speech::v1::DeletePhraseSetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::speech::v1::CustomClass>
-  CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::CustomClass> CreateCustomClass(
+      google::cloud::speech::v1::CreateCustomClassRequest const& request)
+      override;
 
-  StatusOr<google::cloud::speech::v1::CustomClass>
-  GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::CustomClass> GetCustomClass(
+      google::cloud::speech::v1::GetCustomClassRequest const& request) override;
 
-  StreamRange<google::cloud::speech::v1::CustomClass>
-  ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest request) override;
+  StreamRange<google::cloud::speech::v1::CustomClass> ListCustomClasses(
+      google::cloud::speech::v1::ListCustomClassesRequest request) override;
 
-  StatusOr<google::cloud::speech::v1::CustomClass>
-  UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::CustomClass> UpdateCustomClass(
+      google::cloud::speech::v1::UpdateCustomClassRequest const& request)
+      override;
 
-  Status
-  DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const& request) override;
+  Status DeleteCustomClass(
+      google::cloud::speech::v1::DeleteCustomClassRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

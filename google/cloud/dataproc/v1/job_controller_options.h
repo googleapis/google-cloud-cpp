@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_JOB_CONTROLLER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_JOB_CONTROLLER_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/job_controller_connection.h"
 #include "google/cloud/dataproc/v1/job_controller_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct JobControllerPollingPolicyOption {
  * @ingroup google-cloud-dataproc-options
  */
 using JobControllerPolicyOptionList =
-    OptionList<JobControllerRetryPolicyOption,
-               JobControllerBackoffPolicyOption,
+    OptionList<JobControllerRetryPolicyOption, JobControllerBackoffPolicyOption,
                JobControllerPollingPolicyOption,
                JobControllerConnectionIdempotencyPolicyOption>;
 

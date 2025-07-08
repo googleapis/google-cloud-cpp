@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_JOB_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_JOB_CONTROLLER_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/internal/job_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/job_controller_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -57,7 +57,8 @@ class JobControllerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class JobControllerLimitedErrorCountRetryPolicy : public JobControllerRetryPolicy {
+class JobControllerLimitedErrorCountRetryPolicy
+    : public JobControllerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,14 @@ class JobControllerLimitedErrorCountRetryPolicy : public JobControllerRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit JobControllerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   JobControllerLimitedErrorCountRetryPolicy(
       JobControllerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : JobControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : JobControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   JobControllerLimitedErrorCountRetryPolicy(
       JobControllerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : JobControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : JobControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +95,9 @@ class JobControllerLimitedErrorCountRetryPolicy : public JobControllerRetryPolic
   using BaseType = JobControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dataproc_v1_internal::JobControllerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dataproc_v1_internal::JobControllerRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +135,14 @@ class JobControllerLimitedTimeRetryPolicy : public JobControllerRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit JobControllerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  JobControllerLimitedTimeRetryPolicy(JobControllerLimitedTimeRetryPolicy&& rhs) noexcept
-    : JobControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  JobControllerLimitedTimeRetryPolicy(JobControllerLimitedTimeRetryPolicy const& rhs) noexcept
-    : JobControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  JobControllerLimitedTimeRetryPolicy(
+      JobControllerLimitedTimeRetryPolicy&& rhs) noexcept
+      : JobControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  JobControllerLimitedTimeRetryPolicy(
+      JobControllerLimitedTimeRetryPolicy const& rhs) noexcept
+      : JobControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,7 +164,9 @@ class JobControllerLimitedTimeRetryPolicy : public JobControllerRetryPolicy {
   using BaseType = JobControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dataproc_v1_internal::JobControllerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dataproc_v1_internal::JobControllerRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,53 +187,54 @@ class JobControllerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::dataproc::v1::Job>
-  SubmitJob(google::cloud::dataproc::v1::SubmitJobRequest const& request);
+  virtual StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
+      google::cloud::dataproc::v1::SubmitJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Job>>
-  SubmitJobAsOperation(google::cloud::dataproc::v1::SubmitJobRequest const& request);
+  SubmitJobAsOperation(
+      google::cloud::dataproc::v1::SubmitJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  SubmitJobAsOperation(NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
+      NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Job>>
-  SubmitJobAsOperation( google::longrunning::Operation const& operation);
+  SubmitJobAsOperation(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::dataproc::v1::Job>
-  GetJob(google::cloud::dataproc::v1::GetJobRequest const& request);
+  virtual StatusOr<google::cloud::dataproc::v1::Job> GetJob(
+      google::cloud::dataproc::v1::GetJobRequest const& request);
 
-  virtual StreamRange<google::cloud::dataproc::v1::Job>
-  ListJobs(google::cloud::dataproc::v1::ListJobsRequest request);
+  virtual StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
+      google::cloud::dataproc::v1::ListJobsRequest request);
 
-  virtual StatusOr<google::cloud::dataproc::v1::Job>
-  UpdateJob(google::cloud::dataproc::v1::UpdateJobRequest const& request);
+  virtual StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
+      google::cloud::dataproc::v1::UpdateJobRequest const& request);
 
-  virtual StatusOr<google::cloud::dataproc::v1::Job>
-  CancelJob(google::cloud::dataproc::v1::CancelJobRequest const& request);
+  virtual StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
+      google::cloud::dataproc::v1::CancelJobRequest const& request);
 
-  virtual Status
-  DeleteJob(google::cloud::dataproc::v1::DeleteJobRequest const& request);
+  virtual Status DeleteJob(
+      google::cloud::dataproc::v1::DeleteJobRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

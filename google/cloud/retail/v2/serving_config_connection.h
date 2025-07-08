@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_SERVING_CONFIG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_SERVING_CONFIG_CONNECTION_H
 
+#include "google/cloud/retail/v2/internal/serving_config_retry_traits.h"
+#include "google/cloud/retail/v2/serving_config_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/internal/serving_config_retry_traits.h"
-#include "google/cloud/retail/v2/serving_config_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,7 +52,8 @@ class ServingConfigServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServingConfigServiceLimitedErrorCountRetryPolicy : public ServingConfigServiceRetryPolicy {
+class ServingConfigServiceLimitedErrorCountRetryPolicy
+    : public ServingConfigServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +62,18 @@ class ServingConfigServiceLimitedErrorCountRetryPolicy : public ServingConfigSer
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ServingConfigServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit ServingConfigServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   ServingConfigServiceLimitedErrorCountRetryPolicy(
       ServingConfigServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ServingConfigServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServingConfigServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   ServingConfigServiceLimitedErrorCountRetryPolicy(
       ServingConfigServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ServingConfigServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServingConfigServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +93,9 @@ class ServingConfigServiceLimitedErrorCountRetryPolicy : public ServingConfigSer
   using BaseType = ServingConfigServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<retail_v2_internal::ServingConfigServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      retail_v2_internal::ServingConfigServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +108,8 @@ class ServingConfigServiceLimitedErrorCountRetryPolicy : public ServingConfigSer
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServingConfigServiceLimitedTimeRetryPolicy : public ServingConfigServiceRetryPolicy {
+class ServingConfigServiceLimitedTimeRetryPolicy
+    : public ServingConfigServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +134,14 @@ class ServingConfigServiceLimitedTimeRetryPolicy : public ServingConfigServiceRe
   template <typename DurationRep, typename DurationPeriod>
   explicit ServingConfigServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ServingConfigServiceLimitedTimeRetryPolicy(ServingConfigServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ServingConfigServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ServingConfigServiceLimitedTimeRetryPolicy(ServingConfigServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ServingConfigServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServingConfigServiceLimitedTimeRetryPolicy(
+      ServingConfigServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ServingConfigServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServingConfigServiceLimitedTimeRetryPolicy(
+      ServingConfigServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ServingConfigServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +163,18 @@ class ServingConfigServiceLimitedTimeRetryPolicy : public ServingConfigServiceRe
   using BaseType = ServingConfigServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<retail_v2_internal::ServingConfigServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      retail_v2_internal::ServingConfigServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `ServingConfigServiceConnection` object for `ServingConfigServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ServingConfigServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ServingConfigServiceClient`.
+ * sets in `ServingConfigServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ServingConfigServiceClient`.
  *
  * To create a concrete instance, see `MakeServingConfigServiceConnection()`.
  *
@@ -176,42 +187,47 @@ class ServingConfigServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::retail::v2::ServingConfig>
-  CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const& request);
+  CreateServingConfig(
+      google::cloud::retail::v2::CreateServingConfigRequest const& request);
 
-  virtual Status
-  DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::ServingConfig>
-  UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const& request);
+  virtual Status DeleteServingConfig(
+      google::cloud::retail::v2::DeleteServingConfigRequest const& request);
 
   virtual StatusOr<google::cloud::retail::v2::ServingConfig>
-  GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const& request);
+  UpdateServingConfig(
+      google::cloud::retail::v2::UpdateServingConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::retail::v2::ServingConfig> GetServingConfig(
+      google::cloud::retail::v2::GetServingConfigRequest const& request);
 
   virtual StreamRange<google::cloud::retail::v2::ServingConfig>
-  ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest request);
+  ListServingConfigs(
+      google::cloud::retail::v2::ListServingConfigsRequest request);
 
-  virtual StatusOr<google::cloud::retail::v2::ServingConfig>
-  AddControl(google::cloud::retail::v2::AddControlRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::ServingConfig> AddControl(
+      google::cloud::retail::v2::AddControlRequest const& request);
 
-  virtual StatusOr<google::cloud::retail::v2::ServingConfig>
-  RemoveControl(google::cloud::retail::v2::RemoveControlRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
+      google::cloud::retail::v2::RemoveControlRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ServingConfigServiceConnection`.
+ * A factory function to construct an object of type
+ * `ServingConfigServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ServingConfigServiceClient.
+ * should be passed as an argument to the constructor of
+ * ServingConfigServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ServingConfigServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ServingConfigServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -221,11 +237,11 @@ class ServingConfigServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ServingConfigServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `ServingConfigServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<ServingConfigServiceConnection> MakeServingConfigServiceConnection(
-    Options options = {});
+std::shared_ptr<ServingConfigServiceConnection>
+MakeServingConfigServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2

@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AzureClustersClient::AzureClustersClient(
     std::shared_ptr<AzureClustersConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AzureClustersClient::~AzureClustersClient() = default;
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
-AzureClustersClient::CreateAzureClient(std::string const& parent, google::cloud::gkemulticloud::v1::AzureClient const& azure_client, std::string const& azure_client_id, Options opts) {
+AzureClustersClient::CreateAzureClient(
+    std::string const& parent,
+    google::cloud::gkemulticloud::v1::AzureClient const& azure_client,
+    std::string const& azure_client_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAzureClientRequest request;
   request.set_parent(parent);
@@ -42,8 +45,10 @@ AzureClustersClient::CreateAzureClient(std::string const& parent, google::cloud:
   return connection_->CreateAzureClient(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AzureClustersClient::CreateAzureClient(NoAwaitTag, std::string const& parent, google::cloud::gkemulticloud::v1::AzureClient const& azure_client, std::string const& azure_client_id, Options opts) {
+StatusOr<google::longrunning::Operation> AzureClustersClient::CreateAzureClient(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkemulticloud::v1::AzureClient const& azure_client,
+    std::string const& azure_client_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAzureClientRequest request;
   request.set_parent(parent);
@@ -53,19 +58,24 @@ AzureClustersClient::CreateAzureClient(NoAwaitTag, std::string const& parent, go
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
-AzureClustersClient::CreateAzureClient(google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request, Options opts) {
+AzureClustersClient::CreateAzureClient(
+    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureClient(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AzureClustersClient::CreateAzureClient(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AzureClustersClient::CreateAzureClient(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureClient(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
-AzureClustersClient::CreateAzureClient(google::longrunning::Operation const& operation, Options opts) {
+AzureClustersClient::CreateAzureClient(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureClient(operation);
 }
@@ -79,7 +89,9 @@ AzureClustersClient::GetAzureClient(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
-AzureClustersClient::GetAzureClient(google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request, Options opts) {
+AzureClustersClient::GetAzureClient(
+    google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAzureClient(request);
 }
@@ -93,7 +105,9 @@ AzureClustersClient::ListAzureClients(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AzureClient>
-AzureClustersClient::ListAzureClients(google::cloud::gkemulticloud::v1::ListAzureClientsRequest request, Options opts) {
+AzureClustersClient::ListAzureClients(
+    google::cloud::gkemulticloud::v1::ListAzureClientsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAzureClients(std::move(request));
 }
@@ -106,8 +120,8 @@ AzureClustersClient::DeleteAzureClient(std::string const& name, Options opts) {
   return connection_->DeleteAzureClient(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AzureClustersClient::DeleteAzureClient(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AzureClustersClient::DeleteAzureClient(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::DeleteAzureClientRequest request;
   request.set_name(name);
@@ -115,25 +129,33 @@ AzureClustersClient::DeleteAzureClient(NoAwaitTag, std::string const& name, Opti
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AzureClustersClient::DeleteAzureClient(google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request, Options opts) {
+AzureClustersClient::DeleteAzureClient(
+    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureClient(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AzureClustersClient::DeleteAzureClient(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AzureClustersClient::DeleteAzureClient(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureClient(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AzureClustersClient::DeleteAzureClient(google::longrunning::Operation const& operation, Options opts) {
+AzureClustersClient::DeleteAzureClient(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureClient(operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-AzureClustersClient::CreateAzureCluster(std::string const& parent, google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster, std::string const& azure_cluster_id, Options opts) {
+AzureClustersClient::CreateAzureCluster(
+    std::string const& parent,
+    google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
+    std::string const& azure_cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAzureClusterRequest request;
   request.set_parent(parent);
@@ -143,7 +165,10 @@ AzureClustersClient::CreateAzureCluster(std::string const& parent, google::cloud
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::CreateAzureCluster(NoAwaitTag, std::string const& parent, google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster, std::string const& azure_cluster_id, Options opts) {
+AzureClustersClient::CreateAzureCluster(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
+    std::string const& azure_cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAzureClusterRequest request;
   request.set_parent(parent);
@@ -153,25 +178,33 @@ AzureClustersClient::CreateAzureCluster(NoAwaitTag, std::string const& parent, g
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-AzureClustersClient::CreateAzureCluster(google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request, Options opts) {
+AzureClustersClient::CreateAzureCluster(
+    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureCluster(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::CreateAzureCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request, Options opts) {
+AzureClustersClient::CreateAzureCluster(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-AzureClustersClient::CreateAzureCluster(google::longrunning::Operation const& operation, Options opts) {
+AzureClustersClient::CreateAzureCluster(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureCluster(operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-AzureClustersClient::UpdateAzureCluster(google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster, google::protobuf::FieldMask const& update_mask, Options opts) {
+AzureClustersClient::UpdateAzureCluster(
+    google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest request;
   *request.mutable_azure_cluster() = azure_cluster;
@@ -180,7 +213,10 @@ AzureClustersClient::UpdateAzureCluster(google::cloud::gkemulticloud::v1::AzureC
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::UpdateAzureCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster, google::protobuf::FieldMask const& update_mask, Options opts) {
+AzureClustersClient::UpdateAzureCluster(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest request;
   *request.mutable_azure_cluster() = azure_cluster;
@@ -189,19 +225,25 @@ AzureClustersClient::UpdateAzureCluster(NoAwaitTag, google::cloud::gkemulticloud
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-AzureClustersClient::UpdateAzureCluster(google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request, Options opts) {
+AzureClustersClient::UpdateAzureCluster(
+    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAzureCluster(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::UpdateAzureCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request, Options opts) {
+AzureClustersClient::UpdateAzureCluster(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAzureCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-AzureClustersClient::UpdateAzureCluster(google::longrunning::Operation const& operation, Options opts) {
+AzureClustersClient::UpdateAzureCluster(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAzureCluster(operation);
 }
@@ -215,13 +257,16 @@ AzureClustersClient::GetAzureCluster(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
-AzureClustersClient::GetAzureCluster(google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request, Options opts) {
+AzureClustersClient::GetAzureCluster(
+    google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAzureCluster(request);
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>
-AzureClustersClient::ListAzureClusters(std::string const& parent, Options opts) {
+AzureClustersClient::ListAzureClusters(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::ListAzureClustersRequest request;
   request.set_parent(parent);
@@ -229,7 +274,9 @@ AzureClustersClient::ListAzureClusters(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>
-AzureClustersClient::ListAzureClusters(google::cloud::gkemulticloud::v1::ListAzureClustersRequest request, Options opts) {
+AzureClustersClient::ListAzureClusters(
+    google::cloud::gkemulticloud::v1::ListAzureClustersRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAzureClusters(std::move(request));
 }
@@ -243,7 +290,8 @@ AzureClustersClient::DeleteAzureCluster(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::DeleteAzureCluster(NoAwaitTag, std::string const& name, Options opts) {
+AzureClustersClient::DeleteAzureCluster(NoAwaitTag, std::string const& name,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest request;
   request.set_name(name);
@@ -251,37 +299,53 @@ AzureClustersClient::DeleteAzureCluster(NoAwaitTag, std::string const& name, Opt
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AzureClustersClient::DeleteAzureCluster(google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request, Options opts) {
+AzureClustersClient::DeleteAzureCluster(
+    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureCluster(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::DeleteAzureCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request, Options opts) {
+AzureClustersClient::DeleteAzureCluster(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AzureClustersClient::DeleteAzureCluster(google::longrunning::Operation const& operation, Options opts) {
+AzureClustersClient::DeleteAzureCluster(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureCluster(operation);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
-AzureClustersClient::GenerateAzureClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+AzureClustersClient::GenerateAzureClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateAzureClusterAgentToken(request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
-AzureClustersClient::GenerateAzureAccessToken(google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const& request, Options opts) {
+AzureClustersClient::GenerateAzureAccessToken(
+    google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateAzureAccessToken(request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-AzureClustersClient::CreateAzureNodePool(std::string const& parent, google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool, std::string const& azure_node_pool_id, Options opts) {
+AzureClustersClient::CreateAzureNodePool(
+    std::string const& parent,
+    google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
+    std::string const& azure_node_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest request;
   request.set_parent(parent);
@@ -291,7 +355,10 @@ AzureClustersClient::CreateAzureNodePool(std::string const& parent, google::clou
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::CreateAzureNodePool(NoAwaitTag, std::string const& parent, google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool, std::string const& azure_node_pool_id, Options opts) {
+AzureClustersClient::CreateAzureNodePool(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
+    std::string const& azure_node_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest request;
   request.set_parent(parent);
@@ -301,25 +368,33 @@ AzureClustersClient::CreateAzureNodePool(NoAwaitTag, std::string const& parent, 
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-AzureClustersClient::CreateAzureNodePool(google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request, Options opts) {
+AzureClustersClient::CreateAzureNodePool(
+    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureNodePool(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::CreateAzureNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request, Options opts) {
+AzureClustersClient::CreateAzureNodePool(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureNodePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-AzureClustersClient::CreateAzureNodePool(google::longrunning::Operation const& operation, Options opts) {
+AzureClustersClient::CreateAzureNodePool(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAzureNodePool(operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-AzureClustersClient::UpdateAzureNodePool(google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool, google::protobuf::FieldMask const& update_mask, Options opts) {
+AzureClustersClient::UpdateAzureNodePool(
+    google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest request;
   *request.mutable_azure_node_pool() = azure_node_pool;
@@ -328,7 +403,10 @@ AzureClustersClient::UpdateAzureNodePool(google::cloud::gkemulticloud::v1::Azure
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::UpdateAzureNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool, google::protobuf::FieldMask const& update_mask, Options opts) {
+AzureClustersClient::UpdateAzureNodePool(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest request;
   *request.mutable_azure_node_pool() = azure_node_pool;
@@ -337,19 +415,25 @@ AzureClustersClient::UpdateAzureNodePool(NoAwaitTag, google::cloud::gkemulticlou
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-AzureClustersClient::UpdateAzureNodePool(google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request, Options opts) {
+AzureClustersClient::UpdateAzureNodePool(
+    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAzureNodePool(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::UpdateAzureNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request, Options opts) {
+AzureClustersClient::UpdateAzureNodePool(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAzureNodePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-AzureClustersClient::UpdateAzureNodePool(google::longrunning::Operation const& operation, Options opts) {
+AzureClustersClient::UpdateAzureNodePool(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAzureNodePool(operation);
 }
@@ -363,13 +447,16 @@ AzureClustersClient::GetAzureNodePool(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
-AzureClustersClient::GetAzureNodePool(google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request, Options opts) {
+AzureClustersClient::GetAzureNodePool(
+    google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAzureNodePool(request);
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
-AzureClustersClient::ListAzureNodePools(std::string const& parent, Options opts) {
+AzureClustersClient::ListAzureNodePools(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request;
   request.set_parent(parent);
@@ -377,13 +464,16 @@ AzureClustersClient::ListAzureNodePools(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
-AzureClustersClient::ListAzureNodePools(google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request, Options opts) {
+AzureClustersClient::ListAzureNodePools(
+    google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAzureNodePools(std::move(request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AzureClustersClient::DeleteAzureNodePool(std::string const& name, Options opts) {
+AzureClustersClient::DeleteAzureNodePool(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest request;
   request.set_name(name);
@@ -391,7 +481,8 @@ AzureClustersClient::DeleteAzureNodePool(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::DeleteAzureNodePool(NoAwaitTag, std::string const& name, Options opts) {
+AzureClustersClient::DeleteAzureNodePool(NoAwaitTag, std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest request;
   request.set_name(name);
@@ -399,25 +490,32 @@ AzureClustersClient::DeleteAzureNodePool(NoAwaitTag, std::string const& name, Op
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AzureClustersClient::DeleteAzureNodePool(google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request, Options opts) {
+AzureClustersClient::DeleteAzureNodePool(
+    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureNodePool(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AzureClustersClient::DeleteAzureNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request, Options opts) {
+AzureClustersClient::DeleteAzureNodePool(
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureNodePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AzureClustersClient::DeleteAzureNodePool(google::longrunning::Operation const& operation, Options opts) {
+AzureClustersClient::DeleteAzureNodePool(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAzureNodePool(operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
-AzureClustersClient::GetAzureOpenIdConfig(std::string const& azure_cluster, Options opts) {
+AzureClustersClient::GetAzureOpenIdConfig(std::string const& azure_cluster,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest request;
   request.set_azure_cluster(azure_cluster);
@@ -425,13 +523,17 @@ AzureClustersClient::GetAzureOpenIdConfig(std::string const& azure_cluster, Opti
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
-AzureClustersClient::GetAzureOpenIdConfig(google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const& request, Options opts) {
+AzureClustersClient::GetAzureOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAzureOpenIdConfig(request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
-AzureClustersClient::GetAzureJsonWebKeys(std::string const& azure_cluster, Options opts) {
+AzureClustersClient::GetAzureJsonWebKeys(std::string const& azure_cluster,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest request;
   request.set_azure_cluster(azure_cluster);
@@ -439,13 +541,16 @@ AzureClustersClient::GetAzureJsonWebKeys(std::string const& azure_cluster, Optio
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
-AzureClustersClient::GetAzureJsonWebKeys(google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const& request, Options opts) {
+AzureClustersClient::GetAzureJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAzureJsonWebKeys(request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
-AzureClustersClient::GetAzureServerConfig(std::string const& name, Options opts) {
+AzureClustersClient::GetAzureServerConfig(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest request;
   request.set_name(name);
@@ -453,13 +558,16 @@ AzureClustersClient::GetAzureServerConfig(std::string const& name, Options opts)
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
-AzureClustersClient::GetAzureServerConfig(google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const& request, Options opts) {
+AzureClustersClient::GetAzureServerConfig(
+    google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAzureServerConfig(request);
 }
 
-StreamRange<google::longrunning::Operation>
-AzureClustersClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> AzureClustersClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -467,50 +575,50 @@ AzureClustersClient::ListOperations(std::string const& name, std::string const& 
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-AzureClustersClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> AzureClustersClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AzureClustersClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AzureClustersClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AzureClustersClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AzureClustersClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-AzureClustersClient::DeleteOperation(std::string const& name, Options opts) {
+Status AzureClustersClient::DeleteOperation(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-AzureClustersClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status AzureClustersClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-AzureClustersClient::CancelOperation(std::string const& name, Options opts) {
+Status AzureClustersClient::CancelOperation(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-AzureClustersClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status AzureClustersClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

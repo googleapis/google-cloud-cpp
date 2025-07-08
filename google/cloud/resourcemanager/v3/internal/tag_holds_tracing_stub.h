@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_HOLDS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_HOLDS_TRACING_STUB_H
 
+#include "google/cloud/resourcemanager/v3/internal/tag_holds_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_holds_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -42,32 +42,33 @@ class TagHoldsTracingStub : public TagHoldsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateTagHold(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagHold(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteTagHold(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse> ListTagHolds(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
+  ListTagHolds(grpc::ClientContext& context, Options const& options,
+               google::cloud::resourcemanager::v3::ListTagHoldsRequest const&
+                   request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -84,7 +85,8 @@ class TagHoldsTracingStub : public TagHoldsStub {
 
  private:
   std::shared_ptr<TagHoldsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

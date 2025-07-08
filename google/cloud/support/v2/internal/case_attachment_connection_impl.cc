@@ -17,12 +17,12 @@
 // source: google/cloud/support/v2/attachment_service.proto
 
 #include "google/cloud/support/v2/internal/case_attachment_connection_impl.h"
+#include "google/cloud/support/v2/internal/case_attachment_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/support/v2/internal/case_attachment_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,54 +32,63 @@ namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<support_v2::CaseAttachmentServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<support_v2::CaseAttachmentServiceRetryPolicyOption>()->clone();
+std::unique_ptr<support_v2::CaseAttachmentServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<support_v2::CaseAttachmentServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<support_v2::CaseAttachmentServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<support_v2::CaseAttachmentServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<support_v2::CaseAttachmentServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<support_v2::CaseAttachmentServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<support_v2::CaseAttachmentServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 CaseAttachmentServiceConnectionImpl::CaseAttachmentServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<support_v2_internal::CaseAttachmentServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        CaseAttachmentServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), CaseAttachmentServiceConnection::options())) {}
 
 StreamRange<google::cloud::support::v2::Attachment>
-CaseAttachmentServiceConnectionImpl::ListAttachments(google::cloud::support::v2::ListAttachmentsRequest request) {
+CaseAttachmentServiceConnectionImpl::ListAttachments(
+    google::cloud::support::v2::ListAttachmentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAttachments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::support::v2::Attachment>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::support::v2::Attachment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CaseAttachmentServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<support_v2::CaseAttachmentServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::support::v2::ListAttachmentsRequest const& r) {
+          Options const& options,
+          google::cloud::support::v2::ListAttachmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::support::v2::ListAttachmentsRequest const& request) {
+                   google::cloud::support::v2::ListAttachmentsRequest const&
+                       request) {
               return stub->ListAttachments(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::support::v2::ListAttachmentsResponse r) {
-        std::vector<google::cloud::support::v2::Attachment> result(r.attachments().size());
+        std::vector<google::cloud::support::v2::Attachment> result(
+            r.attachments().size());
         auto& messages = *r.mutable_attachments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/batch/v1/batch.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/batch/v1/batch.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,13 +40,11 @@ class BatchServiceStub {
   virtual ~BatchServiceStub() = 0;
 
   virtual StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::CreateJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::batch::v1::Job> GetJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::GetJobRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
@@ -56,8 +54,7 @@ class BatchServiceStub {
       google::cloud::batch::v1::DeleteJobRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::batch::v1::DeleteJobRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCancelJob(
@@ -67,59 +64,50 @@ class BatchServiceStub {
       google::cloud::batch::v1::CancelJobRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CancelJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::batch::v1::CancelJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::ListJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::batch::v1::Task> GetTask(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::GetTaskRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::batch::v1::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::ListTasksRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -132,21 +120,22 @@ class BatchServiceStub {
 class DefaultBatchServiceStub : public BatchServiceStub {
  public:
   DefaultBatchServiceStub(
-      std::unique_ptr<google::cloud::batch::v1::BatchService::StubInterface> grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::batch::v1::BatchService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::CreateJobRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::Job> GetJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::GetJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
@@ -156,8 +145,7 @@ class DefaultBatchServiceStub : public BatchServiceStub {
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCancelJob(
@@ -167,53 +155,43 @@ class DefaultBatchServiceStub : public BatchServiceStub {
       google::cloud::batch::v1::CancelJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CancelJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::batch::v1::CancelJobRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::Task> GetTask(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::ListTasksRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -229,9 +207,12 @@ class DefaultBatchServiceStub : public BatchServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::batch::v1::BatchService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::batch::v1::BatchService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

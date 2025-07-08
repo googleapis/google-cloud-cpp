@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDatastoreAdminConnection : public datastore_admin_v1::DatastoreAdminConnection {
+class MockDatastoreAdminConnection
+    : public datastore_admin_v1::DatastoreAdminConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockDatastoreAdminConnection : public datastore_admin_v1::DatastoreAdminCo
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportEntities(Matcher<google::datastore::admin::v1::ExportEntitiesRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// ExportEntities(Matcher<google::datastore::admin::v1::ExportEntitiesRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>,
-  ExportEntities,
-  (google::datastore::admin::v1::ExportEntitiesRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>,
+      ExportEntities,
+      (google::datastore::admin::v1::ExportEntitiesRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,33 +68,39 @@ class MockDatastoreAdminConnection : public datastore_admin_v1::DatastoreAdminCo
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportEntities(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  ExportEntities, (NoAwaitTag,
-    google::datastore::admin::v1::ExportEntitiesRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportEntities(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>,
-  ExportEntities, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportEntities,
+      (NoAwaitTag,
+       google::datastore::admin::v1::ExportEntitiesRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportEntities(Matcher<google::datastore::admin::v1::ImportEntitiesRequest const&>(_)))
+  /// EXPECT_CALL(*mock, ExportEntities(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>,
-  ImportEntities,
-  (google::datastore::admin::v1::ImportEntitiesRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>,
+      ExportEntities, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportEntities(Matcher<google::datastore::admin::v1::ImportEntitiesRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>,
+      ImportEntities,
+      (google::datastore::admin::v1::ImportEntitiesRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -98,33 +108,38 @@ class MockDatastoreAdminConnection : public datastore_admin_v1::DatastoreAdminCo
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportEntities(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  ImportEntities, (NoAwaitTag,
-    google::datastore::admin::v1::ImportEntitiesRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportEntities,
+      (NoAwaitTag,
+       google::datastore::admin::v1::ImportEntitiesRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportEntities(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ImportEntities(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>,
-  ImportEntities, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>,
+      ImportEntities, (google::longrunning::Operation const& operation),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateIndex(Matcher<google::datastore::admin::v1::CreateIndexRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateIndex(Matcher<google::datastore::admin::v1::CreateIndexRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
-  CreateIndex,
-  (google::datastore::admin::v1::CreateIndexRequest const& request), (override));
-
+              CreateIndex,
+              (google::datastore::admin::v1::CreateIndexRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -132,33 +147,36 @@ class MockDatastoreAdminConnection : public datastore_admin_v1::DatastoreAdminCo
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateIndex(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateIndex, (NoAwaitTag,
-    google::datastore::admin::v1::CreateIndexRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateIndex(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
-  CreateIndex, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateIndex,
+              (NoAwaitTag,
+               google::datastore::admin::v1::CreateIndexRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteIndex(Matcher<google::datastore::admin::v1::DeleteIndexRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
-  DeleteIndex,
-  (google::datastore::admin::v1::DeleteIndexRequest const& request), (override));
+              CreateIndex, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteIndex(Matcher<google::datastore::admin::v1::DeleteIndexRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
+              DeleteIndex,
+              (google::datastore::admin::v1::DeleteIndexRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -166,45 +184,45 @@ class MockDatastoreAdminConnection : public datastore_admin_v1::DatastoreAdminCo
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteIndex(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteIndex, (NoAwaitTag,
-    google::datastore::admin::v1::DeleteIndexRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteIndex,
+              (NoAwaitTag,
+               google::datastore::admin::v1::DeleteIndexRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteIndex(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
-  DeleteIndex, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteIndex, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::datastore::admin::v1::Index>,
-  GetIndex,
-  (google::datastore::admin::v1::GetIndexRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::datastore::admin::v1::Index>, GetIndex,
+              (google::datastore::admin::v1::GetIndexRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::datastore::admin::v1::Index>),
-  ListIndexes,
-  (google::datastore::admin::v1::ListIndexesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::datastore::admin::v1::Index>), ListIndexes,
+              (google::datastore::admin::v1::ListIndexesRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

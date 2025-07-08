@@ -35,50 +35,59 @@ class AttachedClustersConnectionIdempotencyPolicy {
   virtual ~AttachedClustersConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateAttachedCluster(google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request);
+  virtual google::cloud::Idempotency CreateAttachedCluster(
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateAttachedCluster(google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request);
+  virtual google::cloud::Idempotency UpdateAttachedCluster(
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ImportAttachedCluster(google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request);
+  virtual google::cloud::Idempotency ImportAttachedCluster(
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetAttachedCluster(google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request);
+  virtual google::cloud::Idempotency GetAttachedCluster(
+      google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListAttachedClusters(google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request);
+  virtual google::cloud::Idempotency ListAttachedClusters(
+      google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteAttachedCluster(google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request);
+  virtual google::cloud::Idempotency DeleteAttachedCluster(
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetAttachedServerConfig(google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request);
+  virtual google::cloud::Idempotency GetAttachedServerConfig(
+      google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GenerateAttachedClusterInstallManifest(google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request);
+  virtual google::cloud::Idempotency GenerateAttachedClusterInstallManifest(
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterInstallManifestRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GenerateAttachedClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request);
+  virtual google::cloud::Idempotency GenerateAttachedClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy>
-    MakeDefaultAttachedClustersConnectionIdempotencyPolicy();
+MakeDefaultAttachedClustersConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1

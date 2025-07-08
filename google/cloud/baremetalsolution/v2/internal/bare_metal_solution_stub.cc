@@ -33,41 +33,42 @@ BareMetalSolutionStub::~BareMetalSolutionStub() = default;
 
 StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
 DefaultBareMetalSolutionStub::ListInstances(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListInstancesRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListInstancesResponse response;
-    auto status =
-        grpc_stub_->ListInstances(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListInstancesRequest const& request) {
+  google::cloud::baremetalsolution::v2::ListInstancesResponse response;
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 DefaultBareMetalSolutionStub::GetInstance(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) {
-    google::cloud::baremetalsolution::v2::Instance response;
-    auto status =
-        grpc_stub_->GetInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) {
+  google::cloud::baremetalsolution::v2::Instance response;
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::UpdateInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request,
+             google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateInstance(context, request, cq);
       },
@@ -76,42 +77,43 @@ DefaultBareMetalSolutionStub::AsyncUpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 DefaultBareMetalSolutionStub::RenameInstance(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::RenameInstanceRequest const& request) {
-    google::cloud::baremetalsolution::v2::Instance response;
-    auto status =
-        grpc_stub_->RenameInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::Instance response;
+  auto status = grpc_stub_->RenameInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncResetInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::ResetInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::ResetInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
+             google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncResetInstance(context, request, cq);
       },
@@ -120,29 +122,29 @@ DefaultBareMetalSolutionStub::AsyncResetInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::ResetInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ResetInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ResetInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncStartInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::StartInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::StartInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
+             google::cloud::baremetalsolution::v2::StartInstanceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncStartInstance(context, request, cq);
       },
@@ -151,29 +153,29 @@ DefaultBareMetalSolutionStub::AsyncStartInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::StartInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->StartInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncStopInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::StopInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::StopInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
+             google::cloud::baremetalsolution::v2::StopInstanceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncStopInstance(context, request, cq);
       },
@@ -182,92 +184,100 @@ DefaultBareMetalSolutionStub::AsyncStopInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::StopInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->StopInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncEnableInteractiveSerialConsole(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest,
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::
+                                        EnableInteractiveSerialConsoleRequest,
                                     google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request,
+             google::cloud::baremetalsolution::v2::
+                 EnableInteractiveSerialConsoleRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncEnableInteractiveSerialConsole(context, request, cq);
+        return grpc_stub_->AsyncEnableInteractiveSerialConsole(context, request,
+                                                               cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::EnableInteractiveSerialConsole(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->EnableInteractiveSerialConsole(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->EnableInteractiveSerialConsole(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncDisableInteractiveSerialConsole(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest,
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::
+                                        DisableInteractiveSerialConsoleRequest,
                                     google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request,
+             google::cloud::baremetalsolution::v2::
+                 DisableInteractiveSerialConsoleRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDisableInteractiveSerialConsole(context, request, cq);
+        return grpc_stub_->AsyncDisableInteractiveSerialConsole(context,
+                                                                request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::DisableInteractiveSerialConsole(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DisableInteractiveSerialConsole(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DisableInteractiveSerialConsole(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncDetachLun(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::DetachLunRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::DetachLunRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDetachLun(context, request, cq);
       },
       request, std::move(context));
@@ -275,94 +285,88 @@ DefaultBareMetalSolutionStub::AsyncDetachLun(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::DetachLun(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DetachLun(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DetachLun(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
 DefaultBareMetalSolutionStub::ListSSHKeys(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListSSHKeysResponse response;
-    auto status =
-        grpc_stub_->ListSSHKeys(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& request) {
+  google::cloud::baremetalsolution::v2::ListSSHKeysResponse response;
+  auto status = grpc_stub_->ListSSHKeys(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
 DefaultBareMetalSolutionStub::CreateSSHKey(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
-    google::cloud::baremetalsolution::v2::SSHKey response;
-    auto status =
-        grpc_stub_->CreateSSHKey(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
+  google::cloud::baremetalsolution::v2::SSHKey response;
+  auto status = grpc_stub_->CreateSSHKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultBareMetalSolutionStub::DeleteSSHKey(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteSSHKey(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultBareMetalSolutionStub::DeleteSSHKey(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteSSHKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
 DefaultBareMetalSolutionStub::ListVolumes(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListVolumesRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListVolumesResponse response;
-    auto status =
-        grpc_stub_->ListVolumes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListVolumesRequest const& request) {
+  google::cloud::baremetalsolution::v2::ListVolumesResponse response;
+  auto status = grpc_stub_->ListVolumes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 DefaultBareMetalSolutionStub::GetVolume(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) {
-    google::cloud::baremetalsolution::v2::Volume response;
-    auto status =
-        grpc_stub_->GetVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) {
+  google::cloud::baremetalsolution::v2::Volume response;
+  auto status = grpc_stub_->GetVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncUpdateVolume(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::UpdateVolumeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::UpdateVolumeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
+             google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateVolume(context, request, cq);
       },
@@ -371,42 +375,41 @@ DefaultBareMetalSolutionStub::AsyncUpdateVolume(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::UpdateVolume(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 DefaultBareMetalSolutionStub::RenameVolume(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
-    google::cloud::baremetalsolution::v2::Volume response;
-    auto status =
-        grpc_stub_->RenameVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
+  google::cloud::baremetalsolution::v2::Volume response;
+  auto status = grpc_stub_->RenameVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncEvictVolume(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::EvictVolumeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
+             google::cloud::baremetalsolution::v2::EvictVolumeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncEvictVolume(context, request, cq);
       },
@@ -415,29 +418,29 @@ DefaultBareMetalSolutionStub::AsyncEvictVolume(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::EvictVolume(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->EvictVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->EvictVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncResizeVolume(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::ResizeVolumeRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
+             google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncResizeVolume(context, request, cq);
       },
@@ -446,68 +449,66 @@ DefaultBareMetalSolutionStub::AsyncResizeVolume(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::ResizeVolume(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ResizeVolume(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ResizeVolume(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
 DefaultBareMetalSolutionStub::ListNetworks(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListNetworksRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListNetworksResponse response;
-    auto status =
-        grpc_stub_->ListNetworks(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListNetworksRequest const& request) {
+  google::cloud::baremetalsolution::v2::ListNetworksResponse response;
+  auto status = grpc_stub_->ListNetworks(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
 DefaultBareMetalSolutionStub::ListNetworkUsage(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListNetworkUsageResponse response;
-    auto status =
-        grpc_stub_->ListNetworkUsage(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::ListNetworkUsageResponse response;
+  auto status = grpc_stub_->ListNetworkUsage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 DefaultBareMetalSolutionStub::GetNetwork(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) {
-    google::cloud::baremetalsolution::v2::Network response;
-    auto status =
-        grpc_stub_->GetNetwork(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) {
+  google::cloud::baremetalsolution::v2::Network response;
+  auto status = grpc_stub_->GetNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncUpdateNetwork(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::UpdateNetworkRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
+             google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateNetwork(context, request, cq);
       },
@@ -516,42 +517,43 @@ DefaultBareMetalSolutionStub::AsyncUpdateNetwork(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::UpdateNetwork(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateNetwork(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 DefaultBareMetalSolutionStub::CreateVolumeSnapshot(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const& request) {
-    google::cloud::baremetalsolution::v2::VolumeSnapshot response;
-    auto status =
-        grpc_stub_->CreateVolumeSnapshot(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::VolumeSnapshot response;
+  auto status = grpc_stub_->CreateVolumeSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncRestoreVolumeSnapshot(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request,
+             google::cloud::baremetalsolution::v2::
+                 RestoreVolumeSnapshotRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRestoreVolumeSnapshot(context, request, cq);
       },
@@ -560,151 +562,147 @@ DefaultBareMetalSolutionStub::AsyncRestoreVolumeSnapshot(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::RestoreVolumeSnapshot(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RestoreVolumeSnapshot(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestoreVolumeSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultBareMetalSolutionStub::DeleteVolumeSnapshot(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteVolumeSnapshot(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultBareMetalSolutionStub::DeleteVolumeSnapshot(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteVolumeSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 DefaultBareMetalSolutionStub::GetVolumeSnapshot(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const& request) {
-    google::cloud::baremetalsolution::v2::VolumeSnapshot response;
-    auto status =
-        grpc_stub_->GetVolumeSnapshot(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::VolumeSnapshot response;
+  auto status = grpc_stub_->GetVolumeSnapshot(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
 DefaultBareMetalSolutionStub::ListVolumeSnapshots(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse response;
-    auto status =
-        grpc_stub_->ListVolumeSnapshots(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse response;
+  auto status = grpc_stub_->ListVolumeSnapshots(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
 DefaultBareMetalSolutionStub::GetLun(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
-    google::cloud::baremetalsolution::v2::Lun response;
-    auto status =
-        grpc_stub_->GetLun(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
+  google::cloud::baremetalsolution::v2::Lun response;
+  auto status = grpc_stub_->GetLun(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse>
 DefaultBareMetalSolutionStub::ListLuns(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListLunsRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListLunsResponse response;
-    auto status =
-        grpc_stub_->ListLuns(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListLunsRequest const& request) {
+  google::cloud::baremetalsolution::v2::ListLunsResponse response;
+  auto status = grpc_stub_->ListLuns(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncEvictLun(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::EvictLunRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::EvictLunRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncEvictLun(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultBareMetalSolutionStub::EvictLun(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->EvictLun(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultBareMetalSolutionStub::EvictLun(
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->EvictLun(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 DefaultBareMetalSolutionStub::GetNfsShare(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
-    google::cloud::baremetalsolution::v2::NfsShare response;
-    auto status =
-        grpc_stub_->GetNfsShare(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
+  google::cloud::baremetalsolution::v2::NfsShare response;
+  auto status = grpc_stub_->GetNfsShare(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
 DefaultBareMetalSolutionStub::ListNfsShares(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListNfsSharesResponse response;
-    auto status =
-        grpc_stub_->ListNfsShares(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request) {
+  google::cloud::baremetalsolution::v2::ListNfsSharesResponse response;
+  auto status = grpc_stub_->ListNfsShares(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncUpdateNfsShare(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::UpdateNfsShareRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request,
+             google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateNfsShare(context, request, cq);
       },
@@ -713,29 +711,31 @@ DefaultBareMetalSolutionStub::AsyncUpdateNfsShare(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::UpdateNfsShare(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateNfsShare(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateNfsShare(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncCreateNfsShare(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::CreateNfsShareRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request,
+             google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateNfsShare(context, request, cq);
       },
@@ -744,42 +744,44 @@ DefaultBareMetalSolutionStub::AsyncCreateNfsShare(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::CreateNfsShare(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateNfsShare(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateNfsShare(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 DefaultBareMetalSolutionStub::RenameNfsShare(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::RenameNfsShareRequest const& request) {
-    google::cloud::baremetalsolution::v2::NfsShare response;
-    auto status =
-        grpc_stub_->RenameNfsShare(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::NfsShare response;
+  auto status = grpc_stub_->RenameNfsShare(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncDeleteNfsShare(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::baremetalsolution::v2::DeleteNfsShareRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request,
+             google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteNfsShare(context, request, cq);
       },
@@ -788,133 +790,133 @@ DefaultBareMetalSolutionStub::AsyncDeleteNfsShare(
 
 StatusOr<google::longrunning::Operation>
 DefaultBareMetalSolutionStub::DeleteNfsShare(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteNfsShare(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNfsShare(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
 DefaultBareMetalSolutionStub::ListProvisioningQuotas(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse response;
-    auto status =
-        grpc_stub_->ListProvisioningQuotas(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse response;
+  auto status =
+      grpc_stub_->ListProvisioningQuotas(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
 DefaultBareMetalSolutionStub::SubmitProvisioningConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const& request) {
-    google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse response;
-    auto status =
-        grpc_stub_->SubmitProvisioningConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse
+      response;
+  auto status =
+      grpc_stub_->SubmitProvisioningConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::GetProvisioningConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const& request) {
-    google::cloud::baremetalsolution::v2::ProvisioningConfig response;
-    auto status =
-        grpc_stub_->GetProvisioningConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::ProvisioningConfig response;
+  auto status = grpc_stub_->GetProvisioningConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::CreateProvisioningConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const& request) {
-    google::cloud::baremetalsolution::v2::ProvisioningConfig response;
-    auto status =
-        grpc_stub_->CreateProvisioningConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::ProvisioningConfig response;
+  auto status =
+      grpc_stub_->CreateProvisioningConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::UpdateProvisioningConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const& request) {
-    google::cloud::baremetalsolution::v2::ProvisioningConfig response;
-    auto status =
-        grpc_stub_->UpdateProvisioningConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&
+        request) {
+  google::cloud::baremetalsolution::v2::ProvisioningConfig response;
+  auto status =
+      grpc_stub_->UpdateProvisioningConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 DefaultBareMetalSolutionStub::RenameNetwork(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
-    google::cloud::baremetalsolution::v2::Network response;
-    auto status =
-        grpc_stub_->RenameNetwork(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
+  google::cloud::baremetalsolution::v2::Network response;
+  auto status = grpc_stub_->RenameNetwork(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
 DefaultBareMetalSolutionStub::ListOSImages(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::baremetalsolution::v2::ListOSImagesRequest const& request) {
-    google::cloud::baremetalsolution::v2::ListOSImagesResponse response;
-    auto status =
-        grpc_stub_->ListOSImages(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::baremetalsolution::v2::ListOSImagesRequest const& request) {
+  google::cloud::baremetalsolution::v2::ListOSImagesResponse response;
+  auto status = grpc_stub_->ListOSImages(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultBareMetalSolutionStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultBareMetalSolutionStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -943,13 +945,14 @@ future<Status> DefaultBareMetalSolutionStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

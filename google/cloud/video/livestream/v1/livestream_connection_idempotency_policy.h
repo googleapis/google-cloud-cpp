@@ -36,122 +36,130 @@ class LivestreamServiceConnectionIdempotencyPolicy {
   virtual ~LivestreamServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateChannel(google::cloud::video::livestream::v1::CreateChannelRequest const& request);
+  virtual google::cloud::Idempotency CreateChannel(
+      google::cloud::video::livestream::v1::CreateChannelRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListChannels(google::cloud::video::livestream::v1::ListChannelsRequest request);
+  virtual google::cloud::Idempotency ListChannels(
+      google::cloud::video::livestream::v1::ListChannelsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetChannel(google::cloud::video::livestream::v1::GetChannelRequest const& request);
+  virtual google::cloud::Idempotency GetChannel(
+      google::cloud::video::livestream::v1::GetChannelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteChannel(google::cloud::video::livestream::v1::DeleteChannelRequest const& request);
+  virtual google::cloud::Idempotency DeleteChannel(
+      google::cloud::video::livestream::v1::DeleteChannelRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateChannel(google::cloud::video::livestream::v1::UpdateChannelRequest const& request);
+  virtual google::cloud::Idempotency UpdateChannel(
+      google::cloud::video::livestream::v1::UpdateChannelRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  StartChannel(google::cloud::video::livestream::v1::StartChannelRequest const& request);
+  virtual google::cloud::Idempotency StartChannel(
+      google::cloud::video::livestream::v1::StartChannelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  StopChannel(google::cloud::video::livestream::v1::StopChannelRequest const& request);
+  virtual google::cloud::Idempotency StopChannel(
+      google::cloud::video::livestream::v1::StopChannelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateInput(google::cloud::video::livestream::v1::CreateInputRequest const& request);
+  virtual google::cloud::Idempotency CreateInput(
+      google::cloud::video::livestream::v1::CreateInputRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListInputs(google::cloud::video::livestream::v1::ListInputsRequest request);
+  virtual google::cloud::Idempotency ListInputs(
+      google::cloud::video::livestream::v1::ListInputsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetInput(google::cloud::video::livestream::v1::GetInputRequest const& request);
+  virtual google::cloud::Idempotency GetInput(
+      google::cloud::video::livestream::v1::GetInputRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteInput(google::cloud::video::livestream::v1::DeleteInputRequest const& request);
+  virtual google::cloud::Idempotency DeleteInput(
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateInput(google::cloud::video::livestream::v1::UpdateInputRequest const& request);
+  virtual google::cloud::Idempotency UpdateInput(
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateEvent(google::cloud::video::livestream::v1::CreateEventRequest const& request);
+  virtual google::cloud::Idempotency CreateEvent(
+      google::cloud::video::livestream::v1::CreateEventRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListEvents(google::cloud::video::livestream::v1::ListEventsRequest request);
+  virtual google::cloud::Idempotency ListEvents(
+      google::cloud::video::livestream::v1::ListEventsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetEvent(google::cloud::video::livestream::v1::GetEventRequest const& request);
+  virtual google::cloud::Idempotency GetEvent(
+      google::cloud::video::livestream::v1::GetEventRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteEvent(google::cloud::video::livestream::v1::DeleteEventRequest const& request);
+  virtual google::cloud::Idempotency DeleteEvent(
+      google::cloud::video::livestream::v1::DeleteEventRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListClips(google::cloud::video::livestream::v1::ListClipsRequest request);
+  virtual google::cloud::Idempotency ListClips(
+      google::cloud::video::livestream::v1::ListClipsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetClip(google::cloud::video::livestream::v1::GetClipRequest const& request);
+  virtual google::cloud::Idempotency GetClip(
+      google::cloud::video::livestream::v1::GetClipRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateClip(google::cloud::video::livestream::v1::CreateClipRequest const& request);
+  virtual google::cloud::Idempotency CreateClip(
+      google::cloud::video::livestream::v1::CreateClipRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteClip(google::cloud::video::livestream::v1::DeleteClipRequest const& request);
+  virtual google::cloud::Idempotency DeleteClip(
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateDvrSession(google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request);
+  virtual google::cloud::Idempotency CreateDvrSession(
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDvrSessions(google::cloud::video::livestream::v1::ListDvrSessionsRequest request);
+  virtual google::cloud::Idempotency ListDvrSessions(
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDvrSession(google::cloud::video::livestream::v1::GetDvrSessionRequest const& request);
+  virtual google::cloud::Idempotency GetDvrSession(
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteDvrSession(google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request);
+  virtual google::cloud::Idempotency DeleteDvrSession(
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateDvrSession(google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request);
+  virtual google::cloud::Idempotency UpdateDvrSession(
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateAsset(google::cloud::video::livestream::v1::CreateAssetRequest const& request);
+  virtual google::cloud::Idempotency CreateAsset(
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteAsset(google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
+  virtual google::cloud::Idempotency DeleteAsset(
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetAsset(google::cloud::video::livestream::v1::GetAssetRequest const& request);
+  virtual google::cloud::Idempotency GetAsset(
+      google::cloud::video::livestream::v1::GetAssetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListAssets(google::cloud::video::livestream::v1::ListAssetsRequest request);
+  virtual google::cloud::Idempotency ListAssets(
+      google::cloud::video::livestream::v1::ListAssetsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetPool(google::cloud::video::livestream::v1::GetPoolRequest const& request);
+  virtual google::cloud::Idempotency GetPool(
+      google::cloud::video::livestream::v1::GetPoolRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdatePool(google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
+  virtual google::cloud::Idempotency UpdatePool(
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy>
-    MakeDefaultLivestreamServiceConnectionIdempotencyPolicy();
+MakeDefaultLivestreamServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_livestream_v1

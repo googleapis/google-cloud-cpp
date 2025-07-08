@@ -37,27 +37,27 @@ class TasksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TasksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  GetTask(google::cloud::run::v2::GetTaskRequest const& request);
+  virtual google::cloud::Idempotency GetTask(
+      google::cloud::run::v2::GetTaskRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTasks(google::cloud::run::v2::ListTasksRequest request);
+  virtual google::cloud::Idempotency ListTasks(
+      google::cloud::run::v2::ListTasksRequest request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<TasksConnectionIdempotencyPolicy>
-    MakeDefaultTasksConnectionIdempotencyPolicy();
+MakeDefaultTasksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2

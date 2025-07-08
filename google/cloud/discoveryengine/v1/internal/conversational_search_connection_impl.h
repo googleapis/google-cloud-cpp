@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_CONVERSATIONAL_SEARCH_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_CONVERSATIONAL_SEARCH_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/conversational_search_connection.h"
 #include "google/cloud/discoveryengine/v1/conversational_search_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/conversational_search_options.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -47,66 +47,84 @@ class ConversationalSearchServiceConnectionImpl
   ~ConversationalSearchServiceConnectionImpl() override = default;
 
   ConversationalSearchServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<discoveryengine_v1_internal::ConversationalSearchServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          discoveryengine_v1_internal::ConversationalSearchServiceStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
-  ConverseConversation(google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) override;
+  ConverseConversation(
+      google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+          request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Conversation>
-  CreateConversation(google::cloud::discoveryengine::v1::CreateConversationRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Conversation> CreateConversation(
+      google::cloud::discoveryengine::v1::CreateConversationRequest const&
+          request) override;
 
-  Status
-  DeleteConversation(google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) override;
+  Status DeleteConversation(
+      google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+          request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Conversation>
-  UpdateConversation(google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Conversation> UpdateConversation(
+      google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+          request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Conversation>
-  GetConversation(google::cloud::discoveryengine::v1::GetConversationRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Conversation> GetConversation(
+      google::cloud::discoveryengine::v1::GetConversationRequest const& request)
+      override;
 
   StreamRange<google::cloud::discoveryengine::v1::Conversation>
-  ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest request) override;
+  ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest
+                        request) override;
 
-  StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-  AnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
 
   StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-  StreamAnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) override;
+  StreamAnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Answer>
-  GetAnswer(google::cloud::discoveryengine::v1::GetAnswerRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
+      google::cloud::discoveryengine::v1::GetAnswerRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Session>
-  CreateSession(google::cloud::discoveryengine::v1::CreateSessionRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Session> CreateSession(
+      google::cloud::discoveryengine::v1::CreateSessionRequest const& request)
+      override;
 
-  Status
-  DeleteSession(google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) override;
+  Status DeleteSession(
+      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Session>
-  UpdateSession(google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Session> UpdateSession(
+      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Session>
-  GetSession(google::cloud::discoveryengine::v1::GetSessionRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Session> GetSession(
+      google::cloud::discoveryengine::v1::GetSessionRequest const& request)
+      override;
 
-  StreamRange<google::cloud::discoveryengine::v1::Session>
-  ListSessions(google::cloud::discoveryengine::v1::ListSessionsRequest request) override;
+  StreamRange<google::cloud::discoveryengine::v1::Session> ListSessions(
+      google::cloud::discoveryengine::v1::ListSessionsRequest request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<discoveryengine_v1_internal::ConversationalSearchServiceStub> stub_;
+  std::shared_ptr<discoveryengine_v1_internal::ConversationalSearchServiceStub>
+      stub_;
   Options options_;
 };
 

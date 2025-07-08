@@ -17,10 +17,10 @@
 // source: google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto
 
 #include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection.h"
 #include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -39,28 +39,49 @@ Options PrivilegedAccessManagerDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_PRIVILEGED_ACCESS_MANAGER_AUTHORITY",
       "privilegedaccessmanager.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicyOption>()) {
-    options.set<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicyOption>(
-        privilegedaccessmanager_v1::PrivilegedAccessManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+  if (!options.has<privilegedaccessmanager_v1::
+                       PrivilegedAccessManagerRetryPolicyOption>()) {
+    options.set<
+        privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicyOption>(
+        privilegedaccessmanager_v1::
+            PrivilegedAccessManagerLimitedTimeRetryPolicy(
+                std::chrono::minutes(30))
+                .clone());
   }
-  if (!options.has<privilegedaccessmanager_v1::PrivilegedAccessManagerBackoffPolicyOption>()) {
-    options.set<privilegedaccessmanager_v1::PrivilegedAccessManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<privilegedaccessmanager_v1::
+                       PrivilegedAccessManagerBackoffPolicyOption>()) {
+    options.set<
+        privilegedaccessmanager_v1::PrivilegedAccessManagerBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<privilegedaccessmanager_v1::PrivilegedAccessManagerPollingPolicyOption>()) {
-    options.set<privilegedaccessmanager_v1::PrivilegedAccessManagerPollingPolicyOption>(
+  if (!options.has<privilegedaccessmanager_v1::
+                       PrivilegedAccessManagerPollingPolicyOption>()) {
+    options.set<
+        privilegedaccessmanager_v1::PrivilegedAccessManagerPollingPolicyOption>(
         GenericPollingPolicy<
-            privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicyOption::Type,
-            privilegedaccessmanager_v1::PrivilegedAccessManagerBackoffPolicyOption::Type>(
-            options.get<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicyOption>()->clone(),
+            privilegedaccessmanager_v1::
+                PrivilegedAccessManagerRetryPolicyOption::Type,
+            privilegedaccessmanager_v1::
+                PrivilegedAccessManagerBackoffPolicyOption::Type>(
+            options
+                .get<privilegedaccessmanager_v1::
+                         PrivilegedAccessManagerRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<privilegedaccessmanager_v1::PrivilegedAccessManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<privilegedaccessmanager_v1::PrivilegedAccessManagerConnectionIdempotencyPolicyOption>(
-        privilegedaccessmanager_v1::MakeDefaultPrivilegedAccessManagerConnectionIdempotencyPolicy());
+  if (!options.has<
+          privilegedaccessmanager_v1::
+              PrivilegedAccessManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<privilegedaccessmanager_v1::
+                    PrivilegedAccessManagerConnectionIdempotencyPolicyOption>(
+        privilegedaccessmanager_v1::
+            MakeDefaultPrivilegedAccessManagerConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -31,17 +31,19 @@ namespace cloud {
 namespace publicca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PublicCertificateAuthorityServiceLogging : public PublicCertificateAuthorityServiceStub {
+class PublicCertificateAuthorityServiceLogging
+    : public PublicCertificateAuthorityServiceStub {
  public:
   ~PublicCertificateAuthorityServiceLogging() override = default;
-  PublicCertificateAuthorityServiceLogging(std::shared_ptr<PublicCertificateAuthorityServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  PublicCertificateAuthorityServiceLogging(
+      std::shared_ptr<PublicCertificateAuthorityServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
-  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey> CreateExternalAccountKey(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) override;
+  StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
+  CreateExternalAccountKey(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::security::publicca::v1::
+          CreateExternalAccountKeyRequest const& request) override;
 
  private:
   std::shared_ptr<PublicCertificateAuthorityServiceStub> child_;

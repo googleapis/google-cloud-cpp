@@ -41,24 +41,24 @@ std::shared_ptr<AuthorizedCertificatesStub>
 CreateDefaultAuthorizedCertificatesStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::appengine::v1::AuthorizedCertificates::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::appengine::v1::AuthorizedCertificates::NewStub(channel);
   std::shared_ptr<AuthorizedCertificatesStub> stub =
-    std::make_shared<DefaultAuthorizedCertificatesStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultAuthorizedCertificatesStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<AuthorizedCertificatesAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<AuthorizedCertificatesAuth>(std::move(auth),
+                                                        std::move(stub));
   }
   stub = std::make_shared<AuthorizedCertificatesMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AuthorizedCertificatesLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

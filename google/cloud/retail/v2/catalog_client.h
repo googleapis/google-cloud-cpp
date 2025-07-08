@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_CATALOG_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_CATALOG_CLIENT_H
 
+#include "google/cloud/retail/v2/catalog_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/retail/v2/catalog_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CatalogServiceClient {
  public:
-  explicit CatalogServiceClient(std::shared_ptr<CatalogServiceConnection> connection, Options opts = {});
+  explicit CatalogServiceClient(
+      std::shared_ptr<CatalogServiceConnection> connection, Options opts = {});
   ~CatalogServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class CatalogServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CatalogServiceClient const& a, CatalogServiceClient const& b) {
+  friend bool operator==(CatalogServiceClient const& a,
+                         CatalogServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CatalogServiceClient const& a, CatalogServiceClient const& b) {
+  friend bool operator!=(CatalogServiceClient const& a,
+                         CatalogServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,8 +123,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.ListCatalogsRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L208}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::Catalog>
-  ListCatalogs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -160,8 +163,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.ListCatalogsRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L208}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::Catalog>
-  ListCatalogs(google::cloud::retail::v2::ListCatalogsRequest request, Options opts = {});
+  StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
+      google::cloud::retail::v2::ListCatalogsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -197,8 +201,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateCatalogRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L259}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Catalog>
-  UpdateCatalog(google::cloud::retail::v2::Catalog const& catalog, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
+      google::cloud::retail::v2::Catalog const& catalog,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -227,8 +232,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateCatalogRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L259}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Catalog>
-  UpdateCatalog(google::cloud::retail::v2::UpdateCatalogRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
+      google::cloud::retail::v2::UpdateCatalogRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -283,8 +289,7 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.SetDefaultBranchRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L279}
   ///
   // clang-format on
-  Status
-  SetDefaultBranch(std::string const& catalog, Options opts = {});
+  Status SetDefaultBranch(std::string const& catalog, Options opts = {});
 
   // clang-format off
   ///
@@ -343,8 +348,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.SetDefaultBranchRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L279}
   ///
   // clang-format on
-  Status
-  SetDefaultBranch(google::cloud::retail::v2::SetDefaultBranchRequest const& request, Options opts = {});
+  Status SetDefaultBranch(
+      google::cloud::retail::v2::SetDefaultBranchRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -406,7 +412,9 @@ class CatalogServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-  GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const& request, Options opts = {});
+  GetDefaultBranch(
+      google::cloud::retail::v2::GetDefaultBranchRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -431,8 +439,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.GetCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L341}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::CompletionConfig>
-  GetCompletionConfig(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -461,8 +469,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.GetCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L341}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::CompletionConfig>
-  GetCompletionConfig(google::cloud::retail::v2::GetCompletionConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
+      google::cloud::retail::v2::GetCompletionConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -508,8 +517,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L355}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::CompletionConfig>
-  UpdateCompletionConfig(google::cloud::retail::v2::CompletionConfig const& completion_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
+      google::cloud::retail::v2::CompletionConfig const& completion_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -538,8 +548,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L355}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::CompletionConfig>
-  UpdateCompletionConfig(google::cloud::retail::v2::UpdateCompletionConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
+      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -564,8 +575,8 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.GetAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L384}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  GetAttributesConfig(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +605,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.GetAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L384}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  GetAttributesConfig(google::cloud::retail::v2::GetAttributesConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
+      google::cloud::retail::v2::GetAttributesConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -635,8 +647,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L398}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  UpdateAttributesConfig(google::cloud::retail::v2::AttributesConfig const& attributes_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
+      google::cloud::retail::v2::AttributesConfig const& attributes_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -672,8 +685,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L398}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  UpdateAttributesConfig(google::cloud::retail::v2::UpdateAttributesConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
+      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -708,8 +722,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.CatalogAttribute]: @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L90}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  AddCatalogAttribute(google::cloud::retail::v2::AddCatalogAttributeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig> AddCatalogAttribute(
+      google::cloud::retail::v2::AddCatalogAttributeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -744,8 +759,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.RemoveCatalogAttributeRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L436}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  RemoveCatalogAttribute(google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig> RemoveCatalogAttribute(
+      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -783,8 +799,9 @@ class CatalogServiceClient {
   /// [google.cloud.retail.v2.ReplaceCatalogAttributeRequest]: @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L454}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::AttributesConfig>
-  ReplaceCatalogAttribute(google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::AttributesConfig> ReplaceCatalogAttribute(
+      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -819,8 +836,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -859,8 +876,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -886,8 +903,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -918,8 +935,9 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CatalogServiceConnection> connection_;

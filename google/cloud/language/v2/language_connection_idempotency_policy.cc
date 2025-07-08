@@ -26,35 +26,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-LanguageServiceConnectionIdempotencyPolicy::~LanguageServiceConnectionIdempotencyPolicy() = default;
+LanguageServiceConnectionIdempotencyPolicy::
+    ~LanguageServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
 LanguageServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LanguageServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const&) {
+Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeSentiment(
+    google::cloud::language::v2::AnalyzeSentimentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const&) {
+Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeEntities(
+    google::cloud::language::v2::AnalyzeEntitiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LanguageServiceConnectionIdempotencyPolicy::ClassifyText(google::cloud::language::v2::ClassifyTextRequest const&) {
+Idempotency LanguageServiceConnectionIdempotencyPolicy::ClassifyText(
+    google::cloud::language::v2::ClassifyTextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LanguageServiceConnectionIdempotencyPolicy::ModerateText(google::cloud::language::v2::ModerateTextRequest const&) {
+Idempotency LanguageServiceConnectionIdempotencyPolicy::ModerateText(
+    google::cloud::language::v2::ModerateTextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LanguageServiceConnectionIdempotencyPolicy::AnnotateText(google::cloud::language::v2::AnnotateTextRequest const&) {
+Idempotency LanguageServiceConnectionIdempotencyPolicy::AnnotateText(
+    google::cloud::language::v2::AnnotateTextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
-    MakeDefaultLanguageServiceConnectionIdempotencyPolicy() {
+MakeDefaultLanguageServiceConnectionIdempotencyPolicy() {
   return std::make_unique<LanguageServiceConnectionIdempotencyPolicy>();
 }
 

@@ -36,18 +36,20 @@ class LookupServiceTracingConnection
   ~LookupServiceTracingConnection() override = default;
 
   explicit LookupServiceTracingConnection(
-    std::shared_ptr<servicedirectory_v1::LookupServiceConnection> child);
+      std::shared_ptr<servicedirectory_v1::LookupServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-  ResolveService(google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) override;
+  ResolveService(
+      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::shared_ptr<servicedirectory_v1::LookupServiceConnection> child_;

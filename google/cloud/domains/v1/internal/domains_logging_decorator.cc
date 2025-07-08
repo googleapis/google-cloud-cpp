@@ -30,21 +30,17 @@ namespace cloud {
 namespace domains_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DomainsLogging::DomainsLogging(
-    std::shared_ptr<DomainsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+DomainsLogging::DomainsLogging(std::shared_ptr<DomainsStub> child,
+                               TracingOptions tracing_options,
+                               std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
 DomainsLogging::SearchDomains(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::SearchDomainsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::SearchDomainsRequest const& request) {
         return child_->SearchDomains(context, options, request);
       },
@@ -53,13 +49,14 @@ DomainsLogging::SearchDomains(
 
 StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
 DomainsLogging::RetrieveRegisterParameters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::domains::v1::RetrieveRegisterParametersRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::RetrieveRegisterParametersRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
+              request) {
         return child_->RetrieveRegisterParameters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,30 +64,27 @@ DomainsLogging::RetrieveRegisterParameters(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsLogging::AsyncRegisterDomain(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::RegisterDomainRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::RegisterDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::domains::v1::RegisterDomainRequest const& request) {
-        return child_->AsyncRegisterDomain(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncRegisterDomain(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsLogging::RegisterDomain(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::RegisterDomainRequest const& request) {
+StatusOr<google::longrunning::Operation> DomainsLogging::RegisterDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::RegisterDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::RegisterDomainRequest const& request) {
         return child_->RegisterDomain(context, options, request);
       },
@@ -99,13 +93,14 @@ DomainsLogging::RegisterDomain(
 
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DomainsLogging::RetrieveTransferParameters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::domains::v1::RetrieveTransferParametersRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::domains::v1::RetrieveTransferParametersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::RetrieveTransferParametersRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::domains::v1::RetrieveTransferParametersRequest const&
+              request) {
         return child_->RetrieveTransferParameters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -113,30 +108,27 @@ DomainsLogging::RetrieveTransferParameters(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsLogging::AsyncTransferDomain(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::TransferDomainRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::TransferDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::domains::v1::TransferDomainRequest const& request) {
-        return child_->AsyncTransferDomain(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncTransferDomain(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsLogging::TransferDomain(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::TransferDomainRequest const& request) {
+StatusOr<google::longrunning::Operation> DomainsLogging::TransferDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::TransferDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::TransferDomainRequest const& request) {
         return child_->TransferDomain(context, options, request);
       },
@@ -145,13 +137,12 @@ DomainsLogging::TransferDomain(
 
 StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
 DomainsLogging::ListRegistrations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::ListRegistrationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::ListRegistrationsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::domains::v1::ListRegistrationsRequest const& request) {
         return child_->ListRegistrations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -159,13 +150,12 @@ DomainsLogging::ListRegistrations(
 
 StatusOr<google::cloud::domains::v1::Registration>
 DomainsLogging::GetRegistration(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::GetRegistrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::GetRegistrationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::domains::v1::GetRegistrationRequest const& request) {
         return child_->GetRegistration(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -173,31 +163,30 @@ DomainsLogging::GetRegistration(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsLogging::AsyncUpdateRegistration(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
-        return child_->AsyncUpdateRegistration(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::domains::v1::UpdateRegistrationRequest const&
+                 request) {
+        return child_->AsyncUpdateRegistration(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsLogging::UpdateRegistration(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+StatusOr<google::longrunning::Operation> DomainsLogging::UpdateRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::UpdateRegistrationRequest const&
+                 request) {
         return child_->UpdateRegistration(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -205,15 +194,18 @@ DomainsLogging::UpdateRegistration(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsLogging::AsyncConfigureManagementSettings(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) {
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+              request) {
         return child_->AsyncConfigureManagementSettings(
             cq, std::move(context), std::move(options), request);
       },
@@ -223,13 +215,14 @@ DomainsLogging::AsyncConfigureManagementSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsLogging::ConfigureManagementSettings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+              request) {
         return child_->ConfigureManagementSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -237,31 +230,30 @@ DomainsLogging::ConfigureManagementSettings(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsLogging::AsyncConfigureDnsSettings(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
-        return child_->AsyncConfigureDnsSettings(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::domains::v1::ConfigureDnsSettingsRequest const&
+                 request) {
+        return child_->AsyncConfigureDnsSettings(cq, std::move(context),
+                                                 std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsLogging::ConfigureDnsSettings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+StatusOr<google::longrunning::Operation> DomainsLogging::ConfigureDnsSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::ConfigureDnsSettingsRequest const&
+                 request) {
         return child_->ConfigureDnsSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -269,15 +261,17 @@ DomainsLogging::ConfigureDnsSettings(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsLogging::AsyncConfigureContactSettings(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) {
+             google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+                 request) {
         return child_->AsyncConfigureContactSettings(
             cq, std::move(context), std::move(options), request);
       },
@@ -287,13 +281,13 @@ DomainsLogging::AsyncConfigureContactSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsLogging::ConfigureContactSettings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+                 request) {
         return child_->ConfigureContactSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -301,31 +295,30 @@ DomainsLogging::ConfigureContactSettings(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsLogging::AsyncExportRegistration(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::domains::v1::ExportRegistrationRequest const& request) {
-        return child_->AsyncExportRegistration(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::domains::v1::ExportRegistrationRequest const&
+                 request) {
+        return child_->AsyncExportRegistration(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsLogging::ExportRegistration(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+StatusOr<google::longrunning::Operation> DomainsLogging::ExportRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::ExportRegistrationRequest const&
+                 request) {
         return child_->ExportRegistration(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -333,31 +326,30 @@ DomainsLogging::ExportRegistration(
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsLogging::AsyncDeleteRegistration(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
-        return child_->AsyncDeleteRegistration(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::domains::v1::DeleteRegistrationRequest const&
+                 request) {
+        return child_->AsyncDeleteRegistration(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsLogging::DeleteRegistration(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+StatusOr<google::longrunning::Operation> DomainsLogging::DeleteRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::DeleteRegistrationRequest const&
+                 request) {
         return child_->DeleteRegistration(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -365,13 +357,13 @@ DomainsLogging::DeleteRegistration(
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DomainsLogging::RetrieveAuthorizationCode(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
+                 request) {
         return child_->RetrieveAuthorizationCode(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -379,13 +371,12 @@ DomainsLogging::RetrieveAuthorizationCode(
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DomainsLogging::ResetAuthorizationCode(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::ResetAuthorizationCodeRequest const&
+                 request) {
         return child_->ResetAuthorizationCode(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -402,8 +393,8 @@ DomainsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -419,8 +410,8 @@ future<Status> DomainsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

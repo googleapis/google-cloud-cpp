@@ -38,60 +38,60 @@ class CloudRedisConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<CloudRedisConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListInstances(google::cloud::redis::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency ListInstances(
+      google::cloud::redis::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetInstance(google::cloud::redis::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency GetInstance(
+      google::cloud::redis::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetInstanceAuthString(google::cloud::redis::v1::GetInstanceAuthStringRequest const& request);
+  virtual google::cloud::Idempotency GetInstanceAuthString(
+      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateInstance(google::cloud::redis::v1::CreateInstanceRequest const& request);
+  virtual google::cloud::Idempotency CreateInstance(
+      google::cloud::redis::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateInstance(google::cloud::redis::v1::UpdateInstanceRequest const& request);
+  virtual google::cloud::Idempotency UpdateInstance(
+      google::cloud::redis::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpgradeInstance(google::cloud::redis::v1::UpgradeInstanceRequest const& request);
+  virtual google::cloud::Idempotency UpgradeInstance(
+      google::cloud::redis::v1::UpgradeInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportInstance(google::cloud::redis::v1::ImportInstanceRequest const& request);
+  virtual google::cloud::Idempotency ImportInstance(
+      google::cloud::redis::v1::ImportInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportInstance(google::cloud::redis::v1::ExportInstanceRequest const& request);
+  virtual google::cloud::Idempotency ExportInstance(
+      google::cloud::redis::v1::ExportInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  FailoverInstance(google::cloud::redis::v1::FailoverInstanceRequest const& request);
+  virtual google::cloud::Idempotency FailoverInstance(
+      google::cloud::redis::v1::FailoverInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteInstance(google::cloud::redis::v1::DeleteInstanceRequest const& request);
+  virtual google::cloud::Idempotency DeleteInstance(
+      google::cloud::redis::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RescheduleMaintenance(google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
+  virtual google::cloud::Idempotency RescheduleMaintenance(
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>
-    MakeDefaultCloudRedisConnectionIdempotencyPolicy();
+MakeDefaultCloudRedisConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_v1

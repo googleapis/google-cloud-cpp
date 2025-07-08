@@ -32,66 +32,72 @@ ReferenceListServiceTracingStub::ReferenceListServiceTracingStub(
     std::shared_ptr<ReferenceListServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::chronicle::v1::ReferenceList> ReferenceListServiceTracingStub::GetReferenceList(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ReferenceList>
+ReferenceListServiceTracingStub::GetReferenceList(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.ReferenceListService", "GetReferenceList");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "GetReferenceList");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetReferenceList(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse> ReferenceListServiceTracingStub::ListReferenceLists(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse>
+ReferenceListServiceTracingStub::ListReferenceLists(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListReferenceListsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.ReferenceListService", "ListReferenceLists");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "ListReferenceLists");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListReferenceLists(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListReferenceLists(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ReferenceList> ReferenceListServiceTracingStub::CreateReferenceList(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ReferenceList>
+ReferenceListServiceTracingStub::CreateReferenceList(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.ReferenceListService", "CreateReferenceList");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "CreateReferenceList");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateReferenceList(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateReferenceList(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ReferenceList> ReferenceListServiceTracingStub::UpdateReferenceList(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ReferenceList>
+ReferenceListServiceTracingStub::UpdateReferenceList(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.ReferenceListService", "UpdateReferenceList");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "UpdateReferenceList");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateReferenceList(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateReferenceList(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ReferenceListServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ReferenceListServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.ReferenceListService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> ReferenceListServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+ReferenceListServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.ReferenceListService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -99,10 +105,10 @@ StatusOr<google::longrunning::Operation> ReferenceListServiceTracingStub::GetOpe
 }
 
 Status ReferenceListServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.ReferenceListService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -110,10 +116,10 @@ Status ReferenceListServiceTracingStub::DeleteOperation(
 }
 
 Status ReferenceListServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.ReferenceListService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.chronicle.v1.ReferenceListService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

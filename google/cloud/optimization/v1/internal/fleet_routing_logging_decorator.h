@@ -36,28 +36,28 @@ class FleetRoutingLogging : public FleetRoutingStub {
  public:
   ~FleetRoutingLogging() override = default;
   FleetRoutingLogging(std::shared_ptr<FleetRoutingStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                      TracingOptions tracing_options,
+                      std::set<std::string> const& components);
 
-  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse> OptimizeTours(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::optimization::v1::OptimizeToursRequest const& request) override;
+  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
+  OptimizeTours(grpc::ClientContext& context, Options const& options,
+                google::cloud::optimization::v1::OptimizeToursRequest const&
+                    request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchOptimizeTours(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -36,49 +36,53 @@ class LookupServiceStub {
  public:
   virtual ~LookupServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse> ResolveService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
+  ResolveService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicedirectory::v1::ResolveServiceRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 };
 
 class DefaultLookupServiceStub : public LookupServiceStub {
  public:
   explicit DefaultLookupServiceStub(
-      std::unique_ptr<google::cloud::servicedirectory::v1::LookupService::StubInterface> grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub
-)
+      std::unique_ptr<
+          google::cloud::servicedirectory::v1::LookupService::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)) {}
 
-  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse> ResolveService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) override;
+  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
+  ResolveService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::servicedirectory::v1::LookupService::StubInterface> grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
+  std::unique_ptr<
+      google::cloud::servicedirectory::v1::LookupService::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

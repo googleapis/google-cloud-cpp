@@ -26,26 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-LlmUtilityServiceConnectionIdempotencyPolicy::~LlmUtilityServiceConnectionIdempotencyPolicy() = default;
+LlmUtilityServiceConnectionIdempotencyPolicy::
+    ~LlmUtilityServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<LlmUtilityServiceConnectionIdempotencyPolicy>
 LlmUtilityServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LlmUtilityServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::CountTokens(google::cloud::aiplatform::v1::CountTokensRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::CountTokens(
+    google::cloud::aiplatform::v1::CountTokensRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::ComputeTokens(google::cloud::aiplatform::v1::ComputeTokensRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::ComputeTokens(
+    google::cloud::aiplatform::v1::ComputeTokensRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -55,36 +60,43 @@ Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency LlmUtilityServiceConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<LlmUtilityServiceConnectionIdempotencyPolicy>
-    MakeDefaultLlmUtilityServiceConnectionIdempotencyPolicy() {
+MakeDefaultLlmUtilityServiceConnectionIdempotencyPolicy() {
   return std::make_unique<LlmUtilityServiceConnectionIdempotencyPolicy>();
 }
 

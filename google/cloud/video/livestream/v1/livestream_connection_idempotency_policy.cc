@@ -26,163 +26,201 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-LivestreamServiceConnectionIdempotencyPolicy::~LivestreamServiceConnectionIdempotencyPolicy() = default;
+LivestreamServiceConnectionIdempotencyPolicy::
+    ~LivestreamServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy>
 LivestreamServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LivestreamServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateChannel(google::cloud::video::livestream::v1::CreateChannelRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateChannel(
+    google::cloud::video::livestream::v1::CreateChannelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListChannels(google::cloud::video::livestream::v1::ListChannelsRequest) {  // NOLINT
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListChannels(
+    google::cloud::video::livestream::v1::ListChannelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetChannel(google::cloud::video::livestream::v1::GetChannelRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetChannel(
+    google::cloud::video::livestream::v1::GetChannelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteChannel(google::cloud::video::livestream::v1::DeleteChannelRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteChannel(
+    google::cloud::video::livestream::v1::DeleteChannelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdateChannel(google::cloud::video::livestream::v1::UpdateChannelRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdateChannel(
+    google::cloud::video::livestream::v1::UpdateChannelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::StartChannel(google::cloud::video::livestream::v1::StartChannelRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::StartChannel(
+    google::cloud::video::livestream::v1::StartChannelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::StopChannel(google::cloud::video::livestream::v1::StopChannelRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::StopChannel(
+    google::cloud::video::livestream::v1::StopChannelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateInput(google::cloud::video::livestream::v1::CreateInputRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateInput(
+    google::cloud::video::livestream::v1::CreateInputRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListInputs(google::cloud::video::livestream::v1::ListInputsRequest) {  // NOLINT
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListInputs(
+    google::cloud::video::livestream::v1::ListInputsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetInput(google::cloud::video::livestream::v1::GetInputRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetInput(
+    google::cloud::video::livestream::v1::GetInputRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteInput(google::cloud::video::livestream::v1::DeleteInputRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteInput(
+    google::cloud::video::livestream::v1::DeleteInputRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdateInput(google::cloud::video::livestream::v1::UpdateInputRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdateInput(
+    google::cloud::video::livestream::v1::UpdateInputRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateEvent(google::cloud::video::livestream::v1::CreateEventRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateEvent(
+    google::cloud::video::livestream::v1::CreateEventRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListEvents(google::cloud::video::livestream::v1::ListEventsRequest) {  // NOLINT
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListEvents(
+    google::cloud::video::livestream::v1::ListEventsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetEvent(google::cloud::video::livestream::v1::GetEventRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetEvent(
+    google::cloud::video::livestream::v1::GetEventRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteEvent(google::cloud::video::livestream::v1::DeleteEventRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteEvent(
+    google::cloud::video::livestream::v1::DeleteEventRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListClips(google::cloud::video::livestream::v1::ListClipsRequest) {  // NOLINT
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListClips(
+    google::cloud::video::livestream::v1::ListClipsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetClip(google::cloud::video::livestream::v1::GetClipRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetClip(
+    google::cloud::video::livestream::v1::GetClipRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateClip(google::cloud::video::livestream::v1::CreateClipRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateClip(
+    google::cloud::video::livestream::v1::CreateClipRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteClip(google::cloud::video::livestream::v1::DeleteClipRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteClip(
+    google::cloud::video::livestream::v1::DeleteClipRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateDvrSession(google::cloud::video::livestream::v1::CreateDvrSessionRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateDvrSession(
+    google::cloud::video::livestream::v1::CreateDvrSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListDvrSessions(google::cloud::video::livestream::v1::ListDvrSessionsRequest) {  // NOLINT
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListDvrSessions(
+    google::cloud::video::livestream::v1::ListDvrSessionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetDvrSession(google::cloud::video::livestream::v1::GetDvrSessionRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetDvrSession(
+    google::cloud::video::livestream::v1::GetDvrSessionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteDvrSession(google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteDvrSession(
+    google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdateDvrSession(google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdateDvrSession(
+    google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateAsset(google::cloud::video::livestream::v1::CreateAssetRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateAsset(
+    google::cloud::video::livestream::v1::CreateAssetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteAsset(google::cloud::video::livestream::v1::DeleteAssetRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteAsset(
+    google::cloud::video::livestream::v1::DeleteAssetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetAsset(google::cloud::video::livestream::v1::GetAssetRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetAsset(
+    google::cloud::video::livestream::v1::GetAssetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListAssets(google::cloud::video::livestream::v1::ListAssetsRequest) {  // NOLINT
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListAssets(
+    google::cloud::video::livestream::v1::ListAssetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetPool(google::cloud::video::livestream::v1::GetPoolRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetPool(
+    google::cloud::video::livestream::v1::GetPoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdatePool(google::cloud::video::livestream::v1::UpdatePoolRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::UpdatePool(
+    google::cloud::video::livestream::v1::UpdatePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LivestreamServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy>
-    MakeDefaultLivestreamServiceConnectionIdempotencyPolicy() {
+MakeDefaultLivestreamServiceConnectionIdempotencyPolicy() {
   return std::make_unique<LivestreamServiceConnectionIdempotencyPolicy>();
 }
 

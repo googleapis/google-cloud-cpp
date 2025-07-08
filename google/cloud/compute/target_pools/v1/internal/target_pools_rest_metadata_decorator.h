@@ -36,117 +36,160 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TargetPoolsRestMetadata : public TargetPoolsRestStub {
  public:
   ~TargetPoolsRestMetadata() override = default;
-  explicit TargetPoolsRestMetadata(
-      std::shared_ptr<TargetPoolsRestStub> child,
-      std::string api_client_header = "");
+  explicit TargetPoolsRestMetadata(std::shared_ptr<TargetPoolsRestStub> child,
+                                   std::string api_client_header = "");
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddHealthCheck(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::
+          AddHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::
+          AddHealthCheckRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddInstance(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncAddInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList> AggregatedListTargetPools(
+  StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
+  AggregatedListTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::
+          AggregatedListTargetPoolsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteTargetPool(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::
+          DeleteTargetPoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPool(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::
+          DeleteTargetPoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertTargetPool(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertTargetPool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::
+          InsertTargetPoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPool(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::
+          InsertTargetPoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolList> ListTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::
+          ListTargetPoolsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveHealthCheck(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncRemoveHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::
+          RemoveHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveHealthCheck(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::
+          RemoveHealthCheckRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncRemoveInstance(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncRemoveInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::
+          RemoveInstanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::
+          RemoveInstanceRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetBackup(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetBackup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetSecurityPolicy(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) override;
+      google::cloud::cpp::compute::target_pools::v1::
+          SetSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::target_pools::v1::
+          SetSecurityPolicyRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

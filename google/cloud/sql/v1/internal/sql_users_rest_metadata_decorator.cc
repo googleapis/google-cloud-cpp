@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_users.proto
 
 #include "google/cloud/sql/v1/internal/sql_users_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -39,51 +39,47 @@ SqlUsersServiceRestMetadata::SqlUsersServiceRestMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceRestMetadata::Delete(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestMetadata::Delete(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Delete(rest_context, options, request);
 }
 
-StatusOr<google::cloud::sql::v1::User>
-SqlUsersServiceRestMetadata::Get(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+StatusOr<google::cloud::sql::v1::User> SqlUsersServiceRestMetadata::Get(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlUsersGetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Get(rest_context, options, request);
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceRestMetadata::Insert(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestMetadata::Insert(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Insert(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::UsersListResponse>
 SqlUsersServiceRestMetadata::List(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlUsersListRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlUsersListRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->List(rest_context, options, request);
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlUsersServiceRestMetadata::Update(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
+StatusOr<google::cloud::sql::v1::Operation> SqlUsersServiceRestMetadata::Update(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Update(rest_context, options, request);
 }
 
 void SqlUsersServiceRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

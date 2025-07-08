@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONE_OPERATIONS_V1_INTERNAL_ZONE_OPERATIONS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONE_OPERATIONS_V1_INTERNAL_ZONE_OPERATIONS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_rest_stub.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_retry_traits.h"
 #include "google/cloud/compute/zone_operations/v1/zone_operations_connection.h"
 #include "google/cloud/compute/zone_operations/v1/zone_operations_connection_idempotency_policy.h"
 #include "google/cloud/compute/zone_operations/v1/zone_operations_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,41 +43,55 @@ class ZoneOperationsRestConnectionImpl
   ~ZoneOperationsRestConnectionImpl() override = default;
 
   ZoneOperationsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_zone_operations_v1_internal::ZoneOperationsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_zone_operations_v1_internal::ZoneOperationsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  Status
-  DeleteOperation(google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(google::cloud::cpp::compute::zone_operations::v1::
+                             DeleteOperationRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetOperation(google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetOperationRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListZoneOperations(google::cloud::cpp::compute::zone_operations::v1::ListZoneOperationsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
+      google::cloud::cpp::compute::zone_operations::v1::
+          ListZoneOperationsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::zone_operations::v1::WaitRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&
+          request) override;
 
  private:
   static std::unique_ptr<compute_zone_operations_v1::ZoneOperationsRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>()->clone();
+    return options
+        .get<compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_zone_operations_v1::ZoneOperationsBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_zone_operations_v1::ZoneOperationsBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_zone_operations_v1::ZoneOperationsConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_zone_operations_v1::ZoneOperationsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_zone_operations_v1::ZoneOperationsConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_zone_operations_v1::
+                 ZoneOperationsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_zone_operations_v1_internal::ZoneOperationsRestStub> stub_;
+  std::shared_ptr<compute_zone_operations_v1_internal::ZoneOperationsRestStub>
+      stub_;
   Options options_;
 };
 

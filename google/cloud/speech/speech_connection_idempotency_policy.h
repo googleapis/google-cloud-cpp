@@ -26,7 +26,8 @@ namespace cloud {
 namespace speech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use speech_v1::MakeDefaultSpeechConnectionIdempotencyPolicy directly.
+/// @deprecated Use speech_v1::MakeDefaultSpeechConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::speech_v1::MakeDefaultSpeechConnectionIdempotencyPolicy;
 
 /// @deprecated Use speech_v1::SpeechConnectionIdempotencyPolicy directly.

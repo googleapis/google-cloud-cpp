@@ -17,12 +17,12 @@
 // source: google/cloud/chronicle/v1/instance.proto
 
 #include "google/cloud/chronicle/v1/instance_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/chronicle/v1/instance_options.h"
 #include "google/cloud/chronicle/v1/internal/instance_connection_impl.h"
 #include "google/cloud/chronicle/v1/internal/instance_option_defaults.h"
 #include "google/cloud/chronicle/v1/internal/instance_stub_factory.h"
 #include "google/cloud/chronicle/v1/internal/instance_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -44,8 +44,10 @@ InstanceServiceConnection::GetInstance(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> InstanceServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+InstanceServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -56,14 +58,12 @@ InstanceServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-InstanceServiceConnection::DeleteOperation(
+Status InstanceServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-InstanceServiceConnection::CancelOperation(
+Status InstanceServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -71,17 +71,18 @@ InstanceServiceConnection::CancelOperation(
 std::shared_ptr<InstanceServiceConnection> MakeInstanceServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      InstanceServicePolicyOptionList>(options, __func__);
-  options = chronicle_v1_internal::InstanceServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 InstanceServicePolicyOptionList>(options,
+                                                                  __func__);
+  options =
+      chronicle_v1_internal::InstanceServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = chronicle_v1_internal::CreateDefaultInstanceServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return chronicle_v1_internal::MakeInstanceServiceTracingConnection(
       std::make_shared<chronicle_v1_internal::InstanceServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

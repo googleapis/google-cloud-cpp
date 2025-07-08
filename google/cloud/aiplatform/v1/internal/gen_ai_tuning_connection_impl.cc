@@ -33,147 +33,169 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<aiplatform_v1::GenAiTuningServiceRetryPolicyOption>()->clone();
+std::unique_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::GenAiTuningServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<aiplatform_v1::GenAiTuningServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::GenAiTuningServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<aiplatform_v1::GenAiTuningServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<aiplatform_v1::GenAiTuningServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::GenAiTuningServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<aiplatform_v1::GenAiTuningServicePollingPolicyOption>()->clone();
+  return options.get<aiplatform_v1::GenAiTuningServicePollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 GenAiTuningServiceConnectionImpl::GenAiTuningServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::GenAiTuningServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        GenAiTuningServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), GenAiTuningServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceConnectionImpl::CreateTuningJob(google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
+GenAiTuningServiceConnectionImpl::CreateTuningJob(
+    google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTuningJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CreateTuningJobRequest const& request) {
+             google::cloud::aiplatform::v1::CreateTuningJobRequest const&
+                 request) {
         return stub_->CreateTuningJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceConnectionImpl::GetTuningJob(google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
+GenAiTuningServiceConnectionImpl::GetTuningJob(
+    google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTuningJob(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::GetTuningJobRequest const& request) {
         return stub_->GetTuningJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TuningJob>
-GenAiTuningServiceConnectionImpl::ListTuningJobs(google::cloud::aiplatform::v1::ListTuningJobsRequest request) {
+GenAiTuningServiceConnectionImpl::ListTuningJobs(
+    google::cloud::aiplatform::v1::ListTuningJobsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTuningJobs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::TuningJob>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::aiplatform::v1::TuningJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::aiplatform::v1::ListTuningJobsRequest const& r) {
+          Options const& options,
+          google::cloud::aiplatform::v1::ListTuningJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::ListTuningJobsRequest const& request) {
+                   google::cloud::aiplatform::v1::ListTuningJobsRequest const&
+                       request) {
               return stub->ListTuningJobs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListTuningJobsResponse r) {
-        std::vector<google::cloud::aiplatform::v1::TuningJob> result(r.tuning_jobs().size());
+        std::vector<google::cloud::aiplatform::v1::TuningJob> result(
+            r.tuning_jobs().size());
         auto& messages = *r.mutable_tuning_jobs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-Status
-GenAiTuningServiceConnectionImpl::CancelTuningJob(google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
+Status GenAiTuningServiceConnectionImpl::CancelTuningJob(
+    google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelTuningJob(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) {
+             google::cloud::aiplatform::v1::CancelTuningJobRequest const&
+                 request) {
         return stub_->CancelTuningJob(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
-GenAiTuningServiceConnectionImpl::RebaseTunedModel(google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request) {
+GenAiTuningServiceConnectionImpl::RebaseTunedModel(
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RebaseTunedModel(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::TuningJob>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request) {
-     return stub->AsyncRebaseTunedModel(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::aiplatform::v1::TuningJob>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::aiplatform::v1::TuningJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::RebaseTunedModelRequest const&
+              request) {
+        return stub->AsyncRebaseTunedModel(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::TuningJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 GenAiTuningServiceConnectionImpl::RebaseTunedModel(
-      NoAwaitTag, google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RebaseTunedModel(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::RebaseTunedModelRequest const&
+                 request) {
         return stub_->RebaseTunedModel(context, options, request);
       },
       *current, request, __func__);
@@ -181,56 +203,70 @@ GenAiTuningServiceConnectionImpl::RebaseTunedModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
 GenAiTuningServiceConnectionImpl::RebaseTunedModel(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::RebaseTunedModelOperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>(
-        internal::InvalidArgumentError("operation does not correspond to RebaseTunedModel",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::aiplatform::v1::
+                   RebaseTunedModelOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::aiplatform::v1::TuningJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RebaseTunedModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::TuningJob>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::aiplatform::v1::TuningJob>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::aiplatform::v1::TuningJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::TuningJob>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-GenAiTuningServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+GenAiTuningServiceConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -238,7 +274,8 @@ GenAiTuningServiceConnectionImpl::ListLocations(google::cloud::location::ListLoc
 }
 
 StatusOr<google::cloud::location::Location>
-GenAiTuningServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+GenAiTuningServiceConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -251,7 +288,8 @@ GenAiTuningServiceConnectionImpl::GetLocation(google::cloud::location::GetLocati
 }
 
 StatusOr<google::iam::v1::Policy>
-GenAiTuningServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+GenAiTuningServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -264,7 +302,8 @@ GenAiTuningServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequ
 }
 
 StatusOr<google::iam::v1::Policy>
-GenAiTuningServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+GenAiTuningServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -277,7 +316,8 @@ GenAiTuningServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequ
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-GenAiTuningServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+GenAiTuningServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -290,17 +330,21 @@ GenAiTuningServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPer
 }
 
 StreamRange<google::longrunning::Operation>
-GenAiTuningServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+GenAiTuningServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::GenAiTuningServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -310,7 +354,8 @@ GenAiTuningServiceConnectionImpl::ListOperations(google::longrunning::ListOperat
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -318,7 +363,8 @@ GenAiTuningServiceConnectionImpl::ListOperations(google::longrunning::ListOperat
 }
 
 StatusOr<google::longrunning::Operation>
-GenAiTuningServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+GenAiTuningServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -330,8 +376,8 @@ GenAiTuningServiceConnectionImpl::GetOperation(google::longrunning::GetOperation
       *current, request, __func__);
 }
 
-Status
-GenAiTuningServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status GenAiTuningServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -343,8 +389,8 @@ GenAiTuningServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOpe
       *current, request, __func__);
 }
 
-Status
-GenAiTuningServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status GenAiTuningServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -357,7 +403,8 @@ GenAiTuningServiceConnectionImpl::CancelOperation(google::longrunning::CancelOpe
 }
 
 StatusOr<google::longrunning::Operation>
-GenAiTuningServiceConnectionImpl::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
+GenAiTuningServiceConnectionImpl::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

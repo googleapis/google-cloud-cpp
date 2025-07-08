@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKSTATIONS_V1_INTERNAL_WORKSTATIONS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKSTATIONS_V1_INTERNAL_WORKSTATIONS_STUB_FACTORY_H
 
+#include "google/cloud/workstations/v1/internal/workstations_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/workstations/v1/internal/workstations_stub.h"
 #include <memory>
 
 namespace google {

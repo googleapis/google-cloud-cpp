@@ -34,8 +34,10 @@ using ::google::cloud::datacatalog_v1::DataCatalogPollingPolicyOption;
 /// @deprecated Use datacatalog_v1::DataCatalogBackoffPolicyOption directly.
 using ::google::cloud::datacatalog_v1::DataCatalogBackoffPolicyOption;
 
-/// @deprecated Use datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption;
+/// @deprecated Use datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    DataCatalogConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use datacatalog_v1::DataCatalogPolicyOptionList directly.
 using ::google::cloud::datacatalog_v1::DataCatalogPolicyOptionList;

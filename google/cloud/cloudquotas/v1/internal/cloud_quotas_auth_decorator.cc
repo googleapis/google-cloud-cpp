@@ -31,9 +31,9 @@ CloudQuotasAuth::CloudQuotasAuth(
     std::shared_ptr<CloudQuotasStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse> CloudQuotasAuth::ListQuotaInfos(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse>
+CloudQuotasAuth::ListQuotaInfos(
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,44 +41,43 @@ StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse> CloudQuotasAuth::
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaInfo> CloudQuotasAuth::GetQuotaInfo(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetQuotaInfo(context, options, request);
 }
 
-StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse> CloudQuotasAuth::ListQuotaPreferences(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
+CloudQuotasAuth::ListQuotaPreferences(
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListQuotaPreferences(context, options, request);
 }
 
-StatusOr<google::api::cloudquotas::v1::QuotaPreference> CloudQuotasAuth::GetQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::api::cloudquotas::v1::QuotaPreference>
+CloudQuotasAuth::GetQuotaPreference(
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetQuotaPreference(context, options, request);
 }
 
-StatusOr<google::api::cloudquotas::v1::QuotaPreference> CloudQuotasAuth::CreateQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::api::cloudquotas::v1::QuotaPreference>
+CloudQuotasAuth::CreateQuotaPreference(
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateQuotaPreference(context, options, request);
 }
 
-StatusOr<google::api::cloudquotas::v1::QuotaPreference> CloudQuotasAuth::UpdateQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::api::cloudquotas::v1::QuotaPreference>
+CloudQuotasAuth::UpdateQuotaPreference(
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

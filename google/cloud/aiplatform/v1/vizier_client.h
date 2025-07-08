@@ -68,7 +68,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class VizierServiceClient {
  public:
-  explicit VizierServiceClient(std::shared_ptr<VizierServiceConnection> connection, Options opts = {});
+  explicit VizierServiceClient(
+      std::shared_ptr<VizierServiceConnection> connection, Options opts = {});
   ~VizierServiceClient();
 
   ///@{
@@ -81,10 +82,12 @@ class VizierServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(VizierServiceClient const& a, VizierServiceClient const& b) {
+  friend bool operator==(VizierServiceClient const& a,
+                         VizierServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(VizierServiceClient const& a, VizierServiceClient const& b) {
+  friend bool operator!=(VizierServiceClient const& a,
+                         VizierServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -114,8 +117,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Study]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  CreateStudy(std::string const& parent, google::cloud::aiplatform::v1::Study const& study, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Study const& study, Options opts = {});
 
   // clang-format off
   ///
@@ -145,8 +149,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Study]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  CreateStudy(google::cloud::aiplatform::v1::CreateStudyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
+      google::cloud::aiplatform::v1::CreateStudyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -171,8 +176,8 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Study]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  GetStudy(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Study> GetStudy(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -201,8 +206,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Study]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  GetStudy(google::cloud::aiplatform::v1::GetStudyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Study> GetStudy(
+      google::cloud::aiplatform::v1::GetStudyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -236,8 +242,8 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Study]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Study>
-  ListStudies(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Study> ListStudies(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -275,8 +281,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Study]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Study>
-  ListStudies(google::cloud::aiplatform::v1::ListStudiesRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Study> ListStudies(
+      google::cloud::aiplatform::v1::ListStudiesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -298,8 +305,7 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.DeleteStudyRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L261}
   ///
   // clang-format on
-  Status
-  DeleteStudy(std::string const& name, Options opts = {});
+  Status DeleteStudy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -325,8 +331,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.DeleteStudyRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L261}
   ///
   // clang-format on
-  Status
-  DeleteStudy(google::cloud::aiplatform::v1::DeleteStudyRequest const& request, Options opts = {});
+  Status DeleteStudy(
+      google::cloud::aiplatform::v1::DeleteStudyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -352,8 +359,8 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Study]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  LookupStudy(std::string const& parent, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Study> LookupStudy(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -383,8 +390,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Study]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  LookupStudy(google::cloud::aiplatform::v1::LookupStudyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Study> LookupStudy(
+      google::cloud::aiplatform::v1::LookupStudyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -426,7 +434,9 @@ class VizierServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials(google::cloud::aiplatform::v1::SuggestTrialsRequest const& request, Options opts = {});
+  SuggestTrials(
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +449,10 @@ class VizierServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SuggestTrials(NoAwaitTag, google::cloud::aiplatform::v1::SuggestTrialsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> SuggestTrials(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -452,7 +464,8 @@ class VizierServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials(google::longrunning::Operation const& operation, Options opts = {});
+  SuggestTrials(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -478,8 +491,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  CreateTrial(std::string const& parent, google::cloud::aiplatform::v1::Trial const& trial, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Trial const& trial, Options opts = {});
 
   // clang-format off
   ///
@@ -508,8 +522,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  CreateTrial(google::cloud::aiplatform::v1::CreateTrialRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
+      google::cloud::aiplatform::v1::CreateTrialRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -535,8 +550,8 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  GetTrial(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Trial> GetTrial(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -565,8 +580,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  GetTrial(google::cloud::aiplatform::v1::GetTrialRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Trial> GetTrial(
+      google::cloud::aiplatform::v1::GetTrialRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -600,8 +616,8 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Trial>
-  ListTrials(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Trial> ListTrials(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -639,8 +655,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Trial>
-  ListTrials(google::cloud::aiplatform::v1::ListTrialsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Trial> ListTrials(
+      google::cloud::aiplatform::v1::ListTrialsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -670,8 +687,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  AddTrialMeasurement(google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Trial> AddTrialMeasurement(
+      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -700,8 +718,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  CompleteTrial(google::cloud::aiplatform::v1::CompleteTrialRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Trial> CompleteTrial(
+      google::cloud::aiplatform::v1::CompleteTrialRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -724,8 +743,7 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.DeleteTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L487}
   ///
   // clang-format on
-  Status
-  DeleteTrial(std::string const& name, Options opts = {});
+  Status DeleteTrial(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -751,8 +769,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.DeleteTrialRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L487}
   ///
   // clang-format on
-  Status
-  DeleteTrial(google::cloud::aiplatform::v1::DeleteTrialRequest const& request, Options opts = {});
+  Status DeleteTrial(
+      google::cloud::aiplatform::v1::DeleteTrialRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -791,8 +810,12 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.CheckTrialEarlyStoppingStateResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/vizier_service.proto#L515}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-  CheckTrialEarlyStoppingState(google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+  CheckTrialEarlyStoppingState(
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -805,8 +828,11 @@ class VizierServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CheckTrialEarlyStoppingState(NoAwaitTag, google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -817,8 +843,10 @@ class VizierServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-  CheckTrialEarlyStoppingState(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+  CheckTrialEarlyStoppingState(google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -847,8 +875,9 @@ class VizierServiceClient {
   /// [google.cloud.aiplatform.v1.Trial]: @googleapis_reference_link{google/cloud/aiplatform/v1/study.proto#L82}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  StopTrial(google::cloud::aiplatform::v1::StopTrialRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(
+      google::cloud::aiplatform::v1::StopTrialRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -909,7 +938,9 @@ class VizierServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
-  ListOptimalTrials(google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request, Options opts = {});
+  ListOptimalTrials(
+      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -947,8 +978,8 @@ class VizierServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -977,8 +1008,9 @@ class VizierServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1010,8 +1042,8 @@ class VizierServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1042,8 +1074,8 @@ class VizierServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1078,8 +1110,9 @@ class VizierServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1114,8 +1147,8 @@ class VizierServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1154,8 +1187,8 @@ class VizierServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1181,8 +1214,8 @@ class VizierServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1213,8 +1246,9 @@ class VizierServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1238,8 +1272,7 @@ class VizierServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1268,8 +1301,9 @@ class VizierServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1303,8 +1337,7 @@ class VizierServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1343,8 +1376,9 @@ class VizierServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1381,8 +1415,9 @@ class VizierServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<VizierServiceConnection> connection_;

@@ -41,15 +41,18 @@ Options DatastoreDefaultOptions(Options options) {
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datastore_v1::DatastoreRetryPolicyOption>()) {
     options.set<datastore_v1::DatastoreRetryPolicyOption>(
-        datastore_v1::DatastoreLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        datastore_v1::DatastoreLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<datastore_v1::DatastoreBackoffPolicyOption>()) {
     options.set<datastore_v1::DatastoreBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>()) {
     options.set<datastore_v1::DatastoreConnectionIdempotencyPolicyOption>(
         datastore_v1::MakeDefaultDatastoreConnectionIdempotencyPolicy());
   }

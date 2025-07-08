@@ -30,22 +30,21 @@ namespace cloud {
 namespace workflows_executions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ExecutionsLogging::ExecutionsLogging(
-    std::shared_ptr<ExecutionsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+ExecutionsLogging::ExecutionsLogging(std::shared_ptr<ExecutionsStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
 ExecutionsLogging::ListExecutions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::executions::v1::ListExecutionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::executions::v1::ListExecutionsRequest const&
+              request) {
         return child_->ListExecutions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +52,13 @@ ExecutionsLogging::ListExecutions(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsLogging::CreateExecution(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workflows::executions::v1::
+                 CreateExecutionRequest const& request) {
         return child_->CreateExecution(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +66,14 @@ ExecutionsLogging::CreateExecution(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsLogging::GetExecution(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workflows::executions::v1::GetExecutionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::executions::v1::GetExecutionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::executions::v1::GetExecutionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::executions::v1::GetExecutionRequest const&
+              request) {
         return child_->GetExecution(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +81,13 @@ ExecutionsLogging::GetExecution(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsLogging::CancelExecution(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workflows::executions::v1::
+                 CancelExecutionRequest const& request) {
         return child_->CancelExecution(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

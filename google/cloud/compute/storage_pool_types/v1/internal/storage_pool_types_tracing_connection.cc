@@ -30,39 +30,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 StoragePoolTypesTracingConnection::StoragePoolTypesTracingConnection(
-    std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection> child)
+    std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection>
+        child)
     : child_(std::move(child)) {}
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
-StoragePoolTypesTracingConnection::AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request) {
-  auto span = internal::MakeSpan("compute_storage_pool_types_v1::StoragePoolTypesConnection::AggregatedListStoragePoolTypes");
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+StoragePoolTypesTracingConnection::AggregatedListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        AggregatedListStoragePoolTypesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_storage_pool_types_v1::StoragePoolTypesConnection::"
+      "AggregatedListStoragePoolTypes");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListStoragePoolTypes(std::move(request));
-  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
-StoragePoolTypesTracingConnection::GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) {
-  auto span = internal::MakeSpan("compute_storage_pool_types_v1::StoragePoolTypesConnection::GetStoragePoolType");
+StoragePoolTypesTracingConnection::GetStoragePoolType(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        GetStoragePoolTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_storage_pool_types_v1::StoragePoolTypesConnection::"
+      "GetStoragePoolType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetStoragePoolType(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-StoragePoolTypesTracingConnection::ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request) {
-  auto span = internal::MakeSpan("compute_storage_pool_types_v1::StoragePoolTypesConnection::ListStoragePoolTypes");
+StoragePoolTypesTracingConnection::ListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        ListStoragePoolTypesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_storage_pool_types_v1::StoragePoolTypesConnection::"
+      "ListStoragePoolTypes");
   internal::OTelScope scope(span);
   auto sr = child_->ListStoragePoolTypes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::StoragePoolType>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::StoragePoolType>(std::move(span),
+                                                        std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection>
 MakeStoragePoolTypesTracingConnection(
-    std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection> conn) {
+    std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<StoragePoolTypesTracingConnection>(std::move(conn));

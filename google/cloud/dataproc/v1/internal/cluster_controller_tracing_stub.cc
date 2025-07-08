@@ -34,11 +34,12 @@ ClusterControllerTracingStub::ClusterControllerTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncCreateCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::CreateClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "CreateCluster");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "CreateCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateCluster(cq, context, std::move(options), request);
@@ -47,10 +48,10 @@ ClusterControllerTracingStub::AsyncCreateCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerTracingStub::CreateCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataproc::v1::CreateClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "CreateCluster");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "CreateCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -59,11 +60,12 @@ ClusterControllerTracingStub::CreateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncUpdateCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "UpdateCluster");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "UpdateCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateCluster(cq, context, std::move(options), request);
@@ -72,10 +74,10 @@ ClusterControllerTracingStub::AsyncUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerTracingStub::UpdateCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "UpdateCluster");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "UpdateCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -84,11 +86,12 @@ ClusterControllerTracingStub::UpdateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncStopCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::StopClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "StopCluster");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataproc::v1::StopClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "StopCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStopCluster(cq, context, std::move(options), request);
@@ -97,10 +100,10 @@ ClusterControllerTracingStub::AsyncStopCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerTracingStub::StopCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataproc::v1::StopClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "StopCluster");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::StopClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "StopCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -109,11 +112,12 @@ ClusterControllerTracingStub::StopCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncStartCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::StartClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "StartCluster");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataproc::v1::StartClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "StartCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStartCluster(cq, context, std::move(options), request);
@@ -122,10 +126,10 @@ ClusterControllerTracingStub::AsyncStartCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerTracingStub::StartCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataproc::v1::StartClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "StartCluster");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::StartClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "StartCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -134,11 +138,12 @@ ClusterControllerTracingStub::StartCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncDeleteCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "DeleteCluster");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "DeleteCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteCluster(cq, context, std::move(options), request);
@@ -147,32 +152,34 @@ ClusterControllerTracingStub::AsyncDeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerTracingStub::DeleteCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "DeleteCluster");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "DeleteCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteCluster(context, options, request));
 }
 
-StatusOr<google::cloud::dataproc::v1::Cluster> ClusterControllerTracingStub::GetCluster(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::Cluster>
+ClusterControllerTracingStub::GetCluster(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "GetCluster");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCluster(context, options, request));
 }
 
-StatusOr<google::cloud::dataproc::v1::ListClustersResponse> ClusterControllerTracingStub::ListClusters(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
+ClusterControllerTracingStub::ListClusters(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListClustersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "ListClusters");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "ListClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -181,23 +188,25 @@ StatusOr<google::cloud::dataproc::v1::ListClustersResponse> ClusterControllerTra
 
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncDiagnoseCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "DiagnoseCluster");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "DiagnoseCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDiagnoseCluster(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDiagnoseCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerTracingStub::DiagnoseCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "DiagnoseCluster");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "DiagnoseCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -205,10 +214,10 @@ ClusterControllerTracingStub::DiagnoseCluster(
 }
 
 StatusOr<google::iam::v1::Policy> ClusterControllerTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -216,43 +225,46 @@ StatusOr<google::iam::v1::Policy> ClusterControllerTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ClusterControllerTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> ClusterControllerTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ClusterControllerTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ClusterControllerTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ClusterControllerTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> ClusterControllerTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+ClusterControllerTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -260,10 +272,10 @@ StatusOr<google::longrunning::Operation> ClusterControllerTracingStub::GetOperat
 }
 
 Status ClusterControllerTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -271,10 +283,10 @@ Status ClusterControllerTracingStub::DeleteOperation(
 }
 
 Status ClusterControllerTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.ClusterController", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -291,8 +303,7 @@ ClusterControllerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -305,8 +316,8 @@ future<Status> ClusterControllerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

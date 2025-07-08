@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `TargetGrpcProxiesClient`. To do so,
- * construct an object of type `TargetGrpcProxiesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `TargetGrpcProxiesClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTargetGrpcProxiesConnection : public compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection {
+class MockTargetGrpcProxiesConnection
+    : public compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockTargetGrpcProxiesConnection : public compute_target_grpc_proxies_v1::T
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTargetGrpcProxy(Matcher<google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetGrpcProxy(Matcher<google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetGrpcProxy,
-  (google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request), (override));
-
+              DeleteTargetGrpcProxy,
+              (google::cloud::cpp::compute::target_grpc_proxies::v1::
+                   DeleteTargetGrpcProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -65,36 +69,45 @@ class MockTargetGrpcProxiesConnection : public compute_target_grpc_proxies_v1::T
   /// EXPECT_CALL(*mock, DeleteTargetGrpcProxy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteTargetGrpcProxy, (NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const& request), (override));
-
+              DeleteTargetGrpcProxy,
+              (NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::
+                               v1::DeleteTargetGrpcProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTargetGrpcProxy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetGrpcProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetGrpcProxy, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              DeleteTargetGrpcProxy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>,
-  GetTargetGrpcProxy,
-  (google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxyRequest const& request), (override));
+              GetTargetGrpcProxy,
+              (google::cloud::cpp::compute::target_grpc_proxies::v1::
+                   GetTargetGrpcProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertTargetGrpcProxy(Matcher<google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetGrpcProxy(Matcher<google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetGrpcProxy,
-  (google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request), (override));
-
+              InsertTargetGrpcProxy,
+              (google::cloud::cpp::compute::target_grpc_proxies::v1::
+                   InsertTargetGrpcProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -103,36 +116,45 @@ class MockTargetGrpcProxiesConnection : public compute_target_grpc_proxies_v1::T
   /// EXPECT_CALL(*mock, InsertTargetGrpcProxy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertTargetGrpcProxy, (NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const& request), (override));
-
+              InsertTargetGrpcProxy,
+              (NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::
+                               v1::InsertTargetGrpcProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertTargetGrpcProxy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetGrpcProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetGrpcProxy, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              InsertTargetGrpcProxy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>),
-  ListTargetGrpcProxies,
-  (google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest request), (override));
+              ListTargetGrpcProxies,
+              (google::cloud::cpp::compute::target_grpc_proxies::v1::
+                   ListTargetGrpcProxiesRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PatchTargetGrpcProxy(Matcher<google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PatchTargetGrpcProxy(Matcher<google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchTargetGrpcProxy,
-  (google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request), (override));
-
+              PatchTargetGrpcProxy,
+              (google::cloud::cpp::compute::target_grpc_proxies::v1::
+                   PatchTargetGrpcProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -141,20 +163,24 @@ class MockTargetGrpcProxiesConnection : public compute_target_grpc_proxies_v1::T
   /// EXPECT_CALL(*mock, PatchTargetGrpcProxy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchTargetGrpcProxy, (NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const& request), (override));
-
+              PatchTargetGrpcProxy,
+              (NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::
+                               v1::PatchTargetGrpcProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PatchTargetGrpcProxy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PatchTargetGrpcProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchTargetGrpcProxy, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              PatchTargetGrpcProxy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -35,19 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataFusionDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATA_FUSION_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DATA_FUSION_AUTHORITY",
-      "datafusion.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_DATA_FUSION_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DATA_FUSION_AUTHORITY", "datafusion.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datafusion_v1::DataFusionRetryPolicyOption>()) {
     options.set<datafusion_v1::DataFusionRetryPolicyOption>(
         datafusion_v1::DataFusionLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<datafusion_v1::DataFusionBackoffPolicyOption>()) {
     options.set<datafusion_v1::DataFusionBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<datafusion_v1::DataFusionPollingPolicyOption>()) {
     options.set<datafusion_v1::DataFusionPollingPolicyOption>(
@@ -56,9 +58,12 @@ Options DataFusionDefaultOptions(Options options) {
             datafusion_v1::DataFusionBackoffPolicyOption::Type>(
             options.get<datafusion_v1::DataFusionRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>()) {
     options.set<datafusion_v1::DataFusionConnectionIdempotencyPolicyOption>(
         datafusion_v1::MakeDefaultDataFusionConnectionIdempotencyPolicy());
   }

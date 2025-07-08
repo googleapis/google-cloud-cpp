@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/operation.pb.h>
 #include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -67,14 +67,14 @@ class VersionsLimitedErrorCountRetryPolicy : public VersionsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit VersionsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   VersionsLimitedErrorCountRetryPolicy(
       VersionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   VersionsLimitedErrorCountRetryPolicy(
       VersionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +94,9 @@ class VersionsLimitedErrorCountRetryPolicy : public VersionsRetryPolicy {
   using BaseType = VersionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<appengine_v1_internal::VersionsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      appengine_v1_internal::VersionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +134,13 @@ class VersionsLimitedTimeRetryPolicy : public VersionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit VersionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   VersionsLimitedTimeRetryPolicy(VersionsLimitedTimeRetryPolicy&& rhs) noexcept
-    : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  VersionsLimitedTimeRetryPolicy(VersionsLimitedTimeRetryPolicy const& rhs) noexcept
-    : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VersionsLimitedTimeRetryPolicy(
+      VersionsLimitedTimeRetryPolicy const& rhs) noexcept
+      : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -151,15 +154,16 @@ class VersionsLimitedTimeRetryPolicy : public VersionsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<VersionsRetryPolicy> clone() const override {
-    return std::make_unique<VersionsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<VersionsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = VersionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<appengine_v1_internal::VersionsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      appengine_v1_internal::VersionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,38 +184,38 @@ class VersionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::appengine::v1::Version>
-  ListVersions(google::appengine::v1::ListVersionsRequest request);
+  virtual StreamRange<google::appengine::v1::Version> ListVersions(
+      google::appengine::v1::ListVersionsRequest request);
 
-  virtual StatusOr<google::appengine::v1::Version>
-  GetVersion(google::appengine::v1::GetVersionRequest const& request);
+  virtual StatusOr<google::appengine::v1::Version> GetVersion(
+      google::appengine::v1::GetVersionRequest const& request);
 
-  virtual future<StatusOr<google::appengine::v1::Version>>
-  CreateVersion(google::appengine::v1::CreateVersionRequest const& request);
+  virtual future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+      google::appengine::v1::CreateVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateVersion(NoAwaitTag, google::appengine::v1::CreateVersionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateVersion(
+      NoAwaitTag, google::appengine::v1::CreateVersionRequest const& request);
 
-  virtual future<StatusOr<google::appengine::v1::Version>>
-  CreateVersion( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::appengine::v1::Version>>
-  UpdateVersion(google::appengine::v1::UpdateVersionRequest const& request);
+  virtual future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+      google::appengine::v1::UpdateVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateVersion(NoAwaitTag, google::appengine::v1::UpdateVersionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateVersion(
+      NoAwaitTag, google::appengine::v1::UpdateVersionRequest const& request);
 
-  virtual future<StatusOr<google::appengine::v1::Version>>
-  UpdateVersion( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteVersion(NoAwaitTag, google::appengine::v1::DeleteVersionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteVersion(
+      NoAwaitTag, google::appengine::v1::DeleteVersionRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteVersion( google::longrunning::Operation const& operation);
+  DeleteVersion(google::longrunning::Operation const& operation);
 };
 
 /**

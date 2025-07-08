@@ -77,7 +77,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AutoMlClient {
  public:
-  explicit AutoMlClient(std::shared_ptr<AutoMlConnection> connection, Options opts = {});
+  explicit AutoMlClient(std::shared_ptr<AutoMlConnection> connection,
+                        Options opts = {});
   ~AutoMlClient();
 
   ///@{
@@ -128,8 +129,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::Dataset>>
-  CreateDataset(std::string const& parent, google::cloud::automl::v1::Dataset const& dataset, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
+      std::string const& parent,
+      google::cloud::automl::v1::Dataset const& dataset, Options opts = {});
 
   // clang-format off
   ///
@@ -142,8 +144,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag, std::string const& parent, google::cloud::automl::v1::Dataset const& dataset, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::automl::v1::Dataset const& dataset, Options opts = {});
 
   // clang-format off
   ///
@@ -179,8 +182,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.Dataset]: @googleapis_reference_link{google/cloud/automl/v1/dataset.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::Dataset>>
-  CreateDataset(google::cloud::automl::v1::CreateDatasetRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
+      google::cloud::automl::v1::CreateDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -193,8 +197,10 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag, google::cloud::automl::v1::CreateDatasetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag,
+      google::cloud::automl::v1::CreateDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -205,8 +211,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::Dataset>>
-  CreateDataset(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -230,8 +236,8 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L308}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::Dataset>
-  GetDataset(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +266,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L308}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::Dataset>
-  GetDataset(google::cloud::automl::v1::GetDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
+      google::cloud::automl::v1::GetDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -294,8 +301,8 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L319}
   ///
   // clang-format on
-  StreamRange<google::cloud::automl::v1::Dataset>
-  ListDatasets(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -333,8 +340,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L319}
   ///
   // clang-format on
-  StreamRange<google::cloud::automl::v1::Dataset>
-  ListDatasets(google::cloud::automl::v1::ListDatasetsRequest request, Options opts = {});
+  StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
+      google::cloud::automl::v1::ListDatasetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +367,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L359}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::Dataset>
-  UpdateDataset(google::cloud::automl::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
+      google::cloud::automl::v1::Dataset const& dataset,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -389,8 +398,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L359}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::Dataset>
-  UpdateDataset(google::cloud::automl::v1::UpdateDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
+      google::cloud::automl::v1::UpdateDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -427,8 +437,8 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteDataset(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +451,8 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -484,8 +494,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteDataset(google::cloud::automl::v1::DeleteDatasetRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
+      google::cloud::automl::v1::DeleteDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -498,8 +509,10 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag, google::cloud::automl::v1::DeleteDatasetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag,
+      google::cloud::automl::v1::DeleteDatasetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -510,8 +523,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteDataset(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -555,8 +568,10 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ImportData(std::string const& name, google::cloud::automl::v1::InputConfig const& input_config, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
+      std::string const& name,
+      google::cloud::automl::v1::InputConfig const& input_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -569,8 +584,10 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag, std::string const& name, google::cloud::automl::v1::InputConfig const& input_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag, std::string const& name,
+      google::cloud::automl::v1::InputConfig const& input_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -616,8 +633,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ImportData(google::cloud::automl::v1::ImportDataRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
+      google::cloud::automl::v1::ImportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -630,8 +648,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag, google::cloud::automl::v1::ImportDataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag, google::cloud::automl::v1::ImportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -642,8 +661,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ImportData(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -678,8 +697,10 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportData(std::string const& name, google::cloud::automl::v1::OutputConfig const& output_config, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
+      std::string const& name,
+      google::cloud::automl::v1::OutputConfig const& output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -692,8 +713,10 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag, std::string const& name, google::cloud::automl::v1::OutputConfig const& output_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag, std::string const& name,
+      google::cloud::automl::v1::OutputConfig const& output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -732,8 +755,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportData(google::cloud::automl::v1::ExportDataRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
+      google::cloud::automl::v1::ExportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -746,8 +770,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag, google::cloud::automl::v1::ExportDataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag, google::cloud::automl::v1::ExportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -758,8 +783,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportData(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -783,8 +808,8 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L409}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::AnnotationSpec>
-  GetAnnotationSpec(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -813,8 +838,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L409}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::AnnotationSpec>
-  GetAnnotationSpec(google::cloud::automl::v1::GetAnnotationSpecRequest const& request, Options opts = {});
+  StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
+      google::cloud::automl::v1::GetAnnotationSpecRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -851,8 +877,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::Model>>
-  CreateModel(std::string const& parent, google::cloud::automl::v1::Model const& model, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
+      std::string const& parent, google::cloud::automl::v1::Model const& model,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -865,8 +892,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateModel(NoAwaitTag, std::string const& parent, google::cloud::automl::v1::Model const& model, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::automl::v1::Model const& model, Options opts = {});
 
   // clang-format off
   ///
@@ -907,8 +935,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::Model>>
-  CreateModel(google::cloud::automl::v1::CreateModelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
+      google::cloud::automl::v1::CreateModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -921,8 +950,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateModel(NoAwaitTag, google::cloud::automl::v1::CreateModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag, google::cloud::automl::v1::CreateModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -933,8 +963,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::Model>>
-  CreateModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -958,8 +988,8 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::Model>
-  GetModel(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::automl::v1::Model> GetModel(std::string const& name,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -988,8 +1018,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::Model>
-  GetModel(google::cloud::automl::v1::GetModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::automl::v1::Model> GetModel(
+      google::cloud::automl::v1::GetModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1022,8 +1053,8 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::automl::v1::Model>
-  ListModels(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::automl::v1::Model> ListModels(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1061,8 +1092,8 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.Model]: @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::automl::v1::Model>
-  ListModels(google::cloud::automl::v1::ListModelsRequest request, Options opts = {});
+  StreamRange<google::cloud::automl::v1::Model> ListModels(
+      google::cloud::automl::v1::ListModelsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1099,8 +1130,8 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteModel(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1113,8 +1144,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteModel(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -1156,8 +1188,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteModel(google::cloud::automl::v1::DeleteModelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
+      google::cloud::automl::v1::DeleteModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1170,8 +1203,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag, google::cloud::automl::v1::DeleteModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag, google::cloud::automl::v1::DeleteModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1182,8 +1216,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1208,8 +1242,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L497}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::Model>
-  UpdateModel(google::cloud::automl::v1::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::automl::v1::Model> UpdateModel(
+      google::cloud::automl::v1::Model const& model,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1238,8 +1273,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/automl/v1/service.proto#L497}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::Model>
-  UpdateModel(google::cloud::automl::v1::UpdateModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::automl::v1::Model> UpdateModel(
+      google::cloud::automl::v1::UpdateModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1281,8 +1317,8 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeployModel(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1295,8 +1331,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeployModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeployModel(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -1343,8 +1380,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeployModel(google::cloud::automl::v1::DeployModelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
+      google::cloud::automl::v1::DeployModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1357,8 +1395,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeployModel(NoAwaitTag, google::cloud::automl::v1::DeployModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeployModel(
+      NoAwaitTag, google::cloud::automl::v1::DeployModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1369,8 +1408,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeployModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1408,8 +1447,8 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  UndeployModel(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1422,8 +1461,8 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeployModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1466,8 +1505,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  UndeployModel(google::cloud::automl::v1::UndeployModelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
+      google::cloud::automl::v1::UndeployModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1480,8 +1520,10 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeployModel(NoAwaitTag, google::cloud::automl::v1::UndeployModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      NoAwaitTag,
+      google::cloud::automl::v1::UndeployModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1492,8 +1534,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  UndeployModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1533,8 +1575,10 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportModel(std::string const& name, google::cloud::automl::v1::ModelExportOutputConfig const& output_config, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
+      std::string const& name,
+      google::cloud::automl::v1::ModelExportOutputConfig const& output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1547,8 +1591,10 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportModel(NoAwaitTag, std::string const& name, google::cloud::automl::v1::ModelExportOutputConfig const& output_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportModel(
+      NoAwaitTag, std::string const& name,
+      google::cloud::automl::v1::ModelExportOutputConfig const& output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1592,8 +1638,9 @@ class AutoMlClient {
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportModel(google::cloud::automl::v1::ExportModelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
+      google::cloud::automl::v1::ExportModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1606,8 +1653,9 @@ class AutoMlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportModel(NoAwaitTag, google::cloud::automl::v1::ExportModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportModel(
+      NoAwaitTag, google::cloud::automl::v1::ExportModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1618,8 +1666,8 @@ class AutoMlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1643,8 +1691,8 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::ModelEvaluation>
-  GetModelEvaluation(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1673,8 +1721,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::ModelEvaluation>
-  GetModelEvaluation(google::cloud::automl::v1::GetModelEvaluationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
+      google::cloud::automl::v1::GetModelEvaluationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1720,8 +1769,8 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::automl::v1::ModelEvaluation>
-  ListModelEvaluations(std::string const& parent, std::string const& filter, Options opts = {});
+  StreamRange<google::cloud::automl::v1::ModelEvaluation> ListModelEvaluations(
+      std::string const& parent, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1759,8 +1808,9 @@ class AutoMlClient {
   /// [google.cloud.automl.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/automl/v1/model_evaluation.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::automl::v1::ModelEvaluation>
-  ListModelEvaluations(google::cloud::automl::v1::ListModelEvaluationsRequest request, Options opts = {});
+  StreamRange<google::cloud::automl::v1::ModelEvaluation> ListModelEvaluations(
+      google::cloud::automl::v1::ListModelEvaluationsRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AutoMlConnection> connection_;

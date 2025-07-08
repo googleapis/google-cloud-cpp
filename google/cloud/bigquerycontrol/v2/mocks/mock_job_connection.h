@@ -42,37 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockJobServiceConnection : public bigquerycontrol_v2::JobServiceConnection {
+class MockJobServiceConnection
+    : public bigquerycontrol_v2::JobServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::JobCancelResponse>,
-  CancelJob,
-  (google::cloud::bigquery::v2::CancelJobRequest const& request), (override));
+              CancelJob,
+              (google::cloud::bigquery::v2::CancelJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Job>,
-  GetJob,
-  (google::cloud::bigquery::v2::GetJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Job>, GetJob,
+              (google::cloud::bigquery::v2::GetJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Job>,
-  InsertJob,
-  (google::cloud::bigquery::v2::InsertJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Job>, InsertJob,
+              (google::cloud::bigquery::v2::InsertJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteJob,
-  (google::cloud::bigquery::v2::DeleteJobRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteJob,
+              (google::cloud::bigquery::v2::DeleteJobRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::bigquery::v2::ListFormatJob>),
-  ListJobs,
-  (google::cloud::bigquery::v2::ListJobsRequest request), (override));
+              ListJobs, (google::cloud::bigquery::v2::ListJobsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>,
-  GetQueryResults,
-  (google::cloud::bigquery::v2::GetQueryResultsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>,
+      GetQueryResults,
+      (google::cloud::bigquery::v2::GetQueryResultsRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::QueryResponse>,
-  Query,
-  (google::cloud::bigquery::v2::PostQueryRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::QueryResponse>, Query,
+              (google::cloud::bigquery::v2::PostQueryRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

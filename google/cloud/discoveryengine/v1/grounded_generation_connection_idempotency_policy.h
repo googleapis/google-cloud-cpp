@@ -35,26 +35,28 @@ class GroundedGenerationServiceConnectionIdempotencyPolicy {
   virtual ~GroundedGenerationServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<GroundedGenerationServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<GroundedGenerationServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  GenerateGroundedContent(google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request);
+  virtual google::cloud::Idempotency GenerateGroundedContent(
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CheckGrounding(google::cloud::discoveryengine::v1::CheckGroundingRequest const& request);
+  virtual google::cloud::Idempotency CheckGrounding(
+      google::cloud::discoveryengine::v1::CheckGroundingRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<GroundedGenerationServiceConnectionIdempotencyPolicy>
-    MakeDefaultGroundedGenerationServiceConnectionIdempotencyPolicy();
+MakeDefaultGroundedGenerationServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

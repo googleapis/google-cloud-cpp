@@ -44,116 +44,114 @@ TopicAdminMetadata::TopicAdminMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminMetadata::CreateTopic(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::Topic> TopicAdminMetadata::CreateTopic(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::Topic const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminMetadata::UpdateTopic(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::Topic> TopicAdminMetadata::UpdateTopic(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::UpdateTopicRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("topic.name=", internal::UrlEncode(request.topic().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("topic.name=", internal::UrlEncode(request.topic().name())));
   return child_->UpdateTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::Topic>
-TopicAdminMetadata::GetTopic(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::Topic> TopicAdminMetadata::GetTopic(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetTopicRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->GetTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicsResponse>
-TopicAdminMetadata::ListTopics(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::ListTopicsResponse> TopicAdminMetadata::ListTopics(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project=", internal::UrlEncode(request.project())));
+  SetMetadata(context, options,
+              absl::StrCat("project=", internal::UrlEncode(request.project())));
   return child_->ListTopics(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 TopicAdminMetadata::ListTopicSubscriptions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ListTopicSubscriptions(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 TopicAdminMetadata::ListTopicSnapshots(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->ListTopicSnapshots(context, options, request);
 }
 
-Status
-TopicAdminMetadata::DeleteTopic(
-    grpc::ClientContext& context,
-    Options const& options,
+Status TopicAdminMetadata::DeleteTopic(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteTopicRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("topic=", internal::UrlEncode(request.topic())));
+  SetMetadata(context, options,
+              absl::StrCat("topic=", internal::UrlEncode(request.topic())));
   return child_->DeleteTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 TopicAdminMetadata::DetachSubscription(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("subscription=", internal::UrlEncode(request.subscription())));
+  SetMetadata(context, options,
+              absl::StrCat("subscription=",
+                           internal::UrlEncode(request.subscription())));
   return child_->DetachSubscription(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-TopicAdminMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> TopicAdminMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-TopicAdminMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> TopicAdminMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TopicAdminMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 void TopicAdminMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                     Options const& options,
+                                     std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void TopicAdminMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                     Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

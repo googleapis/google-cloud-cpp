@@ -31,54 +31,58 @@ SessionEntityTypesAuth::SessionEntityTypesAuth(
     std::shared_ptr<SessionEntityTypesStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse> SessionEntityTypesAuth::ListSessionEntityTypes(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
+SessionEntityTypesAuth::ListSessionEntityTypes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSessionEntityTypes(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType> SessionEntityTypesAuth::GetSessionEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
+SessionEntityTypesAuth::GetSessionEntityType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSessionEntityType(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType> SessionEntityTypesAuth::CreateSessionEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
+SessionEntityTypesAuth::CreateSessionEntityType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSessionEntityType(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType> SessionEntityTypesAuth::UpdateSessionEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
+SessionEntityTypesAuth::UpdateSessionEntityType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSessionEntityType(context, options, request);
 }
 
 Status SessionEntityTypesAuth::DeleteSessionEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSessionEntityType(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> SessionEntityTypesAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+SessionEntityTypesAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,17 +90,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> SessionEntityTypesAuth:
 }
 
 StatusOr<google::cloud::location::Location> SessionEntityTypesAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> SessionEntityTypesAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+SessionEntityTypesAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,8 +107,7 @@ StatusOr<google::longrunning::ListOperationsResponse> SessionEntityTypesAuth::Li
 }
 
 StatusOr<google::longrunning::Operation> SessionEntityTypesAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -113,8 +115,7 @@ StatusOr<google::longrunning::Operation> SessionEntityTypesAuth::GetOperation(
 }
 
 Status SessionEntityTypesAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -52,7 +52,8 @@ class AccessApprovalRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AccessApprovalLimitedErrorCountRetryPolicy : public AccessApprovalRetryPolicy {
+class AccessApprovalLimitedErrorCountRetryPolicy
+    : public AccessApprovalRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class AccessApprovalLimitedErrorCountRetryPolicy : public AccessApprovalRetryPol
    *     @p maximum_failures == 0.
    */
   explicit AccessApprovalLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   AccessApprovalLimitedErrorCountRetryPolicy(
       AccessApprovalLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AccessApprovalLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AccessApprovalLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AccessApprovalLimitedErrorCountRetryPolicy(
       AccessApprovalLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AccessApprovalLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AccessApprovalLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class AccessApprovalLimitedErrorCountRetryPolicy : public AccessApprovalRetryPol
   using BaseType = AccessApprovalRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<accessapproval_v1_internal::AccessApprovalRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      accessapproval_v1_internal::AccessApprovalRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class AccessApprovalLimitedTimeRetryPolicy : public AccessApprovalRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AccessApprovalLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AccessApprovalLimitedTimeRetryPolicy(AccessApprovalLimitedTimeRetryPolicy&& rhs) noexcept
-    : AccessApprovalLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AccessApprovalLimitedTimeRetryPolicy(AccessApprovalLimitedTimeRetryPolicy const& rhs) noexcept
-    : AccessApprovalLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AccessApprovalLimitedTimeRetryPolicy(
+      AccessApprovalLimitedTimeRetryPolicy&& rhs) noexcept
+      : AccessApprovalLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AccessApprovalLimitedTimeRetryPolicy(
+      AccessApprovalLimitedTimeRetryPolicy const& rhs) noexcept
+      : AccessApprovalLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class AccessApprovalLimitedTimeRetryPolicy : public AccessApprovalRetryPolicy {
   using BaseType = AccessApprovalRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<accessapproval_v1_internal::AccessApprovalRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      accessapproval_v1_internal::AccessApprovalRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,31 +183,48 @@ class AccessApprovalConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-  ListApprovalRequests(google::cloud::accessapproval::v1::ListApprovalRequestsMessage request);
+  ListApprovalRequests(
+      google::cloud::accessapproval::v1::ListApprovalRequestsMessage request);
 
   virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  GetApprovalRequest(google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request);
+  GetApprovalRequest(
+      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
+          request);
 
   virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  ApproveApprovalRequest(google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request);
+  ApproveApprovalRequest(
+      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
+          request);
 
   virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  DismissApprovalRequest(google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request);
+  DismissApprovalRequest(
+      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
+          request);
 
   virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  InvalidateApprovalRequest(google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request);
+  InvalidateApprovalRequest(
+      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+          request);
 
   virtual StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  GetAccessApprovalSettings(google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request);
+  GetAccessApprovalSettings(
+      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
+          request);
 
   virtual StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request);
+  UpdateAccessApprovalSettings(
+      google::cloud::accessapproval::v1::
+          UpdateAccessApprovalSettingsMessage const& request);
 
-  virtual Status
-  DeleteAccessApprovalSettings(google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request);
+  virtual Status DeleteAccessApprovalSettings(
+      google::cloud::accessapproval::v1::
+          DeleteAccessApprovalSettingsMessage const& request);
 
-  virtual StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
-  GetAccessApprovalServiceAccount(google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request);
+  virtual StatusOr<
+      google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
+  GetAccessApprovalServiceAccount(
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const& request);
 };
 
 /**

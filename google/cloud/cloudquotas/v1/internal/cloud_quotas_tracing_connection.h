@@ -36,27 +36,32 @@ class CloudQuotasTracingConnection
   ~CloudQuotasTracingConnection() override = default;
 
   explicit CloudQuotasTracingConnection(
-    std::shared_ptr<cloudquotas_v1::CloudQuotasConnection> child);
+      std::shared_ptr<cloudquotas_v1::CloudQuotasConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::api::cloudquotas::v1::QuotaInfo>
-  ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest request) override;
+  StreamRange<google::api::cloudquotas::v1::QuotaInfo> ListQuotaInfos(
+      google::api::cloudquotas::v1::ListQuotaInfosRequest request) override;
 
-  StatusOr<google::api::cloudquotas::v1::QuotaInfo>
-  GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) override;
+  StatusOr<google::api::cloudquotas::v1::QuotaInfo> GetQuotaInfo(
+      google::api::cloudquotas::v1::GetQuotaInfoRequest const& request)
+      override;
 
   StreamRange<google::api::cloudquotas::v1::QuotaPreference>
-  ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest request) override;
+  ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest
+                           request) override;
 
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) override;
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> GetQuotaPreference(
+      google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request)
+      override;
 
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) override;
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> CreateQuotaPreference(
+      google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request)
+      override;
 
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) override;
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> UpdateQuotaPreference(
+      google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request)
+      override;
 
  private:
   std::shared_ptr<cloudquotas_v1::CloudQuotasConnection> child_;

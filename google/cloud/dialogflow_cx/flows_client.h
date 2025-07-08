@@ -62,11 +62,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
+/// [google.cloud.dialogflow.cx.v3.Flow]:
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
 ///
 class FlowsClient {
  public:
-  explicit FlowsClient(std::shared_ptr<FlowsConnection> connection, Options opts = {});
+  explicit FlowsClient(std::shared_ptr<FlowsConnection> connection,
+                       Options opts = {});
   ~FlowsClient();
 
   ///@{
@@ -115,8 +117,9 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  CreateFlow(std::string const& parent, google::cloud::dialogflow::cx::v3::Flow const& flow, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
+      std::string const& parent,
+      google::cloud::dialogflow::cx::v3::Flow const& flow, Options opts = {});
 
   // clang-format off
   ///
@@ -149,8 +152,9 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.Flow]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L253}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  CreateFlow(google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
+      google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -173,8 +177,7 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.DeleteFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L394}
   ///
   // clang-format on
-  Status
-  DeleteFlow(std::string const& name, Options opts = {});
+  Status DeleteFlow(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +203,9 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.DeleteFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L394}
   ///
   // clang-format on
-  Status
-  DeleteFlow(google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request, Options opts = {});
+  Status DeleteFlow(
+      google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -235,8 +239,8 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L418}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Flow>
-  ListFlows(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -274,8 +278,9 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L418}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Flow>
-  ListFlows(google::cloud::dialogflow::cx::v3::ListFlowsRequest request, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
+      google::cloud::dialogflow::cx::v3::ListFlowsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -301,8 +306,8 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L465}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  GetFlow(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -331,8 +336,9 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L465}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  GetFlow(google::cloud::dialogflow::cx::v3::GetFlowRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
+      google::cloud::dialogflow::cx::v3::GetFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -362,8 +368,9 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L492}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  UpdateFlow(google::cloud::dialogflow::cx::v3::Flow const& flow, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
+      google::cloud::dialogflow::cx::v3::Flow const& flow,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -396,8 +403,9 @@ class FlowsClient {
   /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L492}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  UpdateFlow(google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
+      google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +452,8 @@ class FlowsClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  TrainFlow(std::string const& name, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> TrainFlow(std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -458,8 +466,9 @@ class FlowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  TrainFlow(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> TrainFlow(NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -509,8 +518,9 @@ class FlowsClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  TrainFlow(google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> TrainFlow(
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -523,8 +533,10 @@ class FlowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  TrainFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> TrainFlow(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -535,8 +547,8 @@ class FlowsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  TrainFlow(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> TrainFlow(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -568,7 +580,9 @@ class FlowsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  ValidateFlow(google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request, Options opts = {});
+  ValidateFlow(
+      google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -627,7 +641,10 @@ class FlowsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  GetFlowValidationResult(google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const& request, Options opts = {});
+  GetFlowValidationResult(
+      google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -677,7 +694,9 @@ class FlowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow(google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request, Options opts = {});
+  ImportFlow(
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -690,8 +709,10 @@ class FlowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportFlow(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -703,7 +724,8 @@ class FlowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow(google::longrunning::Operation const& operation, Options opts = {});
+  ImportFlow(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -752,7 +774,9 @@ class FlowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow(google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request, Options opts = {});
+  ExportFlow(
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -765,8 +789,10 @@ class FlowsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportFlow(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -778,7 +804,8 @@ class FlowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow(google::longrunning::Operation const& operation, Options opts = {});
+  ExportFlow(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -816,8 +843,8 @@ class FlowsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -846,8 +873,9 @@ class FlowsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -882,8 +910,8 @@ class FlowsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -922,8 +950,8 @@ class FlowsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -949,8 +977,8 @@ class FlowsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -981,8 +1009,9 @@ class FlowsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1016,8 +1045,7 @@ class FlowsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1056,8 +1084,9 @@ class FlowsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<FlowsConnection> connection_;

@@ -33,35 +33,41 @@ BigQueryReadTracingStub::BigQueryReadTracingStub(
     std::shared_ptr<BigQueryReadStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::bigquery::storage::v1::ReadSession> BigQueryReadTracingStub::CreateReadSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryRead", "CreateReadSession");
+StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
+BigQueryReadTracingStub::CreateReadSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryRead", "CreateReadSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateReadSession(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateReadSession(context, options, request));
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadTracingStub::ReadRows(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryRead", "ReadRows");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryRead", "ReadRows");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->ReadRows(context, options, request);
-  return std::make_unique<internal::StreamingReadRpcTracing<google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
+  return std::make_unique<internal::StreamingReadRpcTracing<
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse> BigQueryReadTracingStub::SplitReadStream(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.storage.v1.BigQueryRead", "SplitReadStream");
+StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+BigQueryReadTracingStub::SplitReadStream(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryRead", "SplitReadStream");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

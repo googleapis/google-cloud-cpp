@@ -32,33 +32,38 @@ ProfilerServiceTracingStub::ProfilerServiceTracingStub(
     std::shared_ptr<ProfilerServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::devtools::cloudprofiler::v2::Profile> ProfilerServiceTracingStub::CreateProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudprofiler::v2::Profile>
+ProfilerServiceTracingStub::CreateProfile(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.cloudprofiler.v2.ProfilerService", "CreateProfile");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudprofiler.v2.ProfilerService", "CreateProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateProfile(context, options, request));
 }
 
-StatusOr<google::devtools::cloudprofiler::v2::Profile> ProfilerServiceTracingStub::CreateOfflineProfile(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.cloudprofiler.v2.ProfilerService", "CreateOfflineProfile");
+StatusOr<google::devtools::cloudprofiler::v2::Profile>
+ProfilerServiceTracingStub::CreateOfflineProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.devtools.cloudprofiler.v2.ProfilerService",
+                             "CreateOfflineProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateOfflineProfile(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateOfflineProfile(context, options, request));
 }
 
-StatusOr<google::devtools::cloudprofiler::v2::Profile> ProfilerServiceTracingStub::UpdateProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudprofiler::v2::Profile>
+ProfilerServiceTracingStub::UpdateProfile(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.cloudprofiler.v2.ProfilerService", "UpdateProfile");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudprofiler.v2.ProfilerService", "UpdateProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

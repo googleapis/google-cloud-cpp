@@ -26,170 +26,255 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CertificateAuthorityServiceConnectionIdempotencyPolicy::~CertificateAuthorityServiceConnectionIdempotencyPolicy() = default;
+CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ~CertificateAuthorityServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>
 CertificateAuthorityServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<CertificateAuthorityServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<
+      CertificateAuthorityServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::CreateCertificate(google::cloud::security::privateca::v1::CreateCertificateRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::CreateCertificate(
+    google::cloud::security::privateca::v1::CreateCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificate(google::cloud::security::privateca::v1::GetCertificateRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificate(
+    google::cloud::security::privateca::v1::GetCertificateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCertificates(google::cloud::security::privateca::v1::ListCertificatesRequest) {  // NOLINT
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCertificates(
+    google::cloud::security::privateca::v1::
+        ListCertificatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::RevokeCertificate(google::cloud::security::privateca::v1::RevokeCertificateRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::RevokeCertificate(
+    google::cloud::security::privateca::v1::RevokeCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCertificate(google::cloud::security::privateca::v1::UpdateCertificateRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCertificate(
+    google::cloud::security::privateca::v1::UpdateCertificateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ActivateCertificateAuthority(google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ActivateCertificateAuthority(
+        google::cloud::security::privateca::v1::
+            ActivateCertificateAuthorityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::CreateCertificateAuthority(google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    CreateCertificateAuthority(google::cloud::security::privateca::v1::
+                                   CreateCertificateAuthorityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::DisableCertificateAuthority(google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    DisableCertificateAuthority(google::cloud::security::privateca::v1::
+                                    DisableCertificateAuthorityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::EnableCertificateAuthority(google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    EnableCertificateAuthority(google::cloud::security::privateca::v1::
+                                   EnableCertificateAuthorityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::FetchCertificateAuthorityCsr(google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    FetchCertificateAuthorityCsr(
+        google::cloud::security::privateca::v1::
+            FetchCertificateAuthorityCsrRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateAuthority(google::cloud::security::privateca::v1::GetCertificateAuthorityRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateAuthority(
+    google::cloud::security::privateca::v1::
+        GetCertificateAuthorityRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCertificateAuthorities(google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest) {  // NOLINT
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ListCertificateAuthorities(
+        google::cloud::security::privateca::v1::
+            ListCertificateAuthoritiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::UndeleteCertificateAuthority(google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    UndeleteCertificateAuthority(
+        google::cloud::security::privateca::v1::
+            UndeleteCertificateAuthorityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::DeleteCertificateAuthority(google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    DeleteCertificateAuthority(google::cloud::security::privateca::v1::
+                                   DeleteCertificateAuthorityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCertificateAuthority(google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    UpdateCertificateAuthority(google::cloud::security::privateca::v1::
+                                   UpdateCertificateAuthorityRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::CreateCaPool(google::cloud::security::privateca::v1::CreateCaPoolRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::CreateCaPool(
+    google::cloud::security::privateca::v1::CreateCaPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCaPool(google::cloud::security::privateca::v1::UpdateCaPoolRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCaPool(
+    google::cloud::security::privateca::v1::UpdateCaPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCaPool(google::cloud::security::privateca::v1::GetCaPoolRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCaPool(
+    google::cloud::security::privateca::v1::GetCaPoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCaPools(google::cloud::security::privateca::v1::ListCaPoolsRequest) {  // NOLINT
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCaPools(
+    google::cloud::security::privateca::v1::ListCaPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::DeleteCaPool(google::cloud::security::privateca::v1::DeleteCaPoolRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::DeleteCaPool(
+    google::cloud::security::privateca::v1::DeleteCaPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::FetchCaCerts(google::cloud::security::privateca::v1::FetchCaCertsRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::FetchCaCerts(
+    google::cloud::security::privateca::v1::FetchCaCertsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateRevocationList(google::cloud::security::privateca::v1::GetCertificateRevocationListRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    GetCertificateRevocationList(
+        google::cloud::security::privateca::v1::
+            GetCertificateRevocationListRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCertificateRevocationLists(google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest) {  // NOLINT
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ListCertificateRevocationLists(
+        google::cloud::security::privateca::v1::
+            ListCertificateRevocationListsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCertificateRevocationList(google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    UpdateCertificateRevocationList(
+        google::cloud::security::privateca::v1::
+            UpdateCertificateRevocationListRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::CreateCertificateTemplate(google::cloud::security::privateca::v1::CreateCertificateTemplateRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    CreateCertificateTemplate(google::cloud::security::privateca::v1::
+                                  CreateCertificateTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::DeleteCertificateTemplate(google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    DeleteCertificateTemplate(google::cloud::security::privateca::v1::
+                                  DeleteCertificateTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateTemplate(google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::GetCertificateTemplate(
+    google::cloud::security::privateca::v1::
+        GetCertificateTemplateRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListCertificateTemplates(google::cloud::security::privateca::v1::ListCertificateTemplatesRequest) {  // NOLINT
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    ListCertificateTemplates(google::cloud::security::privateca::v1::
+                                 ListCertificateTemplatesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::UpdateCertificateTemplate(google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
+    UpdateCertificateTemplate(google::cloud::security::privateca::v1::
+                                  UpdateCertificateTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::SetIamPolicy(
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
   return request.policy().etag().empty() ? Idempotency::kNonIdempotent
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency
+CertificateAuthorityServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>
-    MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<CertificateAuthorityServiceConnectionIdempotencyPolicy>();
+MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      CertificateAuthorityServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

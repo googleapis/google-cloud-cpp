@@ -17,10 +17,10 @@
 // source: google/cloud/support/v2/attachment_service.proto
 
 #include "google/cloud/support/v2/internal/case_attachment_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/support/v2/case_attachment_connection.h"
 #include "google/cloud/support/v2/case_attachment_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,16 +42,23 @@ Options CaseAttachmentServiceDefaultOptions(Options options) {
   if (!options.has<support_v2::CaseAttachmentServiceRetryPolicyOption>()) {
     options.set<support_v2::CaseAttachmentServiceRetryPolicyOption>(
         support_v2::CaseAttachmentServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<support_v2::CaseAttachmentServiceBackoffPolicyOption>()) {
     options.set<support_v2::CaseAttachmentServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<support_v2::CaseAttachmentServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<support_v2::CaseAttachmentServiceConnectionIdempotencyPolicyOption>(
-        support_v2::MakeDefaultCaseAttachmentServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<support_v2::
+                    CaseAttachmentServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        support_v2::CaseAttachmentServiceConnectionIdempotencyPolicyOption>(
+        support_v2::
+            MakeDefaultCaseAttachmentServiceConnectionIdempotencyPolicy());
   }
 
   return options;

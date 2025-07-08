@@ -34,25 +34,27 @@ RevisionsTracingConnection::RevisionsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::run::v2::Revision>
-RevisionsTracingConnection::GetRevision(google::cloud::run::v2::GetRevisionRequest const& request) {
+RevisionsTracingConnection::GetRevision(
+    google::cloud::run::v2::GetRevisionRequest const& request) {
   auto span = internal::MakeSpan("run_v2::RevisionsConnection::GetRevision");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRevision(request));
 }
 
 StreamRange<google::cloud::run::v2::Revision>
-RevisionsTracingConnection::ListRevisions(google::cloud::run::v2::ListRevisionsRequest request) {
+RevisionsTracingConnection::ListRevisions(
+    google::cloud::run::v2::ListRevisionsRequest request) {
   auto span = internal::MakeSpan("run_v2::RevisionsConnection::ListRevisions");
   internal::OTelScope scope(span);
   auto sr = child_->ListRevisions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Revision>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>
-RevisionsTracingConnection::DeleteRevision(google::cloud::run::v2::DeleteRevisionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "run_v2::RevisionsConnection::DeleteRevision");
+RevisionsTracingConnection::DeleteRevision(
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteRevision");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRevision(request));
 }
@@ -60,48 +62,49 @@ RevisionsTracingConnection::DeleteRevision(google::cloud::run::v2::DeleteRevisio
 StatusOr<google::longrunning::Operation>
 RevisionsTracingConnection::DeleteRevision(
     NoAwaitTag, google::cloud::run::v2::DeleteRevisionRequest const& request) {
-  auto span = internal::MakeSpan(
-      "run_v2::RevisionsConnection::DeleteRevision");
+  auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteRevision");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteRevision(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteRevision(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>
 RevisionsTracingConnection::DeleteRevision(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "run_v2::RevisionsConnection::DeleteRevision");
+  auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteRevision");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteRevision(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteRevision(operation));
 }
 
 StreamRange<google::longrunning::Operation>
-RevisionsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+RevisionsTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   auto span = internal::MakeSpan("run_v2::RevisionsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-RevisionsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+RevisionsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto span = internal::MakeSpan("run_v2::RevisionsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-RevisionsTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteOperation");
+Status RevisionsTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("run_v2::RevisionsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
 StatusOr<google::longrunning::Operation>
-RevisionsTracingConnection::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
+RevisionsTracingConnection::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request) {
   auto span = internal::MakeSpan("run_v2::RevisionsConnection::WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WaitOperation(request));
@@ -109,8 +112,7 @@ RevisionsTracingConnection::WaitOperation(google::longrunning::WaitOperationRequ
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<run_v2::RevisionsConnection>
-MakeRevisionsTracingConnection(
+std::shared_ptr<run_v2::RevisionsConnection> MakeRevisionsTracingConnection(
     std::shared_ptr<run_v2::RevisionsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

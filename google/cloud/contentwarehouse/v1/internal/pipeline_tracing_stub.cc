@@ -34,11 +34,12 @@ PipelineServiceTracingStub::PipelineServiceTracingStub(
 
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceTracingStub::AsyncRunPipeline(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.PipelineService", "RunPipeline");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.PipelineService", "RunPipeline");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRunPipeline(cq, context, std::move(options), request);
@@ -47,21 +48,22 @@ PipelineServiceTracingStub::AsyncRunPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceTracingStub::RunPipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.PipelineService", "RunPipeline");
+    grpc::ClientContext& context, Options options,
+    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.PipelineService", "RunPipeline");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RunPipeline(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> PipelineServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+PipelineServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.PipelineService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.PipelineService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -78,8 +80,7 @@ PipelineServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -92,8 +93,8 @@ future<Status> PipelineServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

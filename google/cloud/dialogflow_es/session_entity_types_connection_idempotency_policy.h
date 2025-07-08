@@ -36,41 +36,46 @@ class SessionEntityTypesConnectionIdempotencyPolicy {
   virtual ~SessionEntityTypesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListSessionEntityTypes(google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request);
+  virtual google::cloud::Idempotency ListSessionEntityTypes(
+      google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetSessionEntityType(google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request);
+  virtual google::cloud::Idempotency GetSessionEntityType(
+      google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateSessionEntityType(google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request);
+  virtual google::cloud::Idempotency CreateSessionEntityType(
+      google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateSessionEntityType(google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request);
+  virtual google::cloud::Idempotency UpdateSessionEntityType(
+      google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteSessionEntityType(google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request);
+  virtual google::cloud::Idempotency DeleteSessionEntityType(
+      google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy>
-    MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy();
+MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

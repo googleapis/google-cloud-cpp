@@ -30,21 +30,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class RegionsTracingConnection
-    : public compute_regions_v1::RegionsConnection {
+class RegionsTracingConnection : public compute_regions_v1::RegionsConnection {
  public:
   ~RegionsTracingConnection() override = default;
 
   explicit RegionsTracingConnection(
-    std::shared_ptr<compute_regions_v1::RegionsConnection> child);
+      std::shared_ptr<compute_regions_v1::RegionsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Region>
-  GetRegion(google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
+      google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request)
+      override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Region>
-  ListRegions(google::cloud::cpp::compute::regions::v1::ListRegionsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
+      google::cloud::cpp::compute::regions::v1::ListRegionsRequest request)
+      override;
 
  private:
   std::shared_ptr<compute_regions_v1::RegionsConnection> child_;

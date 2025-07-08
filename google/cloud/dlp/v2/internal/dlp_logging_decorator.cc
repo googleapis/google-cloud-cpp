@@ -30,21 +30,17 @@ namespace cloud {
 namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DlpServiceLogging::DlpServiceLogging(
-    std::shared_ptr<DlpServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+DlpServiceLogging::DlpServiceLogging(std::shared_ptr<DlpServiceStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
 DlpServiceLogging::InspectContent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::InspectContentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::InspectContentRequest const& request) {
         return child_->InspectContent(context, options, request);
       },
@@ -53,12 +49,10 @@ DlpServiceLogging::InspectContent(
 
 StatusOr<google::privacy::dlp::v2::RedactImageResponse>
 DlpServiceLogging::RedactImage(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::RedactImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::RedactImageRequest const& request) {
         return child_->RedactImage(context, options, request);
       },
@@ -67,13 +61,12 @@ DlpServiceLogging::RedactImage(
 
 StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
 DlpServiceLogging::DeidentifyContent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
         return child_->DeidentifyContent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +74,12 @@ DlpServiceLogging::DeidentifyContent(
 
 StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
 DlpServiceLogging::ReidentifyContent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
         return child_->ReidentifyContent(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,12 +87,10 @@ DlpServiceLogging::ReidentifyContent(
 
 StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
 DlpServiceLogging::ListInfoTypes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
         return child_->ListInfoTypes(context, options, request);
       },
@@ -109,13 +99,12 @@ DlpServiceLogging::ListInfoTypes(
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceLogging::CreateInspectTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::CreateInspectTemplateRequest const&
+                 request) {
         return child_->CreateInspectTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,13 +112,12 @@ DlpServiceLogging::CreateInspectTemplate(
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceLogging::UpdateInspectTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::UpdateInspectTemplateRequest const&
+                 request) {
         return child_->UpdateInspectTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,13 +125,12 @@ DlpServiceLogging::UpdateInspectTemplate(
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceLogging::GetInspectTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
         return child_->GetInspectTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,27 +138,24 @@ DlpServiceLogging::GetInspectTemplate(
 
 StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>
 DlpServiceLogging::ListInspectTemplates(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListInspectTemplatesRequest const&
+                 request) {
         return child_->ListInspectTemplates(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteInspectTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::DeleteInspectTemplate(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteInspectTemplateRequest const&
+                 request) {
         return child_->DeleteInspectTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -179,13 +163,12 @@ DlpServiceLogging::DeleteInspectTemplate(
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceLogging::CreateDeidentifyTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const&
+                 request) {
         return child_->CreateDeidentifyTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -193,13 +176,12 @@ DlpServiceLogging::CreateDeidentifyTemplate(
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceLogging::UpdateDeidentifyTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const&
+                 request) {
         return child_->UpdateDeidentifyTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -207,13 +189,12 @@ DlpServiceLogging::UpdateDeidentifyTemplate(
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceLogging::GetDeidentifyTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::GetDeidentifyTemplateRequest const&
+                 request) {
         return child_->GetDeidentifyTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -221,27 +202,24 @@ DlpServiceLogging::GetDeidentifyTemplate(
 
 StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>
 DlpServiceLogging::ListDeidentifyTemplates(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const&
+                 request) {
         return child_->ListDeidentifyTemplates(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteDeidentifyTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::DeleteDeidentifyTemplate(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const&
+                 request) {
         return child_->DeleteDeidentifyTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -249,12 +227,10 @@ DlpServiceLogging::DeleteDeidentifyTemplate(
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceLogging::CreateJobTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
         return child_->CreateJobTrigger(context, options, request);
       },
@@ -263,12 +239,10 @@ DlpServiceLogging::CreateJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceLogging::UpdateJobTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
         return child_->UpdateJobTrigger(context, options, request);
       },
@@ -277,26 +251,22 @@ DlpServiceLogging::UpdateJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceLogging::HybridInspectJobTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::HybridInspectJobTriggerRequest const&
+                 request) {
         return child_->HybridInspectJobTrigger(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::privacy::dlp::v2::JobTrigger>
-DlpServiceLogging::GetJobTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::privacy::dlp::v2::JobTrigger> DlpServiceLogging::GetJobTrigger(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
         return child_->GetJobTrigger(context, options, request);
       },
@@ -305,26 +275,21 @@ DlpServiceLogging::GetJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>
 DlpServiceLogging::ListJobTriggers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListJobTriggersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::ListJobTriggersRequest const& request) {
         return child_->ListJobTriggers(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteJobTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::DeleteJobTrigger(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
         return child_->DeleteJobTrigger(context, options, request);
       },
@@ -333,13 +298,12 @@ DlpServiceLogging::DeleteJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::DlpJob>
 DlpServiceLogging::ActivateJobTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
         return child_->ActivateJobTrigger(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -347,13 +311,12 @@ DlpServiceLogging::ActivateJobTrigger(
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DlpServiceLogging::CreateDiscoveryConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::CreateDiscoveryConfigRequest const&
+                 request) {
         return child_->CreateDiscoveryConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -361,13 +324,12 @@ DlpServiceLogging::CreateDiscoveryConfig(
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DlpServiceLogging::UpdateDiscoveryConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const&
+                 request) {
         return child_->UpdateDiscoveryConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -375,13 +337,12 @@ DlpServiceLogging::UpdateDiscoveryConfig(
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DlpServiceLogging::GetDiscoveryConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
         return child_->GetDiscoveryConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -389,40 +350,34 @@ DlpServiceLogging::GetDiscoveryConfig(
 
 StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
 DlpServiceLogging::ListDiscoveryConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListDiscoveryConfigsRequest const&
+                 request) {
         return child_->ListDiscoveryConfigs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteDiscoveryConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::DeleteDiscoveryConfig(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const&
+                 request) {
         return child_->DeleteDiscoveryConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::privacy::dlp::v2::DlpJob>
-DlpServiceLogging::CreateDlpJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceLogging::CreateDlpJob(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
         return child_->CreateDlpJob(context, options, request);
       },
@@ -431,54 +386,43 @@ DlpServiceLogging::CreateDlpJob(
 
 StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>
 DlpServiceLogging::ListDlpJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListDlpJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::ListDlpJobsRequest const& request) {
         return child_->ListDlpJobs(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::privacy::dlp::v2::DlpJob>
-DlpServiceLogging::GetDlpJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceLogging::GetDlpJob(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetDlpJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::GetDlpJobRequest const& request) {
         return child_->GetDlpJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteDlpJob(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::DeleteDlpJob(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
         return child_->DeleteDlpJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::CancelDlpJob(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::CancelDlpJob(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
         return child_->CancelDlpJob(context, options, request);
       },
@@ -487,13 +431,12 @@ DlpServiceLogging::CancelDlpJob(
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceLogging::CreateStoredInfoType(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::CreateStoredInfoTypeRequest const&
+                 request) {
         return child_->CreateStoredInfoType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -501,13 +444,12 @@ DlpServiceLogging::CreateStoredInfoType(
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceLogging::UpdateStoredInfoType(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const&
+                 request) {
         return child_->UpdateStoredInfoType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -515,13 +457,12 @@ DlpServiceLogging::UpdateStoredInfoType(
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceLogging::GetStoredInfoType(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
         return child_->GetStoredInfoType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -529,27 +470,24 @@ DlpServiceLogging::GetStoredInfoType(
 
 StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>
 DlpServiceLogging::ListStoredInfoTypes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
         return child_->ListStoredInfoTypes(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteStoredInfoType(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::DeleteStoredInfoType(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const&
+                 request) {
         return child_->DeleteStoredInfoType(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -557,13 +495,12 @@ DlpServiceLogging::DeleteStoredInfoType(
 
 StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
 DlpServiceLogging::ListProjectDataProfiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListProjectDataProfilesRequest const&
+                 request) {
         return child_->ListProjectDataProfiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -571,13 +508,12 @@ DlpServiceLogging::ListProjectDataProfiles(
 
 StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
 DlpServiceLogging::ListTableDataProfiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListTableDataProfilesRequest const&
+                 request) {
         return child_->ListTableDataProfiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -585,13 +521,12 @@ DlpServiceLogging::ListTableDataProfiles(
 
 StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
 DlpServiceLogging::ListColumnDataProfiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListColumnDataProfilesRequest const&
+                 request) {
         return child_->ListColumnDataProfiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -599,13 +534,12 @@ DlpServiceLogging::ListColumnDataProfiles(
 
 StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
 DlpServiceLogging::GetProjectDataProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::GetProjectDataProfileRequest const&
+                 request) {
         return child_->GetProjectDataProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -613,13 +547,12 @@ DlpServiceLogging::GetProjectDataProfile(
 
 StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
 DlpServiceLogging::ListFileStoreDataProfiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const&
+                 request) {
         return child_->ListFileStoreDataProfiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -627,27 +560,25 @@ DlpServiceLogging::ListFileStoreDataProfiles(
 
 StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
 DlpServiceLogging::GetFileStoreDataProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::GetFileStoreDataProfileRequest const&
+                 request) {
         return child_->GetFileStoreDataProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteFileStoreDataProfile(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request) {
+Status DlpServiceLogging::DeleteFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+                 request) {
         return child_->DeleteFileStoreDataProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -655,13 +586,12 @@ DlpServiceLogging::DeleteFileStoreDataProfile(
 
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DlpServiceLogging::GetTableDataProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
         return child_->GetTableDataProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -669,27 +599,24 @@ DlpServiceLogging::GetTableDataProfile(
 
 StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
 DlpServiceLogging::GetColumnDataProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::GetColumnDataProfileRequest const&
+                 request) {
         return child_->GetColumnDataProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteTableDataProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::DeleteTableDataProfile(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteTableDataProfileRequest const&
+                 request) {
         return child_->DeleteTableDataProfile(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -697,26 +624,22 @@ DlpServiceLogging::DeleteTableDataProfile(
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceLogging::HybridInspectDlpJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
         return child_->HybridInspectDlpJob(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::FinishDlpJob(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::FinishDlpJob(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
         return child_->FinishDlpJob(context, options, request);
       },
@@ -725,26 +648,21 @@ DlpServiceLogging::FinishDlpJob(
 
 StatusOr<google::privacy::dlp::v2::Connection>
 DlpServiceLogging::CreateConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::CreateConnectionRequest const& request) {
         return child_->CreateConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::privacy::dlp::v2::Connection>
-DlpServiceLogging::GetConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::privacy::dlp::v2::Connection> DlpServiceLogging::GetConnection(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::GetConnectionRequest const& request) {
         return child_->GetConnection(context, options, request);
       },
@@ -753,12 +671,10 @@ DlpServiceLogging::GetConnection(
 
 StatusOr<google::privacy::dlp::v2::ListConnectionsResponse>
 DlpServiceLogging::ListConnections(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::ListConnectionsRequest const& request) {
         return child_->ListConnections(context, options, request);
       },
@@ -767,26 +683,22 @@ DlpServiceLogging::ListConnections(
 
 StatusOr<google::privacy::dlp::v2::SearchConnectionsResponse>
 DlpServiceLogging::SearchConnections(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::privacy::dlp::v2::SearchConnectionsRequest const& request) {
         return child_->SearchConnections(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DlpServiceLogging::DeleteConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DlpServiceLogging::DeleteConnection(
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
         return child_->DeleteConnection(context, options, request);
       },
@@ -795,12 +707,10 @@ DlpServiceLogging::DeleteConnection(
 
 StatusOr<google::privacy::dlp::v2::Connection>
 DlpServiceLogging::UpdateConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
         return child_->UpdateConnection(context, options, request);
       },

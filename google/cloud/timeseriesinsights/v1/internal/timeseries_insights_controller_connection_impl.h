@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_INTERNAL_TIMESERIES_INSIGHTS_CONTROLLER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_INTERNAL_TIMESERIES_INSIGHTS_CONTROLLER_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_retry_traits.h"
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub.h"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection.h"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection_idempotency_policy.h"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -43,36 +43,48 @@ class TimeseriesInsightsControllerConnectionImpl
   ~TimeseriesInsightsControllerConnectionImpl() override = default;
 
   TimeseriesInsightsControllerConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<timeseriesinsights_v1_internal::TimeseriesInsightsControllerStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          timeseriesinsights_v1_internal::TimeseriesInsightsControllerStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
-  ListDataSets(google::cloud::timeseriesinsights::v1::ListDataSetsRequest request) override;
+  StreamRange<google::cloud::timeseriesinsights::v1::DataSet> ListDataSets(
+      google::cloud::timeseriesinsights::v1::ListDataSetsRequest request)
+      override;
 
-  StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
-  CreateDataSet(google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::DataSet> CreateDataSet(
+      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
+          request) override;
 
-  Status
-  DeleteDataSet(google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request) override;
+  Status DeleteDataSet(
+      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
+          request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-  AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) override;
+  AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-  QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) override;
+  QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
+                   request) override;
+
+  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateSlice(
+      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
+          request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-  EvaluateSlice(google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request) override;
-
-  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-  EvaluateTimeseries(google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request) override;
+  EvaluateTimeseries(
+      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<timeseriesinsights_v1_internal::TimeseriesInsightsControllerStub> stub_;
+  std::shared_ptr<
+      timeseriesinsights_v1_internal::TimeseriesInsightsControllerStub>
+      stub_;
   Options options_;
 };
 

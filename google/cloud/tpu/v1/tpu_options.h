@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_TPU_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_TPU_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/tpu/v1/tpu_connection.h"
 #include "google/cloud/tpu/v1/tpu_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,10 +74,8 @@ struct TpuPollingPolicyOption {
  * @ingroup google-cloud-tpu-options
  */
 using TpuPolicyOptionList =
-    OptionList<TpuRetryPolicyOption,
-               TpuBackoffPolicyOption,
-               TpuPollingPolicyOption,
-               TpuConnectionIdempotencyPolicyOption>;
+    OptionList<TpuRetryPolicyOption, TpuBackoffPolicyOption,
+               TpuPollingPolicyOption, TpuConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_v1

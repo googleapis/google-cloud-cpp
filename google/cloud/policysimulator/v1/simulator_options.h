@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_SIMULATOR_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_SIMULATOR_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/policysimulator/v1/simulator_connection.h"
 #include "google/cloud/policysimulator/v1/simulator_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,8 +74,7 @@ struct SimulatorPollingPolicyOption {
  * @ingroup google-cloud-policysimulator-options
  */
 using SimulatorPolicyOptionList =
-    OptionList<SimulatorRetryPolicyOption,
-               SimulatorBackoffPolicyOption,
+    OptionList<SimulatorRetryPolicyOption, SimulatorBackoffPolicyOption,
                SimulatorPollingPolicyOption,
                SimulatorConnectionIdempotencyPolicyOption>;
 

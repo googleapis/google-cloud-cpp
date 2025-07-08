@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_FLAGS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_FLAGS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_flags_rest_stub.h"
 #include "google/cloud/sql/v1/internal/sql_flags_retry_traits.h"
 #include "google/cloud/sql/v1/sql_flags_connection.h"
 #include "google/cloud/sql/v1/sql_flags_connection_idempotency_policy.h"
 #include "google/cloud/sql/v1/sql_flags_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,18 +42,18 @@ class SqlFlagsServiceRestConnectionImpl
   ~SqlFlagsServiceRestConnectionImpl() override = default;
 
   SqlFlagsServiceRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<sql_v1_internal::SqlFlagsServiceRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<sql_v1_internal::SqlFlagsServiceRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::sql::v1::FlagsListResponse>
-  List(google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
+      google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
 
  private:
-  static std::unique_ptr<sql_v1::SqlFlagsServiceRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<sql_v1::SqlFlagsServiceRetryPolicy> retry_policy(
+      Options const& options) {
     return options.get<sql_v1::SqlFlagsServiceRetryPolicyOption>()->clone();
   }
 
@@ -63,7 +63,9 @@ class SqlFlagsServiceRestConnectionImpl
 
   static std::unique_ptr<sql_v1::SqlFlagsServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<sql_v1::SqlFlagsServiceConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<sql_v1::SqlFlagsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

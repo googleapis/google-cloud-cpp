@@ -29,63 +29,85 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-StorageTransferServiceTracingConnection::StorageTransferServiceTracingConnection(
-    std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection> child)
+StorageTransferServiceTracingConnection::
+    StorageTransferServiceTracingConnection(
+        std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
-StorageTransferServiceTracingConnection::GetGoogleServiceAccount(google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::GetGoogleServiceAccount");
+StorageTransferServiceTracingConnection::GetGoogleServiceAccount(
+    google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::"
+      "GetGoogleServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetGoogleServiceAccount(request));
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceTracingConnection::CreateTransferJob(google::storagetransfer::v1::CreateTransferJobRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::CreateTransferJob");
+StorageTransferServiceTracingConnection::CreateTransferJob(
+    google::storagetransfer::v1::CreateTransferJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::"
+      "CreateTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTransferJob(request));
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceTracingConnection::UpdateTransferJob(google::storagetransfer::v1::UpdateTransferJobRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::UpdateTransferJob");
+StorageTransferServiceTracingConnection::UpdateTransferJob(
+    google::storagetransfer::v1::UpdateTransferJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::"
+      "UpdateTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTransferJob(request));
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceTracingConnection::GetTransferJob(google::storagetransfer::v1::GetTransferJobRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::GetTransferJob");
+StorageTransferServiceTracingConnection::GetTransferJob(
+    google::storagetransfer::v1::GetTransferJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::GetTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTransferJob(request));
 }
 
 StreamRange<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceTracingConnection::ListTransferJobs(google::storagetransfer::v1::ListTransferJobsRequest request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::ListTransferJobs");
+StorageTransferServiceTracingConnection::ListTransferJobs(
+    google::storagetransfer::v1::ListTransferJobsRequest request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::ListTransferJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListTransferJobs(std::move(request));
-  return internal::MakeTracedStreamRange<google::storagetransfer::v1::TransferJob>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::storagetransfer::v1::TransferJob>(std::move(span), std::move(sr));
 }
 
-Status
-StorageTransferServiceTracingConnection::PauseTransferOperation(google::storagetransfer::v1::PauseTransferOperationRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::PauseTransferOperation");
+Status StorageTransferServiceTracingConnection::PauseTransferOperation(
+    google::storagetransfer::v1::PauseTransferOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::"
+      "PauseTransferOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PauseTransferOperation(request));
 }
 
-Status
-StorageTransferServiceTracingConnection::ResumeTransferOperation(google::storagetransfer::v1::ResumeTransferOperationRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::ResumeTransferOperation");
+Status StorageTransferServiceTracingConnection::ResumeTransferOperation(
+    google::storagetransfer::v1::ResumeTransferOperationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::"
+      "ResumeTransferOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResumeTransferOperation(request));
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-StorageTransferServiceTracingConnection::RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const& request) {
+StorageTransferServiceTracingConnection::RunTransferJob(
+    google::storagetransfer::v1::RunTransferJobRequest const& request) {
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::RunTransferJob");
   internal::OTelScope scope(span);
@@ -94,12 +116,13 @@ StorageTransferServiceTracingConnection::RunTransferJob(google::storagetransfer:
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceTracingConnection::RunTransferJob(
-    NoAwaitTag, google::storagetransfer::v1::RunTransferJobRequest const& request) {
+    NoAwaitTag,
+    google::storagetransfer::v1::RunTransferJobRequest const& request) {
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::RunTransferJob");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RunTransferJob(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RunTransferJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
@@ -108,73 +131,88 @@ StorageTransferServiceTracingConnection::RunTransferJob(
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::RunTransferJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->RunTransferJob(operation));
+  return internal::EndSpan(std::move(span), child_->RunTransferJob(operation));
 }
 
-Status
-StorageTransferServiceTracingConnection::DeleteTransferJob(google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::DeleteTransferJob");
+Status StorageTransferServiceTracingConnection::DeleteTransferJob(
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::"
+      "DeleteTransferJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTransferJob(request));
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceTracingConnection::CreateAgentPool(google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::CreateAgentPool");
+StorageTransferServiceTracingConnection::CreateAgentPool(
+    google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::CreateAgentPool");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateAgentPool(request));
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceTracingConnection::UpdateAgentPool(google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::UpdateAgentPool");
+StorageTransferServiceTracingConnection::UpdateAgentPool(
+    google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::UpdateAgentPool");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateAgentPool(request));
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceTracingConnection::GetAgentPool(google::storagetransfer::v1::GetAgentPoolRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::GetAgentPool");
+StorageTransferServiceTracingConnection::GetAgentPool(
+    google::storagetransfer::v1::GetAgentPoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::GetAgentPool");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAgentPool(request));
 }
 
 StreamRange<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceTracingConnection::ListAgentPools(google::storagetransfer::v1::ListAgentPoolsRequest request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::ListAgentPools");
+StorageTransferServiceTracingConnection::ListAgentPools(
+    google::storagetransfer::v1::ListAgentPoolsRequest request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::ListAgentPools");
   internal::OTelScope scope(span);
   auto sr = child_->ListAgentPools(std::move(request));
-  return internal::MakeTracedStreamRange<google::storagetransfer::v1::AgentPool>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::storagetransfer::v1::AgentPool>(std::move(span), std::move(sr));
 }
 
-Status
-StorageTransferServiceTracingConnection::DeleteAgentPool(google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::DeleteAgentPool");
+Status StorageTransferServiceTracingConnection::DeleteAgentPool(
+    google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::DeleteAgentPool");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteAgentPool(request));
 }
 
 StreamRange<google::longrunning::Operation>
-StorageTransferServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::ListOperations");
+StorageTransferServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-StorageTransferServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::GetOperation");
+StorageTransferServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-StorageTransferServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("storagetransfer_v1::StorageTransferServiceConnection::CancelOperation");
+Status StorageTransferServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -183,10 +221,12 @@ StorageTransferServiceTracingConnection::CancelOperation(google::longrunning::Ca
 
 std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection>
 MakeStorageTransferServiceTracingConnection(
-    std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection> conn) {
+    std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<StorageTransferServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<StorageTransferServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

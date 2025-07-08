@@ -39,34 +39,37 @@ class AuthorizedCertificatesMetadata : public AuthorizedCertificatesStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse> ListAuthorizedCertificates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::ListAuthorizedCertificatesRequest const& request) override;
+  StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
+  ListAuthorizedCertificates(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::ListAuthorizedCertificatesRequest const& request)
+      override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate> GetAuthorizedCertificate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request) override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate>
+  GetAuthorizedCertificate(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::GetAuthorizedCertificateRequest const& request)
+      override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate> CreateAuthorizedCertificate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request) override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate>
+  CreateAuthorizedCertificate(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
+      override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate> UpdateAuthorizedCertificate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate>
+  UpdateAuthorizedCertificate(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
+      override;
 
   Status DeleteAuthorizedCertificate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
+      override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -26,111 +26,142 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AssetServiceConnectionIdempotencyPolicy::~AssetServiceConnectionIdempotencyPolicy() = default;
+AssetServiceConnectionIdempotencyPolicy::
+    ~AssetServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>
 AssetServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AssetServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::ExportAssets(google::cloud::asset::v1::ExportAssetsRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::ExportAssets(
+    google::cloud::asset::v1::ExportAssetsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::ListAssets(google::cloud::asset::v1::ListAssetsRequest) {  // NOLINT
+Idempotency AssetServiceConnectionIdempotencyPolicy::ListAssets(
+    google::cloud::asset::v1::ListAssetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::BatchGetAssetsHistory(google::cloud::asset::v1::BatchGetAssetsHistoryRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::BatchGetAssetsHistory(
+    google::cloud::asset::v1::BatchGetAssetsHistoryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::CreateFeed(google::cloud::asset::v1::CreateFeedRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::CreateFeed(
+    google::cloud::asset::v1::CreateFeedRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::GetFeed(google::cloud::asset::v1::GetFeedRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::GetFeed(
+    google::cloud::asset::v1::GetFeedRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::ListFeeds(google::cloud::asset::v1::ListFeedsRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::ListFeeds(
+    google::cloud::asset::v1::ListFeedsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::UpdateFeed(google::cloud::asset::v1::UpdateFeedRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::UpdateFeed(
+    google::cloud::asset::v1::UpdateFeedRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::DeleteFeed(google::cloud::asset::v1::DeleteFeedRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::DeleteFeed(
+    google::cloud::asset::v1::DeleteFeedRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::SearchAllResources(google::cloud::asset::v1::SearchAllResourcesRequest) {  // NOLINT
+Idempotency AssetServiceConnectionIdempotencyPolicy::SearchAllResources(
+    google::cloud::asset::v1::SearchAllResourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::SearchAllIamPolicies(google::cloud::asset::v1::SearchAllIamPoliciesRequest) {  // NOLINT
+Idempotency AssetServiceConnectionIdempotencyPolicy::SearchAllIamPolicies(
+    google::cloud::asset::v1::SearchAllIamPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeIamPolicy(google::cloud::asset::v1::AnalyzeIamPolicyRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeIamPolicy(
+    google::cloud::asset::v1::AnalyzeIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeIamPolicyLongrunning(google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&) {
+Idempotency
+AssetServiceConnectionIdempotencyPolicy::AnalyzeIamPolicyLongrunning(
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeMove(google::cloud::asset::v1::AnalyzeMoveRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeMove(
+    google::cloud::asset::v1::AnalyzeMoveRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::QueryAssets(google::cloud::asset::v1::QueryAssetsRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::QueryAssets(
+    google::cloud::asset::v1::QueryAssetsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::CreateSavedQuery(google::cloud::asset::v1::CreateSavedQueryRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::CreateSavedQuery(
+    google::cloud::asset::v1::CreateSavedQueryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::GetSavedQuery(google::cloud::asset::v1::GetSavedQueryRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::GetSavedQuery(
+    google::cloud::asset::v1::GetSavedQueryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::ListSavedQueries(google::cloud::asset::v1::ListSavedQueriesRequest) {  // NOLINT
+Idempotency AssetServiceConnectionIdempotencyPolicy::ListSavedQueries(
+    google::cloud::asset::v1::ListSavedQueriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::UpdateSavedQuery(google::cloud::asset::v1::UpdateSavedQueryRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::UpdateSavedQuery(
+    google::cloud::asset::v1::UpdateSavedQueryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::DeleteSavedQuery(google::cloud::asset::v1::DeleteSavedQueryRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::DeleteSavedQuery(
+    google::cloud::asset::v1::DeleteSavedQueryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::BatchGetEffectiveIamPolicies(google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&) {
+Idempotency
+AssetServiceConnectionIdempotencyPolicy::BatchGetEffectiveIamPolicies(
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicies(google::cloud::asset::v1::AnalyzeOrgPoliciesRequest) {  // NOLINT
+Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicies(
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicyGovernedContainers(google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest) {  // NOLINT
+Idempotency
+AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicyGovernedContainers(
+    google::cloud::asset::v1::
+        AnalyzeOrgPolicyGovernedContainersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicyGovernedAssets(google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest) {  // NOLINT
+Idempotency
+AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicyGovernedAssets(
+    google::cloud::asset::v1::
+        AnalyzeOrgPolicyGovernedAssetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AssetServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency AssetServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>
-    MakeDefaultAssetServiceConnectionIdempotencyPolicy() {
+MakeDefaultAssetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AssetServiceConnectionIdempotencyPolicy>();
 }
 

@@ -26,39 +26,55 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TargetVpnGatewaysConnectionIdempotencyPolicy::~TargetVpnGatewaysConnectionIdempotencyPolicy() = default;
+TargetVpnGatewaysConnectionIdempotencyPolicy::
+    ~TargetVpnGatewaysConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TargetVpnGatewaysConnectionIdempotencyPolicy>
 TargetVpnGatewaysConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TargetVpnGatewaysConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::AggregatedListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::AggregatedListTargetVpnGatewaysRequest) {  // NOLINT
+Idempotency
+TargetVpnGatewaysConnectionIdempotencyPolicy::AggregatedListTargetVpnGateways(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        AggregatedListTargetVpnGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::DeleteTargetVpnGatewayRequest const&) {
+Idempotency
+TargetVpnGatewaysConnectionIdempotencyPolicy::DeleteTargetVpnGateway(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        DeleteTargetVpnGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::GetTargetVpnGatewayRequest const&) {
+Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::GetTargetVpnGateway(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        GetTargetVpnGatewayRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::InsertTargetVpnGatewayRequest const&) {
+Idempotency
+TargetVpnGatewaysConnectionIdempotencyPolicy::InsertTargetVpnGateway(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        InsertTargetVpnGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::ListTargetVpnGatewaysRequest) {  // NOLINT
+Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::ListTargetVpnGateways(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        ListTargetVpnGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::SetLabelsRequest const&) {
+Idempotency TargetVpnGatewaysConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TargetVpnGatewaysConnectionIdempotencyPolicy>
-    MakeDefaultTargetVpnGatewaysConnectionIdempotencyPolicy() {
+MakeDefaultTargetVpnGatewaysConnectionIdempotencyPolicy() {
   return std::make_unique<TargetVpnGatewaysConnectionIdempotencyPolicy>();
 }
 

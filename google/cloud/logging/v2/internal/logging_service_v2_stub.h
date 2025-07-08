@@ -25,8 +25,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/logging/v2/logging.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,93 +40,86 @@ class LoggingServiceV2Stub {
   virtual ~LoggingServiceV2Stub() = 0;
 
   virtual Status DeleteLog(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::DeleteLogRequest const& request) = 0;
 
-  virtual StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::logging::v2::WriteLogEntriesResponse>
+  WriteLogEntries(
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 
   virtual StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogEntriesRequest const& request) = 0;
 
-  virtual StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse> ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest const& request) = 0;
+  virtual StatusOr<
+      google::logging::v2::ListMonitoredResourceDescriptorsResponse>
+  ListMonitoredResourceDescriptors(
+      grpc::ClientContext& context, Options const& options,
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogsRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries(
-      google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options) = 0;
+  AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
+                      std::shared_ptr<grpc::ClientContext> context,
+                      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::logging::v2::WriteLogEntriesRequest const& request) = 0;
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 };
 
 class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
  public:
   explicit DefaultLoggingServiceV2Stub(
-      std::unique_ptr<google::logging::v2::LoggingServiceV2::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub
-)
+      std::unique_ptr<google::logging::v2::LoggingServiceV2::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   Status DeleteLog(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::DeleteLogRequest const& request) override;
 
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogEntriesRequest const& request) override;
 
-  StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse> ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest const& request) override;
+  StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
+  ListMonitoredResourceDescriptors(
+      grpc::ClientContext& context, Options const& options,
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+          request) override;
 
   StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogsRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -138,29 +131,29 @@ class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
-  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>> AsyncWriteLogEntries(
+  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+  AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:
-  std::unique_ptr<google::logging::v2::LoggingServiceV2::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::logging::v2::LoggingServiceV2::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

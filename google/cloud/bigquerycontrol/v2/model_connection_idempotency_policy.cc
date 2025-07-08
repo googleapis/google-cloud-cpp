@@ -26,31 +26,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ModelServiceConnectionIdempotencyPolicy::~ModelServiceConnectionIdempotencyPolicy() = default;
+ModelServiceConnectionIdempotencyPolicy::
+    ~ModelServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
 ModelServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ModelServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::GetModel(google::cloud::bigquery::v2::GetModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetModel(
+    google::cloud::bigquery::v2::GetModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::ListModels(google::cloud::bigquery::v2::ListModelsRequest) {  // NOLINT
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListModels(
+    google::cloud::bigquery::v2::ListModelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::PatchModel(google::cloud::bigquery::v2::PatchModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::PatchModel(
+    google::cloud::bigquery::v2::PatchModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(google::cloud::bigquery::v2::DeleteModelRequest const&) {
+Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(
+    google::cloud::bigquery::v2::DeleteModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
-    MakeDefaultModelServiceConnectionIdempotencyPolicy() {
+MakeDefaultModelServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ModelServiceConnectionIdempotencyPolicy>();
 }
 

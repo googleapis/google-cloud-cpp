@@ -37,28 +37,28 @@ namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ValidationHelperV1Stub>
-CreateDefaultValidationHelperV1Stub(
+std::shared_ptr<ValidationHelperV1Stub> CreateDefaultValidationHelperV1Stub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::binaryauthorization::v1::ValidationHelperV1::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::binaryauthorization::v1::ValidationHelperV1::NewStub(
+          channel);
   std::shared_ptr<ValidationHelperV1Stub> stub =
-    std::make_shared<DefaultValidationHelperV1Stub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultValidationHelperV1Stub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ValidationHelperV1Auth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ValidationHelperV1Auth>(std::move(auth),
+                                                    std::move(stub));
   }
   stub = std::make_shared<ValidationHelperV1Metadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ValidationHelperV1Logging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

@@ -31,9 +31,9 @@ PagesAuth::PagesAuth(
     std::shared_ptr<PagesStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> PagesAuth::ListPages(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
+PagesAuth::ListPages(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> PagesAuth::ListPa
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesAuth::GetPage(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +49,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesAuth::GetPage(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesAuth::CreatePage(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +57,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesAuth::CreatePage(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesAuth::UpdatePage(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,17 +65,16 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesAuth::UpdatePage(
 }
 
 Status PagesAuth::DeletePage(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePage(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> PagesAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+PagesAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +82,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> PagesAuth::ListLocation
 }
 
 StatusOr<google::cloud::location::Location> PagesAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,8 +90,7 @@ StatusOr<google::cloud::location::Location> PagesAuth::GetLocation(
 }
 
 StatusOr<google::longrunning::ListOperationsResponse> PagesAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,8 +98,7 @@ StatusOr<google::longrunning::ListOperationsResponse> PagesAuth::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> PagesAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -113,8 +106,7 @@ StatusOr<google::longrunning::Operation> PagesAuth::GetOperation(
 }
 
 Status PagesAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

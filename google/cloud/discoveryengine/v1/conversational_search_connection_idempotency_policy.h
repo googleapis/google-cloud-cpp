@@ -35,59 +35,66 @@ class ConversationalSearchServiceConnectionIdempotencyPolicy {
   virtual ~ConversationalSearchServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConversationalSearchServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<
+      ConversationalSearchServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ConverseConversation(google::cloud::discoveryengine::v1::ConverseConversationRequest const& request);
+  virtual google::cloud::Idempotency ConverseConversation(
+      google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateConversation(google::cloud::discoveryengine::v1::CreateConversationRequest const& request);
+  virtual google::cloud::Idempotency CreateConversation(
+      google::cloud::discoveryengine::v1::CreateConversationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteConversation(google::cloud::discoveryengine::v1::DeleteConversationRequest const& request);
+  virtual google::cloud::Idempotency DeleteConversation(
+      google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateConversation(google::cloud::discoveryengine::v1::UpdateConversationRequest const& request);
+  virtual google::cloud::Idempotency UpdateConversation(
+      google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetConversation(google::cloud::discoveryengine::v1::GetConversationRequest const& request);
+  virtual google::cloud::Idempotency GetConversation(
+      google::cloud::discoveryengine::v1::GetConversationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest request);
+  virtual google::cloud::Idempotency ListConversations(
+      google::cloud::discoveryengine::v1::ListConversationsRequest request);
 
-  virtual google::cloud::Idempotency
-  AnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request);
+  virtual google::cloud::Idempotency AnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetAnswer(google::cloud::discoveryengine::v1::GetAnswerRequest const& request);
+  virtual google::cloud::Idempotency GetAnswer(
+      google::cloud::discoveryengine::v1::GetAnswerRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateSession(google::cloud::discoveryengine::v1::CreateSessionRequest const& request);
+  virtual google::cloud::Idempotency CreateSession(
+      google::cloud::discoveryengine::v1::CreateSessionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSession(google::cloud::discoveryengine::v1::DeleteSessionRequest const& request);
+  virtual google::cloud::Idempotency DeleteSession(
+      google::cloud::discoveryengine::v1::DeleteSessionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateSession(google::cloud::discoveryengine::v1::UpdateSessionRequest const& request);
+  virtual google::cloud::Idempotency UpdateSession(
+      google::cloud::discoveryengine::v1::UpdateSessionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetSession(google::cloud::discoveryengine::v1::GetSessionRequest const& request);
+  virtual google::cloud::Idempotency GetSession(
+      google::cloud::discoveryengine::v1::GetSessionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSessions(google::cloud::discoveryengine::v1::ListSessionsRequest request);
+  virtual google::cloud::Idempotency ListSessions(
+      google::cloud::discoveryengine::v1::ListSessionsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ConversationalSearchServiceConnectionIdempotencyPolicy>
-    MakeDefaultConversationalSearchServiceConnectionIdempotencyPolicy();
+MakeDefaultConversationalSearchServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

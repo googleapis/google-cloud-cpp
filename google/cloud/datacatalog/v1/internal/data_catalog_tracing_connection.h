@@ -36,148 +36,177 @@ class DataCatalogTracingConnection
   ~DataCatalogTracingConnection() override = default;
 
   explicit DataCatalogTracingConnection(
-    std::shared_ptr<datacatalog_v1::DataCatalogConnection> child);
+      std::shared_ptr<datacatalog_v1::DataCatalogConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
-  SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest request) override;
+  SearchCatalog(
+      google::cloud::datacatalog::v1::SearchCatalogRequest request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  CreateEntryGroup(google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
+      google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  GetEntryGroup(google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
+      google::cloud::datacatalog::v1::GetEntryGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  UpdateEntryGroup(google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
+      google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request)
+      override;
 
-  Status
-  DeleteEntryGroup(google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) override;
+  Status DeleteEntryGroup(
+      google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request)
+      override;
 
-  StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-  ListEntryGroups(google::cloud::datacatalog::v1::ListEntryGroupsRequest request) override;
+  StreamRange<google::cloud::datacatalog::v1::EntryGroup> ListEntryGroups(
+      google::cloud::datacatalog::v1::ListEntryGroupsRequest request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  CreateEntry(google::cloud::datacatalog::v1::CreateEntryRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
+      google::cloud::datacatalog::v1::CreateEntryRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  UpdateEntry(google::cloud::datacatalog::v1::UpdateEntryRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
+      google::cloud::datacatalog::v1::UpdateEntryRequest const& request)
+      override;
 
-  Status
-  DeleteEntry(google::cloud::datacatalog::v1::DeleteEntryRequest const& request) override;
+  Status DeleteEntry(google::cloud::datacatalog::v1::DeleteEntryRequest const&
+                         request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  GetEntry(google::cloud::datacatalog::v1::GetEntryRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
+      google::cloud::datacatalog::v1::GetEntryRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  LookupEntry(google::cloud::datacatalog::v1::LookupEntryRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::Entry> LookupEntry(
+      google::cloud::datacatalog::v1::LookupEntryRequest const& request)
+      override;
 
-  StreamRange<google::cloud::datacatalog::v1::Entry>
-  ListEntries(google::cloud::datacatalog::v1::ListEntriesRequest request) override;
+  StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
+      google::cloud::datacatalog::v1::ListEntriesRequest request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::EntryOverview>
-  ModifyEntryOverview(google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::Contacts>
-  ModifyEntryContacts(google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  CreateTagTemplate(google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
+      google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  GetTagTemplate(google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
+      google::cloud::datacatalog::v1::GetTagTemplateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  UpdateTagTemplate(google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
+      google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request)
+      override;
 
-  Status
-  DeleteTagTemplate(google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) override;
+  Status DeleteTagTemplate(
+      google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  CreateTagTemplateField(google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request) override;
+  CreateTagTemplateField(
+      google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
+          request) override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  UpdateTagTemplateField(google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request) override;
+  UpdateTagTemplateField(
+      google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
+          request) override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateField(google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request) override;
+  RenameTagTemplateField(
+      google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
+          request) override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateFieldEnumValue(google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request) override;
+  RenameTagTemplateFieldEnumValue(
+      google::cloud::datacatalog::v1::
+          RenameTagTemplateFieldEnumValueRequest const& request) override;
 
-  Status
-  DeleteTagTemplateField(google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request) override;
+  Status DeleteTagTemplateField(
+      google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
+          request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::Tag>
-  CreateTag(google::cloud::datacatalog::v1::CreateTagRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
+      google::cloud::datacatalog::v1::CreateTagRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::Tag>
-  UpdateTag(google::cloud::datacatalog::v1::UpdateTagRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
+      google::cloud::datacatalog::v1::UpdateTagRequest const& request) override;
 
-  Status
-  DeleteTag(google::cloud::datacatalog::v1::DeleteTagRequest const& request) override;
+  Status DeleteTag(
+      google::cloud::datacatalog::v1::DeleteTagRequest const& request) override;
 
-  StreamRange<google::cloud::datacatalog::v1::Tag>
-  ListTags(google::cloud::datacatalog::v1::ListTagsRequest request) override;
+  StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
+      google::cloud::datacatalog::v1::ListTagsRequest request) override;
 
   future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-  ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) override;
+  ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ReconcileTags(NoAwaitTag,
-      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ReconcileTags(
+      NoAwaitTag,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-  ReconcileTags(
-      google::longrunning::Operation const& operation) override;
+  ReconcileTags(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
-  StarEntry(google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
-  UnstarEntry(google::cloud::datacatalog::v1::UnstarEntryRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
-
-  future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-  ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ImportEntries(NoAwaitTag,
-      google::cloud::datacatalog::v1::ImportEntriesRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-  ImportEntries(
-      google::longrunning::Operation const& operation) override;
+  ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const&
+                    request) override;
+
+  StatusOr<google::longrunning::Operation> ImportEntries(
+      NoAwaitTag,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
+      google::cloud::datacatalog::v1::SetConfigRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::OrganizationConfig> RetrieveConfig(
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
-  SetConfig(google::cloud::datacatalog::v1::SetConfigRequest const& request) override;
+  RetrieveEffectiveConfig(
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
-  RetrieveConfig(google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
-  RetrieveEffectiveConfig(google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
-
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<datacatalog_v1::DataCatalogConnection> child_;

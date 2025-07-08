@@ -36,53 +36,55 @@ class ParticipantsConnectionIdempotencyPolicy {
   virtual ~ParticipantsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ParticipantsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ParticipantsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateParticipant(google::cloud::dialogflow::v2::CreateParticipantRequest const& request);
+  virtual google::cloud::Idempotency CreateParticipant(
+      google::cloud::dialogflow::v2::CreateParticipantRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetParticipant(google::cloud::dialogflow::v2::GetParticipantRequest const& request);
+  virtual google::cloud::Idempotency GetParticipant(
+      google::cloud::dialogflow::v2::GetParticipantRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListParticipants(google::cloud::dialogflow::v2::ListParticipantsRequest request);
+  virtual google::cloud::Idempotency ListParticipants(
+      google::cloud::dialogflow::v2::ListParticipantsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateParticipant(google::cloud::dialogflow::v2::UpdateParticipantRequest const& request);
+  virtual google::cloud::Idempotency UpdateParticipant(
+      google::cloud::dialogflow::v2::UpdateParticipantRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AnalyzeContent(google::cloud::dialogflow::v2::AnalyzeContentRequest const& request);
+  virtual google::cloud::Idempotency AnalyzeContent(
+      google::cloud::dialogflow::v2::AnalyzeContentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const& request);
+  virtual google::cloud::Idempotency SuggestArticles(
+      google::cloud::dialogflow::v2::SuggestArticlesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SuggestFaqAnswers(google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request);
+  virtual google::cloud::Idempotency SuggestFaqAnswers(
+      google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SuggestSmartReplies(google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
+  virtual google::cloud::Idempotency SuggestSmartReplies(
+      google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SuggestKnowledgeAssist(google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const& request);
+  virtual google::cloud::Idempotency SuggestKnowledgeAssist(
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ParticipantsConnectionIdempotencyPolicy>
-    MakeDefaultParticipantsConnectionIdempotencyPolicy();
+MakeDefaultParticipantsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

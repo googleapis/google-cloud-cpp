@@ -35,32 +35,50 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AnalyticsHubServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ANALYTICS_HUB_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ANALYTICS_HUB_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_ANALYTICS_HUB_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ANALYTICS_HUB_SERVICE_AUTHORITY",
       "analyticshub.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()) {
+  if (!options.has<
+          bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()) {
     options.set<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>(
         bigquery_analyticshub_v1::AnalyticsHubServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>()) {
-    options.set<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<
+          bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>()) {
+    options
+        .set<bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption>()) {
-    options.set<bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption::Type,
-            bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption::Type>(
-            options.get<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()->clone(),
+  if (!options.has<
+          bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption>()) {
+    options.set<
+        bigquery_analyticshub_v1::AnalyticsHubServicePollingPolicyOption>(
+        GenericPollingPolicy<bigquery_analyticshub_v1::
+                                 AnalyticsHubServiceRetryPolicyOption::Type,
+                             bigquery_analyticshub_v1::
+                                 AnalyticsHubServiceBackoffPolicyOption::Type>(
+            options
+                .get<bigquery_analyticshub_v1::
+                         AnalyticsHubServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicyOption>(
-        bigquery_analyticshub_v1::MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<bigquery_analyticshub_v1::
+                    AnalyticsHubServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<bigquery_analyticshub_v1::
+                    AnalyticsHubServiceConnectionIdempotencyPolicyOption>(
+        bigquery_analyticshub_v1::
+            MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy());
   }
 
   return options;

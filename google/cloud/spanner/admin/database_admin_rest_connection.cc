@@ -17,15 +17,15 @@
 // source: google/spanner/admin/database/v1/spanner_database_admin.proto
 
 #include "google/cloud/spanner/admin/database_admin_rest_connection.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/rest_background_threads_impl.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/spanner/admin/database_admin_options.h"
 #include "google/cloud/spanner/admin/internal/database_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/internal/database_admin_rest_connection_impl.h"
 #include "google/cloud/spanner/admin/internal/database_admin_rest_stub_factory.h"
 #include "google/cloud/spanner/admin/internal/database_admin_tracing_connection.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,18 +36,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      DatabaseAdminPolicyOptionList>(options, __func__);
-  options = spanner_admin_internal::DatabaseAdminDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, DatabaseAdminPolicyOptionList>(
+      options, __func__);
+  options =
+      spanner_admin_internal::DatabaseAdminDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = spanner_admin_internal::CreateDefaultDatabaseAdminRestStub(
-      options);
+  auto stub =
+      spanner_admin_internal::CreateDefaultDatabaseAdminRestStub(options);
   return spanner_admin_internal::MakeDatabaseAdminTracingConnection(
-      std::make_shared<
-          spanner_admin_internal::DatabaseAdminRestConnectionImpl>(
+      std::make_shared<spanner_admin_internal::DatabaseAdminRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

@@ -35,13 +35,13 @@ class KeyDashboardServiceLogging : public KeyDashboardServiceStub {
  public:
   ~KeyDashboardServiceLogging() override = default;
   KeyDashboardServiceLogging(std::shared_ptr<KeyDashboardServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                             TracingOptions tracing_options,
+                             std::set<std::string> const& components);
 
-  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse> ListCryptoKeys(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) override;
+  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
+                 google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
+                     request) override;
 
  private:
   std::shared_ptr<KeyDashboardServiceStub> child_;

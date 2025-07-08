@@ -34,133 +34,176 @@ ConversationProfilesTracingConnection::ConversationProfilesTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesTracingConnection::ListConversationProfiles(google::cloud::dialogflow::v2::ListConversationProfilesRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::ListConversationProfiles");
+ConversationProfilesTracingConnection::ListConversationProfiles(
+    google::cloud::dialogflow::v2::ListConversationProfilesRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "ListConversationProfiles");
   internal::OTelScope scope(span);
   auto sr = child_->ListConversationProfiles(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::ConversationProfile>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::ConversationProfile>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesTracingConnection::GetConversationProfile(google::cloud::dialogflow::v2::GetConversationProfileRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::GetConversationProfile");
+ConversationProfilesTracingConnection::GetConversationProfile(
+    google::cloud::dialogflow::v2::GetConversationProfileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::GetConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConversationProfile(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesTracingConnection::CreateConversationProfile(google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::CreateConversationProfile");
+ConversationProfilesTracingConnection::CreateConversationProfile(
+    google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "CreateConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateConversationProfile(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesTracingConnection::UpdateConversationProfile(google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::UpdateConversationProfile");
+ConversationProfilesTracingConnection::UpdateConversationProfile(
+    google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "UpdateConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateConversationProfile(request));
 }
 
-Status
-ConversationProfilesTracingConnection::DeleteConversationProfile(google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::DeleteConversationProfile");
+Status ConversationProfilesTracingConnection::DeleteConversationProfile(
+    google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "DeleteConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteConversationProfile(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::ConversationProfilesConnection::SetSuggestionFeatureConfig");
+      "dialogflow_es::ConversationProfilesConnection::"
+      "SetSuggestionFeatureConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->SetSuggestionFeatureConfig(request));
+  return internal::EndSpan(std::move(span),
+                           child_->SetSuggestionFeatureConfig(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
-    NoAwaitTag, google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::ConversationProfilesConnection::SetSuggestionFeatureConfig");
+      "dialogflow_es::ConversationProfilesConnection::"
+      "SetSuggestionFeatureConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetSuggestionFeatureConfig(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->SetSuggestionFeatureConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::ConversationProfilesConnection::SetSuggestionFeatureConfig");
+      "dialogflow_es::ConversationProfilesConnection::"
+      "SetSuggestionFeatureConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->SetSuggestionFeatureConfig(operation));
+                           child_->SetSuggestionFeatureConfig(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::ConversationProfilesConnection::ClearSuggestionFeatureConfig");
+      "dialogflow_es::ConversationProfilesConnection::"
+      "ClearSuggestionFeatureConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ClearSuggestionFeatureConfig(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ClearSuggestionFeatureConfig(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
-    NoAwaitTag, google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::ConversationProfilesConnection::ClearSuggestionFeatureConfig");
+      "dialogflow_es::ConversationProfilesConnection::"
+      "ClearSuggestionFeatureConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ClearSuggestionFeatureConfig(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ClearSuggestionFeatureConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::ConversationProfilesConnection::ClearSuggestionFeatureConfig");
+      "dialogflow_es::ConversationProfilesConnection::"
+      "ClearSuggestionFeatureConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ClearSuggestionFeatureConfig(operation));
+                           child_->ClearSuggestionFeatureConfig(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-ConversationProfilesTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::ListLocations");
+ConversationProfilesTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ConversationProfilesTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::GetLocation");
+ConversationProfilesTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationProfilesTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::ListOperations");
+ConversationProfilesTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::GetOperation");
+ConversationProfilesTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ConversationProfilesTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::ConversationProfilesConnection::CancelOperation");
+Status ConversationProfilesTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -172,7 +215,8 @@ MakeConversationProfilesTracingConnection(
     std::shared_ptr<dialogflow_es::ConversationProfilesConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ConversationProfilesTracingConnection>(std::move(conn));
+    conn = std::make_shared<ConversationProfilesTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

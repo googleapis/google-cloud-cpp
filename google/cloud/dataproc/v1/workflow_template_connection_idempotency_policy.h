@@ -36,53 +36,59 @@ class WorkflowTemplateServiceConnectionIdempotencyPolicy {
   virtual ~WorkflowTemplateServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateWorkflowTemplate(google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request);
+  virtual google::cloud::Idempotency CreateWorkflowTemplate(
+      google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetWorkflowTemplate(google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request);
+  virtual google::cloud::Idempotency GetWorkflowTemplate(
+      google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InstantiateWorkflowTemplate(google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request);
+  virtual google::cloud::Idempotency InstantiateWorkflowTemplate(
+      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InstantiateInlineWorkflowTemplate(google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request);
+  virtual google::cloud::Idempotency InstantiateInlineWorkflowTemplate(
+      google::cloud::dataproc::v1::
+          InstantiateInlineWorkflowTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateWorkflowTemplate(google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request);
+  virtual google::cloud::Idempotency UpdateWorkflowTemplate(
+      google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListWorkflowTemplates(google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request);
+  virtual google::cloud::Idempotency ListWorkflowTemplates(
+      google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteWorkflowTemplate(google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request);
+  virtual google::cloud::Idempotency DeleteWorkflowTemplate(
+      google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
-    MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy();
+MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1

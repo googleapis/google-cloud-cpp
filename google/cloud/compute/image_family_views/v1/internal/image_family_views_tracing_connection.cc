@@ -29,12 +29,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ImageFamilyViewsTracingConnection::ImageFamilyViewsTracingConnection(
-    std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection> child)
+    std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-ImageFamilyViewsTracingConnection::GetImageFamilyView(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request) {
-  auto span = internal::MakeSpan("compute_image_family_views_v1::ImageFamilyViewsConnection::GetImageFamilyView");
+ImageFamilyViewsTracingConnection::GetImageFamilyView(
+    google::cloud::cpp::compute::image_family_views::v1::
+        GetImageFamilyViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_image_family_views_v1::ImageFamilyViewsConnection::"
+      "GetImageFamilyView");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetImageFamilyView(request));
 }
@@ -43,7 +48,8 @@ ImageFamilyViewsTracingConnection::GetImageFamilyView(google::cloud::cpp::comput
 
 std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
 MakeImageFamilyViewsTracingConnection(
-    std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection> conn) {
+    std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ImageFamilyViewsTracingConnection>(std::move(conn));

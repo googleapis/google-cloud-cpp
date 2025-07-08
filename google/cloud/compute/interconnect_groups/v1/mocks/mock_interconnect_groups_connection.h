@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `InterconnectGroupsConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `InterconnectGroupsClient`. To do so,
- * construct an object of type `InterconnectGroupsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `InterconnectGroupsClient`. To do
+ * so, construct an object of type `InterconnectGroupsClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockInterconnectGroupsConnection : public compute_interconnect_groups_v1::InterconnectGroupsConnection {
+class MockInterconnectGroupsConnection
+    : public compute_interconnect_groups_v1::InterconnectGroupsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockInterconnectGroupsConnection : public compute_interconnect_groups_v1::
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateMembers(Matcher<google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateMembers(Matcher<google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  CreateMembers,
-  (google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request), (override));
-
+              CreateMembers,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   CreateMembersRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -65,32 +69,39 @@ class MockInterconnectGroupsConnection : public compute_interconnect_groups_v1::
   /// EXPECT_CALL(*mock, CreateMembers(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  CreateMembers, (NoAwaitTag,
-    google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateMembers(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  CreateMembers, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              CreateMembers,
+              (NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::
+                               v1::CreateMembersRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInterconnectGroup(Matcher<google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateMembers(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteInterconnectGroup,
-  (google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request), (override));
+              CreateMembers,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInterconnectGroup(Matcher<google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteInterconnectGroup,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   DeleteInterconnectGroupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -99,44 +110,58 @@ class MockInterconnectGroupsConnection : public compute_interconnect_groups_v1::
   /// EXPECT_CALL(*mock, DeleteInterconnectGroup(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteInterconnectGroup, (NoAwaitTag,
-    google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request), (override));
-
+              DeleteInterconnectGroup,
+              (NoAwaitTag,
+               google::cloud::cpp::compute::interconnect_groups::v1::
+                   DeleteInterconnectGroupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInterconnectGroup(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteInterconnectGroup(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteInterconnectGroup, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              DeleteInterconnectGroup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>,
-  GetInterconnectGroup,
-  (google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request), (override));
+              GetInterconnectGroup,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   GetInterconnectGroupRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>,
-  GetOperationalStatus,
-  (google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
+                           InterconnectGroupsGetOperationalStatusResponse>,
+              GetOperationalStatus,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   GetOperationalStatusRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertInterconnectGroup(Matcher<google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertInterconnectGroup(Matcher<google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertInterconnectGroup,
-  (google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request), (override));
-
+              InsertInterconnectGroup,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   InsertInterconnectGroupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -145,36 +170,46 @@ class MockInterconnectGroupsConnection : public compute_interconnect_groups_v1::
   /// EXPECT_CALL(*mock, InsertInterconnectGroup(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertInterconnectGroup, (NoAwaitTag,
-    google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request), (override));
-
+              InsertInterconnectGroup,
+              (NoAwaitTag,
+               google::cloud::cpp::compute::interconnect_groups::v1::
+                   InsertInterconnectGroupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertInterconnectGroup(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertInterconnectGroup(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertInterconnectGroup, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              InsertInterconnectGroup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>),
-  ListInterconnectGroups,
-  (google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest request), (override));
+              ListInterconnectGroups,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   ListInterconnectGroupsRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PatchInterconnectGroup(Matcher<google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PatchInterconnectGroup(Matcher<google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchInterconnectGroup,
-  (google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request), (override));
-
+              PatchInterconnectGroup,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   PatchInterconnectGroupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -183,28 +218,37 @@ class MockInterconnectGroupsConnection : public compute_interconnect_groups_v1::
   /// EXPECT_CALL(*mock, PatchInterconnectGroup(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchInterconnectGroup, (NoAwaitTag,
-    google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request), (override));
-
+              PatchInterconnectGroup,
+              (NoAwaitTag,
+               google::cloud::cpp::compute::interconnect_groups::v1::
+                   PatchInterconnectGroupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PatchInterconnectGroup(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PatchInterconnectGroup(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchInterconnectGroup, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              PatchInterconnectGroup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::interconnect_groups::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::interconnect_groups::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

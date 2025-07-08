@@ -42,25 +42,38 @@ Options DataMigrationServiceDefaultOptions(Options options) {
   if (!options.has<datamigration_v1::DataMigrationServiceRetryPolicyOption>()) {
     options.set<datamigration_v1::DataMigrationServiceRetryPolicyOption>(
         datamigration_v1::DataMigrationServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<datamigration_v1::DataMigrationServiceBackoffPolicyOption>()) {
     options.set<datamigration_v1::DataMigrationServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<datamigration_v1::DataMigrationServicePollingPolicyOption>()) {
+  if (!options
+           .has<datamigration_v1::DataMigrationServicePollingPolicyOption>()) {
     options.set<datamigration_v1::DataMigrationServicePollingPolicyOption>(
         GenericPollingPolicy<
             datamigration_v1::DataMigrationServiceRetryPolicyOption::Type,
             datamigration_v1::DataMigrationServiceBackoffPolicyOption::Type>(
-            options.get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()->clone(),
+            options
+                .get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicyOption>(
-        datamigration_v1::MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<datamigration_v1::
+                    DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<datamigration_v1::
+                    DataMigrationServiceConnectionIdempotencyPolicyOption>(
+        datamigration_v1::
+            MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy());
   }
 
   return options;

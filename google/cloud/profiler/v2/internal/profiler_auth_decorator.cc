@@ -31,27 +31,28 @@ ProfilerServiceAuth::ProfilerServiceAuth(
     std::shared_ptr<ProfilerServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::devtools::cloudprofiler::v2::Profile> ProfilerServiceAuth::CreateProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudprofiler::v2::Profile>
+ProfilerServiceAuth::CreateProfile(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateProfile(context, options, request);
 }
 
-StatusOr<google::devtools::cloudprofiler::v2::Profile> ProfilerServiceAuth::CreateOfflineProfile(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) {
+StatusOr<google::devtools::cloudprofiler::v2::Profile>
+ProfilerServiceAuth::CreateOfflineProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateOfflineProfile(context, options, request);
 }
 
-StatusOr<google::devtools::cloudprofiler::v2::Profile> ProfilerServiceAuth::UpdateProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudprofiler::v2::Profile>
+ProfilerServiceAuth::UpdateProfile(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -36,56 +36,59 @@ class CloudShellServiceTracingConnection
   ~CloudShellServiceTracingConnection() override = default;
 
   explicit CloudShellServiceTracingConnection(
-    std::shared_ptr<shell_v1::CloudShellServiceConnection> child);
+      std::shared_ptr<shell_v1::CloudShellServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::shell::v1::Environment>
-  GetEnvironment(google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
+  StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
+      google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
-  StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
+  StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const&
+                       request) override;
 
-  StatusOr<google::longrunning::Operation>
-  StartEnvironment(NoAwaitTag,
-      google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> StartEnvironment(
+      NoAwaitTag,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
-  StartEnvironment(
-      google::longrunning::Operation const& operation) override;
+  StartEnvironment(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
-  AuthorizeEnvironment(google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
+  AuthorizeEnvironment(
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  AuthorizeEnvironment(NoAwaitTag,
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
+      NoAwaitTag,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
   AuthorizeEnvironment(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
-  AddPublicKey(google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  AddPublicKey(NoAwaitTag,
+  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
-  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
-  AddPublicKey(
+  StatusOr<google::longrunning::Operation> AddPublicKey(
+      NoAwaitTag,
+      google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
-  RemovePublicKey(google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  RemovePublicKey(NoAwaitTag,
-      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
   RemovePublicKey(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RemovePublicKey(
+      NoAwaitTag,
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
+  RemovePublicKey(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<shell_v1::CloudShellServiceConnection> child_;

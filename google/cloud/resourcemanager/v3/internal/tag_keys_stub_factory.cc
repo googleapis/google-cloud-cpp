@@ -17,17 +17,17 @@
 // source: google/cloud/resourcemanager/v3/tag_keys.proto
 
 #include "google/cloud/resourcemanager/v3/internal/tag_keys_stub_factory.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_auth_decorator.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_logging_decorator.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_metadata_decorator.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_stub.h"
+#include "google/cloud/resourcemanager/v3/internal/tag_keys_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_auth_decorator.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_logging_decorator.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_metadata_decorator.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_stub.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_keys_tracing_stub.h"
 #include <google/cloud/resourcemanager/v3/tag_keys.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -38,30 +38,26 @@ namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TagKeysStub>
-CreateDefaultTagKeysStub(
+std::shared_ptr<TagKeysStub> CreateDefaultTagKeysStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::resourcemanager::v3::TagKeys::NewStub(channel);
-  std::shared_ptr<TagKeysStub> stub =
-    std::make_shared<DefaultTagKeysStub>(
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::resourcemanager::v3::TagKeys::NewStub(channel);
+  std::shared_ptr<TagKeysStub> stub = std::make_shared<DefaultTagKeysStub>(
       std::move(service_grpc_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<TagKeysAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<TagKeysAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<TagKeysMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<TagKeysLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
 #include "google/cloud/support/v2/comment_connection.h"
 #include "google/cloud/support/v2/comment_connection_idempotency_policy.h"
 #include "google/cloud/support/v2/comment_options.h"
 #include "google/cloud/support/v2/internal/comment_retry_traits.h"
 #include "google/cloud/support/v2/internal/comment_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -43,17 +43,17 @@ class CommentServiceConnectionImpl
   ~CommentServiceConnectionImpl() override = default;
 
   CommentServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<support_v2_internal::CommentServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<support_v2_internal::CommentServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::support::v2::Comment>
-  ListComments(google::cloud::support::v2::ListCommentsRequest request) override;
+  StreamRange<google::cloud::support::v2::Comment> ListComments(
+      google::cloud::support::v2::ListCommentsRequest request) override;
 
-  StatusOr<google::cloud::support::v2::Comment>
-  CreateComment(google::cloud::support::v2::CreateCommentRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Comment> CreateComment(
+      google::cloud::support::v2::CreateCommentRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

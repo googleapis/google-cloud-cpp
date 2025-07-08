@@ -26,23 +26,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-LicenseCodesConnectionIdempotencyPolicy::~LicenseCodesConnectionIdempotencyPolicy() = default;
+LicenseCodesConnectionIdempotencyPolicy::
+    ~LicenseCodesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<LicenseCodesConnectionIdempotencyPolicy>
 LicenseCodesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LicenseCodesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LicenseCodesConnectionIdempotencyPolicy::GetLicenseCode(google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const&) {
+Idempotency LicenseCodesConnectionIdempotencyPolicy::GetLicenseCode(
+    google::cloud::cpp::compute::license_codes::v1::
+        GetLicenseCodeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency LicenseCodesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const&) {
+Idempotency LicenseCodesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::license_codes::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<LicenseCodesConnectionIdempotencyPolicy>
-    MakeDefaultLicenseCodesConnectionIdempotencyPolicy() {
+MakeDefaultLicenseCodesConnectionIdempotencyPolicy() {
   return std::make_unique<LicenseCodesConnectionIdempotencyPolicy>();
 }
 

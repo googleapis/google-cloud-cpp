@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `ConversationalSearchServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ConversationalSearchServiceClient`. To do so,
- * construct an object of type `ConversationalSearchServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `ConversationalSearchServiceClient`.
+ * To do so, construct an object of type `ConversationalSearchServiceClient`
+ * with an instance of this class. Then use the Google Test framework functions
+ * to program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,77 +42,103 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockConversationalSearchServiceConnection : public discoveryengine_v1::ConversationalSearchServiceConnection {
+class MockConversationalSearchServiceConnection
+    : public discoveryengine_v1::ConversationalSearchServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>,
-  ConverseConversation,
-  (google::cloud::discoveryengine::v1::ConverseConversationRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::discoveryengine::v1::ConverseConversationResponse>,
+      ConverseConversation,
+      (google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Conversation>,
+      CreateConversation,
+      (google::cloud::discoveryengine::v1::CreateConversationRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteConversation,
+      (google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Conversation>,
+      UpdateConversation,
+      (google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Conversation>,
-  CreateConversation,
-  (google::cloud::discoveryengine::v1::CreateConversationRequest const& request), (override));
+              GetConversation,
+              (google::cloud::discoveryengine::v1::GetConversationRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteConversation,
-  (google::cloud::discoveryengine::v1::DeleteConversationRequest const& request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::discoveryengine::v1::Conversation>),
+      ListConversations,
+      (google::cloud::discoveryengine::v1::ListConversationsRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Conversation>,
-  UpdateConversation,
-  (google::cloud::discoveryengine::v1::UpdateConversationRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>,
+      AnswerQuery,
+      (google::cloud::discoveryengine::v1::AnswerQueryRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Conversation>,
-  GetConversation,
-  (google::cloud::discoveryengine::v1::GetConversationRequest const& request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>,
+      StreamAnswerQuery,
+      (google::cloud::discoveryengine::v1::AnswerQueryRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::discoveryengine::v1::Conversation>),
-  ListConversations,
-  (google::cloud::discoveryengine::v1::ListConversationsRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Answer>, GetAnswer,
+      (google::cloud::discoveryengine::v1::GetAnswerRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>,
-  AnswerQuery,
-  (google::cloud::discoveryengine::v1::AnswerQueryRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Session>, CreateSession,
+      (google::cloud::discoveryengine::v1::CreateSessionRequest const& request),
+      (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>,
-  StreamAnswerQuery,
-  (google::cloud::discoveryengine::v1::AnswerQueryRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteSession,
+      (google::cloud::discoveryengine::v1::DeleteSessionRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Answer>,
-  GetAnswer,
-  (google::cloud::discoveryengine::v1::GetAnswerRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Session>, UpdateSession,
+      (google::cloud::discoveryengine::v1::UpdateSessionRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Session>,
-  CreateSession,
-  (google::cloud::discoveryengine::v1::CreateSessionRequest const& request), (override));
-
-  MOCK_METHOD(Status,
-  DeleteSession,
-  (google::cloud::discoveryengine::v1::DeleteSessionRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Session>,
-  UpdateSession,
-  (google::cloud::discoveryengine::v1::UpdateSessionRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Session>,
-  GetSession,
-  (google::cloud::discoveryengine::v1::GetSessionRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Session>, GetSession,
+      (google::cloud::discoveryengine::v1::GetSessionRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::discoveryengine::v1::Session>),
-  ListSessions,
-  (google::cloud::discoveryengine::v1::ListSessionsRequest request), (override));
+              ListSessions,
+              (google::cloud::discoveryengine::v1::ListSessionsRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

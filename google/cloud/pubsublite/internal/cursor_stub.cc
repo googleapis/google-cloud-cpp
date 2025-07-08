@@ -38,7 +38,9 @@ DefaultCursorServiceStub::AsyncStreamingCommitCursor(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingReadWriteRpc<google::cloud::pubsublite::v1::StreamingCommitCursorRequest, google::cloud::pubsublite::v1::StreamingCommitCursorResponse>(
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
+      google::cloud::pubsublite::v1::StreamingCommitCursorResponse>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamingCommitCursor(context, cq);
@@ -47,80 +49,71 @@ DefaultCursorServiceStub::AsyncStreamingCommitCursor(
 
 StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 DefaultCursorServiceStub::CommitCursor(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
-    google::cloud::pubsublite::v1::CommitCursorResponse response;
-    auto status =
-        grpc_stub_->CommitCursor(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
+  google::cloud::pubsublite::v1::CommitCursorResponse response;
+  auto status = grpc_stub_->CommitCursor(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 DefaultCursorServiceStub::ListPartitionCursors(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
-    google::cloud::pubsublite::v1::ListPartitionCursorsResponse response;
-    auto status =
-        grpc_stub_->ListPartitionCursors(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
+  google::cloud::pubsublite::v1::ListPartitionCursorsResponse response;
+  auto status = grpc_stub_->ListPartitionCursors(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultCursorServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCursorServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCursorServiceStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultCursorServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCursorServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultCursorServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCursorServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,38 +33,37 @@ FunctionServiceStub::~FunctionServiceStub() = default;
 
 StatusOr<google::cloud::functions::v2::Function>
 DefaultFunctionServiceStub::GetFunction(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::functions::v2::GetFunctionRequest const& request) {
-    google::cloud::functions::v2::Function response;
-    auto status =
-        grpc_stub_->GetFunction(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::functions::v2::GetFunctionRequest const& request) {
+  google::cloud::functions::v2::Function response;
+  auto status = grpc_stub_->GetFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::functions::v2::ListFunctionsResponse>
 DefaultFunctionServiceStub::ListFunctions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::functions::v2::ListFunctionsRequest const& request) {
-    google::cloud::functions::v2::ListFunctionsResponse response;
-    auto status =
-        grpc_stub_->ListFunctions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::functions::v2::ListFunctionsRequest const& request) {
+  google::cloud::functions::v2::ListFunctionsResponse response;
+  auto status = grpc_stub_->ListFunctions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncCreateFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::functions::v2::CreateFunctionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::functions::v2::CreateFunctionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::functions::v2::CreateFunctionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::functions::v2::CreateFunctionRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::functions::v2::CreateFunctionRequest const& request,
@@ -76,26 +75,25 @@ DefaultFunctionServiceStub::AsyncCreateFunction(
 
 StatusOr<google::longrunning::Operation>
 DefaultFunctionServiceStub::CreateFunction(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::functions::v2::CreateFunctionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateFunction(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v2::CreateFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncUpdateFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::functions::v2::UpdateFunctionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::functions::v2::UpdateFunctionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::functions::v2::UpdateFunctionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::functions::v2::UpdateFunctionRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::functions::v2::UpdateFunctionRequest const& request,
@@ -107,26 +105,25 @@ DefaultFunctionServiceStub::AsyncUpdateFunction(
 
 StatusOr<google::longrunning::Operation>
 DefaultFunctionServiceStub::UpdateFunction(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::functions::v2::UpdateFunctionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateFunction(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v2::UpdateFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncDeleteFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::functions::v2::DeleteFunctionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::functions::v2::DeleteFunctionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::functions::v2::DeleteFunctionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::functions::v2::DeleteFunctionRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::functions::v2::DeleteFunctionRequest const& request,
@@ -138,133 +135,121 @@ DefaultFunctionServiceStub::AsyncDeleteFunction(
 
 StatusOr<google::longrunning::Operation>
 DefaultFunctionServiceStub::DeleteFunction(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::functions::v2::DeleteFunctionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteFunction(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v2::DeleteFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
 DefaultFunctionServiceStub::GenerateUploadUrl(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::functions::v2::GenerateUploadUrlRequest const& request) {
-    google::cloud::functions::v2::GenerateUploadUrlResponse response;
-    auto status =
-        grpc_stub_->GenerateUploadUrl(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::functions::v2::GenerateUploadUrlRequest const& request) {
+  google::cloud::functions::v2::GenerateUploadUrlResponse response;
+  auto status = grpc_stub_->GenerateUploadUrl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
 DefaultFunctionServiceStub::GenerateDownloadUrl(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::functions::v2::GenerateDownloadUrlRequest const& request) {
-    google::cloud::functions::v2::GenerateDownloadUrlResponse response;
-    auto status =
-        grpc_stub_->GenerateDownloadUrl(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::functions::v2::GenerateDownloadUrlRequest const& request) {
+  google::cloud::functions::v2::GenerateDownloadUrlResponse response;
+  auto status = grpc_stub_->GenerateDownloadUrl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
 DefaultFunctionServiceStub::ListRuntimes(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::functions::v2::ListRuntimesRequest const& request) {
-    google::cloud::functions::v2::ListRuntimesResponse response;
-    auto status =
-        grpc_stub_->ListRuntimes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::functions::v2::ListRuntimesRequest const& request) {
+  google::cloud::functions::v2::ListRuntimesResponse response;
+  auto status = grpc_stub_->ListRuntimes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultFunctionServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultFunctionServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultFunctionServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultFunctionServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultFunctionServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultFunctionServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultFunctionServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultFunctionServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -293,13 +278,14 @@ future<Status> DefaultFunctionServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

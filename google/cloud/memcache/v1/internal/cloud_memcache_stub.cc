@@ -33,38 +33,37 @@ CloudMemcacheStub::~CloudMemcacheStub() = default;
 
 StatusOr<google::cloud::memcache::v1::ListInstancesResponse>
 DefaultCloudMemcacheStub::ListInstances(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::memcache::v1::ListInstancesRequest const& request) {
-    google::cloud::memcache::v1::ListInstancesResponse response;
-    auto status =
-        grpc_stub_->ListInstances(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memcache::v1::ListInstancesRequest const& request) {
+  google::cloud::memcache::v1::ListInstancesResponse response;
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::memcache::v1::Instance>
 DefaultCloudMemcacheStub::GetInstance(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::memcache::v1::GetInstanceRequest const& request) {
-    google::cloud::memcache::v1::Instance response;
-    auto status =
-        grpc_stub_->GetInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::memcache::v1::GetInstanceRequest const& request) {
+  google::cloud::memcache::v1::Instance response;
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::memcache::v1::CreateInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memcache::v1::CreateInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::memcache::v1::CreateInstanceRequest const& request,
@@ -76,26 +75,25 @@ DefaultCloudMemcacheStub::AsyncCreateInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudMemcacheStub::CreateInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::memcache::v1::UpdateInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memcache::v1::UpdateInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::memcache::v1::UpdateInstanceRequest const& request,
@@ -107,30 +105,30 @@ DefaultCloudMemcacheStub::AsyncUpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudMemcacheStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncUpdateParameters(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::memcache::v1::UpdateParametersRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memcache::v1::UpdateParametersRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::memcache::v1::UpdateParametersRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::memcache::v1::UpdateParametersRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateParameters(context, request, cq);
       },
       request, std::move(context));
@@ -138,26 +136,25 @@ DefaultCloudMemcacheStub::AsyncUpdateParameters(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudMemcacheStub::UpdateParameters(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateParameters(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateParameters(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::memcache::v1::DeleteInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memcache::v1::DeleteInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::memcache::v1::DeleteInstanceRequest const& request,
@@ -169,26 +166,25 @@ DefaultCloudMemcacheStub::AsyncDeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudMemcacheStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncApplyParameters(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::memcache::v1::ApplyParametersRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memcache::v1::ApplyParametersRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::memcache::v1::ApplyParametersRequest const& request,
@@ -200,29 +196,29 @@ DefaultCloudMemcacheStub::AsyncApplyParameters(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudMemcacheStub::ApplyParameters(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ApplyParameters(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ApplyParameters(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudMemcacheStub::AsyncRescheduleMaintenance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::memcache::v1::RescheduleMaintenanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
+             google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRescheduleMaintenance(context, request, cq);
       },
@@ -231,94 +227,83 @@ DefaultCloudMemcacheStub::AsyncRescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudMemcacheStub::RescheduleMaintenance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RescheduleMaintenance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RescheduleMaintenance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultCloudMemcacheStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultCloudMemcacheStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultCloudMemcacheStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudMemcacheStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudMemcacheStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultCloudMemcacheStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCloudMemcacheStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultCloudMemcacheStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCloudMemcacheStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -347,13 +332,14 @@ future<Status> DefaultCloudMemcacheStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

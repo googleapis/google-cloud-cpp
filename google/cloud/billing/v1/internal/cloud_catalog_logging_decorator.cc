@@ -31,20 +31,16 @@ namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudCatalogLogging::CloudCatalogLogging(
-    std::shared_ptr<CloudCatalogStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<CloudCatalogStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogLogging::ListServices(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::v1::ListServicesRequest const& request) {
         return child_->ListServices(context, options, request);
       },
@@ -53,12 +49,10 @@ CloudCatalogLogging::ListServices(
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 CloudCatalogLogging::ListSkus(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListSkusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::v1::ListSkusRequest const& request) {
         return child_->ListSkus(context, options, request);
       },

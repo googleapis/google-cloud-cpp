@@ -37,86 +37,88 @@ class VizierServiceConnectionIdempotencyPolicy {
   virtual ~VizierServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<VizierServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<VizierServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateStudy(google::cloud::aiplatform::v1::CreateStudyRequest const& request);
+  virtual google::cloud::Idempotency CreateStudy(
+      google::cloud::aiplatform::v1::CreateStudyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetStudy(google::cloud::aiplatform::v1::GetStudyRequest const& request);
+  virtual google::cloud::Idempotency GetStudy(
+      google::cloud::aiplatform::v1::GetStudyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListStudies(google::cloud::aiplatform::v1::ListStudiesRequest request);
+  virtual google::cloud::Idempotency ListStudies(
+      google::cloud::aiplatform::v1::ListStudiesRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteStudy(google::cloud::aiplatform::v1::DeleteStudyRequest const& request);
+  virtual google::cloud::Idempotency DeleteStudy(
+      google::cloud::aiplatform::v1::DeleteStudyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LookupStudy(google::cloud::aiplatform::v1::LookupStudyRequest const& request);
+  virtual google::cloud::Idempotency LookupStudy(
+      google::cloud::aiplatform::v1::LookupStudyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SuggestTrials(google::cloud::aiplatform::v1::SuggestTrialsRequest const& request);
+  virtual google::cloud::Idempotency SuggestTrials(
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateTrial(google::cloud::aiplatform::v1::CreateTrialRequest const& request);
+  virtual google::cloud::Idempotency CreateTrial(
+      google::cloud::aiplatform::v1::CreateTrialRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTrial(google::cloud::aiplatform::v1::GetTrialRequest const& request);
+  virtual google::cloud::Idempotency GetTrial(
+      google::cloud::aiplatform::v1::GetTrialRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTrials(google::cloud::aiplatform::v1::ListTrialsRequest request);
+  virtual google::cloud::Idempotency ListTrials(
+      google::cloud::aiplatform::v1::ListTrialsRequest request);
 
-  virtual google::cloud::Idempotency
-  AddTrialMeasurement(google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request);
+  virtual google::cloud::Idempotency AddTrialMeasurement(
+      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CompleteTrial(google::cloud::aiplatform::v1::CompleteTrialRequest const& request);
+  virtual google::cloud::Idempotency CompleteTrial(
+      google::cloud::aiplatform::v1::CompleteTrialRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTrial(google::cloud::aiplatform::v1::DeleteTrialRequest const& request);
+  virtual google::cloud::Idempotency DeleteTrial(
+      google::cloud::aiplatform::v1::DeleteTrialRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CheckTrialEarlyStoppingState(google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request);
+  virtual google::cloud::Idempotency CheckTrialEarlyStoppingState(
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  StopTrial(google::cloud::aiplatform::v1::StopTrialRequest const& request);
+  virtual google::cloud::Idempotency StopTrial(
+      google::cloud::aiplatform::v1::StopTrialRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOptimalTrials(google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request);
+  virtual google::cloud::Idempotency ListOptimalTrials(
+      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<VizierServiceConnectionIdempotencyPolicy>
-    MakeDefaultVizierServiceConnectionIdempotencyPolicy();
+MakeDefaultVizierServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

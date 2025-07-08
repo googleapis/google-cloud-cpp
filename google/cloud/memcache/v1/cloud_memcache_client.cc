@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudMemcacheClient::CloudMemcacheClient(
     std::shared_ptr<CloudMemcacheConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudMemcacheClient::~CloudMemcacheClient() = default;
 
 StreamRange<google::cloud::memcache::v1::Instance>
@@ -41,7 +41,8 @@ CloudMemcacheClient::ListInstances(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::memcache::v1::Instance>
-CloudMemcacheClient::ListInstances(google::cloud::memcache::v1::ListInstancesRequest request, Options opts) {
+CloudMemcacheClient::ListInstances(
+    google::cloud::memcache::v1::ListInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
@@ -55,13 +56,18 @@ CloudMemcacheClient::GetInstance(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::memcache::v1::Instance>
-CloudMemcacheClient::GetInstance(google::cloud::memcache::v1::GetInstanceRequest const& request, Options opts) {
+CloudMemcacheClient::GetInstance(
+    google::cloud::memcache::v1::GetInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::CreateInstance(std::string const& parent, google::cloud::memcache::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+CloudMemcacheClient::CreateInstance(
+    std::string const& parent,
+    google::cloud::memcache::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -70,8 +76,10 @@ CloudMemcacheClient::CreateInstance(std::string const& parent, google::cloud::me
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::memcache::v1::Instance const& instance, std::string const& instance_id, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::CreateInstance(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::memcache::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::CreateInstanceRequest request;
   request.set_parent(parent);
@@ -81,25 +89,32 @@ CloudMemcacheClient::CreateInstance(NoAwaitTag, std::string const& parent, googl
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::CreateInstance(google::cloud::memcache::v1::CreateInstanceRequest const& request, Options opts) {
+CloudMemcacheClient::CreateInstance(
+    google::cloud::memcache::v1::CreateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::CreateInstance(NoAwaitTag, google::cloud::memcache::v1::CreateInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::CreateInstance(
+    NoAwaitTag,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::CreateInstance(google::longrunning::Operation const& operation, Options opts) {
+CloudMemcacheClient::CreateInstance(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::UpdateInstance(google::cloud::memcache::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
+CloudMemcacheClient::UpdateInstance(
+    google::cloud::memcache::v1::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -107,8 +122,9 @@ CloudMemcacheClient::UpdateInstance(google::cloud::memcache::v1::Instance const&
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::UpdateInstance(NoAwaitTag, google::cloud::memcache::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::UpdateInstance(
+    NoAwaitTag, google::cloud::memcache::v1::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
@@ -117,25 +133,33 @@ CloudMemcacheClient::UpdateInstance(NoAwaitTag, google::cloud::memcache::v1::Ins
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::UpdateInstance(google::cloud::memcache::v1::UpdateInstanceRequest const& request, Options opts) {
+CloudMemcacheClient::UpdateInstance(
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::UpdateInstance(NoAwaitTag, google::cloud::memcache::v1::UpdateInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::UpdateInstance(
+    NoAwaitTag,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::UpdateInstance(google::longrunning::Operation const& operation, Options opts) {
+CloudMemcacheClient::UpdateInstance(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::UpdateParameters(std::string const& name, google::protobuf::FieldMask const& update_mask, google::cloud::memcache::v1::MemcacheParameters const& parameters, Options opts) {
+CloudMemcacheClient::UpdateParameters(
+    std::string const& name, google::protobuf::FieldMask const& update_mask,
+    google::cloud::memcache::v1::MemcacheParameters const& parameters,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::UpdateParametersRequest request;
   request.set_name(name);
@@ -144,8 +168,11 @@ CloudMemcacheClient::UpdateParameters(std::string const& name, google::protobuf:
   return connection_->UpdateParameters(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::UpdateParameters(NoAwaitTag, std::string const& name, google::protobuf::FieldMask const& update_mask, google::cloud::memcache::v1::MemcacheParameters const& parameters, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::UpdateParameters(
+    NoAwaitTag, std::string const& name,
+    google::protobuf::FieldMask const& update_mask,
+    google::cloud::memcache::v1::MemcacheParameters const& parameters,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::UpdateParametersRequest request;
   request.set_name(name);
@@ -155,19 +182,24 @@ CloudMemcacheClient::UpdateParameters(NoAwaitTag, std::string const& name, googl
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::UpdateParameters(google::cloud::memcache::v1::UpdateParametersRequest const& request, Options opts) {
+CloudMemcacheClient::UpdateParameters(
+    google::cloud::memcache::v1::UpdateParametersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateParameters(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::UpdateParameters(NoAwaitTag, google::cloud::memcache::v1::UpdateParametersRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::UpdateParameters(
+    NoAwaitTag,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateParameters(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::UpdateParameters(google::longrunning::Operation const& operation, Options opts) {
+CloudMemcacheClient::UpdateParameters(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateParameters(operation);
 }
@@ -180,8 +212,8 @@ CloudMemcacheClient::DeleteInstance(std::string const& name, Options opts) {
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::DeleteInstance(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::DeleteInstance(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::DeleteInstanceRequest request;
   request.set_name(name);
@@ -189,25 +221,32 @@ CloudMemcacheClient::DeleteInstance(NoAwaitTag, std::string const& name, Options
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
-CloudMemcacheClient::DeleteInstance(google::cloud::memcache::v1::DeleteInstanceRequest const& request, Options opts) {
+CloudMemcacheClient::DeleteInstance(
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::DeleteInstance(NoAwaitTag, google::cloud::memcache::v1::DeleteInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::DeleteInstance(
+    NoAwaitTag,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
-CloudMemcacheClient::DeleteInstance(google::longrunning::Operation const& operation, Options opts) {
+CloudMemcacheClient::DeleteInstance(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::ApplyParameters(std::string const& name, std::vector<std::string> const& node_ids, bool apply_all, Options opts) {
+CloudMemcacheClient::ApplyParameters(std::string const& name,
+                                     std::vector<std::string> const& node_ids,
+                                     bool apply_all, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::ApplyParametersRequest request;
   request.set_name(name);
@@ -216,8 +255,9 @@ CloudMemcacheClient::ApplyParameters(std::string const& name, std::vector<std::s
   return connection_->ApplyParameters(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::ApplyParameters(NoAwaitTag, std::string const& name, std::vector<std::string> const& node_ids, bool apply_all, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::ApplyParameters(
+    NoAwaitTag, std::string const& name,
+    std::vector<std::string> const& node_ids, bool apply_all, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::ApplyParametersRequest request;
   request.set_name(name);
@@ -227,25 +267,34 @@ CloudMemcacheClient::ApplyParameters(NoAwaitTag, std::string const& name, std::v
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::ApplyParameters(google::cloud::memcache::v1::ApplyParametersRequest const& request, Options opts) {
+CloudMemcacheClient::ApplyParameters(
+    google::cloud::memcache::v1::ApplyParametersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyParameters(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::ApplyParameters(NoAwaitTag, google::cloud::memcache::v1::ApplyParametersRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::ApplyParameters(
+    NoAwaitTag,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyParameters(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::ApplyParameters(google::longrunning::Operation const& operation, Options opts) {
+CloudMemcacheClient::ApplyParameters(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyParameters(operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::RescheduleMaintenance(std::string const& instance, google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType reschedule_type, google::protobuf::Timestamp const& schedule_time, Options opts) {
+CloudMemcacheClient::RescheduleMaintenance(
+    std::string const& instance,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType
+        reschedule_type,
+    google::protobuf::Timestamp const& schedule_time, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::RescheduleMaintenanceRequest request;
   request.set_instance(instance);
@@ -255,7 +304,11 @@ CloudMemcacheClient::RescheduleMaintenance(std::string const& instance, google::
 }
 
 StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::RescheduleMaintenance(NoAwaitTag, std::string const& instance, google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType reschedule_type, google::protobuf::Timestamp const& schedule_time, Options opts) {
+CloudMemcacheClient::RescheduleMaintenance(
+    NoAwaitTag, std::string const& instance,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType
+        reschedule_type,
+    google::protobuf::Timestamp const& schedule_time, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::RescheduleMaintenanceRequest request;
   request.set_instance(instance);
@@ -265,37 +318,44 @@ CloudMemcacheClient::RescheduleMaintenance(NoAwaitTag, std::string const& instan
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::RescheduleMaintenance(google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request, Options opts) {
+CloudMemcacheClient::RescheduleMaintenance(
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RescheduleMaintenance(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::RescheduleMaintenance(NoAwaitTag, google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request, Options opts) {
+CloudMemcacheClient::RescheduleMaintenance(
+    NoAwaitTag,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RescheduleMaintenance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
-CloudMemcacheClient::RescheduleMaintenance(google::longrunning::Operation const& operation, Options opts) {
+CloudMemcacheClient::RescheduleMaintenance(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RescheduleMaintenance(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-CloudMemcacheClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+CloudMemcacheClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-CloudMemcacheClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> CloudMemcacheClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-CloudMemcacheClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> CloudMemcacheClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -303,50 +363,50 @@ CloudMemcacheClient::ListOperations(std::string const& name, std::string const& 
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-CloudMemcacheClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> CloudMemcacheClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CloudMemcacheClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> CloudMemcacheClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-CloudMemcacheClient::DeleteOperation(std::string const& name, Options opts) {
+Status CloudMemcacheClient::DeleteOperation(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-CloudMemcacheClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status CloudMemcacheClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-CloudMemcacheClient::CancelOperation(std::string const& name, Options opts) {
+Status CloudMemcacheClient::CancelOperation(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-CloudMemcacheClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status CloudMemcacheClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

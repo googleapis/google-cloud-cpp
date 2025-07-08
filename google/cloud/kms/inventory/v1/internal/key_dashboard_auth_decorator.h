@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,10 +38,10 @@ class KeyDashboardServiceAuth : public KeyDashboardServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<KeyDashboardServiceStub> child);
 
-  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse> ListCryptoKeys(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) override;
+  StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
+                 google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
+                     request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

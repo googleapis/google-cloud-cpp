@@ -35,23 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DataAccessControlServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DATA_ACCESS_CONTROL_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DATA_ACCESS_CONTROL_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_DATA_ACCESS_CONTROL_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DATA_ACCESS_CONTROL_SERVICE_AUTHORITY",
       "chronicle.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<chronicle_v1::DataAccessControlServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::DataAccessControlServiceRetryPolicyOption>(
         chronicle_v1::DataAccessControlServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<chronicle_v1::DataAccessControlServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<chronicle_v1::DataAccessControlServiceBackoffPolicyOption>()) {
     options.set<chronicle_v1::DataAccessControlServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<chronicle_v1::DataAccessControlServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<chronicle_v1::DataAccessControlServiceConnectionIdempotencyPolicyOption>(
-        chronicle_v1::MakeDefaultDataAccessControlServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          chronicle_v1::
+              DataAccessControlServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<chronicle_v1::
+                    DataAccessControlServiceConnectionIdempotencyPolicyOption>(
+        chronicle_v1::
+            MakeDefaultDataAccessControlServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetadataServiceClient::MetadataServiceClient(
     std::shared_ptr<MetadataServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MetadataServiceClient::~MetadataServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-MetadataServiceClient::CreateMetadataStore(std::string const& parent, google::cloud::aiplatform::v1::MetadataStore const& metadata_store, std::string const& metadata_store_id, Options opts) {
+MetadataServiceClient::CreateMetadataStore(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
+    std::string const& metadata_store_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateMetadataStoreRequest request;
   request.set_parent(parent);
@@ -43,7 +46,10 @@ MetadataServiceClient::CreateMetadataStore(std::string const& parent, google::cl
 }
 
 StatusOr<google::longrunning::Operation>
-MetadataServiceClient::CreateMetadataStore(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::MetadataStore const& metadata_store, std::string const& metadata_store_id, Options opts) {
+MetadataServiceClient::CreateMetadataStore(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
+    std::string const& metadata_store_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateMetadataStoreRequest request;
   request.set_parent(parent);
@@ -53,19 +59,25 @@ MetadataServiceClient::CreateMetadataStore(NoAwaitTag, std::string const& parent
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-MetadataServiceClient::CreateMetadataStore(google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request, Options opts) {
+MetadataServiceClient::CreateMetadataStore(
+    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMetadataStore(request);
 }
 
 StatusOr<google::longrunning::Operation>
-MetadataServiceClient::CreateMetadataStore(NoAwaitTag, google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request, Options opts) {
+MetadataServiceClient::CreateMetadataStore(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMetadataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-MetadataServiceClient::CreateMetadataStore(google::longrunning::Operation const& operation, Options opts) {
+MetadataServiceClient::CreateMetadataStore(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMetadataStore(operation);
 }
@@ -79,13 +91,16 @@ MetadataServiceClient::GetMetadataStore(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
-MetadataServiceClient::GetMetadataStore(google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request, Options opts) {
+MetadataServiceClient::GetMetadataStore(
+    google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMetadataStore(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::MetadataStore>
-MetadataServiceClient::ListMetadataStores(std::string const& parent, Options opts) {
+MetadataServiceClient::ListMetadataStores(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListMetadataStoresRequest request;
   request.set_parent(parent);
@@ -93,13 +108,17 @@ MetadataServiceClient::ListMetadataStores(std::string const& parent, Options opt
 }
 
 StreamRange<google::cloud::aiplatform::v1::MetadataStore>
-MetadataServiceClient::ListMetadataStores(google::cloud::aiplatform::v1::ListMetadataStoresRequest request, Options opts) {
+MetadataServiceClient::ListMetadataStores(
+    google::cloud::aiplatform::v1::ListMetadataStoresRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMetadataStores(std::move(request));
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-MetadataServiceClient::DeleteMetadataStore(std::string const& name, Options opts) {
+future<StatusOr<
+    google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+MetadataServiceClient::DeleteMetadataStore(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteMetadataStoreRequest request;
   request.set_name(name);
@@ -107,33 +126,45 @@ MetadataServiceClient::DeleteMetadataStore(std::string const& name, Options opts
 }
 
 StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteMetadataStore(NoAwaitTag, std::string const& name, Options opts) {
+MetadataServiceClient::DeleteMetadataStore(NoAwaitTag, std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteMetadataStoreRequest request;
   request.set_name(name);
   return connection_->DeleteMetadataStore(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-MetadataServiceClient::DeleteMetadataStore(google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request, Options opts) {
+future<StatusOr<
+    google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+MetadataServiceClient::DeleteMetadataStore(
+    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMetadataStore(request);
 }
 
 StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteMetadataStore(NoAwaitTag, google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request, Options opts) {
+MetadataServiceClient::DeleteMetadataStore(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMetadataStore(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-MetadataServiceClient::DeleteMetadataStore(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<
+    google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+MetadataServiceClient::DeleteMetadataStore(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMetadataStore(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceClient::CreateArtifact(std::string const& parent, google::cloud::aiplatform::v1::Artifact const& artifact, std::string const& artifact_id, Options opts) {
+MetadataServiceClient::CreateArtifact(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Artifact const& artifact,
+    std::string const& artifact_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateArtifactRequest request;
   request.set_parent(parent);
@@ -143,7 +174,9 @@ MetadataServiceClient::CreateArtifact(std::string const& parent, google::cloud::
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceClient::CreateArtifact(google::cloud::aiplatform::v1::CreateArtifactRequest const& request, Options opts) {
+MetadataServiceClient::CreateArtifact(
+    google::cloud::aiplatform::v1::CreateArtifactRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateArtifact(request);
 }
@@ -157,7 +190,9 @@ MetadataServiceClient::GetArtifact(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceClient::GetArtifact(google::cloud::aiplatform::v1::GetArtifactRequest const& request, Options opts) {
+MetadataServiceClient::GetArtifact(
+    google::cloud::aiplatform::v1::GetArtifactRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetArtifact(request);
 }
@@ -171,13 +206,16 @@ MetadataServiceClient::ListArtifacts(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceClient::ListArtifacts(google::cloud::aiplatform::v1::ListArtifactsRequest request, Options opts) {
+MetadataServiceClient::ListArtifacts(
+    google::cloud::aiplatform::v1::ListArtifactsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListArtifacts(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceClient::UpdateArtifact(google::cloud::aiplatform::v1::Artifact const& artifact, google::protobuf::FieldMask const& update_mask, Options opts) {
+MetadataServiceClient::UpdateArtifact(
+    google::cloud::aiplatform::v1::Artifact const& artifact,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateArtifactRequest request;
   *request.mutable_artifact() = artifact;
@@ -186,7 +224,9 @@ MetadataServiceClient::UpdateArtifact(google::cloud::aiplatform::v1::Artifact co
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
-MetadataServiceClient::UpdateArtifact(google::cloud::aiplatform::v1::UpdateArtifactRequest const& request, Options opts) {
+MetadataServiceClient::UpdateArtifact(
+    google::cloud::aiplatform::v1::UpdateArtifactRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateArtifact(request);
 }
@@ -199,8 +239,8 @@ MetadataServiceClient::DeleteArtifact(std::string const& name, Options opts) {
   return connection_->DeleteArtifact(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteArtifact(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteArtifact(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteArtifactRequest request;
   request.set_name(name);
@@ -208,19 +248,24 @@ MetadataServiceClient::DeleteArtifact(NoAwaitTag, std::string const& name, Optio
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-MetadataServiceClient::DeleteArtifact(google::cloud::aiplatform::v1::DeleteArtifactRequest const& request, Options opts) {
+MetadataServiceClient::DeleteArtifact(
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteArtifact(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteArtifact(NoAwaitTag, google::cloud::aiplatform::v1::DeleteArtifactRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteArtifact(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteArtifact(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-MetadataServiceClient::DeleteArtifact(google::longrunning::Operation const& operation, Options opts) {
+MetadataServiceClient::DeleteArtifact(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteArtifact(operation);
 }
@@ -233,8 +278,8 @@ MetadataServiceClient::PurgeArtifacts(std::string const& parent, Options opts) {
   return connection_->PurgeArtifacts(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::PurgeArtifacts(NoAwaitTag, std::string const& parent, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeArtifacts(
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PurgeArtifactsRequest request;
   request.set_parent(parent);
@@ -242,25 +287,33 @@ MetadataServiceClient::PurgeArtifacts(NoAwaitTag, std::string const& parent, Opt
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-MetadataServiceClient::PurgeArtifacts(google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request, Options opts) {
+MetadataServiceClient::PurgeArtifacts(
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeArtifacts(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::PurgeArtifacts(NoAwaitTag, google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeArtifacts(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeArtifacts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-MetadataServiceClient::PurgeArtifacts(google::longrunning::Operation const& operation, Options opts) {
+MetadataServiceClient::PurgeArtifacts(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeArtifacts(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
-MetadataServiceClient::CreateContext(std::string const& parent, google::cloud::aiplatform::v1::Context const& context, std::string const& context_id, Options opts) {
+MetadataServiceClient::CreateContext(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Context const& context,
+    std::string const& context_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateContextRequest request;
   request.set_parent(parent);
@@ -270,7 +323,9 @@ MetadataServiceClient::CreateContext(std::string const& parent, google::cloud::a
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
-MetadataServiceClient::CreateContext(google::cloud::aiplatform::v1::CreateContextRequest const& request, Options opts) {
+MetadataServiceClient::CreateContext(
+    google::cloud::aiplatform::v1::CreateContextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateContext(request);
 }
@@ -284,7 +339,9 @@ MetadataServiceClient::GetContext(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
-MetadataServiceClient::GetContext(google::cloud::aiplatform::v1::GetContextRequest const& request, Options opts) {
+MetadataServiceClient::GetContext(
+    google::cloud::aiplatform::v1::GetContextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetContext(request);
 }
@@ -298,13 +355,16 @@ MetadataServiceClient::ListContexts(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Context>
-MetadataServiceClient::ListContexts(google::cloud::aiplatform::v1::ListContextsRequest request, Options opts) {
+MetadataServiceClient::ListContexts(
+    google::cloud::aiplatform::v1::ListContextsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListContexts(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
-MetadataServiceClient::UpdateContext(google::cloud::aiplatform::v1::Context const& context, google::protobuf::FieldMask const& update_mask, Options opts) {
+MetadataServiceClient::UpdateContext(
+    google::cloud::aiplatform::v1::Context const& context,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateContextRequest request;
   *request.mutable_context() = context;
@@ -313,7 +373,9 @@ MetadataServiceClient::UpdateContext(google::cloud::aiplatform::v1::Context cons
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
-MetadataServiceClient::UpdateContext(google::cloud::aiplatform::v1::UpdateContextRequest const& request, Options opts) {
+MetadataServiceClient::UpdateContext(
+    google::cloud::aiplatform::v1::UpdateContextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateContext(request);
 }
@@ -326,8 +388,8 @@ MetadataServiceClient::DeleteContext(std::string const& name, Options opts) {
   return connection_->DeleteContext(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteContext(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteContext(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteContextRequest request;
   request.set_name(name);
@@ -335,19 +397,24 @@ MetadataServiceClient::DeleteContext(NoAwaitTag, std::string const& name, Option
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-MetadataServiceClient::DeleteContext(google::cloud::aiplatform::v1::DeleteContextRequest const& request, Options opts) {
+MetadataServiceClient::DeleteContext(
+    google::cloud::aiplatform::v1::DeleteContextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteContext(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteContext(NoAwaitTag, google::cloud::aiplatform::v1::DeleteContextRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteContext(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteContextRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteContext(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-MetadataServiceClient::DeleteContext(google::longrunning::Operation const& operation, Options opts) {
+MetadataServiceClient::DeleteContext(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteContext(operation);
 }
@@ -360,8 +427,8 @@ MetadataServiceClient::PurgeContexts(std::string const& parent, Options opts) {
   return connection_->PurgeContexts(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::PurgeContexts(NoAwaitTag, std::string const& parent, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeContexts(
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PurgeContextsRequest request;
   request.set_parent(parent);
@@ -369,71 +436,95 @@ MetadataServiceClient::PurgeContexts(NoAwaitTag, std::string const& parent, Opti
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-MetadataServiceClient::PurgeContexts(google::cloud::aiplatform::v1::PurgeContextsRequest const& request, Options opts) {
+MetadataServiceClient::PurgeContexts(
+    google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeContexts(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::PurgeContexts(NoAwaitTag, google::cloud::aiplatform::v1::PurgeContextsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeContexts(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeContexts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-MetadataServiceClient::PurgeContexts(google::longrunning::Operation const& operation, Options opts) {
+MetadataServiceClient::PurgeContexts(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeContexts(operation);
 }
 
-StatusOr<google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
-MetadataServiceClient::AddContextArtifactsAndExecutions(std::string const& context, std::vector<std::string> const& artifacts, std::vector<std::string> const& executions, Options opts) {
+StatusOr<
+    google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
+MetadataServiceClient::AddContextArtifactsAndExecutions(
+    std::string const& context, std::vector<std::string> const& artifacts,
+    std::vector<std::string> const& executions, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest request;
+  google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest
+      request;
   request.set_context(context);
   *request.mutable_artifacts() = {artifacts.begin(), artifacts.end()};
   *request.mutable_executions() = {executions.begin(), executions.end()};
   return connection_->AddContextArtifactsAndExecutions(request);
 }
 
-StatusOr<google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
-MetadataServiceClient::AddContextArtifactsAndExecutions(google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
+MetadataServiceClient::AddContextArtifactsAndExecutions(
+    google::cloud::aiplatform::v1::
+        AddContextArtifactsAndExecutionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddContextArtifactsAndExecutions(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
-MetadataServiceClient::AddContextChildren(std::string const& context, std::vector<std::string> const& child_contexts, Options opts) {
+MetadataServiceClient::AddContextChildren(
+    std::string const& context, std::vector<std::string> const& child_contexts,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::AddContextChildrenRequest request;
   request.set_context(context);
-  *request.mutable_child_contexts() = {child_contexts.begin(), child_contexts.end()};
+  *request.mutable_child_contexts() = {child_contexts.begin(),
+                                       child_contexts.end()};
   return connection_->AddContextChildren(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
-MetadataServiceClient::AddContextChildren(google::cloud::aiplatform::v1::AddContextChildrenRequest const& request, Options opts) {
+MetadataServiceClient::AddContextChildren(
+    google::cloud::aiplatform::v1::AddContextChildrenRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddContextChildren(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
-MetadataServiceClient::RemoveContextChildren(std::string const& context, std::vector<std::string> const& child_contexts, Options opts) {
+MetadataServiceClient::RemoveContextChildren(
+    std::string const& context, std::vector<std::string> const& child_contexts,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::RemoveContextChildrenRequest request;
   request.set_context(context);
-  *request.mutable_child_contexts() = {child_contexts.begin(), child_contexts.end()};
+  *request.mutable_child_contexts() = {child_contexts.begin(),
+                                       child_contexts.end()};
   return connection_->RemoveContextChildren(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
-MetadataServiceClient::RemoveContextChildren(google::cloud::aiplatform::v1::RemoveContextChildrenRequest const& request, Options opts) {
+MetadataServiceClient::RemoveContextChildren(
+    google::cloud::aiplatform::v1::RemoveContextChildrenRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveContextChildren(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceClient::QueryContextLineageSubgraph(std::string const& context, Options opts) {
+MetadataServiceClient::QueryContextLineageSubgraph(std::string const& context,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest request;
   request.set_context(context);
@@ -441,13 +532,19 @@ MetadataServiceClient::QueryContextLineageSubgraph(std::string const& context, O
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceClient::QueryContextLineageSubgraph(google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const& request, Options opts) {
+MetadataServiceClient::QueryContextLineageSubgraph(
+    google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryContextLineageSubgraph(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
-MetadataServiceClient::CreateExecution(std::string const& parent, google::cloud::aiplatform::v1::Execution const& execution, std::string const& execution_id, Options opts) {
+MetadataServiceClient::CreateExecution(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::Execution const& execution,
+    std::string const& execution_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateExecutionRequest request;
   request.set_parent(parent);
@@ -457,7 +554,9 @@ MetadataServiceClient::CreateExecution(std::string const& parent, google::cloud:
 }
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
-MetadataServiceClient::CreateExecution(google::cloud::aiplatform::v1::CreateExecutionRequest const& request, Options opts) {
+MetadataServiceClient::CreateExecution(
+    google::cloud::aiplatform::v1::CreateExecutionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExecution(request);
 }
@@ -471,7 +570,9 @@ MetadataServiceClient::GetExecution(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
-MetadataServiceClient::GetExecution(google::cloud::aiplatform::v1::GetExecutionRequest const& request, Options opts) {
+MetadataServiceClient::GetExecution(
+    google::cloud::aiplatform::v1::GetExecutionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetExecution(request);
 }
@@ -485,13 +586,17 @@ MetadataServiceClient::ListExecutions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::aiplatform::v1::Execution>
-MetadataServiceClient::ListExecutions(google::cloud::aiplatform::v1::ListExecutionsRequest request, Options opts) {
+MetadataServiceClient::ListExecutions(
+    google::cloud::aiplatform::v1::ListExecutionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListExecutions(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
-MetadataServiceClient::UpdateExecution(google::cloud::aiplatform::v1::Execution const& execution, google::protobuf::FieldMask const& update_mask, Options opts) {
+MetadataServiceClient::UpdateExecution(
+    google::cloud::aiplatform::v1::Execution const& execution,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateExecutionRequest request;
   *request.mutable_execution() = execution;
@@ -500,7 +605,9 @@ MetadataServiceClient::UpdateExecution(google::cloud::aiplatform::v1::Execution 
 }
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
-MetadataServiceClient::UpdateExecution(google::cloud::aiplatform::v1::UpdateExecutionRequest const& request, Options opts) {
+MetadataServiceClient::UpdateExecution(
+    google::cloud::aiplatform::v1::UpdateExecutionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExecution(request);
 }
@@ -513,8 +620,8 @@ MetadataServiceClient::DeleteExecution(std::string const& name, Options opts) {
   return connection_->DeleteExecution(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteExecution(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteExecution(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteExecutionRequest request;
   request.set_name(name);
@@ -522,33 +629,39 @@ MetadataServiceClient::DeleteExecution(NoAwaitTag, std::string const& name, Opti
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-MetadataServiceClient::DeleteExecution(google::cloud::aiplatform::v1::DeleteExecutionRequest const& request, Options opts) {
+MetadataServiceClient::DeleteExecution(
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExecution(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteExecution(NoAwaitTag, google::cloud::aiplatform::v1::DeleteExecutionRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteExecution(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExecution(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-MetadataServiceClient::DeleteExecution(google::longrunning::Operation const& operation, Options opts) {
+MetadataServiceClient::DeleteExecution(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExecution(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-MetadataServiceClient::PurgeExecutions(std::string const& parent, Options opts) {
+MetadataServiceClient::PurgeExecutions(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PurgeExecutionsRequest request;
   request.set_parent(parent);
   return connection_->PurgeExecutions(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::PurgeExecutions(NoAwaitTag, std::string const& parent, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeExecutions(
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PurgeExecutionsRequest request;
   request.set_parent(parent);
@@ -556,25 +669,33 @@ MetadataServiceClient::PurgeExecutions(NoAwaitTag, std::string const& parent, Op
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-MetadataServiceClient::PurgeExecutions(google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request, Options opts) {
+MetadataServiceClient::PurgeExecutions(
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeExecutions(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::PurgeExecutions(NoAwaitTag, google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeExecutions(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeExecutions(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-MetadataServiceClient::PurgeExecutions(google::longrunning::Operation const& operation, Options opts) {
+MetadataServiceClient::PurgeExecutions(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeExecutions(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
-MetadataServiceClient::AddExecutionEvents(std::string const& execution, std::vector<google::cloud::aiplatform::v1::Event> const& events, Options opts) {
+MetadataServiceClient::AddExecutionEvents(
+    std::string const& execution,
+    std::vector<google::cloud::aiplatform::v1::Event> const& events,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::AddExecutionEventsRequest request;
   request.set_execution(execution);
@@ -583,13 +704,16 @@ MetadataServiceClient::AddExecutionEvents(std::string const& execution, std::vec
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
-MetadataServiceClient::AddExecutionEvents(google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request, Options opts) {
+MetadataServiceClient::AddExecutionEvents(
+    google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddExecutionEvents(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceClient::QueryExecutionInputsAndOutputs(std::string const& execution, Options opts) {
+MetadataServiceClient::QueryExecutionInputsAndOutputs(
+    std::string const& execution, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest request;
   request.set_execution(execution);
@@ -597,13 +721,19 @@ MetadataServiceClient::QueryExecutionInputsAndOutputs(std::string const& executi
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceClient::QueryExecutionInputsAndOutputs(google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const& request, Options opts) {
+MetadataServiceClient::QueryExecutionInputsAndOutputs(
+    google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryExecutionInputsAndOutputs(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceClient::CreateMetadataSchema(std::string const& parent, google::cloud::aiplatform::v1::MetadataSchema const& metadata_schema, std::string const& metadata_schema_id, Options opts) {
+MetadataServiceClient::CreateMetadataSchema(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::MetadataSchema const& metadata_schema,
+    std::string const& metadata_schema_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateMetadataSchemaRequest request;
   request.set_parent(parent);
@@ -613,13 +743,16 @@ MetadataServiceClient::CreateMetadataSchema(std::string const& parent, google::c
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceClient::CreateMetadataSchema(google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request, Options opts) {
+MetadataServiceClient::CreateMetadataSchema(
+    google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMetadataSchema(request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceClient::GetMetadataSchema(std::string const& name, Options opts) {
+MetadataServiceClient::GetMetadataSchema(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetMetadataSchemaRequest request;
   request.set_name(name);
@@ -627,13 +760,16 @@ MetadataServiceClient::GetMetadataSchema(std::string const& name, Options opts) 
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceClient::GetMetadataSchema(google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request, Options opts) {
+MetadataServiceClient::GetMetadataSchema(
+    google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMetadataSchema(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceClient::ListMetadataSchemas(std::string const& parent, Options opts) {
+MetadataServiceClient::ListMetadataSchemas(std::string const& parent,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListMetadataSchemasRequest request;
   request.set_parent(parent);
@@ -641,13 +777,16 @@ MetadataServiceClient::ListMetadataSchemas(std::string const& parent, Options op
 }
 
 StreamRange<google::cloud::aiplatform::v1::MetadataSchema>
-MetadataServiceClient::ListMetadataSchemas(google::cloud::aiplatform::v1::ListMetadataSchemasRequest request, Options opts) {
+MetadataServiceClient::ListMetadataSchemas(
+    google::cloud::aiplatform::v1::ListMetadataSchemasRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMetadataSchemas(std::move(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceClient::QueryArtifactLineageSubgraph(std::string const& artifact, Options opts) {
+MetadataServiceClient::QueryArtifactLineageSubgraph(std::string const& artifact,
+                                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest request;
   request.set_artifact(artifact);
@@ -655,43 +794,49 @@ MetadataServiceClient::QueryArtifactLineageSubgraph(std::string const& artifact,
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-MetadataServiceClient::QueryArtifactLineageSubgraph(google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const& request, Options opts) {
+MetadataServiceClient::QueryArtifactLineageSubgraph(
+    google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryArtifactLineageSubgraph(request);
 }
 
 StreamRange<google::cloud::location::Location>
-MetadataServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+MetadataServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-MetadataServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> MetadataServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-MetadataServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> MetadataServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-MetadataServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> MetadataServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-MetadataServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+MetadataServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-MetadataServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+MetadataServiceClient::ListOperations(std::string const& name,
+                                      std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -700,55 +845,56 @@ MetadataServiceClient::ListOperations(std::string const& name, std::string const
 }
 
 StreamRange<google::longrunning::Operation>
-MetadataServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+MetadataServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-MetadataServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status MetadataServiceClient::DeleteOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-MetadataServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status MetadataServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-MetadataServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status MetadataServiceClient::CancelOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-MetadataServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status MetadataServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-MetadataServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> MetadataServiceClient::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

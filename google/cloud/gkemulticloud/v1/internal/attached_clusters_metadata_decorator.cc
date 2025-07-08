@@ -49,18 +49,21 @@ AttachedClustersMetadata::AsyncCreateAttachedCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateAttachedCluster(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAttachedCluster(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersMetadata::CreateAttachedCluster(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAttachedCluster(context, options, request);
 }
 
@@ -69,18 +72,25 @@ AttachedClustersMetadata::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("attached_cluster.name=", internal::UrlEncode(request.attached_cluster().name())));
-  return child_->AsyncUpdateAttachedCluster(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("attached_cluster.name=",
+                   internal::UrlEncode(request.attached_cluster().name())));
+  return child_->AsyncUpdateAttachedCluster(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersMetadata::UpdateAttachedCluster(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("attached_cluster.name=", internal::UrlEncode(request.attached_cluster().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("attached_cluster.name=",
+                   internal::UrlEncode(request.attached_cluster().name())));
   return child_->UpdateAttachedCluster(context, options, request);
 }
 
@@ -89,36 +99,41 @@ AttachedClustersMetadata::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportAttachedCluster(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportAttachedCluster(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersMetadata::ImportAttachedCluster(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportAttachedCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
 AttachedClustersMetadata::GetAttachedCluster(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAttachedCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
 AttachedClustersMetadata::ListAttachedClusters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAttachedClusters(context, options, request);
 }
 
@@ -127,81 +142,88 @@ AttachedClustersMetadata::AsyncDeleteAttachedCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteAttachedCluster(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAttachedCluster(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersMetadata::DeleteAttachedCluster(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAttachedCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
 AttachedClustersMetadata::GetAttachedServerConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAttachedServerConfig(context, options, request);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse>
+StatusOr<google::cloud::gkemulticloud::v1::
+             GenerateAttachedClusterInstallManifestResponse>
 AttachedClustersMetadata::GenerateAttachedClusterInstallManifest(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GenerateAttachedClusterInstallManifest(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterInstallManifestRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->GenerateAttachedClusterInstallManifest(context, options,
+                                                        request);
 }
 
-StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+StatusOr<
+    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
 AttachedClustersMetadata::GenerateAttachedClusterAgentToken(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("attached_cluster=", internal::UrlEncode(request.attached_cluster())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkemulticloud::v1::
+        GenerateAttachedClusterAgentTokenRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("attached_cluster=",
+                           internal::UrlEncode(request.attached_cluster())));
   return child_->GenerateAttachedClusterAgentToken(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AttachedClustersMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-AttachedClustersMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> AttachedClustersMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-AttachedClustersMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AttachedClustersMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-AttachedClustersMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AttachedClustersMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -213,8 +235,8 @@ AttachedClustersMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> AttachedClustersMetadata::AsyncCancelOperation(
@@ -224,21 +246,21 @@ future<Status> AttachedClustersMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void AttachedClustersMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                           Options const& options,
+                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void AttachedClustersMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                           Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

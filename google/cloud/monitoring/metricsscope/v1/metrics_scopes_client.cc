@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetricsScopesClient::MetricsScopesClient(
     std::shared_ptr<MetricsScopesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MetricsScopesClient::~MetricsScopesClient() = default;
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
@@ -41,19 +41,29 @@ MetricsScopesClient::GetMetricsScope(std::string const& name, Options opts) {
 }
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
-MetricsScopesClient::GetMetricsScope(google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request, Options opts) {
+MetricsScopesClient::GetMetricsScope(
+    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMetricsScope(request);
 }
 
-StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
-MetricsScopesClient::ListMetricsScopesByMonitoredProject(google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request, Options opts) {
+StatusOr<google::monitoring::metricsscope::v1::
+             ListMetricsScopesByMonitoredProjectResponse>
+MetricsScopesClient::ListMetricsScopesByMonitoredProject(
+    google::monitoring::metricsscope::v1::
+        ListMetricsScopesByMonitoredProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMetricsScopesByMonitoredProject(request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-MetricsScopesClient::CreateMonitoredProject(std::string const& parent, google::monitoring::metricsscope::v1::MonitoredProject const& monitored_project, Options opts) {
+MetricsScopesClient::CreateMonitoredProject(
+    std::string const& parent,
+    google::monitoring::metricsscope::v1::MonitoredProject const&
+        monitored_project,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest request;
   request.set_parent(parent);
@@ -62,7 +72,11 @@ MetricsScopesClient::CreateMonitoredProject(std::string const& parent, google::m
 }
 
 StatusOr<google::longrunning::Operation>
-MetricsScopesClient::CreateMonitoredProject(NoAwaitTag, std::string const& parent, google::monitoring::metricsscope::v1::MonitoredProject const& monitored_project, Options opts) {
+MetricsScopesClient::CreateMonitoredProject(
+    NoAwaitTag, std::string const& parent,
+    google::monitoring::metricsscope::v1::MonitoredProject const&
+        monitored_project,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest request;
   request.set_parent(parent);
@@ -71,25 +85,34 @@ MetricsScopesClient::CreateMonitoredProject(NoAwaitTag, std::string const& paren
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-MetricsScopesClient::CreateMonitoredProject(google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request, Options opts) {
+MetricsScopesClient::CreateMonitoredProject(
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMonitoredProject(request);
 }
 
 StatusOr<google::longrunning::Operation>
-MetricsScopesClient::CreateMonitoredProject(NoAwaitTag, google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request, Options opts) {
+MetricsScopesClient::CreateMonitoredProject(
+    NoAwaitTag,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMonitoredProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-MetricsScopesClient::CreateMonitoredProject(google::longrunning::Operation const& operation, Options opts) {
+MetricsScopesClient::CreateMonitoredProject(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMonitoredProject(operation);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-MetricsScopesClient::DeleteMonitoredProject(std::string const& name, Options opts) {
+MetricsScopesClient::DeleteMonitoredProject(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest request;
   request.set_name(name);
@@ -97,7 +120,8 @@ MetricsScopesClient::DeleteMonitoredProject(std::string const& name, Options opt
 }
 
 StatusOr<google::longrunning::Operation>
-MetricsScopesClient::DeleteMonitoredProject(NoAwaitTag, std::string const& name, Options opts) {
+MetricsScopesClient::DeleteMonitoredProject(NoAwaitTag, std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest request;
   request.set_name(name);
@@ -105,19 +129,27 @@ MetricsScopesClient::DeleteMonitoredProject(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-MetricsScopesClient::DeleteMonitoredProject(google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request, Options opts) {
+MetricsScopesClient::DeleteMonitoredProject(
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMonitoredProject(request);
 }
 
 StatusOr<google::longrunning::Operation>
-MetricsScopesClient::DeleteMonitoredProject(NoAwaitTag, google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request, Options opts) {
+MetricsScopesClient::DeleteMonitoredProject(
+    NoAwaitTag,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMonitoredProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-MetricsScopesClient::DeleteMonitoredProject(google::longrunning::Operation const& operation, Options opts) {
+MetricsScopesClient::DeleteMonitoredProject(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMonitoredProject(operation);
 }

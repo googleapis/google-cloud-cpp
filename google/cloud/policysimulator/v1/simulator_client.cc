@@ -28,26 +28,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SimulatorClient::SimulatorClient(
     std::shared_ptr<SimulatorConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SimulatorClient::~SimulatorClient() = default;
 
-StatusOr<google::cloud::policysimulator::v1::Replay>
-SimulatorClient::GetReplay(std::string const& name, Options opts) {
+StatusOr<google::cloud::policysimulator::v1::Replay> SimulatorClient::GetReplay(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::policysimulator::v1::GetReplayRequest request;
   request.set_name(name);
   return connection_->GetReplay(request);
 }
 
-StatusOr<google::cloud::policysimulator::v1::Replay>
-SimulatorClient::GetReplay(google::cloud::policysimulator::v1::GetReplayRequest const& request, Options opts) {
+StatusOr<google::cloud::policysimulator::v1::Replay> SimulatorClient::GetReplay(
+    google::cloud::policysimulator::v1::GetReplayRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReplay(request);
 }
 
 future<StatusOr<google::cloud::policysimulator::v1::Replay>>
-SimulatorClient::CreateReplay(std::string const& parent, google::cloud::policysimulator::v1::Replay const& replay, Options opts) {
+SimulatorClient::CreateReplay(
+    std::string const& parent,
+    google::cloud::policysimulator::v1::Replay const& replay, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::policysimulator::v1::CreateReplayRequest request;
   request.set_parent(parent);
@@ -55,8 +58,9 @@ SimulatorClient::CreateReplay(std::string const& parent, google::cloud::policysi
   return connection_->CreateReplay(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SimulatorClient::CreateReplay(NoAwaitTag, std::string const& parent, google::cloud::policysimulator::v1::Replay const& replay, Options opts) {
+StatusOr<google::longrunning::Operation> SimulatorClient::CreateReplay(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::policysimulator::v1::Replay const& replay, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::policysimulator::v1::CreateReplayRequest request;
   request.set_parent(parent);
@@ -65,19 +69,24 @@ SimulatorClient::CreateReplay(NoAwaitTag, std::string const& parent, google::clo
 }
 
 future<StatusOr<google::cloud::policysimulator::v1::Replay>>
-SimulatorClient::CreateReplay(google::cloud::policysimulator::v1::CreateReplayRequest const& request, Options opts) {
+SimulatorClient::CreateReplay(
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReplay(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SimulatorClient::CreateReplay(NoAwaitTag, google::cloud::policysimulator::v1::CreateReplayRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SimulatorClient::CreateReplay(
+    NoAwaitTag,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReplay(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::policysimulator::v1::Replay>>
-SimulatorClient::CreateReplay(google::longrunning::Operation const& operation, Options opts) {
+SimulatorClient::CreateReplay(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReplay(operation);
 }
@@ -91,13 +100,15 @@ SimulatorClient::ListReplayResults(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::policysimulator::v1::ReplayResult>
-SimulatorClient::ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest request, Options opts) {
+SimulatorClient::ListReplayResults(
+    google::cloud::policysimulator::v1::ListReplayResultsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReplayResults(std::move(request));
 }
 
-StreamRange<google::longrunning::Operation>
-SimulatorClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> SimulatorClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -105,22 +116,22 @@ SimulatorClient::ListOperations(std::string const& name, std::string const& filt
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-SimulatorClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> SimulatorClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-SimulatorClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> SimulatorClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-SimulatorClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> SimulatorClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

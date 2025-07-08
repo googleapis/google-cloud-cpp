@@ -36,34 +36,35 @@ class TraceServiceStub {
   virtual ~TraceServiceStub() = 0;
 
   virtual Status BatchWriteSpans(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&
+          request) = 0;
 
   virtual StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::Span const& request) = 0;
 };
 
 class DefaultTraceServiceStub : public TraceServiceStub {
  public:
   explicit DefaultTraceServiceStub(
-      std::unique_ptr<google::devtools::cloudtrace::v2::TraceService::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::devtools::cloudtrace::v2::TraceService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   Status BatchWriteSpans(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:
-  std::unique_ptr<google::devtools::cloudtrace::v2::TraceService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::devtools::cloudtrace::v2::TraceService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

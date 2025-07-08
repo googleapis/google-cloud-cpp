@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_CLIENT_H
 
+#include "google/cloud/osconfig/v1/os_config_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
-#include "google/cloud/osconfig/v1/os_config_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class OsConfigServiceClient {
  public:
-  explicit OsConfigServiceClient(std::shared_ptr<OsConfigServiceConnection> connection, Options opts = {});
+  explicit OsConfigServiceClient(
+      std::shared_ptr<OsConfigServiceConnection> connection, Options opts = {});
   ~OsConfigServiceClient();
 
   ///@{
@@ -77,10 +78,12 @@ class OsConfigServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(OsConfigServiceClient const& a, OsConfigServiceClient const& b) {
+  friend bool operator==(OsConfigServiceClient const& a,
+                         OsConfigServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(OsConfigServiceClient const& a, OsConfigServiceClient const& b) {
+  friend bool operator!=(OsConfigServiceClient const& a,
+                         OsConfigServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,8 +115,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchJob>
-  ExecutePatchJob(google::cloud::osconfig::v1::ExecutePatchJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
+      google::cloud::osconfig::v1::ExecutePatchJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +142,8 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchJob>
-  GetPatchJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +173,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchJob>
-  GetPatchJob(google::cloud::osconfig::v1::GetPatchJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
+      google::cloud::osconfig::v1::GetPatchJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +205,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchJob>
-  CancelPatchJob(google::cloud::osconfig::v1::CancelPatchJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchJob> CancelPatchJob(
+      google::cloud::osconfig::v1::CancelPatchJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -234,8 +240,8 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
   // clang-format on
-  StreamRange<google::cloud::osconfig::v1::PatchJob>
-  ListPatchJobs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -273,8 +279,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
   // clang-format on
-  StreamRange<google::cloud::osconfig::v1::PatchJob>
-  ListPatchJobs(google::cloud::osconfig::v1::ListPatchJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
+      google::cloud::osconfig::v1::ListPatchJobsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -348,7 +355,9 @@ class OsConfigServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
-  ListPatchJobInstanceDetails(google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request, Options opts = {});
+  ListPatchJobInstanceDetails(
+      google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -381,8 +390,10 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  CreatePatchDeployment(std::string const& parent, google::cloud::osconfig::v1::PatchDeployment const& patch_deployment, std::string const& patch_deployment_id, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> CreatePatchDeployment(
+      std::string const& parent,
+      google::cloud::osconfig::v1::PatchDeployment const& patch_deployment,
+      std::string const& patch_deployment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -411,8 +422,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  CreatePatchDeployment(google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> CreatePatchDeployment(
+      google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -437,8 +449,8 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  GetPatchDeployment(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> GetPatchDeployment(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -467,8 +479,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  GetPatchDeployment(google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> GetPatchDeployment(
+      google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -541,7 +554,9 @@ class OsConfigServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::osconfig::v1::PatchDeployment>
-  ListPatchDeployments(google::cloud::osconfig::v1::ListPatchDeploymentsRequest request, Options opts = {});
+  ListPatchDeployments(
+      google::cloud::osconfig::v1::ListPatchDeploymentsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -563,8 +578,7 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.DeletePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L295}
   ///
   // clang-format on
-  Status
-  DeletePatchDeployment(std::string const& name, Options opts = {});
+  Status DeletePatchDeployment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -590,8 +604,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.DeletePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L295}
   ///
   // clang-format on
-  Status
-  DeletePatchDeployment(google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request, Options opts = {});
+  Status DeletePatchDeployment(
+      google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -617,8 +632,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  UpdatePatchDeployment(google::cloud::osconfig::v1::PatchDeployment const& patch_deployment, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
+      google::cloud::osconfig::v1::PatchDeployment const& patch_deployment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -647,8 +663,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  UpdatePatchDeployment(google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
+      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -674,8 +691,8 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  PausePatchDeployment(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -705,8 +722,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  PausePatchDeployment(google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
+      google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -732,8 +750,8 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  ResumePatchDeployment(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -763,8 +781,9 @@ class OsConfigServiceClient {
   /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
   ///
   // clang-format on
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  ResumePatchDeployment(google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
+      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<OsConfigServiceConnection> connection_;

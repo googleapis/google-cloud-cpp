@@ -35,21 +35,24 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options MetadataServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_METADATA_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_METADATA_SERVICE_AUTHORITY",
-      "dataplex.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_METADATA_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_METADATA_SERVICE_AUTHORITY", "dataplex.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataplex_v1::MetadataServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::MetadataServiceRetryPolicyOption>(
         dataplex_v1::MetadataServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dataplex_v1::MetadataServiceBackoffPolicyOption>()) {
     options.set<dataplex_v1::MetadataServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption>()) {
     options.set<dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption>(
         dataplex_v1::MakeDefaultMetadataServiceConnectionIdempotencyPolicy());
   }

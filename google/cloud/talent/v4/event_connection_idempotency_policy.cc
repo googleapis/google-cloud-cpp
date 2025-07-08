@@ -26,23 +26,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EventServiceConnectionIdempotencyPolicy::~EventServiceConnectionIdempotencyPolicy() = default;
+EventServiceConnectionIdempotencyPolicy::
+    ~EventServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<EventServiceConnectionIdempotencyPolicy>
 EventServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<EventServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EventServiceConnectionIdempotencyPolicy::CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const&) {
+Idempotency EventServiceConnectionIdempotencyPolicy::CreateClientEvent(
+    google::cloud::talent::v4::CreateClientEventRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency EventServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<EventServiceConnectionIdempotencyPolicy>
-    MakeDefaultEventServiceConnectionIdempotencyPolicy() {
+MakeDefaultEventServiceConnectionIdempotencyPolicy() {
   return std::make_unique<EventServiceConnectionIdempotencyPolicy>();
 }
 

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_PRODUCT_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_PRODUCT_TRACING_STUB_H
 
+#include "google/cloud/retail/v2/internal/product_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/internal/product_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,28 +39,23 @@ class ProductServiceTracingStub : public ProductServiceStub {
   explicit ProductServiceTracingStub(std::shared_ptr<ProductServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateProductRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetProductRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListProductsResponse> ListProducts(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListProductsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateProductRequest const& request) override;
 
   Status DeleteProduct(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteProductRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeProducts(
@@ -70,8 +65,7 @@ class ProductServiceTracingStub : public ProductServiceStub {
       google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(
@@ -81,8 +75,7 @@ class ProductServiceTracingStub : public ProductServiceStub {
       google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportProducts(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSetInventory(
@@ -92,62 +85,63 @@ class ProductServiceTracingStub : public ProductServiceStub {
       google::cloud::retail::v2::SetInventoryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SetInventory(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::SetInventoryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAddFulfillmentPlaces(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) override;
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRemoveFulfillmentPlaces(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) override;
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAddLocalInventories(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::AddLocalInventoriesRequest const& request) override;
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> AddLocalInventories(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::AddLocalInventoriesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRemoveLocalInventories(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) override;
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RemoveLocalInventories(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -164,7 +158,8 @@ class ProductServiceTracingStub : public ProductServiceStub {
 
  private:
   std::shared_ptr<ProductServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

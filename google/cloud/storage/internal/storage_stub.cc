@@ -34,197 +34,174 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageStub::~StorageStub() = default;
 
-Status
-DefaultStorageStub::DeleteBucket(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::DeleteBucketRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteBucket(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultStorageStub::DeleteBucket(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::DeleteBucketRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteBucket(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-StatusOr<google::storage::v2::Bucket>
-DefaultStorageStub::GetBucket(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::GetBucketRequest const& request) {
-    google::storage::v2::Bucket response;
-    auto status =
-        grpc_stub_->GetBucket(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::storage::v2::Bucket> DefaultStorageStub::GetBucket(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::GetBucketRequest const& request) {
+  google::storage::v2::Bucket response;
+  auto status = grpc_stub_->GetBucket(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::storage::v2::Bucket>
-DefaultStorageStub::CreateBucket(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::CreateBucketRequest const& request) {
-    google::storage::v2::Bucket response;
-    auto status =
-        grpc_stub_->CreateBucket(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::storage::v2::Bucket> DefaultStorageStub::CreateBucket(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::CreateBucketRequest const& request) {
+  google::storage::v2::Bucket response;
+  auto status = grpc_stub_->CreateBucket(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::storage::v2::ListBucketsResponse>
 DefaultStorageStub::ListBuckets(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::ListBucketsRequest const& request) {
-    google::storage::v2::ListBucketsResponse response;
-    auto status =
-        grpc_stub_->ListBuckets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::ListBucketsRequest const& request) {
+  google::storage::v2::ListBucketsResponse response;
+  auto status = grpc_stub_->ListBuckets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::storage::v2::Bucket>
 DefaultStorageStub::LockBucketRetentionPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
-    google::storage::v2::Bucket response;
-    auto status =
-        grpc_stub_->LockBucketRetentionPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::LockBucketRetentionPolicyRequest const& request) {
+  google::storage::v2::Bucket response;
+  auto status =
+      grpc_stub_->LockBucketRetentionPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultStorageStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        grpc_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultStorageStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultStorageStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        grpc_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultStorageStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultStorageStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        grpc_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::storage::v2::Bucket>
-DefaultStorageStub::UpdateBucket(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::UpdateBucketRequest const& request) {
-    google::storage::v2::Bucket response;
-    auto status =
-        grpc_stub_->UpdateBucket(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::storage::v2::Bucket> DefaultStorageStub::UpdateBucket(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::UpdateBucketRequest const& request) {
+  google::storage::v2::Bucket response;
+  auto status = grpc_stub_->UpdateBucket(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::storage::v2::Object>
-DefaultStorageStub::ComposeObject(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::ComposeObjectRequest const& request) {
-    google::storage::v2::Object response;
-    auto status =
-        grpc_stub_->ComposeObject(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::storage::v2::Object> DefaultStorageStub::ComposeObject(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::ComposeObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->ComposeObject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultStorageStub::DeleteObject(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::DeleteObjectRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteObject(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultStorageStub::DeleteObject(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::DeleteObjectRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteObject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-StatusOr<google::storage::v2::Object>
-DefaultStorageStub::RestoreObject(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::RestoreObjectRequest const& request) {
-    google::storage::v2::Object response;
-    auto status =
-        grpc_stub_->RestoreObject(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::storage::v2::Object> DefaultStorageStub::RestoreObject(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::RestoreObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->RestoreObject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::storage::v2::CancelResumableWriteResponse>
 DefaultStorageStub::CancelResumableWrite(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::CancelResumableWriteRequest const& request) {
-    google::storage::v2::CancelResumableWriteResponse response;
-    auto status =
-        grpc_stub_->CancelResumableWrite(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::CancelResumableWriteRequest const& request) {
+  google::storage::v2::CancelResumableWriteResponse response;
+  auto status = grpc_stub_->CancelResumableWrite(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::storage::v2::Object>
-DefaultStorageStub::GetObject(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::GetObjectRequest const& request) {
-    google::storage::v2::Object response;
-    auto status =
-        grpc_stub_->GetObject(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::storage::v2::Object> DefaultStorageStub::GetObject(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::GetObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->GetObject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::storage::v2::ReadObjectResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::storage::v2::ReadObjectResponse>>
 DefaultStorageStub::ReadObject(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const&,
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::storage::v2::ReadObjectRequest const& request) {
   auto stream = grpc_stub_->ReadObject(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
-      google::storage::v2::ReadObjectResponse>>(
-      std::move(context), std::move(stream));
+      google::storage::v2::ReadObjectResponse>>(std::move(context),
+                                                std::move(stream));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -234,37 +211,37 @@ DefaultStorageStub::AsyncBidiReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingReadWriteRpc<google::storage::v2::BidiReadObjectRequest, google::storage::v2::BidiReadObjectResponse>(
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncBidiReadObject(context, cq);
       });
 }
 
-StatusOr<google::storage::v2::Object>
-DefaultStorageStub::UpdateObject(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::UpdateObjectRequest const& request) {
-    google::storage::v2::Object response;
-    auto status =
-        grpc_stub_->UpdateObject(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::storage::v2::Object> DefaultStorageStub::UpdateObject(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::UpdateObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->UpdateObject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-DefaultStorageStub::WriteObject(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const&) {
+DefaultStorageStub::WriteObject(std::shared_ptr<grpc::ClientContext> context,
+                                Options const&) {
   auto response = std::make_unique<google::storage::v2::WriteObjectResponse>();
   auto stream = grpc_stub_->WriteObject(context.get(), response.get());
   return std::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
-      google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>>(
-    std::move(context), std::move(response), std::move(stream));
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>>(
+      std::move(context), std::move(response), std::move(stream));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -274,7 +251,9 @@ DefaultStorageStub::AsyncBidiWriteObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingReadWriteRpc<google::storage::v2::BidiWriteObjectRequest, google::storage::v2::BidiWriteObjectResponse>(
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::storage::v2::BidiWriteObjectRequest,
+      google::storage::v2::BidiWriteObjectResponse>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncBidiWriteObject(context, cq);
@@ -283,67 +262,61 @@ DefaultStorageStub::AsyncBidiWriteObject(
 
 StatusOr<google::storage::v2::ListObjectsResponse>
 DefaultStorageStub::ListObjects(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::ListObjectsRequest const& request) {
-    google::storage::v2::ListObjectsResponse response;
-    auto status =
-        grpc_stub_->ListObjects(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::ListObjectsRequest const& request) {
+  google::storage::v2::ListObjectsResponse response;
+  auto status = grpc_stub_->ListObjects(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::storage::v2::RewriteResponse>
 DefaultStorageStub::RewriteObject(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::RewriteObjectRequest const& request) {
-    google::storage::v2::RewriteResponse response;
-    auto status =
-        grpc_stub_->RewriteObject(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::RewriteObjectRequest const& request) {
+  google::storage::v2::RewriteResponse response;
+  auto status = grpc_stub_->RewriteObject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::storage::v2::StartResumableWriteResponse>
 DefaultStorageStub::StartResumableWrite(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::StartResumableWriteRequest const& request) {
-    google::storage::v2::StartResumableWriteResponse response;
-    auto status =
-        grpc_stub_->StartResumableWrite(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::StartResumableWriteRequest const& request) {
+  google::storage::v2::StartResumableWriteResponse response;
+  auto status = grpc_stub_->StartResumableWrite(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::storage::v2::QueryWriteStatusResponse>
 DefaultStorageStub::QueryWriteStatus(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::QueryWriteStatusRequest const& request) {
-    google::storage::v2::QueryWriteStatusResponse response;
-    auto status =
-        grpc_stub_->QueryWriteStatus(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::QueryWriteStatusRequest const& request) {
+  google::storage::v2::QueryWriteStatusResponse response;
+  auto status = grpc_stub_->QueryWriteStatus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::storage::v2::Object>
-DefaultStorageStub::MoveObject(
-  grpc::ClientContext& context, Options const&,
-  google::storage::v2::MoveObjectRequest const& request) {
-    google::storage::v2::Object response;
-    auto status =
-        grpc_stub_->MoveObject(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::storage::v2::Object> DefaultStorageStub::MoveObject(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::MoveObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->MoveObject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::storage::v2::Object>>
@@ -364,8 +337,7 @@ DefaultStorageStub::AsyncComposeObject(
       request, std::move(context));
 }
 
-future<Status>
-DefaultStorageStub::AsyncDeleteObject(
+future<Status> DefaultStorageStub::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
@@ -373,16 +345,16 @@ DefaultStorageStub::AsyncDeleteObject(
     google::storage::v2::DeleteObjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::storage::v2::DeleteObjectRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::storage::v2::DeleteObjectRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteObject(context, request, cq);
-      },
-      request, std::move(context))
-          .then([](future<StatusOr<google::protobuf::Empty>> f) {
-            return f.get().status();
-          });
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::storage::v2::DeleteObjectRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return grpc_stub_->AsyncDeleteObject(context, request, cq);
+             },
+             request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -392,24 +364,33 @@ DefaultStorageStub::AsyncReadObject(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ReadObjectRequest const& request) {
-  return google::cloud::internal::MakeStreamingReadRpc<google::storage::v2::ReadObjectRequest, google::storage::v2::ReadObjectResponse>(
-    cq, std::move(context), std::move(options), request,
-    [this](grpc::ClientContext* context, google::storage::v2::ReadObjectRequest const& request, grpc::CompletionQueue* cq) {
-      return grpc_stub_->PrepareAsyncReadObject(context, request, cq);
-    });
+  return google::cloud::internal::MakeStreamingReadRpc<
+      google::storage::v2::ReadObjectRequest,
+      google::storage::v2::ReadObjectResponse>(
+      cq, std::move(context), std::move(options), request,
+      [this](grpc::ClientContext* context,
+             google::storage::v2::ReadObjectRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncReadObject(context, request, cq);
+      });
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-    google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>>
+    google::storage::v2::WriteObjectRequest,
+    google::storage::v2::WriteObjectResponse>>
 DefaultStorageStub::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingWriteRpc<google::storage::v2::WriteObjectRequest, google::storage::v2::WriteObjectResponse>(
-    cq, std::move(context), std::move(options),
-    [this](grpc::ClientContext* context, google::storage::v2::WriteObjectResponse* response, grpc::CompletionQueue* cq) {
-      return grpc_stub_->PrepareAsyncWriteObject(context, response, cq);
-    });
+  return google::cloud::internal::MakeStreamingWriteRpc<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context,
+             google::storage::v2::WriteObjectResponse* response,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncWriteObject(context, response, cq);
+      });
 }
 
 future<StatusOr<google::storage::v2::RewriteResponse>>
@@ -437,8 +418,9 @@ DefaultStorageStub::AsyncStartResumableWrite(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::storage::v2::StartResumableWriteRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::storage::v2::StartResumableWriteRequest,
-                                    google::storage::v2::StartResumableWriteResponse>(
+  return internal::MakeUnaryRpcImpl<
+      google::storage::v2::StartResumableWriteRequest,
+      google::storage::v2::StartResumableWriteResponse>(
       cq,
       [this](grpc::ClientContext* context,
              google::storage::v2::StartResumableWriteRequest const& request,
@@ -455,8 +437,9 @@ DefaultStorageStub::AsyncQueryWriteStatus(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::storage::v2::QueryWriteStatusRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::storage::v2::QueryWriteStatusRequest,
-                                    google::storage::v2::QueryWriteStatusResponse>(
+  return internal::MakeUnaryRpcImpl<
+      google::storage::v2::QueryWriteStatusRequest,
+      google::storage::v2::QueryWriteStatusResponse>(
       cq,
       [this](grpc::ClientContext* context,
              google::storage::v2::QueryWriteStatusRequest const& request,

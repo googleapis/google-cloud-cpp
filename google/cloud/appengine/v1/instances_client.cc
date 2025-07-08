@@ -28,54 +28,60 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstancesClient::InstancesClient(
     std::shared_ptr<InstancesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 InstancesClient::~InstancesClient() = default;
 
-StreamRange<google::appengine::v1::Instance>
-InstancesClient::ListInstances(google::appengine::v1::ListInstancesRequest request, Options opts) {
+StreamRange<google::appengine::v1::Instance> InstancesClient::ListInstances(
+    google::appengine::v1::ListInstancesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInstances(std::move(request));
 }
 
-StatusOr<google::appengine::v1::Instance>
-InstancesClient::GetInstance(google::appengine::v1::GetInstanceRequest const& request, Options opts) {
+StatusOr<google::appengine::v1::Instance> InstancesClient::GetInstance(
+    google::appengine::v1::GetInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInstance(request);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-InstancesClient::DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request, Options opts) {
+InstancesClient::DeleteInstance(
+    google::appengine::v1::DeleteInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-InstancesClient::DeleteInstance(NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> InstancesClient::DeleteInstance(
+    NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-InstancesClient::DeleteInstance(google::longrunning::Operation const& operation, Options opts) {
+InstancesClient::DeleteInstance(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(operation);
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
-InstancesClient::DebugInstance(google::appengine::v1::DebugInstanceRequest const& request, Options opts) {
+InstancesClient::DebugInstance(
+    google::appengine::v1::DebugInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DebugInstance(request);
 }
 
-StatusOr<google::longrunning::Operation>
-InstancesClient::DebugInstance(NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> InstancesClient::DebugInstance(
+    NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DebugInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
-InstancesClient::DebugInstance(google::longrunning::Operation const& operation, Options opts) {
+InstancesClient::DebugInstance(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DebugInstance(operation);
 }

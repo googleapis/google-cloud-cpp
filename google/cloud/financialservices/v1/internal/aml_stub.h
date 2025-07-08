@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/financialservices/v1/service.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/financialservices/v1/service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,374 +39,421 @@ class AMLStub {
  public:
   virtual ~AMLStub() = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListInstancesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::financialservices::v1::ListInstancesResponse>
+  ListInstances(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListInstancesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::financialservices::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetInstanceRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetInstanceRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateInstanceRequest const& request) = 0;
+      google::cloud::financialservices::v1::CreateInstanceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateInstanceRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateInstanceRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) = 0;
+      google::cloud::financialservices::v1::UpdateInstanceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateInstanceRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) = 0;
+      google::cloud::financialservices::v1::DeleteInstanceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteInstanceRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportRegisteredParties(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncImportRegisteredParties(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) = 0;
+      google::cloud::financialservices::v1::
+          ImportRegisteredPartiesRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ImportRegisteredParties(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ImportRegisteredPartiesRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportRegisteredParties(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportRegisteredParties(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) = 0;
+      google::cloud::financialservices::v1::
+          ExportRegisteredPartiesRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportRegisteredParties(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ExportRegisteredPartiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse> ListDatasets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListDatasetsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse>
+  ListDatasets(grpc::ClientContext& context, Options const& options,
+               google::cloud::financialservices::v1::ListDatasetsRequest const&
+                   request) = 0;
 
   virtual StatusOr<google::cloud::financialservices::v1::Dataset> GetDataset(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetDatasetRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetDatasetRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request) = 0;
+      google::cloud::financialservices::v1::CreateDatasetRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateDatasetRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) = 0;
+      google::cloud::financialservices::v1::UpdateDatasetRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateDatasetRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) = 0;
+      google::cloud::financialservices::v1::DeleteDatasetRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteDatasetRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::ListModelsResponse> ListModels(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListModelsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::financialservices::v1::ListModelsResponse>
+  ListModels(grpc::ClientContext& context, Options const& options,
+             google::cloud::financialservices::v1::ListModelsRequest const&
+                 request) = 0;
 
   virtual StatusOr<google::cloud::financialservices::v1::Model> GetModel(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::financialservices::v1::GetModelRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateModelRequest const& request) = 0;
+      google::cloud::financialservices::v1::CreateModelRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateModelRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateModelRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateModelRequest const& request) = 0;
+      google::cloud::financialservices::v1::UpdateModelRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateModelRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateModelRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportModelMetadata(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportModelMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) = 0;
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportModelMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteModelRequest const& request) = 0;
+      google::cloud::financialservices::v1::DeleteModelRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteModelRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteModelRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::ListEngineConfigsResponse> ListEngineConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListEngineConfigsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::financialservices::v1::ListEngineConfigsResponse>
+  ListEngineConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListEngineConfigsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::EngineConfig> GetEngineConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetEngineConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::financialservices::v1::EngineConfig>
+  GetEngineConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetEngineConfigRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateEngineConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateEngineConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) = 0;
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateEngineConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateEngineConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) = 0;
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportEngineConfigMetadata(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportEngineConfigMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) = 0;
+      google::cloud::financialservices::v1::
+          ExportEngineConfigMetadataRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportEngineConfigMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ExportEngineConfigMetadataRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEngineConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteEngineConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) = 0;
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::EngineVersion> GetEngineVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetEngineVersionRequest const& request) = 0;
+  virtual StatusOr<google::cloud::financialservices::v1::EngineVersion>
+  GetEngineVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetEngineVersionRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::ListEngineVersionsResponse> ListEngineVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListEngineVersionsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::financialservices::v1::ListEngineVersionsResponse>
+  ListEngineVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListEngineVersionsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::ListPredictionResultsResponse> ListPredictionResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListPredictionResultsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::financialservices::v1::ListPredictionResultsResponse>
+  ListPredictionResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListPredictionResultsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::PredictionResult> GetPredictionResult(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetPredictionResultRequest const& request) = 0;
+  virtual StatusOr<google::cloud::financialservices::v1::PredictionResult>
+  GetPredictionResult(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetPredictionResultRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreatePredictionResult(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreatePredictionResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) = 0;
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreatePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdatePredictionResult(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdatePredictionResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) = 0;
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdatePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportPredictionResultMetadata(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportPredictionResultMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) = 0;
+      google::cloud::financialservices::v1::
+          ExportPredictionResultMetadataRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> ExportPredictionResultMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  ExportPredictionResultMetadata(
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ExportPredictionResultMetadataRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeletePredictionResult(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeletePredictionResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) = 0;
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeletePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::ListBacktestResultsResponse> ListBacktestResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListBacktestResultsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::financialservices::v1::ListBacktestResultsResponse>
+  ListBacktestResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListBacktestResultsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::financialservices::v1::BacktestResult> GetBacktestResult(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetBacktestResultRequest const& request) = 0;
+  virtual StatusOr<google::cloud::financialservices::v1::BacktestResult>
+  GetBacktestResult(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetBacktestResultRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBacktestResult(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateBacktestResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) = 0;
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateBacktestResult(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateBacktestResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) = 0;
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportBacktestResultMetadata(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportBacktestResultMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) = 0;
+      google::cloud::financialservices::v1::
+          ExportBacktestResultMetadataRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportBacktestResultMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ExportBacktestResultMetadataRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteBacktestResult(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteBacktestResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) = 0;
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -419,375 +466,407 @@ class AMLStub {
 class DefaultAMLStub : public AMLStub {
  public:
   DefaultAMLStub(
-      std::unique_ptr<google::cloud::financialservices::v1::AML::StubInterface> grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::financialservices::v1::AML::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::financialservices::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListInstancesRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::ListInstancesResponse>
+  ListInstances(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListInstancesRequest const& request)
+      override;
 
   StatusOr<google::cloud::financialservices::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateInstanceRequest const& request) override;
+      google::cloud::financialservices::v1::CreateInstanceRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateInstanceRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) override;
+      google::cloud::financialservices::v1::UpdateInstanceRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateInstanceRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) override;
+      google::cloud::financialservices::v1::DeleteInstanceRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteInstanceRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportRegisteredParties(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) override;
+      google::cloud::financialservices::v1::
+          ImportRegisteredPartiesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportRegisteredParties(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ImportRegisteredPartiesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportRegisteredParties(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) override;
+      google::cloud::financialservices::v1::
+          ExportRegisteredPartiesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportRegisteredParties(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ExportRegisteredPartiesRequest const& request) override;
 
-  StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse> ListDatasets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListDatasetsRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::ListDatasetsResponse>
+  ListDatasets(grpc::ClientContext& context, Options const& options,
+               google::cloud::financialservices::v1::ListDatasetsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::financialservices::v1::Dataset> GetDataset(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetDatasetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetDatasetRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request) override;
+      google::cloud::financialservices::v1::CreateDatasetRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateDatasetRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateDatasetRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) override;
+      google::cloud::financialservices::v1::UpdateDatasetRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateDatasetRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateDatasetRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) override;
+      google::cloud::financialservices::v1::DeleteDatasetRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteDatasetRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteDatasetRequest const& request)
+      override;
 
   StatusOr<google::cloud::financialservices::v1::ListModelsResponse> ListModels(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListModelsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListModelsRequest const& request)
+      override;
 
   StatusOr<google::cloud::financialservices::v1::Model> GetModel(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetModelRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetModelRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateModelRequest const& request) override;
+      google::cloud::financialservices::v1::CreateModelRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateModelRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateModelRequest const& request) override;
+      google::cloud::financialservices::v1::UpdateModelRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateModelRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportModelMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) override;
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> ExportModelMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteModelRequest const& request) override;
+      google::cloud::financialservices::v1::DeleteModelRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteModelRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteModelRequest const& request)
+      override;
 
-  StatusOr<google::cloud::financialservices::v1::ListEngineConfigsResponse> ListEngineConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListEngineConfigsRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::ListEngineConfigsResponse>
+  ListEngineConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListEngineConfigsRequest const&
+          request) override;
 
   StatusOr<google::cloud::financialservices::v1::EngineConfig> GetEngineConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetEngineConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetEngineConfigRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEngineConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) override;
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEngineConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) override;
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncExportEngineConfigMetadata(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncExportEngineConfigMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) override;
+      google::cloud::financialservices::v1::
+          ExportEngineConfigMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportEngineConfigMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ExportEngineConfigMetadataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEngineConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) override;
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEngineConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::financialservices::v1::EngineVersion> GetEngineVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetEngineVersionRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::EngineVersion>
+  GetEngineVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetEngineVersionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::financialservices::v1::ListEngineVersionsResponse> ListEngineVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListEngineVersionsRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::ListEngineVersionsResponse>
+  ListEngineVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListEngineVersionsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::financialservices::v1::ListPredictionResultsResponse> ListPredictionResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListPredictionResultsRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::ListPredictionResultsResponse>
+  ListPredictionResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListPredictionResultsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::financialservices::v1::PredictionResult> GetPredictionResult(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetPredictionResultRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::PredictionResult>
+  GetPredictionResult(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetPredictionResultRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePredictionResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) override;
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreatePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePredictionResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) override;
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncExportPredictionResultMetadata(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncExportPredictionResultMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) override;
+      google::cloud::financialservices::v1::
+          ExportPredictionResultMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportPredictionResultMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ExportPredictionResultMetadataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePredictionResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) override;
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeletePredictionResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+          request) override;
 
-  StatusOr<google::cloud::financialservices::v1::ListBacktestResultsResponse> ListBacktestResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::ListBacktestResultsRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::ListBacktestResultsResponse>
+  ListBacktestResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::ListBacktestResultsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::financialservices::v1::BacktestResult> GetBacktestResult(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::financialservices::v1::GetBacktestResultRequest const& request) override;
+  StatusOr<google::cloud::financialservices::v1::BacktestResult>
+  GetBacktestResult(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::financialservices::v1::GetBacktestResultRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBacktestResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) override;
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBacktestResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) override;
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncExportBacktestResultMetadata(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncExportBacktestResultMetadata(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) override;
+      google::cloud::financialservices::v1::
+          ExportBacktestResultMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportBacktestResultMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::
+          ExportBacktestResultMetadataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBacktestResult(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) override;
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBacktestResult(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -803,9 +882,12 @@ class DefaultAMLStub : public AMLStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::financialservices::v1::AML::StubInterface> grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::financialservices::v1::AML::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

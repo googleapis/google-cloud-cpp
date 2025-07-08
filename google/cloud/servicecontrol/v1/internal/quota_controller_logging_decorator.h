@@ -35,13 +35,13 @@ class QuotaControllerLogging : public QuotaControllerStub {
  public:
   ~QuotaControllerLogging() override = default;
   QuotaControllerLogging(std::shared_ptr<QuotaControllerStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                         TracingOptions tracing_options,
+                         std::set<std::string> const& components);
 
-  StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse> AllocateQuota(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicecontrol::v1::AllocateQuotaRequest const& request) override;
+  StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
+  AllocateQuota(grpc::ClientContext& context, Options const& options,
+                google::api::servicecontrol::v1::AllocateQuotaRequest const&
+                    request) override;
 
  private:
   std::shared_ptr<QuotaControllerStub> child_;

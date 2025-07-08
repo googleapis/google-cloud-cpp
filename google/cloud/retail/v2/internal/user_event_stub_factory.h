@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_USER_EVENT_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_USER_EVENT_STUB_FACTORY_H
 
+#include "google/cloud/retail/v2/internal/user_event_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/internal/user_event_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

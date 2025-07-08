@@ -31,69 +31,75 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PrivilegedAccessManagerStub::~PrivilegedAccessManagerStub() = default;
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+StatusOr<
+    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
 DefaultPrivilegedAccessManagerStub::CheckOnboardingStatus(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse response;
-    auto status =
-        grpc_stub_->CheckOnboardingStatus(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::
+        CheckOnboardingStatusRequest const& request) {
+  google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse
+      response;
+  auto status = grpc_stub_->CheckOnboardingStatus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse>
 DefaultPrivilegedAccessManagerStub::ListEntitlements(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse response;
-    auto status =
-        grpc_stub_->ListEntitlements(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse response;
+  auto status = grpc_stub_->ListEntitlements(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse>
 DefaultPrivilegedAccessManagerStub::SearchEntitlements(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse response;
-    auto status =
-        grpc_stub_->SearchEntitlements(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse
+      response;
+  auto status = grpc_stub_->SearchEntitlements(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
 DefaultPrivilegedAccessManagerStub::GetEntitlement(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::Entitlement response;
-    auto status =
-        grpc_stub_->GetEntitlement(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::Entitlement response;
+  auto status = grpc_stub_->GetEntitlement(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPrivilegedAccessManagerStub::AsyncCreateEntitlement(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request,
+             google::cloud::privilegedaccessmanager::v1::
+                 CreateEntitlementRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateEntitlement(context, request, cq);
       },
@@ -102,29 +108,31 @@ DefaultPrivilegedAccessManagerStub::AsyncCreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 DefaultPrivilegedAccessManagerStub::CreateEntitlement(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateEntitlement(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEntitlement(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPrivilegedAccessManagerStub::AsyncDeleteEntitlement(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request,
+             google::cloud::privilegedaccessmanager::v1::
+                 DeleteEntitlementRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteEntitlement(context, request, cq);
       },
@@ -133,29 +141,31 @@ DefaultPrivilegedAccessManagerStub::AsyncDeleteEntitlement(
 
 StatusOr<google::longrunning::Operation>
 DefaultPrivilegedAccessManagerStub::DeleteEntitlement(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteEntitlement(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEntitlement(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPrivilegedAccessManagerStub::AsyncUpdateEntitlement(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request,
+             google::cloud::privilegedaccessmanager::v1::
+                 UpdateEntitlementRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateEntitlement(context, request, cq);
       },
@@ -164,108 +174,111 @@ DefaultPrivilegedAccessManagerStub::AsyncUpdateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 DefaultPrivilegedAccessManagerStub::UpdateEntitlement(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateEntitlement(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateEntitlement(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse>
 DefaultPrivilegedAccessManagerStub::ListGrants(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::ListGrantsResponse response;
-    auto status =
-        grpc_stub_->ListGrants(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::ListGrantsResponse response;
+  auto status = grpc_stub_->ListGrants(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse>
 DefaultPrivilegedAccessManagerStub::SearchGrants(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse response;
-    auto status =
-        grpc_stub_->SearchGrants(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse response;
+  auto status = grpc_stub_->SearchGrants(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 DefaultPrivilegedAccessManagerStub::GetGrant(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::Grant response;
-    auto status =
-        grpc_stub_->GetGrant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::Grant response;
+  auto status = grpc_stub_->GetGrant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 DefaultPrivilegedAccessManagerStub::CreateGrant(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::Grant response;
-    auto status =
-        grpc_stub_->CreateGrant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::Grant response;
+  auto status = grpc_stub_->CreateGrant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 DefaultPrivilegedAccessManagerStub::ApproveGrant(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::Grant response;
-    auto status =
-        grpc_stub_->ApproveGrant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::Grant response;
+  auto status = grpc_stub_->ApproveGrant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
 DefaultPrivilegedAccessManagerStub::DenyGrant(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) {
-    google::cloud::privilegedaccessmanager::v1::Grant response;
-    auto status =
-        grpc_stub_->DenyGrant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
+        request) {
+  google::cloud::privilegedaccessmanager::v1::Grant response;
+  auto status = grpc_stub_->DenyGrant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPrivilegedAccessManagerStub::AsyncRevokeGrant(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRevokeGrant(context, request, cq);
       },
       request, std::move(context));
@@ -273,81 +286,74 @@ DefaultPrivilegedAccessManagerStub::AsyncRevokeGrant(
 
 StatusOr<google::longrunning::Operation>
 DefaultPrivilegedAccessManagerStub::RevokeGrant(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RevokeGrant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RevokeGrant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultPrivilegedAccessManagerStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultPrivilegedAccessManagerStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultPrivilegedAccessManagerStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultPrivilegedAccessManagerStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultPrivilegedAccessManagerStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultPrivilegedAccessManagerStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -376,13 +382,14 @@ future<Status> DefaultPrivilegedAccessManagerStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

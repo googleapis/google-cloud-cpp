@@ -32,171 +32,169 @@ ParameterManagerStub::~ParameterManagerStub() = default;
 
 StatusOr<google::cloud::parametermanager::v1::ListParametersResponse>
 DefaultParameterManagerStub::ListParameters(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::ListParametersRequest const& request) {
-    google::cloud::parametermanager::v1::ListParametersResponse response;
-    auto status =
-        grpc_stub_->ListParameters(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::ListParametersRequest const& request) {
+  google::cloud::parametermanager::v1::ListParametersResponse response;
+  auto status = grpc_stub_->ListParameters(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 DefaultParameterManagerStub::GetParameter(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::GetParameterRequest const& request) {
-    google::cloud::parametermanager::v1::Parameter response;
-    auto status =
-        grpc_stub_->GetParameter(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::GetParameterRequest const& request) {
+  google::cloud::parametermanager::v1::Parameter response;
+  auto status = grpc_stub_->GetParameter(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 DefaultParameterManagerStub::CreateParameter(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::CreateParameterRequest const& request) {
-    google::cloud::parametermanager::v1::Parameter response;
-    auto status =
-        grpc_stub_->CreateParameter(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::CreateParameterRequest const&
+        request) {
+  google::cloud::parametermanager::v1::Parameter response;
+  auto status = grpc_stub_->CreateParameter(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 DefaultParameterManagerStub::UpdateParameter(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::UpdateParameterRequest const& request) {
-    google::cloud::parametermanager::v1::Parameter response;
-    auto status =
-        grpc_stub_->UpdateParameter(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::UpdateParameterRequest const&
+        request) {
+  google::cloud::parametermanager::v1::Parameter response;
+  auto status = grpc_stub_->UpdateParameter(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultParameterManagerStub::DeleteParameter(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::DeleteParameterRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteParameter(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultParameterManagerStub::DeleteParameter(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::DeleteParameterRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteParameter(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse>
 DefaultParameterManagerStub::ListParameterVersions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::ListParameterVersionsRequest const& request) {
-    google::cloud::parametermanager::v1::ListParameterVersionsResponse response;
-    auto status =
-        grpc_stub_->ListParameterVersions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::ListParameterVersionsRequest const&
+        request) {
+  google::cloud::parametermanager::v1::ListParameterVersionsResponse response;
+  auto status = grpc_stub_->ListParameterVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 DefaultParameterManagerStub::GetParameterVersion(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) {
-    google::cloud::parametermanager::v1::ParameterVersion response;
-    auto status =
-        grpc_stub_->GetParameterVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::GetParameterVersionRequest const&
+        request) {
+  google::cloud::parametermanager::v1::ParameterVersion response;
+  auto status = grpc_stub_->GetParameterVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
 DefaultParameterManagerStub::RenderParameterVersion(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) {
-    google::cloud::parametermanager::v1::RenderParameterVersionResponse response;
-    auto status =
-        grpc_stub_->RenderParameterVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
+        request) {
+  google::cloud::parametermanager::v1::RenderParameterVersionResponse response;
+  auto status =
+      grpc_stub_->RenderParameterVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 DefaultParameterManagerStub::CreateParameterVersion(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) {
-    google::cloud::parametermanager::v1::ParameterVersion response;
-    auto status =
-        grpc_stub_->CreateParameterVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
+        request) {
+  google::cloud::parametermanager::v1::ParameterVersion response;
+  auto status =
+      grpc_stub_->CreateParameterVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 DefaultParameterManagerStub::UpdateParameterVersion(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) {
-    google::cloud::parametermanager::v1::ParameterVersion response;
-    auto status =
-        grpc_stub_->UpdateParameterVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
+        request) {
+  google::cloud::parametermanager::v1::ParameterVersion response;
+  auto status =
+      grpc_stub_->UpdateParameterVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultParameterManagerStub::DeleteParameterVersion(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteParameterVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultParameterManagerStub::DeleteParameterVersion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteParameterVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultParameterManagerStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultParameterManagerStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

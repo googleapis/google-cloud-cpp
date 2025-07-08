@@ -28,25 +28,28 @@ namespace compute_licenses_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LicensesRestLogging::LicensesRestLogging(
-    std::shared_ptr<LicensesRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<LicensesRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesRestLogging::AsyncDeleteLicense(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request) {
-        return child_->AsyncDeleteLicense(
-            cq, std::move(rest_context), std::move(options), request);
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+              request) {
+        return child_->AsyncDeleteLicense(cq, std::move(rest_context),
+                                          std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -54,13 +57,14 @@ LicensesRestLogging::AsyncDeleteLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesRestLogging::DeleteLicense(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+              request) {
         return child_->DeleteLicense(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -68,13 +72,13 @@ LicensesRestLogging::DeleteLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::License>
 LicensesRestLogging::GetLicense(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
+                 request) {
         return child_->GetLicense(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -82,13 +86,14 @@ LicensesRestLogging::GetLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 LicensesRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+              request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -96,17 +101,20 @@ LicensesRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesRestLogging::AsyncInsertLicense(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request) {
-        return child_->AsyncInsertLicense(
-            cq, std::move(rest_context), std::move(options), request);
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+              request) {
+        return child_->AsyncInsertLicense(cq, std::move(rest_context),
+                                          std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,13 +122,14 @@ LicensesRestLogging::AsyncInsertLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesRestLogging::InsertLicense(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+              request) {
         return child_->InsertLicense(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -128,13 +137,14 @@ LicensesRestLogging::InsertLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>
 LicensesRestLogging::ListLicenses(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
+              request) {
         return child_->ListLicenses(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -142,13 +152,14 @@ LicensesRestLogging::ListLicenses(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 LicensesRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+              request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -156,13 +167,13 @@ LicensesRestLogging::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicensesRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::licenses::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -170,17 +181,20 @@ LicensesRestLogging::TestIamPermissions(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesRestLogging::AsyncUpdateLicense(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request) {
-        return child_->AsyncUpdateLicense(
-            cq, std::move(rest_context), std::move(options), request);
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+              request) {
+        return child_->AsyncUpdateLicense(cq, std::move(rest_context),
+                                          std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -188,13 +202,14 @@ LicensesRestLogging::AsyncUpdateLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesRestLogging::UpdateLicense(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+              request) {
         return child_->UpdateLicense(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -205,32 +220,35 @@ LicensesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-LicensesRestLogging::AsyncCancelOperation(
+future<Status> LicensesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

@@ -25,43 +25,47 @@ namespace cloud {
 namespace eventarc_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-EventarcClient::EventarcClient(
-    std::shared_ptr<EventarcConnection> connection, Options opts)
+EventarcClient::EventarcClient(std::shared_ptr<EventarcConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EventarcClient::~EventarcClient() = default;
 
-StatusOr<google::cloud::eventarc::v1::Trigger>
-EventarcClient::GetTrigger(std::string const& name, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Trigger> EventarcClient::GetTrigger(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::GetTriggerRequest request;
   request.set_name(name);
   return connection_->GetTrigger(request);
 }
 
-StatusOr<google::cloud::eventarc::v1::Trigger>
-EventarcClient::GetTrigger(google::cloud::eventarc::v1::GetTriggerRequest const& request, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Trigger> EventarcClient::GetTrigger(
+    google::cloud::eventarc::v1::GetTriggerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTrigger(request);
 }
 
-StreamRange<google::cloud::eventarc::v1::Trigger>
-EventarcClient::ListTriggers(std::string const& parent, Options opts) {
+StreamRange<google::cloud::eventarc::v1::Trigger> EventarcClient::ListTriggers(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::ListTriggersRequest request;
   request.set_parent(parent);
   return connection_->ListTriggers(request);
 }
 
-StreamRange<google::cloud::eventarc::v1::Trigger>
-EventarcClient::ListTriggers(google::cloud::eventarc::v1::ListTriggersRequest request, Options opts) {
+StreamRange<google::cloud::eventarc::v1::Trigger> EventarcClient::ListTriggers(
+    google::cloud::eventarc::v1::ListTriggersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTriggers(std::move(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::CreateTrigger(std::string const& parent, google::cloud::eventarc::v1::Trigger const& trigger, std::string const& trigger_id, Options opts) {
+EventarcClient::CreateTrigger(
+    std::string const& parent,
+    google::cloud::eventarc::v1::Trigger const& trigger,
+    std::string const& trigger_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateTriggerRequest request;
   request.set_parent(parent);
@@ -70,8 +74,10 @@ EventarcClient::CreateTrigger(std::string const& parent, google::cloud::eventarc
   return connection_->CreateTrigger(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateTrigger(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::Trigger const& trigger, std::string const& trigger_id, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateTrigger(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::eventarc::v1::Trigger const& trigger,
+    std::string const& trigger_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateTriggerRequest request;
   request.set_parent(parent);
@@ -81,25 +87,33 @@ EventarcClient::CreateTrigger(NoAwaitTag, std::string const& parent, google::clo
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::CreateTrigger(google::cloud::eventarc::v1::CreateTriggerRequest const& request, Options opts) {
+EventarcClient::CreateTrigger(
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrigger(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateTrigger(NoAwaitTag, google::cloud::eventarc::v1::CreateTriggerRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateTrigger(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrigger(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::CreateTrigger(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::CreateTrigger(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTrigger(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::UpdateTrigger(google::cloud::eventarc::v1::Trigger const& trigger, google::protobuf::FieldMask const& update_mask, bool allow_missing, Options opts) {
+EventarcClient::UpdateTrigger(
+    google::cloud::eventarc::v1::Trigger const& trigger,
+    google::protobuf::FieldMask const& update_mask, bool allow_missing,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateTriggerRequest request;
   *request.mutable_trigger() = trigger;
@@ -108,8 +122,10 @@ EventarcClient::UpdateTrigger(google::cloud::eventarc::v1::Trigger const& trigge
   return connection_->UpdateTrigger(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateTrigger(NoAwaitTag, google::cloud::eventarc::v1::Trigger const& trigger, google::protobuf::FieldMask const& update_mask, bool allow_missing, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateTrigger(
+    NoAwaitTag, google::cloud::eventarc::v1::Trigger const& trigger,
+    google::protobuf::FieldMask const& update_mask, bool allow_missing,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateTriggerRequest request;
   *request.mutable_trigger() = trigger;
@@ -119,25 +135,31 @@ EventarcClient::UpdateTrigger(NoAwaitTag, google::cloud::eventarc::v1::Trigger c
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::UpdateTrigger(google::cloud::eventarc::v1::UpdateTriggerRequest const& request, Options opts) {
+EventarcClient::UpdateTrigger(
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTrigger(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateTrigger(NoAwaitTag, google::cloud::eventarc::v1::UpdateTriggerRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateTrigger(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTrigger(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::UpdateTrigger(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::UpdateTrigger(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTrigger(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::DeleteTrigger(std::string const& name, bool allow_missing, Options opts) {
+EventarcClient::DeleteTrigger(std::string const& name, bool allow_missing,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteTriggerRequest request;
   request.set_name(name);
@@ -145,8 +167,8 @@ EventarcClient::DeleteTrigger(std::string const& name, bool allow_missing, Optio
   return connection_->DeleteTrigger(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteTrigger(NoAwaitTag, std::string const& name, bool allow_missing, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteTrigger(
+    NoAwaitTag, std::string const& name, bool allow_missing, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteTriggerRequest request;
   request.set_name(name);
@@ -155,53 +177,62 @@ EventarcClient::DeleteTrigger(NoAwaitTag, std::string const& name, bool allow_mi
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::DeleteTrigger(google::cloud::eventarc::v1::DeleteTriggerRequest const& request, Options opts) {
+EventarcClient::DeleteTrigger(
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrigger(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteTrigger(NoAwaitTag, google::cloud::eventarc::v1::DeleteTriggerRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteTrigger(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrigger(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::DeleteTrigger(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::DeleteTrigger(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTrigger(operation);
 }
 
-StatusOr<google::cloud::eventarc::v1::Channel>
-EventarcClient::GetChannel(std::string const& name, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Channel> EventarcClient::GetChannel(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::GetChannelRequest request;
   request.set_name(name);
   return connection_->GetChannel(request);
 }
 
-StatusOr<google::cloud::eventarc::v1::Channel>
-EventarcClient::GetChannel(google::cloud::eventarc::v1::GetChannelRequest const& request, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Channel> EventarcClient::GetChannel(
+    google::cloud::eventarc::v1::GetChannelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetChannel(request);
 }
 
-StreamRange<google::cloud::eventarc::v1::Channel>
-EventarcClient::ListChannels(std::string const& parent, Options opts) {
+StreamRange<google::cloud::eventarc::v1::Channel> EventarcClient::ListChannels(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::ListChannelsRequest request;
   request.set_parent(parent);
   return connection_->ListChannels(request);
 }
 
-StreamRange<google::cloud::eventarc::v1::Channel>
-EventarcClient::ListChannels(google::cloud::eventarc::v1::ListChannelsRequest request, Options opts) {
+StreamRange<google::cloud::eventarc::v1::Channel> EventarcClient::ListChannels(
+    google::cloud::eventarc::v1::ListChannelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListChannels(std::move(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::CreateChannel(std::string const& parent, google::cloud::eventarc::v1::Channel const& channel, std::string const& channel_id, Options opts) {
+EventarcClient::CreateChannel(
+    std::string const& parent,
+    google::cloud::eventarc::v1::Channel const& channel,
+    std::string const& channel_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateChannelRequest request;
   request.set_parent(parent);
@@ -210,8 +241,10 @@ EventarcClient::CreateChannel(std::string const& parent, google::cloud::eventarc
   return connection_->CreateChannel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateChannel(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::Channel const& channel, std::string const& channel_id, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateChannel(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::eventarc::v1::Channel const& channel,
+    std::string const& channel_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateChannelRequest request;
   request.set_parent(parent);
@@ -221,25 +254,32 @@ EventarcClient::CreateChannel(NoAwaitTag, std::string const& parent, google::clo
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::CreateChannel(google::cloud::eventarc::v1::CreateChannelRequest const& request, Options opts) {
+EventarcClient::CreateChannel(
+    google::cloud::eventarc::v1::CreateChannelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChannel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateChannel(NoAwaitTag, google::cloud::eventarc::v1::CreateChannelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateChannel(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::CreateChannel(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::CreateChannel(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChannel(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::UpdateChannel(google::cloud::eventarc::v1::Channel const& channel, google::protobuf::FieldMask const& update_mask, Options opts) {
+EventarcClient::UpdateChannel(
+    google::cloud::eventarc::v1::Channel const& channel,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateChannelRequest request;
   *request.mutable_channel() = channel;
@@ -247,8 +287,9 @@ EventarcClient::UpdateChannel(google::cloud::eventarc::v1::Channel const& channe
   return connection_->UpdateChannel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateChannel(NoAwaitTag, google::cloud::eventarc::v1::Channel const& channel, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateChannel(
+    NoAwaitTag, google::cloud::eventarc::v1::Channel const& channel,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateChannelRequest request;
   *request.mutable_channel() = channel;
@@ -257,19 +298,24 @@ EventarcClient::UpdateChannel(NoAwaitTag, google::cloud::eventarc::v1::Channel c
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::UpdateChannel(google::cloud::eventarc::v1::UpdateChannelRequest const& request, Options opts) {
+EventarcClient::UpdateChannel(
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateChannel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateChannel(NoAwaitTag, google::cloud::eventarc::v1::UpdateChannelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateChannel(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::UpdateChannel(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::UpdateChannel(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateChannel(operation);
 }
@@ -282,8 +328,8 @@ EventarcClient::DeleteChannel(std::string const& name, Options opts) {
   return connection_->DeleteChannel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteChannel(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteChannel(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteChannelRequest request;
   request.set_name(name);
@@ -291,33 +337,39 @@ EventarcClient::DeleteChannel(NoAwaitTag, std::string const& name, Options opts)
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::DeleteChannel(google::cloud::eventarc::v1::DeleteChannelRequest const& request, Options opts) {
+EventarcClient::DeleteChannel(
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteChannel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteChannel(NoAwaitTag, google::cloud::eventarc::v1::DeleteChannelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteChannel(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::DeleteChannel(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::DeleteChannel(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteChannel(operation);
 }
 
-StatusOr<google::cloud::eventarc::v1::Provider>
-EventarcClient::GetProvider(std::string const& name, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcClient::GetProvider(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::GetProviderRequest request;
   request.set_name(name);
   return connection_->GetProvider(request);
 }
 
-StatusOr<google::cloud::eventarc::v1::Provider>
-EventarcClient::GetProvider(google::cloud::eventarc::v1::GetProviderRequest const& request, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcClient::GetProvider(
+    google::cloud::eventarc::v1::GetProviderRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProvider(request);
 }
@@ -331,7 +383,8 @@ EventarcClient::ListProviders(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::eventarc::v1::Provider>
-EventarcClient::ListProviders(google::cloud::eventarc::v1::ListProvidersRequest request, Options opts) {
+EventarcClient::ListProviders(
+    google::cloud::eventarc::v1::ListProvidersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProviders(std::move(request));
 }
@@ -345,13 +398,16 @@ EventarcClient::GetChannelConnection(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
-EventarcClient::GetChannelConnection(google::cloud::eventarc::v1::GetChannelConnectionRequest const& request, Options opts) {
+EventarcClient::GetChannelConnection(
+    google::cloud::eventarc::v1::GetChannelConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetChannelConnection(request);
 }
 
 StreamRange<google::cloud::eventarc::v1::ChannelConnection>
-EventarcClient::ListChannelConnections(std::string const& parent, Options opts) {
+EventarcClient::ListChannelConnections(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::ListChannelConnectionsRequest request;
   request.set_parent(parent);
@@ -359,13 +415,18 @@ EventarcClient::ListChannelConnections(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::eventarc::v1::ChannelConnection>
-EventarcClient::ListChannelConnections(google::cloud::eventarc::v1::ListChannelConnectionsRequest request, Options opts) {
+EventarcClient::ListChannelConnections(
+    google::cloud::eventarc::v1::ListChannelConnectionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListChannelConnections(std::move(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-EventarcClient::CreateChannelConnection(std::string const& parent, google::cloud::eventarc::v1::ChannelConnection const& channel_connection, std::string const& channel_connection_id, Options opts) {
+EventarcClient::CreateChannelConnection(
+    std::string const& parent,
+    google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
+    std::string const& channel_connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateChannelConnectionRequest request;
   request.set_parent(parent);
@@ -375,7 +436,10 @@ EventarcClient::CreateChannelConnection(std::string const& parent, google::cloud
 }
 
 StatusOr<google::longrunning::Operation>
-EventarcClient::CreateChannelConnection(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::ChannelConnection const& channel_connection, std::string const& channel_connection_id, Options opts) {
+EventarcClient::CreateChannelConnection(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
+    std::string const& channel_connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateChannelConnectionRequest request;
   request.set_parent(parent);
@@ -385,19 +449,25 @@ EventarcClient::CreateChannelConnection(NoAwaitTag, std::string const& parent, g
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-EventarcClient::CreateChannelConnection(google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request, Options opts) {
+EventarcClient::CreateChannelConnection(
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChannelConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-EventarcClient::CreateChannelConnection(NoAwaitTag, google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request, Options opts) {
+EventarcClient::CreateChannelConnection(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChannelConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-EventarcClient::CreateChannelConnection(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::CreateChannelConnection(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateChannelConnection(operation);
 }
@@ -411,7 +481,8 @@ EventarcClient::DeleteChannelConnection(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteChannelConnection(NoAwaitTag, std::string const& name, Options opts) {
+EventarcClient::DeleteChannelConnection(NoAwaitTag, std::string const& name,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteChannelConnectionRequest request;
   request.set_name(name);
@@ -419,19 +490,25 @@ EventarcClient::DeleteChannelConnection(NoAwaitTag, std::string const& name, Opt
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-EventarcClient::DeleteChannelConnection(google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request, Options opts) {
+EventarcClient::DeleteChannelConnection(
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteChannelConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteChannelConnection(NoAwaitTag, google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request, Options opts) {
+EventarcClient::DeleteChannelConnection(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteChannelConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-EventarcClient::DeleteChannelConnection(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::DeleteChannelConnection(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteChannelConnection(operation);
 }
@@ -445,13 +522,18 @@ EventarcClient::GetGoogleChannelConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-EventarcClient::GetGoogleChannelConfig(google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request, Options opts) {
+EventarcClient::GetGoogleChannelConfig(
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGoogleChannelConfig(request);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-EventarcClient::UpdateGoogleChannelConfig(google::cloud::eventarc::v1::GoogleChannelConfig const& google_channel_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+EventarcClient::UpdateGoogleChannelConfig(
+    google::cloud::eventarc::v1::GoogleChannelConfig const&
+        google_channel_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest request;
   *request.mutable_google_channel_config() = google_channel_config;
@@ -460,21 +542,25 @@ EventarcClient::UpdateGoogleChannelConfig(google::cloud::eventarc::v1::GoogleCha
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-EventarcClient::UpdateGoogleChannelConfig(google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const& request, Options opts) {
+EventarcClient::UpdateGoogleChannelConfig(
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGoogleChannelConfig(request);
 }
 
-StatusOr<google::cloud::eventarc::v1::MessageBus>
-EventarcClient::GetMessageBus(std::string const& name, Options opts) {
+StatusOr<google::cloud::eventarc::v1::MessageBus> EventarcClient::GetMessageBus(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::GetMessageBusRequest request;
   request.set_name(name);
   return connection_->GetMessageBus(request);
 }
 
-StatusOr<google::cloud::eventarc::v1::MessageBus>
-EventarcClient::GetMessageBus(google::cloud::eventarc::v1::GetMessageBusRequest const& request, Options opts) {
+StatusOr<google::cloud::eventarc::v1::MessageBus> EventarcClient::GetMessageBus(
+    google::cloud::eventarc::v1::GetMessageBusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMessageBus(request);
 }
@@ -488,13 +574,16 @@ EventarcClient::ListMessageBuses(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::eventarc::v1::MessageBus>
-EventarcClient::ListMessageBuses(google::cloud::eventarc::v1::ListMessageBusesRequest request, Options opts) {
+EventarcClient::ListMessageBuses(
+    google::cloud::eventarc::v1::ListMessageBusesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMessageBuses(std::move(request));
 }
 
 StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
-EventarcClient::ListMessageBusEnrollments(std::string const& parent, Options opts) {
+EventarcClient::ListMessageBusEnrollments(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest request;
   request.set_parent(parent);
@@ -502,13 +591,19 @@ EventarcClient::ListMessageBusEnrollments(std::string const& parent, Options opt
 }
 
 StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
-EventarcClient::ListMessageBusEnrollments(google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const& request, Options opts) {
+EventarcClient::ListMessageBusEnrollments(
+    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMessageBusEnrollments(request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::CreateMessageBus(std::string const& parent, google::cloud::eventarc::v1::MessageBus const& message_bus, std::string const& message_bus_id, Options opts) {
+EventarcClient::CreateMessageBus(
+    std::string const& parent,
+    google::cloud::eventarc::v1::MessageBus const& message_bus,
+    std::string const& message_bus_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateMessageBusRequest request;
   request.set_parent(parent);
@@ -517,8 +612,10 @@ EventarcClient::CreateMessageBus(std::string const& parent, google::cloud::event
   return connection_->CreateMessageBus(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateMessageBus(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::MessageBus const& message_bus, std::string const& message_bus_id, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateMessageBus(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::eventarc::v1::MessageBus const& message_bus,
+    std::string const& message_bus_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateMessageBusRequest request;
   request.set_parent(parent);
@@ -528,25 +625,32 @@ EventarcClient::CreateMessageBus(NoAwaitTag, std::string const& parent, google::
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::CreateMessageBus(google::cloud::eventarc::v1::CreateMessageBusRequest const& request, Options opts) {
+EventarcClient::CreateMessageBus(
+    google::cloud::eventarc::v1::CreateMessageBusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMessageBus(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::CreateMessageBusRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateMessageBus(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::CreateMessageBusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMessageBus(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::CreateMessageBus(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::CreateMessageBus(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMessageBus(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::UpdateMessageBus(google::cloud::eventarc::v1::MessageBus const& message_bus, google::protobuf::FieldMask const& update_mask, Options opts) {
+EventarcClient::UpdateMessageBus(
+    google::cloud::eventarc::v1::MessageBus const& message_bus,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateMessageBusRequest request;
   *request.mutable_message_bus() = message_bus;
@@ -554,8 +658,9 @@ EventarcClient::UpdateMessageBus(google::cloud::eventarc::v1::MessageBus const& 
   return connection_->UpdateMessageBus(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::MessageBus const& message_bus, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateMessageBus(
+    NoAwaitTag, google::cloud::eventarc::v1::MessageBus const& message_bus,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateMessageBusRequest request;
   *request.mutable_message_bus() = message_bus;
@@ -564,25 +669,31 @@ EventarcClient::UpdateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::Messag
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::UpdateMessageBus(google::cloud::eventarc::v1::UpdateMessageBusRequest const& request, Options opts) {
+EventarcClient::UpdateMessageBus(
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMessageBus(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::UpdateMessageBusRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateMessageBus(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMessageBus(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::UpdateMessageBus(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::UpdateMessageBus(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateMessageBus(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::DeleteMessageBus(std::string const& name, std::string const& etag, Options opts) {
+EventarcClient::DeleteMessageBus(std::string const& name,
+                                 std::string const& etag, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteMessageBusRequest request;
   request.set_name(name);
@@ -590,8 +701,9 @@ EventarcClient::DeleteMessageBus(std::string const& name, std::string const& eta
   return connection_->DeleteMessageBus(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteMessageBus(NoAwaitTag, std::string const& name, std::string const& etag, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteMessageBus(
+    NoAwaitTag, std::string const& name, std::string const& etag,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteMessageBusRequest request;
   request.set_name(name);
@@ -600,33 +712,39 @@ EventarcClient::DeleteMessageBus(NoAwaitTag, std::string const& name, std::strin
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::DeleteMessageBus(google::cloud::eventarc::v1::DeleteMessageBusRequest const& request, Options opts) {
+EventarcClient::DeleteMessageBus(
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMessageBus(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteMessageBus(NoAwaitTag, google::cloud::eventarc::v1::DeleteMessageBusRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteMessageBus(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMessageBus(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-EventarcClient::DeleteMessageBus(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::DeleteMessageBus(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMessageBus(operation);
 }
 
-StatusOr<google::cloud::eventarc::v1::Enrollment>
-EventarcClient::GetEnrollment(std::string const& name, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Enrollment> EventarcClient::GetEnrollment(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::GetEnrollmentRequest request;
   request.set_name(name);
   return connection_->GetEnrollment(request);
 }
 
-StatusOr<google::cloud::eventarc::v1::Enrollment>
-EventarcClient::GetEnrollment(google::cloud::eventarc::v1::GetEnrollmentRequest const& request, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Enrollment> EventarcClient::GetEnrollment(
+    google::cloud::eventarc::v1::GetEnrollmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEnrollment(request);
 }
@@ -640,13 +758,17 @@ EventarcClient::ListEnrollments(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::eventarc::v1::Enrollment>
-EventarcClient::ListEnrollments(google::cloud::eventarc::v1::ListEnrollmentsRequest request, Options opts) {
+EventarcClient::ListEnrollments(
+    google::cloud::eventarc::v1::ListEnrollmentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEnrollments(std::move(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::CreateEnrollment(std::string const& parent, google::cloud::eventarc::v1::Enrollment const& enrollment, std::string const& enrollment_id, Options opts) {
+EventarcClient::CreateEnrollment(
+    std::string const& parent,
+    google::cloud::eventarc::v1::Enrollment const& enrollment,
+    std::string const& enrollment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateEnrollmentRequest request;
   request.set_parent(parent);
@@ -655,8 +777,10 @@ EventarcClient::CreateEnrollment(std::string const& parent, google::cloud::event
   return connection_->CreateEnrollment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateEnrollment(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::Enrollment const& enrollment, std::string const& enrollment_id, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateEnrollment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::eventarc::v1::Enrollment const& enrollment,
+    std::string const& enrollment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateEnrollmentRequest request;
   request.set_parent(parent);
@@ -666,25 +790,32 @@ EventarcClient::CreateEnrollment(NoAwaitTag, std::string const& parent, google::
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::CreateEnrollment(google::cloud::eventarc::v1::CreateEnrollmentRequest const& request, Options opts) {
+EventarcClient::CreateEnrollment(
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnrollment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::CreateEnrollmentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateEnrollment(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnrollment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::CreateEnrollment(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::CreateEnrollment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnrollment(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::UpdateEnrollment(google::cloud::eventarc::v1::Enrollment const& enrollment, google::protobuf::FieldMask const& update_mask, Options opts) {
+EventarcClient::UpdateEnrollment(
+    google::cloud::eventarc::v1::Enrollment const& enrollment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateEnrollmentRequest request;
   *request.mutable_enrollment() = enrollment;
@@ -692,8 +823,9 @@ EventarcClient::UpdateEnrollment(google::cloud::eventarc::v1::Enrollment const& 
   return connection_->UpdateEnrollment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::Enrollment const& enrollment, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateEnrollment(
+    NoAwaitTag, google::cloud::eventarc::v1::Enrollment const& enrollment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateEnrollmentRequest request;
   *request.mutable_enrollment() = enrollment;
@@ -702,25 +834,31 @@ EventarcClient::UpdateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::Enroll
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::UpdateEnrollment(google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request, Options opts) {
+EventarcClient::UpdateEnrollment(
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnrollment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateEnrollment(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnrollment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::UpdateEnrollment(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::UpdateEnrollment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnrollment(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::DeleteEnrollment(std::string const& name, std::string const& etag, Options opts) {
+EventarcClient::DeleteEnrollment(std::string const& name,
+                                 std::string const& etag, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteEnrollmentRequest request;
   request.set_name(name);
@@ -728,8 +866,9 @@ EventarcClient::DeleteEnrollment(std::string const& name, std::string const& eta
   return connection_->DeleteEnrollment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteEnrollment(NoAwaitTag, std::string const& name, std::string const& etag, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteEnrollment(
+    NoAwaitTag, std::string const& name, std::string const& etag,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteEnrollmentRequest request;
   request.set_name(name);
@@ -738,33 +877,39 @@ EventarcClient::DeleteEnrollment(NoAwaitTag, std::string const& name, std::strin
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::DeleteEnrollment(google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request, Options opts) {
+EventarcClient::DeleteEnrollment(
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnrollment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteEnrollment(NoAwaitTag, google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteEnrollment(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnrollment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-EventarcClient::DeleteEnrollment(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::DeleteEnrollment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnrollment(operation);
 }
 
-StatusOr<google::cloud::eventarc::v1::Pipeline>
-EventarcClient::GetPipeline(std::string const& name, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Pipeline> EventarcClient::GetPipeline(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::GetPipelineRequest request;
   request.set_name(name);
   return connection_->GetPipeline(request);
 }
 
-StatusOr<google::cloud::eventarc::v1::Pipeline>
-EventarcClient::GetPipeline(google::cloud::eventarc::v1::GetPipelineRequest const& request, Options opts) {
+StatusOr<google::cloud::eventarc::v1::Pipeline> EventarcClient::GetPipeline(
+    google::cloud::eventarc::v1::GetPipelineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPipeline(request);
 }
@@ -778,13 +923,17 @@ EventarcClient::ListPipelines(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::eventarc::v1::Pipeline>
-EventarcClient::ListPipelines(google::cloud::eventarc::v1::ListPipelinesRequest request, Options opts) {
+EventarcClient::ListPipelines(
+    google::cloud::eventarc::v1::ListPipelinesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPipelines(std::move(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::CreatePipeline(std::string const& parent, google::cloud::eventarc::v1::Pipeline const& pipeline, std::string const& pipeline_id, Options opts) {
+EventarcClient::CreatePipeline(
+    std::string const& parent,
+    google::cloud::eventarc::v1::Pipeline const& pipeline,
+    std::string const& pipeline_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreatePipelineRequest request;
   request.set_parent(parent);
@@ -793,8 +942,10 @@ EventarcClient::CreatePipeline(std::string const& parent, google::cloud::eventar
   return connection_->CreatePipeline(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreatePipeline(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::Pipeline const& pipeline, std::string const& pipeline_id, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreatePipeline(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::eventarc::v1::Pipeline const& pipeline,
+    std::string const& pipeline_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreatePipelineRequest request;
   request.set_parent(parent);
@@ -804,25 +955,32 @@ EventarcClient::CreatePipeline(NoAwaitTag, std::string const& parent, google::cl
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::CreatePipeline(google::cloud::eventarc::v1::CreatePipelineRequest const& request, Options opts) {
+EventarcClient::CreatePipeline(
+    google::cloud::eventarc::v1::CreatePipelineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePipeline(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreatePipeline(NoAwaitTag, google::cloud::eventarc::v1::CreatePipelineRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreatePipeline(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::CreatePipelineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePipeline(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::CreatePipeline(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::CreatePipeline(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePipeline(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::UpdatePipeline(google::cloud::eventarc::v1::Pipeline const& pipeline, google::protobuf::FieldMask const& update_mask, Options opts) {
+EventarcClient::UpdatePipeline(
+    google::cloud::eventarc::v1::Pipeline const& pipeline,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdatePipelineRequest request;
   *request.mutable_pipeline() = pipeline;
@@ -830,8 +988,9 @@ EventarcClient::UpdatePipeline(google::cloud::eventarc::v1::Pipeline const& pipe
   return connection_->UpdatePipeline(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdatePipeline(NoAwaitTag, google::cloud::eventarc::v1::Pipeline const& pipeline, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdatePipeline(
+    NoAwaitTag, google::cloud::eventarc::v1::Pipeline const& pipeline,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdatePipelineRequest request;
   *request.mutable_pipeline() = pipeline;
@@ -840,25 +999,31 @@ EventarcClient::UpdatePipeline(NoAwaitTag, google::cloud::eventarc::v1::Pipeline
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::UpdatePipeline(google::cloud::eventarc::v1::UpdatePipelineRequest const& request, Options opts) {
+EventarcClient::UpdatePipeline(
+    google::cloud::eventarc::v1::UpdatePipelineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePipeline(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdatePipeline(NoAwaitTag, google::cloud::eventarc::v1::UpdatePipelineRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdatePipeline(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::UpdatePipelineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePipeline(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::UpdatePipeline(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::UpdatePipeline(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePipeline(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::DeletePipeline(std::string const& name, std::string const& etag, Options opts) {
+EventarcClient::DeletePipeline(std::string const& name, std::string const& etag,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeletePipelineRequest request;
   request.set_name(name);
@@ -866,8 +1031,9 @@ EventarcClient::DeletePipeline(std::string const& name, std::string const& etag,
   return connection_->DeletePipeline(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeletePipeline(NoAwaitTag, std::string const& name, std::string const& etag, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeletePipeline(
+    NoAwaitTag, std::string const& name, std::string const& etag,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeletePipelineRequest request;
   request.set_name(name);
@@ -876,19 +1042,24 @@ EventarcClient::DeletePipeline(NoAwaitTag, std::string const& name, std::string 
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::DeletePipeline(google::cloud::eventarc::v1::DeletePipelineRequest const& request, Options opts) {
+EventarcClient::DeletePipeline(
+    google::cloud::eventarc::v1::DeletePipelineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePipeline(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeletePipeline(NoAwaitTag, google::cloud::eventarc::v1::DeletePipelineRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeletePipeline(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::DeletePipelineRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePipeline(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-EventarcClient::DeletePipeline(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::DeletePipeline(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePipeline(operation);
 }
@@ -902,7 +1073,9 @@ EventarcClient::GetGoogleApiSource(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleApiSource>
-EventarcClient::GetGoogleApiSource(google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request, Options opts) {
+EventarcClient::GetGoogleApiSource(
+    google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGoogleApiSource(request);
 }
@@ -916,13 +1089,18 @@ EventarcClient::ListGoogleApiSources(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::eventarc::v1::GoogleApiSource>
-EventarcClient::ListGoogleApiSources(google::cloud::eventarc::v1::ListGoogleApiSourcesRequest request, Options opts) {
+EventarcClient::ListGoogleApiSources(
+    google::cloud::eventarc::v1::ListGoogleApiSourcesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGoogleApiSources(std::move(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::CreateGoogleApiSource(std::string const& parent, google::cloud::eventarc::v1::GoogleApiSource const& google_api_source, std::string const& google_api_source_id, Options opts) {
+EventarcClient::CreateGoogleApiSource(
+    std::string const& parent,
+    google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+    std::string const& google_api_source_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateGoogleApiSourceRequest request;
   request.set_parent(parent);
@@ -931,8 +1109,10 @@ EventarcClient::CreateGoogleApiSource(std::string const& parent, google::cloud::
   return connection_->CreateGoogleApiSource(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateGoogleApiSource(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::GoogleApiSource const& google_api_source, std::string const& google_api_source_id, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateGoogleApiSource(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+    std::string const& google_api_source_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::CreateGoogleApiSourceRequest request;
   request.set_parent(parent);
@@ -942,25 +1122,32 @@ EventarcClient::CreateGoogleApiSource(NoAwaitTag, std::string const& parent, goo
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::CreateGoogleApiSource(google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request, Options opts) {
+EventarcClient::CreateGoogleApiSource(
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGoogleApiSource(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::CreateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::CreateGoogleApiSource(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGoogleApiSource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::CreateGoogleApiSource(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::CreateGoogleApiSource(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGoogleApiSource(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::UpdateGoogleApiSource(google::cloud::eventarc::v1::GoogleApiSource const& google_api_source, google::protobuf::FieldMask const& update_mask, Options opts) {
+EventarcClient::UpdateGoogleApiSource(
+    google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest request;
   *request.mutable_google_api_source() = google_api_source;
@@ -968,8 +1155,10 @@ EventarcClient::UpdateGoogleApiSource(google::cloud::eventarc::v1::GoogleApiSour
   return connection_->UpdateGoogleApiSource(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::GoogleApiSource const& google_api_source, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateGoogleApiSource(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest request;
   *request.mutable_google_api_source() = google_api_source;
@@ -978,25 +1167,31 @@ EventarcClient::UpdateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::G
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::UpdateGoogleApiSource(google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request, Options opts) {
+EventarcClient::UpdateGoogleApiSource(
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGoogleApiSource(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::UpdateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::UpdateGoogleApiSource(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGoogleApiSource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::UpdateGoogleApiSource(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::UpdateGoogleApiSource(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGoogleApiSource(operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::DeleteGoogleApiSource(std::string const& name, std::string const& etag, Options opts) {
+EventarcClient::DeleteGoogleApiSource(std::string const& name,
+                                      std::string const& etag, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest request;
   request.set_name(name);
@@ -1004,8 +1199,9 @@ EventarcClient::DeleteGoogleApiSource(std::string const& name, std::string const
   return connection_->DeleteGoogleApiSource(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteGoogleApiSource(NoAwaitTag, std::string const& name, std::string const& etag, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteGoogleApiSource(
+    NoAwaitTag, std::string const& name, std::string const& etag,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest request;
   request.set_name(name);
@@ -1014,55 +1210,61 @@ EventarcClient::DeleteGoogleApiSource(NoAwaitTag, std::string const& name, std::
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::DeleteGoogleApiSource(google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request, Options opts) {
+EventarcClient::DeleteGoogleApiSource(
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGoogleApiSource(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::DeleteGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::DeleteGoogleApiSource(
+    NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGoogleApiSource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-EventarcClient::DeleteGoogleApiSource(google::longrunning::Operation const& operation, Options opts) {
+EventarcClient::DeleteGoogleApiSource(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGoogleApiSource(operation);
 }
 
-StreamRange<google::cloud::location::Location>
-EventarcClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> EventarcClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-EventarcClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> EventarcClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-EventarcClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> EventarcClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-EventarcClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> EventarcClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-EventarcClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+EventarcClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation>
-EventarcClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> EventarcClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -1070,50 +1272,48 @@ EventarcClient::ListOperations(std::string const& name, std::string const& filte
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-EventarcClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> EventarcClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventarcClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-EventarcClient::DeleteOperation(std::string const& name, Options opts) {
+Status EventarcClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-EventarcClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status EventarcClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-EventarcClient::CancelOperation(std::string const& name, Options opts) {
+Status EventarcClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-EventarcClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status EventarcClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

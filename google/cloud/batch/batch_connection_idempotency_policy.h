@@ -26,8 +26,10 @@ namespace cloud {
 namespace batch {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use batch_v1::MakeDefaultBatchServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::batch_v1::MakeDefaultBatchServiceConnectionIdempotencyPolicy;
+/// @deprecated Use batch_v1::MakeDefaultBatchServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::batch_v1::
+    MakeDefaultBatchServiceConnectionIdempotencyPolicy;
 
 /// @deprecated Use batch_v1::BatchServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::batch_v1::BatchServiceConnectionIdempotencyPolicy;

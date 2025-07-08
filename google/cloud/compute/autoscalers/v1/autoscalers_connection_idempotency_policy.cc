@@ -26,43 +26,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AutoscalersConnectionIdempotencyPolicy::~AutoscalersConnectionIdempotencyPolicy() = default;
+AutoscalersConnectionIdempotencyPolicy::
+    ~AutoscalersConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AutoscalersConnectionIdempotencyPolicy>
 AutoscalersConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AutoscalersConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest) {  // NOLINT
+Idempotency AutoscalersConnectionIdempotencyPolicy::AggregatedListAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::
+        AggregatedListAutoscalersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::DeleteAutoscaler(google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&) {
+Idempotency AutoscalersConnectionIdempotencyPolicy::DeleteAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::
+        DeleteAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::GetAutoscaler(google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&) {
+Idempotency AutoscalersConnectionIdempotencyPolicy::GetAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::InsertAutoscaler(google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&) {
+Idempotency AutoscalersConnectionIdempotencyPolicy::InsertAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::
+        InsertAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::ListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest) {  // NOLINT
+Idempotency AutoscalersConnectionIdempotencyPolicy::ListAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::
+        ListAutoscalersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::PatchAutoscaler(google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&) {
+Idempotency AutoscalersConnectionIdempotencyPolicy::PatchAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::
+        PatchAutoscalerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AutoscalersConnectionIdempotencyPolicy::UpdateAutoscaler(google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&) {
+Idempotency AutoscalersConnectionIdempotencyPolicy::UpdateAutoscaler(
+    google::cloud::cpp::compute::autoscalers::v1::
+        UpdateAutoscalerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AutoscalersConnectionIdempotencyPolicy>
-    MakeDefaultAutoscalersConnectionIdempotencyPolicy() {
+MakeDefaultAutoscalersConnectionIdempotencyPolicy() {
   return std::make_unique<AutoscalersConnectionIdempotencyPolicy>();
 }
 

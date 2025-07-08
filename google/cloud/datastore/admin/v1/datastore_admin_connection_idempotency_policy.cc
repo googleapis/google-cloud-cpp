@@ -26,55 +26,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DatastoreAdminConnectionIdempotencyPolicy::~DatastoreAdminConnectionIdempotencyPolicy() = default;
+DatastoreAdminConnectionIdempotencyPolicy::
+    ~DatastoreAdminConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DatastoreAdminConnectionIdempotencyPolicy>
 DatastoreAdminConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DatastoreAdminConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const&) {
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::ExportEntities(
+    google::datastore::admin::v1::ExportEntitiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const&) {
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::ImportEntities(
+    google::datastore::admin::v1::ImportEntitiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::CreateIndex(google::datastore::admin::v1::CreateIndexRequest const&) {
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::CreateIndex(
+    google::datastore::admin::v1::CreateIndexRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::DeleteIndex(google::datastore::admin::v1::DeleteIndexRequest const&) {
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::DeleteIndex(
+    google::datastore::admin::v1::DeleteIndexRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::GetIndex(google::datastore::admin::v1::GetIndexRequest const&) {
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::GetIndex(
+    google::datastore::admin::v1::GetIndexRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::ListIndexes(google::datastore::admin::v1::ListIndexesRequest) {  // NOLINT
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::ListIndexes(
+    google::datastore::admin::v1::ListIndexesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastoreAdminConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DatastoreAdminConnectionIdempotencyPolicy>
-    MakeDefaultDatastoreAdminConnectionIdempotencyPolicy() {
+MakeDefaultDatastoreAdminConnectionIdempotencyPolicy() {
   return std::make_unique<DatastoreAdminConnectionIdempotencyPolicy>();
 }
 

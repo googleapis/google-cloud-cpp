@@ -17,10 +17,10 @@
 // source: google/cloud/timeseriesinsights/v1/timeseries_insights.proto
 
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection.h"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,37 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TimeseriesInsightsControllerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TIMESERIES_INSIGHTS_CONTROLLER_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TIMESERIES_INSIGHTS_CONTROLLER_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_TIMESERIES_INSIGHTS_CONTROLLER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TIMESERIES_INSIGHTS_CONTROLLER_AUTHORITY",
       "timeseriesinsights.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicyOption>()) {
-    options.set<timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicyOption>(
-        timeseriesinsights_v1::TimeseriesInsightsControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+  if (!options.has<timeseriesinsights_v1::
+                       TimeseriesInsightsControllerRetryPolicyOption>()) {
+    options.set<
+        timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicyOption>(
+        timeseriesinsights_v1::
+            TimeseriesInsightsControllerLimitedTimeRetryPolicy(
+                std::chrono::minutes(30))
+                .clone());
   }
-  if (!options.has<timeseriesinsights_v1::TimeseriesInsightsControllerBackoffPolicyOption>()) {
-    options.set<timeseriesinsights_v1::TimeseriesInsightsControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<timeseriesinsights_v1::
+                       TimeseriesInsightsControllerBackoffPolicyOption>()) {
+    options.set<
+        timeseriesinsights_v1::TimeseriesInsightsControllerBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<timeseriesinsights_v1::TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>()) {
-    options.set<timeseriesinsights_v1::TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>(
-        timeseriesinsights_v1::MakeDefaultTimeseriesInsightsControllerConnectionIdempotencyPolicy());
+  if (!options.has<
+          timeseriesinsights_v1::
+              TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        timeseriesinsights_v1::
+            TimeseriesInsightsControllerConnectionIdempotencyPolicyOption>(
+        timeseriesinsights_v1::
+            MakeDefaultTimeseriesInsightsControllerConnectionIdempotencyPolicy());
   }
 
   return options;

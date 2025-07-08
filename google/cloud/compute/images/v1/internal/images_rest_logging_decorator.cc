@@ -27,26 +27,28 @@ namespace cloud {
 namespace compute_images_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ImagesRestLogging::ImagesRestLogging(
-    std::shared_ptr<ImagesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+ImagesRestLogging::ImagesRestLogging(std::shared_ptr<ImagesRestStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestLogging::AsyncDeleteImage(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::images::v1::DeleteImageRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::images::v1::DeleteImageRequest const& request) {
-        return child_->AsyncDeleteImage(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+                 request) {
+        return child_->AsyncDeleteImage(cq, std::move(rest_context),
+                                        std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -54,13 +56,13 @@ ImagesRestLogging::AsyncDeleteImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestLogging::DeleteImage(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::images::v1::DeleteImageRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::DeleteImageRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+                 request) {
         return child_->DeleteImage(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -68,17 +70,18 @@ ImagesRestLogging::DeleteImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestLogging::AsyncDeprecate(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
-        return child_->AsyncDeprecate(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::images::v1::DeprecateRequest const&
+                 request) {
+        return child_->AsyncDeprecate(cq, std::move(rest_context),
+                                      std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -86,27 +89,24 @@ ImagesRestLogging::AsyncDeprecate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestLogging::Deprecate(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::DeprecateRequest const&
+                 request) {
         return child_->Deprecate(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Image>
-ImagesRestLogging::GetImage(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::cloud::cpp::compute::v1::Image> ImagesRestLogging::GetImage(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::GetImageRequest const&
+                 request) {
         return child_->GetImage(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -114,13 +114,14 @@ ImagesRestLogging::GetImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
 ImagesRestLogging::GetFromFamily(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+              request) {
         return child_->GetFromFamily(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -128,13 +129,13 @@ ImagesRestLogging::GetFromFamily(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ImagesRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+                 request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -142,17 +143,19 @@ ImagesRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestLogging::AsyncInsertImage(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::images::v1::InsertImageRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::images::v1::InsertImageRequest const& request) {
-        return child_->AsyncInsertImage(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+                 request) {
+        return child_->AsyncInsertImage(cq, std::move(rest_context),
+                                        std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -160,13 +163,13 @@ ImagesRestLogging::AsyncInsertImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestLogging::InsertImage(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::images::v1::InsertImageRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::InsertImageRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+                 request) {
         return child_->InsertImage(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -174,13 +177,12 @@ ImagesRestLogging::InsertImage(
 
 StatusOr<google::cloud::cpp::compute::v1::ImageList>
 ImagesRestLogging::ListImages(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::ListImagesRequest const&
+                 request) {
         return child_->ListImages(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -188,17 +190,18 @@ ImagesRestLogging::ListImages(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestLogging::AsyncPatchImage(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
-        return child_->AsyncPatchImage(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::images::v1::PatchImageRequest const&
+                 request) {
+        return child_->AsyncPatchImage(cq, std::move(rest_context),
+                                       std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -206,13 +209,12 @@ ImagesRestLogging::AsyncPatchImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestLogging::PatchImage(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::PatchImageRequest const&
+                 request) {
         return child_->PatchImage(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -220,13 +222,13 @@ ImagesRestLogging::PatchImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ImagesRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+                 request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -234,17 +236,18 @@ ImagesRestLogging::SetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestLogging::AsyncSetLabels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
-        return child_->AsyncSetLabels(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
+                 request) {
+        return child_->AsyncSetLabels(cq, std::move(rest_context),
+                                      std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -252,13 +255,12 @@ ImagesRestLogging::AsyncSetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestLogging::SetLabels(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
+                 request) {
         return child_->SetLabels(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -266,13 +268,13 @@ ImagesRestLogging::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ImagesRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -283,32 +285,35 @@ ImagesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-ImagesRestLogging::AsyncCancelOperation(
+future<Status> ImagesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_BACKUP_RUNS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_BACKUP_RUNS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_backup_runs_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_backup_runs_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_backup_runs.pb.h>
 #include <memory>
@@ -41,19 +41,25 @@ class SqlBackupRunsServiceRestMetadata : public SqlBackupRunsServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::BackupRun> Get(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlBackupRunsListRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlBackupRunsListRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -33,15 +33,17 @@ AssuredWorkloadsServiceStub::~AssuredWorkloadsServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssuredWorkloadsServiceStub::AsyncCreateWorkload(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::assuredworkloads::v1::CreateWorkloadRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
+             google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateWorkload(context, request, cq);
       },
@@ -50,146 +52,137 @@ DefaultAssuredWorkloadsServiceStub::AsyncCreateWorkload(
 
 StatusOr<google::longrunning::Operation>
 DefaultAssuredWorkloadsServiceStub::CreateWorkload(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateWorkload(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 DefaultAssuredWorkloadsServiceStub::UpdateWorkload(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
-    google::cloud::assuredworkloads::v1::Workload response;
-    auto status =
-        grpc_stub_->UpdateWorkload(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
+  google::cloud::assuredworkloads::v1::Workload response;
+  auto status = grpc_stub_->UpdateWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
 DefaultAssuredWorkloadsServiceStub::RestrictAllowedResources(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request) {
-    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse response;
-    auto status =
-        grpc_stub_->RestrictAllowedResources(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
+        request) {
+  google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse
+      response;
+  auto status =
+      grpc_stub_->RestrictAllowedResources(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultAssuredWorkloadsServiceStub::DeleteWorkload(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteWorkload(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultAssuredWorkloadsServiceStub::DeleteWorkload(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 DefaultAssuredWorkloadsServiceStub::GetWorkload(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
-    google::cloud::assuredworkloads::v1::Workload response;
-    auto status =
-        grpc_stub_->GetWorkload(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
+  google::cloud::assuredworkloads::v1::Workload response;
+  auto status = grpc_stub_->GetWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
 DefaultAssuredWorkloadsServiceStub::ListWorkloads(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
-    google::cloud::assuredworkloads::v1::ListWorkloadsResponse response;
-    auto status =
-        grpc_stub_->ListWorkloads(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
+  google::cloud::assuredworkloads::v1::ListWorkloadsResponse response;
+  auto status = grpc_stub_->ListWorkloads(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
 DefaultAssuredWorkloadsServiceStub::ListViolations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
-    google::cloud::assuredworkloads::v1::ListViolationsResponse response;
-    auto status =
-        grpc_stub_->ListViolations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
+  google::cloud::assuredworkloads::v1::ListViolationsResponse response;
+  auto status = grpc_stub_->ListViolations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Violation>
 DefaultAssuredWorkloadsServiceStub::GetViolation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
-    google::cloud::assuredworkloads::v1::Violation response;
-    auto status =
-        grpc_stub_->GetViolation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
+  google::cloud::assuredworkloads::v1::Violation response;
+  auto status = grpc_stub_->GetViolation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
 DefaultAssuredWorkloadsServiceStub::AcknowledgeViolation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request) {
-    google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse response;
-    auto status =
-        grpc_stub_->AcknowledgeViolation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+        request) {
+  google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse response;
+  auto status = grpc_stub_->AcknowledgeViolation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultAssuredWorkloadsServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultAssuredWorkloadsServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -218,13 +211,14 @@ future<Status> DefaultAssuredWorkloadsServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

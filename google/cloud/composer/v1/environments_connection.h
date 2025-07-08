@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_ENVIRONMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_ENVIRONMENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/composer/v1/environments_connection_idempotency_policy.h"
 #include "google/cloud/composer/v1/internal/environments_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/orchestration/airflow/service/v1/operations.pb.h>
 #include <google/cloud/orchestration/airflow/service/v1/environments.pb.h>
+#include <google/cloud/orchestration/airflow/service/v1/operations.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -57,7 +57,8 @@ class EnvironmentsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EnvironmentsLimitedErrorCountRetryPolicy : public EnvironmentsRetryPolicy {
+class EnvironmentsLimitedErrorCountRetryPolicy
+    : public EnvironmentsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,14 @@ class EnvironmentsLimitedErrorCountRetryPolicy : public EnvironmentsRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit EnvironmentsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   EnvironmentsLimitedErrorCountRetryPolicy(
       EnvironmentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EnvironmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EnvironmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EnvironmentsLimitedErrorCountRetryPolicy(
       EnvironmentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EnvironmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EnvironmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +95,9 @@ class EnvironmentsLimitedErrorCountRetryPolicy : public EnvironmentsRetryPolicy 
   using BaseType = EnvironmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<composer_v1_internal::EnvironmentsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      composer_v1_internal::EnvironmentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +135,14 @@ class EnvironmentsLimitedTimeRetryPolicy : public EnvironmentsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EnvironmentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EnvironmentsLimitedTimeRetryPolicy(EnvironmentsLimitedTimeRetryPolicy&& rhs) noexcept
-    : EnvironmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EnvironmentsLimitedTimeRetryPolicy(EnvironmentsLimitedTimeRetryPolicy const& rhs) noexcept
-    : EnvironmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EnvironmentsLimitedTimeRetryPolicy(
+      EnvironmentsLimitedTimeRetryPolicy&& rhs) noexcept
+      : EnvironmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EnvironmentsLimitedTimeRetryPolicy(
+      EnvironmentsLimitedTimeRetryPolicy const& rhs) noexcept
+      : EnvironmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,7 +164,9 @@ class EnvironmentsLimitedTimeRetryPolicy : public EnvironmentsRetryPolicy {
   using BaseType = EnvironmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<composer_v1_internal::EnvironmentsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      composer_v1_internal::EnvironmentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,128 +187,195 @@ class EnvironmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        CreateEnvironmentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      CreateEnvironmentRequest const& request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const& request);
+  virtual StatusOr<
+      google::cloud::orchestration::airflow::service::v1::Environment>
+  GetEnvironment(google::cloud::orchestration::airflow::service::v1::
+                     GetEnvironmentRequest const& request);
 
-  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-  ListEnvironments(google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest request);
+  virtual StreamRange<
+      google::cloud::orchestration::airflow::service::v1::Environment>
+  ListEnvironments(google::cloud::orchestration::airflow::service::v1::
+                       ListEnvironmentsRequest request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        UpdateEnvironmentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      UpdateEnvironmentRequest const& request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        DeleteEnvironmentRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteEnvironment(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      DeleteEnvironmentRequest const& request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandResponse>
-  ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandRequest const& request);
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       ExecuteAirflowCommandResponse>
+  ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                            ExecuteAirflowCommandRequest const& request);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse>
-  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::StopAirflowCommandRequest const& request);
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       StopAirflowCommandResponse>
+  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                         StopAirflowCommandRequest const& request);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse>
-  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::PollAirflowCommandRequest const& request);
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       PollAirflowCommandResponse>
+  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                         PollAirflowCommandRequest const& request);
 
-  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>
-  ListWorkloads(google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest request);
+  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::
+                          ListWorkloadsResponse::ComposerWorkload>
+  ListWorkloads(
+      google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+          request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CheckUpgrade(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CheckUpgrade(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      CheckUpgradeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-  CheckUpgrade( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  CreateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest const& request);
+  virtual StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsSecretRequest const& request);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest const& request);
+  virtual StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::
+                             GetUserWorkloadsSecretRequest const& request);
 
-  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest request);
+  virtual StreamRange<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::
+                               ListUserWorkloadsSecretsRequest request);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest const& request);
+  virtual StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsSecretRequest const& request);
 
-  virtual Status
-  DeleteUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest const& request);
+  virtual Status DeleteUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsSecretRequest const& request);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-  CreateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest const& request);
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsConfigMapRequest const& request);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-  GetUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest const& request);
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       UserWorkloadsConfigMap>
+  GetUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsConfigMapRequest const& request);
 
-  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-  ListUserWorkloadsConfigMaps(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest request);
+  virtual StreamRange<google::cloud::orchestration::airflow::service::v1::
+                          UserWorkloadsConfigMap>
+  ListUserWorkloadsConfigMaps(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsConfigMapsRequest request);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-  UpdateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest const& request);
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsConfigMapRequest const& request);
 
-  virtual Status
-  DeleteUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest const& request);
+  virtual Status DeleteUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsConfigMapRequest const& request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
+                   SaveSnapshotRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  SaveSnapshot(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> SaveSnapshot(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      SaveSnapshotRequest const& request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
+                   LoadSnapshotRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  LoadSnapshot(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> LoadSnapshot(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      LoadSnapshotRequest const& request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
-  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request);
+  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                              DatabaseFailoverResponse>>
+  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::
+                       DatabaseFailoverRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DatabaseFailover(NoAwaitTag, google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DatabaseFailover(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      DatabaseFailoverRequest const& request);
 
-  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
-  DatabaseFailover( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                              DatabaseFailoverResponse>>
+  DatabaseFailover(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesResponse>
-  FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesRequest const& request);
+  virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
+                       FetchDatabasePropertiesResponse>
+  FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::
+                              FetchDatabasePropertiesRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 /**

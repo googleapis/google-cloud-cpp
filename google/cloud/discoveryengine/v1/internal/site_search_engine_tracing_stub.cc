@@ -32,36 +32,45 @@ SiteSearchEngineServiceTracingStub::SiteSearchEngineServiceTracingStub(
     std::shared_ptr<SiteSearchEngineServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine> SiteSearchEngineServiceTracingStub::GetSiteSearchEngine(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "GetSiteSearchEngine");
+StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
+SiteSearchEngineServiceTracingStub::GetSiteSearchEngine(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "GetSiteSearchEngine");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetSiteSearchEngine(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetSiteSearchEngine(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncCreateTargetSite(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "CreateTargetSite");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "CreateTargetSite");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateTargetSite(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateTargetSite(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::CreateTargetSite(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "CreateTargetSite");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "CreateTargetSite");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -70,34 +79,43 @@ SiteSearchEngineServiceTracingStub::CreateTargetSite(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncBatchCreateTargetSites(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "BatchCreateTargetSites");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "BatchCreateTargetSites");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchCreateTargetSites(cq, context, std::move(options), request);
+  auto f = child_->AsyncBatchCreateTargetSites(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::BatchCreateTargetSites(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "BatchCreateTargetSites");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "BatchCreateTargetSites");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchCreateTargetSites(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchCreateTargetSites(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::TargetSite> SiteSearchEngineServiceTracingStub::GetTargetSite(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::TargetSite>
+SiteSearchEngineServiceTracingStub::GetTargetSite(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "GetTargetSite");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "GetTargetSite");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,23 +124,29 @@ StatusOr<google::cloud::discoveryengine::v1::TargetSite> SiteSearchEngineService
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncUpdateTargetSite(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "UpdateTargetSite");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "UpdateTargetSite");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateTargetSite(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateTargetSite(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::UpdateTargetSite(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "UpdateTargetSite");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "UpdateTargetSite");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -131,34 +155,42 @@ SiteSearchEngineServiceTracingStub::UpdateTargetSite(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncDeleteTargetSite(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "DeleteTargetSite");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "DeleteTargetSite");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteTargetSite(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteTargetSite(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::DeleteTargetSite(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "DeleteTargetSite");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "DeleteTargetSite");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTargetSite(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse> SiteSearchEngineServiceTracingStub::ListTargetSites(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
+SiteSearchEngineServiceTracingStub::ListTargetSites(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListTargetSitesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "ListTargetSites");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "ListTargetSites");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -167,11 +199,13 @@ StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse> SiteSearch
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncCreateSitemap(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "CreateSitemap");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "CreateSitemap");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateSitemap(cq, context, std::move(options), request);
@@ -180,10 +214,11 @@ SiteSearchEngineServiceTracingStub::AsyncCreateSitemap(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::CreateSitemap(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "CreateSitemap");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "CreateSitemap");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -192,11 +227,13 @@ SiteSearchEngineServiceTracingStub::CreateSitemap(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncDeleteSitemap(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "DeleteSitemap");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "DeleteSitemap");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteSitemap(cq, context, std::move(options), request);
@@ -205,21 +242,24 @@ SiteSearchEngineServiceTracingStub::AsyncDeleteSitemap(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::DeleteSitemap(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "DeleteSitemap");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "DeleteSitemap");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteSitemap(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse> SiteSearchEngineServiceTracingStub::FetchSitemaps(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+SiteSearchEngineServiceTracingStub::FetchSitemaps(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "FetchSitemaps");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "FetchSitemaps");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -228,61 +268,76 @@ StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse> SiteSearchEn
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncEnableAdvancedSiteSearch(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "EnableAdvancedSiteSearch");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "EnableAdvancedSiteSearch");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncEnableAdvancedSiteSearch(cq, context, std::move(options), request);
+  auto f = child_->AsyncEnableAdvancedSiteSearch(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::EnableAdvancedSiteSearch(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "EnableAdvancedSiteSearch");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "EnableAdvancedSiteSearch");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->EnableAdvancedSiteSearch(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->EnableAdvancedSiteSearch(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncDisableAdvancedSiteSearch(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "DisableAdvancedSiteSearch");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "DisableAdvancedSiteSearch");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDisableAdvancedSiteSearch(cq, context, std::move(options), request);
+  auto f = child_->AsyncDisableAdvancedSiteSearch(cq, context,
+                                                  std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::DisableAdvancedSiteSearch(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "DisableAdvancedSiteSearch");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "DisableAdvancedSiteSearch");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DisableAdvancedSiteSearch(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DisableAdvancedSiteSearch(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncRecrawlUris(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "RecrawlUris");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService", "RecrawlUris");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRecrawlUris(cq, context, std::move(options), request);
@@ -291,10 +346,10 @@ SiteSearchEngineServiceTracingStub::AsyncRecrawlUris(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::RecrawlUris(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "RecrawlUris");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService", "RecrawlUris");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -303,56 +358,72 @@ SiteSearchEngineServiceTracingStub::RecrawlUris(
 
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceTracingStub::AsyncBatchVerifyTargetSites(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "BatchVerifyTargetSites");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "BatchVerifyTargetSites");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchVerifyTargetSites(cq, context, std::move(options), request);
+  auto f = child_->AsyncBatchVerifyTargetSites(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceTracingStub::BatchVerifyTargetSites(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "BatchVerifyTargetSites");
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "BatchVerifyTargetSites");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchVerifyTargetSites(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchVerifyTargetSites(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse> SiteSearchEngineServiceTracingStub::FetchDomainVerificationStatus(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "FetchDomainVerificationStatus");
+StatusOr<
+    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse>
+SiteSearchEngineServiceTracingStub::FetchDomainVerificationStatus(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::
+        FetchDomainVerificationStatusRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "FetchDomainVerificationStatus");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchDomainVerificationStatus(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchDomainVerificationStatus(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> SiteSearchEngineServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+SiteSearchEngineServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> SiteSearchEngineServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -360,10 +431,11 @@ StatusOr<google::longrunning::Operation> SiteSearchEngineServiceTracingStub::Get
 }
 
 Status SiteSearchEngineServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.SiteSearchEngineService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SiteSearchEngineService",
+      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -380,8 +452,7 @@ SiteSearchEngineServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -394,14 +465,15 @@ future<Status> SiteSearchEngineServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<SiteSearchEngineServiceStub> MakeSiteSearchEngineServiceTracingStub(
+std::shared_ptr<SiteSearchEngineServiceStub>
+MakeSiteSearchEngineServiceTracingStub(
     std::shared_ptr<SiteSearchEngineServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<SiteSearchEngineServiceTracingStub>(std::move(stub));

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_LINEAGE_V1_LINEAGE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_LINEAGE_V1_LINEAGE_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_retry_traits.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class LineageLimitedErrorCountRetryPolicy : public LineageRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit LineageLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   LineageLimitedErrorCountRetryPolicy(
       LineageLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : LineageLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : LineageLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LineageLimitedErrorCountRetryPolicy(
       LineageLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : LineageLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : LineageLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class LineageLimitedErrorCountRetryPolicy : public LineageRetryPolicy {
   using BaseType = LineageRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<datacatalog_lineage_v1_internal::LineageRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      datacatalog_lineage_v1_internal::LineageRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,13 @@ class LineageLimitedTimeRetryPolicy : public LineageRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit LineageLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   LineageLimitedTimeRetryPolicy(LineageLimitedTimeRetryPolicy&& rhs) noexcept
-    : LineageLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LineageLimitedTimeRetryPolicy(LineageLimitedTimeRetryPolicy const& rhs) noexcept
-    : LineageLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : LineageLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LineageLimitedTimeRetryPolicy(
+      LineageLimitedTimeRetryPolicy const& rhs) noexcept
+      : LineageLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -150,15 +153,16 @@ class LineageLimitedTimeRetryPolicy : public LineageRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<LineageRetryPolicy> clone() const override {
-    return std::make_unique<LineageLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<LineageLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = LineageRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<datacatalog_lineage_v1_internal::LineageRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      datacatalog_lineage_v1_internal::LineageRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,80 +183,109 @@ class LineageConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
-  ProcessOpenLineageRunEvent(google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::
+                       ProcessOpenLineageRunEventResponse>
+  ProcessOpenLineageRunEvent(
+      google::cloud::datacatalog::lineage::v1::
+          ProcessOpenLineageRunEventRequest const& request);
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  CreateProcess(google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request);
+  CreateProcess(
+      google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
+          request);
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  UpdateProcess(google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request);
+  UpdateProcess(
+      google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
-  GetProcess(google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
+      google::cloud::datacatalog::lineage::v1::GetProcessRequest const&
+          request);
 
   virtual StreamRange<google::cloud::datacatalog::lineage::v1::Process>
-  ListProcesses(google::cloud::datacatalog::lineage::v1::ListProcessesRequest request);
+  ListProcesses(
+      google::cloud::datacatalog::lineage::v1::ListProcessesRequest request);
 
-  virtual future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteProcess(google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteProcess(
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteProcess(NoAwaitTag, google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteProcess(
+      NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteProcess( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteProcess(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  CreateRun(google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
+      google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  UpdateRun(google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
+      google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run>
-  GetRun(google::cloud::datacatalog::lineage::v1::GetRunRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
+      google::cloud::datacatalog::lineage::v1::GetRunRequest const& request);
 
-  virtual StreamRange<google::cloud::datacatalog::lineage::v1::Run>
-  ListRuns(google::cloud::datacatalog::lineage::v1::ListRunsRequest request);
+  virtual StreamRange<google::cloud::datacatalog::lineage::v1::Run> ListRuns(
+      google::cloud::datacatalog::lineage::v1::ListRunsRequest request);
 
-  virtual future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteRun(google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteRun(
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteRun(NoAwaitTag, google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteRun(
+      NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request);
 
-  virtual future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteRun( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteRun(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  CreateLineageEvent(google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request);
+  CreateLineageEvent(
+      google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
+          request);
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  GetLineageEvent(google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request);
+  GetLineageEvent(
+      google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
+          request);
 
   virtual StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>
-  ListLineageEvents(google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest request);
+  ListLineageEvents(
+      google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest
+          request);
 
-  virtual Status
-  DeleteLineageEvent(google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request);
+  virtual Status DeleteLineageEvent(
+      google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
+          request);
 
   virtual StreamRange<google::cloud::datacatalog::lineage::v1::Link>
-  SearchLinks(google::cloud::datacatalog::lineage::v1::SearchLinksRequest request);
+  SearchLinks(
+      google::cloud::datacatalog::lineage::v1::SearchLinksRequest request);
 
   virtual StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>
-  BatchSearchLinkProcesses(google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest request);
+  BatchSearchLinkProcesses(
+      google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
+          request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -276,8 +309,7 @@ class LineageConnection {
  * @param options (optional) Configure the `LineageConnection` created by
  * this function.
  */
-std::shared_ptr<LineageConnection> MakeLineageConnection(
-    Options options = {});
+std::shared_ptr<LineageConnection> MakeLineageConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_lineage_v1

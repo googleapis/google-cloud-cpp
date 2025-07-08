@@ -42,25 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockImageVersionsConnection : public composer_v1::ImageVersionsConnection {
+class MockImageVersionsConnection
+    : public composer_v1::ImageVersionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>),
-  ListImageVersions,
-  (google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::orchestration::airflow::service::v1::ImageVersion>),
+      ListImageVersions,
+      (google::cloud::orchestration::airflow::service::v1::
+           ListImageVersionsRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

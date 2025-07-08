@@ -35,276 +35,290 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class JobServiceMetadata : public JobServiceStub {
  public:
   ~JobServiceMetadata() override = default;
-  JobServiceMetadata(
-      std::shared_ptr<JobServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  JobServiceMetadata(std::shared_ptr<JobServiceStub> child,
+                     std::multimap<std::string, std::string> fixed_metadata,
+                     std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateCustomJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::CustomJob> GetCustomJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetCustomJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetCustomJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse> ListCustomJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
+  ListCustomJobs(grpc::ClientContext& context, Options const& options,
+                 google::cloud::aiplatform::v1::ListCustomJobsRequest const&
+                     request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCustomJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteCustomJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request)
+      override;
 
   Status CancelCustomJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CancelCustomJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::DataLabelingJob> CreateDataLabelingJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
+  CreateDataLabelingJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DataLabelingJob> GetDataLabelingJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse> ListDataLabelingJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
+  ListDataLabelingJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataLabelingJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataLabelingJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+          request) override;
 
   Status CancelDataLabelingJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob> CreateHyperparameterTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
+  CreateHyperparameterTuningJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob> GetHyperparameterTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
+  GetHyperparameterTuningJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse> ListHyperparameterTuningJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
+  ListHyperparameterTuningJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteHyperparameterTuningJob(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteHyperparameterTuningJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteHyperparameterTuningJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+          request) override;
 
   Status CancelHyperparameterTuningJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::NasJob> CreateNasJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateNasJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateNasJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::NasJob> GetNasJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetNasJobRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse> ListNasJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListNasJobsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNasJobsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNasJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteNasJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request)
+      override;
 
-  Status CancelNasJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CancelNasJobRequest const& request) override;
+  Status CancelNasJob(grpc::ClientContext& context, Options const& options,
+                      google::cloud::aiplatform::v1::CancelNasJobRequest const&
+                          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::NasTrialDetail> GetNasTrialDetail(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse> ListNasTrialDetails(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
+  ListNasTrialDetails(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob> CreateBatchPredictionJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
+  CreateBatchPredictionJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob> GetBatchPredictionJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
+  GetBatchPredictionJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse> ListBatchPredictionJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
+  ListBatchPredictionJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteBatchPredictionJob(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteBatchPredictionJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBatchPredictionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+          request) override;
 
   Status CancelBatchPredictionJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob> CreateModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
+  CreateModelDeploymentMonitoringJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::
+          CreateModelDeploymentMonitoringJobRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesResponse> SearchModelDeploymentMonitoringStatsAnomalies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::
+               SearchModelDeploymentMonitoringStatsAnomaliesResponse>
+  SearchModelDeploymentMonitoringStatsAnomalies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::
+          SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob> GetModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
+  GetModelDeploymentMonitoringJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::
+          GetModelDeploymentMonitoringJobRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse> ListModelDeploymentMonitoringJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest const& request) override;
+  StatusOr<
+      google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
+  ListModelDeploymentMonitoringJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::
+          ListModelDeploymentMonitoringJobsRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateModelDeploymentMonitoringJob(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateModelDeploymentMonitoringJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) override;
+      google::cloud::aiplatform::v1::
+          UpdateModelDeploymentMonitoringJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::
+          UpdateModelDeploymentMonitoringJobRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteModelDeploymentMonitoringJob(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteModelDeploymentMonitoringJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) override;
+      google::cloud::aiplatform::v1::
+          DeleteModelDeploymentMonitoringJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::
+          DeleteModelDeploymentMonitoringJobRequest const& request) override;
 
   Status PauseModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::
+          PauseModelDeploymentMonitoringJobRequest const& request) override;
 
   Status ResumeModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::
+          ResumeModelDeploymentMonitoringJobRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -320,8 +334,7 @@ class JobServiceMetadata : public JobServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/machine_images/v1/machine_images.proto
 
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,8 +31,7 @@ namespace compute_machine_images_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineImagesRestMetadata::MachineImagesRestMetadata(
-    std::shared_ptr<MachineImagesRestStub> child,
-    std::string api_client_header)
+    std::shared_ptr<MachineImagesRestStub> child, std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -41,97 +40,108 @@ MachineImagesRestMetadata::MachineImagesRestMetadata(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestMetadata::AsyncDeleteMachineImage(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImageRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteMachineImage(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncDeleteMachineImage(cq, std::move(rest_context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestMetadata::DeleteMachineImage(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImageRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteMachineImage(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 MachineImagesRestMetadata::GetMachineImage(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        GetMachineImageRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetMachineImage(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 MachineImagesRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestMetadata::AsyncInsertMachineImage(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImageRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertMachineImage(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncInsertMachineImage(cq, std::move(rest_context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestMetadata::InsertMachineImage(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImageRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertMachineImage(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>
 MachineImagesRestMetadata::ListMachineImages(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        ListMachineImagesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListMachineImages(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 MachineImagesRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestMetadata::AsyncSetLabels(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+        request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncSetLabels(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
+                                request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestMetadata::SetLabels(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->SetLabels(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 MachineImagesRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
@@ -141,28 +151,29 @@ MachineImagesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
-future<Status>
-MachineImagesRestMetadata::AsyncCancelOperation(
+future<Status> MachineImagesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void MachineImagesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

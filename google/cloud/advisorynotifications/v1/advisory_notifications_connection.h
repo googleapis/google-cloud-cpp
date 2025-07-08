@@ -36,14 +36,17 @@ namespace advisorynotifications_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AdvisoryNotificationsServiceConnection`.
-class AdvisoryNotificationsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class AdvisoryNotificationsServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AdvisoryNotificationsServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<AdvisoryNotificationsServiceRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `AdvisoryNotificationsServiceConnection` based on counting errors.
+ * A retry policy for `AdvisoryNotificationsServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +55,8 @@ class AdvisoryNotificationsServiceRetryPolicy : public ::google::cloud::RetryPol
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy : public AdvisoryNotificationsServiceRetryPolicy {
+class AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy
+    : public AdvisoryNotificationsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +65,19 @@ class AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy : public Advisory
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy(
       AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy(
-      AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -80,8 +88,10 @@ class AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy : public Advisory
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AdvisoryNotificationsServiceRetryPolicy> clone() const override {
-    return std::make_unique<AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<AdvisoryNotificationsServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -89,11 +99,15 @@ class AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy : public Advisory
   using BaseType = AdvisoryNotificationsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<advisorynotifications_v1_internal::AdvisoryNotificationsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      advisorynotifications_v1_internal::
+          AdvisoryNotificationsServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `AdvisoryNotificationsServiceConnection` based on elapsed time.
+ * A retry policy for `AdvisoryNotificationsServiceConnection` based on elapsed
+ * time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -102,7 +116,8 @@ class AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy : public Advisory
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AdvisoryNotificationsServiceLimitedTimeRetryPolicy : public AdvisoryNotificationsServiceRetryPolicy {
+class AdvisoryNotificationsServiceLimitedTimeRetryPolicy
+    : public AdvisoryNotificationsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +142,16 @@ class AdvisoryNotificationsServiceLimitedTimeRetryPolicy : public AdvisoryNotifi
   template <typename DurationRep, typename DurationPeriod>
   explicit AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AdvisoryNotificationsServiceLimitedTimeRetryPolicy(AdvisoryNotificationsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : AdvisoryNotificationsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AdvisoryNotificationsServiceLimitedTimeRetryPolicy(AdvisoryNotificationsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : AdvisoryNotificationsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
+      AdvisoryNotificationsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
+      AdvisoryNotificationsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,7 +164,8 @@ class AdvisoryNotificationsServiceLimitedTimeRetryPolicy : public AdvisoryNotifi
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AdvisoryNotificationsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<AdvisoryNotificationsServiceRetryPolicy> clone()
+      const override {
     return std::make_unique<AdvisoryNotificationsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
@@ -154,20 +174,26 @@ class AdvisoryNotificationsServiceLimitedTimeRetryPolicy : public AdvisoryNotifi
   using BaseType = AdvisoryNotificationsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<advisorynotifications_v1_internal::AdvisoryNotificationsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      advisorynotifications_v1_internal::
+          AdvisoryNotificationsServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `AdvisoryNotificationsServiceConnection` object for `AdvisoryNotificationsServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AdvisoryNotificationsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `AdvisoryNotificationsServiceConnection` object for
  * `AdvisoryNotificationsServiceClient`.
  *
- * To create a concrete instance, see `MakeAdvisoryNotificationsServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AdvisoryNotificationsServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AdvisoryNotificationsServiceClient`.
  *
- * For mocking, see `advisorynotifications_v1_mocks::MockAdvisoryNotificationsServiceConnection`.
+ * To create a concrete instance, see
+ * `MakeAdvisoryNotificationsServiceConnection()`.
+ *
+ * For mocking, see
+ * `advisorynotifications_v1_mocks::MockAdvisoryNotificationsServiceConnection`.
  */
 class AdvisoryNotificationsServiceConnection {
  public:
@@ -176,41 +202,52 @@ class AdvisoryNotificationsServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::advisorynotifications::v1::Notification>
-  ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest request);
+  ListNotifications(
+      google::cloud::advisorynotifications::v1::ListNotificationsRequest
+          request);
 
   virtual StatusOr<google::cloud::advisorynotifications::v1::Notification>
-  GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const& request);
+  GetNotification(
+      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+          request);
 
   virtual StatusOr<google::cloud::advisorynotifications::v1::Settings>
-  GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const& request);
+  GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request);
 
   virtual StatusOr<google::cloud::advisorynotifications::v1::Settings>
-  UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request);
+  UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request);
 };
 
 /**
- * A factory function to construct an object of type `AdvisoryNotificationsServiceConnection`.
+ * A factory function to construct an object of type
+ * `AdvisoryNotificationsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AdvisoryNotificationsServiceClient.
+ * should be passed as an argument to the constructor of
+ * AdvisoryNotificationsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AdvisoryNotificationsServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `AdvisoryNotificationsServiceConnection`. Expected options are any
+ * of the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::advisorynotifications_v1::AdvisoryNotificationsServicePolicyOptionList`
+ * -
+ * `google::cloud::advisorynotifications_v1::AdvisoryNotificationsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AdvisoryNotificationsServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the
+ * `AdvisoryNotificationsServiceConnection` created by this function.
  */
-std::shared_ptr<AdvisoryNotificationsServiceConnection> MakeAdvisoryNotificationsServiceConnection(
-    Options options = {});
+std::shared_ptr<AdvisoryNotificationsServiceConnection>
+MakeAdvisoryNotificationsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace advisorynotifications_v1

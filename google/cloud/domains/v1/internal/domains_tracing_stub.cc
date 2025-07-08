@@ -28,109 +28,119 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-DomainsTracingStub::DomainsTracingStub(
-    std::shared_ptr<DomainsStub> child)
+DomainsTracingStub::DomainsTracingStub(std::shared_ptr<DomainsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::domains::v1::SearchDomainsResponse> DomainsTracingStub::SearchDomains(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
+DomainsTracingStub::SearchDomains(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::SearchDomainsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "SearchDomains");
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "SearchDomains");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchDomains(context, options, request));
 }
 
-StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse> DomainsTracingStub::RetrieveRegisterParameters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::domains::v1::RetrieveRegisterParametersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "RetrieveRegisterParameters");
+StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
+DomainsTracingStub::RetrieveRegisterParameters(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "RetrieveRegisterParameters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RetrieveRegisterParameters(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->RetrieveRegisterParameters(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncRegisterDomain(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::RegisterDomainRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "RegisterDomain");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::RegisterDomainRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "RegisterDomain");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRegisterDomain(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncRegisterDomain(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsTracingStub::RegisterDomain(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::RegisterDomainRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "RegisterDomain");
+StatusOr<google::longrunning::Operation> DomainsTracingStub::RegisterDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::RegisterDomainRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "RegisterDomain");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RegisterDomain(context, options, request));
 }
 
-StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse> DomainsTracingStub::RetrieveTransferParameters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::domains::v1::RetrieveTransferParametersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "RetrieveTransferParameters");
+StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
+DomainsTracingStub::RetrieveTransferParameters(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::domains::v1::RetrieveTransferParametersRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "RetrieveTransferParameters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RetrieveTransferParameters(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->RetrieveTransferParameters(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncTransferDomain(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::TransferDomainRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "TransferDomain");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::TransferDomainRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "TransferDomain");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncTransferDomain(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncTransferDomain(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsTracingStub::TransferDomain(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::TransferDomainRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "TransferDomain");
+StatusOr<google::longrunning::Operation> DomainsTracingStub::TransferDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::TransferDomainRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "TransferDomain");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->TransferDomain(context, options, request));
 }
 
-StatusOr<google::cloud::domains::v1::ListRegistrationsResponse> DomainsTracingStub::ListRegistrations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
+DomainsTracingStub::ListRegistrations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::ListRegistrationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ListRegistrations");
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ListRegistrations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListRegistrations(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListRegistrations(context, options, request));
 }
 
-StatusOr<google::cloud::domains::v1::Registration> DomainsTracingStub::GetRegistration(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::domains::v1::Registration>
+DomainsTracingStub::GetRegistration(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::GetRegistrationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "GetRegistration");
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "GetRegistration");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -139,174 +149,194 @@ StatusOr<google::cloud::domains::v1::Registration> DomainsTracingStub::GetRegist
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncUpdateRegistration(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "UpdateRegistration");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "UpdateRegistration");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateRegistration(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateRegistration(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsTracingStub::UpdateRegistration(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "UpdateRegistration");
+StatusOr<google::longrunning::Operation> DomainsTracingStub::UpdateRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "UpdateRegistration");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateRegistration(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateRegistration(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncConfigureManagementSettings(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ConfigureManagementSettings");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ConfigureManagementSettings");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncConfigureManagementSettings(cq, context, std::move(options), request);
+  auto f = child_->AsyncConfigureManagementSettings(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingStub::ConfigureManagementSettings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ConfigureManagementSettings");
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ConfigureManagementSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ConfigureManagementSettings(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ConfigureManagementSettings(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncConfigureDnsSettings(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ConfigureDnsSettings");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ConfigureDnsSettings");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncConfigureDnsSettings(cq, context, std::move(options), request);
+  auto f = child_->AsyncConfigureDnsSettings(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingStub::ConfigureDnsSettings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ConfigureDnsSettings");
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ConfigureDnsSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ConfigureDnsSettings(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ConfigureDnsSettings(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncConfigureContactSettings(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ConfigureContactSettings");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ConfigureContactSettings");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncConfigureContactSettings(cq, context, std::move(options), request);
+  auto f = child_->AsyncConfigureContactSettings(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingStub::ConfigureContactSettings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::ConfigureContactSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ConfigureContactSettings");
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ConfigureContactSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ConfigureContactSettings(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ConfigureContactSettings(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncExportRegistration(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::ExportRegistrationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ExportRegistration");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ExportRegistration");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportRegistration(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncExportRegistration(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsTracingStub::ExportRegistration(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::ExportRegistrationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ExportRegistration");
+StatusOr<google::longrunning::Operation> DomainsTracingStub::ExportRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ExportRegistration");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ExportRegistration(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ExportRegistration(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncDeleteRegistration(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "DeleteRegistration");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "DeleteRegistration");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteRegistration(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteRegistration(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DomainsTracingStub::DeleteRegistration(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "DeleteRegistration");
+StatusOr<google::longrunning::Operation> DomainsTracingStub::DeleteRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "DeleteRegistration");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteRegistration(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteRegistration(context, options, request));
 }
 
-StatusOr<google::cloud::domains::v1::AuthorizationCode> DomainsTracingStub::RetrieveAuthorizationCode(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "RetrieveAuthorizationCode");
+StatusOr<google::cloud::domains::v1::AuthorizationCode>
+DomainsTracingStub::RetrieveAuthorizationCode(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "RetrieveAuthorizationCode");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RetrieveAuthorizationCode(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->RetrieveAuthorizationCode(context, options, request));
 }
 
-StatusOr<google::cloud::domains::v1::AuthorizationCode> DomainsTracingStub::ResetAuthorizationCode(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::domains::v1::AuthorizationCode>
+DomainsTracingStub::ResetAuthorizationCode(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains", "ResetAuthorizationCode");
+  auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
+                                     "ResetAuthorizationCode");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ResetAuthorizationCode(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ResetAuthorizationCode(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -319,8 +349,7 @@ DomainsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -333,8 +362,8 @@ future<Status> DomainsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -36,26 +36,31 @@ class InstanceSettingsTracingConnection
   ~InstanceSettingsTracingConnection() override = default;
 
   explicit InstanceSettingsTracingConnection(
-    std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection> child);
+      std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request) override;
+  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::
+                          GetInstanceSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) override;
+  PatchInstanceSettings(
+      google::cloud::cpp::compute::instance_settings::v1::
+          PatchInstanceSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchInstanceSettings(NoAwaitTag,
-      google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
+      NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
+                      PatchInstanceSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInstanceSettings(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection> child_;
+  std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -68,7 +73,8 @@ class InstanceSettingsTracingConnection
  */
 std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
 MakeInstanceSettingsTracingConnection(
-    std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection> conn);
+    std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_settings_v1_internal

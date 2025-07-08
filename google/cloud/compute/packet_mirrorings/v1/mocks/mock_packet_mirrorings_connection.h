@@ -42,25 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockPacketMirroringsConnection : public compute_packet_mirrorings_v1::PacketMirroringsConnection {
+class MockPacketMirroringsConnection
+    : public compute_packet_mirrorings_v1::PacketMirroringsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>),
-  AggregatedListPacketMirrorings,
-  (google::cloud::cpp::compute::packet_mirrorings::v1::AggregatedListPacketMirroringsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              PacketMirroringsScopedList>>),
+      AggregatedListPacketMirrorings,
+      (google::cloud::cpp::compute::packet_mirrorings::v1::
+           AggregatedListPacketMirroringsRequest request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePacketMirroring(Matcher<google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeletePacketMirroring(Matcher<google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeletePacketMirroring,
-  (google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request), (override));
-
+              DeletePacketMirroring,
+              (google::cloud::cpp::compute::packet_mirrorings::v1::
+                   DeletePacketMirroringRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -69,36 +77,45 @@ class MockPacketMirroringsConnection : public compute_packet_mirrorings_v1::Pack
   /// EXPECT_CALL(*mock, DeletePacketMirroring(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeletePacketMirroring, (NoAwaitTag,
-    google::cloud::cpp::compute::packet_mirrorings::v1::DeletePacketMirroringRequest const& request), (override));
-
+              DeletePacketMirroring,
+              (NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                               DeletePacketMirroringRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePacketMirroring(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeletePacketMirroring(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeletePacketMirroring, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              DeletePacketMirroring,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>,
-  GetPacketMirroring,
-  (google::cloud::cpp::compute::packet_mirrorings::v1::GetPacketMirroringRequest const& request), (override));
+              GetPacketMirroring,
+              (google::cloud::cpp::compute::packet_mirrorings::v1::
+                   GetPacketMirroringRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertPacketMirroring(Matcher<google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertPacketMirroring(Matcher<google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertPacketMirroring,
-  (google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request), (override));
-
+              InsertPacketMirroring,
+              (google::cloud::cpp::compute::packet_mirrorings::v1::
+                   InsertPacketMirroringRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -107,36 +124,45 @@ class MockPacketMirroringsConnection : public compute_packet_mirrorings_v1::Pack
   /// EXPECT_CALL(*mock, InsertPacketMirroring(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertPacketMirroring, (NoAwaitTag,
-    google::cloud::cpp::compute::packet_mirrorings::v1::InsertPacketMirroringRequest const& request), (override));
-
+              InsertPacketMirroring,
+              (NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                               InsertPacketMirroringRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertPacketMirroring(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertPacketMirroring(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertPacketMirroring, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              InsertPacketMirroring,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>),
-  ListPacketMirrorings,
-  (google::cloud::cpp::compute::packet_mirrorings::v1::ListPacketMirroringsRequest request), (override));
+              ListPacketMirrorings,
+              (google::cloud::cpp::compute::packet_mirrorings::v1::
+                   ListPacketMirroringsRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PatchPacketMirroring(Matcher<google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PatchPacketMirroring(Matcher<google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchPacketMirroring,
-  (google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request), (override));
-
+              PatchPacketMirroring,
+              (google::cloud::cpp::compute::packet_mirrorings::v1::
+                   PatchPacketMirroringRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -145,24 +171,31 @@ class MockPacketMirroringsConnection : public compute_packet_mirrorings_v1::Pack
   /// EXPECT_CALL(*mock, PatchPacketMirroring(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchPacketMirroring, (NoAwaitTag,
-    google::cloud::cpp::compute::packet_mirrorings::v1::PatchPacketMirroringRequest const& request), (override));
-
+              PatchPacketMirroring,
+              (NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                               PatchPacketMirroringRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PatchPacketMirroring(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PatchPacketMirroring(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PatchPacketMirroring, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              PatchPacketMirroring,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::packet_mirrorings::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::packet_mirrorings::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

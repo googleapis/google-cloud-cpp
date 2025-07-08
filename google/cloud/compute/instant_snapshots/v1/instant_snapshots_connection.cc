@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instant_snapshots/v1/instant_snapshots.proto
 
 #include "google/cloud/compute/instant_snapshots/v1/instant_snapshots_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/instant_snapshots/v1/instant_snapshots_options.h"
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_option_defaults.h"
 #include "google/cloud/compute/instant_snapshots/v1/internal/instant_snapshots_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,111 +36,124 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InstantSnapshotsConnection::~InstantSnapshotsConnection() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>> InstantSnapshotsConnection::AggregatedListInstantSnapshots(
-    google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
+InstantSnapshotsConnection::AggregatedListInstantSnapshots(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        AggregatedListInstantSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>>();
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             InstantSnapshotsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsConnection::DeleteInstantSnapshot(
-    google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const&) {
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        DeleteInstantSnapshotRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsConnection::DeleteInstantSnapshot(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                    DeleteInstantSnapshotRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsConnection::DeleteInstantSnapshot(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
 InstantSnapshotsConnection::GetInstantSnapshot(
-    google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const&) {
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        GetInstantSnapshotRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstantSnapshotsConnection::GetIamPolicy(
-    google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsConnection::InsertInstantSnapshot(
-    google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const&) {
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        InsertInstantSnapshotRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsConnection::InsertInstantSnapshot(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                    InsertInstantSnapshotRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsConnection::InsertInstantSnapshot(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot> InstantSnapshotsConnection::ListInstantSnapshots(
-    google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
+InstantSnapshotsConnection::ListInstantSnapshots(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        ListInstantSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstantSnapshotsConnection::SetIamPolicy(
-    google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsConnection::SetLabels(
-    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&) {
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        SetLabelsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsConnection::SetLabels(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                    SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsConnection::SetLabels(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstantSnapshotsConnection::TestIamPermissions(
-    google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -25,11 +25,11 @@ namespace cloud {
 namespace resourcemanager_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ProjectsClient::ProjectsClient(
-    std::shared_ptr<ProjectsConnection> connection, Options opts)
+ProjectsClient::ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProjectsClient::~ProjectsClient() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
@@ -41,7 +41,9 @@ ProjectsClient::GetProject(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
-ProjectsClient::GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const& request, Options opts) {
+ProjectsClient::GetProject(
+    google::cloud::resourcemanager::v3::GetProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProject(request);
 }
@@ -55,7 +57,9 @@ ProjectsClient::ListProjects(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
-ProjectsClient::ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest request, Options opts) {
+ProjectsClient::ListProjects(
+    google::cloud::resourcemanager::v3::ListProjectsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProjects(std::move(request));
 }
@@ -69,21 +73,25 @@ ProjectsClient::SearchProjects(std::string const& query, Options opts) {
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
-ProjectsClient::SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest request, Options opts) {
+ProjectsClient::SearchProjects(
+    google::cloud::resourcemanager::v3::SearchProjectsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchProjects(std::move(request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::CreateProject(google::cloud::resourcemanager::v3::Project const& project, Options opts) {
+ProjectsClient::CreateProject(
+    google::cloud::resourcemanager::v3::Project const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::CreateProjectRequest request;
   *request.mutable_project() = project;
   return connection_->CreateProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::CreateProject(NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::CreateProject(
+    NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::CreateProjectRequest request;
   *request.mutable_project() = project;
@@ -91,25 +99,32 @@ ProjectsClient::CreateProject(NoAwaitTag, google::cloud::resourcemanager::v3::Pr
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const& request, Options opts) {
+ProjectsClient::CreateProject(
+    google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::CreateProject(NoAwaitTag, google::cloud::resourcemanager::v3::CreateProjectRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::CreateProject(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::CreateProject(google::longrunning::Operation const& operation, Options opts) {
+ProjectsClient::CreateProject(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateProject(operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::UpdateProject(google::cloud::resourcemanager::v3::Project const& project, google::protobuf::FieldMask const& update_mask, Options opts) {
+ProjectsClient::UpdateProject(
+    google::cloud::resourcemanager::v3::Project const& project,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::UpdateProjectRequest request;
   *request.mutable_project() = project;
@@ -117,8 +132,9 @@ ProjectsClient::UpdateProject(google::cloud::resourcemanager::v3::Project const&
   return connection_->UpdateProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::UpdateProject(NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::UpdateProject(
+    NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::UpdateProjectRequest request;
   *request.mutable_project() = project;
@@ -127,25 +143,32 @@ ProjectsClient::UpdateProject(NoAwaitTag, google::cloud::resourcemanager::v3::Pr
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const& request, Options opts) {
+ProjectsClient::UpdateProject(
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::UpdateProject(NoAwaitTag, google::cloud::resourcemanager::v3::UpdateProjectRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::UpdateProject(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::UpdateProject(google::longrunning::Operation const& operation, Options opts) {
+ProjectsClient::UpdateProject(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProject(operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::MoveProject(std::string const& name, std::string const& destination_parent, Options opts) {
+ProjectsClient::MoveProject(std::string const& name,
+                            std::string const& destination_parent,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::MoveProjectRequest request;
   request.set_name(name);
@@ -153,8 +176,9 @@ ProjectsClient::MoveProject(std::string const& name, std::string const& destinat
   return connection_->MoveProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::MoveProject(NoAwaitTag, std::string const& name, std::string const& destination_parent, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::MoveProject(
+    NoAwaitTag, std::string const& name, std::string const& destination_parent,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::MoveProjectRequest request;
   request.set_name(name);
@@ -163,19 +187,24 @@ ProjectsClient::MoveProject(NoAwaitTag, std::string const& name, std::string con
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const& request, Options opts) {
+ProjectsClient::MoveProject(
+    google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::MoveProject(NoAwaitTag, google::cloud::resourcemanager::v3::MoveProjectRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::MoveProject(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::MoveProject(google::longrunning::Operation const& operation, Options opts) {
+ProjectsClient::MoveProject(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveProject(operation);
 }
@@ -188,8 +217,8 @@ ProjectsClient::DeleteProject(std::string const& name, Options opts) {
   return connection_->DeleteProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::DeleteProject(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::DeleteProject(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::DeleteProjectRequest request;
   request.set_name(name);
@@ -197,19 +226,24 @@ ProjectsClient::DeleteProject(NoAwaitTag, std::string const& name, Options opts)
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const& request, Options opts) {
+ProjectsClient::DeleteProject(
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::DeleteProject(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteProjectRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::DeleteProject(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::DeleteProject(google::longrunning::Operation const& operation, Options opts) {
+ProjectsClient::DeleteProject(google::longrunning::Operation const& operation,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProject(operation);
 }
@@ -222,8 +256,8 @@ ProjectsClient::UndeleteProject(std::string const& name, Options opts) {
   return connection_->UndeleteProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::UndeleteProject(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::UndeleteProject(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::UndeleteProjectRequest request;
   request.set_name(name);
@@ -231,39 +265,45 @@ ProjectsClient::UndeleteProject(NoAwaitTag, std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request, Options opts) {
+ProjectsClient::UndeleteProject(
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteProject(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::UndeleteProject(NoAwaitTag, google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::UndeleteProject(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::UndeleteProject(google::longrunning::Operation const& operation, Options opts) {
+ProjectsClient::UndeleteProject(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteProject(operation);
 }
 
-StatusOr<google::iam::v1::Policy>
-ProjectsClient::GetIamPolicy(std::string const& resource, Options opts) {
+StatusOr<google::iam::v1::Policy> ProjectsClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ProjectsClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> ProjectsClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ProjectsClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts) {
+StatusOr<google::iam::v1::Policy> ProjectsClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
@@ -271,14 +311,16 @@ ProjectsClient::SetIamPolicy(std::string const& resource, google::iam::v1::Polic
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ProjectsClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> ProjectsClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ProjectsClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts) {
+ProjectsClient::TestIamPermissions(std::string const& resource,
+                                   std::vector<std::string> const& permissions,
+                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
@@ -287,21 +329,22 @@ ProjectsClient::TestIamPermissions(std::string const& resource, std::vector<std:
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ProjectsClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+ProjectsClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ProjectsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ProjectsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

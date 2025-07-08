@@ -26,10 +26,14 @@ namespace cloud {
 namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use optimization_v1::MakeDefaultFleetRoutingConnectionIdempotencyPolicy directly.
-using ::google::cloud::optimization_v1::MakeDefaultFleetRoutingConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// optimization_v1::MakeDefaultFleetRoutingConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::optimization_v1::
+    MakeDefaultFleetRoutingConnectionIdempotencyPolicy;
 
-/// @deprecated Use optimization_v1::FleetRoutingConnectionIdempotencyPolicy directly.
+/// @deprecated Use optimization_v1::FleetRoutingConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::optimization_v1::FleetRoutingConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

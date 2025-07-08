@@ -63,11 +63,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.Document]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+/// [google.cloud.dialogflow.v2.Document]:
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
 ///
 class DocumentsClient {
  public:
-  explicit DocumentsClient(std::shared_ptr<DocumentsConnection> connection, Options opts = {});
+  explicit DocumentsClient(std::shared_ptr<DocumentsConnection> connection,
+                           Options opts = {});
   ~DocumentsClient();
 
   ///@{
@@ -120,8 +122,8 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L410}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Document>
-  ListDocuments(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Document> ListDocuments(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -159,8 +161,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L410}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Document>
-  ListDocuments(google::cloud::dialogflow::v2::ListDocumentsRequest request, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Document> ListDocuments(
+      google::cloud::dialogflow::v2::ListDocumentsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -185,8 +188,8 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.GetDocumentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L396}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Document>
-  GetDocument(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -215,8 +218,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.GetDocumentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L396}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Document>
-  GetDocument(google::cloud::dialogflow::v2::GetDocumentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
+      google::cloud::dialogflow::v2::GetDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -258,8 +262,10 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L645}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  CreateDocument(std::string const& parent, google::cloud::dialogflow::v2::Document const& document, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
+      std::string const& parent,
+      google::cloud::dialogflow::v2::Document const& document,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -272,8 +278,10 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDocument(NoAwaitTag, std::string const& parent, google::cloud::dialogflow::v2::Document const& document, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDocument(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dialogflow::v2::Document const& document,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -318,8 +326,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L645}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  CreateDocument(google::cloud::dialogflow::v2::CreateDocumentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -332,8 +341,10 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDocument(NoAwaitTag, google::cloud::dialogflow::v2::CreateDocumentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -344,8 +355,8 @@ class DocumentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  CreateDocument(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -394,7 +405,9 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-  ImportDocuments(google::cloud::dialogflow::v2::ImportDocumentsRequest const& request, Options opts = {});
+  ImportDocuments(
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -407,8 +420,10 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportDocuments(NoAwaitTag, google::cloud::dialogflow::v2::ImportDocumentsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportDocuments(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -420,7 +435,8 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-  ImportDocuments(google::longrunning::Operation const& operation, Options opts = {});
+  ImportDocuments(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -475,8 +491,8 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDocument(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDocument(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -522,7 +538,9 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-  DeleteDocument(google::cloud::dialogflow::v2::DeleteDocumentRequest const& request, Options opts = {});
+  DeleteDocument(
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -535,8 +553,10 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDocument(NoAwaitTag, google::cloud::dialogflow::v2::DeleteDocumentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -548,7 +568,8 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-  DeleteDocument(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteDocument(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -591,8 +612,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L559}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  UpdateDocument(google::cloud::dialogflow::v2::Document const& document, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
+      google::cloud::dialogflow::v2::Document const& document,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -605,8 +627,9 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDocument(NoAwaitTag, google::cloud::dialogflow::v2::Document const& document, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDocument(
+      NoAwaitTag, google::cloud::dialogflow::v2::Document const& document,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -651,8 +674,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L559}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  UpdateDocument(google::cloud::dialogflow::v2::UpdateDocumentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -665,8 +689,10 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDocument(NoAwaitTag, google::cloud::dialogflow::v2::UpdateDocumentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -677,8 +703,8 @@ class DocumentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  UpdateDocument(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -730,8 +756,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L572}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ReloadDocument(std::string const& name, std::string const& content_uri, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
+      std::string const& name, std::string const& content_uri,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -744,8 +771,9 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ReloadDocument(NoAwaitTag, std::string const& name, std::string const& content_uri, Options opts = {});
+  StatusOr<google::longrunning::Operation> ReloadDocument(
+      NoAwaitTag, std::string const& name, std::string const& content_uri,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -796,8 +824,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L572}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ReloadDocument(google::cloud::dialogflow::v2::ReloadDocumentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -810,8 +839,10 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ReloadDocument(NoAwaitTag, google::cloud::dialogflow::v2::ReloadDocumentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ReloadDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -822,8 +853,8 @@ class DocumentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ReloadDocument(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -869,8 +900,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L645}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ExportDocument(google::cloud::dialogflow::v2::ExportDocumentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -883,8 +915,10 @@ class DocumentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportDocument(NoAwaitTag, google::cloud::dialogflow::v2::ExportDocumentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportDocument(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -895,8 +929,8 @@ class DocumentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::Document>>
-  ExportDocument(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -934,8 +968,8 @@ class DocumentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -964,8 +998,9 @@ class DocumentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1000,8 +1035,8 @@ class DocumentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1040,8 +1075,8 @@ class DocumentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1067,8 +1102,8 @@ class DocumentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1099,8 +1134,9 @@ class DocumentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1134,8 +1170,7 @@ class DocumentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1174,8 +1209,9 @@ class DocumentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DocumentsConnection> connection_;

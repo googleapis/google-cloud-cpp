@@ -33,21 +33,22 @@ TraceServiceTracingStub::TraceServiceTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 Status TraceServiceTracingStub::BatchWriteSpans(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.cloudtrace.v2.TraceService", "BatchWriteSpans");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudtrace.v2.TraceService", "BatchWriteSpans");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->BatchWriteSpans(context, options, request));
 }
 
-StatusOr<google::devtools::cloudtrace::v2::Span> TraceServiceTracingStub::CreateSpan(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudtrace::v2::Span>
+TraceServiceTracingStub::CreateSpan(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::Span const& request) {
-  auto span = internal::MakeSpanGrpc("google.devtools.cloudtrace.v2.TraceService", "CreateSpan");
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudtrace.v2.TraceService", "CreateSpan");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

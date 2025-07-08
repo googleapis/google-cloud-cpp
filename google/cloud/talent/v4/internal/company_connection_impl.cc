@@ -17,12 +17,12 @@
 // source: google/cloud/talent/v4/company_service.proto
 
 #include "google/cloud/talent/v4/internal/company_connection_impl.h"
+#include "google/cloud/talent/v4/internal/company_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/talent/v4/internal/company_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,34 +32,36 @@ namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<talent_v4::CompanyServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<talent_v4::CompanyServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<talent_v4::CompanyServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<talent_v4::CompanyServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<talent_v4::CompanyServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<talent_v4::CompanyServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<talent_v4::CompanyServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 CompanyServiceConnectionImpl::CompanyServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<talent_v4_internal::CompanyServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        CompanyServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      CompanyServiceConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::Company>
-CompanyServiceConnectionImpl::CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const& request) {
+CompanyServiceConnectionImpl::CreateCompany(
+    google::cloud::talent::v4::CreateCompanyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -72,7 +74,8 @@ CompanyServiceConnectionImpl::CreateCompany(google::cloud::talent::v4::CreateCom
 }
 
 StatusOr<google::cloud::talent::v4::Company>
-CompanyServiceConnectionImpl::GetCompany(google::cloud::talent::v4::GetCompanyRequest const& request) {
+CompanyServiceConnectionImpl::GetCompany(
+    google::cloud::talent::v4::GetCompanyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -85,7 +88,8 @@ CompanyServiceConnectionImpl::GetCompany(google::cloud::talent::v4::GetCompanyRe
 }
 
 StatusOr<google::cloud::talent::v4::Company>
-CompanyServiceConnectionImpl::UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const& request) {
+CompanyServiceConnectionImpl::UpdateCompany(
+    google::cloud::talent::v4::UpdateCompanyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -97,8 +101,8 @@ CompanyServiceConnectionImpl::UpdateCompany(google::cloud::talent::v4::UpdateCom
       *current, request, __func__);
 }
 
-Status
-CompanyServiceConnectionImpl::DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const& request) {
+Status CompanyServiceConnectionImpl::DeleteCompany(
+    google::cloud::talent::v4::DeleteCompanyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -111,27 +115,33 @@ CompanyServiceConnectionImpl::DeleteCompany(google::cloud::talent::v4::DeleteCom
 }
 
 StreamRange<google::cloud::talent::v4::Company>
-CompanyServiceConnectionImpl::ListCompanies(google::cloud::talent::v4::ListCompaniesRequest request) {
+CompanyServiceConnectionImpl::ListCompanies(
+    google::cloud::talent::v4::ListCompaniesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListCompanies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::talent::v4::Company>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::talent::v4::Company>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<talent_v4::CompanyServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<talent_v4::CompanyServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::talent::v4::ListCompaniesRequest const& r) {
+          Options const& options,
+          google::cloud::talent::v4::ListCompaniesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::talent::v4::ListCompaniesRequest const& request) {
+                   google::cloud::talent::v4::ListCompaniesRequest const&
+                       request) {
               return stub->ListCompanies(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::talent::v4::ListCompaniesResponse r) {
-        std::vector<google::cloud::talent::v4::Company> result(r.companies().size());
+        std::vector<google::cloud::talent::v4::Company> result(
+            r.companies().size());
         auto& messages = *r.mutable_companies();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -139,7 +149,8 @@ CompanyServiceConnectionImpl::ListCompanies(google::cloud::talent::v4::ListCompa
 }
 
 StatusOr<google::longrunning::Operation>
-CompanyServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+CompanyServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

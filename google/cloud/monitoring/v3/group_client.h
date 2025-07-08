@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_GROUP_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_GROUP_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/monitoring/v3/group_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -70,11 +70,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
+/// [google.monitoring.v3.Group]:
+/// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
 ///
 class GroupServiceClient {
  public:
-  explicit GroupServiceClient(std::shared_ptr<GroupServiceConnection> connection, Options opts = {});
+  explicit GroupServiceClient(
+      std::shared_ptr<GroupServiceConnection> connection, Options opts = {});
   ~GroupServiceClient();
 
   ///@{
@@ -87,10 +89,12 @@ class GroupServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(GroupServiceClient const& a, GroupServiceClient const& b) {
+  friend bool operator==(GroupServiceClient const& a,
+                         GroupServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GroupServiceClient const& a, GroupServiceClient const& b) {
+  friend bool operator!=(GroupServiceClient const& a,
+                         GroupServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -130,8 +134,8 @@ class GroupServiceClient {
   /// [google.monitoring.v3.ListGroupsRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L109}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::Group>
-  ListGroups(std::string const& name, Options opts = {});
+  StreamRange<google::monitoring::v3::Group> ListGroups(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +173,8 @@ class GroupServiceClient {
   /// [google.monitoring.v3.ListGroupsRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L109}
   ///
   // clang-format on
-  StreamRange<google::monitoring::v3::Group>
-  ListGroups(google::monitoring::v3::ListGroupsRequest request, Options opts = {});
+  StreamRange<google::monitoring::v3::Group> ListGroups(
+      google::monitoring::v3::ListGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -196,8 +200,8 @@ class GroupServiceClient {
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Group>
-  GetGroup(std::string const& name, Options opts = {});
+  StatusOr<google::monitoring::v3::Group> GetGroup(std::string const& name,
+                                                   Options opts = {});
 
   // clang-format off
   ///
@@ -226,8 +230,9 @@ class GroupServiceClient {
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Group>
-  GetGroup(google::monitoring::v3::GetGroupRequest const& request, Options opts = {});
+  StatusOr<google::monitoring::v3::Group> GetGroup(
+      google::monitoring::v3::GetGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -257,8 +262,9 @@ class GroupServiceClient {
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Group>
-  CreateGroup(std::string const& name, google::monitoring::v3::Group const& group, Options opts = {});
+  StatusOr<google::monitoring::v3::Group> CreateGroup(
+      std::string const& name, google::monitoring::v3::Group const& group,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -287,8 +293,9 @@ class GroupServiceClient {
   /// [google.monitoring.v3.Group]: @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Group>
-  CreateGroup(google::monitoring::v3::CreateGroupRequest const& request, Options opts = {});
+  StatusOr<google::monitoring::v3::Group> CreateGroup(
+      google::monitoring::v3::CreateGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -315,8 +322,8 @@ class GroupServiceClient {
   /// [google.monitoring.v3.UpdateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L216}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Group>
-  UpdateGroup(google::monitoring::v3::Group const& group, Options opts = {});
+  StatusOr<google::monitoring::v3::Group> UpdateGroup(
+      google::monitoring::v3::Group const& group, Options opts = {});
 
   // clang-format off
   ///
@@ -346,8 +353,9 @@ class GroupServiceClient {
   /// [google.monitoring.v3.UpdateGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L216}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::Group>
-  UpdateGroup(google::monitoring::v3::UpdateGroupRequest const& request, Options opts = {});
+  StatusOr<google::monitoring::v3::Group> UpdateGroup(
+      google::monitoring::v3::UpdateGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -370,8 +378,7 @@ class GroupServiceClient {
   /// [google.monitoring.v3.DeleteGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L228}
   ///
   // clang-format on
-  Status
-  DeleteGroup(std::string const& name, Options opts = {});
+  Status DeleteGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -397,8 +404,8 @@ class GroupServiceClient {
   /// [google.monitoring.v3.DeleteGroupRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L228}
   ///
   // clang-format on
-  Status
-  DeleteGroup(google::monitoring::v3::DeleteGroupRequest const& request, Options opts = {});
+  Status DeleteGroup(google::monitoring::v3::DeleteGroupRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -433,8 +440,8 @@ class GroupServiceClient {
   /// [google.monitoring.v3.ListGroupMembersRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L246}
   ///
   // clang-format on
-  StreamRange<google::api::MonitoredResource>
-  ListGroupMembers(std::string const& name, Options opts = {});
+  StreamRange<google::api::MonitoredResource> ListGroupMembers(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -472,8 +479,9 @@ class GroupServiceClient {
   /// [google.monitoring.v3.ListGroupMembersRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L246}
   ///
   // clang-format on
-  StreamRange<google::api::MonitoredResource>
-  ListGroupMembers(google::monitoring::v3::ListGroupMembersRequest request, Options opts = {});
+  StreamRange<google::api::MonitoredResource> ListGroupMembers(
+      google::monitoring::v3::ListGroupMembersRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<GroupServiceConnection> connection_;

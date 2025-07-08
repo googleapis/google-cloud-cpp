@@ -36,21 +36,21 @@ class ModelServiceTracingConnection
   ~ModelServiceTracingConnection() override = default;
 
   explicit ModelServiceTracingConnection(
-    std::shared_ptr<bigquerycontrol_v2::ModelServiceConnection> child);
+      std::shared_ptr<bigquerycontrol_v2::ModelServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::v2::Model>
-  GetModel(google::cloud::bigquery::v2::GetModelRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Model> GetModel(
+      google::cloud::bigquery::v2::GetModelRequest const& request) override;
 
-  StreamRange<google::cloud::bigquery::v2::Model>
-  ListModels(google::cloud::bigquery::v2::ListModelsRequest request) override;
+  StreamRange<google::cloud::bigquery::v2::Model> ListModels(
+      google::cloud::bigquery::v2::ListModelsRequest request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Model>
-  PatchModel(google::cloud::bigquery::v2::PatchModelRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Model> PatchModel(
+      google::cloud::bigquery::v2::PatchModelRequest const& request) override;
 
-  Status
-  DeleteModel(google::cloud::bigquery::v2::DeleteModelRequest const& request) override;
+  Status DeleteModel(
+      google::cloud::bigquery::v2::DeleteModelRequest const& request) override;
 
  private:
   std::shared_ptr<bigquerycontrol_v2::ModelServiceConnection> child_;

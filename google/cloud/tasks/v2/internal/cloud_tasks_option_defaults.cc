@@ -17,10 +17,10 @@
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
 #include "google/cloud/tasks/v2/internal/cloud_tasks_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/tasks/v2/cloud_tasks_connection.h"
 #include "google/cloud/tasks/v2/cloud_tasks_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,19 +35,20 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudTasksDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_TASKS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CLOUD_TASKS_AUTHORITY",
-      "cloudtasks.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_TASKS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_TASKS_AUTHORITY", "cloudtasks.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<tasks_v2::CloudTasksRetryPolicyOption>()) {
     options.set<tasks_v2::CloudTasksRetryPolicyOption>(
-        tasks_v2::CloudTasksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        tasks_v2::CloudTasksLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<tasks_v2::CloudTasksBackoffPolicyOption>()) {
     options.set<tasks_v2::CloudTasksBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>()) {
     options.set<tasks_v2::CloudTasksConnectionIdempotencyPolicyOption>(

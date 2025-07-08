@@ -35,23 +35,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options IdentityAwareProxyAdminServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_ADMIN_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_ADMIN_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_ADMIN_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_ADMIN_SERVICE_AUTHORITY",
       "iap.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>()) {
     options.set<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>(
         iap_v1::IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<iap_v1::IdentityAwareProxyAdminServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<iap_v1::IdentityAwareProxyAdminServiceBackoffPolicyOption>()) {
     options.set<iap_v1::IdentityAwareProxyAdminServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<iap_v1::IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<iap_v1::IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>(
-        iap_v1::MakeDefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          iap_v1::
+              IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        iap_v1::
+            IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>(
+        iap_v1::
+            MakeDefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy());
   }
 
   return options;

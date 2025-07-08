@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_INTERNAL_POLICIES_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_INTERNAL_POLICIES_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/iam/v2/internal/policies_retry_traits.h"
 #include "google/cloud/iam/v2/internal/policies_stub.h"
 #include "google/cloud/iam/v2/policies_connection.h"
 #include "google/cloud/iam/v2/policies_connection_idempotency_policy.h"
 #include "google/cloud/iam/v2/policies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -40,59 +40,51 @@ namespace cloud {
 namespace iam_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PoliciesConnectionImpl
-    : public iam_v2::PoliciesConnection {
+class PoliciesConnectionImpl : public iam_v2::PoliciesConnection {
  public:
   ~PoliciesConnectionImpl() override = default;
 
   PoliciesConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_v2_internal::PoliciesStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<iam_v2_internal::PoliciesStub> stub, Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::iam::v2::Policy>
-  ListPolicies(google::iam::v2::ListPoliciesRequest request) override;
+  StreamRange<google::iam::v2::Policy> ListPolicies(
+      google::iam::v2::ListPoliciesRequest request) override;
 
-  StatusOr<google::iam::v2::Policy>
-  GetPolicy(google::iam::v2::GetPolicyRequest const& request) override;
+  StatusOr<google::iam::v2::Policy> GetPolicy(
+      google::iam::v2::GetPolicyRequest const& request) override;
 
-  future<StatusOr<google::iam::v2::Policy>>
-  CreatePolicy(google::iam::v2::CreatePolicyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreatePolicy(NoAwaitTag,
+  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
       google::iam::v2::CreatePolicyRequest const& request) override;
 
-  future<StatusOr<google::iam::v2::Policy>>
-  CreatePolicy(
+  StatusOr<google::longrunning::Operation> CreatePolicy(
+      NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request) override;
+
+  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::iam::v2::Policy>>
-  UpdatePolicy(google::iam::v2::UpdatePolicyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdatePolicy(NoAwaitTag,
+  future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
-  future<StatusOr<google::iam::v2::Policy>>
-  UpdatePolicy(
+  StatusOr<google::longrunning::Operation> UpdatePolicy(
+      NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request) override;
+
+  future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::iam::v2::Policy>>
-  DeletePolicy(google::iam::v2::DeletePolicyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeletePolicy(NoAwaitTag,
+  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       google::iam::v2::DeletePolicyRequest const& request) override;
 
-  future<StatusOr<google::iam::v2::Policy>>
-  DeletePolicy(
+  StatusOr<google::longrunning::Operation> DeletePolicy(
+      NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request) override;
+
+  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

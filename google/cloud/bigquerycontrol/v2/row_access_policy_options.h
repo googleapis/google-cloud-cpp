@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_ROW_ACCESS_POLICY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_ROW_ACCESS_POLICY_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/row_access_policy_connection.h"
 #include "google/cloud/bigquerycontrol/v2/row_access_policy_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct RowAccessPolicyServiceBackoffPolicyOption {
  * @ingroup google-cloud-bigquerycontrol-options
  */
 struct RowAccessPolicyServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>;
 };
 
 /**

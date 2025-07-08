@@ -64,8 +64,7 @@ struct MatchServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 using MatchServicePolicyOptionList =
-    OptionList<MatchServiceRetryPolicyOption,
-               MatchServiceBackoffPolicyOption,
+    OptionList<MatchServiceRetryPolicyOption, MatchServiceBackoffPolicyOption,
                MatchServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

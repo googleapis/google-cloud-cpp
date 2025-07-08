@@ -42,33 +42,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCompanyServiceConnection : public talent_v4::CompanyServiceConnection {
+class MockCompanyServiceConnection
+    : public talent_v4::CompanyServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>,
-  CreateCompany,
-  (google::cloud::talent::v4::CreateCompanyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, CreateCompany,
+              (google::cloud::talent::v4::CreateCompanyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>,
-  GetCompany,
-  (google::cloud::talent::v4::GetCompanyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, GetCompany,
+              (google::cloud::talent::v4::GetCompanyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>,
-  UpdateCompany,
-  (google::cloud::talent::v4::UpdateCompanyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, UpdateCompany,
+              (google::cloud::talent::v4::UpdateCompanyRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteCompany,
-  (google::cloud::talent::v4::DeleteCompanyRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteCompany,
+              (google::cloud::talent::v4::DeleteCompanyRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Company>),
-  ListCompanies,
-  (google::cloud::talent::v4::ListCompaniesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Company>), ListCompanies,
+              (google::cloud::talent::v4::ListCompaniesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

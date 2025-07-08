@@ -33,7 +33,8 @@ using ::google::cloud::retail_v2::MakeSearchServiceConnection;
 /// @deprecated Use retail_v2::SearchServiceConnection directly.
 using ::google::cloud::retail_v2::SearchServiceConnection;
 
-/// @deprecated Use retail_v2::SearchServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use retail_v2::SearchServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::retail_v2::SearchServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use retail_v2::SearchServiceLimitedTimeRetryPolicy directly.

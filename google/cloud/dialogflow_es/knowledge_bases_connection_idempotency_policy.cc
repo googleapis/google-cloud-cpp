@@ -26,55 +26,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-KnowledgeBasesConnectionIdempotencyPolicy::~KnowledgeBasesConnectionIdempotencyPolicy() = default;
+KnowledgeBasesConnectionIdempotencyPolicy::
+    ~KnowledgeBasesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy>
 KnowledgeBasesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<KnowledgeBasesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListKnowledgeBases(google::cloud::dialogflow::v2::ListKnowledgeBasesRequest) {  // NOLINT
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListKnowledgeBases(
+    google::cloud::dialogflow::v2::ListKnowledgeBasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::GetKnowledgeBase(google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const&) {
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::GetKnowledgeBase(
+    google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::CreateKnowledgeBase(google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&) {
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::CreateKnowledgeBase(
+    google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::DeleteKnowledgeBase(google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&) {
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::DeleteKnowledgeBase(
+    google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::UpdateKnowledgeBase(google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&) {
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::UpdateKnowledgeBase(
+    google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency KnowledgeBasesConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency KnowledgeBasesConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy>
-    MakeDefaultKnowledgeBasesConnectionIdempotencyPolicy() {
+MakeDefaultKnowledgeBasesConnectionIdempotencyPolicy() {
   return std::make_unique<KnowledgeBasesConnectionIdempotencyPolicy>();
 }
 

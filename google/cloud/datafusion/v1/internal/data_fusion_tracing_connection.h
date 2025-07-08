@@ -30,67 +30,72 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class DataFusionTracingConnection
-    : public datafusion_v1::DataFusionConnection {
+class DataFusionTracingConnection : public datafusion_v1::DataFusionConnection {
  public:
   ~DataFusionTracingConnection() override = default;
 
   explicit DataFusionTracingConnection(
-    std::shared_ptr<datafusion_v1::DataFusionConnection> child);
+      std::shared_ptr<datafusion_v1::DataFusionConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::datafusion::v1::Version>
-  ListAvailableVersions(google::cloud::datafusion::v1::ListAvailableVersionsRequest request) override;
+  StreamRange<google::cloud::datafusion::v1::Version> ListAvailableVersions(
+      google::cloud::datafusion::v1::ListAvailableVersionsRequest request)
+      override;
 
-  StreamRange<google::cloud::datafusion::v1::Instance>
-  ListInstances(google::cloud::datafusion::v1::ListInstancesRequest request) override;
+  StreamRange<google::cloud::datafusion::v1::Instance> ListInstances(
+      google::cloud::datafusion::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::datafusion::v1::Instance>
-  GetInstance(google::cloud::datafusion::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
+      google::cloud::datafusion::v1::GetInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance(google::cloud::datafusion::v1::CreateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag,
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance(
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const& request) override;
+  DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag,
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(
+  DeleteInstance(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance(google::cloud::datafusion::v1::UpdateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag,
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RestartInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  RestartInstance(google::cloud::datafusion::v1::RestartInstanceRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  RestartInstance(NoAwaitTag,
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  RestartInstance(
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
       google::longrunning::Operation const& operation) override;
 
  private:

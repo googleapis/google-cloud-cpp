@@ -36,24 +36,28 @@ class ContainerAnalysisTracingConnection
   ~ContainerAnalysisTracingConnection() override = default;
 
   explicit ContainerAnalysisTracingConnection(
-    std::shared_ptr<containeranalysis_v1::ContainerAnalysisConnection> child);
+      std::shared_ptr<containeranalysis_v1::ContainerAnalysisConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-  GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) override;
+  StatusOr<
+      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+  GetVulnerabilityOccurrencesSummary(
+      google::devtools::containeranalysis::v1::
+          GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
   StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
-  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) override;
+  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) override;
 
  private:
   std::shared_ptr<containeranalysis_v1::ContainerAnalysisConnection> child_;

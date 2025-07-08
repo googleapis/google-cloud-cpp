@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_TOPIC_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_TOPIC_ADMIN_CONNECTION_H
 
+#include "google/cloud/pubsub/admin/internal/topic_admin_retry_traits.h"
+#include "google/cloud/pubsub/admin/topic_admin_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsub/admin/internal/topic_admin_retry_traits.h"
-#include "google/cloud/pubsub/admin/topic_admin_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -63,14 +63,14 @@ class TopicAdminLimitedErrorCountRetryPolicy : public TopicAdminRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit TopicAdminLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TopicAdminLimitedErrorCountRetryPolicy(
       TopicAdminLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TopicAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TopicAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TopicAdminLimitedErrorCountRetryPolicy(
       TopicAdminLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TopicAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TopicAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +90,9 @@ class TopicAdminLimitedErrorCountRetryPolicy : public TopicAdminRetryPolicy {
   using BaseType = TopicAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<pubsub_admin_internal::TopicAdminRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      pubsub_admin_internal::TopicAdminRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +130,14 @@ class TopicAdminLimitedTimeRetryPolicy : public TopicAdminRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TopicAdminLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TopicAdminLimitedTimeRetryPolicy(TopicAdminLimitedTimeRetryPolicy&& rhs) noexcept
-    : TopicAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TopicAdminLimitedTimeRetryPolicy(TopicAdminLimitedTimeRetryPolicy const& rhs) noexcept
-    : TopicAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TopicAdminLimitedTimeRetryPolicy(
+      TopicAdminLimitedTimeRetryPolicy&& rhs) noexcept
+      : TopicAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TopicAdminLimitedTimeRetryPolicy(
+      TopicAdminLimitedTimeRetryPolicy const& rhs) noexcept
+      : TopicAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,7 +159,9 @@ class TopicAdminLimitedTimeRetryPolicy : public TopicAdminRetryPolicy {
   using BaseType = TopicAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<pubsub_admin_internal::TopicAdminRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      pubsub_admin_internal::TopicAdminRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,35 +182,36 @@ class TopicAdminConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::pubsub::v1::Topic>
-  CreateTopic(google::pubsub::v1::Topic const& request);
+  virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(
+      google::pubsub::v1::Topic const& request);
 
-  virtual StatusOr<google::pubsub::v1::Topic>
-  UpdateTopic(google::pubsub::v1::UpdateTopicRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Topic> UpdateTopic(
+      google::pubsub::v1::UpdateTopicRequest const& request);
 
-  virtual StatusOr<google::pubsub::v1::Topic>
-  GetTopic(google::pubsub::v1::GetTopicRequest const& request);
+  virtual StatusOr<google::pubsub::v1::Topic> GetTopic(
+      google::pubsub::v1::GetTopicRequest const& request);
 
-  virtual StreamRange<google::pubsub::v1::Topic>
-  ListTopics(google::pubsub::v1::ListTopicsRequest request);
+  virtual StreamRange<google::pubsub::v1::Topic> ListTopics(
+      google::pubsub::v1::ListTopicsRequest request);
 
-  virtual StreamRange<std::string>
-  ListTopicSubscriptions(google::pubsub::v1::ListTopicSubscriptionsRequest request);
+  virtual StreamRange<std::string> ListTopicSubscriptions(
+      google::pubsub::v1::ListTopicSubscriptionsRequest request);
 
-  virtual StreamRange<std::string>
-  ListTopicSnapshots(google::pubsub::v1::ListTopicSnapshotsRequest request);
+  virtual StreamRange<std::string> ListTopicSnapshots(
+      google::pubsub::v1::ListTopicSnapshotsRequest request);
 
-  virtual Status
-  DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request);
+  virtual Status DeleteTopic(
+      google::pubsub::v1::DeleteTopicRequest const& request);
 
   virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-  DetachSubscription(google::pubsub::v1::DetachSubscriptionRequest const& request);
+  DetachSubscription(
+      google::pubsub::v1::DetachSubscriptionRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);

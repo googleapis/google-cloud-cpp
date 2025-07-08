@@ -32,54 +32,67 @@ namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<appengine_v1::AuthorizedCertificatesRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()->clone();
+std::unique_ptr<appengine_v1::AuthorizedCertificatesRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<appengine_v1::AuthorizedCertificatesBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<appengine_v1::AuthorizedCertificatesBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<appengine_v1::
+               AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 AuthorizedCertificatesConnectionImpl::AuthorizedCertificatesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<appengine_v1_internal::AuthorizedCertificatesStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AuthorizedCertificatesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), AuthorizedCertificatesConnection::options())) {}
 
 StreamRange<google::appengine::v1::AuthorizedCertificate>
-AuthorizedCertificatesConnectionImpl::ListAuthorizedCertificates(google::appengine::v1::ListAuthorizedCertificatesRequest request) {
+AuthorizedCertificatesConnectionImpl::ListAuthorizedCertificates(
+    google::appengine::v1::ListAuthorizedCertificatesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListAuthorizedCertificates(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListAuthorizedCertificates(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::appengine::v1::AuthorizedCertificate>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::appengine::v1::AuthorizedCertificate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<appengine_v1::AuthorizedCertificatesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<appengine_v1::AuthorizedCertificatesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::appengine::v1::ListAuthorizedCertificatesRequest const& r) {
+          Options const& options,
+          google::appengine::v1::ListAuthorizedCertificatesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
-              return stub->ListAuthorizedCertificates(context, options, request);
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::appengine::v1::ListAuthorizedCertificatesRequest const&
+                    request) {
+              return stub->ListAuthorizedCertificates(context, options,
+                                                      request);
             },
             options, r, function_name);
       },
       [](google::appengine::v1::ListAuthorizedCertificatesResponse r) {
-        std::vector<google::appengine::v1::AuthorizedCertificate> result(r.certificates().size());
+        std::vector<google::appengine::v1::AuthorizedCertificate> result(
+            r.certificates().size());
         auto& messages = *r.mutable_certificates();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -87,52 +100,59 @@ AuthorizedCertificatesConnectionImpl::ListAuthorizedCertificates(google::appengi
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
-AuthorizedCertificatesConnectionImpl::GetAuthorizedCertificate(google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
+AuthorizedCertificatesConnectionImpl::GetAuthorizedCertificate(
+    google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAuthorizedCertificate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
+             google::appengine::v1::GetAuthorizedCertificateRequest const&
+                 request) {
         return stub_->GetAuthorizedCertificate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
-AuthorizedCertificatesConnectionImpl::CreateAuthorizedCertificate(google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
+AuthorizedCertificatesConnectionImpl::CreateAuthorizedCertificate(
+    google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAuthorizedCertificate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
+             google::appengine::v1::CreateAuthorizedCertificateRequest const&
+                 request) {
         return stub_->CreateAuthorizedCertificate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
-AuthorizedCertificatesConnectionImpl::UpdateAuthorizedCertificate(google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
+AuthorizedCertificatesConnectionImpl::UpdateAuthorizedCertificate(
+    google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAuthorizedCertificate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
+             google::appengine::v1::UpdateAuthorizedCertificateRequest const&
+                 request) {
         return stub_->UpdateAuthorizedCertificate(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-AuthorizedCertificatesConnectionImpl::DeleteAuthorizedCertificate(google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
+Status AuthorizedCertificatesConnectionImpl::DeleteAuthorizedCertificate(
+    google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAuthorizedCertificate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
+             google::appengine::v1::DeleteAuthorizedCertificateRequest const&
+                 request) {
         return stub_->DeleteAuthorizedCertificate(context, options, request);
       },
       *current, request, __func__);

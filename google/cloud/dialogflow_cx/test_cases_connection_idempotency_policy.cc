@@ -26,83 +26,101 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TestCasesConnectionIdempotencyPolicy::~TestCasesConnectionIdempotencyPolicy() = default;
+TestCasesConnectionIdempotencyPolicy::~TestCasesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<TestCasesConnectionIdempotencyPolicy>
 TestCasesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TestCasesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCases(google::cloud::dialogflow::cx::v3::ListTestCasesRequest) {  // NOLINT
+Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCases(
+    google::cloud::dialogflow::cx::v3::ListTestCasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::BatchDeleteTestCases(google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::BatchDeleteTestCases(
+    google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::GetTestCase(google::cloud::dialogflow::cx::v3::GetTestCaseRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::GetTestCase(
+    google::cloud::dialogflow::cx::v3::GetTestCaseRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::CreateTestCase(google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::CreateTestCase(
+    google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::UpdateTestCase(google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::UpdateTestCase(
+    google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::RunTestCase(google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::RunTestCase(
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::BatchRunTestCases(google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::BatchRunTestCases(
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::CalculateCoverage(google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::CalculateCoverage(
+    google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::ImportTestCases(google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::ImportTestCases(
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::ExportTestCases(google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::ExportTestCases(
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCaseResults(google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest) {  // NOLINT
+Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCaseResults(
+    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::GetTestCaseResult(google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::GetTestCaseResult(
+    google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency TestCasesConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency TestCasesConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TestCasesConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency TestCasesConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TestCasesConnectionIdempotencyPolicy>
-    MakeDefaultTestCasesConnectionIdempotencyPolicy() {
+MakeDefaultTestCasesConnectionIdempotencyPolicy() {
   return std::make_unique<TestCasesConnectionIdempotencyPolicy>();
 }
 

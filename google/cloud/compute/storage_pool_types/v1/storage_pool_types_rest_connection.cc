@@ -17,12 +17,12 @@
 // source: google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto
 
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_option_defaults.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_rest_connection_impl.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_rest_stub_factory.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_tracing_connection.h"
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,19 +36,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<StoragePoolTypesConnection> MakeStoragePoolTypesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      StoragePoolTypesPolicyOptionList>(options, __func__);
-  options = compute_storage_pool_types_v1_internal::StoragePoolTypesDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, StoragePoolTypesPolicyOptionList>(
+      options, __func__);
+  options =
+      compute_storage_pool_types_v1_internal::StoragePoolTypesDefaultOptions(
+          std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_storage_pool_types_v1_internal::CreateDefaultStoragePoolTypesRestStub(
-      options);
-  return compute_storage_pool_types_v1_internal::MakeStoragePoolTypesTracingConnection(
-      std::make_shared<
-          compute_storage_pool_types_v1_internal::StoragePoolTypesRestConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_storage_pool_types_v1_internal::
+      CreateDefaultStoragePoolTypesRestStub(options);
+  return compute_storage_pool_types_v1_internal::
+      MakeStoragePoolTypesTracingConnection(
+          std::make_shared<compute_storage_pool_types_v1_internal::
+                               StoragePoolTypesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

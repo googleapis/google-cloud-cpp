@@ -33,15 +33,19 @@ EventServiceTracingConnection::EventServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
-EventServiceTracingConnection::CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const& request) {
-  auto span = internal::MakeSpan("talent_v4::EventServiceConnection::CreateClientEvent");
+EventServiceTracingConnection::CreateClientEvent(
+    google::cloud::talent::v4::CreateClientEventRequest const& request) {
+  auto span = internal::MakeSpan(
+      "talent_v4::EventServiceConnection::CreateClientEvent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateClientEvent(request));
 }
 
 StatusOr<google::longrunning::Operation>
-EventServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("talent_v4::EventServiceConnection::GetOperation");
+EventServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("talent_v4::EventServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

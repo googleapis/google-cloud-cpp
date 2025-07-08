@@ -34,14 +34,16 @@ class SystemPolicyV1ConnectionIdempotencyPolicy {
   virtual ~SystemPolicyV1ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  GetSystemPolicy(google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetSystemPolicy(
+      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+          request);
 };
 
 std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
-    MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy();
+MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_v1

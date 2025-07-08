@@ -31,45 +31,45 @@ PolicyTagManagerSerializationAuth::PolicyTagManagerSerializationAuth(
     std::shared_ptr<PolicyTagManagerSerializationStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::datacatalog::v1::Taxonomy> PolicyTagManagerSerializationAuth::ReplaceTaxonomy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Taxonomy>
+PolicyTagManagerSerializationAuth::ReplaceTaxonomy(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReplaceTaxonomy(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse> PolicyTagManagerSerializationAuth::ImportTaxonomies(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
+PolicyTagManagerSerializationAuth::ImportTaxonomies(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ImportTaxonomies(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse> PolicyTagManagerSerializationAuth::ExportTaxonomies(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
+PolicyTagManagerSerializationAuth::ExportTaxonomies(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportTaxonomies(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> PolicyTagManagerSerializationAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+PolicyTagManagerSerializationAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> PolicyTagManagerSerializationAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+PolicyTagManagerSerializationAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +77,7 @@ StatusOr<google::longrunning::Operation> PolicyTagManagerSerializationAuth::GetO
 }
 
 Status PolicyTagManagerSerializationAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +85,7 @@ Status PolicyTagManagerSerializationAuth::DeleteOperation(
 }
 
 Status PolicyTagManagerSerializationAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

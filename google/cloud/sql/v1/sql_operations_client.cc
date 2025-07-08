@@ -28,24 +28,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlOperationsServiceClient::SqlOperationsServiceClient(
     std::shared_ptr<SqlOperationsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SqlOperationsServiceClient::~SqlOperationsServiceClient() = default;
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlOperationsServiceClient::Get(google::cloud::sql::v1::SqlOperationsGetRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlOperationsServiceClient::Get(
+    google::cloud::sql::v1::SqlOperationsGetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Get(request);
 }
 
-StreamRange<google::cloud::sql::v1::Operation>
-SqlOperationsServiceClient::List(google::cloud::sql::v1::SqlOperationsListRequest request, Options opts) {
+StreamRange<google::cloud::sql::v1::Operation> SqlOperationsServiceClient::List(
+    google::cloud::sql::v1::SqlOperationsListRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->List(std::move(request));
 }
 
-Status
-SqlOperationsServiceClient::Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const& request, Options opts) {
+Status SqlOperationsServiceClient::Cancel(
+    google::cloud::sql::v1::SqlOperationsCancelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Cancel(request);
 }

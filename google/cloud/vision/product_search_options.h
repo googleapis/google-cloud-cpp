@@ -34,8 +34,10 @@ using ::google::cloud::vision_v1::ProductSearchPollingPolicyOption;
 /// @deprecated Use vision_v1::ProductSearchBackoffPolicyOption directly.
 using ::google::cloud::vision_v1::ProductSearchBackoffPolicyOption;
 
-/// @deprecated Use vision_v1::ProductSearchConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::vision_v1::ProductSearchConnectionIdempotencyPolicyOption;
+/// @deprecated Use vision_v1::ProductSearchConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::vision_v1::
+    ProductSearchConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use vision_v1::ProductSearchPolicyOptionList directly.
 using ::google::cloud::vision_v1::ProductSearchPolicyOptionList;

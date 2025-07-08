@@ -36,27 +36,37 @@ class DocumentSchemaServiceTracingConnection
   ~DocumentSchemaServiceTracingConnection() override = default;
 
   explicit DocumentSchemaServiceTracingConnection(
-    std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection> child);
+      std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  CreateDocumentSchema(google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) override;
+  CreateDocumentSchema(
+      google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
+          request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  UpdateDocumentSchema(google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) override;
+  UpdateDocumentSchema(
+      google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
+          request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  GetDocumentSchema(google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) override;
+  GetDocumentSchema(
+      google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
+          request) override;
 
-  Status
-  DeleteDocumentSchema(google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) override;
+  Status DeleteDocumentSchema(
+      google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
+          request) override;
 
   StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
-  ListDocumentSchemas(google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request) override;
+  ListDocumentSchemas(
+      google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection> child_;

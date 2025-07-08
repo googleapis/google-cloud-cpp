@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetastoreServiceClient::MetastoreServiceClient(
     std::shared_ptr<MetastoreServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MetastoreServiceClient::~MetastoreServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceClient::CreateCatalog(std::string const& parent, google::cloud::bigquery::biglake::v1::Catalog const& catalog, std::string const& catalog_id, Options opts) {
+MetastoreServiceClient::CreateCatalog(
+    std::string const& parent,
+    google::cloud::bigquery::biglake::v1::Catalog const& catalog,
+    std::string const& catalog_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::biglake::v1::CreateCatalogRequest request;
   request.set_parent(parent);
@@ -43,7 +46,9 @@ MetastoreServiceClient::CreateCatalog(std::string const& parent, google::cloud::
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceClient::CreateCatalog(google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request, Options opts) {
+MetastoreServiceClient::CreateCatalog(
+    google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCatalog(request);
 }
@@ -57,7 +62,9 @@ MetastoreServiceClient::DeleteCatalog(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceClient::DeleteCatalog(google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request, Options opts) {
+MetastoreServiceClient::DeleteCatalog(
+    google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCatalog(request);
 }
@@ -71,7 +78,9 @@ MetastoreServiceClient::GetCatalog(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceClient::GetCatalog(google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request, Options opts) {
+MetastoreServiceClient::GetCatalog(
+    google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCatalog(request);
 }
@@ -85,13 +94,18 @@ MetastoreServiceClient::ListCatalogs(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::bigquery::biglake::v1::Catalog>
-MetastoreServiceClient::ListCatalogs(google::cloud::bigquery::biglake::v1::ListCatalogsRequest request, Options opts) {
+MetastoreServiceClient::ListCatalogs(
+    google::cloud::bigquery::biglake::v1::ListCatalogsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCatalogs(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceClient::CreateDatabase(std::string const& parent, google::cloud::bigquery::biglake::v1::Database const& database, std::string const& database_id, Options opts) {
+MetastoreServiceClient::CreateDatabase(
+    std::string const& parent,
+    google::cloud::bigquery::biglake::v1::Database const& database,
+    std::string const& database_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::biglake::v1::CreateDatabaseRequest request;
   request.set_parent(parent);
@@ -101,7 +115,9 @@ MetastoreServiceClient::CreateDatabase(std::string const& parent, google::cloud:
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceClient::CreateDatabase(google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request, Options opts) {
+MetastoreServiceClient::CreateDatabase(
+    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDatabase(request);
 }
@@ -115,13 +131,17 @@ MetastoreServiceClient::DeleteDatabase(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceClient::DeleteDatabase(google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request, Options opts) {
+MetastoreServiceClient::DeleteDatabase(
+    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDatabase(request);
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceClient::UpdateDatabase(google::cloud::bigquery::biglake::v1::Database const& database, google::protobuf::FieldMask const& update_mask, Options opts) {
+MetastoreServiceClient::UpdateDatabase(
+    google::cloud::bigquery::biglake::v1::Database const& database,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest request;
   *request.mutable_database() = database;
@@ -130,7 +150,9 @@ MetastoreServiceClient::UpdateDatabase(google::cloud::bigquery::biglake::v1::Dat
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceClient::UpdateDatabase(google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request, Options opts) {
+MetastoreServiceClient::UpdateDatabase(
+    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDatabase(request);
 }
@@ -144,7 +166,9 @@ MetastoreServiceClient::GetDatabase(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceClient::GetDatabase(google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request, Options opts) {
+MetastoreServiceClient::GetDatabase(
+    google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDatabase(request);
 }
@@ -158,13 +182,18 @@ MetastoreServiceClient::ListDatabases(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::bigquery::biglake::v1::Database>
-MetastoreServiceClient::ListDatabases(google::cloud::bigquery::biglake::v1::ListDatabasesRequest request, Options opts) {
+MetastoreServiceClient::ListDatabases(
+    google::cloud::bigquery::biglake::v1::ListDatabasesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatabases(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::CreateTable(std::string const& parent, google::cloud::bigquery::biglake::v1::Table const& table, std::string const& table_id, Options opts) {
+MetastoreServiceClient::CreateTable(
+    std::string const& parent,
+    google::cloud::bigquery::biglake::v1::Table const& table,
+    std::string const& table_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::biglake::v1::CreateTableRequest request;
   request.set_parent(parent);
@@ -174,7 +203,9 @@ MetastoreServiceClient::CreateTable(std::string const& parent, google::cloud::bi
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::CreateTable(google::cloud::bigquery::biglake::v1::CreateTableRequest const& request, Options opts) {
+MetastoreServiceClient::CreateTable(
+    google::cloud::bigquery::biglake::v1::CreateTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTable(request);
 }
@@ -188,13 +219,17 @@ MetastoreServiceClient::DeleteTable(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::DeleteTable(google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request, Options opts) {
+MetastoreServiceClient::DeleteTable(
+    google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTable(request);
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::UpdateTable(google::cloud::bigquery::biglake::v1::Table const& table, google::protobuf::FieldMask const& update_mask, Options opts) {
+MetastoreServiceClient::UpdateTable(
+    google::cloud::bigquery::biglake::v1::Table const& table,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::biglake::v1::UpdateTableRequest request;
   *request.mutable_table() = table;
@@ -203,13 +238,16 @@ MetastoreServiceClient::UpdateTable(google::cloud::bigquery::biglake::v1::Table 
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::UpdateTable(google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request, Options opts) {
+MetastoreServiceClient::UpdateTable(
+    google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTable(request);
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::RenameTable(std::string const& name, std::string const& new_name, Options opts) {
+MetastoreServiceClient::RenameTable(std::string const& name,
+                                    std::string const& new_name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::biglake::v1::RenameTableRequest request;
   request.set_name(name);
@@ -218,7 +256,9 @@ MetastoreServiceClient::RenameTable(std::string const& name, std::string const& 
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::RenameTable(google::cloud::bigquery::biglake::v1::RenameTableRequest const& request, Options opts) {
+MetastoreServiceClient::RenameTable(
+    google::cloud::bigquery::biglake::v1::RenameTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenameTable(request);
 }
@@ -232,7 +272,9 @@ MetastoreServiceClient::GetTable(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::GetTable(google::cloud::bigquery::biglake::v1::GetTableRequest const& request, Options opts) {
+MetastoreServiceClient::GetTable(
+    google::cloud::bigquery::biglake::v1::GetTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTable(request);
 }
@@ -246,7 +288,9 @@ MetastoreServiceClient::ListTables(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::bigquery::biglake::v1::Table>
-MetastoreServiceClient::ListTables(google::cloud::bigquery::biglake::v1::ListTablesRequest request, Options opts) {
+MetastoreServiceClient::ListTables(
+    google::cloud::bigquery::biglake::v1::ListTablesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTables(std::move(request));
 }

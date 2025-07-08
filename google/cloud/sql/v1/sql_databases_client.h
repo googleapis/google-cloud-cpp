@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_DATABASES_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_DATABASES_CLIENT_H
 
+#include "google/cloud/sql/v1/sql_databases_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/sql/v1/sql_databases_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,23 +61,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlDatabasesServiceClient {
  public:
-  explicit SqlDatabasesServiceClient(std::shared_ptr<SqlDatabasesServiceConnection> connection, Options opts = {});
+  explicit SqlDatabasesServiceClient(
+      std::shared_ptr<SqlDatabasesServiceConnection> connection,
+      Options opts = {});
   ~SqlDatabasesServiceClient();
 
   ///@{
   /// @name Copy and move support
   SqlDatabasesServiceClient(SqlDatabasesServiceClient const&) = default;
-  SqlDatabasesServiceClient& operator=(SqlDatabasesServiceClient const&) = default;
+  SqlDatabasesServiceClient& operator=(SqlDatabasesServiceClient const&) =
+      default;
   SqlDatabasesServiceClient(SqlDatabasesServiceClient&&) = default;
   SqlDatabasesServiceClient& operator=(SqlDatabasesServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlDatabasesServiceClient const& a, SqlDatabasesServiceClient const& b) {
+  friend bool operator==(SqlDatabasesServiceClient const& a,
+                         SqlDatabasesServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlDatabasesServiceClient const& a, SqlDatabasesServiceClient const& b) {
+  friend bool operator!=(SqlDatabasesServiceClient const& a,
+                         SqlDatabasesServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +114,9 @@ class SqlDatabasesServiceClient {
   /// [google.cloud.sql.v1.SqlDatabasesDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L90}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation>
-  Delete(google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation> Delete(
+      google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -140,8 +146,9 @@ class SqlDatabasesServiceClient {
   /// [google.cloud.sql.v1.SqlDatabasesGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Database>
-  Get(google::cloud::sql::v1::SqlDatabasesGetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::sql::v1::Database> Get(
+      google::cloud::sql::v1::SqlDatabasesGetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -173,8 +180,9 @@ class SqlDatabasesServiceClient {
   /// [google.cloud.sql.v1.SqlDatabasesInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L114}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation>
-  Insert(google::cloud::sql::v1::SqlDatabasesInsertRequest const& request, Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation> Insert(
+      google::cloud::sql::v1::SqlDatabasesInsertRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -203,8 +211,9 @@ class SqlDatabasesServiceClient {
   /// [google.cloud.sql.v1.SqlDatabasesListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L125}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::DatabasesListResponse>
-  List(google::cloud::sql::v1::SqlDatabasesListRequest const& request, Options opts = {});
+  StatusOr<google::cloud::sql::v1::DatabasesListResponse> List(
+      google::cloud::sql::v1::SqlDatabasesListRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -234,8 +243,9 @@ class SqlDatabasesServiceClient {
   /// [google.cloud.sql.v1.SqlDatabasesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L134}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation>
-  Patch(google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation> Patch(
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -265,8 +275,9 @@ class SqlDatabasesServiceClient {
   /// [google.cloud.sql.v1.SqlDatabasesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_databases.proto#L134}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation>
-  Update(google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation> Update(
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SqlDatabasesServiceConnection> connection_;

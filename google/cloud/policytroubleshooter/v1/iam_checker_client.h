@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_IAM_CHECKER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_IAM_CHECKER_CLIENT_H
 
+#include "google/cloud/policytroubleshooter/v1/iam_checker_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
-#include "google/cloud/policytroubleshooter/v1/iam_checker_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -36,7 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// IAM Policy Troubleshooter service.
 ///
-/// This service helps you troubleshoot access issues for Google Cloud resources.
+/// This service helps you troubleshoot access issues for Google Cloud
+/// resources.
 ///
 /// @par Equality
 ///
@@ -63,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class IamCheckerClient {
  public:
-  explicit IamCheckerClient(std::shared_ptr<IamCheckerConnection> connection, Options opts = {});
+  explicit IamCheckerClient(std::shared_ptr<IamCheckerConnection> connection,
+                            Options opts = {});
   ~IamCheckerClient();
 
   ///@{
@@ -113,8 +115,11 @@ class IamCheckerClient {
   /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyResponse]: @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L64}
   ///
   // clang-format on
-  StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::
+                            TroubleshootIamPolicyRequest const& request,
+                        Options opts = {});
 
  private:
   std::shared_ptr<IamCheckerConnection> connection_;

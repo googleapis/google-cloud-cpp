@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/securitycenter/v2/securitycenter_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,236 +38,255 @@ class SecurityCenterStub {
  public:
   virtual ~SecurityCenterStub() = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsResponse> BatchCreateResourceValueConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::
+                       BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::
+          BatchCreateResourceValueConfigsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncBulkMuteFindings(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBulkMuteFindings(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) = 0;
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport> CreateBigQueryExport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateBigQueryExportRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
+  CreateBigQueryExport(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::Finding> CreateFinding(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateFindingRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateFindingRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig> CreateMuteConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig>
+  CreateMuteConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateMuteConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig> CreateNotificationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateNotificationConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
+  CreateNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateNotificationConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::Source> CreateSource(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateSourceRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateSourceRequest const&
+          request) = 0;
 
   virtual Status DeleteBigQueryExport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const&
+          request) = 0;
 
   virtual Status DeleteMuteConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::DeleteMuteConfigRequest const&
+          request) = 0;
 
   virtual Status DeleteNotificationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const&
+          request) = 0;
 
   virtual Status DeleteResourceValueConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport> GetBigQueryExport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetBigQueryExportRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
+  GetBigQueryExport(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetBigQueryExportRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::Simulation> GetSimulation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetSimulationRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetSimulationRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ValuedResource> GetValuedResource(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetValuedResourceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::ValuedResource>
+  GetValuedResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetValuedResourceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig> GetMuteConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetMuteConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetMuteConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig> GetNotificationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetNotificationConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
+  GetNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetNotificationConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig> GetResourceValueConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetResourceValueConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
+  GetResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetResourceValueConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::Source> GetSource(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycenter::v2::GetSourceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::GroupFindingsResponse> GroupFindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GroupFindingsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::GroupFindingsResponse>
+  GroupFindings(grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v2::GroupFindingsRequest const&
+                    request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ListAttackPathsResponse> ListAttackPaths(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListAttackPathsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::ListAttackPathsResponse>
+  ListAttackPaths(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListAttackPathsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ListBigQueryExportsResponse> ListBigQueryExports(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListBigQueryExportsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::securitycenter::v2::ListBigQueryExportsResponse>
+  ListBigQueryExports(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListBigQueryExportsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ListFindingsResponse> ListFindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListFindingsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::ListFindingsResponse>
+  ListFindings(grpc::ClientContext& context, Options const& options,
+               google::cloud::securitycenter::v2::ListFindingsRequest const&
+                   request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ListMuteConfigsResponse> ListMuteConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListMuteConfigsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::ListMuteConfigsResponse>
+  ListMuteConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListMuteConfigsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ListNotificationConfigsResponse> ListNotificationConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListNotificationConfigsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::securitycenter::v2::ListNotificationConfigsResponse>
+  ListNotificationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListNotificationConfigsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ListResourceValueConfigsResponse> ListResourceValueConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListResourceValueConfigsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::securitycenter::v2::ListResourceValueConfigsResponse>
+  ListResourceValueConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListResourceValueConfigsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ListSourcesResponse> ListSources(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::securitycenter::v2::ListSourcesResponse>
+  ListSources(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycenter::v2::ListSourcesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ListValuedResourcesResponse> ListValuedResources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListValuedResourcesRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::securitycenter::v2::ListValuedResourcesResponse>
+  ListValuedResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListValuedResourcesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::Finding> SetFindingState(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::SetFindingStateRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::SetFindingStateRequest const&
+          request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::Finding> SetMute(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycenter::v2::SetMuteRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport> UpdateBigQueryExport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
+  UpdateBigQueryExport(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ExternalSystem> UpdateExternalSystem(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateExternalSystemRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
+  UpdateExternalSystem(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateExternalSystemRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::Finding> UpdateFinding(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateFindingRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateFindingRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig> UpdateMuteConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::MuteConfig>
+  UpdateMuteConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateMuteConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig> UpdateNotificationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
+  UpdateNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig> UpdateResourceValueConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
+  UpdateResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::securitycenter::v2::SecurityMarks> UpdateSecurityMarks(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const& request) = 0;
+  virtual StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
+  UpdateSecurityMarks(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::securitycenter::v2::Source> UpdateSource(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateSourceRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateSourceRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -280,235 +299,249 @@ class SecurityCenterStub {
 class DefaultSecurityCenterStub : public SecurityCenterStub {
  public:
   DefaultSecurityCenterStub(
-      std::unique_ptr<google::cloud::securitycenter::v2::SecurityCenter::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::cloud::securitycenter::v2::SecurityCenter::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsResponse> BatchCreateResourceValueConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::
+               BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::
+          BatchCreateResourceValueConfigsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBulkMuteFindings(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) override;
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::securitycenter::v2::BigQueryExport> CreateBigQueryExport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateBigQueryExportRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
+  CreateBigQueryExport(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::Finding> CreateFinding(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateFindingRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateFindingRequest const& request)
+      override;
 
   StatusOr<google::cloud::securitycenter::v2::MuteConfig> CreateMuteConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::securitycenter::v2::NotificationConfig> CreateNotificationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateNotificationConfigRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
+  CreateNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateNotificationConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::Source> CreateSource(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::CreateSourceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::CreateSourceRequest const& request)
+      override;
 
   Status DeleteBigQueryExport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const&
+          request) override;
 
   Status DeleteMuteConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request)
+      override;
 
   Status DeleteNotificationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const&
+          request) override;
 
   Status DeleteResourceValueConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport> GetBigQueryExport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetBigQueryExportRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetBigQueryExportRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::Simulation> GetSimulation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetSimulationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetSimulationRequest const& request)
+      override;
 
   StatusOr<google::cloud::securitycenter::v2::ValuedResource> GetValuedResource(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetValuedResourceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetValuedResourceRequest const&
+          request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::MuteConfig> GetMuteConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetMuteConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetMuteConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::securitycenter::v2::NotificationConfig> GetNotificationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetNotificationConfigRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
+  GetNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetNotificationConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig> GetResourceValueConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetResourceValueConfigRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
+  GetResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetResourceValueConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::Source> GetSource(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GetSourceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::GetSourceRequest const& request)
+      override;
 
-  StatusOr<google::cloud::securitycenter::v2::GroupFindingsResponse> GroupFindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::GroupFindingsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::GroupFindingsResponse>
+  GroupFindings(grpc::ClientContext& context, Options const& options,
+                google::cloud::securitycenter::v2::GroupFindingsRequest const&
+                    request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::ListAttackPathsResponse> ListAttackPaths(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListAttackPathsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ListAttackPathsResponse>
+  ListAttackPaths(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListAttackPathsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::securitycenter::v2::ListBigQueryExportsResponse> ListBigQueryExports(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListBigQueryExportsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ListBigQueryExportsResponse>
+  ListBigQueryExports(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListBigQueryExportsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::ListFindingsResponse> ListFindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListFindingsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ListFindingsResponse>
+  ListFindings(grpc::ClientContext& context, Options const& options,
+               google::cloud::securitycenter::v2::ListFindingsRequest const&
+                   request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::ListMuteConfigsResponse> ListMuteConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListMuteConfigsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ListMuteConfigsResponse>
+  ListMuteConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListMuteConfigsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::securitycenter::v2::ListNotificationConfigsResponse> ListNotificationConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListNotificationConfigsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ListNotificationConfigsResponse>
+  ListNotificationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListNotificationConfigsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::ListResourceValueConfigsResponse> ListResourceValueConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListResourceValueConfigsRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ListResourceValueConfigsResponse>
+  ListResourceValueConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListResourceValueConfigsRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::ListSourcesResponse> ListSources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListSourcesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListSourcesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::securitycenter::v2::ListValuedResourcesResponse> ListValuedResources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::ListValuedResourcesRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ListValuedResourcesResponse>
+  ListValuedResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::ListValuedResourcesRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::Finding> SetFindingState(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::SetFindingStateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::SetFindingStateRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::securitycenter::v2::Finding> SetMute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::SetMuteRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::SetMuteRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::BigQueryExport> UpdateBigQueryExport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
+  UpdateBigQueryExport(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const&
+          request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::ExternalSystem> UpdateExternalSystem(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateExternalSystemRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
+  UpdateExternalSystem(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateExternalSystemRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::Finding> UpdateFinding(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateFindingRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateFindingRequest const& request)
+      override;
 
   StatusOr<google::cloud::securitycenter::v2::MuteConfig> UpdateMuteConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::securitycenter::v2::NotificationConfig> UpdateNotificationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
+  UpdateNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig> UpdateResourceValueConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
+  UpdateResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::securitycenter::v2::SecurityMarks> UpdateSecurityMarks(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const& request) override;
+  StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
+  UpdateSecurityMarks(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v2::Source> UpdateSource(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::securitycenter::v2::UpdateSourceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v2::UpdateSourceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -524,8 +557,11 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::securitycenter::v2::SecurityCenter::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<
+      google::cloud::securitycenter::v2::SecurityCenter::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

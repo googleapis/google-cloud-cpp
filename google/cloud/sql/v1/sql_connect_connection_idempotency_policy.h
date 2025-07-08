@@ -34,17 +34,18 @@ class SqlConnectServiceConnectionIdempotencyPolicy {
   virtual ~SqlConnectServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlConnectServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SqlConnectServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  GetConnectSettings(google::cloud::sql::v1::GetConnectSettingsRequest const& request);
+  virtual google::cloud::Idempotency GetConnectSettings(
+      google::cloud::sql::v1::GetConnectSettingsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GenerateEphemeralCert(google::cloud::sql::v1::GenerateEphemeralCertRequest const& request);
+  virtual google::cloud::Idempotency GenerateEphemeralCert(
+      google::cloud::sql::v1::GenerateEphemeralCertRequest const& request);
 };
 
 std::unique_ptr<SqlConnectServiceConnectionIdempotencyPolicy>
-    MakeDefaultSqlConnectServiceConnectionIdempotencyPolicy();
+MakeDefaultSqlConnectServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

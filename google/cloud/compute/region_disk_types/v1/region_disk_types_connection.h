@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_REGION_DISK_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_REGION_DISK_TYPES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_disk_types/v1/internal/region_disk_types_retry_traits.h"
 #include "google/cloud/compute/region_disk_types/v1/region_disk_types_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class RegionDiskTypesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionDiskTypesLimitedErrorCountRetryPolicy : public RegionDiskTypesRetryPolicy {
+class RegionDiskTypesLimitedErrorCountRetryPolicy
+    : public RegionDiskTypesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class RegionDiskTypesLimitedErrorCountRetryPolicy : public RegionDiskTypesRetryP
    *     @p maximum_failures == 0.
    */
   explicit RegionDiskTypesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RegionDiskTypesLimitedErrorCountRetryPolicy(
       RegionDiskTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RegionDiskTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RegionDiskTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RegionDiskTypesLimitedErrorCountRetryPolicy(
       RegionDiskTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RegionDiskTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RegionDiskTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class RegionDiskTypesLimitedErrorCountRetryPolicy : public RegionDiskTypesRetryP
   using BaseType = RegionDiskTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_region_disk_types_v1_internal::RegionDiskTypesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_region_disk_types_v1_internal::RegionDiskTypesRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class RegionDiskTypesLimitedErrorCountRetryPolicy : public RegionDiskTypesRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RegionDiskTypesLimitedTimeRetryPolicy : public RegionDiskTypesRetryPolicy {
+class RegionDiskTypesLimitedTimeRetryPolicy
+    : public RegionDiskTypesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class RegionDiskTypesLimitedTimeRetryPolicy : public RegionDiskTypesRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit RegionDiskTypesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RegionDiskTypesLimitedTimeRetryPolicy(RegionDiskTypesLimitedTimeRetryPolicy&& rhs) noexcept
-    : RegionDiskTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RegionDiskTypesLimitedTimeRetryPolicy(RegionDiskTypesLimitedTimeRetryPolicy const& rhs) noexcept
-    : RegionDiskTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionDiskTypesLimitedTimeRetryPolicy(
+      RegionDiskTypesLimitedTimeRetryPolicy&& rhs) noexcept
+      : RegionDiskTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RegionDiskTypesLimitedTimeRetryPolicy(
+      RegionDiskTypesLimitedTimeRetryPolicy const& rhs) noexcept
+      : RegionDiskTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class RegionDiskTypesLimitedTimeRetryPolicy : public RegionDiskTypesRetryPolicy 
   using BaseType = RegionDiskTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_region_disk_types_v1_internal::RegionDiskTypesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_region_disk_types_v1_internal::RegionDiskTypesRetryTraits>
+      impl_;
 };
 
 /**
@@ -167,7 +175,8 @@ class RegionDiskTypesLimitedTimeRetryPolicy : public RegionDiskTypesRetryPolicy 
  *
  * To create a concrete instance, see `MakeRegionDiskTypesConnection()`.
  *
- * For mocking, see `compute_region_disk_types_v1_mocks::MockRegionDiskTypesConnection`.
+ * For mocking, see
+ * `compute_region_disk_types_v1_mocks::MockRegionDiskTypesConnection`.
  */
 class RegionDiskTypesConnection {
  public:
@@ -175,11 +184,13 @@ class RegionDiskTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetDiskType(google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
+      google::cloud::cpp::compute::region_disk_types::v1::
+          GetDiskTypeRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::DiskType>
-  ListRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest request);
+  ListRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::
+                          ListRegionDiskTypesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

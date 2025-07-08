@@ -53,7 +53,8 @@ class EvaluationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EvaluationServiceLimitedErrorCountRetryPolicy : public EvaluationServiceRetryPolicy {
+class EvaluationServiceLimitedErrorCountRetryPolicy
+    : public EvaluationServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,14 @@ class EvaluationServiceLimitedErrorCountRetryPolicy : public EvaluationServiceRe
    *     @p maximum_failures == 0.
    */
   explicit EvaluationServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   EvaluationServiceLimitedErrorCountRetryPolicy(
       EvaluationServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EvaluationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EvaluationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EvaluationServiceLimitedErrorCountRetryPolicy(
       EvaluationServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EvaluationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EvaluationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +91,9 @@ class EvaluationServiceLimitedErrorCountRetryPolicy : public EvaluationServiceRe
   using BaseType = EvaluationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::EvaluationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::EvaluationServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -103,7 +106,8 @@ class EvaluationServiceLimitedErrorCountRetryPolicy : public EvaluationServiceRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EvaluationServiceLimitedTimeRetryPolicy : public EvaluationServiceRetryPolicy {
+class EvaluationServiceLimitedTimeRetryPolicy
+    : public EvaluationServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -128,12 +132,14 @@ class EvaluationServiceLimitedTimeRetryPolicy : public EvaluationServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit EvaluationServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EvaluationServiceLimitedTimeRetryPolicy(EvaluationServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : EvaluationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EvaluationServiceLimitedTimeRetryPolicy(EvaluationServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : EvaluationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EvaluationServiceLimitedTimeRetryPolicy(
+      EvaluationServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : EvaluationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EvaluationServiceLimitedTimeRetryPolicy(
+      EvaluationServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : EvaluationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,16 +161,18 @@ class EvaluationServiceLimitedTimeRetryPolicy : public EvaluationServiceRetryPol
   using BaseType = EvaluationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::EvaluationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::EvaluationServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `EvaluationServiceConnection` object for `EvaluationServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `EvaluationServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `EvaluationServiceClient`.
+ * sets in `EvaluationServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `EvaluationServiceClient`.
  *
  * To create a concrete instance, see `MakeEvaluationServiceConnection()`.
  *
@@ -177,48 +185,51 @@ class EvaluationServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::aiplatform::v1::EvaluateInstancesResponse>
-  EvaluateInstances(google::cloud::aiplatform::v1::EvaluateInstancesRequest const& request);
+  EvaluateInstances(
+      google::cloud::aiplatform::v1::EvaluateInstancesRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `EvaluationServiceConnection`.
+ * A factory function to construct an object of type
+ * `EvaluationServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of EvaluationServiceClient.
+ * should be passed as an argument to the constructor of
+ * EvaluationServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `EvaluationServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `EvaluationServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -229,8 +240,8 @@ class EvaluationServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `EvaluationServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `EvaluationServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<EvaluationServiceConnection> MakeEvaluationServiceConnection(
     std::string const& location, Options options = {});

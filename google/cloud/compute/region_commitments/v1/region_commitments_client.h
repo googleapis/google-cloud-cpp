@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionCommitmentsClient {
  public:
-  explicit RegionCommitmentsClient(std::shared_ptr<RegionCommitmentsConnection> connection, Options opts = {});
+  explicit RegionCommitmentsClient(
+      std::shared_ptr<RegionCommitmentsConnection> connection,
+      Options opts = {});
   ~RegionCommitmentsClient();
 
   ///@{
@@ -77,10 +79,12 @@ class RegionCommitmentsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionCommitmentsClient const& a, RegionCommitmentsClient const& b) {
+  friend bool operator==(RegionCommitmentsClient const& a,
+                         RegionCommitmentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionCommitmentsClient const& a, RegionCommitmentsClient const& b) {
+  friend bool operator!=(RegionCommitmentsClient const& a,
+                         RegionCommitmentsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,8 +123,10 @@ class RegionCommitmentsClient {
   /// [google.cloud.cpp.compute.v1.CommitmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L433}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>
-  AggregatedListRegionCommitments(std::string const& project, Options opts = {});
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::CommitmentsScopedList>>
+  AggregatedListRegionCommitments(std::string const& project,
+                                  Options opts = {});
 
   // clang-format off
   ///
@@ -161,8 +167,12 @@ class RegionCommitmentsClient {
   /// [google.cloud.cpp.compute.v1.CommitmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L433}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::CommitmentsScopedList>>
-  AggregatedListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest request, Options opts = {});
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::CommitmentsScopedList>>
+  AggregatedListRegionCommitments(
+      google::cloud::cpp::compute::region_commitments::v1::
+          AggregatedListRegionCommitmentsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -189,8 +199,9 @@ class RegionCommitmentsClient {
   /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Commitment>
-  GetCommitment(std::string const& project, std::string const& region, std::string const& commitment, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
+      std::string const& project, std::string const& region,
+      std::string const& commitment, Options opts = {});
 
   // clang-format off
   ///
@@ -220,8 +231,10 @@ class RegionCommitmentsClient {
   /// [google.cloud.cpp.compute.v1.Commitment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_019.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Commitment>
-  GetCommitment(google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
+      google::cloud::cpp::compute::region_commitments::v1::
+          GetCommitmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -255,8 +268,10 @@ class RegionCommitmentsClient {
   /// [google.cloud.cpp.compute.region_commitments.v1.InsertCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L199}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Commitment const& commitment_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -269,8 +284,10 @@ class RegionCommitmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertCommitment(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Commitment const& commitment_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -307,8 +324,10 @@ class RegionCommitmentsClient {
   /// [google.cloud.cpp.compute.region_commitments.v1.InsertCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L199}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -321,8 +340,11 @@ class RegionCommitmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertCommitment(NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
+      NoAwaitTag,
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -333,8 +355,9 @@ class RegionCommitmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -370,7 +393,8 @@ class RegionCommitmentsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
-  ListRegionCommitments(std::string const& project, std::string const& region, Options opts = {});
+  ListRegionCommitments(std::string const& project, std::string const& region,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -410,7 +434,9 @@ class RegionCommitmentsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
-  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest request, Options opts = {});
+  ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
+                            ListRegionCommitmentsRequest request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -447,8 +473,11 @@ class RegionCommitmentsClient {
   /// [google.cloud.cpp.compute.region_commitments.v1.UpdateCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L304}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(std::string const& project, std::string const& region, std::string const& commitment, std::string const& update_mask, google::cloud::cpp::compute::v1::Commitment const& commitment_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
+      std::string const& project, std::string const& region,
+      std::string const& commitment, std::string const& update_mask,
+      google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -461,8 +490,11 @@ class RegionCommitmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateCommitment(NoAwaitTag, std::string const& project, std::string const& region, std::string const& commitment, std::string const& update_mask, google::cloud::cpp::compute::v1::Commitment const& commitment_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& commitment, std::string const& update_mask,
+      google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -500,8 +532,10 @@ class RegionCommitmentsClient {
   /// [google.cloud.cpp.compute.region_commitments.v1.UpdateCommitmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L304}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -514,8 +548,11 @@ class RegionCommitmentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateCommitment(NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
+      NoAwaitTag,
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -526,8 +563,9 @@ class RegionCommitmentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionCommitmentsConnection> connection_;

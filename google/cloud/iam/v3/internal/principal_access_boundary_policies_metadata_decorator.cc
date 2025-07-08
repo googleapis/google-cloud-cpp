@@ -33,10 +33,11 @@ namespace cloud {
 namespace iam_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PrincipalAccessBoundaryPoliciesMetadata::PrincipalAccessBoundaryPoliciesMetadata(
-    std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> child,
-    std::multimap<std::string, std::string> fixed_metadata,
-    std::string api_client_header)
+PrincipalAccessBoundaryPoliciesMetadata::
+    PrincipalAccessBoundaryPoliciesMetadata(
+        std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> child,
+        std::multimap<std::string, std::string> fixed_metadata,
+        std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
@@ -45,98 +46,120 @@ PrincipalAccessBoundaryPoliciesMetadata::PrincipalAccessBoundaryPoliciesMetadata
               : std::move(api_client_header)) {}
 
 future<StatusOr<google::longrunning::Operation>>
-PrincipalAccessBoundaryPoliciesMetadata::AsyncCreatePrincipalAccessBoundaryPolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+PrincipalAccessBoundaryPoliciesMetadata::
+    AsyncCreatePrincipalAccessBoundaryPolicy(
+        google::cloud::CompletionQueue& cq,
+        std::shared_ptr<grpc::ClientContext> context,
+        google::cloud::internal::ImmutableOptions options,
+        google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+            request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreatePrincipalAccessBoundaryPolicy(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesMetadata::CreatePrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context,
-    Options options,
-    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePrincipalAccessBoundaryPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
 PrincipalAccessBoundaryPoliciesMetadata::GetPrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPrincipalAccessBoundaryPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-PrincipalAccessBoundaryPoliciesMetadata::AsyncUpdatePrincipalAccessBoundaryPolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("principal_access_boundary_policy.name=", internal::UrlEncode(request.principal_access_boundary_policy().name())));
+PrincipalAccessBoundaryPoliciesMetadata::
+    AsyncUpdatePrincipalAccessBoundaryPolicy(
+        google::cloud::CompletionQueue& cq,
+        std::shared_ptr<grpc::ClientContext> context,
+        google::cloud::internal::ImmutableOptions options,
+        google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+            request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("principal_access_boundary_policy.name=",
+                   internal::UrlEncode(
+                       request.principal_access_boundary_policy().name())));
   return child_->AsyncUpdatePrincipalAccessBoundaryPolicy(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesMetadata::UpdatePrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context,
-    Options options,
-    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("principal_access_boundary_policy.name=", internal::UrlEncode(request.principal_access_boundary_policy().name())));
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("principal_access_boundary_policy.name=",
+                   internal::UrlEncode(
+                       request.principal_access_boundary_policy().name())));
   return child_->UpdatePrincipalAccessBoundaryPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-PrincipalAccessBoundaryPoliciesMetadata::AsyncDeletePrincipalAccessBoundaryPolicy(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+PrincipalAccessBoundaryPoliciesMetadata::
+    AsyncDeletePrincipalAccessBoundaryPolicy(
+        google::cloud::CompletionQueue& cq,
+        std::shared_ptr<grpc::ClientContext> context,
+        google::cloud::internal::ImmutableOptions options,
+        google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+            request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePrincipalAccessBoundaryPolicy(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesMetadata::DeletePrincipalAccessBoundaryPolicy(
-    grpc::ClientContext& context,
-    Options options,
-    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePrincipalAccessBoundaryPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse>
 PrincipalAccessBoundaryPoliciesMetadata::ListPrincipalAccessBoundaryPolicies(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPrincipalAccessBoundaryPolicies(context, options, request);
 }
 
 StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse>
-PrincipalAccessBoundaryPoliciesMetadata::SearchPrincipalAccessBoundaryPolicyBindings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->SearchPrincipalAccessBoundaryPolicyBindings(context, options, request);
+PrincipalAccessBoundaryPoliciesMetadata::
+    SearchPrincipalAccessBoundaryPolicyBindings(
+        grpc::ClientContext& context, Options const& options,
+        google::iam::v3::
+            SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SearchPrincipalAccessBoundaryPolicyBindings(context, options,
+                                                             request);
 }
 
 StatusOr<google::longrunning::Operation>
 PrincipalAccessBoundaryPoliciesMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -148,8 +171,8 @@ PrincipalAccessBoundaryPoliciesMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> PrincipalAccessBoundaryPoliciesMetadata::AsyncCancelOperation(
@@ -159,21 +182,21 @@ future<Status> PrincipalAccessBoundaryPoliciesMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void PrincipalAccessBoundaryPoliciesMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void PrincipalAccessBoundaryPoliciesMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void PrincipalAccessBoundaryPoliciesMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+void PrincipalAccessBoundaryPoliciesMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

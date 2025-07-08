@@ -17,17 +17,17 @@
 // source: google/cloud/video/transcoder/v1/services.proto
 
 #include "google/cloud/video/transcoder/v1/transcoder_connection.h"
+#include "google/cloud/video/transcoder/v1/internal/transcoder_connection_impl.h"
+#include "google/cloud/video/transcoder/v1/internal/transcoder_option_defaults.h"
+#include "google/cloud/video/transcoder/v1/internal/transcoder_stub_factory.h"
+#include "google/cloud/video/transcoder/v1/internal/transcoder_tracing_connection.h"
+#include "google/cloud/video/transcoder/v1/transcoder_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/video/transcoder/v1/internal/transcoder_connection_impl.h"
-#include "google/cloud/video/transcoder/v1/internal/transcoder_option_defaults.h"
-#include "google/cloud/video/transcoder/v1/internal/transcoder_stub_factory.h"
-#include "google/cloud/video/transcoder/v1/internal/transcoder_tracing_connection.h"
-#include "google/cloud/video/transcoder/v1/transcoder_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,8 +44,10 @@ TranscoderServiceConnection::CreateJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::video::transcoder::v1::Job> TranscoderServiceConnection::ListJobs(
-    google::cloud::video::transcoder::v1::ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::video::transcoder::v1::Job>
+TranscoderServiceConnection::ListJobs(
+    google::cloud::video::transcoder::v1::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::video::transcoder::v1::Job>>();
 }
@@ -56,8 +58,7 @@ TranscoderServiceConnection::GetJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TranscoderServiceConnection::DeleteJob(
+Status TranscoderServiceConnection::DeleteJob(
     google::cloud::video::transcoder::v1::DeleteJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -68,8 +69,10 @@ TranscoderServiceConnection::CreateJobTemplate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::video::transcoder::v1::JobTemplate> TranscoderServiceConnection::ListJobTemplates(
-    google::cloud::video::transcoder::v1::ListJobTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
+TranscoderServiceConnection::ListJobTemplates(
+    google::cloud::video::transcoder::v1::
+        ListJobTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::video::transcoder::v1::JobTemplate>>();
 }
@@ -80,8 +83,7 @@ TranscoderServiceConnection::GetJobTemplate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TranscoderServiceConnection::DeleteJobTemplate(
+Status TranscoderServiceConnection::DeleteJobTemplate(
     google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -89,17 +91,19 @@ TranscoderServiceConnection::DeleteJobTemplate(
 std::shared_ptr<TranscoderServiceConnection> MakeTranscoderServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TranscoderServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 TranscoderServicePolicyOptionList>(options,
+                                                                    __func__);
   options = video_transcoder_v1_internal::TranscoderServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = video_transcoder_v1_internal::CreateDefaultTranscoderServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return video_transcoder_v1_internal::MakeTranscoderServiceTracingConnection(
-      std::make_shared<video_transcoder_v1_internal::TranscoderServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          video_transcoder_v1_internal::TranscoderServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

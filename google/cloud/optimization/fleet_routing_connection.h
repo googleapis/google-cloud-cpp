@@ -33,10 +33,13 @@ using ::google::cloud::optimization_v1::MakeFleetRoutingConnection;
 /// @deprecated Use optimization_v1::FleetRoutingConnection directly.
 using ::google::cloud::optimization_v1::FleetRoutingConnection;
 
-/// @deprecated Use optimization_v1::FleetRoutingLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::optimization_v1::FleetRoutingLimitedErrorCountRetryPolicy;
+/// @deprecated Use optimization_v1::FleetRoutingLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::optimization_v1::
+    FleetRoutingLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use optimization_v1::FleetRoutingLimitedTimeRetryPolicy directly.
+/// @deprecated Use optimization_v1::FleetRoutingLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::optimization_v1::FleetRoutingLimitedTimeRetryPolicy;
 
 /// @deprecated Use optimization_v1::FleetRoutingRetryPolicy directly.

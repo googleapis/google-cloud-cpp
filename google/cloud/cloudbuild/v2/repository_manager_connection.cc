@@ -17,12 +17,12 @@
 // source: google/devtools/cloudbuild/v2/repositories.proto
 
 #include "google/cloud/cloudbuild/v2/repository_manager_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_connection_impl.h"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_option_defaults.h"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_stub_factory.h"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_tracing_connection.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -42,8 +42,8 @@ future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerConnection::CreateConnection(
     google::devtools::cloudbuild::v2::CreateConnectionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::Connection>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,15 +51,15 @@ RepositoryManagerConnection::CreateConnection(
     NoAwaitTag,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerConnection::CreateConnection(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::Connection>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
@@ -68,8 +68,10 @@ RepositoryManagerConnection::GetConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::cloudbuild::v2::Connection> RepositoryManagerConnection::ListConnections(
-    google::devtools::cloudbuild::v2::ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::cloudbuild::v2::Connection>
+RepositoryManagerConnection::ListConnections(
+    google::devtools::cloudbuild::v2::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v2::Connection>>();
 }
@@ -78,8 +80,8 @@ future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerConnection::UpdateConnection(
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::Connection>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -87,23 +89,23 @@ RepositoryManagerConnection::UpdateConnection(
     NoAwaitTag,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerConnection::UpdateConnection(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::Connection>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerConnection::DeleteConnection(
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -111,23 +113,23 @@ RepositoryManagerConnection::DeleteConnection(
     NoAwaitTag,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerConnection::DeleteConnection(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
 RepositoryManagerConnection::CreateRepository(
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::Repository>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::Repository>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -135,23 +137,24 @@ RepositoryManagerConnection::CreateRepository(
     NoAwaitTag,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
 RepositoryManagerConnection::CreateRepository(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::Repository>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::Repository>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+future<
+    StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
 RepositoryManagerConnection::BatchCreateRepositories(
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -159,15 +162,16 @@ RepositoryManagerConnection::BatchCreateRepositories(
     NoAwaitTag,
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+future<
+    StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
 RepositoryManagerConnection::BatchCreateRepositories(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
@@ -176,8 +180,10 @@ RepositoryManagerConnection::GetRepository(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::cloudbuild::v2::Repository> RepositoryManagerConnection::ListRepositories(
-    google::devtools::cloudbuild::v2::ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::cloudbuild::v2::Repository>
+RepositoryManagerConnection::ListRepositories(
+    google::devtools::cloudbuild::v2::
+        ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v2::Repository>>();
 }
@@ -186,8 +192,8 @@ future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerConnection::DeleteRepository(
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -195,15 +201,15 @@ RepositoryManagerConnection::DeleteRepository(
     NoAwaitTag,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerConnection::DeleteRepository(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
@@ -218,8 +224,10 @@ RepositoryManagerConnection::FetchReadToken(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::devtools::cloudbuild::v2::Repository> RepositoryManagerConnection::FetchLinkableRepositories(
-    google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::cloudbuild::v2::Repository>
+RepositoryManagerConnection::FetchLinkableRepositories(
+    google::devtools::cloudbuild::v2::
+        FetchLinkableRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v2::Repository>>();
 }
@@ -230,14 +238,12 @@ RepositoryManagerConnection::FetchGitRefs(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-RepositoryManagerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> RepositoryManagerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-RepositoryManagerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> RepositoryManagerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -254,8 +260,7 @@ RepositoryManagerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-RepositoryManagerConnection::CancelOperation(
+Status RepositoryManagerConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -263,17 +268,18 @@ RepositoryManagerConnection::CancelOperation(
 std::shared_ptr<RepositoryManagerConnection> MakeRepositoryManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      RepositoryManagerPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 RepositoryManagerPolicyOptionList>(options,
+                                                                    __func__);
   options = cloudbuild_v2_internal::RepositoryManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = cloudbuild_v2_internal::CreateDefaultRepositoryManagerStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return cloudbuild_v2_internal::MakeRepositoryManagerTracingConnection(
       std::make_shared<cloudbuild_v2_internal::RepositoryManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

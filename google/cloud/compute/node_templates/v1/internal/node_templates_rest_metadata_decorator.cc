@@ -17,11 +17,11 @@
 // source: google/cloud/compute/node_templates/v1/node_templates.proto
 
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,8 +31,7 @@ namespace compute_node_templates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NodeTemplatesRestMetadata::NodeTemplatesRestMetadata(
-    std::shared_ptr<NodeTemplatesRestStub> child,
-    std::string api_client_header)
+    std::shared_ptr<NodeTemplatesRestStub> child, std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -41,86 +40,96 @@ NodeTemplatesRestMetadata::NodeTemplatesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
 NodeTemplatesRestMetadata::AggregatedListNodeTemplates(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        AggregatedListNodeTemplatesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListNodeTemplates(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestMetadata::AsyncDeleteNodeTemplate(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplateRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteNodeTemplate(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncDeleteNodeTemplate(cq, std::move(rest_context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesRestMetadata::DeleteNodeTemplate(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteNodeTemplate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 NodeTemplatesRestMetadata::GetNodeTemplate(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_templates::v1::GetNodeTemplateRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        GetNodeTemplateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetNodeTemplate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeTemplatesRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestMetadata::AsyncInsertNodeTemplate(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplateRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertNodeTemplate(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncInsertNodeTemplate(cq, std::move(rest_context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesRestMetadata::InsertNodeTemplate(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertNodeTemplate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList>
 NodeTemplatesRestMetadata::ListNodeTemplates(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        ListNodeTemplatesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListNodeTemplates(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeTemplatesRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeTemplatesRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::node_templates::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
@@ -130,28 +139,29 @@ NodeTemplatesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
-future<Status>
-NodeTemplatesRestMetadata::AsyncCancelOperation(
+future<Status> NodeTemplatesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void NodeTemplatesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,186 +36,209 @@ class DataprocMetastoreTracingConnection
   ~DataprocMetastoreTracingConnection() override = default;
 
   explicit DataprocMetastoreTracingConnection(
-    std::shared_ptr<metastore_v1::DataprocMetastoreConnection> child);
+      std::shared_ptr<metastore_v1::DataprocMetastoreConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::metastore::v1::Service>
-  ListServices(google::cloud::metastore::v1::ListServicesRequest request) override;
+  StreamRange<google::cloud::metastore::v1::Service> ListServices(
+      google::cloud::metastore::v1::ListServicesRequest request) override;
 
-  StatusOr<google::cloud::metastore::v1::Service>
-  GetService(google::cloud::metastore::v1::GetServiceRequest const& request) override;
+  StatusOr<google::cloud::metastore::v1::Service> GetService(
+      google::cloud::metastore::v1::GetServiceRequest const& request) override;
 
-  future<StatusOr<google::cloud::metastore::v1::Service>>
-  CreateService(google::cloud::metastore::v1::CreateServiceRequest const& request) override;
+  future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
+      google::cloud::metastore::v1::CreateServiceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateService(NoAwaitTag,
-      google::cloud::metastore::v1::CreateServiceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateService(
+      NoAwaitTag,
+      google::cloud::metastore::v1::CreateServiceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::Service>>
-  CreateService(
+  future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::metastore::v1::Service>>
-  UpdateService(google::cloud::metastore::v1::UpdateServiceRequest const& request) override;
+  future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
+      google::cloud::metastore::v1::UpdateServiceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateService(NoAwaitTag,
-      google::cloud::metastore::v1::UpdateServiceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateService(
+      NoAwaitTag,
+      google::cloud::metastore::v1::UpdateServiceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::Service>>
-  UpdateService(
+  future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteService(google::cloud::metastore::v1::DeleteServiceRequest const& request) override;
+  DeleteService(google::cloud::metastore::v1::DeleteServiceRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteService(NoAwaitTag,
-      google::cloud::metastore::v1::DeleteServiceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteService(
+      NoAwaitTag,
+      google::cloud::metastore::v1::DeleteServiceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteService(
-      google::longrunning::Operation const& operation) override;
+  DeleteService(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::metastore::v1::MetadataImport>
-  ListMetadataImports(google::cloud::metastore::v1::ListMetadataImportsRequest request) override;
+  StreamRange<google::cloud::metastore::v1::MetadataImport> ListMetadataImports(
+      google::cloud::metastore::v1::ListMetadataImportsRequest request)
+      override;
 
-  StatusOr<google::cloud::metastore::v1::MetadataImport>
-  GetMetadataImport(google::cloud::metastore::v1::GetMetadataImportRequest const& request) override;
+  StatusOr<google::cloud::metastore::v1::MetadataImport> GetMetadataImport(
+      google::cloud::metastore::v1::GetMetadataImportRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
-  CreateMetadataImport(google::cloud::metastore::v1::CreateMetadataImportRequest const& request) override;
+  CreateMetadataImport(
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateMetadataImport(NoAwaitTag,
-      google::cloud::metastore::v1::CreateMetadataImportRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateMetadataImport(
+      NoAwaitTag,
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
   CreateMetadataImport(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
-  UpdateMetadataImport(google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) override;
+  UpdateMetadataImport(
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateMetadataImport(NoAwaitTag,
-      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateMetadataImport(
+      NoAwaitTag,
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
   UpdateMetadataImport(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
-  ExportMetadata(google::cloud::metastore::v1::ExportMetadataRequest const& request) override;
+  future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
+      google::cloud::metastore::v1::ExportMetadataRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportMetadata(NoAwaitTag,
-      google::cloud::metastore::v1::ExportMetadataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportMetadata(
+      NoAwaitTag,
+      google::cloud::metastore::v1::ExportMetadataRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
-  ExportMetadata(
+  future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::metastore::v1::Restore>>
-  RestoreService(google::cloud::metastore::v1::RestoreServiceRequest const& request) override;
+  future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
+      google::cloud::metastore::v1::RestoreServiceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  RestoreService(NoAwaitTag,
-      google::cloud::metastore::v1::RestoreServiceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RestoreService(
+      NoAwaitTag,
+      google::cloud::metastore::v1::RestoreServiceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::Restore>>
-  RestoreService(
+  future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::metastore::v1::Backup>
-  ListBackups(google::cloud::metastore::v1::ListBackupsRequest request) override;
+  StreamRange<google::cloud::metastore::v1::Backup> ListBackups(
+      google::cloud::metastore::v1::ListBackupsRequest request) override;
 
-  StatusOr<google::cloud::metastore::v1::Backup>
-  GetBackup(google::cloud::metastore::v1::GetBackupRequest const& request) override;
+  StatusOr<google::cloud::metastore::v1::Backup> GetBackup(
+      google::cloud::metastore::v1::GetBackupRequest const& request) override;
 
-  future<StatusOr<google::cloud::metastore::v1::Backup>>
-  CreateBackup(google::cloud::metastore::v1::CreateBackupRequest const& request) override;
+  future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
+      google::cloud::metastore::v1::CreateBackupRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateBackup(NoAwaitTag,
-      google::cloud::metastore::v1::CreateBackupRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      NoAwaitTag,
+      google::cloud::metastore::v1::CreateBackupRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::Backup>>
-  CreateBackup(
+  future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteBackup(google::cloud::metastore::v1::DeleteBackupRequest const& request) override;
+  DeleteBackup(google::cloud::metastore::v1::DeleteBackupRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteBackup(NoAwaitTag,
-      google::cloud::metastore::v1::DeleteBackupRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      NoAwaitTag,
+      google::cloud::metastore::v1::DeleteBackupRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteBackup(
-      google::longrunning::Operation const& operation) override;
+  DeleteBackup(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
-  QueryMetadata(google::cloud::metastore::v1::QueryMetadataRequest const& request) override;
+  QueryMetadata(google::cloud::metastore::v1::QueryMetadataRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  QueryMetadata(NoAwaitTag,
-      google::cloud::metastore::v1::QueryMetadataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> QueryMetadata(
+      NoAwaitTag,
+      google::cloud::metastore::v1::QueryMetadataRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
-  QueryMetadata(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
-  MoveTableToDatabase(google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  MoveTableToDatabase(NoAwaitTag,
-      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) override;
+  QueryMetadata(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
   MoveTableToDatabase(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
-  AlterMetadataResourceLocation(google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> MoveTableToDatabase(
+      NoAwaitTag,
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  AlterMetadataResourceLocation(NoAwaitTag,
-      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request) override;
+  future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+  MoveTableToDatabase(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+  future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+  AlterMetadataResourceLocation(
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> AlterMetadataResourceLocation(
+      NoAwaitTag,
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
   AlterMetadataResourceLocation(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<metastore_v1::DataprocMetastoreConnection> child_;

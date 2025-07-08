@@ -26,19 +26,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SqlTiersServiceConnectionIdempotencyPolicy::~SqlTiersServiceConnectionIdempotencyPolicy() = default;
+SqlTiersServiceConnectionIdempotencyPolicy::
+    ~SqlTiersServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SqlTiersServiceConnectionIdempotencyPolicy>
 SqlTiersServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SqlTiersServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SqlTiersServiceConnectionIdempotencyPolicy::List(google::cloud::sql::v1::SqlTiersListRequest const&) {
+Idempotency SqlTiersServiceConnectionIdempotencyPolicy::List(
+    google::cloud::sql::v1::SqlTiersListRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SqlTiersServiceConnectionIdempotencyPolicy>
-    MakeDefaultSqlTiersServiceConnectionIdempotencyPolicy() {
+MakeDefaultSqlTiersServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlTiersServiceConnectionIdempotencyPolicy>();
 }
 

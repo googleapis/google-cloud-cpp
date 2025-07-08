@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RepositoryManagerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REPOSITORY_MANAGER_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_REPOSITORY_MANAGER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_REPOSITORY_MANAGER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REPOSITORY_MANAGER_AUTHORITY",
       "cloudbuild.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()) {
     options.set<cloudbuild_v2::RepositoryManagerRetryPolicyOption>(
         cloudbuild_v2::RepositoryManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>()) {
     options.set<cloudbuild_v2::RepositoryManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<cloudbuild_v2::RepositoryManagerPollingPolicyOption>()) {
     options.set<cloudbuild_v2::RepositoryManagerPollingPolicyOption>(
         GenericPollingPolicy<
             cloudbuild_v2::RepositoryManagerRetryPolicyOption::Type,
             cloudbuild_v2::RepositoryManagerBackoffPolicyOption::Type>(
-            options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()->clone(),
+            options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<cloudbuild_v2::RepositoryManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<cloudbuild_v2::RepositoryManagerConnectionIdempotencyPolicyOption>(
-        cloudbuild_v2::MakeDefaultRepositoryManagerConnectionIdempotencyPolicy());
+  if (!options.has<cloudbuild_v2::
+                       RepositoryManagerConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<cloudbuild_v2::RepositoryManagerConnectionIdempotencyPolicyOption>(
+            cloudbuild_v2::
+                MakeDefaultRepositoryManagerConnectionIdempotencyPolicy());
   }
 
   return options;

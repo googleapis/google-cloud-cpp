@@ -32,20 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AuthorizedCertificatesLogging::AuthorizedCertificatesLogging(
     std::shared_ptr<AuthorizedCertificatesStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
 AuthorizedCertificatesLogging::ListAuthorizedCertificates(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::ListAuthorizedCertificatesRequest const&
+                 request) {
         return child_->ListAuthorizedCertificates(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ AuthorizedCertificatesLogging::ListAuthorizedCertificates(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesLogging::GetAuthorizedCertificate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::GetAuthorizedCertificateRequest const&
+                 request) {
         return child_->GetAuthorizedCertificate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ AuthorizedCertificatesLogging::GetAuthorizedCertificate(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesLogging::CreateAuthorizedCertificate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::CreateAuthorizedCertificateRequest const&
+                 request) {
         return child_->CreateAuthorizedCertificate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +76,24 @@ AuthorizedCertificatesLogging::CreateAuthorizedCertificate(
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesLogging::UpdateAuthorizedCertificate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::UpdateAuthorizedCertificateRequest const&
+                 request) {
         return child_->UpdateAuthorizedCertificate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AuthorizedCertificatesLogging::DeleteAuthorizedCertificate(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AuthorizedCertificatesLogging::DeleteAuthorizedCertificate(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::DeleteAuthorizedCertificateRequest const&
+                 request) {
         return child_->DeleteAuthorizedCertificate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

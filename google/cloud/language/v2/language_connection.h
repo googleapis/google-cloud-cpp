@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_LANGUAGE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_LANGUAGE_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/language/v2/internal/language_retry_traits.h"
 #include "google/cloud/language/v2/language_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -51,7 +51,8 @@ class LanguageServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LanguageServiceLimitedErrorCountRetryPolicy : public LanguageServiceRetryPolicy {
+class LanguageServiceLimitedErrorCountRetryPolicy
+    : public LanguageServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class LanguageServiceLimitedErrorCountRetryPolicy : public LanguageServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit LanguageServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   LanguageServiceLimitedErrorCountRetryPolicy(
       LanguageServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : LanguageServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : LanguageServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   LanguageServiceLimitedErrorCountRetryPolicy(
       LanguageServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : LanguageServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : LanguageServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class LanguageServiceLimitedErrorCountRetryPolicy : public LanguageServiceRetryP
   using BaseType = LanguageServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<language_v2_internal::LanguageServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      language_v2_internal::LanguageServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -101,7 +104,8 @@ class LanguageServiceLimitedErrorCountRetryPolicy : public LanguageServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class LanguageServiceLimitedTimeRetryPolicy : public LanguageServiceRetryPolicy {
+class LanguageServiceLimitedTimeRetryPolicy
+    : public LanguageServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +130,14 @@ class LanguageServiceLimitedTimeRetryPolicy : public LanguageServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit LanguageServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  LanguageServiceLimitedTimeRetryPolicy(LanguageServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : LanguageServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  LanguageServiceLimitedTimeRetryPolicy(LanguageServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : LanguageServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LanguageServiceLimitedTimeRetryPolicy(
+      LanguageServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : LanguageServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  LanguageServiceLimitedTimeRetryPolicy(
+      LanguageServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : LanguageServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +159,9 @@ class LanguageServiceLimitedTimeRetryPolicy : public LanguageServiceRetryPolicy 
   using BaseType = LanguageServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<language_v2_internal::LanguageServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      language_v2_internal::LanguageServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,10 +183,12 @@ class LanguageServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v2::AnalyzeSentimentRequest const& request);
+  AnalyzeSentiment(
+      google::cloud::language::v2::AnalyzeSentimentRequest const& request);
 
   virtual StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v2::AnalyzeEntitiesRequest const& request);
+  AnalyzeEntities(
+      google::cloud::language::v2::AnalyzeEntitiesRequest const& request);
 
   virtual StatusOr<google::cloud::language::v2::ClassifyTextResponse>
   ClassifyText(google::cloud::language::v2::ClassifyTextRequest const& request);
@@ -191,14 +201,15 @@ class LanguageServiceConnection {
 };
 
 /**
- * A factory function to construct an object of type `LanguageServiceConnection`.
+ * A factory function to construct an object of type
+ * `LanguageServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of LanguageServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `LanguageServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `LanguageServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -208,8 +219,8 @@ class LanguageServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `LanguageServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `LanguageServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<LanguageServiceConnection> MakeLanguageServiceConnection(
     Options options = {});

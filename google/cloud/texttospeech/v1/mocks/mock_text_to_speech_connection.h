@@ -42,30 +42,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTextToSpeechConnection : public texttospeech_v1::TextToSpeechConnection {
+class MockTextToSpeechConnection
+    : public texttospeech_v1::TextToSpeechConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>,
-  ListVoices,
-  (google::cloud::texttospeech::v1::ListVoicesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>, ListVoices,
+      (google::cloud::texttospeech::v1::ListVoicesRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>,
-  SynthesizeSpeech,
-  (google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>,
+      SynthesizeSpeech,
+      (google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request),
+      (override));
 
-  MOCK_METHOD((std::unique_ptr<
-      ::google::cloud::AsyncStreamingReadWriteRpc<
-          google::cloud::texttospeech::v1::StreamingSynthesizeRequest, google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>),
+  MOCK_METHOD(
+      (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+           google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+           google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>),
       AsyncStreamingSynthesize, (), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

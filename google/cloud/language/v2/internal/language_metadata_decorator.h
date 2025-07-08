@@ -39,34 +39,30 @@ class LanguageServiceMetadata : public LanguageServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse> AnalyzeSentiment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::language::v2::AnalyzeSentimentRequest const& request) override;
+  StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
+  AnalyzeSentiment(grpc::ClientContext& context, Options const& options,
+                   google::cloud::language::v2::AnalyzeSentimentRequest const&
+                       request) override;
 
-  StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse> AnalyzeEntities(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::language::v2::AnalyzeEntitiesRequest const& request) override;
+  StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
+  AnalyzeEntities(grpc::ClientContext& context, Options const& options,
+                  google::cloud::language::v2::AnalyzeEntitiesRequest const&
+                      request) override;
 
   StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::ClassifyTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::ModerateTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::AnnotateTextRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,19 +38,18 @@ class LookupServiceAuth : public LookupServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<LookupServiceStub> child);
 
-  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse> ResolveService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) override;
+  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
+  ResolveService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:

@@ -34,61 +34,76 @@ ReferenceListServiceTracingConnection::ReferenceListServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceTracingConnection::GetReferenceList(google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::ReferenceListServiceConnection::GetReferenceList");
+ReferenceListServiceTracingConnection::GetReferenceList(
+    google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::GetReferenceList");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetReferenceList(request));
 }
 
 StreamRange<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceTracingConnection::ListReferenceLists(google::cloud::chronicle::v1::ListReferenceListsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::ReferenceListServiceConnection::ListReferenceLists");
+ReferenceListServiceTracingConnection::ListReferenceLists(
+    google::cloud::chronicle::v1::ListReferenceListsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::ListReferenceLists");
   internal::OTelScope scope(span);
   auto sr = child_->ListReferenceLists(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::chronicle::v1::ReferenceList>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::chronicle::v1::ReferenceList>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceTracingConnection::CreateReferenceList(google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::ReferenceListServiceConnection::CreateReferenceList");
+ReferenceListServiceTracingConnection::CreateReferenceList(
+    google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::CreateReferenceList");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateReferenceList(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceTracingConnection::UpdateReferenceList(google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::ReferenceListServiceConnection::UpdateReferenceList");
+ReferenceListServiceTracingConnection::UpdateReferenceList(
+    google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::UpdateReferenceList");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateReferenceList(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ReferenceListServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("chronicle_v1::ReferenceListServiceConnection::ListOperations");
+ReferenceListServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ReferenceListServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::ReferenceListServiceConnection::GetOperation");
+ReferenceListServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ReferenceListServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::ReferenceListServiceConnection::DeleteOperation");
+Status ReferenceListServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-ReferenceListServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("chronicle_v1::ReferenceListServiceConnection::CancelOperation");
+Status ReferenceListServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "chronicle_v1::ReferenceListServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -100,7 +115,8 @@ MakeReferenceListServiceTracingConnection(
     std::shared_ptr<chronicle_v1::ReferenceListServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ReferenceListServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<ReferenceListServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

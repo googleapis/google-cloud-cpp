@@ -28,25 +28,27 @@ namespace compute_target_pools_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetPoolsRestLogging::TargetPoolsRestLogging(
-    std::shared_ptr<TargetPoolsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<TargetPoolsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestLogging::AsyncAddHealthCheck(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) {
-        return child_->AsyncAddHealthCheck(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_pools::v1::
+                 AddHealthCheckRequest const& request) {
+        return child_->AsyncAddHealthCheck(cq, std::move(rest_context),
+                                           std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -54,13 +56,13 @@ TargetPoolsRestLogging::AsyncAddHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::AddHealthCheck(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 AddHealthCheckRequest const& request) {
         return child_->AddHealthCheck(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -68,17 +70,19 @@ TargetPoolsRestLogging::AddHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestLogging::AsyncAddInstance(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) {
-        return child_->AsyncAddInstance(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_pools::v1::
+                 AddInstanceRequest const& request) {
+        return child_->AsyncAddInstance(cq, std::move(rest_context),
+                                        std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -86,13 +90,13 @@ TargetPoolsRestLogging::AsyncAddInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::AddInstance(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 AddInstanceRequest const& request) {
         return child_->AddInstance(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -100,31 +104,34 @@ TargetPoolsRestLogging::AddInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
 TargetPoolsRestLogging::AggregatedListTargetPools(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        AggregatedListTargetPoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest const& request) {
-        return child_->AggregatedListTargetPools(rest_context, options, request);
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 AggregatedListTargetPoolsRequest const& request) {
+        return child_->AggregatedListTargetPools(rest_context, options,
+                                                 request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestLogging::AsyncDeleteTargetPool(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_pools::v1::
+        DeleteTargetPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) {
-        return child_->AsyncDeleteTargetPool(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_pools::v1::
+                 DeleteTargetPoolRequest const& request) {
+        return child_->AsyncDeleteTargetPool(cq, std::move(rest_context),
+                                             std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -132,13 +139,13 @@ TargetPoolsRestLogging::AsyncDeleteTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::DeleteTargetPool(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        DeleteTargetPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 DeleteTargetPoolRequest const& request) {
         return child_->DeleteTargetPool(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -146,13 +153,13 @@ TargetPoolsRestLogging::DeleteTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
 TargetPoolsRestLogging::GetTargetPool(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 GetTargetPoolRequest const& request) {
         return child_->GetTargetPool(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -160,13 +167,14 @@ TargetPoolsRestLogging::GetTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
 TargetPoolsRestLogging::GetHealth(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
+              request) {
         return child_->GetHealth(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -174,17 +182,19 @@ TargetPoolsRestLogging::GetHealth(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestLogging::AsyncInsertTargetPool(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_pools::v1::
+        InsertTargetPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) {
-        return child_->AsyncInsertTargetPool(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_pools::v1::
+                 InsertTargetPoolRequest const& request) {
+        return child_->AsyncInsertTargetPool(cq, std::move(rest_context),
+                                             std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -192,13 +202,13 @@ TargetPoolsRestLogging::AsyncInsertTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::InsertTargetPool(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        InsertTargetPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 InsertTargetPoolRequest const& request) {
         return child_->InsertTargetPool(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -206,13 +216,13 @@ TargetPoolsRestLogging::InsertTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolList>
 TargetPoolsRestLogging::ListTargetPools(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 ListTargetPoolsRequest const& request) {
         return child_->ListTargetPools(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -220,17 +230,19 @@ TargetPoolsRestLogging::ListTargetPools(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestLogging::AsyncRemoveHealthCheck(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_pools::v1::
+        RemoveHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) {
-        return child_->AsyncRemoveHealthCheck(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_pools::v1::
+                 RemoveHealthCheckRequest const& request) {
+        return child_->AsyncRemoveHealthCheck(cq, std::move(rest_context),
+                                              std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -238,13 +250,13 @@ TargetPoolsRestLogging::AsyncRemoveHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::RemoveHealthCheck(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        RemoveHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 RemoveHealthCheckRequest const& request) {
         return child_->RemoveHealthCheck(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -252,17 +264,19 @@ TargetPoolsRestLogging::RemoveHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestLogging::AsyncRemoveInstance(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) {
-        return child_->AsyncRemoveInstance(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_pools::v1::
+                 RemoveInstanceRequest const& request) {
+        return child_->AsyncRemoveInstance(cq, std::move(rest_context),
+                                           std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -270,13 +284,13 @@ TargetPoolsRestLogging::AsyncRemoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::RemoveInstance(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 RemoveInstanceRequest const& request) {
         return child_->RemoveInstance(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -284,17 +298,20 @@ TargetPoolsRestLogging::RemoveInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestLogging::AsyncSetBackup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) {
-        return child_->AsyncSetBackup(
-            cq, std::move(rest_context), std::move(options), request);
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+              request) {
+        return child_->AsyncSetBackup(cq, std::move(rest_context),
+                                      std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -302,13 +319,14 @@ TargetPoolsRestLogging::AsyncSetBackup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::SetBackup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+              request) {
         return child_->SetBackup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -316,17 +334,19 @@ TargetPoolsRestLogging::SetBackup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestLogging::AsyncSetSecurityPolicy(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) {
-        return child_->AsyncSetSecurityPolicy(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_pools::v1::
+                 SetSecurityPolicyRequest const& request) {
+        return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context),
+                                              std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -334,13 +354,13 @@ TargetPoolsRestLogging::AsyncSetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::SetSecurityPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_pools::v1::
+                 SetSecurityPolicyRequest const& request) {
         return child_->SetSecurityPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -351,32 +371,35 @@ TargetPoolsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-TargetPoolsRestLogging::AsyncCancelOperation(
+future<Status> TargetPoolsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

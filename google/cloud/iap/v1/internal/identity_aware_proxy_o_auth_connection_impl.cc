@@ -17,10 +17,10 @@
 // source: google/cloud/iap/v1/service.proto
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_connection_impl.h"
+#include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_option_defaults.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -32,34 +32,45 @@ namespace iap_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicyOption>()->clone();
+std::unique_ptr<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<iap_v1::IdentityAwareProxyOAuthServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<iap_v1::IdentityAwareProxyOAuthServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
+std::unique_ptr<
+    iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<
+          iap_v1::
+              IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
-IdentityAwareProxyOAuthServiceConnectionImpl::IdentityAwareProxyOAuthServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iap_v1_internal::IdentityAwareProxyOAuthServiceStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        IdentityAwareProxyOAuthServiceConnection::options())) {}
+IdentityAwareProxyOAuthServiceConnectionImpl::
+    IdentityAwareProxyOAuthServiceConnectionImpl(
+        std::unique_ptr<google::cloud::BackgroundThreads> background,
+        std::shared_ptr<iap_v1_internal::IdentityAwareProxyOAuthServiceStub>
+            stub,
+        Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options),
+          IdentityAwareProxyOAuthServiceConnection::options())) {}
 
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
-IdentityAwareProxyOAuthServiceConnectionImpl::ListBrands(google::cloud::iap::v1::ListBrandsRequest const& request) {
+IdentityAwareProxyOAuthServiceConnectionImpl::ListBrands(
+    google::cloud::iap::v1::ListBrandsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -72,7 +83,8 @@ IdentityAwareProxyOAuthServiceConnectionImpl::ListBrands(google::cloud::iap::v1:
 }
 
 StatusOr<google::cloud::iap::v1::Brand>
-IdentityAwareProxyOAuthServiceConnectionImpl::CreateBrand(google::cloud::iap::v1::CreateBrandRequest const& request) {
+IdentityAwareProxyOAuthServiceConnectionImpl::CreateBrand(
+    google::cloud::iap::v1::CreateBrandRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -85,7 +97,8 @@ IdentityAwareProxyOAuthServiceConnectionImpl::CreateBrand(google::cloud::iap::v1
 }
 
 StatusOr<google::cloud::iap::v1::Brand>
-IdentityAwareProxyOAuthServiceConnectionImpl::GetBrand(google::cloud::iap::v1::GetBrandRequest const& request) {
+IdentityAwareProxyOAuthServiceConnectionImpl::GetBrand(
+    google::cloud::iap::v1::GetBrandRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -98,40 +111,54 @@ IdentityAwareProxyOAuthServiceConnectionImpl::GetBrand(google::cloud::iap::v1::G
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceConnectionImpl::CreateIdentityAwareProxyClient(google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) {
+IdentityAwareProxyOAuthServiceConnectionImpl::CreateIdentityAwareProxyClient(
+    google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateIdentityAwareProxyClient(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
+              request) {
         return stub_->CreateIdentityAwareProxyClient(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceConnectionImpl::ListIdentityAwareProxyClients(google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) {
+IdentityAwareProxyOAuthServiceConnectionImpl::ListIdentityAwareProxyClients(
+    google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListIdentityAwareProxyClients(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListIdentityAwareProxyClients(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const& r) {
+          Options const& options,
+          google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const& request) {
-              return stub->ListIdentityAwareProxyClients(context, options, request);
+                   google::cloud::iap::v1::
+                       ListIdentityAwareProxyClientsRequest const& request) {
+              return stub->ListIdentityAwareProxyClients(context, options,
+                                                         request);
             },
             options, r, function_name);
       },
       [](google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse r) {
-        std::vector<google::cloud::iap::v1::IdentityAwareProxyClient> result(r.identity_aware_proxy_clients().size());
+        std::vector<google::cloud::iap::v1::IdentityAwareProxyClient> result(
+            r.identity_aware_proxy_clients().size());
         auto& messages = *r.mutable_identity_aware_proxy_clients();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -139,39 +166,51 @@ IdentityAwareProxyOAuthServiceConnectionImpl::ListIdentityAwareProxyClients(goog
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceConnectionImpl::GetIdentityAwareProxyClient(google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
+IdentityAwareProxyOAuthServiceConnectionImpl::GetIdentityAwareProxyClient(
+    google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIdentityAwareProxyClient(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
+             google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&
+                 request) {
         return stub_->GetIdentityAwareProxyClient(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceConnectionImpl::ResetIdentityAwareProxyClientSecret(google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) {
+IdentityAwareProxyOAuthServiceConnectionImpl::
+    ResetIdentityAwareProxyClientSecret(
+        google::cloud::iap::v1::
+            ResetIdentityAwareProxyClientSecretRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ResetIdentityAwareProxyClientSecret(request),
+      idempotency_policy(*current)->ResetIdentityAwareProxyClientSecret(
+          request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) {
-        return stub_->ResetIdentityAwareProxyClientSecret(context, options, request);
+             google::cloud::iap::v1::
+                 ResetIdentityAwareProxyClientSecretRequest const& request) {
+        return stub_->ResetIdentityAwareProxyClientSecret(context, options,
+                                                          request);
       },
       *current, request, __func__);
 }
 
 Status
-IdentityAwareProxyOAuthServiceConnectionImpl::DeleteIdentityAwareProxyClient(google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) {
+IdentityAwareProxyOAuthServiceConnectionImpl::DeleteIdentityAwareProxyClient(
+    google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteIdentityAwareProxyClient(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
+              request) {
         return stub_->DeleteIdentityAwareProxyClient(context, options, request);
       },
       *current, request, __func__);

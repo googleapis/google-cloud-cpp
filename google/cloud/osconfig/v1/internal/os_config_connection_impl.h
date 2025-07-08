@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/osconfig/v1/internal/os_config_retry_traits.h"
 #include "google/cloud/osconfig/v1/internal/os_config_stub.h"
 #include "google/cloud/osconfig/v1/os_config_connection.h"
 #include "google/cloud/osconfig/v1/os_config_connection_idempotency_policy.h"
 #include "google/cloud/osconfig/v1/os_config_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,47 +43,58 @@ class OsConfigServiceConnectionImpl
   ~OsConfigServiceConnectionImpl() override = default;
 
   OsConfigServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<osconfig_v1_internal::OsConfigServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<osconfig_v1_internal::OsConfigServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::osconfig::v1::PatchJob>
-  ExecutePatchJob(google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
+      google::cloud::osconfig::v1::ExecutePatchJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::PatchJob>
-  GetPatchJob(google::cloud::osconfig::v1::GetPatchJobRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
+      google::cloud::osconfig::v1::GetPatchJobRequest const& request) override;
 
-  StatusOr<google::cloud::osconfig::v1::PatchJob>
-  CancelPatchJob(google::cloud::osconfig::v1::CancelPatchJobRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::PatchJob> CancelPatchJob(
+      google::cloud::osconfig::v1::CancelPatchJobRequest const& request)
+      override;
 
-  StreamRange<google::cloud::osconfig::v1::PatchJob>
-  ListPatchJobs(google::cloud::osconfig::v1::ListPatchJobsRequest request) override;
+  StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
+      google::cloud::osconfig::v1::ListPatchJobsRequest request) override;
 
   StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
-  ListPatchJobInstanceDetails(google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request) override;
+  ListPatchJobInstanceDetails(
+      google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  CreatePatchDeployment(google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> CreatePatchDeployment(
+      google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  GetPatchDeployment(google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> GetPatchDeployment(
+      google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request)
+      override;
 
   StreamRange<google::cloud::osconfig::v1::PatchDeployment>
-  ListPatchDeployments(google::cloud::osconfig::v1::ListPatchDeploymentsRequest request) override;
+  ListPatchDeployments(google::cloud::osconfig::v1::ListPatchDeploymentsRequest
+                           request) override;
 
-  Status
-  DeletePatchDeployment(google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) override;
+  Status DeletePatchDeployment(
+      google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  UpdatePatchDeployment(google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
+      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  PausePatchDeployment(google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
+      google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  ResumePatchDeployment(google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
+      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

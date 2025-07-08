@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,14 +39,15 @@ class TextToSpeechAuth : public TextToSpeechStub {
       std::shared_ptr<TextToSpeechStub> child);
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::texttospeech::v1::ListVoicesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::texttospeech::v1::ListVoicesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse> SynthesizeSpeech(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) override;
+  StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
+  SynthesizeSpeech(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
@@ -57,13 +58,11 @@ class TextToSpeechAuth : public TextToSpeechStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

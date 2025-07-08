@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_IMAGES_V1_MACHINE_IMAGES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_IMAGES_V1_MACHINE_IMAGES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_connection.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct MachineImagesPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using MachineImagesPolicyOptionList =
-    OptionList<MachineImagesRetryPolicyOption,
-               MachineImagesBackoffPolicyOption,
+    OptionList<MachineImagesRetryPolicyOption, MachineImagesBackoffPolicyOption,
                MachineImagesPollingPolicyOption,
                MachineImagesConnectionIdempotencyPolicyOption>;
 

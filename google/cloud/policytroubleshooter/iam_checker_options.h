@@ -28,16 +28,22 @@ namespace cloud {
 namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use policytroubleshooter_v1::IamCheckerBackoffPolicyOption directly.
+/// @deprecated Use policytroubleshooter_v1::IamCheckerBackoffPolicyOption
+/// directly.
 using ::google::cloud::policytroubleshooter_v1::IamCheckerBackoffPolicyOption;
 
-/// @deprecated Use policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::policytroubleshooter_v1::
+    IamCheckerConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use policytroubleshooter_v1::IamCheckerPolicyOptionList directly.
+/// @deprecated Use policytroubleshooter_v1::IamCheckerPolicyOptionList
+/// directly.
 using ::google::cloud::policytroubleshooter_v1::IamCheckerPolicyOptionList;
 
-/// @deprecated Use policytroubleshooter_v1::IamCheckerRetryPolicyOption directly.
+/// @deprecated Use policytroubleshooter_v1::IamCheckerRetryPolicyOption
+/// directly.
 using ::google::cloud::policytroubleshooter_v1::IamCheckerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

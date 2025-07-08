@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_STUB_FACTORY_H
 
+#include "google/cloud/texttospeech/v1/internal/text_to_speech_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
-#include "google/cloud/texttospeech/v1/internal/text_to_speech_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

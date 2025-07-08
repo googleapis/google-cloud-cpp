@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_INTERNAL_WEB_SECURITY_SCANNER_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_INTERNAL_WEB_SECURITY_SCANNER_METADATA_DECORATOR_H
 
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -40,73 +40,75 @@ class WebSecurityScannerMetadata : public WebSecurityScannerStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
+          request) override;
 
   Status DeleteScanConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> GetScanConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse> ListScanConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::ListScanConfigsRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse>
+  ListScanConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
+          request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::StartScanRunRequest const& request)
+      override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request)
+      override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse> ListScanRuns(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
+  ListScanRuns(grpc::ClientContext& context, Options const& options,
+               google::cloud::websecurityscanner::v1::ListScanRunsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request)
+      override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse> ListCrawledUrls(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>
+  ListCrawledUrls(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
+          request) override;
 
   StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::GetFindingRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::GetFindingRequest const& request)
+      override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse> ListFindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
+  ListFindings(grpc::ClientContext& context, Options const& options,
+               google::cloud::websecurityscanner::v1::ListFindingsRequest const&
+                   request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse> ListFindingTypeStats(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
+  ListFindingTypeStats(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
+          request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

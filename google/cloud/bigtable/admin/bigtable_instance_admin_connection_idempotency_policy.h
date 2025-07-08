@@ -34,104 +34,108 @@ class BigtableInstanceAdminConnectionIdempotencyPolicy {
   virtual ~BigtableInstanceAdminConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateInstance(google::bigtable::admin::v2::CreateInstanceRequest const& request);
+  virtual google::cloud::Idempotency CreateInstance(
+      google::bigtable::admin::v2::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetInstance(google::bigtable::admin::v2::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency GetInstance(
+      google::bigtable::admin::v2::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListInstances(google::bigtable::admin::v2::ListInstancesRequest const& request);
+  virtual google::cloud::Idempotency ListInstances(
+      google::bigtable::admin::v2::ListInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateInstance(google::bigtable::admin::v2::Instance const& request);
+  virtual google::cloud::Idempotency UpdateInstance(
+      google::bigtable::admin::v2::Instance const& request);
 
-  virtual google::cloud::Idempotency
-  PartialUpdateInstance(google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request);
+  virtual google::cloud::Idempotency PartialUpdateInstance(
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteInstance(google::bigtable::admin::v2::DeleteInstanceRequest const& request);
+  virtual google::cloud::Idempotency DeleteInstance(
+      google::bigtable::admin::v2::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateCluster(google::bigtable::admin::v2::CreateClusterRequest const& request);
+  virtual google::cloud::Idempotency CreateCluster(
+      google::bigtable::admin::v2::CreateClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetCluster(google::bigtable::admin::v2::GetClusterRequest const& request);
+  virtual google::cloud::Idempotency GetCluster(
+      google::bigtable::admin::v2::GetClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListClusters(google::bigtable::admin::v2::ListClustersRequest const& request);
+  virtual google::cloud::Idempotency ListClusters(
+      google::bigtable::admin::v2::ListClustersRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateCluster(google::bigtable::admin::v2::Cluster const& request);
+  virtual google::cloud::Idempotency UpdateCluster(
+      google::bigtable::admin::v2::Cluster const& request);
 
-  virtual google::cloud::Idempotency
-  PartialUpdateCluster(google::bigtable::admin::v2::PartialUpdateClusterRequest const& request);
+  virtual google::cloud::Idempotency PartialUpdateCluster(
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteCluster(google::bigtable::admin::v2::DeleteClusterRequest const& request);
+  virtual google::cloud::Idempotency DeleteCluster(
+      google::bigtable::admin::v2::DeleteClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateAppProfile(google::bigtable::admin::v2::CreateAppProfileRequest const& request);
+  virtual google::cloud::Idempotency CreateAppProfile(
+      google::bigtable::admin::v2::CreateAppProfileRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetAppProfile(google::bigtable::admin::v2::GetAppProfileRequest const& request);
+  virtual google::cloud::Idempotency GetAppProfile(
+      google::bigtable::admin::v2::GetAppProfileRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListAppProfiles(google::bigtable::admin::v2::ListAppProfilesRequest request);
+  virtual google::cloud::Idempotency ListAppProfiles(
+      google::bigtable::admin::v2::ListAppProfilesRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateAppProfile(google::bigtable::admin::v2::UpdateAppProfileRequest const& request);
+  virtual google::cloud::Idempotency UpdateAppProfile(
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteAppProfile(google::bigtable::admin::v2::DeleteAppProfileRequest const& request);
+  virtual google::cloud::Idempotency DeleteAppProfile(
+      google::bigtable::admin::v2::DeleteAppProfileRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListHotTablets(google::bigtable::admin::v2::ListHotTabletsRequest request);
+  virtual google::cloud::Idempotency ListHotTablets(
+      google::bigtable::admin::v2::ListHotTabletsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateLogicalView(google::bigtable::admin::v2::CreateLogicalViewRequest const& request);
+  virtual google::cloud::Idempotency CreateLogicalView(
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetLogicalView(google::bigtable::admin::v2::GetLogicalViewRequest const& request);
+  virtual google::cloud::Idempotency GetLogicalView(
+      google::bigtable::admin::v2::GetLogicalViewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLogicalViews(google::bigtable::admin::v2::ListLogicalViewsRequest request);
+  virtual google::cloud::Idempotency ListLogicalViews(
+      google::bigtable::admin::v2::ListLogicalViewsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateLogicalView(google::bigtable::admin::v2::UpdateLogicalViewRequest const& request);
+  virtual google::cloud::Idempotency UpdateLogicalView(
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteLogicalView(google::bigtable::admin::v2::DeleteLogicalViewRequest const& request);
+  virtual google::cloud::Idempotency DeleteLogicalView(
+      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateMaterializedView(google::bigtable::admin::v2::CreateMaterializedViewRequest const& request);
+  virtual google::cloud::Idempotency CreateMaterializedView(
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetMaterializedView(google::bigtable::admin::v2::GetMaterializedViewRequest const& request);
+  virtual google::cloud::Idempotency GetMaterializedView(
+      google::bigtable::admin::v2::GetMaterializedViewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListMaterializedViews(google::bigtable::admin::v2::ListMaterializedViewsRequest request);
+  virtual google::cloud::Idempotency ListMaterializedViews(
+      google::bigtable::admin::v2::ListMaterializedViewsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateMaterializedView(google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request);
+  virtual google::cloud::Idempotency UpdateMaterializedView(
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteMaterializedView(google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request);
+  virtual google::cloud::Idempotency DeleteMaterializedView(
+      google::bigtable::admin::v2::DeleteMaterializedViewRequest const&
+          request);
 };
 
 std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>
-    MakeDefaultBigtableInstanceAdminConnectionIdempotencyPolicy();
+MakeDefaultBigtableInstanceAdminConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin

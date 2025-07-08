@@ -32,145 +32,146 @@ CloudControlsPartnerCoreStub::~CloudControlsPartnerCoreStub() = default;
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
 DefaultCloudControlsPartnerCoreStub::GetWorkload(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::Workload response;
-    auto status =
-        grpc_stub_->GetWorkload(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::Workload response;
+  auto status = grpc_stub_->GetWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse>
 DefaultCloudControlsPartnerCoreStub::ListWorkloads(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse response;
-    auto status =
-        grpc_stub_->ListWorkloads(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse response;
+  auto status = grpc_stub_->ListWorkloads(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
 DefaultCloudControlsPartnerCoreStub::GetCustomer(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::Customer response;
-    auto status =
-        grpc_stub_->GetCustomer(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::Customer response;
+  auto status = grpc_stub_->GetCustomer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse>
 DefaultCloudControlsPartnerCoreStub::ListCustomers(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::ListCustomersResponse response;
-    auto status =
-        grpc_stub_->ListCustomers(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::ListCustomersResponse response;
+  auto status = grpc_stub_->ListCustomers(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
 DefaultCloudControlsPartnerCoreStub::GetEkmConnections(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::EkmConnections response;
-    auto status =
-        grpc_stub_->GetEkmConnections(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::EkmConnections response;
+  auto status = grpc_stub_->GetEkmConnections(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
 DefaultCloudControlsPartnerCoreStub::GetPartnerPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::PartnerPermissions response;
-    auto status =
-        grpc_stub_->GetPartnerPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::PartnerPermissions response;
+  auto status = grpc_stub_->GetPartnerPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse>
+StatusOr<
+    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse>
 DefaultCloudControlsPartnerCoreStub::ListAccessApprovalRequests(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse response;
-    auto status =
-        grpc_stub_->ListAccessApprovalRequests(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::
+        ListAccessApprovalRequestsRequest const& request) {
+  google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse
+      response;
+  auto status =
+      grpc_stub_->ListAccessApprovalRequests(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
 DefaultCloudControlsPartnerCoreStub::GetPartner(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::Partner response;
-    auto status =
-        grpc_stub_->GetPartner(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) {
+  google::cloud::cloudcontrolspartner::v1::Partner response;
+  auto status = grpc_stub_->GetPartner(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
 DefaultCloudControlsPartnerCoreStub::CreateCustomer(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::Customer response;
-    auto status =
-        grpc_stub_->CreateCustomer(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::Customer response;
+  auto status = grpc_stub_->CreateCustomer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
 DefaultCloudControlsPartnerCoreStub::UpdateCustomer(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) {
-    google::cloud::cloudcontrolspartner::v1::Customer response;
-    auto status =
-        grpc_stub_->UpdateCustomer(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+        request) {
+  google::cloud::cloudcontrolspartner::v1::Customer response;
+  auto status = grpc_stub_->UpdateCustomer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultCloudControlsPartnerCoreStub::DeleteCustomer(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteCustomer(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCloudControlsPartnerCoreStub::DeleteCustomer(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteCustomer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

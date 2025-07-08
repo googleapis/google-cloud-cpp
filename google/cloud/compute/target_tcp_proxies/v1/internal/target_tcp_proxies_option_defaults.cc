@@ -35,32 +35,50 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TargetTcpProxiesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_TCP_PROXIES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TARGET_TCP_PROXIES_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_TCP_PROXIES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TARGET_TCP_PROXIES_AUTHORITY",
       "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_target_tcp_proxies_v1::TargetTcpProxiesRetryPolicyOption>()) {
-    options.set<compute_target_tcp_proxies_v1::TargetTcpProxiesRetryPolicyOption>(
+  if (!options.has<
+          compute_target_tcp_proxies_v1::TargetTcpProxiesRetryPolicyOption>()) {
+    options.set<
+        compute_target_tcp_proxies_v1::TargetTcpProxiesRetryPolicyOption>(
         compute_target_tcp_proxies_v1::TargetTcpProxiesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_target_tcp_proxies_v1::TargetTcpProxiesBackoffPolicyOption>()) {
-    options.set<compute_target_tcp_proxies_v1::TargetTcpProxiesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<compute_target_tcp_proxies_v1::
+                       TargetTcpProxiesBackoffPolicyOption>()) {
+    options.set<
+        compute_target_tcp_proxies_v1::TargetTcpProxiesBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_target_tcp_proxies_v1::TargetTcpProxiesPollingPolicyOption>()) {
-    options.set<compute_target_tcp_proxies_v1::TargetTcpProxiesPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_target_tcp_proxies_v1::TargetTcpProxiesRetryPolicyOption::Type,
-            compute_target_tcp_proxies_v1::TargetTcpProxiesBackoffPolicyOption::Type>(
-            options.get<compute_target_tcp_proxies_v1::TargetTcpProxiesRetryPolicyOption>()->clone(),
+  if (!options.has<compute_target_tcp_proxies_v1::
+                       TargetTcpProxiesPollingPolicyOption>()) {
+    options.set<
+        compute_target_tcp_proxies_v1::TargetTcpProxiesPollingPolicyOption>(
+        GenericPollingPolicy<compute_target_tcp_proxies_v1::
+                                 TargetTcpProxiesRetryPolicyOption::Type,
+                             compute_target_tcp_proxies_v1::
+                                 TargetTcpProxiesBackoffPolicyOption::Type>(
+            options
+                .get<compute_target_tcp_proxies_v1::
+                         TargetTcpProxiesRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_target_tcp_proxies_v1::TargetTcpProxiesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_target_tcp_proxies_v1::TargetTcpProxiesConnectionIdempotencyPolicyOption>(
-        compute_target_tcp_proxies_v1::MakeDefaultTargetTcpProxiesConnectionIdempotencyPolicy());
+  if (!options.has<compute_target_tcp_proxies_v1::
+                       TargetTcpProxiesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_target_tcp_proxies_v1::
+                    TargetTcpProxiesConnectionIdempotencyPolicyOption>(
+        compute_target_tcp_proxies_v1::
+            MakeDefaultTargetTcpProxiesConnectionIdempotencyPolicy());
   }
 
   return options;

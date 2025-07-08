@@ -19,17 +19,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_INTERNAL_STORAGE_TRANSFER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_INTERNAL_STORAGE_TRANSFER_CONNECTION_IMPL_H
 
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_retry_traits.h"
+#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_connection_idempotency_policy.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_retry_traits.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
-#include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
-#include "google/cloud/storagetransfer/v1/storage_transfer_connection_idempotency_policy.h"
-#include "google/cloud/storagetransfer/v1/storage_transfer_options.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -46,74 +46,88 @@ class StorageTransferServiceConnectionImpl
   ~StorageTransferServiceConnectionImpl() override = default;
 
   StorageTransferServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<storagetransfer_v1_internal::StorageTransferServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<storagetransfer_v1_internal::StorageTransferServiceStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
-  GetGoogleServiceAccount(google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request) override;
+  GetGoogleServiceAccount(
+      google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
+          request) override;
 
-  StatusOr<google::storagetransfer::v1::TransferJob>
-  CreateTransferJob(google::storagetransfer::v1::CreateTransferJobRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
+      google::storagetransfer::v1::CreateTransferJobRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::TransferJob>
-  UpdateTransferJob(google::storagetransfer::v1::UpdateTransferJobRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
+      google::storagetransfer::v1::UpdateTransferJobRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::TransferJob>
-  GetTransferJob(google::storagetransfer::v1::GetTransferJobRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
+      google::storagetransfer::v1::GetTransferJobRequest const& request)
+      override;
 
-  StreamRange<google::storagetransfer::v1::TransferJob>
-  ListTransferJobs(google::storagetransfer::v1::ListTransferJobsRequest request) override;
+  StreamRange<google::storagetransfer::v1::TransferJob> ListTransferJobs(
+      google::storagetransfer::v1::ListTransferJobsRequest request) override;
 
-  Status
-  PauseTransferOperation(google::storagetransfer::v1::PauseTransferOperationRequest const& request) override;
+  Status PauseTransferOperation(
+      google::storagetransfer::v1::PauseTransferOperationRequest const& request)
+      override;
 
-  Status
-  ResumeTransferOperation(google::storagetransfer::v1::ResumeTransferOperationRequest const& request) override;
+  Status ResumeTransferOperation(
+      google::storagetransfer::v1::ResumeTransferOperationRequest const&
+          request) override;
 
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-  RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const& request) override;
+  RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RunTransferJob(NoAwaitTag,
-      google::storagetransfer::v1::RunTransferJobRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RunTransferJob(
+      NoAwaitTag,
+      google::storagetransfer::v1::RunTransferJobRequest const& request)
+      override;
 
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-  RunTransferJob(
-      google::longrunning::Operation const& operation) override;
+  RunTransferJob(google::longrunning::Operation const& operation) override;
 
-  Status
-  DeleteTransferJob(google::storagetransfer::v1::DeleteTransferJobRequest const& request) override;
+  Status DeleteTransferJob(
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::AgentPool>
-  CreateAgentPool(google::storagetransfer::v1::CreateAgentPoolRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::AgentPool>
-  UpdateAgentPool(google::storagetransfer::v1::UpdateAgentPoolRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::AgentPool>
-  GetAgentPool(google::storagetransfer::v1::GetAgentPoolRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
+      google::storagetransfer::v1::GetAgentPoolRequest const& request) override;
 
-  StreamRange<google::storagetransfer::v1::AgentPool>
-  ListAgentPools(google::storagetransfer::v1::ListAgentPoolsRequest request) override;
+  StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
+      google::storagetransfer::v1::ListAgentPoolsRequest request) override;
 
-  Status
-  DeleteAgentPool(google::storagetransfer::v1::DeleteAgentPoolRequest const& request) override;
+  Status DeleteAgentPool(
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<storagetransfer_v1_internal::StorageTransferServiceStub> stub_;
+  std::shared_ptr<storagetransfer_v1_internal::StorageTransferServiceStub>
+      stub_;
   Options options_;
 };
 

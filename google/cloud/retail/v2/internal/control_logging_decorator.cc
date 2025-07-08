@@ -31,34 +31,27 @@ namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ControlServiceLogging::ControlServiceLogging(
-    std::shared_ptr<ControlServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ControlServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceLogging::CreateControl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateControlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::CreateControlRequest const& request) {
         return child_->CreateControl(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ControlServiceLogging::DeleteControl(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ControlServiceLogging::DeleteControl(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::DeleteControlRequest const& request) {
         return child_->DeleteControl(context, options, request);
       },
@@ -67,26 +60,21 @@ ControlServiceLogging::DeleteControl(
 
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceLogging::UpdateControl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::UpdateControlRequest const& request) {
         return child_->UpdateControl(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::retail::v2::Control>
-ControlServiceLogging::GetControl(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::Control> ControlServiceLogging::GetControl(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetControlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::GetControlRequest const& request) {
         return child_->GetControl(context, options, request);
       },
@@ -95,12 +83,10 @@ ControlServiceLogging::GetControl(
 
 StatusOr<google::cloud::retail::v2::ListControlsResponse>
 ControlServiceLogging::ListControls(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListControlsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::ListControlsRequest const& request) {
         return child_->ListControls(context, options, request);
       },
@@ -109,26 +95,21 @@ ControlServiceLogging::ListControls(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ControlServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ControlServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ControlServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },

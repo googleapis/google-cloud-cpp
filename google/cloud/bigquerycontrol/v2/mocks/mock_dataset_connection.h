@@ -42,37 +42,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDatasetServiceConnection : public bigquerycontrol_v2::DatasetServiceConnection {
+class MockDatasetServiceConnection
+    : public bigquerycontrol_v2::DatasetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Dataset>,
-  GetDataset,
-  (google::cloud::bigquery::v2::GetDatasetRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Dataset>, GetDataset,
+              (google::cloud::bigquery::v2::GetDatasetRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Dataset>,
-  InsertDataset,
-  (google::cloud::bigquery::v2::InsertDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::v2::Dataset>, InsertDataset,
+      (google::cloud::bigquery::v2::InsertDatasetRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Dataset>,
-  PatchDataset,
-  (google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::v2::Dataset>, PatchDataset,
+      (google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Dataset>,
-  UpdateDataset,
-  (google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::v2::Dataset>, UpdateDataset,
+      (google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteDataset,
-  (google::cloud::bigquery::v2::DeleteDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteDataset,
+      (google::cloud::bigquery::v2::DeleteDatasetRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::bigquery::v2::ListFormatDataset>),
-  ListDatasets,
-  (google::cloud::bigquery::v2::ListDatasetsRequest request), (override));
+              ListDatasets,
+              (google::cloud::bigquery::v2::ListDatasetsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Dataset>,
-  UndeleteDataset,
-  (google::cloud::bigquery::v2::UndeleteDatasetRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::bigquery::v2::Dataset>, UndeleteDataset,
+      (google::cloud::bigquery::v2::UndeleteDatasetRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

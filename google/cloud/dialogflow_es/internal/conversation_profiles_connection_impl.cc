@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/v2/conversation_profile.proto
 
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_connection_impl.h"
+#include "google/cloud/dialogflow_es/internal/conversation_profiles_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/dialogflow_es/internal/conversation_profiles_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,58 +33,71 @@ namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dialogflow_es::ConversationProfilesRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()->clone();
+std::unique_ptr<dialogflow_es::ConversationProfilesRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<dialogflow_es::ConversationProfilesBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dialogflow_es::ConversationProfilesBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<dialogflow_es::ConversationProfilesConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<dialogflow_es::ConversationProfilesConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<dialogflow_es::
+               ConversationProfilesConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<dialogflow_es::ConversationProfilesPollingPolicyOption>()->clone();
+  return options.get<dialogflow_es::ConversationProfilesPollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 ConversationProfilesConnectionImpl::ConversationProfilesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dialogflow_es_internal::ConversationProfilesStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ConversationProfilesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), ConversationProfilesConnection::options())) {}
 
 StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesConnectionImpl::ListConversationProfiles(google::cloud::dialogflow::v2::ListConversationProfilesRequest request) {
+ConversationProfilesConnectionImpl::ListConversationProfiles(
+    google::cloud::dialogflow::v2::ListConversationProfilesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListConversationProfiles(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListConversationProfiles(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dialogflow::v2::ConversationProfile>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dialogflow::v2::ConversationProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::ConversationProfilesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::ConversationProfilesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dialogflow::v2::ListConversationProfilesRequest const& r) {
+          Options const& options,
+          google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dialogflow::v2::ListConversationProfilesRequest const& request) {
+                   google::cloud::dialogflow::v2::
+                       ListConversationProfilesRequest const& request) {
               return stub->ListConversationProfiles(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::ListConversationProfilesResponse r) {
-        std::vector<google::cloud::dialogflow::v2::ConversationProfile> result(r.conversation_profiles().size());
+        std::vector<google::cloud::dialogflow::v2::ConversationProfile> result(
+            r.conversation_profiles().size());
         auto& messages = *r.mutable_conversation_profiles();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -92,101 +105,123 @@ ConversationProfilesConnectionImpl::ListConversationProfiles(google::cloud::dial
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesConnectionImpl::GetConversationProfile(google::cloud::dialogflow::v2::GetConversationProfileRequest const& request) {
+ConversationProfilesConnectionImpl::GetConversationProfile(
+    google::cloud::dialogflow::v2::GetConversationProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConversationProfile(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::GetConversationProfileRequest const& request) {
+             google::cloud::dialogflow::v2::GetConversationProfileRequest const&
+                 request) {
         return stub_->GetConversationProfile(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesConnectionImpl::CreateConversationProfile(google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request) {
+ConversationProfilesConnectionImpl::CreateConversationProfile(
+    google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateConversationProfile(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
+              request) {
         return stub_->CreateConversationProfile(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesConnectionImpl::UpdateConversationProfile(google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request) {
+ConversationProfilesConnectionImpl::UpdateConversationProfile(
+    google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateConversationProfile(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
+              request) {
         return stub_->UpdateConversationProfile(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-ConversationProfilesConnectionImpl::DeleteConversationProfile(google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request) {
+Status ConversationProfilesConnectionImpl::DeleteConversationProfile(
+    google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteConversationProfile(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
+              request) {
         return stub_->DeleteConversationProfile(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->SetSuggestionFeatureConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dialogflow::v2::ConversationProfile>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
-     return stub->AsyncSetSuggestionFeatureConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dialogflow::v2::ConversationProfile>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dialogflow::v2::ConversationProfile>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::dialogflow::v2::
+                         SetSuggestionFeatureConfigRequest const& request) {
+        return stub->AsyncSetSuggestionFeatureConfig(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::v2::ConversationProfile>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
-      NoAwaitTag, google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetSuggestionFeatureConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 SetSuggestionFeatureConfigRequest const& request) {
         return stub_->SetSuggestionFeatureConfig(context, options, request);
       },
       *current, request, __func__);
@@ -194,78 +229,94 @@ ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::dialogflow::v2::SetSuggestionFeatureConfigOperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
-        internal::InvalidArgumentError("operation does not correspond to SetSuggestionFeatureConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::dialogflow::v2::
+                   SetSuggestionFeatureConfigOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SetSuggestionFeatureConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dialogflow::v2::ConversationProfile>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dialogflow::v2::ConversationProfile>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::v2::ConversationProfile>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::v2::ConversationProfile>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ClearSuggestionFeatureConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::dialogflow::v2::ConversationProfile>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
-     return stub->AsyncClearSuggestionFeatureConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dialogflow::v2::ConversationProfile>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::dialogflow::v2::ConversationProfile>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::dialogflow::v2::
+                         ClearSuggestionFeatureConfigRequest const& request) {
+        return stub->AsyncClearSuggestionFeatureConfig(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::v2::ConversationProfile>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
-      NoAwaitTag, google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ClearSuggestionFeatureConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 ClearSuggestionFeatureConfigRequest const& request) {
         return stub_->ClearSuggestionFeatureConfig(context, options, request);
       },
       *current, request, __func__);
@@ -273,56 +324,70 @@ ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigOperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
-        internal::InvalidArgumentError("operation does not correspond to ClearSuggestionFeatureConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::dialogflow::v2::
+                   ClearSuggestionFeatureConfigOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ClearSuggestionFeatureConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::dialogflow::v2::ConversationProfile>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::dialogflow::v2::ConversationProfile>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::v2::ConversationProfile>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::v2::ConversationProfile>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-ConversationProfilesConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+ConversationProfilesConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::ConversationProfilesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::ConversationProfilesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -330,7 +395,8 @@ ConversationProfilesConnectionImpl::ListLocations(google::cloud::location::ListL
 }
 
 StatusOr<google::cloud::location::Location>
-ConversationProfilesConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+ConversationProfilesConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -343,17 +409,21 @@ ConversationProfilesConnectionImpl::GetLocation(google::cloud::location::GetLoca
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationProfilesConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+ConversationProfilesConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dialogflow_es::ConversationProfilesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dialogflow_es::ConversationProfilesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -363,7 +433,8 @@ ConversationProfilesConnectionImpl::ListOperations(google::longrunning::ListOper
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -371,7 +442,8 @@ ConversationProfilesConnectionImpl::ListOperations(google::longrunning::ListOper
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+ConversationProfilesConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -383,8 +455,8 @@ ConversationProfilesConnectionImpl::GetOperation(google::longrunning::GetOperati
       *current, request, __func__);
 }
 
-Status
-ConversationProfilesConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status ConversationProfilesConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

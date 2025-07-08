@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_HTTP_PROXIES_V1_TARGET_HTTP_PROXIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_HTTP_PROXIES_V1_TARGET_HTTP_PROXIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_retry_traits.h"
 #include "google/cloud/compute/target_http_proxies/v1/target_http_proxies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class TargetHttpProxiesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetHttpProxiesLimitedErrorCountRetryPolicy : public TargetHttpProxiesRetryPolicy {
+class TargetHttpProxiesLimitedErrorCountRetryPolicy
+    : public TargetHttpProxiesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class TargetHttpProxiesLimitedErrorCountRetryPolicy : public TargetHttpProxiesRe
    *     @p maximum_failures == 0.
    */
   explicit TargetHttpProxiesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TargetHttpProxiesLimitedErrorCountRetryPolicy(
       TargetHttpProxiesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TargetHttpProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TargetHttpProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TargetHttpProxiesLimitedErrorCountRetryPolicy(
       TargetHttpProxiesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TargetHttpProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TargetHttpProxiesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class TargetHttpProxiesLimitedErrorCountRetryPolicy : public TargetHttpProxiesRe
   using BaseType = TargetHttpProxiesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_target_http_proxies_v1_internal::TargetHttpProxiesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_target_http_proxies_v1_internal::TargetHttpProxiesRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class TargetHttpProxiesLimitedErrorCountRetryPolicy : public TargetHttpProxiesRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TargetHttpProxiesLimitedTimeRetryPolicy : public TargetHttpProxiesRetryPolicy {
+class TargetHttpProxiesLimitedTimeRetryPolicy
+    : public TargetHttpProxiesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class TargetHttpProxiesLimitedTimeRetryPolicy : public TargetHttpProxiesRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit TargetHttpProxiesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TargetHttpProxiesLimitedTimeRetryPolicy(TargetHttpProxiesLimitedTimeRetryPolicy&& rhs) noexcept
-    : TargetHttpProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TargetHttpProxiesLimitedTimeRetryPolicy(TargetHttpProxiesLimitedTimeRetryPolicy const& rhs) noexcept
-    : TargetHttpProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetHttpProxiesLimitedTimeRetryPolicy(
+      TargetHttpProxiesLimitedTimeRetryPolicy&& rhs) noexcept
+      : TargetHttpProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TargetHttpProxiesLimitedTimeRetryPolicy(
+      TargetHttpProxiesLimitedTimeRetryPolicy const& rhs) noexcept
+      : TargetHttpProxiesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,20 +163,23 @@ class TargetHttpProxiesLimitedTimeRetryPolicy : public TargetHttpProxiesRetryPol
   using BaseType = TargetHttpProxiesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_target_http_proxies_v1_internal::TargetHttpProxiesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_target_http_proxies_v1_internal::TargetHttpProxiesRetryTraits>
+      impl_;
 };
 
 /**
  * The `TargetHttpProxiesConnection` object for `TargetHttpProxiesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TargetHttpProxiesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TargetHttpProxiesClient`.
+ * sets in `TargetHttpProxiesClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TargetHttpProxiesClient`.
  *
  * To create a concrete instance, see `MakeTargetHttpProxiesConnection()`.
  *
- * For mocking, see `compute_target_http_proxies_v1_mocks::MockTargetHttpProxiesConnection`.
+ * For mocking, see
+ * `compute_target_http_proxies_v1_mocks::MockTargetHttpProxiesConnection`.
  */
 class TargetHttpProxiesConnection {
  public:
@@ -178,50 +187,70 @@ class TargetHttpProxiesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
-  AggregatedListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest request);
+  virtual StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
+  AggregatedListTargetHttpProxies(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          AggregatedListTargetHttpProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const& request);
+  DeleteTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
+                            DeleteTargetHttpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetHttpProxy(NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const& request);
+  DeleteTargetHttpProxy(NoAwaitTag,
+                        google::cloud::cpp::compute::target_http_proxies::v1::
+                            DeleteTargetHttpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetHttpProxy( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteTargetHttpProxy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  GetTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxyRequest const& request);
+  GetTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
+                         GetTargetHttpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const& request);
+  InsertTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
+                            InsertTargetHttpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetHttpProxy(NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const& request);
+  InsertTargetHttpProxy(NoAwaitTag,
+                        google::cloud::cpp::compute::target_http_proxies::v1::
+                            InsertTargetHttpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetHttpProxy( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertTargetHttpProxy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest request);
+  ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::
+                            ListTargetHttpProxiesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const& request);
+  PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
+                           PatchTargetHttpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchTargetHttpProxy(NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const& request);
+  PatchTargetHttpProxy(NoAwaitTag,
+                       google::cloud::cpp::compute::target_http_proxies::v1::
+                           PatchTargetHttpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetHttpProxy( google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchTargetHttpProxy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUrlMap(google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request);
+  SetUrlMap(google::cloud::cpp::compute::target_http_proxies::v1::
+                SetUrlMapRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetUrlMap(NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
+                      SetUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUrlMap( google::cloud::cpp::compute::v1::Operation const& operation);
+  SetUrlMap(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

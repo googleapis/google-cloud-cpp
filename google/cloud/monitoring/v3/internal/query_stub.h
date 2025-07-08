@@ -35,25 +35,26 @@ class QueryServiceStub {
  public:
   virtual ~QueryServiceStub() = 0;
 
-  virtual StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
+  QueryTimeSeries(
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::QueryTimeSeriesRequest const& request) = 0;
 };
 
 class DefaultQueryServiceStub : public QueryServiceStub {
  public:
   explicit DefaultQueryServiceStub(
-      std::unique_ptr<google::monitoring::v3::QueryService::StubInterface> grpc_stub)
+      std::unique_ptr<google::monitoring::v3::QueryService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::QueryTimeSeriesRequest const& request) override;
 
  private:
-  std::unique_ptr<google::monitoring::v3::QueryService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::monitoring::v3::QueryService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

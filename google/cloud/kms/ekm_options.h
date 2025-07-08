@@ -31,7 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use kms_v1::EkmServiceBackoffPolicyOption directly.
 using ::google::cloud::kms_v1::EkmServiceBackoffPolicyOption;
 
-/// @deprecated Use kms_v1::EkmServiceConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use kms_v1::EkmServiceConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::kms_v1::EkmServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use kms_v1::EkmServicePolicyOptionList directly.

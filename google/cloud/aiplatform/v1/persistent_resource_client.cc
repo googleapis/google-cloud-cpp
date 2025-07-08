@@ -26,14 +26,19 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PersistentResourceServiceClient::PersistentResourceServiceClient(
-    std::shared_ptr<PersistentResourceServiceConnection> connection, Options opts)
+    std::shared_ptr<PersistentResourceServiceConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PersistentResourceServiceClient::~PersistentResourceServiceClient() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::CreatePersistentResource(std::string const& parent, google::cloud::aiplatform::v1::PersistentResource const& persistent_resource, std::string const& persistent_resource_id, Options opts) {
+PersistentResourceServiceClient::CreatePersistentResource(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::PersistentResource const&
+        persistent_resource,
+    std::string const& persistent_resource_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreatePersistentResourceRequest request;
   request.set_parent(parent);
@@ -43,7 +48,11 @@ PersistentResourceServiceClient::CreatePersistentResource(std::string const& par
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::CreatePersistentResource(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::PersistentResource const& persistent_resource, std::string const& persistent_resource_id, Options opts) {
+PersistentResourceServiceClient::CreatePersistentResource(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::PersistentResource const&
+        persistent_resource,
+    std::string const& persistent_resource_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreatePersistentResourceRequest request;
   request.set_parent(parent);
@@ -53,25 +62,34 @@ PersistentResourceServiceClient::CreatePersistentResource(NoAwaitTag, std::strin
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::CreatePersistentResource(google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::CreatePersistentResource(
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePersistentResource(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::CreatePersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::CreatePersistentResource(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePersistentResource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::CreatePersistentResource(google::longrunning::Operation const& operation, Options opts) {
+PersistentResourceServiceClient::CreatePersistentResource(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePersistentResource(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-PersistentResourceServiceClient::GetPersistentResource(std::string const& name, Options opts) {
+PersistentResourceServiceClient::GetPersistentResource(std::string const& name,
+                                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::GetPersistentResourceRequest request;
   request.set_name(name);
@@ -79,13 +97,16 @@ PersistentResourceServiceClient::GetPersistentResource(std::string const& name, 
 }
 
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
-PersistentResourceServiceClient::GetPersistentResource(google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::GetPersistentResource(
+    google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPersistentResource(request);
 }
 
 StreamRange<google::cloud::aiplatform::v1::PersistentResource>
-PersistentResourceServiceClient::ListPersistentResources(std::string const& parent, Options opts) {
+PersistentResourceServiceClient::ListPersistentResources(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ListPersistentResourcesRequest request;
   request.set_parent(parent);
@@ -93,13 +114,16 @@ PersistentResourceServiceClient::ListPersistentResources(std::string const& pare
 }
 
 StreamRange<google::cloud::aiplatform::v1::PersistentResource>
-PersistentResourceServiceClient::ListPersistentResources(google::cloud::aiplatform::v1::ListPersistentResourcesRequest request, Options opts) {
+PersistentResourceServiceClient::ListPersistentResources(
+    google::cloud::aiplatform::v1::ListPersistentResourcesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPersistentResources(std::move(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PersistentResourceServiceClient::DeletePersistentResource(std::string const& name, Options opts) {
+PersistentResourceServiceClient::DeletePersistentResource(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeletePersistentResourceRequest request;
   request.set_name(name);
@@ -107,7 +131,8 @@ PersistentResourceServiceClient::DeletePersistentResource(std::string const& nam
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::DeletePersistentResource(NoAwaitTag, std::string const& name, Options opts) {
+PersistentResourceServiceClient::DeletePersistentResource(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeletePersistentResourceRequest request;
   request.set_name(name);
@@ -115,25 +140,36 @@ PersistentResourceServiceClient::DeletePersistentResource(NoAwaitTag, std::strin
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PersistentResourceServiceClient::DeletePersistentResource(google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::DeletePersistentResource(
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePersistentResource(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::DeletePersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::DeletePersistentResource(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePersistentResource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-PersistentResourceServiceClient::DeletePersistentResource(google::longrunning::Operation const& operation, Options opts) {
+PersistentResourceServiceClient::DeletePersistentResource(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePersistentResource(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::UpdatePersistentResource(google::cloud::aiplatform::v1::PersistentResource const& persistent_resource, google::protobuf::FieldMask const& update_mask, Options opts) {
+PersistentResourceServiceClient::UpdatePersistentResource(
+    google::cloud::aiplatform::v1::PersistentResource const&
+        persistent_resource,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdatePersistentResourceRequest request;
   *request.mutable_persistent_resource() = persistent_resource;
@@ -142,7 +178,11 @@ PersistentResourceServiceClient::UpdatePersistentResource(google::cloud::aiplatf
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::UpdatePersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::PersistentResource const& persistent_resource, google::protobuf::FieldMask const& update_mask, Options opts) {
+PersistentResourceServiceClient::UpdatePersistentResource(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::PersistentResource const&
+        persistent_resource,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdatePersistentResourceRequest request;
   *request.mutable_persistent_resource() = persistent_resource;
@@ -151,25 +191,34 @@ PersistentResourceServiceClient::UpdatePersistentResource(NoAwaitTag, google::cl
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::UpdatePersistentResource(google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::UpdatePersistentResource(
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePersistentResource(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::UpdatePersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::UpdatePersistentResource(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePersistentResource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::UpdatePersistentResource(google::longrunning::Operation const& operation, Options opts) {
+PersistentResourceServiceClient::UpdatePersistentResource(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePersistentResource(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::RebootPersistentResource(std::string const& name, Options opts) {
+PersistentResourceServiceClient::RebootPersistentResource(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::RebootPersistentResourceRequest request;
   request.set_name(name);
@@ -177,7 +226,8 @@ PersistentResourceServiceClient::RebootPersistentResource(std::string const& nam
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::RebootPersistentResource(NoAwaitTag, std::string const& name, Options opts) {
+PersistentResourceServiceClient::RebootPersistentResource(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::RebootPersistentResourceRequest request;
   request.set_name(name);
@@ -185,55 +235,68 @@ PersistentResourceServiceClient::RebootPersistentResource(NoAwaitTag, std::strin
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::RebootPersistentResource(google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::RebootPersistentResource(
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RebootPersistentResource(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::RebootPersistentResource(NoAwaitTag, google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request, Options opts) {
+PersistentResourceServiceClient::RebootPersistentResource(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RebootPersistentResource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-PersistentResourceServiceClient::RebootPersistentResource(google::longrunning::Operation const& operation, Options opts) {
+PersistentResourceServiceClient::RebootPersistentResource(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RebootPersistentResource(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-PersistentResourceServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+PersistentResourceServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-PersistentResourceServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+PersistentResourceServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-PersistentResourceServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> PersistentResourceServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-PersistentResourceServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> PersistentResourceServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PersistentResourceServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+PersistentResourceServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-PersistentResourceServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+PersistentResourceServiceClient::ListOperations(std::string const& name,
+                                                std::string const& filter,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -242,13 +305,15 @@ PersistentResourceServiceClient::ListOperations(std::string const& name, std::st
 }
 
 StreamRange<google::longrunning::Operation>
-PersistentResourceServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+PersistentResourceServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::GetOperation(std::string const& name, Options opts) {
+PersistentResourceServiceClient::GetOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -256,41 +321,43 @@ PersistentResourceServiceClient::GetOperation(std::string const& name, Options o
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+PersistentResourceServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-PersistentResourceServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status PersistentResourceServiceClient::DeleteOperation(std::string const& name,
+                                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-PersistentResourceServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status PersistentResourceServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-PersistentResourceServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status PersistentResourceServiceClient::CancelOperation(std::string const& name,
+                                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-PersistentResourceServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status PersistentResourceServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PersistentResourceServiceClient::WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts) {
+PersistentResourceServiceClient::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WaitOperation(request);
 }

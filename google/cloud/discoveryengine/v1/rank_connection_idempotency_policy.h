@@ -37,21 +37,21 @@ class RankServiceConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<RankServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  Rank(google::cloud::discoveryengine::v1::RankRequest const& request);
+  virtual google::cloud::Idempotency Rank(
+      google::cloud::discoveryengine::v1::RankRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<RankServiceConnectionIdempotencyPolicy>
-    MakeDefaultRankServiceConnectionIdempotencyPolicy();
+MakeDefaultRankServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

@@ -17,8 +17,8 @@
 // source: google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto
 
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -33,36 +33,52 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StoragePoolTypesRestConnectionImpl::StoragePoolTypesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_storage_pool_types_v1_internal::StoragePoolTypesRestStub> stub,
+    std::shared_ptr<
+        compute_storage_pool_types_v1_internal::StoragePoolTypesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        StoragePoolTypesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      StoragePoolTypesConnection::options())) {}
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
-StoragePoolTypesRestConnectionImpl::AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request) {
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+StoragePoolTypesRestConnectionImpl::AggregatedListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        AggregatedListStoragePoolTypesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->AggregatedListStoragePoolTypes(request);
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListStoragePoolTypes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest const& r) {
+          Options const& options,
+          google::cloud::cpp::compute::storage_pool_types::v1::
+              AggregatedListStoragePoolTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest const& request) {
-              return stub->AggregatedListStoragePoolTypes(rest_context, options, request);
+                   google::cloud::cpp::compute::storage_pool_types::v1::
+                       AggregatedListStoragePoolTypesRequest const& request) {
+              return stub->AggregatedListStoragePoolTypes(rest_context, options,
+                                                          request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList r) {
-        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>> result(r.items().size());
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               StoragePoolTypesScopedList>>
+            result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -70,41 +86,54 @@ StoragePoolTypesRestConnectionImpl::AggregatedListStoragePoolTypes(google::cloud
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
-StoragePoolTypesRestConnectionImpl::GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) {
+StoragePoolTypesRestConnectionImpl::GetStoragePoolType(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        GetStoragePoolTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetStoragePoolType(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::storage_pool_types::v1::
+                 GetStoragePoolTypeRequest const& request) {
         return stub_->GetStoragePoolType(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-StoragePoolTypesRestConnectionImpl::ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request) {
+StoragePoolTypesRestConnectionImpl::ListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        ListStoragePoolTypesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListStoragePoolTypes(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListStoragePoolTypes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest const& r) {
+          Options const& options,
+          google::cloud::cpp::compute::storage_pool_types::v1::
+              ListStoragePoolTypesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](rest_internal::RestContext& rest_context,
                    Options const& options,
-                   google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest const& request) {
+                   google::cloud::cpp::compute::storage_pool_types::v1::
+                       ListStoragePoolTypesRequest const& request) {
               return stub->ListStoragePoolTypes(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::cpp::compute::v1::StoragePoolTypeList r) {
-        std::vector<google::cloud::cpp::compute::v1::StoragePoolType> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::StoragePoolType> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

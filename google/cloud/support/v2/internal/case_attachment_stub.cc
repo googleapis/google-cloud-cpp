@@ -32,15 +32,14 @@ CaseAttachmentServiceStub::~CaseAttachmentServiceStub() = default;
 
 StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
 DefaultCaseAttachmentServiceStub::ListAttachments(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::support::v2::ListAttachmentsRequest const& request) {
-    google::cloud::support::v2::ListAttachmentsResponse response;
-    auto status =
-        grpc_stub_->ListAttachments(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::support::v2::ListAttachmentsRequest const& request) {
+  google::cloud::support::v2::ListAttachmentsResponse response;
+  auto status = grpc_stub_->ListAttachments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

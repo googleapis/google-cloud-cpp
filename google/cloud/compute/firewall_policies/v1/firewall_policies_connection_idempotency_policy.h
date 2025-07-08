@@ -34,65 +34,84 @@ class FirewallPoliciesConnectionIdempotencyPolicy {
   virtual ~FirewallPoliciesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<FirewallPoliciesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<FirewallPoliciesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AddAssociation(google::cloud::cpp::compute::firewall_policies::v1::AddAssociationRequest const& request);
+  virtual google::cloud::Idempotency AddAssociation(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          AddAssociationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AddRule(google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const& request);
+  virtual google::cloud::Idempotency AddRule(
+      google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CloneRules(google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const& request);
+  virtual google::cloud::Idempotency CloneRules(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          CloneRulesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::DeleteFirewallPolicyRequest const& request);
+  virtual google::cloud::Idempotency DeleteFirewallPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          DeleteFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::GetFirewallPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetFirewallPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          GetFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetAssociation(google::cloud::cpp::compute::firewall_policies::v1::GetAssociationRequest const& request);
+  virtual google::cloud::Idempotency GetAssociation(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          GetAssociationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::firewall_policies::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetRule(google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const& request);
+  virtual google::cloud::Idempotency GetRule(
+      google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::InsertFirewallPolicyRequest const& request);
+  virtual google::cloud::Idempotency InsertFirewallPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          InsertFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::ListFirewallPoliciesRequest request);
+  virtual google::cloud::Idempotency ListFirewallPolicies(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          ListFirewallPoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListAssociations(google::cloud::cpp::compute::firewall_policies::v1::ListAssociationsRequest const& request);
+  virtual google::cloud::Idempotency ListAssociations(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          ListAssociationsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Move(google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const& request);
+  virtual google::cloud::Idempotency Move(
+      google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  PatchFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::PatchFirewallPolicyRequest const& request);
+  virtual google::cloud::Idempotency PatchFirewallPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          PatchFirewallPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PatchRule(google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const& request);
+  virtual google::cloud::Idempotency PatchRule(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          PatchRuleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RemoveAssociation(google::cloud::cpp::compute::firewall_policies::v1::RemoveAssociationRequest const& request);
+  virtual google::cloud::Idempotency RemoveAssociation(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          RemoveAssociationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RemoveRule(google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const& request);
+  virtual google::cloud::Idempotency RemoveRule(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          RemoveRuleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::firewall_policies::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::firewall_policies::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<FirewallPoliciesConnectionIdempotencyPolicy>
-    MakeDefaultFirewallPoliciesConnectionIdempotencyPolicy();
+MakeDefaultFirewallPoliciesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_firewall_policies_v1

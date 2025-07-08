@@ -50,17 +50,17 @@ EngineServiceMetadata::AsyncCreateEngine(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEngine(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateEngine(cq, std::move(context), std::move(options),
+                                   request);
 }
 
-StatusOr<google::longrunning::Operation>
-EngineServiceMetadata::CreateEngine(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EngineServiceMetadata::CreateEngine(
+    grpc::ClientContext& context, Options options,
     google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEngine(context, options, request);
 }
 
@@ -70,71 +70,70 @@ EngineServiceMetadata::AsyncDeleteEngine(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteEngine(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteEngine(cq, std::move(context), std::move(options),
+                                   request);
 }
 
-StatusOr<google::longrunning::Operation>
-EngineServiceMetadata::DeleteEngine(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> EngineServiceMetadata::DeleteEngine(
+    grpc::ClientContext& context, Options options,
     google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEngine(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>
 EngineServiceMetadata::UpdateEngine(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateEngineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("engine.name=", internal::UrlEncode(request.engine().name())));
+  SetMetadata(context, options,
+              absl::StrCat("engine.name=",
+                           internal::UrlEncode(request.engine().name())));
   return child_->UpdateEngine(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>
 EngineServiceMetadata::GetEngine(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetEngineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEngine(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListEnginesResponse>
 EngineServiceMetadata::ListEngines(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListEnginesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEngines(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EngineServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-EngineServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> EngineServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-EngineServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EngineServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -146,8 +145,8 @@ EngineServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> EngineServiceMetadata::AsyncCancelOperation(
@@ -157,8 +156,8 @@ future<Status> EngineServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void EngineServiceMetadata::SetMetadata(grpc::ClientContext& context,
@@ -170,8 +169,8 @@ void EngineServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void EngineServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

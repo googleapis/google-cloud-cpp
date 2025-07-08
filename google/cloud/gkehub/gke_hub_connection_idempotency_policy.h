@@ -26,7 +26,8 @@ namespace cloud {
 namespace gkehub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use gkehub_v1::MakeDefaultGkeHubConnectionIdempotencyPolicy directly.
+/// @deprecated Use gkehub_v1::MakeDefaultGkeHubConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::gkehub_v1::MakeDefaultGkeHubConnectionIdempotencyPolicy;
 
 /// @deprecated Use gkehub_v1::GkeHubConnectionIdempotencyPolicy directly.

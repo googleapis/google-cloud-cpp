@@ -34,149 +34,192 @@ RegistrationServiceTracingConnection::RegistrationServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceTracingConnection::CreateNamespace(google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::CreateNamespace");
+RegistrationServiceTracingConnection::CreateNamespace(
+    google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::CreateNamespace");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateNamespace(request));
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceTracingConnection::ListNamespaces(google::cloud::servicedirectory::v1::ListNamespacesRequest request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::ListNamespaces");
+RegistrationServiceTracingConnection::ListNamespaces(
+    google::cloud::servicedirectory::v1::ListNamespacesRequest request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::ListNamespaces");
   internal::OTelScope scope(span);
   auto sr = child_->ListNamespaces(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::servicedirectory::v1::Namespace>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::servicedirectory::v1::Namespace>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceTracingConnection::GetNamespace(google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::GetNamespace");
+RegistrationServiceTracingConnection::GetNamespace(
+    google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::GetNamespace");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNamespace(request));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceTracingConnection::UpdateNamespace(google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::UpdateNamespace");
+RegistrationServiceTracingConnection::UpdateNamespace(
+    google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::UpdateNamespace");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateNamespace(request));
 }
 
-Status
-RegistrationServiceTracingConnection::DeleteNamespace(google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::DeleteNamespace");
+Status RegistrationServiceTracingConnection::DeleteNamespace(
+    google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::DeleteNamespace");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteNamespace(request));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceTracingConnection::CreateService(google::cloud::servicedirectory::v1::CreateServiceRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::CreateService");
+RegistrationServiceTracingConnection::CreateService(
+    google::cloud::servicedirectory::v1::CreateServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::CreateService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateService(request));
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceTracingConnection::ListServices(google::cloud::servicedirectory::v1::ListServicesRequest request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::ListServices");
+RegistrationServiceTracingConnection::ListServices(
+    google::cloud::servicedirectory::v1::ListServicesRequest request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::ListServices");
   internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::servicedirectory::v1::Service>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::servicedirectory::v1::Service>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceTracingConnection::GetService(google::cloud::servicedirectory::v1::GetServiceRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::GetService");
+RegistrationServiceTracingConnection::GetService(
+    google::cloud::servicedirectory::v1::GetServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::GetService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetService(request));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceTracingConnection::UpdateService(google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::UpdateService");
+RegistrationServiceTracingConnection::UpdateService(
+    google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::UpdateService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateService(request));
 }
 
-Status
-RegistrationServiceTracingConnection::DeleteService(google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::DeleteService");
+Status RegistrationServiceTracingConnection::DeleteService(
+    google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::DeleteService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteService(request));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceTracingConnection::CreateEndpoint(google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::CreateEndpoint");
+RegistrationServiceTracingConnection::CreateEndpoint(
+    google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::CreateEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateEndpoint(request));
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceTracingConnection::ListEndpoints(google::cloud::servicedirectory::v1::ListEndpointsRequest request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::ListEndpoints");
+RegistrationServiceTracingConnection::ListEndpoints(
+    google::cloud::servicedirectory::v1::ListEndpointsRequest request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::ListEndpoints");
   internal::OTelScope scope(span);
   auto sr = child_->ListEndpoints(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::servicedirectory::v1::Endpoint>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::servicedirectory::v1::Endpoint>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceTracingConnection::GetEndpoint(google::cloud::servicedirectory::v1::GetEndpointRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::GetEndpoint");
+RegistrationServiceTracingConnection::GetEndpoint(
+    google::cloud::servicedirectory::v1::GetEndpointRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::GetEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEndpoint(request));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceTracingConnection::UpdateEndpoint(google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::UpdateEndpoint");
+RegistrationServiceTracingConnection::UpdateEndpoint(
+    google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::UpdateEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateEndpoint(request));
 }
 
-Status
-RegistrationServiceTracingConnection::DeleteEndpoint(google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::DeleteEndpoint");
+Status RegistrationServiceTracingConnection::DeleteEndpoint(
+    google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::DeleteEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteEndpoint(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-RegistrationServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::GetIamPolicy");
+RegistrationServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-RegistrationServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::SetIamPolicy");
+RegistrationServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-RegistrationServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::TestIamPermissions");
+RegistrationServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::cloud::location::Location>
-RegistrationServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::ListLocations");
+RegistrationServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-RegistrationServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("servicedirectory_v1::RegistrationServiceConnection::GetLocation");
+RegistrationServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::RegistrationServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
@@ -188,7 +231,8 @@ MakeRegistrationServiceTracingConnection(
     std::shared_ptr<servicedirectory_v1::RegistrationServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<RegistrationServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<RegistrationServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

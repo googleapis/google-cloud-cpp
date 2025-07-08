@@ -17,13 +17,13 @@
 // source: google/cloud/contentwarehouse/v1/document_schema_service.proto
 
 #include "google/cloud/contentwarehouse/v1/document_schema_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/contentwarehouse/v1/document_schema_options.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_connection_impl.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_option_defaults.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_stub_factory.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -56,14 +56,15 @@ DocumentSchemaServiceConnection::GetDocumentSchema(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DocumentSchemaServiceConnection::DeleteDocumentSchema(
+Status DocumentSchemaServiceConnection::DeleteDocumentSchema(
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema> DocumentSchemaServiceConnection::ListDocumentSchemas(
-    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
+DocumentSchemaServiceConnection::ListDocumentSchemas(
+    google::cloud::contentwarehouse::v1::
+        ListDocumentSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>>();
 }
@@ -74,20 +75,24 @@ DocumentSchemaServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DocumentSchemaServiceConnection> MakeDocumentSchemaServiceConnection(
-    Options options) {
+std::shared_ptr<DocumentSchemaServiceConnection>
+MakeDocumentSchemaServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DocumentSchemaServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 DocumentSchemaServicePolicyOptionList>(
+      options, __func__);
   options = contentwarehouse_v1_internal::DocumentSchemaServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = contentwarehouse_v1_internal::CreateDefaultDocumentSchemaServiceStub(
-    std::move(auth), options);
-  return contentwarehouse_v1_internal::MakeDocumentSchemaServiceTracingConnection(
-      std::make_shared<contentwarehouse_v1_internal::DocumentSchemaServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      contentwarehouse_v1_internal::CreateDefaultDocumentSchemaServiceStub(
+          std::move(auth), options);
+  return contentwarehouse_v1_internal::
+      MakeDocumentSchemaServiceTracingConnection(
+          std::make_shared<contentwarehouse_v1_internal::
+                               DocumentSchemaServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

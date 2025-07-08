@@ -33,28 +33,28 @@ DataTaxonomyServiceAuth::DataTaxonomyServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncCreateDataTaxonomy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDataTaxonomy(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDataTaxonomy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::CreateDataTaxonomy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataTaxonomy(context, options, request);
@@ -62,28 +62,28 @@ DataTaxonomyServiceAuth::CreateDataTaxonomy(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncUpdateDataTaxonomy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDataTaxonomy(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateDataTaxonomy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::UpdateDataTaxonomy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataTaxonomy(context, options, request);
@@ -91,45 +91,45 @@ DataTaxonomyServiceAuth::UpdateDataTaxonomy(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncDeleteDataTaxonomy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDataTaxonomy(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDataTaxonomy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::DeleteDataTaxonomy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataTaxonomy(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListDataTaxonomiesResponse> DataTaxonomyServiceAuth::ListDataTaxonomies(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListDataTaxonomiesResponse>
+DataTaxonomyServiceAuth::ListDataTaxonomies(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListDataTaxonomiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataTaxonomies(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::DataTaxonomy> DataTaxonomyServiceAuth::GetDataTaxonomy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::DataTaxonomy>
+DataTaxonomyServiceAuth::GetDataTaxonomy(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -138,14 +138,16 @@ StatusOr<google::cloud::dataplex::v1::DataTaxonomy> DataTaxonomyServiceAuth::Get
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncCreateDataAttributeBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -157,9 +159,9 @@ DataTaxonomyServiceAuth::AsyncCreateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::CreateDataAttributeBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataAttributeBinding(context, options, request);
@@ -167,14 +169,16 @@ DataTaxonomyServiceAuth::CreateDataAttributeBinding(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncUpdateDataAttributeBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -186,9 +190,9 @@ DataTaxonomyServiceAuth::AsyncUpdateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::UpdateDataAttributeBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataAttributeBinding(context, options, request);
@@ -196,14 +200,16 @@ DataTaxonomyServiceAuth::UpdateDataAttributeBinding(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncDeleteDataAttributeBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -215,27 +221,29 @@ DataTaxonomyServiceAuth::AsyncDeleteDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::DeleteDataAttributeBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataAttributeBinding(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListDataAttributeBindingsResponse> DataTaxonomyServiceAuth::ListDataAttributeBindings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataplex::v1::ListDataAttributeBindingsRequest const& request) {
+StatusOr<google::cloud::dataplex::v1::ListDataAttributeBindingsResponse>
+DataTaxonomyServiceAuth::ListDataAttributeBindings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListDataAttributeBindingsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataAttributeBindings(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::DataAttributeBinding> DataTaxonomyServiceAuth::GetDataAttributeBinding(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataplex::v1::GetDataAttributeBindingRequest const& request) {
+StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
+DataTaxonomyServiceAuth::GetDataAttributeBinding(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataAttributeBinding(context, options, request);
@@ -243,28 +251,28 @@ StatusOr<google::cloud::dataplex::v1::DataAttributeBinding> DataTaxonomyServiceA
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncCreateDataAttribute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDataAttribute(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDataAttribute(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::CreateDataAttribute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDataAttribute(context, options, request);
@@ -272,28 +280,28 @@ DataTaxonomyServiceAuth::CreateDataAttribute(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncUpdateDataAttribute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDataAttribute(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateDataAttribute(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::UpdateDataAttribute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDataAttribute(context, options, request);
@@ -301,63 +309,63 @@ DataTaxonomyServiceAuth::UpdateDataAttribute(
 
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceAuth::AsyncDeleteDataAttribute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDataAttribute(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDataAttribute(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceAuth::DeleteDataAttribute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDataAttribute(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListDataAttributesResponse> DataTaxonomyServiceAuth::ListDataAttributes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListDataAttributesResponse>
+DataTaxonomyServiceAuth::ListDataAttributes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListDataAttributesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDataAttributes(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::DataAttribute> DataTaxonomyServiceAuth::GetDataAttribute(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::DataAttribute>
+DataTaxonomyServiceAuth::GetDataAttribute(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetDataAttributeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDataAttribute(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> DataTaxonomyServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DataTaxonomyServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> DataTaxonomyServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+DataTaxonomyServiceAuth::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -365,8 +373,7 @@ StatusOr<google::cloud::location::Location> DataTaxonomyServiceAuth::GetLocation
 }
 
 StatusOr<google::iam::v1::Policy> DataTaxonomyServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -374,26 +381,25 @@ StatusOr<google::iam::v1::Policy> DataTaxonomyServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataTaxonomyServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> DataTaxonomyServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataTaxonomyServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DataTaxonomyServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DataTaxonomyServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -401,8 +407,7 @@ StatusOr<google::longrunning::ListOperationsResponse> DataTaxonomyServiceAuth::L
 }
 
 StatusOr<google::longrunning::Operation> DataTaxonomyServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -410,8 +415,7 @@ StatusOr<google::longrunning::Operation> DataTaxonomyServiceAuth::GetOperation(
 }
 
 Status DataTaxonomyServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -419,8 +423,7 @@ Status DataTaxonomyServiceAuth::DeleteOperation(
 }
 
 Status DataTaxonomyServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -434,15 +437,16 @@ DataTaxonomyServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -451,13 +455,14 @@ future<Status> DataTaxonomyServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

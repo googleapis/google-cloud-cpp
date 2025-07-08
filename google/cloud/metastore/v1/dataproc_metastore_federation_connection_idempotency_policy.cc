@@ -26,74 +26,103 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataprocMetastoreFederationConnectionIdempotencyPolicy::~DataprocMetastoreFederationConnectionIdempotencyPolicy() = default;
+DataprocMetastoreFederationConnectionIdempotencyPolicy::
+    ~DataprocMetastoreFederationConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataprocMetastoreFederationConnectionIdempotencyPolicy>
 DataprocMetastoreFederationConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DataprocMetastoreFederationConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<
+      DataprocMetastoreFederationConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::ListFederations(google::cloud::metastore::v1::ListFederationsRequest) {  // NOLINT
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::ListFederations(
+    google::cloud::metastore::v1::ListFederationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::GetFederation(google::cloud::metastore::v1::GetFederationRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::GetFederation(
+    google::cloud::metastore::v1::GetFederationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::CreateFederation(google::cloud::metastore::v1::CreateFederationRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::CreateFederation(
+    google::cloud::metastore::v1::CreateFederationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::UpdateFederation(google::cloud::metastore::v1::UpdateFederationRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::UpdateFederation(
+    google::cloud::metastore::v1::UpdateFederationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::DeleteFederation(google::cloud::metastore::v1::DeleteFederationRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::DeleteFederation(
+    google::cloud::metastore::v1::DeleteFederationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::SetIamPolicy(
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
   return request.policy().etag().empty() ? Idempotency::kNonIdempotent
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataprocMetastoreFederationConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency
+DataprocMetastoreFederationConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataprocMetastoreFederationConnectionIdempotencyPolicy>
-    MakeDefaultDataprocMetastoreFederationConnectionIdempotencyPolicy() {
-  return std::make_unique<DataprocMetastoreFederationConnectionIdempotencyPolicy>();
+MakeDefaultDataprocMetastoreFederationConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      DataprocMetastoreFederationConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

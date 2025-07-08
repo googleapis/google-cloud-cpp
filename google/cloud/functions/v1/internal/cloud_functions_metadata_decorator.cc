@@ -46,19 +46,19 @@ CloudFunctionsServiceMetadata::CloudFunctionsServiceMetadata(
 
 StatusOr<google::cloud::functions::v1::ListFunctionsResponse>
 CloudFunctionsServiceMetadata::ListFunctions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::ListFunctionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFunctions(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceMetadata::GetFunction(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GetFunctionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFunction(context, options, request);
 }
 
@@ -68,17 +68,20 @@ CloudFunctionsServiceMetadata::AsyncCreateFunction(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("location=", internal::UrlEncode(request.location())));
-  return child_->AsyncCreateFunction(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
+  return child_->AsyncCreateFunction(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceMetadata::CreateFunction(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("location=", internal::UrlEncode(request.location())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
   return child_->CreateFunction(context, options, request);
 }
 
@@ -88,17 +91,20 @@ CloudFunctionsServiceMetadata::AsyncUpdateFunction(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("function.name=", internal::UrlEncode(request.function().name())));
-  return child_->AsyncUpdateFunction(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("function.name=",
+                           internal::UrlEncode(request.function().name())));
+  return child_->AsyncUpdateFunction(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceMetadata::UpdateFunction(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("function.name=", internal::UrlEncode(request.function().name())));
+  SetMetadata(context, options,
+              absl::StrCat("function.name=",
+                           internal::UrlEncode(request.function().name())));
   return child_->UpdateFunction(context, options, request);
 }
 
@@ -108,87 +114,88 @@ CloudFunctionsServiceMetadata::AsyncDeleteFunction(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteFunction(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteFunction(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceMetadata::DeleteFunction(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFunction(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>
 CloudFunctionsServiceMetadata::CallFunction(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::CallFunctionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CallFunction(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
 CloudFunctionsServiceMetadata::GenerateUploadUrl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateUploadUrlRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GenerateUploadUrl(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
 CloudFunctionsServiceMetadata::GenerateDownloadUrl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateDownloadUrl(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudFunctionsServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> CloudFunctionsServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudFunctionsServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> CloudFunctionsServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudFunctionsServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudFunctionsServiceMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CloudFunctionsServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   SetMetadata(context, options, absl::StrCat());
   return child_->ListOperations(context, options, request);
@@ -196,10 +203,10 @@ CloudFunctionsServiceMetadata::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -211,8 +218,8 @@ CloudFunctionsServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> CloudFunctionsServiceMetadata::AsyncCancelOperation(
@@ -222,21 +229,21 @@ future<Status> CloudFunctionsServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void CloudFunctionsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void CloudFunctionsServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CloudFunctionsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                                Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

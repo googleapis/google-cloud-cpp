@@ -31,9 +31,9 @@ MetricsServiceV2Auth::MetricsServiceV2Auth(
     std::shared_ptr<MetricsServiceV2Stub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::logging::v2::ListLogMetricsResponse> MetricsServiceV2Auth::ListLogMetrics(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::logging::v2::ListLogMetricsResponse>
+MetricsServiceV2Auth::ListLogMetrics(
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogMetricsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::logging::v2::ListLogMetricsResponse> MetricsServiceV2Auth::List
 }
 
 StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::GetLogMetric(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetLogMetricRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +49,7 @@ StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::GetLogMetric(
 }
 
 StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::CreateLogMetric(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateLogMetricRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +57,7 @@ StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::CreateLogMetric(
 }
 
 StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::UpdateLogMetric(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateLogMetricRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,17 +65,16 @@ StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::UpdateLogMetric(
 }
 
 Status MetricsServiceV2Auth::DeleteLogMetric(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteLogMetric(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> MetricsServiceV2Auth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+MetricsServiceV2Auth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +82,7 @@ StatusOr<google::longrunning::ListOperationsResponse> MetricsServiceV2Auth::List
 }
 
 StatusOr<google::longrunning::Operation> MetricsServiceV2Auth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,8 +90,7 @@ StatusOr<google::longrunning::Operation> MetricsServiceV2Auth::GetOperation(
 }
 
 Status MetricsServiceV2Auth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

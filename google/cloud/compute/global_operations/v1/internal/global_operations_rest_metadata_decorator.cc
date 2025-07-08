@@ -17,11 +17,11 @@
 // source: google/cloud/compute/global_operations/v1/global_operations.proto
 
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,49 +41,53 @@ GlobalOperationsRestMetadata::GlobalOperationsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
 GlobalOperationsRestMetadata::AggregatedListGlobalOperations(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::global_operations::v1::AggregatedListGlobalOperationsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_operations::v1::
+        AggregatedListGlobalOperationsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListGlobalOperations(rest_context, options, request);
 }
 
-Status
-GlobalOperationsRestMetadata::DeleteOperation(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+Status GlobalOperationsRestMetadata::DeleteOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteOperationRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteOperation(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalOperationsRestMetadata::GetOperation(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_operations::v1::
+        GetOperationRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetOperation(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 GlobalOperationsRestMetadata::ListGlobalOperations(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::global_operations::v1::ListGlobalOperationsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_operations::v1::
+        ListGlobalOperationsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListGlobalOperations(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalOperationsRestMetadata::Wait(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::global_operations::v1::WaitRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_operations::v1::WaitRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->Wait(rest_context, options, request);
 }
 
 void GlobalOperationsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

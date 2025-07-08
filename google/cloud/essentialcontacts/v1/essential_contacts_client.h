@@ -61,23 +61,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EssentialContactsServiceClient {
  public:
-  explicit EssentialContactsServiceClient(std::shared_ptr<EssentialContactsServiceConnection> connection, Options opts = {});
+  explicit EssentialContactsServiceClient(
+      std::shared_ptr<EssentialContactsServiceConnection> connection,
+      Options opts = {});
   ~EssentialContactsServiceClient();
 
   ///@{
   /// @name Copy and move support
-  EssentialContactsServiceClient(EssentialContactsServiceClient const&) = default;
-  EssentialContactsServiceClient& operator=(EssentialContactsServiceClient const&) = default;
+  EssentialContactsServiceClient(EssentialContactsServiceClient const&) =
+      default;
+  EssentialContactsServiceClient& operator=(
+      EssentialContactsServiceClient const&) = default;
   EssentialContactsServiceClient(EssentialContactsServiceClient&&) = default;
-  EssentialContactsServiceClient& operator=(EssentialContactsServiceClient&&) = default;
+  EssentialContactsServiceClient& operator=(EssentialContactsServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(EssentialContactsServiceClient const& a, EssentialContactsServiceClient const& b) {
+  friend bool operator==(EssentialContactsServiceClient const& a,
+                         EssentialContactsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EssentialContactsServiceClient const& a, EssentialContactsServiceClient const& b) {
+  friend bool operator!=(EssentialContactsServiceClient const& a,
+                         EssentialContactsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -108,8 +115,10 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.CreateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L243}
   ///
   // clang-format on
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  CreateContact(std::string const& parent, google::cloud::essentialcontacts::v1::Contact const& contact, Options opts = {});
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
+      std::string const& parent,
+      google::cloud::essentialcontacts::v1::Contact const& contact,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +147,9 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.CreateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L243}
   ///
   // clang-format on
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  CreateContact(google::cloud::essentialcontacts::v1::CreateContactRequest const& request, Options opts = {});
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
+      google::cloud::essentialcontacts::v1::CreateContactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -168,8 +178,9 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.UpdateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L260}
   ///
   // clang-format on
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  UpdateContact(google::cloud::essentialcontacts::v1::Contact const& contact, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
+      google::cloud::essentialcontacts::v1::Contact const& contact,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -199,8 +210,9 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.UpdateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L260}
   ///
   // clang-format on
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  UpdateContact(google::cloud::essentialcontacts::v1::UpdateContactRequest const& request, Options opts = {});
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
+      google::cloud::essentialcontacts::v1::UpdateContactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -235,8 +247,8 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.ListContactsRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L178}
   ///
   // clang-format on
-  StreamRange<google::cloud::essentialcontacts::v1::Contact>
-  ListContacts(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::essentialcontacts::v1::Contact> ListContacts(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -274,8 +286,9 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.ListContactsRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L178}
   ///
   // clang-format on
-  StreamRange<google::cloud::essentialcontacts::v1::Contact>
-  ListContacts(google::cloud::essentialcontacts::v1::ListContactsRequest request, Options opts = {});
+  StreamRange<google::cloud::essentialcontacts::v1::Contact> ListContacts(
+      google::cloud::essentialcontacts::v1::ListContactsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -302,8 +315,8 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.GetContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  GetContact(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -332,8 +345,9 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.GetContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  GetContact(google::cloud::essentialcontacts::v1::GetContactRequest const& request, Options opts = {});
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
+      google::cloud::essentialcontacts::v1::GetContactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -357,8 +371,7 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.DeleteContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L229}
   ///
   // clang-format on
-  Status
-  DeleteContact(std::string const& name, Options opts = {});
+  Status DeleteContact(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -384,8 +397,9 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.DeleteContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L229}
   ///
   // clang-format on
-  Status
-  DeleteContact(google::cloud::essentialcontacts::v1::DeleteContactRequest const& request, Options opts = {});
+  Status DeleteContact(
+      google::cloud::essentialcontacts::v1::DeleteContactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +439,9 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
   ///
   // clang-format on
-  StreamRange<google::cloud::essentialcontacts::v1::Contact>
-  ComputeContacts(google::cloud::essentialcontacts::v1::ComputeContactsRequest request, Options opts = {});
+  StreamRange<google::cloud::essentialcontacts::v1::Contact> ComputeContacts(
+      google::cloud::essentialcontacts::v1::ComputeContactsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -453,8 +468,10 @@ class EssentialContactsServiceClient {
   /// [google.cloud.essentialcontacts.v1.SendTestMessageRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L317}
   ///
   // clang-format on
-  Status
-  SendTestMessage(google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request, Options opts = {});
+  Status SendTestMessage(
+      google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<EssentialContactsServiceConnection> connection_;

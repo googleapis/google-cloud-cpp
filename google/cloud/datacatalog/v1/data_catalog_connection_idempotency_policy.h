@@ -37,132 +37,140 @@ class DataCatalogConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DataCatalogConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest request);
+  virtual google::cloud::Idempotency SearchCatalog(
+      google::cloud::datacatalog::v1::SearchCatalogRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateEntryGroup(google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request);
+  virtual google::cloud::Idempotency CreateEntryGroup(
+      google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetEntryGroup(google::cloud::datacatalog::v1::GetEntryGroupRequest const& request);
+  virtual google::cloud::Idempotency GetEntryGroup(
+      google::cloud::datacatalog::v1::GetEntryGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateEntryGroup(google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request);
+  virtual google::cloud::Idempotency UpdateEntryGroup(
+      google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteEntryGroup(google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request);
+  virtual google::cloud::Idempotency DeleteEntryGroup(
+      google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListEntryGroups(google::cloud::datacatalog::v1::ListEntryGroupsRequest request);
+  virtual google::cloud::Idempotency ListEntryGroups(
+      google::cloud::datacatalog::v1::ListEntryGroupsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateEntry(google::cloud::datacatalog::v1::CreateEntryRequest const& request);
+  virtual google::cloud::Idempotency CreateEntry(
+      google::cloud::datacatalog::v1::CreateEntryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateEntry(google::cloud::datacatalog::v1::UpdateEntryRequest const& request);
+  virtual google::cloud::Idempotency UpdateEntry(
+      google::cloud::datacatalog::v1::UpdateEntryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteEntry(google::cloud::datacatalog::v1::DeleteEntryRequest const& request);
+  virtual google::cloud::Idempotency DeleteEntry(
+      google::cloud::datacatalog::v1::DeleteEntryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetEntry(google::cloud::datacatalog::v1::GetEntryRequest const& request);
+  virtual google::cloud::Idempotency GetEntry(
+      google::cloud::datacatalog::v1::GetEntryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LookupEntry(google::cloud::datacatalog::v1::LookupEntryRequest const& request);
+  virtual google::cloud::Idempotency LookupEntry(
+      google::cloud::datacatalog::v1::LookupEntryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListEntries(google::cloud::datacatalog::v1::ListEntriesRequest request);
+  virtual google::cloud::Idempotency ListEntries(
+      google::cloud::datacatalog::v1::ListEntriesRequest request);
 
-  virtual google::cloud::Idempotency
-  ModifyEntryOverview(google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request);
+  virtual google::cloud::Idempotency ModifyEntryOverview(
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ModifyEntryContacts(google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request);
+  virtual google::cloud::Idempotency ModifyEntryContacts(
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateTagTemplate(google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request);
+  virtual google::cloud::Idempotency CreateTagTemplate(
+      google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTagTemplate(google::cloud::datacatalog::v1::GetTagTemplateRequest const& request);
+  virtual google::cloud::Idempotency GetTagTemplate(
+      google::cloud::datacatalog::v1::GetTagTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTagTemplate(google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request);
+  virtual google::cloud::Idempotency UpdateTagTemplate(
+      google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTagTemplate(google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request);
+  virtual google::cloud::Idempotency DeleteTagTemplate(
+      google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateTagTemplateField(google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request);
+  virtual google::cloud::Idempotency CreateTagTemplateField(
+      google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateTagTemplateField(google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request);
+  virtual google::cloud::Idempotency UpdateTagTemplateField(
+      google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RenameTagTemplateField(google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request);
+  virtual google::cloud::Idempotency RenameTagTemplateField(
+      google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RenameTagTemplateFieldEnumValue(google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request);
+  virtual google::cloud::Idempotency RenameTagTemplateFieldEnumValue(
+      google::cloud::datacatalog::v1::
+          RenameTagTemplateFieldEnumValueRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTagTemplateField(google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request);
+  virtual google::cloud::Idempotency DeleteTagTemplateField(
+      google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateTag(google::cloud::datacatalog::v1::CreateTagRequest const& request);
+  virtual google::cloud::Idempotency CreateTag(
+      google::cloud::datacatalog::v1::CreateTagRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTag(google::cloud::datacatalog::v1::UpdateTagRequest const& request);
+  virtual google::cloud::Idempotency UpdateTag(
+      google::cloud::datacatalog::v1::UpdateTagRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTag(google::cloud::datacatalog::v1::DeleteTagRequest const& request);
+  virtual google::cloud::Idempotency DeleteTag(
+      google::cloud::datacatalog::v1::DeleteTagRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTags(google::cloud::datacatalog::v1::ListTagsRequest request);
+  virtual google::cloud::Idempotency ListTags(
+      google::cloud::datacatalog::v1::ListTagsRequest request);
 
-  virtual google::cloud::Idempotency
-  ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
+  virtual google::cloud::Idempotency ReconcileTags(
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  StarEntry(google::cloud::datacatalog::v1::StarEntryRequest const& request);
+  virtual google::cloud::Idempotency StarEntry(
+      google::cloud::datacatalog::v1::StarEntryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UnstarEntry(google::cloud::datacatalog::v1::UnstarEntryRequest const& request);
+  virtual google::cloud::Idempotency UnstarEntry(
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
+  virtual google::cloud::Idempotency ImportEntries(
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetConfig(google::cloud::datacatalog::v1::SetConfigRequest const& request);
+  virtual google::cloud::Idempotency SetConfig(
+      google::cloud::datacatalog::v1::SetConfigRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RetrieveConfig(google::cloud::datacatalog::v1::RetrieveConfigRequest const& request);
+  virtual google::cloud::Idempotency RetrieveConfig(
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RetrieveEffectiveConfig(google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request);
+  virtual google::cloud::Idempotency RetrieveEffectiveConfig(
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>
-    MakeDefaultDataCatalogConnectionIdempotencyPolicy();
+MakeDefaultDataCatalogConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_v1

@@ -36,16 +36,19 @@ class ConnectionServiceTracingStub : public ConnectionServiceStub {
  public:
   ~ConnectionServiceTracingStub() override = default;
 
-  explicit ConnectionServiceTracingStub(std::shared_ptr<ConnectionServiceStub> child);
+  explicit ConnectionServiceTracingStub(
+      std::shared_ptr<ConnectionServiceStub> child);
 
-  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse> ListConnections(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) override;
+  StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
+  ListConnections(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request)
+      override;
 
  private:
   std::shared_ptr<ConnectionServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

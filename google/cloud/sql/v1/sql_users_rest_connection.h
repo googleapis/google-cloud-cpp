@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_REST_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_REST_CONNECTION_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/sql_users_connection.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,8 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * should be passed as an argument to the constructor of SqlUsersServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SqlUsersServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `SqlUsersServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
@@ -50,8 +50,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `SqlUsersServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `SqlUsersServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<SqlUsersServiceConnection> MakeSqlUsersServiceConnectionRest(
     Options options = {});

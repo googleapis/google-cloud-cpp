@@ -31,47 +31,49 @@ namespace cloud {
 namespace binaryauthorization_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BinauthzManagementServiceV1Logging : public BinauthzManagementServiceV1Stub {
+class BinauthzManagementServiceV1Logging
+    : public BinauthzManagementServiceV1Stub {
  public:
   ~BinauthzManagementServiceV1Logging() override = default;
-  BinauthzManagementServiceV1Logging(std::shared_ptr<BinauthzManagementServiceV1Stub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  BinauthzManagementServiceV1Logging(
+      std::shared_ptr<BinauthzManagementServiceV1Stub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request)
+      override;
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
+          request) override;
 
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::GetAttestorRequest const& request)
+      override;
 
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
+          request) override;
 
-  StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse> ListAttestors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::ListAttestorsRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse>
+  ListAttestors(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
+          request) override;
 
   Status DeleteAttestor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
+          request) override;
 
  private:
   std::shared_ptr<BinauthzManagementServiceV1Stub> child_;

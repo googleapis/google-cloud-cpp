@@ -38,48 +38,48 @@ class DocumentsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DocumentsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListDocuments(google::cloud::dialogflow::v2::ListDocumentsRequest request);
+  virtual google::cloud::Idempotency ListDocuments(
+      google::cloud::dialogflow::v2::ListDocumentsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDocument(google::cloud::dialogflow::v2::GetDocumentRequest const& request);
+  virtual google::cloud::Idempotency GetDocument(
+      google::cloud::dialogflow::v2::GetDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateDocument(google::cloud::dialogflow::v2::CreateDocumentRequest const& request);
+  virtual google::cloud::Idempotency CreateDocument(
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportDocuments(google::cloud::dialogflow::v2::ImportDocumentsRequest const& request);
+  virtual google::cloud::Idempotency ImportDocuments(
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteDocument(google::cloud::dialogflow::v2::DeleteDocumentRequest const& request);
+  virtual google::cloud::Idempotency DeleteDocument(
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateDocument(google::cloud::dialogflow::v2::UpdateDocumentRequest const& request);
+  virtual google::cloud::Idempotency UpdateDocument(
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ReloadDocument(google::cloud::dialogflow::v2::ReloadDocumentRequest const& request);
+  virtual google::cloud::Idempotency ReloadDocument(
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportDocument(google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
+  virtual google::cloud::Idempotency ExportDocument(
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DocumentsConnectionIdempotencyPolicy>
-    MakeDefaultDocumentsConnectionIdempotencyPolicy();
+MakeDefaultDocumentsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

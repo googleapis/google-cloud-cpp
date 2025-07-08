@@ -17,17 +17,17 @@
 // source: google/cloud/run/v2/task.proto
 
 #include "google/cloud/run/v2/internal/tasks_stub_factory.h"
+#include "google/cloud/run/v2/internal/tasks_auth_decorator.h"
+#include "google/cloud/run/v2/internal/tasks_logging_decorator.h"
+#include "google/cloud/run/v2/internal/tasks_metadata_decorator.h"
+#include "google/cloud/run/v2/internal/tasks_stub.h"
+#include "google/cloud/run/v2/internal/tasks_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/run/v2/internal/tasks_auth_decorator.h"
-#include "google/cloud/run/v2/internal/tasks_logging_decorator.h"
-#include "google/cloud/run/v2/internal/tasks_metadata_decorator.h"
-#include "google/cloud/run/v2/internal/tasks_stub.h"
-#include "google/cloud/run/v2/internal/tasks_tracing_stub.h"
 #include <google/cloud/run/v2/task.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -38,29 +38,26 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TasksStub>
-CreateDefaultTasksStub(
+std::shared_ptr<TasksStub> CreateDefaultTasksStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::run::v2::Tasks::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
-  std::shared_ptr<TasksStub> stub =
-    std::make_shared<DefaultTasksStub>(std::move(service_grpc_stub), std::move(service_operations_stub));
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  std::shared_ptr<TasksStub> stub = std::make_shared<DefaultTasksStub>(
+      std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<TasksAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<TasksAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<TasksMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<TasksLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

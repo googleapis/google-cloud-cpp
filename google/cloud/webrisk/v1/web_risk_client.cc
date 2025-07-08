@@ -28,12 +28,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WebRiskServiceClient::WebRiskServiceClient(
     std::shared_ptr<WebRiskServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 WebRiskServiceClient::~WebRiskServiceClient() = default;
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-WebRiskServiceClient::ComputeThreatListDiff(google::cloud::webrisk::v1::ThreatType threat_type, std::string const& version_token, google::cloud::webrisk::v1::ComputeThreatListDiffRequest::Constraints const& constraints, Options opts) {
+WebRiskServiceClient::ComputeThreatListDiff(
+    google::cloud::webrisk::v1::ThreatType threat_type,
+    std::string const& version_token,
+    google::cloud::webrisk::v1::ComputeThreatListDiffRequest::Constraints const&
+        constraints,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::ComputeThreatListDiffRequest request;
   request.set_threat_type(threat_type);
@@ -43,13 +48,18 @@ WebRiskServiceClient::ComputeThreatListDiff(google::cloud::webrisk::v1::ThreatTy
 }
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-WebRiskServiceClient::ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request, Options opts) {
+WebRiskServiceClient::ComputeThreatListDiff(
+    google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeThreatListDiff(request);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
-WebRiskServiceClient::SearchUris(std::string const& uri, std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types, Options opts) {
+WebRiskServiceClient::SearchUris(
+    std::string const& uri,
+    std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::SearchUrisRequest request;
   request.set_uri(uri);
@@ -58,13 +68,18 @@ WebRiskServiceClient::SearchUris(std::string const& uri, std::vector<google::clo
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
-WebRiskServiceClient::SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request, Options opts) {
+WebRiskServiceClient::SearchUris(
+    google::cloud::webrisk::v1::SearchUrisRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchUris(request);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
-WebRiskServiceClient::SearchHashes(std::string const& hash_prefix, std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types, Options opts) {
+WebRiskServiceClient::SearchHashes(
+    std::string const& hash_prefix,
+    std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::SearchHashesRequest request;
   request.set_hash_prefix(hash_prefix);
@@ -73,13 +88,17 @@ WebRiskServiceClient::SearchHashes(std::string const& hash_prefix, std::vector<g
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
-WebRiskServiceClient::SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request, Options opts) {
+WebRiskServiceClient::SearchHashes(
+    google::cloud::webrisk::v1::SearchHashesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchHashes(request);
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
-WebRiskServiceClient::CreateSubmission(std::string const& parent, google::cloud::webrisk::v1::Submission const& submission, Options opts) {
+WebRiskServiceClient::CreateSubmission(
+    std::string const& parent,
+    google::cloud::webrisk::v1::Submission const& submission, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::CreateSubmissionRequest request;
   request.set_parent(parent);
@@ -88,13 +107,17 @@ WebRiskServiceClient::CreateSubmission(std::string const& parent, google::cloud:
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
-WebRiskServiceClient::CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request, Options opts) {
+WebRiskServiceClient::CreateSubmission(
+    google::cloud::webrisk::v1::CreateSubmissionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSubmission(request);
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
-WebRiskServiceClient::SubmitUri(std::string const& parent, google::cloud::webrisk::v1::Submission const& submission, Options opts) {
+WebRiskServiceClient::SubmitUri(
+    std::string const& parent,
+    google::cloud::webrisk::v1::Submission const& submission, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::SubmitUriRequest request;
   request.set_parent(parent);
@@ -102,8 +125,9 @@ WebRiskServiceClient::SubmitUri(std::string const& parent, google::cloud::webris
   return connection_->SubmitUri(request);
 }
 
-StatusOr<google::longrunning::Operation>
-WebRiskServiceClient::SubmitUri(NoAwaitTag, std::string const& parent, google::cloud::webrisk::v1::Submission const& submission, Options opts) {
+StatusOr<google::longrunning::Operation> WebRiskServiceClient::SubmitUri(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::webrisk::v1::Submission const& submission, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::webrisk::v1::SubmitUriRequest request;
   request.set_parent(parent);
@@ -112,25 +136,29 @@ WebRiskServiceClient::SubmitUri(NoAwaitTag, std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
-WebRiskServiceClient::SubmitUri(google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts) {
+WebRiskServiceClient::SubmitUri(
+    google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubmitUri(request);
 }
 
-StatusOr<google::longrunning::Operation>
-WebRiskServiceClient::SubmitUri(NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> WebRiskServiceClient::SubmitUri(
+    NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubmitUri(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
-WebRiskServiceClient::SubmitUri(google::longrunning::Operation const& operation, Options opts) {
+WebRiskServiceClient::SubmitUri(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubmitUri(operation);
 }
 
 StreamRange<google::longrunning::Operation>
-WebRiskServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+WebRiskServiceClient::ListOperations(std::string const& name,
+                                     std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -139,49 +167,50 @@ WebRiskServiceClient::ListOperations(std::string const& name, std::string const&
 }
 
 StreamRange<google::longrunning::Operation>
-WebRiskServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+WebRiskServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-WebRiskServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> WebRiskServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-WebRiskServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> WebRiskServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-WebRiskServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status WebRiskServiceClient::DeleteOperation(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-WebRiskServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status WebRiskServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-WebRiskServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status WebRiskServiceClient::CancelOperation(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-WebRiskServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status WebRiskServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

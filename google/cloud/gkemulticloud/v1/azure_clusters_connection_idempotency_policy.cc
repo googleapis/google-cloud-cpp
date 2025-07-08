@@ -26,107 +26,133 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AzureClustersConnectionIdempotencyPolicy::~AzureClustersConnectionIdempotencyPolicy() = default;
+AzureClustersConnectionIdempotencyPolicy::
+    ~AzureClustersConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AzureClustersConnectionIdempotencyPolicy>
 AzureClustersConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AzureClustersConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::CreateAzureClient(google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::CreateAzureClient(
+    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureClient(google::cloud::gkemulticloud::v1::GetAzureClientRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureClient(
+    google::cloud::gkemulticloud::v1::GetAzureClientRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::ListAzureClients(google::cloud::gkemulticloud::v1::ListAzureClientsRequest) {  // NOLINT
+Idempotency AzureClustersConnectionIdempotencyPolicy::ListAzureClients(
+    google::cloud::gkemulticloud::v1::ListAzureClientsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteAzureClient(google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteAzureClient(
+    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::CreateAzureCluster(google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::CreateAzureCluster(
+    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::UpdateAzureCluster(google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::UpdateAzureCluster(
+    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureCluster(google::cloud::gkemulticloud::v1::GetAzureClusterRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureCluster(
+    google::cloud::gkemulticloud::v1::GetAzureClusterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::ListAzureClusters(google::cloud::gkemulticloud::v1::ListAzureClustersRequest) {  // NOLINT
+Idempotency AzureClustersConnectionIdempotencyPolicy::ListAzureClusters(
+    google::cloud::gkemulticloud::v1::ListAzureClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteAzureCluster(google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteAzureCluster(
+    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GenerateAzureClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenRequest const&) {
+Idempotency
+AzureClustersConnectionIdempotencyPolicy::GenerateAzureClusterAgentToken(
+    google::cloud::gkemulticloud::v1::
+        GenerateAzureClusterAgentTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GenerateAzureAccessToken(google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::GenerateAzureAccessToken(
+    google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::CreateAzureNodePool(google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::CreateAzureNodePool(
+    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::UpdateAzureNodePool(google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::UpdateAzureNodePool(
+    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureNodePool(google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureNodePool(
+    google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::ListAzureNodePools(google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest) {  // NOLINT
+Idempotency AzureClustersConnectionIdempotencyPolicy::ListAzureNodePools(
+    google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteAzureNodePool(google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteAzureNodePool(
+    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureOpenIdConfig(google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureJsonWebKeys(google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureServerConfig(google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureServerConfig(
+    google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AzureClustersConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AzureClustersConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency AzureClustersConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AzureClustersConnectionIdempotencyPolicy>
-    MakeDefaultAzureClustersConnectionIdempotencyPolicy() {
+MakeDefaultAzureClustersConnectionIdempotencyPolicy() {
   return std::make_unique<AzureClustersConnectionIdempotencyPolicy>();
 }
 

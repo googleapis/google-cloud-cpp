@@ -17,11 +17,11 @@
 // source: google/cloud/compute/interconnect_groups/v1/interconnect_groups.proto
 
 #include "google/cloud/compute/interconnect_groups/v1/interconnect_groups_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/interconnect_groups/v1/interconnect_groups_options.h"
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_option_defaults.h"
 #include "google/cloud/compute/interconnect_groups/v1/internal/interconnect_groups_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,133 +38,145 @@ InterconnectGroupsConnection::~InterconnectGroupsConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsConnection::CreateMembers(
-    google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        CreateMembersRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsConnection::CreateMembers(
-    NoAwaitTag,
-    google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
+                    CreateMembersRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsConnection::CreateMembers(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsConnection::DeleteInterconnectGroup(
-    google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        DeleteInterconnectGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsConnection::DeleteInterconnectGroup(
-    NoAwaitTag,
-    google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
+                    DeleteInterconnectGroupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsConnection::DeleteInterconnectGroup(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
 InterconnectGroupsConnection::GetInterconnectGroup(
-    google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetInterconnectGroupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InterconnectGroupsConnection::GetIamPolicy(
-    google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
+StatusOr<google::cloud::cpp::compute::v1::
+             InterconnectGroupsGetOperationalStatusResponse>
 InterconnectGroupsConnection::GetOperationalStatus(
-    google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetOperationalStatusRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsConnection::InsertInterconnectGroup(
-    google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        InsertInterconnectGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsConnection::InsertInterconnectGroup(
-    NoAwaitTag,
-    google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
+                    InsertInterconnectGroupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsConnection::InsertInterconnectGroup(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup> InterconnectGroupsConnection::ListInterconnectGroups(
-    google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
+InterconnectGroupsConnection::ListInterconnectGroups(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        ListInterconnectGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsConnection::PatchInterconnectGroup(
-    google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        PatchInterconnectGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsConnection::PatchInterconnectGroup(
-    NoAwaitTag,
-    google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::
+                    PatchInterconnectGroupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsConnection::PatchInterconnectGroup(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InterconnectGroupsConnection::SetIamPolicy(
-    google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InterconnectGroupsConnection::TestIamPermissions(
-    google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

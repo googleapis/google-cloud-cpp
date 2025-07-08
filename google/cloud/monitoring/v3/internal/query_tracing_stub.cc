@@ -32,11 +32,12 @@ QueryServiceTracingStub::QueryServiceTracingStub(
     std::shared_ptr<QueryServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryServiceTracingStub::QueryTimeSeries(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
+QueryServiceTracingStub::QueryTimeSeries(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.QueryService", "QueryTimeSeries");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.QueryService",
+                                     "QueryTimeSeries");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

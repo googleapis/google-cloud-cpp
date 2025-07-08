@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPANY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPANY_CONNECTION_H
 
+#include "google/cloud/talent/v4/company_connection_idempotency_policy.h"
+#include "google/cloud/talent/v4/internal/company_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/talent/v4/company_connection_idempotency_policy.h"
-#include "google/cloud/talent/v4/internal/company_retry_traits.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/company_service.pb.h>
 #include <memory>
@@ -52,7 +52,8 @@ class CompanyServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CompanyServiceLimitedErrorCountRetryPolicy : public CompanyServiceRetryPolicy {
+class CompanyServiceLimitedErrorCountRetryPolicy
+    : public CompanyServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class CompanyServiceLimitedErrorCountRetryPolicy : public CompanyServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit CompanyServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   CompanyServiceLimitedErrorCountRetryPolicy(
       CompanyServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : CompanyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CompanyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CompanyServiceLimitedErrorCountRetryPolicy(
       CompanyServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : CompanyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CompanyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class CompanyServiceLimitedErrorCountRetryPolicy : public CompanyServiceRetryPol
   using BaseType = CompanyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<talent_v4_internal::CompanyServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      talent_v4_internal::CompanyServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class CompanyServiceLimitedTimeRetryPolicy : public CompanyServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CompanyServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  CompanyServiceLimitedTimeRetryPolicy(CompanyServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : CompanyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CompanyServiceLimitedTimeRetryPolicy(CompanyServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : CompanyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CompanyServiceLimitedTimeRetryPolicy(
+      CompanyServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : CompanyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CompanyServiceLimitedTimeRetryPolicy(
+      CompanyServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : CompanyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class CompanyServiceLimitedTimeRetryPolicy : public CompanyServiceRetryPolicy {
   using BaseType = CompanyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<talent_v4_internal::CompanyServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      talent_v4_internal::CompanyServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,23 +182,23 @@ class CompanyServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::talent::v4::Company>
-  CreateCompany(google::cloud::talent::v4::CreateCompanyRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Company> CreateCompany(
+      google::cloud::talent::v4::CreateCompanyRequest const& request);
 
-  virtual StatusOr<google::cloud::talent::v4::Company>
-  GetCompany(google::cloud::talent::v4::GetCompanyRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Company> GetCompany(
+      google::cloud::talent::v4::GetCompanyRequest const& request);
 
-  virtual StatusOr<google::cloud::talent::v4::Company>
-  UpdateCompany(google::cloud::talent::v4::UpdateCompanyRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
+      google::cloud::talent::v4::UpdateCompanyRequest const& request);
 
-  virtual Status
-  DeleteCompany(google::cloud::talent::v4::DeleteCompanyRequest const& request);
+  virtual Status DeleteCompany(
+      google::cloud::talent::v4::DeleteCompanyRequest const& request);
 
-  virtual StreamRange<google::cloud::talent::v4::Company>
-  ListCompanies(google::cloud::talent::v4::ListCompaniesRequest request);
+  virtual StreamRange<google::cloud::talent::v4::Company> ListCompanies(
+      google::cloud::talent::v4::ListCompaniesRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

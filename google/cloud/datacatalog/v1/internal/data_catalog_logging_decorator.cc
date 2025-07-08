@@ -30,22 +30,19 @@ namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DataCatalogLogging::DataCatalogLogging(
-    std::shared_ptr<DataCatalogStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+DataCatalogLogging::DataCatalogLogging(std::shared_ptr<DataCatalogStub> child,
+                                       TracingOptions tracing_options,
+                                       std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>
 DataCatalogLogging::SearchCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
         return child_->SearchCatalog(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ DataCatalogLogging::SearchCatalog(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogLogging::CreateEntryGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::CreateEntryGroupRequest const&
+                 request) {
         return child_->CreateEntryGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ DataCatalogLogging::CreateEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogLogging::GetEntryGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
         return child_->GetEntryGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +76,24 @@ DataCatalogLogging::GetEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogLogging::UpdateEntryGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::UpdateEntryGroupRequest const&
+                 request) {
         return child_->UpdateEntryGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataCatalogLogging::DeleteEntryGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataCatalogLogging::DeleteEntryGroup(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::DeleteEntryGroupRequest const&
+                 request) {
         return child_->DeleteEntryGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,83 +101,71 @@ DataCatalogLogging::DeleteEntryGroup(
 
 StatusOr<google::cloud::datacatalog::v1::ListEntryGroupsResponse>
 DataCatalogLogging::ListEntryGroups(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListEntryGroupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ListEntryGroupsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::ListEntryGroupsRequest const&
+                 request) {
         return child_->ListEntryGroups(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::datacatalog::v1::Entry>
-DataCatalogLogging::CreateEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogLogging::CreateEntry(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
         return child_->CreateEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::datacatalog::v1::Entry>
-DataCatalogLogging::UpdateEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogLogging::UpdateEntry(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
         return child_->UpdateEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataCatalogLogging::DeleteEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataCatalogLogging::DeleteEntry(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
         return child_->DeleteEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::datacatalog::v1::Entry>
-DataCatalogLogging::GetEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogLogging::GetEntry(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::GetEntryRequest const& request) {
         return child_->GetEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::datacatalog::v1::Entry>
-DataCatalogLogging::LookupEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogLogging::LookupEntry(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
         return child_->LookupEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -193,13 +173,12 @@ DataCatalogLogging::LookupEntry(
 
 StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse>
 DataCatalogLogging::ListEntries(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ListEntriesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::ListEntriesRequest const& request) {
         return child_->ListEntries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -207,13 +186,12 @@ DataCatalogLogging::ListEntries(
 
 StatusOr<google::cloud::datacatalog::v1::EntryOverview>
 DataCatalogLogging::ModifyEntryOverview(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+                 request) {
         return child_->ModifyEntryOverview(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -221,13 +199,12 @@ DataCatalogLogging::ModifyEntryOverview(
 
 StatusOr<google::cloud::datacatalog::v1::Contacts>
 DataCatalogLogging::ModifyEntryContacts(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+                 request) {
         return child_->ModifyEntryContacts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -235,13 +212,12 @@ DataCatalogLogging::ModifyEntryContacts(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogLogging::CreateTagTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::CreateTagTemplateRequest const&
+                 request) {
         return child_->CreateTagTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -249,13 +225,12 @@ DataCatalogLogging::CreateTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogLogging::GetTagTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::GetTagTemplateRequest const&
+                 request) {
         return child_->GetTagTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -263,27 +238,24 @@ DataCatalogLogging::GetTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogLogging::UpdateTagTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::UpdateTagTemplateRequest const&
+                 request) {
         return child_->UpdateTagTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataCatalogLogging::DeleteTagTemplate(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataCatalogLogging::DeleteTagTemplate(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::DeleteTagTemplateRequest const&
+                 request) {
         return child_->DeleteTagTemplate(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -291,13 +263,14 @@ DataCatalogLogging::DeleteTagTemplate(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogLogging::CreateTagTemplateField(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
+              request) {
         return child_->CreateTagTemplateField(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -305,13 +278,14 @@ DataCatalogLogging::CreateTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogLogging::UpdateTagTemplateField(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
+              request) {
         return child_->UpdateTagTemplateField(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -319,13 +293,14 @@ DataCatalogLogging::UpdateTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogLogging::RenameTagTemplateField(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
+              request) {
         return child_->RenameTagTemplateField(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -333,68 +308,60 @@ DataCatalogLogging::RenameTagTemplateField(
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogLogging::RenameTagTemplateFieldEnumValue(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::
+        RenameTagTemplateFieldEnumValueRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request) {
-        return child_->RenameTagTemplateFieldEnumValue(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::
+                 RenameTagTemplateFieldEnumValueRequest const& request) {
+        return child_->RenameTagTemplateFieldEnumValue(context, options,
+                                                       request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataCatalogLogging::DeleteTagTemplateField(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request) {
+Status DataCatalogLogging::DeleteTagTemplateField(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
+              request) {
         return child_->DeleteTagTemplateField(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::datacatalog::v1::Tag>
-DataCatalogLogging::CreateTag(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogLogging::CreateTag(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::CreateTagRequest const& request) {
         return child_->CreateTag(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::datacatalog::v1::Tag>
-DataCatalogLogging::UpdateTag(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogLogging::UpdateTag(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
         return child_->UpdateTag(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataCatalogLogging::DeleteTag(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataCatalogLogging::DeleteTag(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
         return child_->DeleteTag(context, options, request);
       },
@@ -403,12 +370,10 @@ DataCatalogLogging::DeleteTag(
 
 StatusOr<google::cloud::datacatalog::v1::ListTagsResponse>
 DataCatalogLogging::ListTags(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListTagsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::ListTagsRequest const& request) {
         return child_->ListTags(context, options, request);
       },
@@ -417,31 +382,30 @@ DataCatalogLogging::ListTags(
 
 future<StatusOr<google::longrunning::Operation>>
 DataCatalogLogging::AsyncReconcileTags(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
-        return child_->AsyncReconcileTags(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+        return child_->AsyncReconcileTags(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DataCatalogLogging::ReconcileTags(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+StatusOr<google::longrunning::Operation> DataCatalogLogging::ReconcileTags(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
         return child_->ReconcileTags(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -449,12 +413,10 @@ DataCatalogLogging::ReconcileTags(
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogLogging::StarEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::StarEntryRequest const& request) {
         return child_->StarEntry(context, options, request);
       },
@@ -463,40 +425,33 @@ DataCatalogLogging::StarEntry(
 
 StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
 DataCatalogLogging::UnstarEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
         return child_->UnstarEntry(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataCatalogLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DataCatalogLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataCatalogLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DataCatalogLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -505,12 +460,10 @@ DataCatalogLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataCatalogLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -519,31 +472,30 @@ DataCatalogLogging::TestIamPermissions(
 
 future<StatusOr<google::longrunning::Operation>>
 DataCatalogLogging::AsyncImportEntries(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
-        return child_->AsyncImportEntries(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+        return child_->AsyncImportEntries(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DataCatalogLogging::ImportEntries(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+StatusOr<google::longrunning::Operation> DataCatalogLogging::ImportEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
         return child_->ImportEntries(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -551,12 +503,10 @@ DataCatalogLogging::ImportEntries(
 
 StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
 DataCatalogLogging::SetConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::SetConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::SetConfigRequest const& request) {
         return child_->SetConfig(context, options, request);
       },
@@ -565,13 +515,12 @@ DataCatalogLogging::SetConfig(
 
 StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
 DataCatalogLogging::RetrieveConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::RetrieveConfigRequest const&
+                 request) {
         return child_->RetrieveConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -579,13 +528,14 @@ DataCatalogLogging::RetrieveConfig(
 
 StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
 DataCatalogLogging::RetrieveEffectiveConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+              request) {
         return child_->RetrieveEffectiveConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -593,54 +543,43 @@ DataCatalogLogging::RetrieveEffectiveConfig(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DataCatalogLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DataCatalogLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> DataCatalogLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataCatalogLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataCatalogLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataCatalogLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataCatalogLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -658,8 +597,8 @@ DataCatalogLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -675,8 +614,8 @@ future<Status> DataCatalogLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

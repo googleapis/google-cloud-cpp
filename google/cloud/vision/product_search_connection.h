@@ -33,7 +33,8 @@ using ::google::cloud::vision_v1::MakeProductSearchConnection;
 /// @deprecated Use vision_v1::ProductSearchConnection directly.
 using ::google::cloud::vision_v1::ProductSearchConnection;
 
-/// @deprecated Use vision_v1::ProductSearchLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use vision_v1::ProductSearchLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::vision_v1::ProductSearchLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use vision_v1::ProductSearchLimitedTimeRetryPolicy directly.

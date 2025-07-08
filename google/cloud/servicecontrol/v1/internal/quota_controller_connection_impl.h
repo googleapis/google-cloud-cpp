@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_INTERNAL_QUOTA_CONTROLLER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_INTERNAL_QUOTA_CONTROLLER_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_retry_traits.h"
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_stub.h"
 #include "google/cloud/servicecontrol/v1/quota_controller_connection.h"
 #include "google/cloud/servicecontrol/v1/quota_controller_connection_idempotency_policy.h"
 #include "google/cloud/servicecontrol/v1/quota_controller_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,14 +42,15 @@ class QuotaControllerConnectionImpl
   ~QuotaControllerConnectionImpl() override = default;
 
   QuotaControllerConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<servicecontrol_v1_internal::QuotaControllerStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<servicecontrol_v1_internal::QuotaControllerStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const& request) override;
+  AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const&
+                    request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

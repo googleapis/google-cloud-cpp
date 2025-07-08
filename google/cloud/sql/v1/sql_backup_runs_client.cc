@@ -28,30 +28,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlBackupRunsServiceClient::SqlBackupRunsServiceClient(
     std::shared_ptr<SqlBackupRunsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SqlBackupRunsServiceClient::~SqlBackupRunsServiceClient() = default;
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlBackupRunsServiceClient::Delete(google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlBackupRunsServiceClient::Delete(
+    google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Delete(request);
 }
 
-StatusOr<google::cloud::sql::v1::BackupRun>
-SqlBackupRunsServiceClient::Get(google::cloud::sql::v1::SqlBackupRunsGetRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::BackupRun> SqlBackupRunsServiceClient::Get(
+    google::cloud::sql::v1::SqlBackupRunsGetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Get(request);
 }
 
-StatusOr<google::cloud::sql::v1::Operation>
-SqlBackupRunsServiceClient::Insert(google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::Operation> SqlBackupRunsServiceClient::Insert(
+    google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Insert(request);
 }
 
 StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
-SqlBackupRunsServiceClient::List(google::cloud::sql::v1::SqlBackupRunsListRequest const& request, Options opts) {
+SqlBackupRunsServiceClient::List(
+    google::cloud::sql::v1::SqlBackupRunsListRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->List(request);
 }

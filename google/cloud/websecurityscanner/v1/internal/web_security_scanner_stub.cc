@@ -32,171 +32,164 @@ WebSecurityScannerStub::~WebSecurityScannerStub() = default;
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::CreateScanConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request) {
-    google::cloud::websecurityscanner::v1::ScanConfig response;
-    auto status =
-        grpc_stub_->CreateScanConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
+        request) {
+  google::cloud::websecurityscanner::v1::ScanConfig response;
+  auto status = grpc_stub_->CreateScanConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultWebSecurityScannerStub::DeleteScanConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteScanConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultWebSecurityScannerStub::DeleteScanConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteScanConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::GetScanConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request) {
-    google::cloud::websecurityscanner::v1::ScanConfig response;
-    auto status =
-        grpc_stub_->GetScanConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
+        request) {
+  google::cloud::websecurityscanner::v1::ScanConfig response;
+  auto status = grpc_stub_->GetScanConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse>
 DefaultWebSecurityScannerStub::ListScanConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::ListScanConfigsRequest const& request) {
-    google::cloud::websecurityscanner::v1::ListScanConfigsResponse response;
-    auto status =
-        grpc_stub_->ListScanConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
+        request) {
+  google::cloud::websecurityscanner::v1::ListScanConfigsResponse response;
+  auto status = grpc_stub_->ListScanConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::UpdateScanConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request) {
-    google::cloud::websecurityscanner::v1::ScanConfig response;
-    auto status =
-        grpc_stub_->UpdateScanConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
+        request) {
+  google::cloud::websecurityscanner::v1::ScanConfig response;
+  auto status = grpc_stub_->UpdateScanConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::StartScanRun(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
-    google::cloud::websecurityscanner::v1::ScanRun response;
-    auto status =
-        grpc_stub_->StartScanRun(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
+  google::cloud::websecurityscanner::v1::ScanRun response;
+  auto status = grpc_stub_->StartScanRun(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::GetScanRun(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
-    google::cloud::websecurityscanner::v1::ScanRun response;
-    auto status =
-        grpc_stub_->GetScanRun(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
+  google::cloud::websecurityscanner::v1::ScanRun response;
+  auto status = grpc_stub_->GetScanRun(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
 DefaultWebSecurityScannerStub::ListScanRuns(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
-    google::cloud::websecurityscanner::v1::ListScanRunsResponse response;
-    auto status =
-        grpc_stub_->ListScanRuns(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
+  google::cloud::websecurityscanner::v1::ListScanRunsResponse response;
+  auto status = grpc_stub_->ListScanRuns(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::StopScanRun(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
-    google::cloud::websecurityscanner::v1::ScanRun response;
-    auto status =
-        grpc_stub_->StopScanRun(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
+  google::cloud::websecurityscanner::v1::ScanRun response;
+  auto status = grpc_stub_->StopScanRun(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>
 DefaultWebSecurityScannerStub::ListCrawledUrls(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const& request) {
-    google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse response;
-    auto status =
-        grpc_stub_->ListCrawledUrls(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
+        request) {
+  google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse response;
+  auto status = grpc_stub_->ListCrawledUrls(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
 DefaultWebSecurityScannerStub::GetFinding(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
-    google::cloud::websecurityscanner::v1::Finding response;
-    auto status =
-        grpc_stub_->GetFinding(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
+  google::cloud::websecurityscanner::v1::Finding response;
+  auto status = grpc_stub_->GetFinding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
 DefaultWebSecurityScannerStub::ListFindings(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
-    google::cloud::websecurityscanner::v1::ListFindingsResponse response;
-    auto status =
-        grpc_stub_->ListFindings(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
+  google::cloud::websecurityscanner::v1::ListFindingsResponse response;
+  auto status = grpc_stub_->ListFindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
 DefaultWebSecurityScannerStub::ListFindingTypeStats(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request) {
-    google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse response;
-    auto status =
-        grpc_stub_->ListFindingTypeStats(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
+        request) {
+  google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse response;
+  auto status = grpc_stub_->ListFindingTypeStats(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

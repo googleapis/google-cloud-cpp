@@ -34,49 +34,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AnswerRecordsMetadata : public AnswerRecordsStub {
  public:
   ~AnswerRecordsMetadata() override = default;
-  AnswerRecordsMetadata(
-      std::shared_ptr<AnswerRecordsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  AnswerRecordsMetadata(std::shared_ptr<AnswerRecordsStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
-  StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse> ListAnswerRecords(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
+  ListAnswerRecords(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::AnswerRecord> UpdateAnswerRecord(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

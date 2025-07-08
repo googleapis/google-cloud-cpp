@@ -34,8 +34,10 @@ using ::google::cloud::resourcemanager_v3::FoldersPollingPolicyOption;
 /// @deprecated Use resourcemanager_v3::FoldersBackoffPolicyOption directly.
 using ::google::cloud::resourcemanager_v3::FoldersBackoffPolicyOption;
 
-/// @deprecated Use resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption;
+/// @deprecated Use resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::resourcemanager_v3::
+    FoldersConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use resourcemanager_v3::FoldersPolicyOptionList directly.
 using ::google::cloud::resourcemanager_v3::FoldersPolicyOptionList;

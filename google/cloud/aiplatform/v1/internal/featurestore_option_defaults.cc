@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/featurestore_option_defaults.h"
 #include "google/cloud/aiplatform/v1/featurestore_connection.h"
 #include "google/cloud/aiplatform/v1/featurestore_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,34 +34,45 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options FeaturestoreServiceDefaultOptions(std::string const& location, Options options) {
+Options FeaturestoreServiceDefaultOptions(std::string const& location,
+                                          Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FEATURESTORE_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FEATURESTORE_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_FEATURESTORE_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FEATURESTORE_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>(
         aiplatform_v1::FeaturestoreServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<aiplatform_v1::FeaturestoreServiceBackoffPolicyOption>()) {
     options.set<aiplatform_v1::FeaturestoreServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<aiplatform_v1::FeaturestoreServicePollingPolicyOption>()) {
     options.set<aiplatform_v1::FeaturestoreServicePollingPolicyOption>(
         GenericPollingPolicy<
             aiplatform_v1::FeaturestoreServiceRetryPolicyOption::Type,
             aiplatform_v1::FeaturestoreServiceBackoffPolicyOption::Type>(
-            options.get<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>()->clone(),
+            options.get<aiplatform_v1::FeaturestoreServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<aiplatform_v1::FeaturestoreServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<aiplatform_v1::FeaturestoreServiceConnectionIdempotencyPolicyOption>(
-        aiplatform_v1::MakeDefaultFeaturestoreServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<aiplatform_v1::
+                    FeaturestoreServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        aiplatform_v1::FeaturestoreServiceConnectionIdempotencyPolicyOption>(
+        aiplatform_v1::
+            MakeDefaultFeaturestoreServiceConnectionIdempotencyPolicy());
   }
 
   return options;

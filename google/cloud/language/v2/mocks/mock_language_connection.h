@@ -42,29 +42,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockLanguageServiceConnection : public language_v2::LanguageServiceConnection {
+class MockLanguageServiceConnection
+    : public language_v2::LanguageServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>,
-  AnalyzeSentiment,
-  (google::cloud::language::v2::AnalyzeSentimentRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>,
+      AnalyzeSentiment,
+      (google::cloud::language::v2::AnalyzeSentimentRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>,
-  AnalyzeEntities,
-  (google::cloud::language::v2::AnalyzeEntitiesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>,
+      AnalyzeEntities,
+      (google::cloud::language::v2::AnalyzeEntitiesRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::language::v2::ClassifyTextResponse>,
-  ClassifyText,
-  (google::cloud::language::v2::ClassifyTextRequest const& request), (override));
+              ClassifyText,
+              (google::cloud::language::v2::ClassifyTextRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::language::v2::ModerateTextResponse>,
-  ModerateText,
-  (google::cloud::language::v2::ModerateTextRequest const& request), (override));
+              ModerateText,
+              (google::cloud::language::v2::ModerateTextRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::language::v2::AnnotateTextResponse>,
-  AnnotateText,
-  (google::cloud::language::v2::AnnotateTextRequest const& request), (override));
+              AnnotateText,
+              (google::cloud::language::v2::AnnotateTextRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

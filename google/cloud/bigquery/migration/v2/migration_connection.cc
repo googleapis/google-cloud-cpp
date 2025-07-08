@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/migration/v2/migration_service.proto
 
 #include "google/cloud/bigquery/migration/v2/migration_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/migration/v2/internal/migration_connection_impl.h"
 #include "google/cloud/bigquery/migration/v2/internal/migration_option_defaults.h"
 #include "google/cloud/bigquery/migration/v2/internal/migration_stub_factory.h"
 #include "google/cloud/bigquery/migration/v2/internal/migration_tracing_connection.h"
 #include "google/cloud/bigquery/migration/v2/migration_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -40,31 +40,35 @@ MigrationServiceConnection::~MigrationServiceConnection() = default;
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceConnection::CreateMigrationWorkflow(
-    google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const&) {
+    google::cloud::bigquery::migration::v2::
+        CreateMigrationWorkflowRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceConnection::GetMigrationWorkflow(
-    google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&) {
+    google::cloud::bigquery::migration::v2::
+        GetMigrationWorkflowRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow> MigrationServiceConnection::ListMigrationWorkflows(
-    google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
+MigrationServiceConnection::ListMigrationWorkflows(
+    google::cloud::bigquery::migration::v2::
+        ListMigrationWorkflowsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>>();
 }
 
-Status
-MigrationServiceConnection::DeleteMigrationWorkflow(
-    google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const&) {
+Status MigrationServiceConnection::DeleteMigrationWorkflow(
+    google::cloud::bigquery::migration::v2::
+        DeleteMigrationWorkflowRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MigrationServiceConnection::StartMigrationWorkflow(
-    google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&) {
+Status MigrationServiceConnection::StartMigrationWorkflow(
+    google::cloud::bigquery::migration::v2::
+        StartMigrationWorkflowRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -74,8 +78,10 @@ MigrationServiceConnection::GetMigrationSubtask(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask> MigrationServiceConnection::ListMigrationSubtasks(
-    google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
+MigrationServiceConnection::ListMigrationSubtasks(
+    google::cloud::bigquery::migration::v2::
+        ListMigrationSubtasksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>>();
 }
@@ -83,17 +89,19 @@ StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask> MigrationS
 std::shared_ptr<MigrationServiceConnection> MakeMigrationServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      MigrationServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 MigrationServicePolicyOptionList>(options,
+                                                                   __func__);
   options = bigquery_migration_v2_internal::MigrationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigquery_migration_v2_internal::CreateDefaultMigrationServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return bigquery_migration_v2_internal::MakeMigrationServiceTracingConnection(
-      std::make_shared<bigquery_migration_v2_internal::MigrationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          bigquery_migration_v2_internal::MigrationServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,67 +33,66 @@ DirectAccessServiceStub::~DirectAccessServiceStub() = default;
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DefaultDirectAccessServiceStub::CreateDeviceSession(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
-    google::cloud::devicestreaming::v1::DeviceSession response;
-    auto status =
-        grpc_stub_->CreateDeviceSession(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+        request) {
+  google::cloud::devicestreaming::v1::DeviceSession response;
+  auto status = grpc_stub_->CreateDeviceSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse>
 DefaultDirectAccessServiceStub::ListDeviceSessions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& request) {
-    google::cloud::devicestreaming::v1::ListDeviceSessionsResponse response;
-    auto status =
-        grpc_stub_->ListDeviceSessions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const&
+        request) {
+  google::cloud::devicestreaming::v1::ListDeviceSessionsResponse response;
+  auto status = grpc_stub_->ListDeviceSessions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DefaultDirectAccessServiceStub::GetDeviceSession(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
-    google::cloud::devicestreaming::v1::DeviceSession response;
-    auto status =
-        grpc_stub_->GetDeviceSession(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+        request) {
+  google::cloud::devicestreaming::v1::DeviceSession response;
+  auto status = grpc_stub_->GetDeviceSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDirectAccessServiceStub::CancelDeviceSession(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->CancelDeviceSession(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDirectAccessServiceStub::CancelDeviceSession(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->CancelDeviceSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DefaultDirectAccessServiceStub::UpdateDeviceSession(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
-    google::cloud::devicestreaming::v1::DeviceSession response;
-    auto status =
-        grpc_stub_->UpdateDeviceSession(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+        request) {
+  google::cloud::devicestreaming::v1::DeviceSession response;
+  auto status = grpc_stub_->UpdateDeviceSession(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -103,7 +102,9 @@ DefaultDirectAccessServiceStub::AsyncAdbConnect(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingReadWriteRpc<google::cloud::devicestreaming::v1::AdbMessage, google::cloud::devicestreaming::v1::DeviceMessage>(
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::devicestreaming::v1::AdbMessage,
+      google::cloud::devicestreaming::v1::DeviceMessage>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncAdbConnect(context, cq);

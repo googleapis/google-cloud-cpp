@@ -26,71 +26,92 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() = default;
+ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
 ProjectsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ProjectsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::DisableXpnHost(
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::DisableXpnResource(
+    google::cloud::cpp::compute::projects::v1::
+        DisableXpnResourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::EnableXpnHost(
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::EnableXpnResource(
+    google::cloud::cpp::compute::projects::v1::
+        EnableXpnResourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::GetProject(google::cloud::cpp::compute::projects::v1::GetProjectRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::GetProject(
+    google::cloud::cpp::compute::projects::v1::GetProjectRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::GetXpnHost(
+    google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::GetXpnResources(
+    google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest) {  // NOLINT
+Idempotency ProjectsConnectionIdempotencyPolicy::ListXpnHosts(
+    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::MoveDisk(
+    google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::MoveInstance(
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::SetCloudArmorTier(google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::SetCloudArmorTier(
+    google::cloud::cpp::compute::projects::v1::
+        SetCloudArmorTierRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::SetCommonInstanceMetadata(
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::SetDefaultNetworkTier(
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::SetUsageExportBucket(
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
-    MakeDefaultProjectsConnectionIdempotencyPolicy() {
+MakeDefaultProjectsConnectionIdempotencyPolicy() {
   return std::make_unique<ProjectsConnectionIdempotencyPolicy>();
 }
 

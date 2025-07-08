@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_INTERNAL_BIGQUERY_READ_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_INTERNAL_BIGQUERY_READ_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_options.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_retry_traits.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -47,20 +47,24 @@ class BigQueryReadConnectionImpl
   ~BigQueryReadConnectionImpl() override = default;
 
   BigQueryReadConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_storage_v1_internal::BigQueryReadStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquery_storage_v1_internal::BigQueryReadStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+          request) override;
 
-  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) override;
+  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
+      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
-  SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request) override;
+  SplitReadStream(
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
@@ -69,7 +73,7 @@ class BigQueryReadConnectionImpl
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1_internal
 }  // namespace cloud
 }  // namespace google

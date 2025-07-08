@@ -17,17 +17,17 @@
 // source: google/monitoring/v3/query_service.proto
 
 #include "google/cloud/monitoring/v3/query_connection.h"
+#include "google/cloud/monitoring/v3/internal/query_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/query_option_defaults.h"
+#include "google/cloud/monitoring/v3/internal/query_stub_factory.h"
+#include "google/cloud/monitoring/v3/internal/query_tracing_connection.h"
+#include "google/cloud/monitoring/v3/query_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/monitoring/v3/internal/query_connection_impl.h"
-#include "google/cloud/monitoring/v3/internal/query_option_defaults.h"
-#include "google/cloud/monitoring/v3/internal/query_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/query_tracing_connection.h"
-#include "google/cloud/monitoring/v3/query_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 QueryServiceConnection::~QueryServiceConnection() = default;
 
-StreamRange<google::monitoring::v3::TimeSeriesData> QueryServiceConnection::QueryTimeSeries(
-    google::monitoring::v3::QueryTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::TimeSeriesData>
+QueryServiceConnection::QueryTimeSeries(
+    google::monitoring::v3::
+        QueryTimeSeriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::TimeSeriesData>>();
 }
@@ -47,17 +49,18 @@ StreamRange<google::monitoring::v3::TimeSeriesData> QueryServiceConnection::Quer
 std::shared_ptr<QueryServiceConnection> MakeQueryServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      QueryServicePolicyOptionList>(options, __func__);
-  options = monitoring_v3_internal::QueryServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 QueryServicePolicyOptionList>(options,
+                                                               __func__);
+  options =
+      monitoring_v3_internal::QueryServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = monitoring_v3_internal::CreateDefaultQueryServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return monitoring_v3_internal::MakeQueryServiceTracingConnection(
       std::make_shared<monitoring_v3_internal::QueryServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

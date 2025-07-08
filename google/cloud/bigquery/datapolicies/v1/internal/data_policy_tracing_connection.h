@@ -36,36 +36,47 @@ class DataPolicyServiceTracingConnection
   ~DataPolicyServiceTracingConnection() override = default;
 
   explicit DataPolicyServiceTracingConnection(
-    std::shared_ptr<bigquery_datapolicies_v1::DataPolicyServiceConnection> child);
+      std::shared_ptr<bigquery_datapolicies_v1::DataPolicyServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  CreateDataPolicy(google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request) override;
+  CreateDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  UpdateDataPolicy(google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request) override;
+  UpdateDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  RenameDataPolicy(google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request) override;
+  RenameDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
+          request) override;
 
-  Status
-  DeleteDataPolicy(google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request) override;
+  Status DeleteDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  GetDataPolicy(google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request) override;
+  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
+          request) override;
 
   StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  ListDataPolicies(google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest request) override;
+  ListDataPolicies(
+      google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
+          request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<bigquery_datapolicies_v1::DataPolicyServiceConnection> child_;
@@ -81,7 +92,8 @@ class DataPolicyServiceTracingConnection
  */
 std::shared_ptr<bigquery_datapolicies_v1::DataPolicyServiceConnection>
 MakeDataPolicyServiceTracingConnection(
-    std::shared_ptr<bigquery_datapolicies_v1::DataPolicyServiceConnection> conn);
+    std::shared_ptr<bigquery_datapolicies_v1::DataPolicyServiceConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datapolicies_v1_internal

@@ -34,82 +34,105 @@ CloudBillingTracingConnection::CloudBillingTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingTracingConnection::GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::GetBillingAccount");
+CloudBillingTracingConnection::GetBillingAccount(
+    google::cloud::billing::v1::GetBillingAccountRequest const& request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::GetBillingAccount");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBillingAccount(request));
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
-CloudBillingTracingConnection::ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::ListBillingAccounts");
+CloudBillingTracingConnection::ListBillingAccounts(
+    google::cloud::billing::v1::ListBillingAccountsRequest request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::ListBillingAccounts");
   internal::OTelScope scope(span);
   auto sr = child_->ListBillingAccounts(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::billing::v1::BillingAccount>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::billing::v1::BillingAccount>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingTracingConnection::UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::UpdateBillingAccount");
+CloudBillingTracingConnection::UpdateBillingAccount(
+    google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::UpdateBillingAccount");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateBillingAccount(request));
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingTracingConnection::CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::CreateBillingAccount");
+CloudBillingTracingConnection::CreateBillingAccount(
+    google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::CreateBillingAccount");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateBillingAccount(request));
 }
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingTracingConnection::ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::ListProjectBillingInfo");
+CloudBillingTracingConnection::ListProjectBillingInfo(
+    google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::ListProjectBillingInfo");
   internal::OTelScope scope(span);
   auto sr = child_->ListProjectBillingInfo(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::billing::v1::ProjectBillingInfo>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::billing::v1::ProjectBillingInfo>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingTracingConnection::GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::GetProjectBillingInfo");
+CloudBillingTracingConnection::GetProjectBillingInfo(
+    google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::GetProjectBillingInfo");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProjectBillingInfo(request));
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingTracingConnection::UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::UpdateProjectBillingInfo");
+CloudBillingTracingConnection::UpdateProjectBillingInfo(
+    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::UpdateProjectBillingInfo");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateProjectBillingInfo(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy> CloudBillingTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("billing_v1::CloudBillingConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy> CloudBillingTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("billing_v1::CloudBillingConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudBillingTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::TestIamPermissions");
+CloudBillingTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingTracingConnection::MoveBillingAccount(google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
-  auto span = internal::MakeSpan("billing_v1::CloudBillingConnection::MoveBillingAccount");
+CloudBillingTracingConnection::MoveBillingAccount(
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+  auto span = internal::MakeSpan(
+      "billing_v1::CloudBillingConnection::MoveBillingAccount");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->MoveBillingAccount(request));
 }

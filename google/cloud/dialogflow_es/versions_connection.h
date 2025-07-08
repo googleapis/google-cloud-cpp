@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_VERSIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_VERSIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/internal/versions_retry_traits.h"
 #include "google/cloud/dialogflow_es/versions_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -63,14 +63,14 @@ class VersionsLimitedErrorCountRetryPolicy : public VersionsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit VersionsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   VersionsLimitedErrorCountRetryPolicy(
       VersionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   VersionsLimitedErrorCountRetryPolicy(
       VersionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : VersionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +90,9 @@ class VersionsLimitedErrorCountRetryPolicy : public VersionsRetryPolicy {
   using BaseType = VersionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::VersionsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::VersionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +130,13 @@ class VersionsLimitedTimeRetryPolicy : public VersionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit VersionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   VersionsLimitedTimeRetryPolicy(VersionsLimitedTimeRetryPolicy&& rhs) noexcept
-    : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  VersionsLimitedTimeRetryPolicy(VersionsLimitedTimeRetryPolicy const& rhs) noexcept
-    : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VersionsLimitedTimeRetryPolicy(
+      VersionsLimitedTimeRetryPolicy const& rhs) noexcept
+      : VersionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -147,15 +150,16 @@ class VersionsLimitedTimeRetryPolicy : public VersionsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<VersionsRetryPolicy> clone() const override {
-    return std::make_unique<VersionsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<VersionsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = VersionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::VersionsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::VersionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,35 +180,35 @@ class VersionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::v2::Version>
-  ListVersions(google::cloud::dialogflow::v2::ListVersionsRequest request);
+  virtual StreamRange<google::cloud::dialogflow::v2::Version> ListVersions(
+      google::cloud::dialogflow::v2::ListVersionsRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Version>
-  GetVersion(google::cloud::dialogflow::v2::GetVersionRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Version> GetVersion(
+      google::cloud::dialogflow::v2::GetVersionRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Version>
-  CreateVersion(google::cloud::dialogflow::v2::CreateVersionRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Version> CreateVersion(
+      google::cloud::dialogflow::v2::CreateVersionRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Version>
-  UpdateVersion(google::cloud::dialogflow::v2::UpdateVersionRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Version> UpdateVersion(
+      google::cloud::dialogflow::v2::UpdateVersionRequest const& request);
 
-  virtual Status
-  DeleteVersion(google::cloud::dialogflow::v2::DeleteVersionRequest const& request);
+  virtual Status DeleteVersion(
+      google::cloud::dialogflow::v2::DeleteVersionRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

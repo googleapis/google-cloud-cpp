@@ -17,9 +17,9 @@
 // source: google/cloud/dataproc/v1/autoscaling_policies.proto
 
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_connection_impl.h"
+#include "google/cloud/dataproc/v1/internal/autoscaling_policy_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/dataproc/v1/internal/autoscaling_policy_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,114 +32,140 @@ namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>()->clone();
+std::unique_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicy>
+std::unique_ptr<
+    dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<dataproc_v1::
+               AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 AutoscalingPolicyServiceConnectionImpl::AutoscalingPolicyServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dataproc_v1_internal::AutoscalingPolicyServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AutoscalingPolicyServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), AutoscalingPolicyServiceConnection::options())) {}
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceConnectionImpl::CreateAutoscalingPolicy(google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) {
+AutoscalingPolicyServiceConnectionImpl::CreateAutoscalingPolicy(
+    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAutoscalingPolicy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) {
+             google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
+                 request) {
         return stub_->CreateAutoscalingPolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceConnectionImpl::UpdateAutoscalingPolicy(google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) {
+AutoscalingPolicyServiceConnectionImpl::UpdateAutoscalingPolicy(
+    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAutoscalingPolicy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) {
+             google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
+                 request) {
         return stub_->UpdateAutoscalingPolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceConnectionImpl::GetAutoscalingPolicy(google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
+AutoscalingPolicyServiceConnectionImpl::GetAutoscalingPolicy(
+    google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAutoscalingPolicy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
+             google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&
+                 request) {
         return stub_->GetAutoscalingPolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceConnectionImpl::ListAutoscalingPolicies(google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) {
+AutoscalingPolicyServiceConnectionImpl::ListAutoscalingPolicies(
+    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListAutoscalingPolicies(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListAutoscalingPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& r) {
+          Options const& options,
+          google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const& request) {
+                   google::cloud::dataproc::v1::
+                       ListAutoscalingPoliciesRequest const& request) {
               return stub->ListAutoscalingPolicies(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse r) {
-        std::vector<google::cloud::dataproc::v1::AutoscalingPolicy> result(r.policies().size());
+        std::vector<google::cloud::dataproc::v1::AutoscalingPolicy> result(
+            r.policies().size());
         auto& messages = *r.mutable_policies();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-Status
-AutoscalingPolicyServiceConnectionImpl::DeleteAutoscalingPolicy(google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) {
+Status AutoscalingPolicyServiceConnectionImpl::DeleteAutoscalingPolicy(
+    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAutoscalingPolicy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) {
+             google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
+                 request) {
         return stub_->DeleteAutoscalingPolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
-AutoscalingPolicyServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+AutoscalingPolicyServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -152,7 +178,8 @@ AutoscalingPolicyServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPoli
 }
 
 StatusOr<google::iam::v1::Policy>
-AutoscalingPolicyServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+AutoscalingPolicyServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -165,7 +192,8 @@ AutoscalingPolicyServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPoli
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutoscalingPolicyServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+AutoscalingPolicyServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -178,17 +206,22 @@ AutoscalingPolicyServiceConnectionImpl::TestIamPermissions(google::iam::v1::Test
 }
 
 StreamRange<google::longrunning::Operation>
-AutoscalingPolicyServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+AutoscalingPolicyServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<dataproc_v1::AutoscalingPolicyServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -198,7 +231,8 @@ AutoscalingPolicyServiceConnectionImpl::ListOperations(google::longrunning::List
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -206,7 +240,8 @@ AutoscalingPolicyServiceConnectionImpl::ListOperations(google::longrunning::List
 }
 
 StatusOr<google::longrunning::Operation>
-AutoscalingPolicyServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+AutoscalingPolicyServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -218,8 +253,8 @@ AutoscalingPolicyServiceConnectionImpl::GetOperation(google::longrunning::GetOpe
       *current, request, __func__);
 }
 
-Status
-AutoscalingPolicyServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status AutoscalingPolicyServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -231,8 +266,8 @@ AutoscalingPolicyServiceConnectionImpl::DeleteOperation(google::longrunning::Del
       *current, request, __func__);
 }
 
-Status
-AutoscalingPolicyServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status AutoscalingPolicyServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

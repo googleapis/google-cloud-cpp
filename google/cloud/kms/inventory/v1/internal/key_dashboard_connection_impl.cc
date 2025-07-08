@@ -17,12 +17,12 @@
 // source: google/cloud/kms/inventory/v1/key_dashboard_service.proto
 
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_connection_impl.h"
+#include "google/cloud/kms/inventory/v1/internal/key_dashboard_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/kms/inventory/v1/internal/key_dashboard_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,54 +32,68 @@ namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<kms_inventory_v1::KeyDashboardServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()->clone();
+std::unique_ptr<kms_inventory_v1::KeyDashboardServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<kms_inventory_v1::KeyDashboardServiceConnectionIdempotencyPolicy>
+std::unique_ptr<
+    kms_inventory_v1::KeyDashboardServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<kms_inventory_v1::KeyDashboardServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<kms_inventory_v1::
+               KeyDashboardServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 KeyDashboardServiceConnectionImpl::KeyDashboardServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<kms_inventory_v1_internal::KeyDashboardServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        KeyDashboardServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), KeyDashboardServiceConnection::options())) {}
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-KeyDashboardServiceConnectionImpl::ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest request) {
+KeyDashboardServiceConnectionImpl::ListCryptoKeys(
+    google::cloud::kms::inventory::v1::ListCryptoKeysRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListCryptoKeys(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::kms::v1::CryptoKey>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::kms::v1::CryptoKey>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_inventory_v1::KeyDashboardServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<kms_inventory_v1::KeyDashboardServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& r) {
+          Options const& options,
+          google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
+                    request) {
               return stub->ListCryptoKeys(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::kms::inventory::v1::ListCryptoKeysResponse r) {
-        std::vector<google::cloud::kms::v1::CryptoKey> result(r.crypto_keys().size());
+        std::vector<google::cloud::kms::v1::CryptoKey> result(
+            r.crypto_keys().size());
         auto& messages = *r.mutable_crypto_keys();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

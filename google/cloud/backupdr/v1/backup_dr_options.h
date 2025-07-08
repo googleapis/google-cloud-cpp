@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_BACKUP_DR_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_BACKUP_DR_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/backupdr/v1/backup_dr_connection.h"
 #include "google/cloud/backupdr/v1/backup_dr_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct BackupDRPollingPolicyOption {
  * @ingroup google-cloud-backupdr-options
  */
 using BackupDRPolicyOptionList =
-    OptionList<BackupDRRetryPolicyOption,
-               BackupDRBackoffPolicyOption,
+    OptionList<BackupDRRetryPolicyOption, BackupDRBackoffPolicyOption,
                BackupDRPollingPolicyOption,
                BackupDRConnectionIdempotencyPolicyOption>;
 

@@ -26,11 +26,16 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_v3::MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::monitoring_v3::MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// monitoring_v3::MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::
+    MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicy;
+/// @deprecated Use monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::
+    AlertPolicyServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

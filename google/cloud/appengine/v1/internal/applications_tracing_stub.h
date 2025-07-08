@@ -39,8 +39,7 @@ class ApplicationsTracingStub : public ApplicationsStub {
   explicit ApplicationsTracingStub(std::shared_ptr<ApplicationsStub> child);
 
   StatusOr<google::appengine::v1::Application> GetApplication(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateApplication(
@@ -50,8 +49,7 @@ class ApplicationsTracingStub : public ApplicationsStub {
       google::appengine::v1::CreateApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::CreateApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateApplication(
@@ -61,8 +59,7 @@ class ApplicationsTracingStub : public ApplicationsStub {
       google::appengine::v1::UpdateApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::UpdateApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRepairApplication(
@@ -72,8 +69,7 @@ class ApplicationsTracingStub : public ApplicationsStub {
       google::appengine::v1::RepairApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RepairApplication(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::RepairApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -90,7 +86,8 @@ class ApplicationsTracingStub : public ApplicationsStub {
 
  private:
   std::shared_ptr<ApplicationsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContentServiceClient::ContentServiceClient(
     std::shared_ptr<ContentServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ContentServiceClient::~ContentServiceClient() = default;
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceClient::CreateContent(std::string const& parent, google::cloud::dataplex::v1::Content const& content, Options opts) {
+ContentServiceClient::CreateContent(
+    std::string const& parent,
+    google::cloud::dataplex::v1::Content const& content, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateContentRequest request;
   request.set_parent(parent);
@@ -42,13 +44,17 @@ ContentServiceClient::CreateContent(std::string const& parent, google::cloud::da
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceClient::CreateContent(google::cloud::dataplex::v1::CreateContentRequest const& request, Options opts) {
+ContentServiceClient::CreateContent(
+    google::cloud::dataplex::v1::CreateContentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateContent(request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceClient::UpdateContent(google::cloud::dataplex::v1::Content const& content, google::protobuf::FieldMask const& update_mask, Options opts) {
+ContentServiceClient::UpdateContent(
+    google::cloud::dataplex::v1::Content const& content,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateContentRequest request;
   *request.mutable_content() = content;
@@ -57,61 +63,66 @@ ContentServiceClient::UpdateContent(google::cloud::dataplex::v1::Content const& 
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceClient::UpdateContent(google::cloud::dataplex::v1::UpdateContentRequest const& request, Options opts) {
+ContentServiceClient::UpdateContent(
+    google::cloud::dataplex::v1::UpdateContentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateContent(request);
 }
 
-Status
-ContentServiceClient::DeleteContent(std::string const& name, Options opts) {
+Status ContentServiceClient::DeleteContent(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteContentRequest request;
   request.set_name(name);
   return connection_->DeleteContent(request);
 }
 
-Status
-ContentServiceClient::DeleteContent(google::cloud::dataplex::v1::DeleteContentRequest const& request, Options opts) {
+Status ContentServiceClient::DeleteContent(
+    google::cloud::dataplex::v1::DeleteContentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteContent(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceClient::GetContent(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Content> ContentServiceClient::GetContent(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::GetContentRequest request;
   request.set_name(name);
   return connection_->GetContent(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Content>
-ContentServiceClient::GetContent(google::cloud::dataplex::v1::GetContentRequest const& request, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Content> ContentServiceClient::GetContent(
+    google::cloud::dataplex::v1::GetContentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetContent(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ContentServiceClient::GetIamPolicy(std::string const& resource, Options opts) {
+StatusOr<google::iam::v1::Policy> ContentServiceClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ContentServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> ContentServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ContentServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> ContentServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContentServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+ContentServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
@@ -125,25 +136,28 @@ ContentServiceClient::ListContent(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataplex::v1::Content>
-ContentServiceClient::ListContent(google::cloud::dataplex::v1::ListContentRequest request, Options opts) {
+ContentServiceClient::ListContent(
+    google::cloud::dataplex::v1::ListContentRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListContent(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>
-ContentServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+ContentServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-ContentServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> ContentServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-ContentServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+ContentServiceClient::ListOperations(std::string const& name,
+                                     std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -152,49 +166,50 @@ ContentServiceClient::ListOperations(std::string const& name, std::string const&
 }
 
 StreamRange<google::longrunning::Operation>
-ContentServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+ContentServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-ContentServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ContentServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ContentServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ContentServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-ContentServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status ContentServiceClient::DeleteOperation(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-ContentServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status ContentServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-ContentServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status ContentServiceClient::CancelOperation(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-ContentServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status ContentServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ACCELERATOR_TYPES_V1_INTERNAL_ACCELERATOR_TYPES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ACCELERATOR_TYPES_V1_INTERNAL_ACCELERATOR_TYPES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_connection.h"
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_connection_idempotency_policy.h"
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_options.h"
 #include "google/cloud/compute/accelerator_types/v1/internal/accelerator_types_rest_stub.h"
 #include "google/cloud/compute/accelerator_types/v1/internal/accelerator_types_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,38 +43,57 @@ class AcceleratorTypesRestConnectionImpl
   ~AcceleratorTypesRestConnectionImpl() override = default;
 
   AcceleratorTypesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_accelerator_types_v1_internal::AcceleratorTypesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_accelerator_types_v1_internal::AcceleratorTypesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
-  AggregatedListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
+  AggregatedListAcceleratorTypes(
+      google::cloud::cpp::compute::accelerator_types::v1::
+          AggregatedListAcceleratorTypesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorType(google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
+      google::cloud::cpp::compute::accelerator_types::v1::
+          GetAcceleratorTypeRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest request) override;
+  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::
+                           ListAcceleratorTypesRequest request) override;
 
  private:
-  static std::unique_ptr<compute_accelerator_types_v1::AcceleratorTypesRetryPolicy>
+  static std::unique_ptr<
+      compute_accelerator_types_v1::AcceleratorTypesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>()->clone();
+    return options
+        .get<compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_accelerator_types_v1::AcceleratorTypesBackoffPolicyOption>()->clone();
+    return options
+        .get<
+            compute_accelerator_types_v1::AcceleratorTypesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_accelerator_types_v1::AcceleratorTypesConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_accelerator_types_v1::AcceleratorTypesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_accelerator_types_v1::AcceleratorTypesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_accelerator_types_v1::
+                 AcceleratorTypesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_accelerator_types_v1_internal::AcceleratorTypesRestStub> stub_;
+  std::shared_ptr<
+      compute_accelerator_types_v1_internal::AcceleratorTypesRestStub>
+      stub_;
   Options options_;
 };
 

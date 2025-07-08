@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExecutionsClient::ExecutionsClient(
     std::shared_ptr<ExecutionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ExecutionsClient::~ExecutionsClient() = default;
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
@@ -41,13 +41,18 @@ ExecutionsClient::ListExecutions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
-ExecutionsClient::ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request, Options opts) {
+ExecutionsClient::ListExecutions(
+    google::cloud::workflows::executions::v1::ListExecutionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListExecutions(std::move(request));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsClient::CreateExecution(std::string const& parent, google::cloud::workflows::executions::v1::Execution const& execution, Options opts) {
+ExecutionsClient::CreateExecution(
+    std::string const& parent,
+    google::cloud::workflows::executions::v1::Execution const& execution,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::executions::v1::CreateExecutionRequest request;
   request.set_parent(parent);
@@ -56,7 +61,10 @@ ExecutionsClient::CreateExecution(std::string const& parent, google::cloud::work
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsClient::CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request, Options opts) {
+ExecutionsClient::CreateExecution(
+    google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExecution(request);
 }
@@ -70,7 +78,10 @@ ExecutionsClient::GetExecution(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsClient::GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request, Options opts) {
+ExecutionsClient::GetExecution(
+    google::cloud::workflows::executions::v1::GetExecutionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetExecution(request);
 }
@@ -84,7 +95,10 @@ ExecutionsClient::CancelExecution(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsClient::CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request, Options opts) {
+ExecutionsClient::CancelExecution(
+    google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelExecution(request);
 }

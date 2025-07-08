@@ -32,70 +32,79 @@ UptimeCheckServiceTracingStub::UptimeCheckServiceTracingStub(
     std::shared_ptr<UptimeCheckServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse> UptimeCheckServiceTracingStub::ListUptimeCheckConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
+UptimeCheckServiceTracingStub::ListUptimeCheckConfigs(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService", "ListUptimeCheckConfigs");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService",
+                                     "ListUptimeCheckConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListUptimeCheckConfigs(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListUptimeCheckConfigs(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::UptimeCheckConfig> UptimeCheckServiceTracingStub::GetUptimeCheckConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::UptimeCheckConfig>
+UptimeCheckServiceTracingStub::GetUptimeCheckConfig(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService", "GetUptimeCheckConfig");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService",
+                                     "GetUptimeCheckConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetUptimeCheckConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetUptimeCheckConfig(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::UptimeCheckConfig> UptimeCheckServiceTracingStub::CreateUptimeCheckConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::UptimeCheckConfig>
+UptimeCheckServiceTracingStub::CreateUptimeCheckConfig(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService", "CreateUptimeCheckConfig");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService",
+                                     "CreateUptimeCheckConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateUptimeCheckConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateUptimeCheckConfig(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::UptimeCheckConfig> UptimeCheckServiceTracingStub::UpdateUptimeCheckConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::UptimeCheckConfig>
+UptimeCheckServiceTracingStub::UpdateUptimeCheckConfig(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService", "UpdateUptimeCheckConfig");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService",
+                                     "UpdateUptimeCheckConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateUptimeCheckConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateUptimeCheckConfig(context, options, request));
 }
 
 Status UptimeCheckServiceTracingStub::DeleteUptimeCheckConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService", "DeleteUptimeCheckConfig");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService",
+                                     "DeleteUptimeCheckConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteUptimeCheckConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteUptimeCheckConfig(context, options, request));
 }
 
-StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse> UptimeCheckServiceTracingStub::ListUptimeCheckIps(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
+UptimeCheckServiceTracingStub::ListUptimeCheckIps(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService", "ListUptimeCheckIps");
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.UptimeCheckService",
+                                     "ListUptimeCheckIps");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListUptimeCheckIps(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListUptimeCheckIps(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

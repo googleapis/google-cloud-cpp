@@ -65,7 +65,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EventarcClient {
  public:
-  explicit EventarcClient(std::shared_ptr<EventarcConnection> connection, Options opts = {});
+  explicit EventarcClient(std::shared_ptr<EventarcConnection> connection,
+                          Options opts = {});
   ~EventarcClient();
 
   ///@{
@@ -108,8 +109,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Trigger>
-  GetTrigger(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +139,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Trigger>
-  GetTrigger(google::cloud::eventarc::v1::GetTriggerRequest const& request, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
+      google::cloud::eventarc::v1::GetTriggerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -172,8 +174,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Trigger>
-  ListTriggers(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -211,8 +213,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Trigger>
-  ListTriggers(google::cloud::eventarc::v1::ListTriggersRequest request, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
+      google::cloud::eventarc::v1::ListTriggersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -245,8 +248,10 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  CreateTrigger(std::string const& parent, google::cloud::eventarc::v1::Trigger const& trigger, std::string const& trigger_id, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
+      std::string const& parent,
+      google::cloud::eventarc::v1::Trigger const& trigger,
+      std::string const& trigger_id, Options opts = {});
 
   // clang-format off
   ///
@@ -259,8 +264,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTrigger(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::Trigger const& trigger, std::string const& trigger_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTrigger(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::Trigger const& trigger,
+      std::string const& trigger_id, Options opts = {});
 
   // clang-format off
   ///
@@ -296,8 +303,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  CreateTrigger(google::cloud::eventarc::v1::CreateTriggerRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -310,8 +318,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTrigger(NoAwaitTag, google::cloud::eventarc::v1::CreateTriggerRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTrigger(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -322,8 +332,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  CreateTrigger(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +369,10 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L568}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  UpdateTrigger(google::cloud::eventarc::v1::Trigger const& trigger, google::protobuf::FieldMask const& update_mask, bool allow_missing, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
+      google::cloud::eventarc::v1::Trigger const& trigger,
+      google::protobuf::FieldMask const& update_mask, bool allow_missing,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +385,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateTrigger(NoAwaitTag, google::cloud::eventarc::v1::Trigger const& trigger, google::protobuf::FieldMask const& update_mask, bool allow_missing, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateTrigger(
+      NoAwaitTag, google::cloud::eventarc::v1::Trigger const& trigger,
+      google::protobuf::FieldMask const& update_mask, bool allow_missing,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -410,8 +424,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L568}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  UpdateTrigger(google::cloud::eventarc::v1::UpdateTriggerRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +439,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateTrigger(NoAwaitTag, google::cloud::eventarc::v1::UpdateTriggerRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateTrigger(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -436,8 +453,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  UpdateTrigger(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -470,8 +487,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  DeleteTrigger(std::string const& name, bool allow_missing, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
+      std::string const& name, bool allow_missing, Options opts = {});
 
   // clang-format off
   ///
@@ -484,8 +501,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTrigger(NoAwaitTag, std::string const& name, bool allow_missing, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTrigger(
+      NoAwaitTag, std::string const& name, bool allow_missing,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -521,8 +539,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  DeleteTrigger(google::cloud::eventarc::v1::DeleteTriggerRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -535,8 +554,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTrigger(NoAwaitTag, google::cloud::eventarc::v1::DeleteTriggerRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTrigger(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -547,8 +568,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-  DeleteTrigger(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -572,8 +593,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Channel>
-  GetChannel(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -602,8 +623,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Channel>
-  GetChannel(google::cloud::eventarc::v1::GetChannelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
+      google::cloud::eventarc::v1::GetChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -636,8 +658,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L621}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Channel>
-  ListChannels(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -675,8 +697,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L621}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Channel>
-  ListChannels(google::cloud::eventarc::v1::ListChannelsRequest request, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
+      google::cloud::eventarc::v1::ListChannelsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -709,8 +732,10 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L663}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  CreateChannel(std::string const& parent, google::cloud::eventarc::v1::Channel const& channel, std::string const& channel_id, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      std::string const& parent,
+      google::cloud::eventarc::v1::Channel const& channel,
+      std::string const& channel_id, Options opts = {});
 
   // clang-format off
   ///
@@ -723,8 +748,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateChannel(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::Channel const& channel, std::string const& channel_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::Channel const& channel,
+      std::string const& channel_id, Options opts = {});
 
   // clang-format off
   ///
@@ -760,8 +787,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L663}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  CreateChannel(google::cloud::eventarc::v1::CreateChannelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      google::cloud::eventarc::v1::CreateChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -774,8 +802,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateChannel(NoAwaitTag, google::cloud::eventarc::v1::CreateChannelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -786,8 +816,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  CreateChannel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -821,8 +851,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L684}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  UpdateChannel(google::cloud::eventarc::v1::Channel const& channel, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::eventarc::v1::Channel const& channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -835,8 +866,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateChannel(NoAwaitTag, google::cloud::eventarc::v1::Channel const& channel, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      NoAwaitTag, google::cloud::eventarc::v1::Channel const& channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -872,8 +904,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L684}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  UpdateChannel(google::cloud::eventarc::v1::UpdateChannelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -886,8 +919,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateChannel(NoAwaitTag, google::cloud::eventarc::v1::UpdateChannelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -898,8 +933,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  UpdateChannel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -930,8 +965,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L699}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  DeleteChannel(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -944,8 +979,8 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteChannel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -981,8 +1016,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L699}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  DeleteChannel(google::cloud::eventarc::v1::DeleteChannelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -995,8 +1031,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteChannel(NoAwaitTag, google::cloud::eventarc::v1::DeleteChannelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1007,8 +1045,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Channel>>
-  DeleteChannel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1032,8 +1070,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Provider>
-  GetProvider(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1062,8 +1100,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Provider>
-  GetProvider(google::cloud::eventarc::v1::GetProviderRequest const& request, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
+      google::cloud::eventarc::v1::GetProviderRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1096,8 +1135,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Provider>
-  ListProviders(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Provider> ListProviders(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1135,8 +1174,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Provider>
-  ListProviders(google::cloud::eventarc::v1::ListProvidersRequest request, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Provider> ListProviders(
+      google::cloud::eventarc::v1::ListProvidersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1160,8 +1200,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L768}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::ChannelConnection>
-  GetChannelConnection(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1190,8 +1230,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L768}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::ChannelConnection>
-  GetChannelConnection(google::cloud::eventarc::v1::GetChannelConnectionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1264,7 +1305,9 @@ class EventarcClient {
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::ChannelConnection>
-  ListChannelConnections(google::cloud::eventarc::v1::ListChannelConnectionsRequest request, Options opts = {});
+  ListChannelConnections(
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1298,7 +1341,10 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  CreateChannelConnection(std::string const& parent, google::cloud::eventarc::v1::ChannelConnection const& channel_connection, std::string const& channel_connection_id, Options opts = {});
+  CreateChannelConnection(
+      std::string const& parent,
+      google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
+      std::string const& channel_connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1311,8 +1357,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateChannelConnection(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::ChannelConnection const& channel_connection, std::string const& channel_connection_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateChannelConnection(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
+      std::string const& channel_connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1349,7 +1397,10 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  CreateChannelConnection(google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request, Options opts = {});
+  CreateChannelConnection(
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1362,8 +1413,11 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateChannelConnection(NoAwaitTag, google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateChannelConnection(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1375,7 +1429,8 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  CreateChannelConnection(google::longrunning::Operation const& operation, Options opts = {});
+  CreateChannelConnection(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1420,8 +1475,8 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteChannelConnection(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteChannelConnection(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1458,7 +1513,10 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  DeleteChannelConnection(google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request, Options opts = {});
+  DeleteChannelConnection(
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1471,8 +1529,11 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteChannelConnection(NoAwaitTag, google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteChannelConnection(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1484,7 +1545,8 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  DeleteChannelConnection(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteChannelConnection(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1539,7 +1601,9 @@ class EventarcClient {
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  GetGoogleChannelConfig(google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request, Options opts = {});
+  GetGoogleChannelConfig(
+      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1567,7 +1631,10 @@ class EventarcClient {
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  UpdateGoogleChannelConfig(google::cloud::eventarc::v1::GoogleChannelConfig const& google_channel_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateGoogleChannelConfig(
+      google::cloud::eventarc::v1::GoogleChannelConfig const&
+          google_channel_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1597,7 +1664,10 @@ class EventarcClient {
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  UpdateGoogleChannelConfig(google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const& request, Options opts = {});
+  UpdateGoogleChannelConfig(
+      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1621,8 +1691,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::MessageBus>
-  GetMessageBus(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::MessageBus> GetMessageBus(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1651,8 +1721,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::MessageBus>
-  GetMessageBus(google::cloud::eventarc::v1::GetMessageBusRequest const& request, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::MessageBus> GetMessageBus(
+      google::cloud::eventarc::v1::GetMessageBusRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1685,8 +1756,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::MessageBus>
-  ListMessageBuses(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::MessageBus> ListMessageBuses(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1724,8 +1795,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::MessageBus>
-  ListMessageBuses(google::cloud::eventarc::v1::ListMessageBusesRequest request, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::MessageBus> ListMessageBuses(
+      google::cloud::eventarc::v1::ListMessageBusesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1780,7 +1852,10 @@ class EventarcClient {
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
-  ListMessageBusEnrollments(google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const& request, Options opts = {});
+  ListMessageBusEnrollments(
+      google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1814,8 +1889,10 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  CreateMessageBus(std::string const& parent, google::cloud::eventarc::v1::MessageBus const& message_bus, std::string const& message_bus_id, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> CreateMessageBus(
+      std::string const& parent,
+      google::cloud::eventarc::v1::MessageBus const& message_bus,
+      std::string const& message_bus_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1828,8 +1905,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMessageBus(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::MessageBus const& message_bus, std::string const& message_bus_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMessageBus(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::MessageBus const& message_bus,
+      std::string const& message_bus_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1865,8 +1944,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  CreateMessageBus(google::cloud::eventarc::v1::CreateMessageBusRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> CreateMessageBus(
+      google::cloud::eventarc::v1::CreateMessageBusRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1879,8 +1959,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::CreateMessageBusRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateMessageBusRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1891,8 +1973,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  CreateMessageBus(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> CreateMessageBus(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1926,8 +2008,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L984}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  UpdateMessageBus(google::cloud::eventarc::v1::MessageBus const& message_bus, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
+      google::cloud::eventarc::v1::MessageBus const& message_bus,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1940,8 +2023,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::MessageBus const& message_bus, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateMessageBus(
+      NoAwaitTag, google::cloud::eventarc::v1::MessageBus const& message_bus,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1977,8 +2061,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L984}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  UpdateMessageBus(google::cloud::eventarc::v1::UpdateMessageBusRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
+      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1991,8 +2076,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateMessageBus(NoAwaitTag, google::cloud::eventarc::v1::UpdateMessageBusRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2003,8 +2090,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  UpdateMessageBus(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2037,8 +2124,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  DeleteMessageBus(std::string const& name, std::string const& etag, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> DeleteMessageBus(
+      std::string const& name, std::string const& etag, Options opts = {});
 
   // clang-format off
   ///
@@ -2051,8 +2138,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteMessageBus(NoAwaitTag, std::string const& name, std::string const& etag, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteMessageBus(
+      NoAwaitTag, std::string const& name, std::string const& etag,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2088,8 +2176,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  DeleteMessageBus(google::cloud::eventarc::v1::DeleteMessageBusRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> DeleteMessageBus(
+      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2102,8 +2191,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteMessageBus(NoAwaitTag, google::cloud::eventarc::v1::DeleteMessageBusRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2114,8 +2205,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::MessageBus>>
-  DeleteMessageBus(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> DeleteMessageBus(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2139,8 +2230,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.GetEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1027}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Enrollment>
-  GetEnrollment(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2169,8 +2260,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.GetEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1027}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Enrollment>
-  GetEnrollment(google::cloud::eventarc::v1::GetEnrollmentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
+      google::cloud::eventarc::v1::GetEnrollmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2203,8 +2295,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.ListEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1038}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Enrollment>
-  ListEnrollments(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Enrollment> ListEnrollments(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2242,8 +2334,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.ListEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1038}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Enrollment>
-  ListEnrollments(google::cloud::eventarc::v1::ListEnrollmentsRequest request, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Enrollment> ListEnrollments(
+      google::cloud::eventarc::v1::ListEnrollmentsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2277,8 +2370,10 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  CreateEnrollment(std::string const& parent, google::cloud::eventarc::v1::Enrollment const& enrollment, std::string const& enrollment_id, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> CreateEnrollment(
+      std::string const& parent,
+      google::cloud::eventarc::v1::Enrollment const& enrollment,
+      std::string const& enrollment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2291,8 +2386,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEnrollment(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::Enrollment const& enrollment, std::string const& enrollment_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEnrollment(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::Enrollment const& enrollment,
+      std::string const& enrollment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2328,8 +2425,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  CreateEnrollment(google::cloud::eventarc::v1::CreateEnrollmentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> CreateEnrollment(
+      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2342,8 +2440,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::CreateEnrollmentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2354,8 +2454,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  CreateEnrollment(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> CreateEnrollment(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2389,8 +2489,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1106}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  UpdateEnrollment(google::cloud::eventarc::v1::Enrollment const& enrollment, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
+      google::cloud::eventarc::v1::Enrollment const& enrollment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2403,8 +2504,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::Enrollment const& enrollment, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEnrollment(
+      NoAwaitTag, google::cloud::eventarc::v1::Enrollment const& enrollment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2440,8 +2542,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1106}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  UpdateEnrollment(google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2454,8 +2557,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEnrollment(NoAwaitTag, google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2466,8 +2571,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  UpdateEnrollment(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2500,8 +2605,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  DeleteEnrollment(std::string const& name, std::string const& etag, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> DeleteEnrollment(
+      std::string const& name, std::string const& etag, Options opts = {});
 
   // clang-format off
   ///
@@ -2514,8 +2619,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEnrollment(NoAwaitTag, std::string const& name, std::string const& etag, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEnrollment(
+      NoAwaitTag, std::string const& name, std::string const& etag,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2551,8 +2657,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  DeleteEnrollment(google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> DeleteEnrollment(
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2565,8 +2672,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEnrollment(NoAwaitTag, google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2577,8 +2686,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Enrollment>>
-  DeleteEnrollment(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> DeleteEnrollment(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2602,8 +2711,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Pipeline>
-  GetPipeline(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Pipeline> GetPipeline(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2632,8 +2741,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::Pipeline>
-  GetPipeline(google::cloud::eventarc::v1::GetPipelineRequest const& request, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::Pipeline> GetPipeline(
+      google::cloud::eventarc::v1::GetPipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2666,8 +2776,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Pipeline>
-  ListPipelines(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Pipeline> ListPipelines(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2705,8 +2815,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
-  StreamRange<google::cloud::eventarc::v1::Pipeline>
-  ListPipelines(google::cloud::eventarc::v1::ListPipelinesRequest request, Options opts = {});
+  StreamRange<google::cloud::eventarc::v1::Pipeline> ListPipelines(
+      google::cloud::eventarc::v1::ListPipelinesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2739,8 +2850,10 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  CreatePipeline(std::string const& parent, google::cloud::eventarc::v1::Pipeline const& pipeline, std::string const& pipeline_id, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> CreatePipeline(
+      std::string const& parent,
+      google::cloud::eventarc::v1::Pipeline const& pipeline,
+      std::string const& pipeline_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2753,8 +2866,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreatePipeline(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::Pipeline const& pipeline, std::string const& pipeline_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreatePipeline(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::Pipeline const& pipeline,
+      std::string const& pipeline_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2790,8 +2905,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  CreatePipeline(google::cloud::eventarc::v1::CreatePipelineRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> CreatePipeline(
+      google::cloud::eventarc::v1::CreatePipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2804,8 +2920,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreatePipeline(NoAwaitTag, google::cloud::eventarc::v1::CreatePipelineRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreatePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreatePipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2816,8 +2934,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  CreatePipeline(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> CreatePipeline(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2851,8 +2969,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1227}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  UpdatePipeline(google::cloud::eventarc::v1::Pipeline const& pipeline, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
+      google::cloud::eventarc::v1::Pipeline const& pipeline,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2865,8 +2984,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdatePipeline(NoAwaitTag, google::cloud::eventarc::v1::Pipeline const& pipeline, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdatePipeline(
+      NoAwaitTag, google::cloud::eventarc::v1::Pipeline const& pipeline,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2902,8 +3022,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.UpdatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1227}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  UpdatePipeline(google::cloud::eventarc::v1::UpdatePipelineRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
+      google::cloud::eventarc::v1::UpdatePipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2916,8 +3037,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdatePipeline(NoAwaitTag, google::cloud::eventarc::v1::UpdatePipelineRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdatePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdatePipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2928,8 +3051,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  UpdatePipeline(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2962,8 +3085,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  DeletePipeline(std::string const& name, std::string const& etag, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> DeletePipeline(
+      std::string const& name, std::string const& etag, Options opts = {});
 
   // clang-format off
   ///
@@ -2976,8 +3099,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeletePipeline(NoAwaitTag, std::string const& name, std::string const& etag, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeletePipeline(
+      NoAwaitTag, std::string const& name, std::string const& etag,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3013,8 +3137,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  DeletePipeline(google::cloud::eventarc::v1::DeletePipelineRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> DeletePipeline(
+      google::cloud::eventarc::v1::DeletePipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3027,8 +3152,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeletePipeline(NoAwaitTag, google::cloud::eventarc::v1::DeletePipelineRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeletePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeletePipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3039,8 +3166,8 @@ class EventarcClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::eventarc::v1::Pipeline>>
-  DeletePipeline(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> DeletePipeline(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3064,8 +3191,8 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::GoogleApiSource>
-  GetGoogleApiSource(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::GoogleApiSource> GetGoogleApiSource(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3094,8 +3221,9 @@ class EventarcClient {
   /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::eventarc::v1::GoogleApiSource>
-  GetGoogleApiSource(google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::eventarc::v1::GoogleApiSource> GetGoogleApiSource(
+      google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3168,7 +3296,9 @@ class EventarcClient {
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::GoogleApiSource>
-  ListGoogleApiSources(google::cloud::eventarc::v1::ListGoogleApiSourcesRequest request, Options opts = {});
+  ListGoogleApiSources(
+      google::cloud::eventarc::v1::ListGoogleApiSourcesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3203,7 +3333,10 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  CreateGoogleApiSource(std::string const& parent, google::cloud::eventarc::v1::GoogleApiSource const& google_api_source, std::string const& google_api_source_id, Options opts = {});
+  CreateGoogleApiSource(
+      std::string const& parent,
+      google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+      std::string const& google_api_source_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3216,8 +3349,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGoogleApiSource(NoAwaitTag, std::string const& parent, google::cloud::eventarc::v1::GoogleApiSource const& google_api_source, std::string const& google_api_source_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGoogleApiSource(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+      std::string const& google_api_source_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3254,7 +3389,9 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  CreateGoogleApiSource(google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request, Options opts = {});
+  CreateGoogleApiSource(
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3267,8 +3404,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3280,7 +3419,8 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  CreateGoogleApiSource(google::longrunning::Operation const& operation, Options opts = {});
+  CreateGoogleApiSource(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -3315,7 +3455,9 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  UpdateGoogleApiSource(google::cloud::eventarc::v1::GoogleApiSource const& google_api_source, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateGoogleApiSource(
+      google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3328,8 +3470,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::GoogleApiSource const& google_api_source, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3366,7 +3510,9 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  UpdateGoogleApiSource(google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request, Options opts = {});
+  UpdateGoogleApiSource(
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3379,8 +3525,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3392,7 +3540,8 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  UpdateGoogleApiSource(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateGoogleApiSource(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -3426,7 +3575,8 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  DeleteGoogleApiSource(std::string const& name, std::string const& etag, Options opts = {});
+  DeleteGoogleApiSource(std::string const& name, std::string const& etag,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -3439,8 +3589,9 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGoogleApiSource(NoAwaitTag, std::string const& name, std::string const& etag, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGoogleApiSource(
+      NoAwaitTag, std::string const& name, std::string const& etag,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3477,7 +3628,9 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  DeleteGoogleApiSource(google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request, Options opts = {});
+  DeleteGoogleApiSource(
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3490,8 +3643,10 @@ class EventarcClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGoogleApiSource(NoAwaitTag, google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3503,7 +3658,8 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
-  DeleteGoogleApiSource(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteGoogleApiSource(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -3541,8 +3697,8 @@ class EventarcClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3571,8 +3727,9 @@ class EventarcClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3604,8 +3761,8 @@ class EventarcClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3636,8 +3793,8 @@ class EventarcClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3672,8 +3829,9 @@ class EventarcClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3708,8 +3866,8 @@ class EventarcClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -3748,8 +3906,8 @@ class EventarcClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3775,8 +3933,8 @@ class EventarcClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -3807,8 +3965,9 @@ class EventarcClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3832,8 +3991,7 @@ class EventarcClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3862,8 +4020,9 @@ class EventarcClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3897,8 +4056,7 @@ class EventarcClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3937,8 +4095,9 @@ class EventarcClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<EventarcConnection> connection_;

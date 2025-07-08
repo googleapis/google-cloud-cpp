@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/v2/routine.proto
 
 #include "google/cloud/bigquerycontrol/v2/routine_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquerycontrol/v2/internal/routine_option_defaults.h"
 #include "google/cloud/bigquerycontrol/v2/internal/routine_tracing_connection.h"
 #include "google/cloud/bigquerycontrol/v2/routine_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -59,8 +59,7 @@ RoutineServiceConnection::PatchRoutine(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-RoutineServiceConnection::DeleteRoutine(
+Status RoutineServiceConnection::DeleteRoutine(
     google::cloud::bigquery::v2::DeleteRoutineRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

@@ -33,7 +33,8 @@ using ::google::cloud::connectors_v1::MakeConnectorsConnection;
 /// @deprecated Use connectors_v1::ConnectorsConnection directly.
 using ::google::cloud::connectors_v1::ConnectorsConnection;
 
-/// @deprecated Use connectors_v1::ConnectorsLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use connectors_v1::ConnectorsLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::connectors_v1::ConnectorsLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use connectors_v1::ConnectorsLimitedTimeRetryPolicy directly.

@@ -37,56 +37,63 @@ class DeploymentResourcePoolServiceConnectionIdempotencyPolicy {
   virtual ~DeploymentResourcePoolServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DeploymentResourcePoolServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<
+      DeploymentResourcePoolServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request);
+  virtual google::cloud::Idempotency CreateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request);
+  virtual google::cloud::Idempotency GetDeploymentResourcePool(
+      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request);
+  virtual google::cloud::Idempotency ListDeploymentResourcePools(
+      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateDeploymentResourcePool(google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const& request);
+  virtual google::cloud::Idempotency UpdateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request);
+  virtual google::cloud::Idempotency DeleteDeploymentResourcePool(
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<DeploymentResourcePoolServiceConnectionIdempotencyPolicy>
-    MakeDefaultDeploymentResourcePoolServiceConnectionIdempotencyPolicy();
+MakeDefaultDeploymentResourcePoolServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

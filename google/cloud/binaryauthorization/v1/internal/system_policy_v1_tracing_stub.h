@@ -39,13 +39,14 @@ class SystemPolicyV1TracingStub : public SystemPolicyV1Stub {
   explicit SystemPolicyV1TracingStub(std::shared_ptr<SystemPolicyV1Stub> child);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+          request) override;
 
  private:
   std::shared_ptr<SystemPolicyV1Stub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

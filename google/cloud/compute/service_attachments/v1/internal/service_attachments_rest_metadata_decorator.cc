@@ -17,11 +17,11 @@
 // source: google/cloud/compute/service_attachments/v1/service_attachments.proto
 
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,105 +41,118 @@ ServiceAttachmentsRestMetadata::ServiceAttachmentsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
 ServiceAttachmentsRestMetadata::AggregatedListServiceAttachments(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::AggregatedListServiceAttachmentsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        AggregatedListServiceAttachmentsRequest const& request) {
   SetMetadata(rest_context, options);
-  return child_->AggregatedListServiceAttachments(rest_context, options, request);
+  return child_->AggregatedListServiceAttachments(rest_context, options,
+                                                  request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestMetadata::AsyncDeleteServiceAttachment(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        DeleteServiceAttachmentRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncDeleteServiceAttachment(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncDeleteServiceAttachment(cq, std::move(rest_context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestMetadata::DeleteServiceAttachment(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::DeleteServiceAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        DeleteServiceAttachmentRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteServiceAttachment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
 ServiceAttachmentsRestMetadata::GetServiceAttachment(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::GetServiceAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        GetServiceAttachmentRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetServiceAttachment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ServiceAttachmentsRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        GetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestMetadata::AsyncInsertServiceAttachment(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        InsertServiceAttachmentRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncInsertServiceAttachment(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncInsertServiceAttachment(cq, std::move(rest_context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestMetadata::InsertServiceAttachment(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::InsertServiceAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        InsertServiceAttachmentRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertServiceAttachment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
 ServiceAttachmentsRestMetadata::ListServiceAttachments(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::ListServiceAttachmentsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        ListServiceAttachmentsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListServiceAttachments(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestMetadata::AsyncPatchServiceAttachment(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        PatchServiceAttachmentRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchServiceAttachment(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncPatchServiceAttachment(cq, std::move(rest_context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestMetadata::PatchServiceAttachment(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::PatchServiceAttachmentRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        PatchServiceAttachmentRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchServiceAttachment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ServiceAttachmentsRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        SetIamPolicyRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ServiceAttachmentsRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::service_attachments::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
@@ -149,28 +162,29 @@ ServiceAttachmentsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
-future<Status>
-ServiceAttachmentsRestMetadata::AsyncCancelOperation(
+future<Status> ServiceAttachmentsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void ServiceAttachmentsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

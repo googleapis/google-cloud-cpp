@@ -31,19 +31,21 @@ KeyTrackingServiceAuth::KeyTrackingServiceAuth(
     std::shared_ptr<KeyTrackingServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary> KeyTrackingServiceAuth::GetProtectedResourcesSummary(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) {
+StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
+KeyTrackingServiceAuth::GetProtectedResourcesSummary(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::inventory::v1::
+        GetProtectedResourcesSummaryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetProtectedResourcesSummary(context, options, request);
 }
 
-StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse> KeyTrackingServiceAuth::SearchProtectedResources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) {
+StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
+KeyTrackingServiceAuth::SearchProtectedResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchProtectedResources(context, options, request);

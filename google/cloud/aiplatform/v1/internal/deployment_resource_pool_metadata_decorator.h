@@ -32,7 +32,8 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DeploymentResourcePoolServiceMetadata : public DeploymentResourcePoolServiceStub {
+class DeploymentResourcePoolServiceMetadata
+    : public DeploymentResourcePoolServiceStub {
  public:
   ~DeploymentResourcePoolServiceMetadata() override = default;
   DeploymentResourcePoolServiceMetadata(
@@ -40,97 +41,95 @@ class DeploymentResourcePoolServiceMetadata : public DeploymentResourcePoolServi
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateDeploymentResourcePool(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool> GetDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
+  GetDeploymentResourcePool(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse> ListDeploymentResourcePools(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
+  ListDeploymentResourcePools(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDeploymentResourcePool(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const& request) override;
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeploymentResourcePool(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -146,8 +145,7 @@ class DeploymentResourcePoolServiceMetadata : public DeploymentResourcePoolServi
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

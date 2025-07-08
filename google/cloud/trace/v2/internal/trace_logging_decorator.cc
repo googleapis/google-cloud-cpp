@@ -31,21 +31,17 @@ namespace trace_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TraceServiceLogging::TraceServiceLogging(
-    std::shared_ptr<TraceServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<TraceServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-Status
-TraceServiceLogging::BatchWriteSpans(
-    grpc::ClientContext& context,
-    Options const& options,
+Status TraceServiceLogging::BatchWriteSpans(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&
+                 request) {
         return child_->BatchWriteSpans(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,12 +49,10 @@ TraceServiceLogging::BatchWriteSpans(
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceLogging::CreateSpan(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::Span const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudtrace::v2::Span const& request) {
         return child_->CreateSpan(context, options, request);
       },

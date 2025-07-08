@@ -40,68 +40,61 @@ class SessionTemplateControllerMetadata : public SessionTemplateControllerStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::dataproc::v1::SessionTemplate> CreateSessionTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request)
+      override;
 
   StatusOr<google::cloud::dataproc::v1::SessionTemplate> UpdateSessionTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request)
+      override;
 
   StatusOr<google::cloud::dataproc::v1::SessionTemplate> GetSessionTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataproc::v1::GetSessionTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataproc::v1::GetSessionTemplateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dataproc::v1::ListSessionTemplatesResponse> ListSessionTemplates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataproc::v1::ListSessionTemplatesRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::ListSessionTemplatesResponse>
+  ListSessionTemplates(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataproc::v1::ListSessionTemplatesRequest const& request)
+      override;
 
   Status DeleteSessionTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

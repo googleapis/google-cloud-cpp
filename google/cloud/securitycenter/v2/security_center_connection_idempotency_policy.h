@@ -35,143 +35,165 @@ class SecurityCenterConnectionIdempotencyPolicy {
   virtual ~SecurityCenterConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SecurityCenterConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SecurityCenterConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  BatchCreateResourceValueConfigs(google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsRequest const& request);
+  virtual google::cloud::Idempotency BatchCreateResourceValueConfigs(
+      google::cloud::securitycenter::v2::
+          BatchCreateResourceValueConfigsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BulkMuteFindings(google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request);
+  virtual google::cloud::Idempotency BulkMuteFindings(
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateBigQueryExport(google::cloud::securitycenter::v2::CreateBigQueryExportRequest const& request);
+  virtual google::cloud::Idempotency CreateBigQueryExport(
+      google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateFinding(google::cloud::securitycenter::v2::CreateFindingRequest const& request);
+  virtual google::cloud::Idempotency CreateFinding(
+      google::cloud::securitycenter::v2::CreateFindingRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateMuteConfig(google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request);
+  virtual google::cloud::Idempotency CreateMuteConfig(
+      google::cloud::securitycenter::v2::CreateMuteConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateNotificationConfig(google::cloud::securitycenter::v2::CreateNotificationConfigRequest const& request);
+  virtual google::cloud::Idempotency CreateNotificationConfig(
+      google::cloud::securitycenter::v2::CreateNotificationConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateSource(google::cloud::securitycenter::v2::CreateSourceRequest const& request);
+  virtual google::cloud::Idempotency CreateSource(
+      google::cloud::securitycenter::v2::CreateSourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteBigQueryExport(google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const& request);
+  virtual google::cloud::Idempotency DeleteBigQueryExport(
+      google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteMuteConfig(google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request);
+  virtual google::cloud::Idempotency DeleteMuteConfig(
+      google::cloud::securitycenter::v2::DeleteMuteConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteNotificationConfig(google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const& request);
+  virtual google::cloud::Idempotency DeleteNotificationConfig(
+      google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteResourceValueConfig(google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const& request);
+  virtual google::cloud::Idempotency DeleteResourceValueConfig(
+      google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetBigQueryExport(google::cloud::securitycenter::v2::GetBigQueryExportRequest const& request);
+  virtual google::cloud::Idempotency GetBigQueryExport(
+      google::cloud::securitycenter::v2::GetBigQueryExportRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetSimulation(google::cloud::securitycenter::v2::GetSimulationRequest const& request);
+  virtual google::cloud::Idempotency GetSimulation(
+      google::cloud::securitycenter::v2::GetSimulationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetValuedResource(google::cloud::securitycenter::v2::GetValuedResourceRequest const& request);
+  virtual google::cloud::Idempotency GetValuedResource(
+      google::cloud::securitycenter::v2::GetValuedResourceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetMuteConfig(google::cloud::securitycenter::v2::GetMuteConfigRequest const& request);
+  virtual google::cloud::Idempotency GetMuteConfig(
+      google::cloud::securitycenter::v2::GetMuteConfigRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetNotificationConfig(google::cloud::securitycenter::v2::GetNotificationConfigRequest const& request);
+  virtual google::cloud::Idempotency GetNotificationConfig(
+      google::cloud::securitycenter::v2::GetNotificationConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetResourceValueConfig(google::cloud::securitycenter::v2::GetResourceValueConfigRequest const& request);
+  virtual google::cloud::Idempotency GetResourceValueConfig(
+      google::cloud::securitycenter::v2::GetResourceValueConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetSource(google::cloud::securitycenter::v2::GetSourceRequest const& request);
+  virtual google::cloud::Idempotency GetSource(
+      google::cloud::securitycenter::v2::GetSourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GroupFindings(google::cloud::securitycenter::v2::GroupFindingsRequest request);
+  virtual google::cloud::Idempotency GroupFindings(
+      google::cloud::securitycenter::v2::GroupFindingsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListAttackPaths(google::cloud::securitycenter::v2::ListAttackPathsRequest request);
+  virtual google::cloud::Idempotency ListAttackPaths(
+      google::cloud::securitycenter::v2::ListAttackPathsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListBigQueryExports(google::cloud::securitycenter::v2::ListBigQueryExportsRequest request);
+  virtual google::cloud::Idempotency ListBigQueryExports(
+      google::cloud::securitycenter::v2::ListBigQueryExportsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListFindings(google::cloud::securitycenter::v2::ListFindingsRequest request);
+  virtual google::cloud::Idempotency ListFindings(
+      google::cloud::securitycenter::v2::ListFindingsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListMuteConfigs(google::cloud::securitycenter::v2::ListMuteConfigsRequest request);
+  virtual google::cloud::Idempotency ListMuteConfigs(
+      google::cloud::securitycenter::v2::ListMuteConfigsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListNotificationConfigs(google::cloud::securitycenter::v2::ListNotificationConfigsRequest request);
+  virtual google::cloud::Idempotency ListNotificationConfigs(
+      google::cloud::securitycenter::v2::ListNotificationConfigsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  ListResourceValueConfigs(google::cloud::securitycenter::v2::ListResourceValueConfigsRequest request);
+  virtual google::cloud::Idempotency ListResourceValueConfigs(
+      google::cloud::securitycenter::v2::ListResourceValueConfigsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  ListSources(google::cloud::securitycenter::v2::ListSourcesRequest request);
+  virtual google::cloud::Idempotency ListSources(
+      google::cloud::securitycenter::v2::ListSourcesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListValuedResources(google::cloud::securitycenter::v2::ListValuedResourcesRequest request);
+  virtual google::cloud::Idempotency ListValuedResources(
+      google::cloud::securitycenter::v2::ListValuedResourcesRequest request);
 
-  virtual google::cloud::Idempotency
-  SetFindingState(google::cloud::securitycenter::v2::SetFindingStateRequest const& request);
+  virtual google::cloud::Idempotency SetFindingState(
+      google::cloud::securitycenter::v2::SetFindingStateRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetMute(google::cloud::securitycenter::v2::SetMuteRequest const& request);
+  virtual google::cloud::Idempotency SetMute(
+      google::cloud::securitycenter::v2::SetMuteRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateBigQueryExport(google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const& request);
+  virtual google::cloud::Idempotency UpdateBigQueryExport(
+      google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateExternalSystem(google::cloud::securitycenter::v2::UpdateExternalSystemRequest const& request);
+  virtual google::cloud::Idempotency UpdateExternalSystem(
+      google::cloud::securitycenter::v2::UpdateExternalSystemRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateFinding(google::cloud::securitycenter::v2::UpdateFindingRequest const& request);
+  virtual google::cloud::Idempotency UpdateFinding(
+      google::cloud::securitycenter::v2::UpdateFindingRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateMuteConfig(google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request);
+  virtual google::cloud::Idempotency UpdateMuteConfig(
+      google::cloud::securitycenter::v2::UpdateMuteConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateNotificationConfig(google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const& request);
+  virtual google::cloud::Idempotency UpdateNotificationConfig(
+      google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateResourceValueConfig(google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const& request);
+  virtual google::cloud::Idempotency UpdateResourceValueConfig(
+      google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateSecurityMarks(google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const& request);
+  virtual google::cloud::Idempotency UpdateSecurityMarks(
+      google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateSource(google::cloud::securitycenter::v2::UpdateSourceRequest const& request);
+  virtual google::cloud::Idempotency UpdateSource(
+      google::cloud::securitycenter::v2::UpdateSourceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<SecurityCenterConnectionIdempotencyPolicy>
-    MakeDefaultSecurityCenterConnectionIdempotencyPolicy();
+MakeDefaultSecurityCenterConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_v2

@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConversationProfilesClient::ConversationProfilesClient(
     std::shared_ptr<ConversationProfilesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ConversationProfilesClient::~ConversationProfilesClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesClient::ListConversationProfiles(std::string const& parent, Options opts) {
+ConversationProfilesClient::ListConversationProfiles(std::string const& parent,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ListConversationProfilesRequest request;
   request.set_parent(parent);
@@ -41,13 +42,16 @@ ConversationProfilesClient::ListConversationProfiles(std::string const& parent, 
 }
 
 StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesClient::ListConversationProfiles(google::cloud::dialogflow::v2::ListConversationProfilesRequest request, Options opts) {
+ConversationProfilesClient::ListConversationProfiles(
+    google::cloud::dialogflow::v2::ListConversationProfilesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConversationProfiles(std::move(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesClient::GetConversationProfile(std::string const& name, Options opts) {
+ConversationProfilesClient::GetConversationProfile(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetConversationProfileRequest request;
   request.set_name(name);
@@ -55,13 +59,19 @@ ConversationProfilesClient::GetConversationProfile(std::string const& name, Opti
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesClient::GetConversationProfile(google::cloud::dialogflow::v2::GetConversationProfileRequest const& request, Options opts) {
+ConversationProfilesClient::GetConversationProfile(
+    google::cloud::dialogflow::v2::GetConversationProfileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConversationProfile(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesClient::CreateConversationProfile(std::string const& parent, google::cloud::dialogflow::v2::ConversationProfile const& conversation_profile, Options opts) {
+ConversationProfilesClient::CreateConversationProfile(
+    std::string const& parent,
+    google::cloud::dialogflow::v2::ConversationProfile const&
+        conversation_profile,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateConversationProfileRequest request;
   request.set_parent(parent);
@@ -70,13 +80,19 @@ ConversationProfilesClient::CreateConversationProfile(std::string const& parent,
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesClient::CreateConversationProfile(google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request, Options opts) {
+ConversationProfilesClient::CreateConversationProfile(
+    google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversationProfile(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesClient::UpdateConversationProfile(google::cloud::dialogflow::v2::ConversationProfile const& conversation_profile, google::protobuf::FieldMask const& update_mask, Options opts) {
+ConversationProfilesClient::UpdateConversationProfile(
+    google::cloud::dialogflow::v2::ConversationProfile const&
+        conversation_profile,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateConversationProfileRequest request;
   *request.mutable_conversation_profile() = conversation_profile;
@@ -85,27 +101,33 @@ ConversationProfilesClient::UpdateConversationProfile(google::cloud::dialogflow:
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-ConversationProfilesClient::UpdateConversationProfile(google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request, Options opts) {
+ConversationProfilesClient::UpdateConversationProfile(
+    google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConversationProfile(request);
 }
 
-Status
-ConversationProfilesClient::DeleteConversationProfile(std::string const& name, Options opts) {
+Status ConversationProfilesClient::DeleteConversationProfile(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteConversationProfileRequest request;
   request.set_name(name);
   return connection_->DeleteConversationProfile(request);
 }
 
-Status
-ConversationProfilesClient::DeleteConversationProfile(google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request, Options opts) {
+Status ConversationProfilesClient::DeleteConversationProfile(
+    google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversationProfile(request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesClient::SetSuggestionFeatureConfig(std::string const& conversation_profile, Options opts) {
+ConversationProfilesClient::SetSuggestionFeatureConfig(
+    std::string const& conversation_profile, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
@@ -113,7 +135,8 @@ ConversationProfilesClient::SetSuggestionFeatureConfig(std::string const& conver
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesClient::SetSuggestionFeatureConfig(NoAwaitTag, std::string const& conversation_profile, Options opts) {
+ConversationProfilesClient::SetSuggestionFeatureConfig(
+    NoAwaitTag, std::string const& conversation_profile, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
@@ -121,7 +144,12 @@ ConversationProfilesClient::SetSuggestionFeatureConfig(NoAwaitTag, std::string c
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesClient::SetSuggestionFeatureConfig(std::string const& conversation_profile, google::cloud::dialogflow::v2::Participant::Role participant_role, google::cloud::dialogflow::v2::HumanAgentAssistantConfig::SuggestionFeatureConfig const& suggestion_feature_config, Options opts) {
+ConversationProfilesClient::SetSuggestionFeatureConfig(
+    std::string const& conversation_profile,
+    google::cloud::dialogflow::v2::Participant::Role participant_role,
+    google::cloud::dialogflow::v2::HumanAgentAssistantConfig::
+        SuggestionFeatureConfig const& suggestion_feature_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
@@ -131,7 +159,12 @@ ConversationProfilesClient::SetSuggestionFeatureConfig(std::string const& conver
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesClient::SetSuggestionFeatureConfig(NoAwaitTag, std::string const& conversation_profile, google::cloud::dialogflow::v2::Participant::Role participant_role, google::cloud::dialogflow::v2::HumanAgentAssistantConfig::SuggestionFeatureConfig const& suggestion_feature_config, Options opts) {
+ConversationProfilesClient::SetSuggestionFeatureConfig(
+    NoAwaitTag, std::string const& conversation_profile,
+    google::cloud::dialogflow::v2::Participant::Role participant_role,
+    google::cloud::dialogflow::v2::HumanAgentAssistantConfig::
+        SuggestionFeatureConfig const& suggestion_feature_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
@@ -141,25 +174,34 @@ ConversationProfilesClient::SetSuggestionFeatureConfig(NoAwaitTag, std::string c
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesClient::SetSuggestionFeatureConfig(google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request, Options opts) {
+ConversationProfilesClient::SetSuggestionFeatureConfig(
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSuggestionFeatureConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesClient::SetSuggestionFeatureConfig(NoAwaitTag, google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request, Options opts) {
+ConversationProfilesClient::SetSuggestionFeatureConfig(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSuggestionFeatureConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesClient::SetSuggestionFeatureConfig(google::longrunning::Operation const& operation, Options opts) {
+ConversationProfilesClient::SetSuggestionFeatureConfig(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSuggestionFeatureConfig(operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesClient::ClearSuggestionFeatureConfig(std::string const& conversation_profile, Options opts) {
+ConversationProfilesClient::ClearSuggestionFeatureConfig(
+    std::string const& conversation_profile, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
@@ -167,7 +209,8 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(std::string const& conv
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesClient::ClearSuggestionFeatureConfig(NoAwaitTag, std::string const& conversation_profile, Options opts) {
+ConversationProfilesClient::ClearSuggestionFeatureConfig(
+    NoAwaitTag, std::string const& conversation_profile, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
@@ -175,7 +218,12 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(NoAwaitTag, std::string
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesClient::ClearSuggestionFeatureConfig(std::string const& conversation_profile, google::cloud::dialogflow::v2::Participant::Role participant_role, google::cloud::dialogflow::v2::SuggestionFeature::Type suggestion_feature_type, Options opts) {
+ConversationProfilesClient::ClearSuggestionFeatureConfig(
+    std::string const& conversation_profile,
+    google::cloud::dialogflow::v2::Participant::Role participant_role,
+    google::cloud::dialogflow::v2::SuggestionFeature::Type
+        suggestion_feature_type,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
@@ -185,7 +233,12 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(std::string const& conv
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesClient::ClearSuggestionFeatureConfig(NoAwaitTag, std::string const& conversation_profile, google::cloud::dialogflow::v2::Participant::Role participant_role, google::cloud::dialogflow::v2::SuggestionFeature::Type suggestion_feature_type, Options opts) {
+ConversationProfilesClient::ClearSuggestionFeatureConfig(
+    NoAwaitTag, std::string const& conversation_profile,
+    google::cloud::dialogflow::v2::Participant::Role participant_role,
+    google::cloud::dialogflow::v2::SuggestionFeature::Type
+        suggestion_feature_type,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
@@ -195,37 +248,49 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(NoAwaitTag, std::string
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesClient::ClearSuggestionFeatureConfig(google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request, Options opts) {
+ConversationProfilesClient::ClearSuggestionFeatureConfig(
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ClearSuggestionFeatureConfig(request);
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesClient::ClearSuggestionFeatureConfig(NoAwaitTag, google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request, Options opts) {
+ConversationProfilesClient::ClearSuggestionFeatureConfig(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ClearSuggestionFeatureConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-ConversationProfilesClient::ClearSuggestionFeatureConfig(google::longrunning::Operation const& operation, Options opts) {
+ConversationProfilesClient::ClearSuggestionFeatureConfig(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ClearSuggestionFeatureConfig(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-ConversationProfilesClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+ConversationProfilesClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-ConversationProfilesClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+ConversationProfilesClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationProfilesClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+ConversationProfilesClient::ListOperations(std::string const& name,
+                                           std::string const& filter,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -234,13 +299,15 @@ ConversationProfilesClient::ListOperations(std::string const& name, std::string 
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationProfilesClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+ConversationProfilesClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesClient::GetOperation(std::string const& name, Options opts) {
+ConversationProfilesClient::GetOperation(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -248,21 +315,22 @@ ConversationProfilesClient::GetOperation(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationProfilesClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+ConversationProfilesClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-ConversationProfilesClient::CancelOperation(std::string const& name, Options opts) {
+Status ConversationProfilesClient::CancelOperation(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-ConversationProfilesClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status ConversationProfilesClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

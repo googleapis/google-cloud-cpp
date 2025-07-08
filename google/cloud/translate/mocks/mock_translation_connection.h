@@ -30,7 +30,8 @@ namespace cloud {
 namespace translate_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use translate_v3_mocks::MockTranslationServiceConnection directly.
+/// @deprecated Use translate_v3_mocks::MockTranslationServiceConnection
+/// directly.
 using ::google::cloud::translate_v3_mocks::MockTranslationServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,38 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TagValuesConnectionIdempotencyPolicy::~TagValuesConnectionIdempotencyPolicy() = default;
+TagValuesConnectionIdempotencyPolicy::~TagValuesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<TagValuesConnectionIdempotencyPolicy>
 TagValuesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TagValuesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::ListTagValues(google::cloud::resourcemanager::v3::ListTagValuesRequest) {  // NOLINT
+Idempotency TagValuesConnectionIdempotencyPolicy::ListTagValues(
+    google::cloud::resourcemanager::v3::ListTagValuesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::GetTagValue(google::cloud::resourcemanager::v3::GetTagValueRequest const&) {
+Idempotency TagValuesConnectionIdempotencyPolicy::GetTagValue(
+    google::cloud::resourcemanager::v3::GetTagValueRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::GetNamespacedTagValue(google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&) {
+Idempotency TagValuesConnectionIdempotencyPolicy::GetNamespacedTagValue(
+    google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::CreateTagValue(google::cloud::resourcemanager::v3::CreateTagValueRequest const&) {
+Idempotency TagValuesConnectionIdempotencyPolicy::CreateTagValue(
+    google::cloud::resourcemanager::v3::CreateTagValueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::UpdateTagValue(google::cloud::resourcemanager::v3::UpdateTagValueRequest const&) {
+Idempotency TagValuesConnectionIdempotencyPolicy::UpdateTagValue(
+    google::cloud::resourcemanager::v3::UpdateTagValueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::DeleteTagValue(google::cloud::resourcemanager::v3::DeleteTagValueRequest const&) {
+Idempotency TagValuesConnectionIdempotencyPolicy::DeleteTagValue(
+    google::cloud::resourcemanager::v3::DeleteTagValueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency TagValuesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -67,16 +75,18 @@ Idempotency TagValuesConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency TagValuesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagValuesConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TagValuesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TagValuesConnectionIdempotencyPolicy>
-    MakeDefaultTagValuesConnectionIdempotencyPolicy() {
+MakeDefaultTagValuesConnectionIdempotencyPolicy() {
   return std::make_unique<TagValuesConnectionIdempotencyPolicy>();
 }
 

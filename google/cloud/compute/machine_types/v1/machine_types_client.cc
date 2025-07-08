@@ -28,26 +28,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MachineTypesClient::MachineTypesClient(
     std::shared_ptr<MachineTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MachineTypesClient::~MachineTypesClient() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>
-MachineTypesClient::AggregatedListMachineTypes(std::string const& project, Options opts) {
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::MachineTypesScopedList>>
+MachineTypesClient::AggregatedListMachineTypes(std::string const& project,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest request;
+  google::cloud::cpp::compute::machine_types::v1::
+      AggregatedListMachineTypesRequest request;
   request.set_project(project);
   return connection_->AggregatedListMachineTypes(request);
 }
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>
-MachineTypesClient::AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest request, Options opts) {
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::MachineTypesScopedList>>
+MachineTypesClient::AggregatedListMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::
+        AggregatedListMachineTypesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListMachineTypes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesClient::GetMachineType(std::string const& project, std::string const& zone, std::string const& machine_type, Options opts) {
+MachineTypesClient::GetMachineType(std::string const& project,
+                                   std::string const& zone,
+                                   std::string const& machine_type,
+                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest request;
   request.set_project(project);
@@ -57,22 +67,30 @@ MachineTypesClient::GetMachineType(std::string const& project, std::string const
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesClient::GetMachineType(google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const& request, Options opts) {
+MachineTypesClient::GetMachineType(
+    google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetMachineType(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesClient::ListMachineTypes(std::string const& project, std::string const& zone, Options opts) {
+MachineTypesClient::ListMachineTypes(std::string const& project,
+                                     std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request;
+  google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
+      request;
   request.set_project(project);
   request.set_zone(zone);
   return connection_->ListMachineTypes(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineType>
-MachineTypesClient::ListMachineTypes(google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request, Options opts) {
+MachineTypesClient::ListMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMachineTypes(std::move(request));
 }

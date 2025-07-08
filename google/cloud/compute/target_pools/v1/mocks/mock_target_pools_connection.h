@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsConnection {
+class MockTargetPoolsConnection
+    : public compute_target_pools_v1::TargetPoolsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AddHealthCheck(Matcher<google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AddHealthCheck(Matcher<google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  AddHealthCheck,
-  (google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request), (override));
-
+              AddHealthCheck,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   AddHealthCheckRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -65,32 +69,39 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// EXPECT_CALL(*mock, AddHealthCheck(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  AddHealthCheck, (NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AddHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  AddHealthCheck, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              AddHealthCheck,
+              (NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                               AddHealthCheckRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AddInstance(Matcher<google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AddHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  AddInstance,
-  (google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request), (override));
+              AddHealthCheck,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddInstance(Matcher<google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AddInstance,
+      (google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -98,37 +109,50 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AddInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  AddInstance, (NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AddInstance(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  AddInstance, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
-
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>),
-  AggregatedListTargetPools,
-  (google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddInstance,
+      (NoAwaitTag,
+       google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTargetPool(Matcher<google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AddInstance(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetPool,
-  (google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request), (override));
+              AddInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  MOCK_METHOD(
+      (StreamRange<
+          std::pair<std::string,
+                    google::cloud::cpp::compute::v1::TargetPoolsScopedList>>),
+      AggregatedListTargetPools,
+      (google::cloud::cpp::compute::target_pools::v1::
+           AggregatedListTargetPoolsRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetPool(Matcher<google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteTargetPool,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   DeleteTargetPoolRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -137,40 +161,52 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// EXPECT_CALL(*mock, DeleteTargetPool(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteTargetPool, (NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request), (override));
-
+              DeleteTargetPool,
+              (NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                               DeleteTargetPoolRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTargetPool(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetPool(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetPool, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              DeleteTargetPool,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetPool>,
-  GetTargetPool,
-  (google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const& request), (override));
+              GetTargetPool,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   GetTargetPoolRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>,
-  GetHealth,
-  (google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>,
+      GetHealth,
+      (google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertTargetPool(Matcher<google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetPool(Matcher<google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetPool,
-  (google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request), (override));
-
+              InsertTargetPool,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   InsertTargetPoolRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -179,36 +215,46 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// EXPECT_CALL(*mock, InsertTargetPool(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertTargetPool, (NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertTargetPool(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetPool, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetPool>),
-  ListTargetPools,
-  (google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest request), (override));
+              InsertTargetPool,
+              (NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                               InsertTargetPoolRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RemoveHealthCheck(Matcher<google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetPool(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  RemoveHealthCheck,
-  (google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request), (override));
+              InsertTargetPool,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cpp::compute::v1::TargetPool>),
+      ListTargetPools,
+      (google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemoveHealthCheck(Matcher<google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              RemoveHealthCheck,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   RemoveHealthCheckRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -217,32 +263,39 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// EXPECT_CALL(*mock, RemoveHealthCheck(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  RemoveHealthCheck, (NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RemoveHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  RemoveHealthCheck, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              RemoveHealthCheck,
+              (NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                               RemoveHealthCheckRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RemoveInstance(Matcher<google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// RemoveHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  RemoveInstance,
-  (google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request), (override));
+              RemoveHealthCheck,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemoveInstance(Matcher<google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              RemoveInstance,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   RemoveInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -251,32 +304,39 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// EXPECT_CALL(*mock, RemoveInstance(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  RemoveInstance, (NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RemoveInstance(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  RemoveInstance, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              RemoveInstance,
+              (NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                               RemoveInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetBackup(Matcher<google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// RemoveInstance(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetBackup,
-  (google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request), (override));
+              RemoveInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetBackup(Matcher<google::cloud::cpp::compute::target_pools::v1::SetBackupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetBackup,
+      (google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -284,33 +344,40 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetBackup, (NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetBackup(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetBackup, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetBackup,
+      (NoAwaitTag,
+       google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetSecurityPolicy(Matcher<google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetBackup(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetSecurityPolicy,
-  (google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request), (override));
+              SetBackup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetSecurityPolicy(Matcher<google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetSecurityPolicy,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -319,20 +386,24 @@ class MockTargetPoolsConnection : public compute_target_pools_v1::TargetPoolsCon
   /// EXPECT_CALL(*mock, SetSecurityPolicy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetSecurityPolicy, (NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request), (override));
-
+              SetSecurityPolicy,
+              (NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                               SetSecurityPolicyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetSecurityPolicy, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              SetSecurityPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

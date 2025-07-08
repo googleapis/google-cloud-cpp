@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_connect.proto
 
 #include "google/cloud/sql/v1/internal/sql_connect_rest_connection_impl.h"
+#include "google/cloud/sql/v1/internal/sql_connect_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_connect_rest_stub_factory.h"
 #include <memory>
 #include <utility>
 
@@ -34,32 +34,35 @@ SqlConnectServiceRestConnectionImpl::SqlConnectServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<sql_v1_internal::SqlConnectServiceRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SqlConnectServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), SqlConnectServiceConnection::options())) {}
 
 StatusOr<google::cloud::sql::v1::ConnectSettings>
-SqlConnectServiceRestConnectionImpl::GetConnectSettings(google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
+SqlConnectServiceRestConnectionImpl::GetConnectSettings(
+    google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnectSettings(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
         return stub_->GetConnectSettings(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-SqlConnectServiceRestConnectionImpl::GenerateEphemeralCert(google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
+SqlConnectServiceRestConnectionImpl::GenerateEphemeralCert(
+    google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateEphemeralCert(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
         return stub_->GenerateEphemeralCert(rest_context, options, request);
       },
       *current, request, __func__);

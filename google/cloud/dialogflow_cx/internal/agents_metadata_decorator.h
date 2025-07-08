@@ -35,101 +35,100 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AgentsMetadata : public AgentsStub {
  public:
   ~AgentsMetadata() override = default;
-  AgentsMetadata(
-      std::shared_ptr<AgentsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  AgentsMetadata(std::shared_ptr<AgentsStub> child,
+                 std::multimap<std::string, std::string> fixed_metadata,
+                 std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse> ListAgents(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> GetAgent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::GetAgentRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> CreateAgent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> UpdateAgent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request)
+      override;
 
   Status DeleteAgent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAgent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) override;
+      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ExportAgent(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreAgent(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) override;
+      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RestoreAgent(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult> ValidateAgent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
+  ValidateAgent(grpc::ClientContext& context, Options const& options,
+                google::cloud::dialogflow::cx::v3::ValidateAgentRequest const&
+                    request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult> GetAgentValidationResult(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
+  GetAgentValidationResult(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings> GetGenerativeSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  GetGenerativeSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings> UpdateGenerativeSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+  UpdateGenerativeSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -145,8 +144,7 @@ class AgentsMetadata : public AgentsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

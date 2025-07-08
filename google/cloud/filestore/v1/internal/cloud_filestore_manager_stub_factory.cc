@@ -17,12 +17,12 @@
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_auth_decorator.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_logging_decorator.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_metadata_decorator.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub.h"
 #include "google/cloud/filestore/v1/internal/cloud_filestore_manager_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -43,27 +43,27 @@ std::shared_ptr<CloudFilestoreManagerStub>
 CreateDefaultCloudFilestoreManagerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::filestore::v1::CloudFilestoreManager::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::filestore::v1::CloudFilestoreManager::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudFilestoreManagerStub> stub =
-    std::make_shared<DefaultCloudFilestoreManagerStub>(
-      std::move(service_grpc_stub), std::move(service_locations_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultCloudFilestoreManagerStub>(
+          std::move(service_grpc_stub), std::move(service_locations_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<CloudFilestoreManagerAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<CloudFilestoreManagerAuth>(std::move(auth),
+                                                       std::move(stub));
   }
   stub = std::make_shared<CloudFilestoreManagerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudFilestoreManagerLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

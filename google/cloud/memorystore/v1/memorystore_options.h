@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_MEMORYSTORE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_MEMORYSTORE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/memorystore/v1/memorystore_connection.h"
 #include "google/cloud/memorystore/v1/memorystore_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct MemorystorePollingPolicyOption {
  * @ingroup google-cloud-memorystore-options
  */
 using MemorystorePolicyOptionList =
-    OptionList<MemorystoreRetryPolicyOption,
-               MemorystoreBackoffPolicyOption,
+    OptionList<MemorystoreRetryPolicyOption, MemorystoreBackoffPolicyOption,
                MemorystorePollingPolicyOption,
                MemorystoreConnectionIdempotencyPolicyOption>;
 

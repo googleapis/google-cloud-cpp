@@ -67,23 +67,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConversationDatasetsClient {
  public:
-  explicit ConversationDatasetsClient(std::shared_ptr<ConversationDatasetsConnection> connection, Options opts = {});
+  explicit ConversationDatasetsClient(
+      std::shared_ptr<ConversationDatasetsConnection> connection,
+      Options opts = {});
   ~ConversationDatasetsClient();
 
   ///@{
   /// @name Copy and move support
   ConversationDatasetsClient(ConversationDatasetsClient const&) = default;
-  ConversationDatasetsClient& operator=(ConversationDatasetsClient const&) = default;
+  ConversationDatasetsClient& operator=(ConversationDatasetsClient const&) =
+      default;
   ConversationDatasetsClient(ConversationDatasetsClient&&) = default;
   ConversationDatasetsClient& operator=(ConversationDatasetsClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConversationDatasetsClient const& a, ConversationDatasetsClient const& b) {
+  friend bool operator==(ConversationDatasetsClient const& a,
+                         ConversationDatasetsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConversationDatasetsClient const& a, ConversationDatasetsClient const& b) {
+  friend bool operator!=(ConversationDatasetsClient const& a,
+                         ConversationDatasetsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -130,7 +135,11 @@ class ConversationDatasetsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-  CreateConversationDataset(std::string const& parent, google::cloud::dialogflow::v2::ConversationDataset const& conversation_dataset, Options opts = {});
+  CreateConversationDataset(
+      std::string const& parent,
+      google::cloud::dialogflow::v2::ConversationDataset const&
+          conversation_dataset,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -143,8 +152,11 @@ class ConversationDatasetsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateConversationDataset(NoAwaitTag, std::string const& parent, google::cloud::dialogflow::v2::ConversationDataset const& conversation_dataset, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateConversationDataset(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dialogflow::v2::ConversationDataset const&
+          conversation_dataset,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -191,7 +203,10 @@ class ConversationDatasetsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-  CreateConversationDataset(google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request, Options opts = {});
+  CreateConversationDataset(
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -204,8 +219,11 @@ class ConversationDatasetsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateConversationDataset(NoAwaitTag, google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateConversationDataset(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -217,7 +235,8 @@ class ConversationDatasetsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-  CreateConversationDataset(google::longrunning::Operation const& operation, Options opts = {});
+  CreateConversationDataset(google::longrunning::Operation const& operation,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -273,7 +292,10 @@ class ConversationDatasetsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
-  GetConversationDataset(google::cloud::dialogflow::v2::GetConversationDatasetRequest const& request, Options opts = {});
+  GetConversationDataset(
+      google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -349,7 +371,9 @@ class ConversationDatasetsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
-  ListConversationDatasets(google::cloud::dialogflow::v2::ListConversationDatasetsRequest request, Options opts = {});
+  ListConversationDatasets(
+      google::cloud::dialogflow::v2::ListConversationDatasetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -390,7 +414,8 @@ class ConversationDatasetsClient {
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L269}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      DeleteConversationDatasetOperationMetadata>>
   DeleteConversationDataset(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -404,8 +429,8 @@ class ConversationDatasetsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteConversationDataset(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteConversationDataset(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -450,8 +475,12 @@ class ConversationDatasetsClient {
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L269}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
-  DeleteConversationDataset(google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      DeleteConversationDatasetOperationMetadata>>
+  DeleteConversationDataset(
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -464,8 +493,11 @@ class ConversationDatasetsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteConversationDataset(NoAwaitTag, google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteConversationDataset(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -476,8 +508,10 @@ class ConversationDatasetsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
-  DeleteConversationDataset(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      DeleteConversationDatasetOperationMetadata>>
+  DeleteConversationDataset(google::longrunning::Operation const& operation,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -525,8 +559,12 @@ class ConversationDatasetsClient {
   /// [google.cloud.dialogflow.v2.ImportConversationDataRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L283}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-  ImportConversationData(google::cloud::dialogflow::v2::ImportConversationDataRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+  ImportConversationData(
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -539,8 +577,11 @@ class ConversationDatasetsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportConversationData(NoAwaitTag, google::cloud::dialogflow::v2::ImportConversationDataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportConversationData(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -551,8 +592,10 @@ class ConversationDatasetsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-  ImportConversationData(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+  ImportConversationData(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -590,8 +633,8 @@ class ConversationDatasetsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -620,8 +663,9 @@ class ConversationDatasetsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -656,8 +700,8 @@ class ConversationDatasetsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -696,8 +740,8 @@ class ConversationDatasetsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -723,8 +767,8 @@ class ConversationDatasetsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -755,8 +799,9 @@ class ConversationDatasetsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -790,8 +835,7 @@ class ConversationDatasetsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -830,8 +874,9 @@ class ConversationDatasetsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConversationDatasetsConnection> connection_;

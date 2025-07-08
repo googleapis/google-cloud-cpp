@@ -31,7 +31,8 @@ namespace cloud {
 namespace compute_region_autoscalers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultRegionAutoscalersRestStub::DefaultRegionAutoscalersRestStub(Options options)
+DefaultRegionAutoscalersRestStub::DefaultRegionAutoscalersRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       operations_(rest_internal::MakePooledRestClient(
@@ -40,206 +41,281 @@ DefaultRegionAutoscalersRestStub::DefaultRegionAutoscalersRestStub(Options optio
 
 DefaultRegionAutoscalersRestStub::DefaultRegionAutoscalersRestStub(
     std::shared_ptr<rest_internal::RestClient> service,
-    std::shared_ptr<rest_internal::RestClient> operations,
-    Options options)
+    std::shared_ptr<rest_internal::RestClient> operations, Options options)
     : service_(std::move(service)),
       operations_(std::move(operations)),
       options_(std::move(options)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionAutoscalersRestStub::AsyncDeleteAutoscaler(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_autoscalers::v1::DeleteAutoscalerRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        DeleteAutoscalerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](
-          auto p, auto service, auto request, auto rest_context, auto options) {
-      std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-      p.set_value(rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request,
-          false,
-          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers", "/", request.autoscaler()), std::move(query_params)));
-    },
-    std::move(p), service_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request, false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "autoscalers", "/", request.autoscaler()),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionAutoscalersRestStub::DeleteAutoscaler(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_autoscalers::v1::DeleteAutoscalerRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        DeleteAutoscalerRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers", "/", request.autoscaler()), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers", "/",
+                   request.autoscaler()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 DefaultRegionAutoscalersRestStub::GetAutoscaler(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_autoscalers::v1::GetAutoscalerRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        GetAutoscalerRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers", "/", request.autoscaler()), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers", "/",
+                   request.autoscaler()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionAutoscalersRestStub::AsyncInsertAutoscaler(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_autoscalers::v1::InsertAutoscalerRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        InsertAutoscalerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](
-          auto p, auto service, auto request, auto rest_context, auto options) {
-      std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-      p.set_value(rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.autoscaler_resource(),
-          false,
-          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers"), std::move(query_params)));
-    },
-    std::move(p), service_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.autoscaler_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "autoscalers"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionAutoscalersRestStub::InsertAutoscaler(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_autoscalers::v1::InsertAutoscalerRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        InsertAutoscalerRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.autoscaler_resource(), false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers"), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionAutoscalerList>
 DefaultRegionAutoscalersRestStub::ListRegionAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_autoscalers::v1::ListRegionAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        ListRegionAutoscalersRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"filter", request.filter()});
-  query_params.push_back({"max_results", std::to_string(request.max_results())});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
   query_params.push_back({"order_by", request.order_by()});
   query_params.push_back({"page_token", request.page_token()});
-  query_params.push_back({"return_partial_success", (request.return_partial_success() ? "1" : "0")});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-  return rest_internal::Get<google::cloud::cpp::compute::v1::RegionAutoscalerList>(
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::RegionAutoscalerList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers"), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionAutoscalersRestStub::AsyncPatchAutoscaler(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_autoscalers::v1::PatchAutoscalerRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        PatchAutoscalerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](
-          auto p, auto service, auto request, auto rest_context, auto options) {
-      std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"autoscaler", request.autoscaler()});
-  query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-      p.set_value(rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.autoscaler_resource(),
-          false,
-          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers"), std::move(query_params)));
-    },
-    std::move(p), service_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"autoscaler", request.autoscaler()});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.autoscaler_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "autoscalers"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionAutoscalersRestStub::PatchAutoscaler(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_autoscalers::v1::PatchAutoscalerRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        PatchAutoscalerRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"autoscaler", request.autoscaler()});
   query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.autoscaler_resource(), false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers"), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionAutoscalersRestStub::AsyncUpdateAutoscaler(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_autoscalers::v1::UpdateAutoscalerRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        UpdateAutoscalerRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](
-          auto p, auto service, auto request, auto rest_context, auto options) {
-      std::vector<std::pair<std::string, std::string>> query_params;
-  query_params.push_back({"autoscaler", request.autoscaler()});
-  query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
-      p.set_value(rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
-          *service, *rest_context, request.autoscaler_resource(),
-          false,
-          absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers"), std::move(query_params)));
-    },
-    std::move(p), service_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"autoscaler", request.autoscaler()});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+        p.set_value(
+            rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+                *service, *rest_context, request.autoscaler_resource(), false,
+                absl::StrCat("/", "compute", "/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/", "projects", "/", request.project(), "/",
+                             "regions", "/", request.region(), "/",
+                             "autoscalers"),
+                std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionAutoscalersRestStub::UpdateAutoscaler(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::compute::region_autoscalers::v1::UpdateAutoscalerRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        UpdateAutoscalerRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back({"autoscaler", request.autoscaler()});
   query_params.push_back({"request_id", request.request_id()});
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.autoscaler_resource(), false,
-      absl::StrCat("/", "compute", "/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "regions", "/", request.region(), "/", "autoscalers"), std::move(query_params));
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -247,51 +323,59 @@ DefaultRegionAutoscalersRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
-      p.set_value(rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
-          *operations, *rest_context, request, false,
-          absl::StrCat("/compute/",
-                              rest_internal::DetermineApiVersion("v1", *options),
-                              "/projects/", request.project(),
-                              "/regions/", request.region(),
-                              "/operations/", request.operation())));
-    },
-    std::move(p), operations_, request, std::move(rest_context),
-    std::move(options)};
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> f =
+      p.get_future();
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
+        p.set_value(
+            rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
+                *operations, *rest_context, request, false,
+                absl::StrCat("/compute/",
+                             rest_internal::DetermineApiVersion("v1", *options),
+                             "/projects/", request.project(), "/regions/",
+                             request.region(), "/operations/",
+                             request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
 }
 
-future<Status>
-DefaultRegionAutoscalersRestStub::AsyncCancelOperation(
+future<Status> DefaultRegionAutoscalersRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto operations, auto request, auto rest_context, auto options) {
-      p.set_value(rest_internal::Post<google::protobuf::Empty>(
-          *operations, *rest_context, request, false,
-          absl::StrCat("/compute/",
-                              rest_internal::DetermineApiVersion("v1", *options),
-                              "/projects/", request.project(),
-                              "/regions/", request.region(),
-                              "/operations/", request.operation())));
-    },
-    std::move(p), operations_, request, std::move(rest_context),
-    std::move(options)};
+  std::thread t{
+      [](auto p, auto operations, auto request, auto rest_context,
+         auto options) {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations, *rest_context, request, false,
+            absl::StrCat(
+                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
+                "/projects/", request.project(), "/regions/", request.region(),
+                "/operations/", request.operation())));
+      },
+      std::move(p),
+      operations_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
-    cq.RunAsync([t = std::move(t)]() mutable {
-      t.join();
-    });
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();
   });
 }

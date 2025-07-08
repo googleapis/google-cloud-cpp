@@ -32,22 +32,24 @@ DomainMappingsTracingStub::DomainMappingsTracingStub(
     std::shared_ptr<DomainMappingsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::appengine::v1::ListDomainMappingsResponse> DomainMappingsTracingStub::ListDomainMappings(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::ListDomainMappingsResponse>
+DomainMappingsTracingStub::ListDomainMappings(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings", "ListDomainMappings");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "ListDomainMappings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListDomainMappings(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListDomainMappings(context, options, request));
 }
 
-StatusOr<google::appengine::v1::DomainMapping> DomainMappingsTracingStub::GetDomainMapping(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::DomainMapping>
+DomainMappingsTracingStub::GetDomainMapping(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetDomainMappingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings", "GetDomainMapping");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "GetDomainMapping");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,77 +58,83 @@ StatusOr<google::appengine::v1::DomainMapping> DomainMappingsTracingStub::GetDom
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsTracingStub::AsyncCreateDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::CreateDomainMappingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings", "CreateDomainMapping");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "CreateDomainMapping");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateDomainMapping(cq, context, std::move(options), request);
+  auto f = child_->AsyncCreateDomainMapping(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingStub::CreateDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::CreateDomainMappingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings", "CreateDomainMapping");
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "CreateDomainMapping");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateDomainMapping(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateDomainMapping(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsTracingStub::AsyncUpdateDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::UpdateDomainMappingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings", "UpdateDomainMapping");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "UpdateDomainMapping");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateDomainMapping(cq, context, std::move(options), request);
+  auto f = child_->AsyncUpdateDomainMapping(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingStub::UpdateDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::UpdateDomainMappingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings", "UpdateDomainMapping");
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "UpdateDomainMapping");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateDomainMapping(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateDomainMapping(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsTracingStub::AsyncDeleteDomainMapping(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::DeleteDomainMappingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings", "DeleteDomainMapping");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "DeleteDomainMapping");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteDomainMapping(cq, context, std::move(options), request);
+  auto f = child_->AsyncDeleteDomainMapping(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingStub::DeleteDomainMapping(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::DeleteDomainMappingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings", "DeleteDomainMapping");
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "DeleteDomainMapping");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteDomainMapping(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteDomainMapping(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -139,8 +147,7 @@ DomainMappingsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -153,8 +160,8 @@ future<Status> DomainMappingsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -34,14 +34,15 @@ class KeyDashboardServiceConnectionIdempotencyPolicy {
   virtual ~KeyDashboardServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<KeyDashboardServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<KeyDashboardServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest request);
+  virtual google::cloud::Idempotency ListCryptoKeys(
+      google::cloud::kms::inventory::v1::ListCryptoKeysRequest request);
 };
 
 std::unique_ptr<KeyDashboardServiceConnectionIdempotencyPolicy>
-    MakeDefaultKeyDashboardServiceConnectionIdempotencyPolicy();
+MakeDefaultKeyDashboardServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_inventory_v1

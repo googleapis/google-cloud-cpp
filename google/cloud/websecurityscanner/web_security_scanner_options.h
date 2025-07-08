@@ -28,17 +28,26 @@ namespace cloud {
 namespace websecurityscanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use websecurityscanner_v1::WebSecurityScannerBackoffPolicyOption directly.
-using ::google::cloud::websecurityscanner_v1::WebSecurityScannerBackoffPolicyOption;
+/// @deprecated Use websecurityscanner_v1::WebSecurityScannerBackoffPolicyOption
+/// directly.
+using ::google::cloud::websecurityscanner_v1::
+    WebSecurityScannerBackoffPolicyOption;
 
-/// @deprecated Use websecurityscanner_v1::WebSecurityScannerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::websecurityscanner_v1::WebSecurityScannerConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// websecurityscanner_v1::WebSecurityScannerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::websecurityscanner_v1::
+    WebSecurityScannerConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use websecurityscanner_v1::WebSecurityScannerPolicyOptionList directly.
-using ::google::cloud::websecurityscanner_v1::WebSecurityScannerPolicyOptionList;
+/// @deprecated Use websecurityscanner_v1::WebSecurityScannerPolicyOptionList
+/// directly.
+using ::google::cloud::websecurityscanner_v1::
+    WebSecurityScannerPolicyOptionList;
 
-/// @deprecated Use websecurityscanner_v1::WebSecurityScannerRetryPolicyOption directly.
-using ::google::cloud::websecurityscanner_v1::WebSecurityScannerRetryPolicyOption;
+/// @deprecated Use websecurityscanner_v1::WebSecurityScannerRetryPolicyOption
+/// directly.
+using ::google::cloud::websecurityscanner_v1::
+    WebSecurityScannerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner

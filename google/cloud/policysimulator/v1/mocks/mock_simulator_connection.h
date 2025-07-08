@@ -46,21 +46,25 @@ class MockSimulatorConnection : public policysimulator_v1::SimulatorConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::policysimulator::v1::Replay>,
-  GetReplay,
-  (google::cloud::policysimulator::v1::GetReplayRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::policysimulator::v1::Replay>, GetReplay,
+      (google::cloud::policysimulator::v1::GetReplayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateReplay(Matcher<google::cloud::policysimulator::v1::CreateReplayRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateReplay(Matcher<google::cloud::policysimulator::v1::CreateReplayRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::policysimulator::v1::Replay>>,
-  CreateReplay,
-  (google::cloud::policysimulator::v1::CreateReplayRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::policysimulator::v1::Replay>>,
+      CreateReplay,
+      (google::cloud::policysimulator::v1::CreateReplayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -68,33 +72,36 @@ class MockSimulatorConnection : public policysimulator_v1::SimulatorConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateReplay(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateReplay, (NoAwaitTag,
-    google::cloud::policysimulator::v1::CreateReplayRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateReplay,
+      (NoAwaitTag,
+       google::cloud::policysimulator::v1::CreateReplayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateReplay(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateReplay(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::policysimulator::v1::Replay>>,
-  CreateReplay, (
-    google::longrunning::Operation const& operation), (override));
+              CreateReplay, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::policysimulator::v1::ReplayResult>),
-  ListReplayResults,
-  (google::cloud::policysimulator::v1::ListReplayResultsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::policysimulator::v1::ReplayResult>),
+      ListReplayResults,
+      (google::cloud::policysimulator::v1::ListReplayResultsRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

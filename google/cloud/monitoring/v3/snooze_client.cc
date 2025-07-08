@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SnoozeServiceClient::SnoozeServiceClient(
     std::shared_ptr<SnoozeServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SnoozeServiceClient::~SnoozeServiceClient() = default;
 
-StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceClient::CreateSnooze(std::string const& parent, google::monitoring::v3::Snooze const& snooze, Options opts) {
+StatusOr<google::monitoring::v3::Snooze> SnoozeServiceClient::CreateSnooze(
+    std::string const& parent, google::monitoring::v3::Snooze const& snooze,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::CreateSnoozeRequest request;
   request.set_parent(parent);
@@ -41,42 +42,43 @@ SnoozeServiceClient::CreateSnooze(std::string const& parent, google::monitoring:
   return connection_->CreateSnooze(request);
 }
 
-StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceClient::CreateSnooze(google::monitoring::v3::CreateSnoozeRequest const& request, Options opts) {
+StatusOr<google::monitoring::v3::Snooze> SnoozeServiceClient::CreateSnooze(
+    google::monitoring::v3::CreateSnoozeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSnooze(request);
 }
 
-StreamRange<google::monitoring::v3::Snooze>
-SnoozeServiceClient::ListSnoozes(std::string const& parent, Options opts) {
+StreamRange<google::monitoring::v3::Snooze> SnoozeServiceClient::ListSnoozes(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::ListSnoozesRequest request;
   request.set_parent(parent);
   return connection_->ListSnoozes(request);
 }
 
-StreamRange<google::monitoring::v3::Snooze>
-SnoozeServiceClient::ListSnoozes(google::monitoring::v3::ListSnoozesRequest request, Options opts) {
+StreamRange<google::monitoring::v3::Snooze> SnoozeServiceClient::ListSnoozes(
+    google::monitoring::v3::ListSnoozesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSnoozes(std::move(request));
 }
 
-StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceClient::GetSnooze(std::string const& name, Options opts) {
+StatusOr<google::monitoring::v3::Snooze> SnoozeServiceClient::GetSnooze(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::GetSnoozeRequest request;
   request.set_name(name);
   return connection_->GetSnooze(request);
 }
 
-StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceClient::GetSnooze(google::monitoring::v3::GetSnoozeRequest const& request, Options opts) {
+StatusOr<google::monitoring::v3::Snooze> SnoozeServiceClient::GetSnooze(
+    google::monitoring::v3::GetSnoozeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSnooze(request);
 }
 
-StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceClient::UpdateSnooze(google::monitoring::v3::Snooze const& snooze, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::monitoring::v3::Snooze> SnoozeServiceClient::UpdateSnooze(
+    google::monitoring::v3::Snooze const& snooze,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::v3::UpdateSnoozeRequest request;
   *request.mutable_snooze() = snooze;
@@ -84,8 +86,8 @@ SnoozeServiceClient::UpdateSnooze(google::monitoring::v3::Snooze const& snooze, 
   return connection_->UpdateSnooze(request);
 }
 
-StatusOr<google::monitoring::v3::Snooze>
-SnoozeServiceClient::UpdateSnooze(google::monitoring::v3::UpdateSnoozeRequest const& request, Options opts) {
+StatusOr<google::monitoring::v3::Snooze> SnoozeServiceClient::UpdateSnooze(
+    google::monitoring::v3::UpdateSnoozeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSnooze(request);
 }

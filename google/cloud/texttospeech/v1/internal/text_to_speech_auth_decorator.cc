@@ -32,18 +32,18 @@ TextToSpeechAuth::TextToSpeechAuth(
     std::shared_ptr<TextToSpeechStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> TextToSpeechAuth::ListVoices(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
+TextToSpeechAuth::ListVoices(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListVoices(context, options, request);
 }
 
-StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse> TextToSpeechAuth::SynthesizeSpeech(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
+TextToSpeechAuth::SynthesizeSpeech(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -58,19 +58,20 @@ TextToSpeechAuth::AsyncStreamingSynthesize(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-    google::cloud::texttospeech::v1::StreamingSynthesizeRequest, google::cloud::texttospeech::v1::StreamingSynthesizeResponse>;
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingSynthesize(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> TextToSpeechAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+TextToSpeechAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -78,8 +79,7 @@ StatusOr<google::longrunning::ListOperationsResponse> TextToSpeechAuth::ListOper
 }
 
 StatusOr<google::longrunning::Operation> TextToSpeechAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

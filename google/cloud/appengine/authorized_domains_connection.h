@@ -33,10 +33,13 @@ using ::google::cloud::appengine_v1::MakeAuthorizedDomainsConnection;
 /// @deprecated Use appengine_v1::AuthorizedDomainsConnection directly.
 using ::google::cloud::appengine_v1::AuthorizedDomainsConnection;
 
-/// @deprecated Use appengine_v1::AuthorizedDomainsLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::appengine_v1::AuthorizedDomainsLimitedErrorCountRetryPolicy;
+/// @deprecated Use appengine_v1::AuthorizedDomainsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::appengine_v1::
+    AuthorizedDomainsLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use appengine_v1::AuthorizedDomainsLimitedTimeRetryPolicy directly.
+/// @deprecated Use appengine_v1::AuthorizedDomainsLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::appengine_v1::AuthorizedDomainsLimitedTimeRetryPolicy;
 
 /// @deprecated Use appengine_v1::AuthorizedDomainsRetryPolicy directly.

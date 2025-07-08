@@ -26,27 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SearchServiceConnectionIdempotencyPolicy::~SearchServiceConnectionIdempotencyPolicy() = default;
+SearchServiceConnectionIdempotencyPolicy::
+    ~SearchServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
 SearchServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SearchServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SearchServiceConnectionIdempotencyPolicy::Search(google::cloud::retail::v2::SearchRequest) {  // NOLINT
+Idempotency SearchServiceConnectionIdempotencyPolicy::Search(
+    google::cloud::retail::v2::SearchRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SearchServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SearchServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SearchServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency SearchServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
-    MakeDefaultSearchServiceConnectionIdempotencyPolicy() {
+MakeDefaultSearchServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SearchServiceConnectionIdempotencyPolicy>();
 }
 

@@ -28,19 +28,28 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use video_stitcher_v1::VideoStitcherServicePollingPolicyOption directly.
-using ::google::cloud::video_stitcher_v1::VideoStitcherServicePollingPolicyOption;
+/// @deprecated Use video_stitcher_v1::VideoStitcherServicePollingPolicyOption
+/// directly.
+using ::google::cloud::video_stitcher_v1::
+    VideoStitcherServicePollingPolicyOption;
 
-/// @deprecated Use video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption directly.
-using ::google::cloud::video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption;
+/// @deprecated Use video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::video_stitcher_v1::
+    VideoStitcherServiceBackoffPolicyOption;
 
-/// @deprecated Use video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::video_stitcher_v1::
+    VideoStitcherServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use video_stitcher_v1::VideoStitcherServicePolicyOptionList directly.
+/// @deprecated Use video_stitcher_v1::VideoStitcherServicePolicyOptionList
+/// directly.
 using ::google::cloud::video_stitcher_v1::VideoStitcherServicePolicyOptionList;
 
-/// @deprecated Use video_stitcher_v1::VideoStitcherServiceRetryPolicyOption directly.
+/// @deprecated Use video_stitcher_v1::VideoStitcherServiceRetryPolicyOption
+/// directly.
 using ::google::cloud::video_stitcher_v1::VideoStitcherServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

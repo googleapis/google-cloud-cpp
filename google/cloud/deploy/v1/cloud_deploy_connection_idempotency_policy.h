@@ -39,171 +39,171 @@ class CloudDeployConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<CloudDeployConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListDeliveryPipelines(google::cloud::deploy::v1::ListDeliveryPipelinesRequest request);
+  virtual google::cloud::Idempotency ListDeliveryPipelines(
+      google::cloud::deploy::v1::ListDeliveryPipelinesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDeliveryPipeline(google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request);
+  virtual google::cloud::Idempotency GetDeliveryPipeline(
+      google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateDeliveryPipeline(google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request);
+  virtual google::cloud::Idempotency CreateDeliveryPipeline(
+      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateDeliveryPipeline(google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request);
+  virtual google::cloud::Idempotency UpdateDeliveryPipeline(
+      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteDeliveryPipeline(google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request);
+  virtual google::cloud::Idempotency DeleteDeliveryPipeline(
+      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTargets(google::cloud::deploy::v1::ListTargetsRequest request);
+  virtual google::cloud::Idempotency ListTargets(
+      google::cloud::deploy::v1::ListTargetsRequest request);
 
-  virtual google::cloud::Idempotency
-  RollbackTarget(google::cloud::deploy::v1::RollbackTargetRequest const& request);
+  virtual google::cloud::Idempotency RollbackTarget(
+      google::cloud::deploy::v1::RollbackTargetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTarget(google::cloud::deploy::v1::GetTargetRequest const& request);
+  virtual google::cloud::Idempotency GetTarget(
+      google::cloud::deploy::v1::GetTargetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateTarget(google::cloud::deploy::v1::CreateTargetRequest const& request);
+  virtual google::cloud::Idempotency CreateTarget(
+      google::cloud::deploy::v1::CreateTargetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTarget(google::cloud::deploy::v1::UpdateTargetRequest const& request);
+  virtual google::cloud::Idempotency UpdateTarget(
+      google::cloud::deploy::v1::UpdateTargetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTarget(google::cloud::deploy::v1::DeleteTargetRequest const& request);
+  virtual google::cloud::Idempotency DeleteTarget(
+      google::cloud::deploy::v1::DeleteTargetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListCustomTargetTypes(google::cloud::deploy::v1::ListCustomTargetTypesRequest request);
+  virtual google::cloud::Idempotency ListCustomTargetTypes(
+      google::cloud::deploy::v1::ListCustomTargetTypesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetCustomTargetType(google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request);
+  virtual google::cloud::Idempotency GetCustomTargetType(
+      google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateCustomTargetType(google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request);
+  virtual google::cloud::Idempotency CreateCustomTargetType(
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateCustomTargetType(google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request);
+  virtual google::cloud::Idempotency UpdateCustomTargetType(
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteCustomTargetType(google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request);
+  virtual google::cloud::Idempotency DeleteCustomTargetType(
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListReleases(google::cloud::deploy::v1::ListReleasesRequest request);
+  virtual google::cloud::Idempotency ListReleases(
+      google::cloud::deploy::v1::ListReleasesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetRelease(google::cloud::deploy::v1::GetReleaseRequest const& request);
+  virtual google::cloud::Idempotency GetRelease(
+      google::cloud::deploy::v1::GetReleaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateRelease(google::cloud::deploy::v1::CreateReleaseRequest const& request);
+  virtual google::cloud::Idempotency CreateRelease(
+      google::cloud::deploy::v1::CreateReleaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AbandonRelease(google::cloud::deploy::v1::AbandonReleaseRequest const& request);
+  virtual google::cloud::Idempotency AbandonRelease(
+      google::cloud::deploy::v1::AbandonReleaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateDeployPolicy(google::cloud::deploy::v1::CreateDeployPolicyRequest const& request);
+  virtual google::cloud::Idempotency CreateDeployPolicy(
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateDeployPolicy(google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request);
+  virtual google::cloud::Idempotency UpdateDeployPolicy(
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteDeployPolicy(google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request);
+  virtual google::cloud::Idempotency DeleteDeployPolicy(
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDeployPolicies(google::cloud::deploy::v1::ListDeployPoliciesRequest request);
+  virtual google::cloud::Idempotency ListDeployPolicies(
+      google::cloud::deploy::v1::ListDeployPoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDeployPolicy(google::cloud::deploy::v1::GetDeployPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetDeployPolicy(
+      google::cloud::deploy::v1::GetDeployPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ApproveRollout(google::cloud::deploy::v1::ApproveRolloutRequest const& request);
+  virtual google::cloud::Idempotency ApproveRollout(
+      google::cloud::deploy::v1::ApproveRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AdvanceRollout(google::cloud::deploy::v1::AdvanceRolloutRequest const& request);
+  virtual google::cloud::Idempotency AdvanceRollout(
+      google::cloud::deploy::v1::AdvanceRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelRollout(google::cloud::deploy::v1::CancelRolloutRequest const& request);
+  virtual google::cloud::Idempotency CancelRollout(
+      google::cloud::deploy::v1::CancelRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListRollouts(google::cloud::deploy::v1::ListRolloutsRequest request);
+  virtual google::cloud::Idempotency ListRollouts(
+      google::cloud::deploy::v1::ListRolloutsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetRollout(google::cloud::deploy::v1::GetRolloutRequest const& request);
+  virtual google::cloud::Idempotency GetRollout(
+      google::cloud::deploy::v1::GetRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateRollout(google::cloud::deploy::v1::CreateRolloutRequest const& request);
+  virtual google::cloud::Idempotency CreateRollout(
+      google::cloud::deploy::v1::CreateRolloutRequest const& request);
 
-  virtual google::cloud::Idempotency
-  IgnoreJob(google::cloud::deploy::v1::IgnoreJobRequest const& request);
+  virtual google::cloud::Idempotency IgnoreJob(
+      google::cloud::deploy::v1::IgnoreJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RetryJob(google::cloud::deploy::v1::RetryJobRequest const& request);
+  virtual google::cloud::Idempotency RetryJob(
+      google::cloud::deploy::v1::RetryJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListJobRuns(google::cloud::deploy::v1::ListJobRunsRequest request);
+  virtual google::cloud::Idempotency ListJobRuns(
+      google::cloud::deploy::v1::ListJobRunsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetJobRun(google::cloud::deploy::v1::GetJobRunRequest const& request);
+  virtual google::cloud::Idempotency GetJobRun(
+      google::cloud::deploy::v1::GetJobRunRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TerminateJobRun(google::cloud::deploy::v1::TerminateJobRunRequest const& request);
+  virtual google::cloud::Idempotency TerminateJobRun(
+      google::cloud::deploy::v1::TerminateJobRunRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetConfig(google::cloud::deploy::v1::GetConfigRequest const& request);
+  virtual google::cloud::Idempotency GetConfig(
+      google::cloud::deploy::v1::GetConfigRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateAutomation(google::cloud::deploy::v1::CreateAutomationRequest const& request);
+  virtual google::cloud::Idempotency CreateAutomation(
+      google::cloud::deploy::v1::CreateAutomationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateAutomation(google::cloud::deploy::v1::UpdateAutomationRequest const& request);
+  virtual google::cloud::Idempotency UpdateAutomation(
+      google::cloud::deploy::v1::UpdateAutomationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteAutomation(google::cloud::deploy::v1::DeleteAutomationRequest const& request);
+  virtual google::cloud::Idempotency DeleteAutomation(
+      google::cloud::deploy::v1::DeleteAutomationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetAutomation(google::cloud::deploy::v1::GetAutomationRequest const& request);
+  virtual google::cloud::Idempotency GetAutomation(
+      google::cloud::deploy::v1::GetAutomationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListAutomations(google::cloud::deploy::v1::ListAutomationsRequest request);
+  virtual google::cloud::Idempotency ListAutomations(
+      google::cloud::deploy::v1::ListAutomationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetAutomationRun(google::cloud::deploy::v1::GetAutomationRunRequest const& request);
+  virtual google::cloud::Idempotency GetAutomationRun(
+      google::cloud::deploy::v1::GetAutomationRunRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListAutomationRuns(google::cloud::deploy::v1::ListAutomationRunsRequest request);
+  virtual google::cloud::Idempotency ListAutomationRuns(
+      google::cloud::deploy::v1::ListAutomationRunsRequest request);
 
-  virtual google::cloud::Idempotency
-  CancelAutomationRun(google::cloud::deploy::v1::CancelAutomationRunRequest const& request);
+  virtual google::cloud::Idempotency CancelAutomationRun(
+      google::cloud::deploy::v1::CancelAutomationRunRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<CloudDeployConnectionIdempotencyPolicy>
-    MakeDefaultCloudDeployConnectionIdempotencyPolicy();
+MakeDefaultCloudDeployConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy_v1

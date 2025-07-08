@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_BARE_METAL_SOLUTION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_BARE_METAL_SOLUTION_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.h"
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

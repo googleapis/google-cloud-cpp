@@ -32,25 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class CloudControlsPartnerMonitoringTracingStub : public CloudControlsPartnerMonitoringStub {
+class CloudControlsPartnerMonitoringTracingStub
+    : public CloudControlsPartnerMonitoringStub {
  public:
   ~CloudControlsPartnerMonitoringTracingStub() override = default;
 
-  explicit CloudControlsPartnerMonitoringTracingStub(std::shared_ptr<CloudControlsPartnerMonitoringStub> child);
+  explicit CloudControlsPartnerMonitoringTracingStub(
+      std::shared_ptr<CloudControlsPartnerMonitoringStub> child);
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse> ListViolations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
+  ListViolations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
+          request) override;
 
  private:
   std::shared_ptr<CloudControlsPartnerMonitoringStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -61,7 +65,8 @@ class CloudControlsPartnerMonitoringTracingStub : public CloudControlsPartnerMon
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<CloudControlsPartnerMonitoringStub> MakeCloudControlsPartnerMonitoringTracingStub(
+std::shared_ptr<CloudControlsPartnerMonitoringStub>
+MakeCloudControlsPartnerMonitoringTracingStub(
     std::shared_ptr<CloudControlsPartnerMonitoringStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,158 +32,143 @@ AdaptationStub::~AdaptationStub() = default;
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 DefaultAdaptationStub::CreatePhraseSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
-    google::cloud::speech::v1::PhraseSet response;
-    auto status =
-        grpc_stub_->CreatePhraseSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
+  google::cloud::speech::v1::PhraseSet response;
+  auto status = grpc_stub_->CreatePhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 DefaultAdaptationStub::GetPhraseSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::GetPhraseSetRequest const& request) {
-    google::cloud::speech::v1::PhraseSet response;
-    auto status =
-        grpc_stub_->GetPhraseSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::GetPhraseSetRequest const& request) {
+  google::cloud::speech::v1::PhraseSet response;
+  auto status = grpc_stub_->GetPhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v1::ListPhraseSetResponse>
 DefaultAdaptationStub::ListPhraseSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::ListPhraseSetRequest const& request) {
-    google::cloud::speech::v1::ListPhraseSetResponse response;
-    auto status =
-        grpc_stub_->ListPhraseSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::ListPhraseSetRequest const& request) {
+  google::cloud::speech::v1::ListPhraseSetResponse response;
+  auto status = grpc_stub_->ListPhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 DefaultAdaptationStub::UpdatePhraseSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
-    google::cloud::speech::v1::PhraseSet response;
-    auto status =
-        grpc_stub_->UpdatePhraseSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
+  google::cloud::speech::v1::PhraseSet response;
+  auto status = grpc_stub_->UpdatePhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultAdaptationStub::DeletePhraseSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeletePhraseSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultAdaptationStub::DeletePhraseSet(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeletePhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 DefaultAdaptationStub::CreateCustomClass(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::CreateCustomClassRequest const& request) {
-    google::cloud::speech::v1::CustomClass response;
-    auto status =
-        grpc_stub_->CreateCustomClass(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::CreateCustomClassRequest const& request) {
+  google::cloud::speech::v1::CustomClass response;
+  auto status = grpc_stub_->CreateCustomClass(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 DefaultAdaptationStub::GetCustomClass(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::GetCustomClassRequest const& request) {
-    google::cloud::speech::v1::CustomClass response;
-    auto status =
-        grpc_stub_->GetCustomClass(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::GetCustomClassRequest const& request) {
+  google::cloud::speech::v1::CustomClass response;
+  auto status = grpc_stub_->GetCustomClass(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v1::ListCustomClassesResponse>
 DefaultAdaptationStub::ListCustomClasses(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::ListCustomClassesRequest const& request) {
-    google::cloud::speech::v1::ListCustomClassesResponse response;
-    auto status =
-        grpc_stub_->ListCustomClasses(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::ListCustomClassesRequest const& request) {
+  google::cloud::speech::v1::ListCustomClassesResponse response;
+  auto status = grpc_stub_->ListCustomClasses(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 DefaultAdaptationStub::UpdateCustomClass(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
-    google::cloud::speech::v1::CustomClass response;
-    auto status =
-        grpc_stub_->UpdateCustomClass(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
+  google::cloud::speech::v1::CustomClass response;
+  auto status = grpc_stub_->UpdateCustomClass(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultAdaptationStub::DeleteCustomClass(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteCustomClass(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultAdaptationStub::DeleteCustomClass(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteCustomClass(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultAdaptationStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultAdaptationStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultAdaptationStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

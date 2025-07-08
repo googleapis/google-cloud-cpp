@@ -35,92 +35,117 @@ class EnvironmentsConnectionIdempotencyPolicy {
   virtual ~EnvironmentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request);
+  virtual google::cloud::Idempotency CreateEnvironment(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateEnvironmentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetEnvironment(google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const& request);
+  virtual google::cloud::Idempotency GetEnvironment(
+      google::cloud::orchestration::airflow::service::v1::
+          GetEnvironmentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListEnvironments(google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest request);
+  virtual google::cloud::Idempotency ListEnvironments(
+      google::cloud::orchestration::airflow::service::v1::
+          ListEnvironmentsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request);
+  virtual google::cloud::Idempotency UpdateEnvironment(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateEnvironmentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request);
+  virtual google::cloud::Idempotency DeleteEnvironment(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteEnvironmentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandRequest const& request);
+  virtual google::cloud::Idempotency ExecuteAirflowCommand(
+      google::cloud::orchestration::airflow::service::v1::
+          ExecuteAirflowCommandRequest const& request);
 
-  virtual google::cloud::Idempotency
-  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::StopAirflowCommandRequest const& request);
+  virtual google::cloud::Idempotency StopAirflowCommand(
+      google::cloud::orchestration::airflow::service::v1::
+          StopAirflowCommandRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::PollAirflowCommandRequest const& request);
+  virtual google::cloud::Idempotency PollAirflowCommand(
+      google::cloud::orchestration::airflow::service::v1::
+          PollAirflowCommandRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListWorkloads(google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest request);
+  virtual google::cloud::Idempotency ListWorkloads(
+      google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request);
+  virtual google::cloud::Idempotency CheckUpgrade(
+      google::cloud::orchestration::airflow::service::v1::
+          CheckUpgradeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest const& request);
+  virtual google::cloud::Idempotency CreateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsSecretRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest const& request);
+  virtual google::cloud::Idempotency GetUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsSecretRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest request);
+  virtual google::cloud::Idempotency ListUserWorkloadsSecrets(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsSecretsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest const& request);
+  virtual google::cloud::Idempotency UpdateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsSecretRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest const& request);
+  virtual google::cloud::Idempotency DeleteUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsSecretRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest const& request);
+  virtual google::cloud::Idempotency CreateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsConfigMapRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest const& request);
+  virtual google::cloud::Idempotency GetUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsConfigMapRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListUserWorkloadsConfigMaps(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest request);
+  virtual google::cloud::Idempotency ListUserWorkloadsConfigMaps(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsConfigMapsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest const& request);
+  virtual google::cloud::Idempotency UpdateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsConfigMapRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest const& request);
+  virtual google::cloud::Idempotency DeleteUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsConfigMapRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request);
+  virtual google::cloud::Idempotency SaveSnapshot(
+      google::cloud::orchestration::airflow::service::v1::
+          SaveSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request);
+  virtual google::cloud::Idempotency LoadSnapshot(
+      google::cloud::orchestration::airflow::service::v1::
+          LoadSnapshotRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request);
+  virtual google::cloud::Idempotency DatabaseFailover(
+      google::cloud::orchestration::airflow::service::v1::
+          DatabaseFailoverRequest const& request);
 
-  virtual google::cloud::Idempotency
-  FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesRequest const& request);
+  virtual google::cloud::Idempotency FetchDatabaseProperties(
+      google::cloud::orchestration::airflow::service::v1::
+          FetchDatabasePropertiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
-    MakeDefaultEnvironmentsConnectionIdempotencyPolicy();
+MakeDefaultEnvironmentsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_v1

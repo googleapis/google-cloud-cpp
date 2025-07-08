@@ -36,52 +36,68 @@ class InstanceTemplatesTracingConnection
   ~InstanceTemplatesTracingConnection() override = default;
 
   explicit InstanceTemplatesTracingConnection(
-    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection> child);
+      std::shared_ptr<
+          compute_instance_templates_v1::InstanceTemplatesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
-  AggregatedListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest request) override;
+  StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
+  AggregatedListInstanceTemplates(
+      google::cloud::cpp::compute::instance_templates::v1::
+          AggregatedListInstanceTemplatesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request) override;
+  DeleteInstanceTemplate(
+      google::cloud::cpp::compute::instance_templates::v1::
+          DeleteInstanceTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceTemplate(NoAwaitTag,
-      google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
+      NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
+                      DeleteInstanceTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceTemplate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplateRequest const& request) override;
+  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                          GetInstanceTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instance_templates::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request) override;
+  InsertInstanceTemplate(
+      google::cloud::cpp::compute::instance_templates::v1::
+          InsertInstanceTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstanceTemplate(NoAwaitTag,
-      google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
+      NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
+                      InsertInstanceTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceTemplate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request) override;
+  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                            ListInstanceTemplatesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instance_templates::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection> child_;
+  std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -94,7 +110,8 @@ class InstanceTemplatesTracingConnection
  */
 std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
 MakeInstanceTemplatesTracingConnection(
-    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection> conn);
+    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_templates_v1_internal

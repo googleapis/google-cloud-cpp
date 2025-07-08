@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/logging/v2/logging_service_v2_client.h"
 #include "google/cloud/logging/v2/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/logging/v2/logging_service_v2_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <iostream>
@@ -49,10 +49,13 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
 
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy
-   : public google::cloud::logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy {
+    : public google::cloud::logging_v2::
+          LoggingServiceV2ConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy> clone() const override {
+  std::unique_ptr<
+      google::cloud::logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy>
+  clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -64,17 +67,23 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options = google::cloud::Options{}
-    .set<google::cloud::logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption>(
-      CustomIdempotencyPolicy().clone())
-    .set<google::cloud::logging_v2::LoggingServiceV2RetryPolicyOption>(
-      google::cloud::logging_v2::LoggingServiceV2LimitedErrorCountRetryPolicy(3).clone())
-    .set<google::cloud::logging_v2::LoggingServiceV2BackoffPolicyOption>(
-      google::cloud::ExponentialBackoffPolicy(
-          /*initial_delay=*/std::chrono::milliseconds(200),
-          /*maximum_delay=*/std::chrono::seconds(45),
-          /*scaling=*/2.0).clone());
-  auto connection = google::cloud::logging_v2::MakeLoggingServiceV2Connection(options);
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::logging_v2::
+                   LoggingServiceV2ConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::logging_v2::LoggingServiceV2RetryPolicyOption>(
+              google::cloud::logging_v2::
+                  LoggingServiceV2LimitedErrorCountRetryPolicy(3)
+                      .clone())
+          .set<google::cloud::logging_v2::LoggingServiceV2BackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection =
+      google::cloud::logging_v2::MakeLoggingServiceV2Connection(options);
 
   // c1 and c2 share the same retry policies
   auto c1 = google::cloud::logging_v2::LoggingServiceV2Client(connection);
@@ -83,8 +92,12 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::logging_v2::LoggingServiceV2Client(
-    connection, google::cloud::Options{}.set<google::cloud::logging_v2::LoggingServiceV2RetryPolicyOption>(
-      google::cloud::logging_v2::LoggingServiceV2LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
+      connection,
+      google::cloud::Options{}
+          .set<google::cloud::logging_v2::LoggingServiceV2RetryPolicyOption>(
+              google::cloud::logging_v2::LoggingServiceV2LimitedTimeRetryPolicy(
+                  std::chrono::minutes(5))
+                  .clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -106,7 +119,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::logging_v2::LoggingServiceV2Client(
-      google::cloud::logging_v2::MakeLoggingServiceV2Connection(options));
+        google::cloud::logging_v2::MakeLoggingServiceV2Connection(options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -116,9 +129,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet({
-    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
-  });
+  examples::CheckEnvironmentVariablesAreSet(
+      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

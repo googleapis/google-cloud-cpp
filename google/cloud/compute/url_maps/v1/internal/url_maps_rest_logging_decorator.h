@@ -39,86 +39,117 @@ class UrlMapsRestLogging : public UrlMapsRestStub {
  public:
   ~UrlMapsRestLogging() override = default;
   UrlMapsRestLogging(std::shared_ptr<UrlMapsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                     TracingOptions tracing_options,
+                     std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList> AggregatedListUrlMaps(
+  StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+  AggregatedListUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::AggregatedListUrlMapsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::
+          AggregatedListUrlMapsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const& request) override;
+      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const& request) override;
+      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInvalidateCache(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInvalidateCache(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const& request) override;
+      google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapList> ListUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const& request) override;
+      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const& request) override;
+      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<UrlMapsRestStub> child_;

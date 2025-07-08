@@ -33,7 +33,8 @@ using ::google::cloud::datastream_v1::MakeDatastreamConnection;
 /// @deprecated Use datastream_v1::DatastreamConnection directly.
 using ::google::cloud::datastream_v1::DatastreamConnection;
 
-/// @deprecated Use datastream_v1::DatastreamLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use datastream_v1::DatastreamLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::datastream_v1::DatastreamLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use datastream_v1::DatastreamLimitedTimeRetryPolicy directly.

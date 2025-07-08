@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GeneratorsClient::GeneratorsClient(
     std::shared_ptr<GeneratorsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 GeneratorsClient::~GeneratorsClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Generator>
@@ -41,7 +41,9 @@ GeneratorsClient::ListGenerators(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsClient::ListGenerators(google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request, Options opts) {
+GeneratorsClient::ListGenerators(
+    google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGenerators(std::move(request));
 }
@@ -55,13 +57,18 @@ GeneratorsClient::GetGenerator(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsClient::GetGenerator(google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request, Options opts) {
+GeneratorsClient::GetGenerator(
+    google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGenerator(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsClient::CreateGenerator(std::string const& parent, google::cloud::dialogflow::cx::v3::Generator const& generator, Options opts) {
+GeneratorsClient::CreateGenerator(
+    std::string const& parent,
+    google::cloud::dialogflow::cx::v3::Generator const& generator,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreateGeneratorRequest request;
   request.set_parent(parent);
@@ -70,13 +77,17 @@ GeneratorsClient::CreateGenerator(std::string const& parent, google::cloud::dial
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsClient::CreateGenerator(google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request, Options opts) {
+GeneratorsClient::CreateGenerator(
+    google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGenerator(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsClient::UpdateGenerator(google::cloud::dialogflow::cx::v3::Generator const& generator, google::protobuf::FieldMask const& update_mask, Options opts) {
+GeneratorsClient::UpdateGenerator(
+    google::cloud::dialogflow::cx::v3::Generator const& generator,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest request;
   *request.mutable_generator() = generator;
@@ -85,39 +96,42 @@ GeneratorsClient::UpdateGenerator(google::cloud::dialogflow::cx::v3::Generator c
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Generator>
-GeneratorsClient::UpdateGenerator(google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request, Options opts) {
+GeneratorsClient::UpdateGenerator(
+    google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGenerator(request);
 }
 
-Status
-GeneratorsClient::DeleteGenerator(std::string const& name, Options opts) {
+Status GeneratorsClient::DeleteGenerator(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest request;
   request.set_name(name);
   return connection_->DeleteGenerator(request);
 }
 
-Status
-GeneratorsClient::DeleteGenerator(google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request, Options opts) {
+Status GeneratorsClient::DeleteGenerator(
+    google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGenerator(request);
 }
 
-StreamRange<google::cloud::location::Location>
-GeneratorsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> GeneratorsClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-GeneratorsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> GeneratorsClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-GeneratorsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> GeneratorsClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -125,36 +139,36 @@ GeneratorsClient::ListOperations(std::string const& name, std::string const& fil
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-GeneratorsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> GeneratorsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-GeneratorsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> GeneratorsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-GeneratorsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> GeneratorsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-GeneratorsClient::CancelOperation(std::string const& name, Options opts) {
+Status GeneratorsClient::CancelOperation(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-GeneratorsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status GeneratorsClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

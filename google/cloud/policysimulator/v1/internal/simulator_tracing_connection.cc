@@ -34,14 +34,17 @@ SimulatorTracingConnection::SimulatorTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::policysimulator::v1::Replay>
-SimulatorTracingConnection::GetReplay(google::cloud::policysimulator::v1::GetReplayRequest const& request) {
-  auto span = internal::MakeSpan("policysimulator_v1::SimulatorConnection::GetReplay");
+SimulatorTracingConnection::GetReplay(
+    google::cloud::policysimulator::v1::GetReplayRequest const& request) {
+  auto span =
+      internal::MakeSpan("policysimulator_v1::SimulatorConnection::GetReplay");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetReplay(request));
 }
 
 future<StatusOr<google::cloud::policysimulator::v1::Replay>>
-SimulatorTracingConnection::CreateReplay(google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+SimulatorTracingConnection::CreateReplay(
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
   auto span = internal::MakeSpan(
       "policysimulator_v1::SimulatorConnection::CreateReplay");
   internal::OTelScope scope(span);
@@ -50,12 +53,12 @@ SimulatorTracingConnection::CreateReplay(google::cloud::policysimulator::v1::Cre
 
 StatusOr<google::longrunning::Operation>
 SimulatorTracingConnection::CreateReplay(
-    NoAwaitTag, google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+    NoAwaitTag,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
   auto span = internal::MakeSpan(
       "policysimulator_v1::SimulatorConnection::CreateReplay");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateReplay(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateReplay(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::policysimulator::v1::Replay>>
@@ -64,31 +67,37 @@ SimulatorTracingConnection::CreateReplay(
   auto span = internal::MakeSpan(
       "policysimulator_v1::SimulatorConnection::CreateReplay");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateReplay(operation));
+  return internal::EndSpan(std::move(span), child_->CreateReplay(operation));
 }
 
 StreamRange<google::cloud::policysimulator::v1::ReplayResult>
-SimulatorTracingConnection::ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest request) {
-  auto span = internal::MakeSpan("policysimulator_v1::SimulatorConnection::ListReplayResults");
+SimulatorTracingConnection::ListReplayResults(
+    google::cloud::policysimulator::v1::ListReplayResultsRequest request) {
+  auto span = internal::MakeSpan(
+      "policysimulator_v1::SimulatorConnection::ListReplayResults");
   internal::OTelScope scope(span);
   auto sr = child_->ListReplayResults(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::policysimulator::v1::ReplayResult>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::policysimulator::v1::ReplayResult>(std::move(span),
+                                                        std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-SimulatorTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("policysimulator_v1::SimulatorConnection::ListOperations");
+SimulatorTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "policysimulator_v1::SimulatorConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SimulatorTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("policysimulator_v1::SimulatorConnection::GetOperation");
+SimulatorTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "policysimulator_v1::SimulatorConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

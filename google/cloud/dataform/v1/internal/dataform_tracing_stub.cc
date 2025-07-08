@@ -28,48 +28,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-DataformTracingStub::DataformTracingStub(
-    std::shared_ptr<DataformStub> child)
+DataformTracingStub::DataformTracingStub(std::shared_ptr<DataformStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse> DataformTracingStub::ListRepositories(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ListRepositoriesResponse>
+DataformTracingStub::ListRepositories(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListRepositoriesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ListRepositories");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ListRepositories");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListRepositories(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::Repository> DataformTracingStub::GetRepository(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::Repository>
+DataformTracingStub::GetRepository(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetRepository");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetRepository");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetRepository(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::Repository> DataformTracingStub::CreateRepository(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::Repository>
+DataformTracingStub::CreateRepository(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CreateRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CreateRepository");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateRepository");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateRepository(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::Repository> DataformTracingStub::UpdateRepository(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::Repository>
+DataformTracingStub::UpdateRepository(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::UpdateRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "UpdateRepository");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "UpdateRepository");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -77,109 +80,126 @@ StatusOr<google::cloud::dataform::v1::Repository> DataformTracingStub::UpdateRep
 }
 
 Status DataformTracingStub::DeleteRepository(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::DeleteRepositoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "DeleteRepository");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteRepository");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteRepository(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse> DataformTracingStub::CommitRepositoryChanges(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CommitRepositoryChanges");
+StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
+DataformTracingStub::CommitRepositoryChanges(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CommitRepositoryChanges");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CommitRepositoryChanges(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CommitRepositoryChanges(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse> DataformTracingStub::ReadRepositoryFile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
+DataformTracingStub::ReadRepositoryFile(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ReadRepositoryFileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ReadRepositoryFile");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ReadRepositoryFile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ReadRepositoryFile(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ReadRepositoryFile(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::QueryRepositoryDirectoryContentsResponse> DataformTracingStub::QueryRepositoryDirectoryContents(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "QueryRepositoryDirectoryContents");
+StatusOr<google::cloud::dataform::v1::QueryRepositoryDirectoryContentsResponse>
+DataformTracingStub::QueryRepositoryDirectoryContents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "QueryRepositoryDirectoryContents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->QueryRepositoryDirectoryContents(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->QueryRepositoryDirectoryContents(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::FetchRepositoryHistoryResponse> DataformTracingStub::FetchRepositoryHistory(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchRepositoryHistoryResponse>
+DataformTracingStub::FetchRepositoryHistory(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchRepositoryHistoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "FetchRepositoryHistory");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "FetchRepositoryHistory");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchRepositoryHistory(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchRepositoryHistory(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse> DataformTracingStub::ComputeRepositoryAccessTokenStatus(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ComputeRepositoryAccessTokenStatus");
+StatusOr<
+    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
+DataformTracingStub::ComputeRepositoryAccessTokenStatus(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::
+        ComputeRepositoryAccessTokenStatusRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ComputeRepositoryAccessTokenStatus");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ComputeRepositoryAccessTokenStatus(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ComputeRepositoryAccessTokenStatus(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse> DataformTracingStub::FetchRemoteBranches(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
+DataformTracingStub::FetchRemoteBranches(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "FetchRemoteBranches");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "FetchRemoteBranches");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchRemoteBranches(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->FetchRemoteBranches(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ListWorkspacesResponse> DataformTracingStub::ListWorkspaces(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ListWorkspacesResponse>
+DataformTracingStub::ListWorkspaces(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListWorkspacesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ListWorkspaces");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ListWorkspaces");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListWorkspaces(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::Workspace> DataformTracingStub::GetWorkspace(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::Workspace>
+DataformTracingStub::GetWorkspace(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetWorkspaceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetWorkspace");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetWorkspace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetWorkspace(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::Workspace> DataformTracingStub::CreateWorkspace(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::Workspace>
+DataformTracingStub::CreateWorkspace(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CreateWorkspaceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CreateWorkspace");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateWorkspace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -187,428 +207,479 @@ StatusOr<google::cloud::dataform::v1::Workspace> DataformTracingStub::CreateWork
 }
 
 Status DataformTracingStub::DeleteWorkspace(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::DeleteWorkspaceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "DeleteWorkspace");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteWorkspace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteWorkspace(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse> DataformTracingStub::InstallNpmPackages(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
+DataformTracingStub::InstallNpmPackages(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::InstallNpmPackagesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "InstallNpmPackages");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "InstallNpmPackages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->InstallNpmPackages(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->InstallNpmPackages(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse> DataformTracingStub::PullGitCommits(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse>
+DataformTracingStub::PullGitCommits(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::PullGitCommitsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "PullGitCommits");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "PullGitCommits");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PullGitCommits(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse> DataformTracingStub::PushGitCommits(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse>
+DataformTracingStub::PushGitCommits(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::PushGitCommitsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "PushGitCommits");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "PushGitCommits");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->PushGitCommits(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse> DataformTracingStub::FetchFileGitStatuses(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
+DataformTracingStub::FetchFileGitStatuses(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "FetchFileGitStatuses");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "FetchFileGitStatuses");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchFileGitStatuses(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->FetchFileGitStatuses(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse> DataformTracingStub::FetchGitAheadBehind(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
+DataformTracingStub::FetchGitAheadBehind(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "FetchGitAheadBehind");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "FetchGitAheadBehind");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchGitAheadBehind(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->FetchGitAheadBehind(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse> DataformTracingStub::CommitWorkspaceChanges(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
+DataformTracingStub::CommitWorkspaceChanges(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CommitWorkspaceChanges");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CommitWorkspaceChanges");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CommitWorkspaceChanges(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CommitWorkspaceChanges(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse> DataformTracingStub::ResetWorkspaceChanges(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
+DataformTracingStub::ResetWorkspaceChanges(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ResetWorkspaceChanges");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ResetWorkspaceChanges");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ResetWorkspaceChanges(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ResetWorkspaceChanges(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse> DataformTracingStub::FetchFileDiff(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse>
+DataformTracingStub::FetchFileDiff(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::FetchFileDiffRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "FetchFileDiff");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "FetchFileDiff");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->FetchFileDiff(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::QueryDirectoryContentsResponse> DataformTracingStub::QueryDirectoryContents(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::QueryDirectoryContentsResponse>
+DataformTracingStub::QueryDirectoryContents(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::QueryDirectoryContentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "QueryDirectoryContents");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "QueryDirectoryContents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->QueryDirectoryContents(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->QueryDirectoryContents(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::SearchFilesResponse> DataformTracingStub::SearchFiles(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::SearchFilesResponse>
+DataformTracingStub::SearchFiles(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::SearchFilesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "SearchFiles");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "SearchFiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchFiles(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse> DataformTracingStub::MakeDirectory(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse>
+DataformTracingStub::MakeDirectory(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::MakeDirectoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "MakeDirectory");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "MakeDirectory");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MakeDirectory(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse> DataformTracingStub::RemoveDirectory(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
+DataformTracingStub::RemoveDirectory(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::RemoveDirectoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "RemoveDirectory");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "RemoveDirectory");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RemoveDirectory(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse> DataformTracingStub::MoveDirectory(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse>
+DataformTracingStub::MoveDirectory(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::MoveDirectoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "MoveDirectory");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "MoveDirectory");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MoveDirectory(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ReadFileResponse> DataformTracingStub::ReadFile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ReadFileResponse>
+DataformTracingStub::ReadFile(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ReadFileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ReadFile");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ReadFile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ReadFile(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::RemoveFileResponse> DataformTracingStub::RemoveFile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::RemoveFileResponse>
+DataformTracingStub::RemoveFile(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::RemoveFileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "RemoveFile");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "RemoveFile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RemoveFile(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::MoveFileResponse> DataformTracingStub::MoveFile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::MoveFileResponse>
+DataformTracingStub::MoveFile(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::MoveFileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "MoveFile");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "MoveFile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->MoveFile(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::WriteFileResponse> DataformTracingStub::WriteFile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::WriteFileResponse>
+DataformTracingStub::WriteFile(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::WriteFileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "WriteFile");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "WriteFile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->WriteFile(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ListReleaseConfigsResponse> DataformTracingStub::ListReleaseConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ListReleaseConfigsResponse>
+DataformTracingStub::ListReleaseConfigs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListReleaseConfigsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ListReleaseConfigs");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ListReleaseConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListReleaseConfigs(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListReleaseConfigs(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ReleaseConfig> DataformTracingStub::GetReleaseConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+DataformTracingStub::GetReleaseConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetReleaseConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetReleaseConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetReleaseConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetReleaseConfig(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ReleaseConfig> DataformTracingStub::CreateReleaseConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+DataformTracingStub::CreateReleaseConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CreateReleaseConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CreateReleaseConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateReleaseConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateReleaseConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateReleaseConfig(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ReleaseConfig> DataformTracingStub::UpdateReleaseConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ReleaseConfig>
+DataformTracingStub::UpdateReleaseConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "UpdateReleaseConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "UpdateReleaseConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateReleaseConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateReleaseConfig(context, options, request));
 }
 
 Status DataformTracingStub::DeleteReleaseConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "DeleteReleaseConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteReleaseConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteReleaseConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteReleaseConfig(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ListCompilationResultsResponse> DataformTracingStub::ListCompilationResults(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ListCompilationResultsResponse>
+DataformTracingStub::ListCompilationResults(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListCompilationResultsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ListCompilationResults");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ListCompilationResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListCompilationResults(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListCompilationResults(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::CompilationResult> DataformTracingStub::GetCompilationResult(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::CompilationResult>
+DataformTracingStub::GetCompilationResult(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetCompilationResultRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetCompilationResult");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetCompilationResult");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetCompilationResult(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetCompilationResult(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::CompilationResult> DataformTracingStub::CreateCompilationResult(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::CreateCompilationResultRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CreateCompilationResult");
+StatusOr<google::cloud::dataform::v1::CompilationResult>
+DataformTracingStub::CreateCompilationResult(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateCompilationResultRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateCompilationResult");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateCompilationResult(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateCompilationResult(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse> DataformTracingStub::QueryCompilationResultActions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::QueryCompilationResultActionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "QueryCompilationResultActions");
+StatusOr<google::cloud::dataform::v1::QueryCompilationResultActionsResponse>
+DataformTracingStub::QueryCompilationResultActions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryCompilationResultActionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "QueryCompilationResultActions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->QueryCompilationResultActions(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->QueryCompilationResultActions(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ListWorkflowConfigsResponse> DataformTracingStub::ListWorkflowConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::ListWorkflowConfigsResponse>
+DataformTracingStub::ListWorkflowConfigs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::ListWorkflowConfigsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ListWorkflowConfigs");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ListWorkflowConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListWorkflowConfigs(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListWorkflowConfigs(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowConfig> DataformTracingStub::GetWorkflowConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+DataformTracingStub::GetWorkflowConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetWorkflowConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetWorkflowConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetWorkflowConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetWorkflowConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetWorkflowConfig(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowConfig> DataformTracingStub::CreateWorkflowConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+DataformTracingStub::CreateWorkflowConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CreateWorkflowConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateWorkflowConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateWorkflowConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateWorkflowConfig(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowConfig> DataformTracingStub::UpdateWorkflowConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::WorkflowConfig>
+DataformTracingStub::UpdateWorkflowConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "UpdateWorkflowConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "UpdateWorkflowConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateWorkflowConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateWorkflowConfig(context, options, request));
 }
 
 Status DataformTracingStub::DeleteWorkflowConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "DeleteWorkflowConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteWorkflowConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteWorkflowConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteWorkflowConfig(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::ListWorkflowInvocationsResponse> DataformTracingStub::ListWorkflowInvocations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::ListWorkflowInvocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ListWorkflowInvocations");
+StatusOr<google::cloud::dataform::v1::ListWorkflowInvocationsResponse>
+DataformTracingStub::ListWorkflowInvocations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::ListWorkflowInvocationsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ListWorkflowInvocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListWorkflowInvocations(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListWorkflowInvocations(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowInvocation> DataformTracingStub::GetWorkflowInvocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
+DataformTracingStub::GetWorkflowInvocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetWorkflowInvocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetWorkflowInvocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetWorkflowInvocation(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetWorkflowInvocation(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::WorkflowInvocation> DataformTracingStub::CreateWorkflowInvocation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CreateWorkflowInvocation");
+StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
+DataformTracingStub::CreateWorkflowInvocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CreateWorkflowInvocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateWorkflowInvocation(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateWorkflowInvocation(context, options, request));
 }
 
 Status DataformTracingStub::DeleteWorkflowInvocation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "DeleteWorkflowInvocation");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "DeleteWorkflowInvocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteWorkflowInvocation(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteWorkflowInvocation(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse> DataformTracingStub::CancelWorkflowInvocation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "CancelWorkflowInvocation");
+StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
+DataformTracingStub::CancelWorkflowInvocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "CancelWorkflowInvocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CancelWorkflowInvocation(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CancelWorkflowInvocation(context, options, request));
 }
 
-StatusOr<google::cloud::dataform::v1::QueryWorkflowInvocationActionsResponse> DataformTracingStub::QueryWorkflowInvocationActions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "QueryWorkflowInvocationActions");
+StatusOr<google::cloud::dataform::v1::QueryWorkflowInvocationActionsResponse>
+DataformTracingStub::QueryWorkflowInvocationActions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "QueryWorkflowInvocationActions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->QueryWorkflowInvocationActions(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->QueryWorkflowInvocationActions(context, options, request));
 }
 
 StatusOr<google::cloud::dataform::v1::Config> DataformTracingStub::GetConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::GetConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetConfig");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -616,21 +687,22 @@ StatusOr<google::cloud::dataform::v1::Config> DataformTracingStub::GetConfig(
 }
 
 StatusOr<google::cloud::dataform::v1::Config> DataformTracingStub::UpdateConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataform::v1::UpdateConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "UpdateConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "UpdateConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateConfig(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> DataformTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DataformTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -638,10 +710,10 @@ StatusOr<google::cloud::location::ListLocationsResponse> DataformTracingStub::Li
 }
 
 StatusOr<google::cloud::location::Location> DataformTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -649,10 +721,10 @@ StatusOr<google::cloud::location::Location> DataformTracingStub::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> DataformTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -660,25 +732,26 @@ StatusOr<google::iam::v1::Policy> DataformTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DataformTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> DataformTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DataformTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.dataform.v1.Dataform",
+                                     "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

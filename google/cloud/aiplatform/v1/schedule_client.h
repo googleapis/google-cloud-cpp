@@ -65,7 +65,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ScheduleServiceClient {
  public:
-  explicit ScheduleServiceClient(std::shared_ptr<ScheduleServiceConnection> connection, Options opts = {});
+  explicit ScheduleServiceClient(
+      std::shared_ptr<ScheduleServiceConnection> connection, Options opts = {});
   ~ScheduleServiceClient();
 
   ///@{
@@ -78,10 +79,12 @@ class ScheduleServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ScheduleServiceClient const& a, ScheduleServiceClient const& b) {
+  friend bool operator==(ScheduleServiceClient const& a,
+                         ScheduleServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ScheduleServiceClient const& a, ScheduleServiceClient const& b) {
+  friend bool operator!=(ScheduleServiceClient const& a,
+                         ScheduleServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,8 +113,10 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule>
-  CreateSchedule(std::string const& parent, google::cloud::aiplatform::v1::Schedule const& schedule, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Schedule const& schedule,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -140,8 +145,9 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule>
-  CreateSchedule(google::cloud::aiplatform::v1::CreateScheduleRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
+      google::cloud::aiplatform::v1::CreateScheduleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -188,8 +194,8 @@ class ScheduleServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSchedule(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSchedule(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -226,7 +232,9 @@ class ScheduleServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSchedule(google::cloud::aiplatform::v1::DeleteScheduleRequest const& request, Options opts = {});
+  DeleteSchedule(
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -239,8 +247,10 @@ class ScheduleServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSchedule(NoAwaitTag, google::cloud::aiplatform::v1::DeleteScheduleRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSchedule(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -252,7 +262,8 @@ class ScheduleServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSchedule(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteSchedule(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -278,8 +289,8 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule>
-  GetSchedule(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -308,8 +319,9 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule>
-  GetSchedule(google::cloud::aiplatform::v1::GetScheduleRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
+      google::cloud::aiplatform::v1::GetScheduleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -343,8 +355,8 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Schedule>
-  ListSchedules(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Schedule> ListSchedules(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -382,8 +394,9 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Schedule>
-  ListSchedules(google::cloud::aiplatform::v1::ListSchedulesRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Schedule> ListSchedules(
+      google::cloud::aiplatform::v1::ListSchedulesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -410,8 +423,7 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status
-  PauseSchedule(std::string const& name, Options opts = {});
+  Status PauseSchedule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +453,9 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status
-  PauseSchedule(google::cloud::aiplatform::v1::PauseScheduleRequest const& request, Options opts = {});
+  Status PauseSchedule(
+      google::cloud::aiplatform::v1::PauseScheduleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -475,8 +488,7 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status
-  ResumeSchedule(std::string const& name, Options opts = {});
+  Status ResumeSchedule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -514,8 +526,8 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status
-  ResumeSchedule(std::string const& name, bool catch_up, Options opts = {});
+  Status ResumeSchedule(std::string const& name, bool catch_up,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -551,8 +563,9 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status
-  ResumeSchedule(google::cloud::aiplatform::v1::ResumeScheduleRequest const& request, Options opts = {});
+  Status ResumeSchedule(
+      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -590,8 +603,9 @@ class ScheduleServiceClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule>
-  UpdateSchedule(google::cloud::aiplatform::v1::Schedule const& schedule, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
+      google::cloud::aiplatform::v1::Schedule const& schedule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -626,8 +640,9 @@ class ScheduleServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L298}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule>
-  UpdateSchedule(google::cloud::aiplatform::v1::UpdateScheduleRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
+      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -665,8 +680,8 @@ class ScheduleServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -695,8 +710,9 @@ class ScheduleServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -728,8 +744,8 @@ class ScheduleServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -760,8 +776,8 @@ class ScheduleServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -796,8 +812,9 @@ class ScheduleServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -832,8 +849,8 @@ class ScheduleServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -872,8 +889,8 @@ class ScheduleServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -899,8 +916,8 @@ class ScheduleServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -931,8 +948,9 @@ class ScheduleServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -956,8 +974,7 @@ class ScheduleServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -986,8 +1003,9 @@ class ScheduleServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1021,8 +1039,7 @@ class ScheduleServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1061,8 +1078,9 @@ class ScheduleServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1099,8 +1117,9 @@ class ScheduleServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ScheduleServiceConnection> connection_;

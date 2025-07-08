@@ -31,9 +31,9 @@ HubServiceAuth::HubServiceAuth(
     std::shared_ptr<HubServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse> HubServiceAuth::ListHubs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
+HubServiceAuth::ListHubs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListHubsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,131 +41,126 @@ StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse> HubServiceAut
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Hub> HubServiceAuth::GetHub(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetHubRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetHub(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-HubServiceAuth::AsyncCreateHub(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncCreateHub(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateHub(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateHub(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::CreateHub(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::CreateHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateHub(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-HubServiceAuth::AsyncUpdateHub(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncUpdateHub(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateHub(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateHub(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::UpdateHub(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::UpdateHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateHub(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-HubServiceAuth::AsyncDeleteHub(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncDeleteHub(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteHub(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteHub(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::DeleteHub(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::DeleteHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteHub(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse> HubServiceAuth::ListHubSpokes(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListHubSpokesRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
+HubServiceAuth::ListHubSpokes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListHubSpokes(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::QueryHubStatusResponse> HubServiceAuth::QueryHubStatus(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::QueryHubStatusRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::QueryHubStatusResponse>
+HubServiceAuth::QueryHubStatus(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::QueryHubStatusRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryHubStatus(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse> HubServiceAuth::ListSpokes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
+HubServiceAuth::ListSpokes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListSpokesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSpokes(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::Spoke> HubServiceAuth::GetSpoke(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::networkconnectivity::v1::Spoke>
+HubServiceAuth::GetSpoke(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -174,28 +169,27 @@ StatusOr<google::cloud::networkconnectivity::v1::Spoke> HubServiceAuth::GetSpoke
 
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncCreateSpoke(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateSpoke(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateSpoke(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::CreateSpoke(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::CreateSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSpoke(context, options, request);
@@ -203,28 +197,27 @@ HubServiceAuth::CreateSpoke(
 
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncUpdateSpoke(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateSpoke(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateSpoke(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::UpdateSpoke(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::UpdateSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSpoke(context, options, request);
@@ -232,28 +225,29 @@ HubServiceAuth::UpdateSpoke(
 
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncRejectHubSpoke(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRejectHubSpoke(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRejectHubSpoke(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::RejectHubSpoke(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::RejectHubSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RejectHubSpoke(context, options, request);
@@ -261,28 +255,29 @@ HubServiceAuth::RejectHubSpoke(
 
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncAcceptHubSpoke(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAcceptHubSpoke(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncAcceptHubSpoke(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::AcceptHubSpoke(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::AcceptHubSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AcceptHubSpoke(context, options, request);
@@ -290,28 +285,29 @@ HubServiceAuth::AcceptHubSpoke(
 
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncAcceptSpokeUpdate(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAcceptSpokeUpdate(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncAcceptSpokeUpdate(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::AcceptSpokeUpdate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::AcceptSpokeUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AcceptSpokeUpdate(context, options, request);
@@ -319,28 +315,29 @@ HubServiceAuth::AcceptSpokeUpdate(
 
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncRejectSpokeUpdate(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRejectSpokeUpdate(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRejectSpokeUpdate(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::RejectSpokeUpdate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::RejectSpokeUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RejectSpokeUpdate(context, options, request);
@@ -348,81 +345,82 @@ HubServiceAuth::RejectSpokeUpdate(
 
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncDeleteSpoke(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteSpoke(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteSpoke(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::DeleteSpoke(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::DeleteSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSpoke(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::RouteTable> HubServiceAuth::GetRouteTable(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetRouteTableRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+HubServiceAuth::GetRouteTable(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRouteTable(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::Route> HubServiceAuth::GetRoute(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::networkconnectivity::v1::Route>
+HubServiceAuth::GetRoute(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetRouteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRoute(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse> HubServiceAuth::ListRoutes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
+HubServiceAuth::ListRoutes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListRoutesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListRoutes(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse> HubServiceAuth::ListRouteTables(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListRouteTablesRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
+HubServiceAuth::ListRouteTables(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListRouteTables(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::Group> HubServiceAuth::GetGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::networkconnectivity::v1::Group>
+HubServiceAuth::GetGroup(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetGroup(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse> HubServiceAuth::ListGroups(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
+HubServiceAuth::ListGroups(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -431,36 +429,35 @@ StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse> HubServiceA
 
 future<StatusOr<google::longrunning::Operation>>
 HubServiceAuth::AsyncUpdateGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateGroup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateGroup(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-HubServiceAuth::UpdateGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+StatusOr<google::longrunning::Operation> HubServiceAuth::UpdateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateGroup(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> HubServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+HubServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -468,8 +465,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> HubServiceAuth::ListLoc
 }
 
 StatusOr<google::cloud::location::Location> HubServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -477,8 +473,7 @@ StatusOr<google::cloud::location::Location> HubServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> HubServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -486,26 +481,25 @@ StatusOr<google::iam::v1::Policy> HubServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> HubServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> HubServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+HubServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> HubServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+HubServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -513,8 +507,7 @@ StatusOr<google::longrunning::ListOperationsResponse> HubServiceAuth::ListOperat
 }
 
 StatusOr<google::longrunning::Operation> HubServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -522,8 +515,7 @@ StatusOr<google::longrunning::Operation> HubServiceAuth::GetOperation(
 }
 
 Status HubServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -531,8 +523,7 @@ Status HubServiceAuth::DeleteOperation(
 }
 
 Status HubServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -546,15 +537,16 @@ HubServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -563,13 +555,14 @@ future<Status> HubServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

@@ -30,8 +30,10 @@ namespace cloud {
 namespace dataproc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use dataproc_v1_mocks::MockAutoscalingPolicyServiceConnection directly.
-using ::google::cloud::dataproc_v1_mocks::MockAutoscalingPolicyServiceConnection;
+/// @deprecated Use dataproc_v1_mocks::MockAutoscalingPolicyServiceConnection
+/// directly.
+using ::google::cloud::dataproc_v1_mocks::
+    MockAutoscalingPolicyServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_mocks

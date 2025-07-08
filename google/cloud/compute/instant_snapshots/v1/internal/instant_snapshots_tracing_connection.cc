@@ -30,106 +30,145 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 InstantSnapshotsTracingConnection::InstantSnapshotsTracingConnection(
-    std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection> child)
+    std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection>
+        child)
     : child_(std::move(child)) {}
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
-InstantSnapshotsTracingConnection::AggregatedListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest request) {
-  auto span = internal::MakeSpan("compute_instant_snapshots_v1::InstantSnapshotsConnection::AggregatedListInstantSnapshots");
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
+InstantSnapshotsTracingConnection::AggregatedListInstantSnapshots(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        AggregatedListInstantSnapshotsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "AggregatedListInstantSnapshots");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListInstantSnapshots(std::move(request));
-  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstantSnapshotsTracingConnection::DeleteInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) {
+InstantSnapshotsTracingConnection::DeleteInstantSnapshot(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        DeleteInstantSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instant_snapshots_v1::InstantSnapshotsConnection::DeleteInstantSnapshot");
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "DeleteInstantSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteInstantSnapshot(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteInstantSnapshot(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsTracingConnection::DeleteInstantSnapshot(
-    NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                    DeleteInstantSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instant_snapshots_v1::InstantSnapshotsConnection::DeleteInstantSnapshot");
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "DeleteInstantSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteInstantSnapshot(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteInstantSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsTracingConnection::DeleteInstantSnapshot(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_instant_snapshots_v1::InstantSnapshotsConnection::DeleteInstantSnapshot");
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "DeleteInstantSnapshot");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteInstantSnapshot(operation));
+                           child_->DeleteInstantSnapshot(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
-InstantSnapshotsTracingConnection::GetInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request) {
-  auto span = internal::MakeSpan("compute_instant_snapshots_v1::InstantSnapshotsConnection::GetInstantSnapshot");
+InstantSnapshotsTracingConnection::GetInstantSnapshot(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        GetInstantSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "GetInstantSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstantSnapshot(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InstantSnapshotsTracingConnection::GetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_instant_snapshots_v1::InstantSnapshotsConnection::GetIamPolicy");
+InstantSnapshotsTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstantSnapshotsTracingConnection::InsertInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) {
+InstantSnapshotsTracingConnection::InsertInstantSnapshot(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        InsertInstantSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instant_snapshots_v1::InstantSnapshotsConnection::InsertInstantSnapshot");
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "InsertInstantSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertInstantSnapshot(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertInstantSnapshot(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsTracingConnection::InsertInstantSnapshot(
-    NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                    InsertInstantSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instant_snapshots_v1::InstantSnapshotsConnection::InsertInstantSnapshot");
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "InsertInstantSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertInstantSnapshot(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->InsertInstantSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstantSnapshotsTracingConnection::InsertInstantSnapshot(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_instant_snapshots_v1::InstantSnapshotsConnection::InsertInstantSnapshot");
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "InsertInstantSnapshot");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->InsertInstantSnapshot(operation));
+                           child_->InsertInstantSnapshot(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
-InstantSnapshotsTracingConnection::ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest request) {
-  auto span = internal::MakeSpan("compute_instant_snapshots_v1::InstantSnapshotsConnection::ListInstantSnapshots");
+InstantSnapshotsTracingConnection::ListInstantSnapshots(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        ListInstantSnapshotsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "ListInstantSnapshots");
   internal::OTelScope scope(span);
   auto sr = child_->ListInstantSnapshots(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::InstantSnapshot>(std::move(span),
+                                                        std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InstantSnapshotsTracingConnection::SetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_instant_snapshots_v1::InstantSnapshotsConnection::SetIamPolicy");
+InstantSnapshotsTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstantSnapshotsTracingConnection::SetLabels(google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) {
+InstantSnapshotsTracingConnection::SetLabels(
+    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_instant_snapshots_v1::InstantSnapshotsConnection::SetLabels");
   internal::OTelScope scope(span);
@@ -138,12 +177,13 @@ InstantSnapshotsTracingConnection::SetLabels(google::cloud::cpp::compute::instan
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstantSnapshotsTracingConnection::SetLabels(
-    NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_instant_snapshots_v1::InstantSnapshotsConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetLabels(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -152,13 +192,16 @@ InstantSnapshotsTracingConnection::SetLabels(
   auto span = internal::MakeSpan(
       "compute_instant_snapshots_v1::InstantSnapshotsConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->SetLabels(operation));
+  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-InstantSnapshotsTracingConnection::TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_instant_snapshots_v1::InstantSnapshotsConnection::TestIamPermissions");
+InstantSnapshotsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::instant_snapshots::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instant_snapshots_v1::InstantSnapshotsConnection::"
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -167,7 +210,8 @@ InstantSnapshotsTracingConnection::TestIamPermissions(google::cloud::cpp::comput
 
 std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection>
 MakeInstantSnapshotsTracingConnection(
-    std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection> conn) {
+    std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<InstantSnapshotsTracingConnection>(std::move(conn));

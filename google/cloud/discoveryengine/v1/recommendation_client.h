@@ -62,23 +62,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RecommendationServiceClient {
  public:
-  explicit RecommendationServiceClient(std::shared_ptr<RecommendationServiceConnection> connection, Options opts = {});
+  explicit RecommendationServiceClient(
+      std::shared_ptr<RecommendationServiceConnection> connection,
+      Options opts = {});
   ~RecommendationServiceClient();
 
   ///@{
   /// @name Copy and move support
   RecommendationServiceClient(RecommendationServiceClient const&) = default;
-  RecommendationServiceClient& operator=(RecommendationServiceClient const&) = default;
+  RecommendationServiceClient& operator=(RecommendationServiceClient const&) =
+      default;
   RecommendationServiceClient(RecommendationServiceClient&&) = default;
-  RecommendationServiceClient& operator=(RecommendationServiceClient&&) = default;
+  RecommendationServiceClient& operator=(RecommendationServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(RecommendationServiceClient const& a, RecommendationServiceClient const& b) {
+  friend bool operator==(RecommendationServiceClient const& a,
+                         RecommendationServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RecommendationServiceClient const& a, RecommendationServiceClient const& b) {
+  friend bool operator!=(RecommendationServiceClient const& a,
+                         RecommendationServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,8 +116,9 @@ class RecommendationServiceClient {
   /// [google.cloud.discoveryengine.v1.RecommendResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/recommendation_service.proto#L191}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::RecommendResponse>
-  Recommend(google::cloud::discoveryengine::v1::RecommendRequest const& request, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::RecommendResponse> Recommend(
+      google::cloud::discoveryengine::v1::RecommendRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -146,8 +153,8 @@ class RecommendationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +193,8 @@ class RecommendationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +220,8 @@ class RecommendationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -245,8 +252,9 @@ class RecommendationServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -280,8 +288,7 @@ class RecommendationServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -320,8 +327,9 @@ class RecommendationServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RecommendationServiceConnection> connection_;

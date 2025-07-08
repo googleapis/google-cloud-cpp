@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_AVAILABLE_DATABASE_VERSIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_AVAILABLE_DATABASE_VERSIONS_CONNECTION_H
 
+#include "google/cloud/sql/v1/internal/sql_available_database_versions_retry_traits.h"
+#include "google/cloud/sql/v1/sql_available_database_versions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/sql/v1/internal/sql_available_database_versions_retry_traits.h"
-#include "google/cloud/sql/v1/sql_available_database_versions_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_available_database_versions.pb.h>
@@ -35,14 +35,17 @@ namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SqlAvailableDatabaseVersionsServiceConnection`.
-class SqlAvailableDatabaseVersionsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class SqlAvailableDatabaseVersionsServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SqlAvailableDatabaseVersionsServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<SqlAvailableDatabaseVersionsServiceRetryPolicy>
+  clone() const = 0;
 };
 
 /**
- * A retry policy for `SqlAvailableDatabaseVersionsServiceConnection` based on counting errors.
+ * A retry policy for `SqlAvailableDatabaseVersionsServiceConnection` based on
+ * counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -51,7 +54,8 @@ class SqlAvailableDatabaseVersionsServiceRetryPolicy : public ::google::cloud::R
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy : public SqlAvailableDatabaseVersionsServiceRetryPolicy {
+class SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy
+    : public SqlAvailableDatabaseVersionsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -60,15 +64,20 @@ class SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy : public S
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy(
-      SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy&&
+          rhs) noexcept
+      : SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy(
-      SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -79,8 +88,10 @@ class SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy : public S
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SqlAvailableDatabaseVersionsServiceRetryPolicy> clone() const override {
-    return std::make_unique<SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<SqlAvailableDatabaseVersionsServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -88,11 +99,14 @@ class SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy : public S
   using BaseType = SqlAvailableDatabaseVersionsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlAvailableDatabaseVersionsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      sql_v1_internal::SqlAvailableDatabaseVersionsServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `SqlAvailableDatabaseVersionsServiceConnection` based on elapsed time.
+ * A retry policy for `SqlAvailableDatabaseVersionsServiceConnection` based on
+ * elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -101,7 +115,8 @@ class SqlAvailableDatabaseVersionsServiceLimitedErrorCountRetryPolicy : public S
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy : public SqlAvailableDatabaseVersionsServiceRetryPolicy {
+class SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy
+    : public SqlAvailableDatabaseVersionsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +141,17 @@ class SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy : public SqlAvai
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(
+      SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(
+      SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy const&
+          rhs) noexcept
+      : SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -144,8 +164,10 @@ class SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy : public SqlAvai
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SqlAvailableDatabaseVersionsServiceRetryPolicy> clone() const override {
-    return std::make_unique<SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy>(
+  std::unique_ptr<SqlAvailableDatabaseVersionsServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
 
@@ -153,20 +175,25 @@ class SqlAvailableDatabaseVersionsServiceLimitedTimeRetryPolicy : public SqlAvai
   using BaseType = SqlAvailableDatabaseVersionsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlAvailableDatabaseVersionsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      sql_v1_internal::SqlAvailableDatabaseVersionsServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `SqlAvailableDatabaseVersionsServiceConnection` object for `SqlAvailableDatabaseVersionsServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `SqlAvailableDatabaseVersionsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `SqlAvailableDatabaseVersionsServiceConnection` object for
  * `SqlAvailableDatabaseVersionsServiceClient`.
  *
- * To create a concrete instance, see `MakeSqlAvailableDatabaseVersionsServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SqlAvailableDatabaseVersionsServiceClient`. This allows users to
+ * inject custom behavior (e.g., with a Google Mock object) when writing tests
+ * that use objects of type `SqlAvailableDatabaseVersionsServiceClient`.
  *
- * For mocking, see `sql_v1_mocks::MockSqlAvailableDatabaseVersionsServiceConnection`.
+ * To create a concrete instance, see
+ * `MakeSqlAvailableDatabaseVersionsServiceConnection()`.
+ *
+ * For mocking, see
+ * `sql_v1_mocks::MockSqlAvailableDatabaseVersionsServiceConnection`.
  */
 class SqlAvailableDatabaseVersionsServiceConnection {
  public:

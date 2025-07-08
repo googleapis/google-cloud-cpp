@@ -24,10 +24,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/aiplatform/v1/featurestore_service.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/aiplatform/v1/featurestore_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,85 +40,94 @@ class FeaturestoreServiceStub {
  public:
   virtual ~FeaturestoreServiceStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateFeaturestore(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateFeaturestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) = 0;
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateFeaturestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse> ListFeaturestores(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
+  ListFeaturestores(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListFeaturestoresRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeaturestore(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateFeaturestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) = 0;
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateFeaturestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeaturestore(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteFeaturestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeaturestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateEntityType(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateEntityType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) = 0;
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateEntityType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse> ListEntityTypes(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
+  ListEntityTypes(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateEntityTypeRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntityType(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteEntityType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteEntityType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
@@ -127,34 +136,33 @@ class FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateFeature(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateFeatures(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchCreateFeatures(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) = 0;
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> BatchCreateFeatures(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
+  ListFeatures(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListFeaturesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
@@ -164,113 +172,112 @@ class FeaturestoreServiceStub {
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeature(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportFeatureValues(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncImportFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) = 0;
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ImportFeatureValues(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchReadFeatureValues(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchReadFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) = 0;
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> BatchReadFeatureValues(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncExportFeatureValues(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) = 0;
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ExportFeatureValues(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeatureValues(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeatureValues(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse> SearchFeatures(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
+  SearchFeatures(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -283,10 +290,14 @@ class FeaturestoreServiceStub {
 class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
  public:
   DefaultFeaturestoreServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::FeaturestoreService::StubInterface> grpc_stub,
+      std::unique_ptr<
+          google::cloud::aiplatform::v1::FeaturestoreService::StubInterface>
+          grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
@@ -296,227 +307,229 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateFeaturestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse> ListFeaturestores(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
+  ListFeaturestores(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFeaturestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) override;
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateFeaturestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeaturestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteFeaturestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEntityType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateEntityType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetEntityTypeRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse> ListEntityTypes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
+  ListEntityTypes(grpc::ClientContext& context, Options const& options,
+                  google::cloud::aiplatform::v1::ListEntityTypesRequest const&
+                      request) override;
 
   StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntityType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteEntityType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateFeature(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateFeatures(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) override;
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchCreateFeatures(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListFeaturesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListFeaturesRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) override;
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ImportFeatureValues(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchReadFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) override;
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> BatchReadFeatureValues(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) override;
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ExportFeatureValues(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeatureValues(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureValues(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse> SearchFeatures(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
+  SearchFeatures(grpc::ClientContext& context, Options const& options,
+                 google::cloud::aiplatform::v1::SearchFeaturesRequest const&
+                     request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -532,10 +545,14 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::FeaturestoreService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::aiplatform::v1::FeaturestoreService::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

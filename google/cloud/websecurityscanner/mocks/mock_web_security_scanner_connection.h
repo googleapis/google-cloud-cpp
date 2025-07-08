@@ -30,8 +30,10 @@ namespace cloud {
 namespace websecurityscanner_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use websecurityscanner_v1_mocks::MockWebSecurityScannerConnection directly.
-using ::google::cloud::websecurityscanner_v1_mocks::MockWebSecurityScannerConnection;
+/// @deprecated Use
+/// websecurityscanner_v1_mocks::MockWebSecurityScannerConnection directly.
+using ::google::cloud::websecurityscanner_v1_mocks::
+    MockWebSecurityScannerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_mocks

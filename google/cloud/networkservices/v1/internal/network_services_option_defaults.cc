@@ -17,10 +17,10 @@
 // source: google/cloud/networkservices/v1/network_services.proto
 
 #include "google/cloud/networkservices/v1/internal/network_services_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/networkservices/v1/network_services_connection.h"
 #include "google/cloud/networkservices/v1/network_services_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options NetworkServicesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_NETWORK_SERVICES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_NETWORK_SERVICES_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_NETWORK_SERVICES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_NETWORK_SERVICES_AUTHORITY",
       "networkservices.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<networkservices_v1::NetworkServicesRetryPolicyOption>()) {
     options.set<networkservices_v1::NetworkServicesRetryPolicyOption>(
         networkservices_v1::NetworkServicesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<networkservices_v1::NetworkServicesBackoffPolicyOption>()) {
     options.set<networkservices_v1::NetworkServicesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<networkservices_v1::NetworkServicesPollingPolicyOption>()) {
     options.set<networkservices_v1::NetworkServicesPollingPolicyOption>(
         GenericPollingPolicy<
             networkservices_v1::NetworkServicesRetryPolicyOption::Type,
             networkservices_v1::NetworkServicesBackoffPolicyOption::Type>(
-            options.get<networkservices_v1::NetworkServicesRetryPolicyOption>()->clone(),
+            options.get<networkservices_v1::NetworkServicesRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<networkservices_v1::NetworkServicesConnectionIdempotencyPolicyOption>()) {
-    options.set<networkservices_v1::NetworkServicesConnectionIdempotencyPolicyOption>(
-        networkservices_v1::MakeDefaultNetworkServicesConnectionIdempotencyPolicy());
+  if (!options.has<networkservices_v1::
+                       NetworkServicesConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        networkservices_v1::NetworkServicesConnectionIdempotencyPolicyOption>(
+        networkservices_v1::
+            MakeDefaultNetworkServicesConnectionIdempotencyPolicy());
   }
 
   return options;

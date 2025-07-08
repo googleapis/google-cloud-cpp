@@ -33,51 +33,48 @@ CloudRedisStub::~CloudRedisStub() = default;
 
 StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 DefaultCloudRedisStub::ListInstances(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::redis::v1::ListInstancesRequest const& request) {
-    google::cloud::redis::v1::ListInstancesResponse response;
-    auto status =
-        grpc_stub_->ListInstances(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::v1::ListInstancesRequest const& request) {
+  google::cloud::redis::v1::ListInstancesResponse response;
+  auto status = grpc_stub_->ListInstances(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::redis::v1::Instance>
-DefaultCloudRedisStub::GetInstance(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::redis::v1::GetInstanceRequest const& request) {
-    google::cloud::redis::v1::Instance response;
-    auto status =
-        grpc_stub_->GetInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::redis::v1::Instance> DefaultCloudRedisStub::GetInstance(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::v1::GetInstanceRequest const& request) {
+  google::cloud::redis::v1::Instance response;
+  auto status = grpc_stub_->GetInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::redis::v1::InstanceAuthString>
 DefaultCloudRedisStub::GetInstanceAuthString(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
-    google::cloud::redis::v1::InstanceAuthString response;
-    auto status =
-        grpc_stub_->GetInstanceAuthString(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
+  google::cloud::redis::v1::InstanceAuthString response;
+  auto status = grpc_stub_->GetInstanceAuthString(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::redis::v1::CreateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::redis::v1::CreateInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::v1::CreateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::v1::CreateInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::redis::v1::CreateInstanceRequest const& request,
@@ -87,28 +84,26 @@ DefaultCloudRedisStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudRedisStub::CreateInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::redis::v1::CreateInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::redis::v1::UpdateInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::redis::v1::UpdateInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::v1::UpdateInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::redis::v1::UpdateInstanceRequest const& request,
@@ -118,28 +113,26 @@ DefaultCloudRedisStub::AsyncUpdateInstance(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudRedisStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::redis::v1::UpdateInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::UpdateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncUpgradeInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::redis::v1::UpgradeInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::v1::UpgradeInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::redis::v1::UpgradeInstanceRequest const& request,
@@ -149,28 +142,26 @@ DefaultCloudRedisStub::AsyncUpgradeInstance(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudRedisStub::UpgradeInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpgradeInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::UpgradeInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpgradeInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncImportInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::redis::v1::ImportInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::redis::v1::ImportInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::v1::ImportInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::v1::ImportInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::redis::v1::ImportInstanceRequest const& request,
@@ -180,28 +171,26 @@ DefaultCloudRedisStub::AsyncImportInstance(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudRedisStub::ImportInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::redis::v1::ImportInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ImportInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::ImportInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::ImportInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncExportInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::redis::v1::ExportInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::redis::v1::ExportInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::v1::ExportInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::v1::ExportInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::redis::v1::ExportInstanceRequest const& request,
@@ -211,28 +200,26 @@ DefaultCloudRedisStub::AsyncExportInstance(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudRedisStub::ExportInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::redis::v1::ExportInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ExportInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::ExportInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::ExportInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncFailoverInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::redis::v1::FailoverInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::redis::v1::FailoverInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::v1::FailoverInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::redis::v1::FailoverInstanceRequest const& request,
@@ -244,26 +231,25 @@ DefaultCloudRedisStub::AsyncFailoverInstance(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudRedisStub::FailoverInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::redis::v1::FailoverInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->FailoverInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->FailoverInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::redis::v1::DeleteInstanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::redis::v1::DeleteInstanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::v1::DeleteInstanceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::redis::v1::DeleteInstanceRequest const& request,
@@ -273,32 +259,31 @@ DefaultCloudRedisStub::AsyncDeleteInstance(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudRedisStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::redis::v1::DeleteInstanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteInstance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncRescheduleMaintenance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::redis::v1::RescheduleMaintenanceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::v1::RescheduleMaintenanceRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRescheduleMaintenance(context, request, cq);
       },
       request, std::move(context));
@@ -306,94 +291,82 @@ DefaultCloudRedisStub::AsyncRescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudRedisStub::RescheduleMaintenance(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RescheduleMaintenance(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RescheduleMaintenance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultCloudRedisStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::location::Location>
-DefaultCloudRedisStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::location::Location> DefaultCloudRedisStub::GetLocation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultCloudRedisStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudRedisStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultCloudRedisStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCloudRedisStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultCloudRedisStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCloudRedisStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -422,13 +395,14 @@ future<Status> DefaultCloudRedisStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

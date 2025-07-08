@@ -32,19 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompletionServiceLogging::CompletionServiceLogging(
     std::shared_ptr<CompletionServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceLogging::CompleteQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CompleteQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::CompleteQueryRequest const& request) {
         return child_->CompleteQuery(context, options, request);
       },
@@ -53,17 +49,18 @@ CompletionServiceLogging::CompleteQuery(
 
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceLogging::AsyncImportCompletionData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
-        return child_->AsyncImportCompletionData(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::retail::v2::ImportCompletionDataRequest const&
+                 request) {
+        return child_->AsyncImportCompletionData(cq, std::move(context),
+                                                 std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -71,13 +68,12 @@ CompletionServiceLogging::AsyncImportCompletionData(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceLogging::ImportCompletionData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::ImportCompletionDataRequest const&
+                 request) {
         return child_->ImportCompletionData(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -85,26 +81,21 @@ CompletionServiceLogging::ImportCompletionData(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CompletionServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-CompletionServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> CompletionServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -122,8 +113,8 @@ CompletionServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -139,8 +130,8 @@ future<Status> CompletionServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

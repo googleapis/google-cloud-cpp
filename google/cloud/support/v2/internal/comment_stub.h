@@ -35,35 +35,34 @@ class CommentServiceStub {
  public:
   virtual ~CommentServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::support::v2::ListCommentsResponse> ListComments(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::support::v2::ListCommentsResponse>
+  ListComments(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCommentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) = 0;
 };
 
 class DefaultCommentServiceStub : public CommentServiceStub {
  public:
   explicit DefaultCommentServiceStub(
-      std::unique_ptr<google::cloud::support::v2::CommentService::StubInterface> grpc_stub)
+      std::unique_ptr<google::cloud::support::v2::CommentService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::support::v2::ListCommentsResponse> ListComments(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCommentsRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::support::v2::CommentService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::support::v2::CommentService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

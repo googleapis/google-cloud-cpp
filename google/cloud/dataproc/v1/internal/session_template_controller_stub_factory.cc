@@ -17,12 +17,12 @@
 // source: google/cloud/dataproc/v1/session_templates.proto
 
 #include "google/cloud/dataproc/v1/internal/session_template_controller_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_auth_decorator.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_logging_decorator.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_metadata_decorator.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_stub.h"
 #include "google/cloud/dataproc/v1/internal/session_template_controller_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -43,26 +43,28 @@ std::shared_ptr<SessionTemplateControllerStub>
 CreateDefaultSessionTemplateControllerStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::dataproc::v1::SessionTemplateController::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::dataproc::v1::SessionTemplateController::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<SessionTemplateControllerStub> stub =
-    std::make_shared<DefaultSessionTemplateControllerStub>(std::move(service_grpc_stub), std::move(service_operations_stub), std::move(service_iampolicy_stub));
+      std::make_shared<DefaultSessionTemplateControllerStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_iampolicy_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<SessionTemplateControllerAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<SessionTemplateControllerAuth>(std::move(auth),
+                                                           std::move(stub));
   }
   stub = std::make_shared<SessionTemplateControllerMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SessionTemplateControllerLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

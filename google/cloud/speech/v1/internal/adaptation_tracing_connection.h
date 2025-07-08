@@ -30,51 +30,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class AdaptationTracingConnection
-    : public speech_v1::AdaptationConnection {
+class AdaptationTracingConnection : public speech_v1::AdaptationConnection {
  public:
   ~AdaptationTracingConnection() override = default;
 
   explicit AdaptationTracingConnection(
-    std::shared_ptr<speech_v1::AdaptationConnection> child);
+      std::shared_ptr<speech_v1::AdaptationConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::speech::v1::PhraseSet>
-  CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
+      google::cloud::speech::v1::CreatePhraseSetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::speech::v1::PhraseSet>
-  GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::PhraseSet> GetPhraseSet(
+      google::cloud::speech::v1::GetPhraseSetRequest const& request) override;
 
-  StreamRange<google::cloud::speech::v1::PhraseSet>
-  ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest request) override;
+  StreamRange<google::cloud::speech::v1::PhraseSet> ListPhraseSet(
+      google::cloud::speech::v1::ListPhraseSetRequest request) override;
 
-  StatusOr<google::cloud::speech::v1::PhraseSet>
-  UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::PhraseSet> UpdatePhraseSet(
+      google::cloud::speech::v1::UpdatePhraseSetRequest const& request)
+      override;
 
-  Status
-  DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const& request) override;
+  Status DeletePhraseSet(
+      google::cloud::speech::v1::DeletePhraseSetRequest const& request)
+      override;
 
-  StatusOr<google::cloud::speech::v1::CustomClass>
-  CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::CustomClass> CreateCustomClass(
+      google::cloud::speech::v1::CreateCustomClassRequest const& request)
+      override;
 
-  StatusOr<google::cloud::speech::v1::CustomClass>
-  GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::CustomClass> GetCustomClass(
+      google::cloud::speech::v1::GetCustomClassRequest const& request) override;
 
-  StreamRange<google::cloud::speech::v1::CustomClass>
-  ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest request) override;
+  StreamRange<google::cloud::speech::v1::CustomClass> ListCustomClasses(
+      google::cloud::speech::v1::ListCustomClassesRequest request) override;
 
-  StatusOr<google::cloud::speech::v1::CustomClass>
-  UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const& request) override;
+  StatusOr<google::cloud::speech::v1::CustomClass> UpdateCustomClass(
+      google::cloud::speech::v1::UpdateCustomClassRequest const& request)
+      override;
 
-  Status
-  DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const& request) override;
+  Status DeleteCustomClass(
+      google::cloud::speech::v1::DeleteCustomClassRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<speech_v1::AdaptationConnection> child_;

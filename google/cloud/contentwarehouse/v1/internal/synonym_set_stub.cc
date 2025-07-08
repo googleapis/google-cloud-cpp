@@ -32,80 +32,77 @@ SynonymSetServiceStub::~SynonymSetServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::CreateSynonymSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request) {
-    google::cloud::contentwarehouse::v1::SynonymSet response;
-    auto status =
-        grpc_stub_->CreateSynonymSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
+        request) {
+  google::cloud::contentwarehouse::v1::SynonymSet response;
+  auto status = grpc_stub_->CreateSynonymSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::GetSynonymSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
-    google::cloud::contentwarehouse::v1::SynonymSet response;
-    auto status =
-        grpc_stub_->GetSynonymSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
+  google::cloud::contentwarehouse::v1::SynonymSet response;
+  auto status = grpc_stub_->GetSynonymSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 DefaultSynonymSetServiceStub::UpdateSynonymSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request) {
-    google::cloud::contentwarehouse::v1::SynonymSet response;
-    auto status =
-        grpc_stub_->UpdateSynonymSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
+        request) {
+  google::cloud::contentwarehouse::v1::SynonymSet response;
+  auto status = grpc_stub_->UpdateSynonymSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultSynonymSetServiceStub::DeleteSynonymSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteSynonymSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultSynonymSetServiceStub::DeleteSynonymSet(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteSynonymSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
 DefaultSynonymSetServiceStub::ListSynonymSets(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const& request) {
-    google::cloud::contentwarehouse::v1::ListSynonymSetsResponse response;
-    auto status =
-        grpc_stub_->ListSynonymSets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
+        request) {
+  google::cloud::contentwarehouse::v1::ListSynonymSetsResponse response;
+  auto status = grpc_stub_->ListSynonymSets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultSynonymSetServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

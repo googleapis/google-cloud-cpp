@@ -35,23 +35,24 @@ class TextToSpeechConnectionIdempotencyPolicy {
   virtual ~TextToSpeechConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListVoices(google::cloud::texttospeech::v1::ListVoicesRequest const& request);
+  virtual google::cloud::Idempotency ListVoices(
+      google::cloud::texttospeech::v1::ListVoicesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
+  virtual google::cloud::Idempotency SynthesizeSpeech(
+      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>
-    MakeDefaultTextToSpeechConnectionIdempotencyPolicy();
+MakeDefaultTextToSpeechConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_v1

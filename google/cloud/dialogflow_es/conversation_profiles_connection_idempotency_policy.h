@@ -36,47 +36,54 @@ class ConversationProfilesConnectionIdempotencyPolicy {
   virtual ~ConversationProfilesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ListConversationProfiles(google::cloud::dialogflow::v2::ListConversationProfilesRequest request);
+  virtual google::cloud::Idempotency ListConversationProfiles(
+      google::cloud::dialogflow::v2::ListConversationProfilesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetConversationProfile(google::cloud::dialogflow::v2::GetConversationProfileRequest const& request);
+  virtual google::cloud::Idempotency GetConversationProfile(
+      google::cloud::dialogflow::v2::GetConversationProfileRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateConversationProfile(google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request);
+  virtual google::cloud::Idempotency CreateConversationProfile(
+      google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateConversationProfile(google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request);
+  virtual google::cloud::Idempotency UpdateConversationProfile(
+      google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteConversationProfile(google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request);
+  virtual google::cloud::Idempotency DeleteConversationProfile(
+      google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetSuggestionFeatureConfig(google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request);
+  virtual google::cloud::Idempotency SetSuggestionFeatureConfig(
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ClearSuggestionFeatureConfig(google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request);
+  virtual google::cloud::Idempotency ClearSuggestionFeatureConfig(
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>
-    MakeDefaultConversationProfilesConnectionIdempotencyPolicy();
+MakeDefaultConversationProfilesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

@@ -17,12 +17,12 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/v1/internal/image_annotator_connection_impl.h"
+#include "google/cloud/vision/v1/internal/image_annotator_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/vision/v1/internal/image_annotator_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,106 +32,118 @@ namespace vision_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<vision_v1::ImageAnnotatorRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<vision_v1::ImageAnnotatorRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<vision_v1::ImageAnnotatorBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<vision_v1::ImageAnnotatorConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<vision_v1::ImageAnnotatorPollingPolicyOption>()->clone();
 }
 
-} // namespace
+}  // namespace
 
 ImageAnnotatorConnectionImpl::ImageAnnotatorConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<vision_v1_internal::ImageAnnotatorStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ImageAnnotatorConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ImageAnnotatorConnection::options())) {}
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
-ImageAnnotatorConnectionImpl::BatchAnnotateImages(google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
+ImageAnnotatorConnectionImpl::BatchAnnotateImages(
+    google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchAnnotateImages(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
+             google::cloud::vision::v1::BatchAnnotateImagesRequest const&
+                 request) {
         return stub_->BatchAnnotateImages(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
-ImageAnnotatorConnectionImpl::BatchAnnotateFiles(google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
+ImageAnnotatorConnectionImpl::BatchAnnotateFiles(
+    google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchAnnotateFiles(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
         return stub_->BatchAnnotateFiles(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->AsyncBatchAnnotateImages(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-     return stub->AsyncAsyncBatchAnnotateImages(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+              request) {
+        return stub->AsyncAsyncBatchAnnotateImages(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
-      NoAwaitTag, google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AsyncBatchAnnotateImages(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+                 request) {
         return stub_->AsyncBatchAnnotateImages(context, options, request);
       },
       *current, request, __func__);
@@ -139,78 +151,92 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::vision::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to AsyncBatchAnnotateImages",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::vision::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AsyncBatchAnnotateImages",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->AsyncBatchAnnotateFiles(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-     return stub->AsyncAsyncBatchAnnotateFiles(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+              request) {
+        return stub->AsyncAsyncBatchAnnotateFiles(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
-      NoAwaitTag, google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AsyncBatchAnnotateFiles(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+                 request) {
         return stub_->AsyncBatchAnnotateFiles(context, options, request);
       },
       *current, request, __func__);
@@ -218,36 +244,44 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::vision::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to AsyncBatchAnnotateFiles",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::vision::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AsyncBatchAnnotateFiles",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
-ImageAnnotatorConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+ImageAnnotatorConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

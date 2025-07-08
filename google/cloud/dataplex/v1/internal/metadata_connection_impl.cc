@@ -17,9 +17,9 @@
 // source: google/cloud/dataplex/v1/metadata.proto
 
 #include "google/cloud/dataplex/v1/internal/metadata_connection_impl.h"
+#include "google/cloud/dataplex/v1/internal/metadata_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/dataplex/v1/internal/metadata_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,34 +32,37 @@ namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataplex_v1::MetadataServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<dataplex_v1::MetadataServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<dataplex_v1::MetadataServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<dataplex_v1::MetadataServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<dataplex_v1::MetadataServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<dataplex_v1::MetadataServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 MetadataServiceConnectionImpl::MetadataServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<dataplex_v1_internal::MetadataServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        MetadataServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      MetadataServiceConnection::options())) {}
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceConnectionImpl::CreateEntity(google::cloud::dataplex::v1::CreateEntityRequest const& request) {
+MetadataServiceConnectionImpl::CreateEntity(
+    google::cloud::dataplex::v1::CreateEntityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -72,7 +75,8 @@ MetadataServiceConnectionImpl::CreateEntity(google::cloud::dataplex::v1::CreateE
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceConnectionImpl::UpdateEntity(google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
+MetadataServiceConnectionImpl::UpdateEntity(
+    google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -84,8 +88,8 @@ MetadataServiceConnectionImpl::UpdateEntity(google::cloud::dataplex::v1::UpdateE
       *current, request, __func__);
 }
 
-Status
-MetadataServiceConnectionImpl::DeleteEntity(google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
+Status MetadataServiceConnectionImpl::DeleteEntity(
+    google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -98,7 +102,8 @@ MetadataServiceConnectionImpl::DeleteEntity(google::cloud::dataplex::v1::DeleteE
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
-MetadataServiceConnectionImpl::GetEntity(google::cloud::dataplex::v1::GetEntityRequest const& request) {
+MetadataServiceConnectionImpl::GetEntity(
+    google::cloud::dataplex::v1::GetEntityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -111,27 +116,33 @@ MetadataServiceConnectionImpl::GetEntity(google::cloud::dataplex::v1::GetEntityR
 }
 
 StreamRange<google::cloud::dataplex::v1::Entity>
-MetadataServiceConnectionImpl::ListEntities(google::cloud::dataplex::v1::ListEntitiesRequest request) {
+MetadataServiceConnectionImpl::ListEntities(
+    google::cloud::dataplex::v1::ListEntitiesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEntities(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Entity>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataplex::v1::Entity>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataplex::v1::ListEntitiesRequest const& r) {
+          Options const& options,
+          google::cloud::dataplex::v1::ListEntitiesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
+                   google::cloud::dataplex::v1::ListEntitiesRequest const&
+                       request) {
               return stub->ListEntities(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListEntitiesResponse r) {
-        std::vector<google::cloud::dataplex::v1::Entity> result(r.entities().size());
+        std::vector<google::cloud::dataplex::v1::Entity> result(
+            r.entities().size());
         auto& messages = *r.mutable_entities();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -139,33 +150,37 @@ MetadataServiceConnectionImpl::ListEntities(google::cloud::dataplex::v1::ListEnt
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
-MetadataServiceConnectionImpl::CreatePartition(google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
+MetadataServiceConnectionImpl::CreatePartition(
+    google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePartition(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
         return stub_->CreatePartition(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-MetadataServiceConnectionImpl::DeletePartition(google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
+Status MetadataServiceConnectionImpl::DeletePartition(
+    google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePartition(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
         return stub_->DeletePartition(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
-MetadataServiceConnectionImpl::GetPartition(google::cloud::dataplex::v1::GetPartitionRequest const& request) {
+MetadataServiceConnectionImpl::GetPartition(
+    google::cloud::dataplex::v1::GetPartitionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -178,27 +193,33 @@ MetadataServiceConnectionImpl::GetPartition(google::cloud::dataplex::v1::GetPart
 }
 
 StreamRange<google::cloud::dataplex::v1::Partition>
-MetadataServiceConnectionImpl::ListPartitions(google::cloud::dataplex::v1::ListPartitionsRequest request) {
+MetadataServiceConnectionImpl::ListPartitions(
+    google::cloud::dataplex::v1::ListPartitionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListPartitions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataplex::v1::Partition>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataplex::v1::Partition>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataplex::v1::ListPartitionsRequest const& r) {
+          Options const& options,
+          google::cloud::dataplex::v1::ListPartitionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
+                   google::cloud::dataplex::v1::ListPartitionsRequest const&
+                       request) {
               return stub->ListPartitions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListPartitionsResponse r) {
-        std::vector<google::cloud::dataplex::v1::Partition> result(r.partitions().size());
+        std::vector<google::cloud::dataplex::v1::Partition> result(
+            r.partitions().size());
         auto& messages = *r.mutable_partitions();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -206,27 +227,33 @@ MetadataServiceConnectionImpl::ListPartitions(google::cloud::dataplex::v1::ListP
 }
 
 StreamRange<google::cloud::location::Location>
-MetadataServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+MetadataServiceConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -234,7 +261,8 @@ MetadataServiceConnectionImpl::ListLocations(google::cloud::location::ListLocati
 }
 
 StatusOr<google::cloud::location::Location>
-MetadataServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+MetadataServiceConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -246,8 +274,8 @@ MetadataServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationR
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-MetadataServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> MetadataServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -259,8 +287,8 @@ MetadataServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-MetadataServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> MetadataServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -273,7 +301,8 @@ MetadataServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-MetadataServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+MetadataServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -286,17 +315,21 @@ MetadataServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermis
 }
 
 StreamRange<google::longrunning::Operation>
-MetadataServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+MetadataServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<dataplex_v1::MetadataServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -306,7 +339,8 @@ MetadataServiceConnectionImpl::ListOperations(google::longrunning::ListOperation
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -314,7 +348,8 @@ MetadataServiceConnectionImpl::ListOperations(google::longrunning::ListOperation
 }
 
 StatusOr<google::longrunning::Operation>
-MetadataServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+MetadataServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -326,8 +361,8 @@ MetadataServiceConnectionImpl::GetOperation(google::longrunning::GetOperationReq
       *current, request, __func__);
 }
 
-Status
-MetadataServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status MetadataServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -339,8 +374,8 @@ MetadataServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperat
       *current, request, __func__);
 }
 
-Status
-MetadataServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status MetadataServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

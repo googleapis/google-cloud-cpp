@@ -35,26 +35,27 @@ class SearchServiceConnectionIdempotencyPolicy {
   virtual ~SearchServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SearchServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SearchServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  Search(google::cloud::discoveryengine::v1::SearchRequest request);
+  virtual google::cloud::Idempotency Search(
+      google::cloud::discoveryengine::v1::SearchRequest request);
 
-  virtual google::cloud::Idempotency
-  SearchLite(google::cloud::discoveryengine::v1::SearchRequest request);
+  virtual google::cloud::Idempotency SearchLite(
+      google::cloud::discoveryengine::v1::SearchRequest request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
-    MakeDefaultSearchServiceConnectionIdempotencyPolicy();
+MakeDefaultSearchServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

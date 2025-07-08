@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionOperationsClient {
  public:
-  explicit RegionOperationsClient(std::shared_ptr<RegionOperationsConnection> connection, Options opts = {});
+  explicit RegionOperationsClient(
+      std::shared_ptr<RegionOperationsConnection> connection,
+      Options opts = {});
   ~RegionOperationsClient();
 
   ///@{
@@ -75,10 +77,12 @@ class RegionOperationsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionOperationsClient const& a, RegionOperationsClient const& b) {
+  friend bool operator==(RegionOperationsClient const& a,
+                         RegionOperationsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionOperationsClient const& a, RegionOperationsClient const& b) {
+  friend bool operator!=(RegionOperationsClient const& a,
+                         RegionOperationsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -106,8 +110,8 @@ class RegionOperationsClient {
   /// [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L93}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& project, std::string const& region, std::string const& operation, Options opts = {});
+  Status DeleteOperation(std::string const& project, std::string const& region,
+                         std::string const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -134,8 +138,9 @@ class RegionOperationsClient {
   /// [google.cloud.cpp.compute.region_operations.v1.DeleteOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L93}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(google::cloud::cpp::compute::region_operations::v1::
+                             DeleteOperationRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -163,8 +168,9 @@ class RegionOperationsClient {
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetOperation(std::string const& project, std::string const& region, std::string const& operation, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
+      std::string const& project, std::string const& region,
+      std::string const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -194,8 +200,10 @@ class RegionOperationsClient {
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetOperation(google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
+      google::cloud::cpp::compute::region_operations::v1::
+          GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -231,8 +239,8 @@ class RegionOperationsClient {
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListRegionOperations(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
+      std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -272,8 +280,10 @@ class RegionOperationsClient {
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
+      google::cloud::cpp::compute::region_operations::v1::
+          ListRegionOperationsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -311,8 +321,9 @@ class RegionOperationsClient {
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(std::string const& project, std::string const& region, std::string const& operation, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      std::string const& project, std::string const& region,
+      std::string const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -352,8 +363,10 @@ class RegionOperationsClient {
   /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionOperationsConnection> connection_;

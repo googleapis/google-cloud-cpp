@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `ApiGatewayServiceClient`. To do so,
- * construct an object of type `ApiGatewayServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `ApiGatewayServiceClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,29 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceConnection {
+class MockApiGatewayServiceConnection
+    : public apigateway_v1::ApiGatewayServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::Gateway>),
-  ListGateways,
-  (google::cloud::apigateway::v1::ListGatewaysRequest request), (override));
+              ListGateways,
+              (google::cloud::apigateway::v1::ListGatewaysRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apigateway::v1::Gateway>,
-  GetGateway,
-  (google::cloud::apigateway::v1::GetGatewayRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::apigateway::v1::Gateway>, GetGateway,
+              (google::cloud::apigateway::v1::GetGatewayRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateGateway(Matcher<google::cloud::apigateway::v1::CreateGatewayRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateGateway(Matcher<google::cloud::apigateway::v1::CreateGatewayRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Gateway>>,
-  CreateGateway,
-  (google::cloud::apigateway::v1::CreateGatewayRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::Gateway>>, CreateGateway,
+      (google::cloud::apigateway::v1::CreateGatewayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -72,33 +76,37 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateGateway(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateGateway, (NoAwaitTag,
-    google::cloud::apigateway::v1::CreateGatewayRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateGateway(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Gateway>>,
-  CreateGateway, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateGateway,
+      (NoAwaitTag,
+       google::cloud::apigateway::v1::CreateGatewayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateGateway(Matcher<google::cloud::apigateway::v1::UpdateGatewayRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Gateway>>,
-  UpdateGateway,
-  (google::cloud::apigateway::v1::UpdateGatewayRequest const& request), (override));
+              CreateGateway, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateGateway(Matcher<google::cloud::apigateway::v1::UpdateGatewayRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::Gateway>>, UpdateGateway,
+      (google::cloud::apigateway::v1::UpdateGatewayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +114,38 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateGateway(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateGateway, (NoAwaitTag,
-    google::cloud::apigateway::v1::UpdateGatewayRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateGateway,
+      (NoAwaitTag,
+       google::cloud::apigateway::v1::UpdateGatewayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateGateway(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Gateway>>,
-  UpdateGateway, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateGateway, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteGateway(Matcher<google::cloud::apigateway::v1::DeleteGatewayRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteGateway(Matcher<google::cloud::apigateway::v1::DeleteGatewayRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-  DeleteGateway,
-  (google::cloud::apigateway::v1::DeleteGatewayRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
+      DeleteGateway,
+      (google::cloud::apigateway::v1::DeleteGatewayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,41 +153,45 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteGateway(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteGateway, (NoAwaitTag,
-    google::cloud::apigateway::v1::DeleteGatewayRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteGateway(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-  DeleteGateway, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::Api>),
-  ListApis,
-  (google::cloud::apigateway::v1::ListApisRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::apigateway::v1::Api>,
-  GetApi,
-  (google::cloud::apigateway::v1::GetApiRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteGateway,
+      (NoAwaitTag,
+       google::cloud::apigateway::v1::DeleteGatewayRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateApi(Matcher<google::cloud::apigateway::v1::CreateApiRequest const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>,
-  CreateApi,
-  (google::cloud::apigateway::v1::CreateApiRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
+      DeleteGateway, (google::longrunning::Operation const& operation),
+      (override));
 
+  MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::Api>), ListApis,
+              (google::cloud::apigateway::v1::ListApisRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::apigateway::v1::Api>, GetApi,
+              (google::cloud::apigateway::v1::GetApiRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateApi(Matcher<google::cloud::apigateway::v1::CreateApiRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, CreateApi,
+              (google::cloud::apigateway::v1::CreateApiRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -182,33 +199,34 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateApi(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateApi, (NoAwaitTag,
-    google::cloud::apigateway::v1::CreateApiRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateApi(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>,
-  CreateApi, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateApi,
+              (NoAwaitTag,
+               google::cloud::apigateway::v1::CreateApiRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateApi(Matcher<google::cloud::apigateway::v1::UpdateApiRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateApi(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>,
-  UpdateApi,
-  (google::cloud::apigateway::v1::UpdateApiRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, CreateApi,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateApi(Matcher<google::cloud::apigateway::v1::UpdateApiRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, UpdateApi,
+              (google::cloud::apigateway::v1::UpdateApiRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -216,33 +234,36 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateApi(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateApi, (NoAwaitTag,
-    google::cloud::apigateway::v1::UpdateApiRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateApi(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>,
-  UpdateApi, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateApi,
+              (NoAwaitTag,
+               google::cloud::apigateway::v1::UpdateApiRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteApi(Matcher<google::cloud::apigateway::v1::DeleteApiRequest const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateApi(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-  DeleteApi,
-  (google::cloud::apigateway::v1::DeleteApiRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, UpdateApi,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteApi(Matcher<google::cloud::apigateway::v1::DeleteApiRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
+      DeleteApi,
+      (google::cloud::apigateway::v1::DeleteApiRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -250,41 +271,47 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteApi(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteApi, (NoAwaitTag,
-    google::cloud::apigateway::v1::DeleteApiRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteApi,
+              (NoAwaitTag,
+               google::cloud::apigateway::v1::DeleteApiRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteApi(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteApi(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-  DeleteApi, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
+      DeleteApi, (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::ApiConfig>),
-  ListApiConfigs,
-  (google::cloud::apigateway::v1::ListApiConfigsRequest request), (override));
+              ListApiConfigs,
+              (google::cloud::apigateway::v1::ListApiConfigsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::apigateway::v1::ApiConfig>,
-  GetApiConfig,
-  (google::cloud::apigateway::v1::GetApiConfigRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::apigateway::v1::ApiConfig>, GetApiConfig,
+      (google::cloud::apigateway::v1::GetApiConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateApiConfig(Matcher<google::cloud::apigateway::v1::CreateApiConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateApiConfig(Matcher<google::cloud::apigateway::v1::CreateApiConfigRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
-  CreateApiConfig,
-  (google::cloud::apigateway::v1::CreateApiConfigRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
+      CreateApiConfig,
+      (google::cloud::apigateway::v1::CreateApiConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -292,33 +319,38 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateApiConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateApiConfig, (NoAwaitTag,
-    google::cloud::apigateway::v1::CreateApiConfigRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateApiConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
-  CreateApiConfig, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateApiConfig,
+      (NoAwaitTag,
+       google::cloud::apigateway::v1::CreateApiConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateApiConfig(Matcher<google::cloud::apigateway::v1::UpdateApiConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateApiConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
-  UpdateApiConfig,
-  (google::cloud::apigateway::v1::UpdateApiConfigRequest const& request), (override));
+              CreateApiConfig,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateApiConfig(Matcher<google::cloud::apigateway::v1::UpdateApiConfigRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
+      UpdateApiConfig,
+      (google::cloud::apigateway::v1::UpdateApiConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -326,33 +358,38 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateApiConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateApiConfig, (NoAwaitTag,
-    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateApiConfig,
+      (NoAwaitTag,
+       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateApiConfig(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateApiConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
-  UpdateApiConfig, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateApiConfig,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteApiConfig(Matcher<google::cloud::apigateway::v1::DeleteApiConfigRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteApiConfig(Matcher<google::cloud::apigateway::v1::DeleteApiConfigRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-  DeleteApiConfig,
-  (google::cloud::apigateway::v1::DeleteApiConfigRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
+      DeleteApiConfig,
+      (google::cloud::apigateway::v1::DeleteApiConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -360,21 +397,24 @@ class MockApiGatewayServiceConnection : public apigateway_v1::ApiGatewayServiceC
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteApiConfig(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteApiConfig, (NoAwaitTag,
-    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteApiConfig,
+      (NoAwaitTag,
+       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteApiConfig(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteApiConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-  DeleteApiConfig, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
+      DeleteApiConfig, (google::longrunning::Operation const& operation),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

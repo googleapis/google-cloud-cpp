@@ -31,9 +31,9 @@ CatalogServiceAuth::CatalogServiceAuth(
     std::shared_ptr<CatalogServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::retail::v2::ListCatalogsResponse> CatalogServiceAuth::ListCatalogs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::ListCatalogsResponse>
+CatalogServiceAuth::ListCatalogs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListCatalogsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::retail::v2::ListCatalogsResponse> CatalogServiceAuth::Li
 }
 
 StatusOr<google::cloud::retail::v2::Catalog> CatalogServiceAuth::UpdateCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateCatalogRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,89 +49,88 @@ StatusOr<google::cloud::retail::v2::Catalog> CatalogServiceAuth::UpdateCatalog(
 }
 
 Status CatalogServiceAuth::SetDefaultBranch(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetDefaultBranch(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse> CatalogServiceAuth::GetDefaultBranch(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
+CatalogServiceAuth::GetDefaultBranch(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDefaultBranch(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::CompletionConfig> CatalogServiceAuth::GetCompletionConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceAuth::GetCompletionConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCompletionConfig(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::CompletionConfig> CatalogServiceAuth::UpdateCompletionConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceAuth::UpdateCompletionConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateCompletionConfig(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::AttributesConfig> CatalogServiceAuth::GetAttributesConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceAuth::GetAttributesConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAttributesConfig(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::AttributesConfig> CatalogServiceAuth::UpdateAttributesConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceAuth::UpdateAttributesConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAttributesConfig(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::AttributesConfig> CatalogServiceAuth::AddCatalogAttribute(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceAuth::AddCatalogAttribute(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AddCatalogAttribute(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::AttributesConfig> CatalogServiceAuth::RemoveCatalogAttribute(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceAuth::RemoveCatalogAttribute(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RemoveCatalogAttribute(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::AttributesConfig> CatalogServiceAuth::ReplaceCatalogAttribute(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceAuth::ReplaceCatalogAttribute(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReplaceCatalogAttribute(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> CatalogServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+CatalogServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -140,8 +138,7 @@ StatusOr<google::longrunning::ListOperationsResponse> CatalogServiceAuth::ListOp
 }
 
 StatusOr<google::longrunning::Operation> CatalogServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

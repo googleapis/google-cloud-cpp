@@ -46,19 +46,18 @@ VersionsMetadata::VersionsMetadata(
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsMetadata::ListVersions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListVersionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVersions(context, options, request);
 }
 
-StatusOr<google::appengine::v1::Version>
-VersionsMetadata::GetVersion(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::Version> VersionsMetadata::GetVersion(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetVersionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVersion(context, options, request);
 }
 
@@ -68,17 +67,17 @@ VersionsMetadata::AsyncCreateVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::appengine::v1::CreateVersionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateVersion(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateVersion(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-VersionsMetadata::CreateVersion(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> VersionsMetadata::CreateVersion(
+    grpc::ClientContext& context, Options options,
     google::appengine::v1::CreateVersionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateVersion(context, options, request);
 }
 
@@ -88,17 +87,17 @@ VersionsMetadata::AsyncUpdateVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::appengine::v1::UpdateVersionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUpdateVersion(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncUpdateVersion(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-VersionsMetadata::UpdateVersion(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> VersionsMetadata::UpdateVersion(
+    grpc::ClientContext& context, Options options,
     google::appengine::v1::UpdateVersionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateVersion(context, options, request);
 }
 
@@ -108,17 +107,17 @@ VersionsMetadata::AsyncDeleteVersion(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::appengine::v1::DeleteVersionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteVersion(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteVersion(cq, std::move(context), std::move(options),
+                                    request);
 }
 
-StatusOr<google::longrunning::Operation>
-VersionsMetadata::DeleteVersion(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> VersionsMetadata::DeleteVersion(
+    grpc::ClientContext& context, Options options,
     google::appengine::v1::DeleteVersionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteVersion(context, options, request);
 }
 
@@ -130,8 +129,8 @@ VersionsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> VersionsMetadata::AsyncCancelOperation(
@@ -141,21 +140,21 @@ future<Status> VersionsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void VersionsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                   Options const& options,
+                                   std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void VersionsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                   Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

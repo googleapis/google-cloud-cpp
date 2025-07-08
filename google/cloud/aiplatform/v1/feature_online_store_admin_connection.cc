@@ -36,14 +36,15 @@ namespace cloud {
 namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FeatureOnlineStoreAdminServiceConnection::~FeatureOnlineStoreAdminServiceConnection() = default;
+FeatureOnlineStoreAdminServiceConnection::
+    ~FeatureOnlineStoreAdminServiceConnection() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore(
     google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,15 +52,15 @@ FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore(
     NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
@@ -68,8 +69,10 @@ FeatureOnlineStoreAdminServiceConnection::GetFeatureOnlineStore(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore> FeatureOnlineStoreAdminServiceConnection::ListFeatureOnlineStores(
-    google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
+FeatureOnlineStoreAdminServiceConnection::ListFeatureOnlineStores(
+    google::cloud::aiplatform::v1::
+        ListFeatureOnlineStoresRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>>();
 }
@@ -78,8 +81,8 @@ future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore(
     google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -87,23 +90,23 @@ FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore(
     NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore(
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -111,23 +114,23 @@ FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnection::CreateFeatureView(
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -135,15 +138,15 @@ FeatureOnlineStoreAdminServiceConnection::CreateFeatureView(
     NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnection::CreateFeatureView(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
@@ -152,8 +155,10 @@ FeatureOnlineStoreAdminServiceConnection::GetFeatureView(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::FeatureView> FeatureOnlineStoreAdminServiceConnection::ListFeatureViews(
-    google::cloud::aiplatform::v1::ListFeatureViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::FeatureView>
+FeatureOnlineStoreAdminServiceConnection::ListFeatureViews(
+    google::cloud::aiplatform::v1::
+        ListFeatureViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::FeatureView>>();
 }
@@ -162,8 +167,8 @@ future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView(
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -171,23 +176,23 @@ FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView(
     NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView(
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -195,15 +200,15 @@ FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
@@ -218,14 +223,18 @@ FeatureOnlineStoreAdminServiceConnection::GetFeatureViewSync(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::FeatureViewSync> FeatureOnlineStoreAdminServiceConnection::ListFeatureViewSyncs(
-    google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
+FeatureOnlineStoreAdminServiceConnection::ListFeatureViewSyncs(
+    google::cloud::aiplatform::v1::
+        ListFeatureViewSyncsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>>();
 }
 
-StreamRange<google::cloud::location::Location> FeatureOnlineStoreAdminServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+FeatureOnlineStoreAdminServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -254,8 +263,10 @@ FeatureOnlineStoreAdminServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> FeatureOnlineStoreAdminServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -266,14 +277,12 @@ FeatureOnlineStoreAdminServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-FeatureOnlineStoreAdminServiceConnection::DeleteOperation(
+Status FeatureOnlineStoreAdminServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-FeatureOnlineStoreAdminServiceConnection::CancelOperation(
+Status FeatureOnlineStoreAdminServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -284,20 +293,25 @@ FeatureOnlineStoreAdminServiceConnection::WaitOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> MakeFeatureOnlineStoreAdminServiceConnection(
-    std::string const& location, Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
+std::shared_ptr<FeatureOnlineStoreAdminServiceConnection>
+MakeFeatureOnlineStoreAdminServiceConnection(std::string const& location,
+                                             Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       FeatureOnlineStoreAdminServicePolicyOptionList>(options, __func__);
-  options = aiplatform_v1_internal::FeatureOnlineStoreAdminServiceDefaultOptions(
-      location, std::move(options));
+  options =
+      aiplatform_v1_internal::FeatureOnlineStoreAdminServiceDefaultOptions(
+          location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = aiplatform_v1_internal::CreateDefaultFeatureOnlineStoreAdminServiceStub(
-    std::move(auth), options);
-  return aiplatform_v1_internal::MakeFeatureOnlineStoreAdminServiceTracingConnection(
-      std::make_shared<aiplatform_v1_internal::FeatureOnlineStoreAdminServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      aiplatform_v1_internal::CreateDefaultFeatureOnlineStoreAdminServiceStub(
+          std::move(auth), options);
+  return aiplatform_v1_internal::
+      MakeFeatureOnlineStoreAdminServiceTracingConnection(
+          std::make_shared<aiplatform_v1_internal::
+                               FeatureOnlineStoreAdminServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

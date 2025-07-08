@@ -19,9 +19,9 @@
 #include "google/cloud/dataproc/v1/internal/workflow_template_option_defaults.h"
 #include "google/cloud/dataproc/v1/workflow_template_connection.h"
 #include "google/cloud/dataproc/v1/workflow_template_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,34 +34,47 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options WorkflowTemplateServiceDefaultOptions(std::string const& location, Options options) {
+Options WorkflowTemplateServiceDefaultOptions(std::string const& location,
+                                              Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_WORKFLOW_TEMPLATE_SERVICE_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dataproc.googleapis.com"));
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dataproc.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()) {
     options.set<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>(
         dataproc_v1::WorkflowTemplateServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>()) {
     options.set<dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<dataproc_v1::WorkflowTemplateServicePollingPolicyOption>()) {
     options.set<dataproc_v1::WorkflowTemplateServicePollingPolicyOption>(
         GenericPollingPolicy<
             dataproc_v1::WorkflowTemplateServiceRetryPolicyOption::Type,
             dataproc_v1::WorkflowTemplateServiceBackoffPolicyOption::Type>(
-            options.get<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()->clone(),
+            options
+                .get<dataproc_v1::WorkflowTemplateServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicyOption>(
-        dataproc_v1::MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          dataproc_v1::
+              WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        dataproc_v1::WorkflowTemplateServiceConnectionIdempotencyPolicyOption>(
+        dataproc_v1::
+            MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy());
   }
 
   return options;

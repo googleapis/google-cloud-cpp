@@ -34,14 +34,15 @@ class CaseAttachmentServiceConnectionIdempotencyPolicy {
   virtual ~CaseAttachmentServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CaseAttachmentServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<CaseAttachmentServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ListAttachments(google::cloud::support::v2::ListAttachmentsRequest request);
+  virtual google::cloud::Idempotency ListAttachments(
+      google::cloud::support::v2::ListAttachmentsRequest request);
 };
 
 std::unique_ptr<CaseAttachmentServiceConnectionIdempotencyPolicy>
-    MakeDefaultCaseAttachmentServiceConnectionIdempotencyPolicy();
+MakeDefaultCaseAttachmentServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace support_v2

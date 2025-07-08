@@ -37,14 +37,14 @@ class SqlAvailableDatabaseVersionsServiceRestStub {
   virtual ~SqlAvailableDatabaseVersionsServiceRestStub() = default;
 };
 
-class DefaultSqlAvailableDatabaseVersionsServiceRestStub : public SqlAvailableDatabaseVersionsServiceRestStub {
+class DefaultSqlAvailableDatabaseVersionsServiceRestStub
+    : public SqlAvailableDatabaseVersionsServiceRestStub {
  public:
   ~DefaultSqlAvailableDatabaseVersionsServiceRestStub() override = default;
 
   explicit DefaultSqlAvailableDatabaseVersionsServiceRestStub(Options options);
   DefaultSqlAvailableDatabaseVersionsServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

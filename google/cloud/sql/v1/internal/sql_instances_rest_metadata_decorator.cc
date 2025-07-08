@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_instances.proto
 
 #include "google/cloud/sql/v1/internal/sql_instances_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,281 +41,291 @@ SqlInstancesServiceRestMetadata::SqlInstancesServiceRestMetadata(
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::AddServerCa(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AddServerCa(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Clone(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Clone(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Delete(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Delete(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::DemoteMaster(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DemoteMaster(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Demote(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Demote(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Export(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Export(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Failover(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Failover(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Reencrypt(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Reencrypt(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceRestMetadata::Get(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Get(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Import(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Import(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Insert(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Insert(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::InstancesListResponse>
 SqlInstancesServiceRestMetadata::List(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesListRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesListRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->List(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
 SqlInstancesServiceRestMetadata::ListServerCas(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListServerCas(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Patch(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Patch(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::PromoteReplica(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PromoteReplica(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Switchover(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Switchover(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::ResetSslConfig(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ResetSslConfig(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Restart(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Restart(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::RestoreBackup(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->RestoreBackup(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::RotateServerCa(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->RotateServerCa(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::StartReplica(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->StartReplica(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::StopReplica(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->StopReplica(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::TruncateLog(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->TruncateLog(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::Update(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Update(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SslCert>
 SqlInstancesServiceRestMetadata::CreateEphemeral(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->CreateEphemeral(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::RescheduleMaintenance(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->RescheduleMaintenance(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
 SqlInstancesServiceRestMetadata::VerifyExternalSyncSettings(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->VerifyExternalSyncSettings(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::StartExternalSync(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->StartExternalSync(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::PerformDiskShrink(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->PerformDiskShrink(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
 SqlInstancesServiceRestMetadata::GetDiskShrinkConfig(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetDiskShrinkConfig(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlInstancesServiceRestMetadata::ResetReplicaSize(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ResetReplicaSize(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
 SqlInstancesServiceRestMetadata::GetLatestRecoveryTime(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetLatestRecoveryTime(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
 SqlInstancesServiceRestMetadata::AcquireSsrsLease(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->AcquireSsrsLease(rest_context, options, request);
 }
 
 StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
 SqlInstancesServiceRestMetadata::ReleaseSsrsLease(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ReleaseSsrsLease(rest_context, options, request);
 }
 
 void SqlInstancesServiceRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

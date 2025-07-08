@@ -31,7 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use orgpolicy_v2::OrgPolicyBackoffPolicyOption directly.
 using ::google::cloud::orgpolicy_v2::OrgPolicyBackoffPolicyOption;
 
-/// @deprecated Use orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use orgpolicy_v2::OrgPolicyPolicyOptionList directly.

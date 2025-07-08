@@ -33,10 +33,10 @@ RuleServiceTracingStub::RuleServiceTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceTracingStub::CreateRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateRuleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "CreateRule");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "CreateRule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,21 +44,22 @@ StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceTracingStub::CreateRule(
 }
 
 StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceTracingStub::GetRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRuleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "GetRule");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "GetRule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetRule(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ListRulesResponse> RuleServiceTracingStub::ListRules(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListRulesResponse>
+RuleServiceTracingStub::ListRules(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRulesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "ListRules");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "ListRules");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -66,10 +67,10 @@ StatusOr<google::cloud::chronicle::v1::ListRulesResponse> RuleServiceTracingStub
 }
 
 StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceTracingStub::UpdateRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "UpdateRule");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "UpdateRule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -77,112 +78,121 @@ StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceTracingStub::UpdateRule(
 }
 
 Status RuleServiceTracingStub::DeleteRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "DeleteRule");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "DeleteRule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteRule(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse> RuleServiceTracingStub::ListRuleRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
+RuleServiceTracingStub::ListRuleRevisions(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "ListRuleRevisions");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "ListRuleRevisions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListRuleRevisions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListRuleRevisions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RuleServiceTracingStub::AsyncCreateRetrohunt(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "CreateRetrohunt");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "CreateRetrohunt");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateRetrohunt(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateRetrohunt(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 RuleServiceTracingStub::CreateRetrohunt(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "CreateRetrohunt");
+    grpc::ClientContext& context, Options options,
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "CreateRetrohunt");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateRetrohunt(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::Retrohunt> RuleServiceTracingStub::GetRetrohunt(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::Retrohunt>
+RuleServiceTracingStub::GetRetrohunt(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "GetRetrohunt");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "GetRetrohunt");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetRetrohunt(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ListRetrohuntsResponse> RuleServiceTracingStub::ListRetrohunts(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListRetrohuntsResponse>
+RuleServiceTracingStub::ListRetrohunts(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "ListRetrohunts");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "ListRetrohunts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListRetrohunts(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::RuleDeployment> RuleServiceTracingStub::GetRuleDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::RuleDeployment>
+RuleServiceTracingStub::GetRuleDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "GetRuleDeployment");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "GetRuleDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetRuleDeployment(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetRuleDeployment(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse> RuleServiceTracingStub::ListRuleDeployments(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse>
+RuleServiceTracingStub::ListRuleDeployments(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "ListRuleDeployments");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "ListRuleDeployments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListRuleDeployments(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListRuleDeployments(context, options, request));
 }
 
-StatusOr<google::cloud::chronicle::v1::RuleDeployment> RuleServiceTracingStub::UpdateRuleDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::RuleDeployment>
+RuleServiceTracingStub::UpdateRuleDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "UpdateRuleDeployment");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "UpdateRuleDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateRuleDeployment(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateRuleDeployment(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> RuleServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+RuleServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -190,10 +200,10 @@ StatusOr<google::longrunning::ListOperationsResponse> RuleServiceTracingStub::Li
 }
 
 StatusOr<google::longrunning::Operation> RuleServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -201,10 +211,10 @@ StatusOr<google::longrunning::Operation> RuleServiceTracingStub::GetOperation(
 }
 
 Status RuleServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -212,10 +222,10 @@ Status RuleServiceTracingStub::DeleteOperation(
 }
 
 Status RuleServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.chronicle.v1.RuleService",
+                                     "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -232,8 +242,7 @@ RuleServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -246,8 +255,8 @@ future<Status> RuleServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

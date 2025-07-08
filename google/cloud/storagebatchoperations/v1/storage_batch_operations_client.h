@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEBATCHOPERATIONS_V1_STORAGE_BATCH_OPERATIONS_CLIENT_H
 
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -38,8 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
 /// Storage Batch Operations offers a managed experience to perform batch
-/// operations on millions of Cloud Storage objects in a serverless fashion. With
-/// this service, you can automate and simplify large scale API operations
+/// operations on millions of Cloud Storage objects in a serverless fashion.
+/// With this service, you can automate and simplify large scale API operations
 /// performed on Cloud Storage objects.
 ///
 /// @par Equality
@@ -67,23 +67,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class StorageBatchOperationsClient {
  public:
-  explicit StorageBatchOperationsClient(std::shared_ptr<StorageBatchOperationsConnection> connection, Options opts = {});
+  explicit StorageBatchOperationsClient(
+      std::shared_ptr<StorageBatchOperationsConnection> connection,
+      Options opts = {});
   ~StorageBatchOperationsClient();
 
   ///@{
   /// @name Copy and move support
   StorageBatchOperationsClient(StorageBatchOperationsClient const&) = default;
-  StorageBatchOperationsClient& operator=(StorageBatchOperationsClient const&) = default;
+  StorageBatchOperationsClient& operator=(StorageBatchOperationsClient const&) =
+      default;
   StorageBatchOperationsClient(StorageBatchOperationsClient&&) = default;
-  StorageBatchOperationsClient& operator=(StorageBatchOperationsClient&&) = default;
+  StorageBatchOperationsClient& operator=(StorageBatchOperationsClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(StorageBatchOperationsClient const& a, StorageBatchOperationsClient const& b) {
+  friend bool operator==(StorageBatchOperationsClient const& a,
+                         StorageBatchOperationsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(StorageBatchOperationsClient const& a, StorageBatchOperationsClient const& b) {
+  friend bool operator!=(StorageBatchOperationsClient const& a,
+                         StorageBatchOperationsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,8 +125,8 @@ class StorageBatchOperationsClient {
   /// [google.cloud.storagebatchoperations.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L93}
   ///
   // clang-format on
-  StreamRange<google::cloud::storagebatchoperations::v1::Job>
-  ListJobs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::storagebatchoperations::v1::Job> ListJobs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -158,8 +164,9 @@ class StorageBatchOperationsClient {
   /// [google.cloud.storagebatchoperations.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L93}
   ///
   // clang-format on
-  StreamRange<google::cloud::storagebatchoperations::v1::Job>
-  ListJobs(google::cloud::storagebatchoperations::v1::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::storagebatchoperations::v1::Job> ListJobs(
+      google::cloud::storagebatchoperations::v1::ListJobsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -184,8 +191,8 @@ class StorageBatchOperationsClient {
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::storagebatchoperations::v1::Job>
-  GetJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::storagebatchoperations::v1::Job> GetJob(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +221,9 @@ class StorageBatchOperationsClient {
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::storagebatchoperations::v1::Job>
-  GetJob(google::cloud::storagebatchoperations::v1::GetJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::storagebatchoperations::v1::Job> GetJob(
+      google::cloud::storagebatchoperations::v1::GetJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -251,8 +259,10 @@ class StorageBatchOperationsClient {
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-  CreateJob(std::string const& parent, google::cloud::storagebatchoperations::v1::Job const& job, std::string const& job_id, Options opts = {});
+  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>> CreateJob(
+      std::string const& parent,
+      google::cloud::storagebatchoperations::v1::Job const& job,
+      std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -265,8 +275,10 @@ class StorageBatchOperationsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateJob(NoAwaitTag, std::string const& parent, google::cloud::storagebatchoperations::v1::Job const& job, std::string const& job_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateJob(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::storagebatchoperations::v1::Job const& job,
+      std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -302,8 +314,10 @@ class StorageBatchOperationsClient {
   /// [google.cloud.storagebatchoperations.v1.Job]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations_types.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-  CreateJob(google::cloud::storagebatchoperations::v1::CreateJobRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>> CreateJob(
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -316,8 +330,11 @@ class StorageBatchOperationsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateJob(NoAwaitTag, google::cloud::storagebatchoperations::v1::CreateJobRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateJob(
+      NoAwaitTag,
+      google::cloud::storagebatchoperations::v1::CreateJobRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -328,8 +345,8 @@ class StorageBatchOperationsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
-  CreateJob(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::storagebatchoperations::v1::Job>> CreateJob(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -351,8 +368,7 @@ class StorageBatchOperationsClient {
   /// [google.cloud.storagebatchoperations.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L186}
   ///
   // clang-format on
-  Status
-  DeleteJob(std::string const& name, Options opts = {});
+  Status DeleteJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -378,8 +394,10 @@ class StorageBatchOperationsClient {
   /// [google.cloud.storagebatchoperations.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/storagebatchoperations/v1/storage_batch_operations.proto#L186}
   ///
   // clang-format on
-  Status
-  DeleteJob(google::cloud::storagebatchoperations::v1::DeleteJobRequest const& request, Options opts = {});
+  Status DeleteJob(
+      google::cloud::storagebatchoperations::v1::DeleteJobRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -435,7 +453,9 @@ class StorageBatchOperationsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::storagebatchoperations::v1::CancelJobResponse>
-  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const& request, Options opts = {});
+  CancelJob(google::cloud::storagebatchoperations::v1::CancelJobRequest const&
+                request,
+            Options opts = {});
 
   // clang-format off
   ///
@@ -473,8 +493,8 @@ class StorageBatchOperationsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -503,8 +523,9 @@ class StorageBatchOperationsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -539,8 +560,8 @@ class StorageBatchOperationsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -579,8 +600,8 @@ class StorageBatchOperationsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -606,8 +627,8 @@ class StorageBatchOperationsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -638,8 +659,9 @@ class StorageBatchOperationsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -663,8 +685,7 @@ class StorageBatchOperationsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -693,8 +714,9 @@ class StorageBatchOperationsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -728,8 +750,7 @@ class StorageBatchOperationsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -768,8 +789,9 @@ class StorageBatchOperationsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<StorageBatchOperationsConnection> connection_;

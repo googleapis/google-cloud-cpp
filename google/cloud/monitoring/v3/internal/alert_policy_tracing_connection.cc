@@ -34,38 +34,47 @@ AlertPolicyServiceTracingConnection::AlertPolicyServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceTracingConnection::ListAlertPolicies(google::monitoring::v3::ListAlertPoliciesRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::AlertPolicyServiceConnection::ListAlertPolicies");
+AlertPolicyServiceTracingConnection::ListAlertPolicies(
+    google::monitoring::v3::ListAlertPoliciesRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::AlertPolicyServiceConnection::ListAlertPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListAlertPolicies(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::AlertPolicy>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceTracingConnection::GetAlertPolicy(google::monitoring::v3::GetAlertPolicyRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::AlertPolicyServiceConnection::GetAlertPolicy");
+AlertPolicyServiceTracingConnection::GetAlertPolicy(
+    google::monitoring::v3::GetAlertPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::AlertPolicyServiceConnection::GetAlertPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAlertPolicy(request));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceTracingConnection::CreateAlertPolicy(google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::AlertPolicyServiceConnection::CreateAlertPolicy");
+AlertPolicyServiceTracingConnection::CreateAlertPolicy(
+    google::monitoring::v3::CreateAlertPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::AlertPolicyServiceConnection::CreateAlertPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateAlertPolicy(request));
 }
 
-Status
-AlertPolicyServiceTracingConnection::DeleteAlertPolicy(google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::AlertPolicyServiceConnection::DeleteAlertPolicy");
+Status AlertPolicyServiceTracingConnection::DeleteAlertPolicy(
+    google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::AlertPolicyServiceConnection::DeleteAlertPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteAlertPolicy(request));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
-AlertPolicyServiceTracingConnection::UpdateAlertPolicy(google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::AlertPolicyServiceConnection::UpdateAlertPolicy");
+AlertPolicyServiceTracingConnection::UpdateAlertPolicy(
+    google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::AlertPolicyServiceConnection::UpdateAlertPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateAlertPolicy(request));
 }
@@ -77,7 +86,8 @@ MakeAlertPolicyServiceTracingConnection(
     std::shared_ptr<monitoring_v3::AlertPolicyServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<AlertPolicyServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<AlertPolicyServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -36,59 +36,65 @@ class ConversationsConnectionIdempotencyPolicy {
   virtual ~ConversationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConversationsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ConversationsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateConversation(google::cloud::dialogflow::v2::CreateConversationRequest const& request);
+  virtual google::cloud::Idempotency CreateConversation(
+      google::cloud::dialogflow::v2::CreateConversationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListConversations(google::cloud::dialogflow::v2::ListConversationsRequest request);
+  virtual google::cloud::Idempotency ListConversations(
+      google::cloud::dialogflow::v2::ListConversationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetConversation(google::cloud::dialogflow::v2::GetConversationRequest const& request);
+  virtual google::cloud::Idempotency GetConversation(
+      google::cloud::dialogflow::v2::GetConversationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CompleteConversation(google::cloud::dialogflow::v2::CompleteConversationRequest const& request);
+  virtual google::cloud::Idempotency CompleteConversation(
+      google::cloud::dialogflow::v2::CompleteConversationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  IngestContextReferences(google::cloud::dialogflow::v2::IngestContextReferencesRequest const& request);
+  virtual google::cloud::Idempotency IngestContextReferences(
+      google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListMessages(google::cloud::dialogflow::v2::ListMessagesRequest request);
+  virtual google::cloud::Idempotency ListMessages(
+      google::cloud::dialogflow::v2::ListMessagesRequest request);
 
-  virtual google::cloud::Idempotency
-  SuggestConversationSummary(google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const& request);
+  virtual google::cloud::Idempotency SuggestConversationSummary(
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GenerateStatelessSummary(google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const& request);
+  virtual google::cloud::Idempotency GenerateStatelessSummary(
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GenerateStatelessSuggestion(google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const& request);
+  virtual google::cloud::Idempotency GenerateStatelessSuggestion(
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SearchKnowledge(google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);
+  virtual google::cloud::Idempotency SearchKnowledge(
+      google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GenerateSuggestions(google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request);
+  virtual google::cloud::Idempotency GenerateSuggestions(
+      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ConversationsConnectionIdempotencyPolicy>
-    MakeDefaultConversationsConnectionIdempotencyPolicy();
+MakeDefaultConversationsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

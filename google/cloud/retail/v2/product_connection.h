@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_PRODUCT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_PRODUCT_CONNECTION_H
 
+#include "google/cloud/retail/v2/internal/product_retry_traits.h"
+#include "google/cloud/retail/v2/product_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/retail/v2/internal/product_retry_traits.h"
-#include "google/cloud/retail/v2/product_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -56,7 +56,8 @@ class ProductServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ProductServiceLimitedErrorCountRetryPolicy : public ProductServiceRetryPolicy {
+class ProductServiceLimitedErrorCountRetryPolicy
+    : public ProductServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ProductServiceLimitedErrorCountRetryPolicy : public ProductServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit ProductServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ProductServiceLimitedErrorCountRetryPolicy(
       ProductServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ProductServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProductServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ProductServiceLimitedErrorCountRetryPolicy(
       ProductServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ProductServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProductServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ProductServiceLimitedErrorCountRetryPolicy : public ProductServiceRetryPol
   using BaseType = ProductServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<retail_v2_internal::ProductServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      retail_v2_internal::ProductServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class ProductServiceLimitedTimeRetryPolicy : public ProductServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ProductServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ProductServiceLimitedTimeRetryPolicy(ProductServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ProductServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ProductServiceLimitedTimeRetryPolicy(ProductServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ProductServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProductServiceLimitedTimeRetryPolicy(
+      ProductServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ProductServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProductServiceLimitedTimeRetryPolicy(
+      ProductServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ProductServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class ProductServiceLimitedTimeRetryPolicy : public ProductServiceRetryPolicy {
   using BaseType = ProductServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<retail_v2_internal::ProductServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      retail_v2_internal::ProductServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,89 +186,109 @@ class ProductServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::retail::v2::Product>
-  CreateProduct(google::cloud::retail::v2::CreateProductRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::Product> CreateProduct(
+      google::cloud::retail::v2::CreateProductRequest const& request);
 
-  virtual StatusOr<google::cloud::retail::v2::Product>
-  GetProduct(google::cloud::retail::v2::GetProductRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::Product> GetProduct(
+      google::cloud::retail::v2::GetProductRequest const& request);
 
-  virtual StreamRange<google::cloud::retail::v2::Product>
-  ListProducts(google::cloud::retail::v2::ListProductsRequest request);
+  virtual StreamRange<google::cloud::retail::v2::Product> ListProducts(
+      google::cloud::retail::v2::ListProductsRequest request);
 
-  virtual StatusOr<google::cloud::retail::v2::Product>
-  UpdateProduct(google::cloud::retail::v2::UpdateProductRequest const& request);
+  virtual StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
+      google::cloud::retail::v2::UpdateProductRequest const& request);
 
-  virtual Status
-  DeleteProduct(google::cloud::retail::v2::DeleteProductRequest const& request);
+  virtual Status DeleteProduct(
+      google::cloud::retail::v2::DeleteProductRequest const& request);
 
   virtual future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
   PurgeProducts(google::cloud::retail::v2::PurgeProductsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  PurgeProducts(NoAwaitTag, google::cloud::retail::v2::PurgeProductsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> PurgeProducts(
+      NoAwaitTag,
+      google::cloud::retail::v2::PurgeProductsRequest const& request);
 
   virtual future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-  PurgeProducts( google::longrunning::Operation const& operation);
+  PurgeProducts(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(google::cloud::retail::v2::ImportProductsRequest const& request);
+  ImportProducts(
+      google::cloud::retail::v2::ImportProductsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportProducts(NoAwaitTag, google::cloud::retail::v2::ImportProductsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ImportProducts(
+      NoAwaitTag,
+      google::cloud::retail::v2::ImportProductsRequest const& request);
 
   virtual future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts( google::longrunning::Operation const& operation);
+  ImportProducts(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  SetInventory(NoAwaitTag, google::cloud::retail::v2::SetInventoryRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> SetInventory(
+      NoAwaitTag,
+      google::cloud::retail::v2::SetInventoryRequest const& request);
 
   virtual future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory( google::longrunning::Operation const& operation);
+  SetInventory(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
+  AddFulfillmentPlaces(
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  AddFulfillmentPlaces(NoAwaitTag, google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
+      NoAwaitTag,
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request);
 
-  virtual future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
+  AddFulfillmentPlaces(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
+  RemoveFulfillmentPlaces(
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RemoveFulfillmentPlaces(NoAwaitTag, google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
+      NoAwaitTag,
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
 
-  virtual future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
+  RemoveFulfillmentPlaces(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+  AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  AddLocalInventories(NoAwaitTag, google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> AddLocalInventories(
+      NoAwaitTag,
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
 
-  virtual future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+  AddLocalInventories(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-  RemoveLocalInventories(google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+  RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RemoveLocalInventories(NoAwaitTag, google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> RemoveLocalInventories(
+      NoAwaitTag,
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
 
-  virtual future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-  RemoveLocalInventories( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+  RemoveLocalInventories(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

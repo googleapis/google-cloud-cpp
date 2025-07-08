@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_VIDEO_INTELLIGENCE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_VIDEO_INTELLIGENCE_OPTIONS_H
 
+#include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
 #include <memory>
 
 namespace google {
@@ -55,7 +55,8 @@ struct VideoIntelligenceServiceBackoffPolicyOption {
  * @ingroup google-cloud-videointelligence-options
  */
 struct VideoIntelligenceServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>;
 };
 
 /**

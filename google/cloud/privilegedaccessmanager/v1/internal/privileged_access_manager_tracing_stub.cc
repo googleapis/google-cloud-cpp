@@ -32,44 +32,57 @@ PrivilegedAccessManagerTracingStub::PrivilegedAccessManagerTracingStub(
     std::shared_ptr<PrivilegedAccessManagerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse> PrivilegedAccessManagerTracingStub::CheckOnboardingStatus(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "CheckOnboardingStatus");
+StatusOr<
+    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+PrivilegedAccessManagerTracingStub::CheckOnboardingStatus(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::
+        CheckOnboardingStatusRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "CheckOnboardingStatus");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CheckOnboardingStatus(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CheckOnboardingStatus(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse> PrivilegedAccessManagerTracingStub::ListEntitlements(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "ListEntitlements");
+StatusOr<google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse>
+PrivilegedAccessManagerTracingStub::ListEntitlements(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "ListEntitlements");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEntitlements(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse> PrivilegedAccessManagerTracingStub::SearchEntitlements(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "SearchEntitlements");
+StatusOr<google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse>
+PrivilegedAccessManagerTracingStub::SearchEntitlements(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "SearchEntitlements");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SearchEntitlements(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->SearchEntitlements(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement> PrivilegedAccessManagerTracingStub::GetEntitlement(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "GetEntitlement");
+StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
+PrivilegedAccessManagerTracingStub::GetEntitlement(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "GetEntitlement");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -78,139 +91,175 @@ StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement> PrivilegedAcce
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerTracingStub::AsyncCreateEntitlement(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "CreateEntitlement");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "CreateEntitlement");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateEntitlement(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateEntitlement(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerTracingStub::CreateEntitlement(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "CreateEntitlement");
+    grpc::ClientContext& context, Options options,
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "CreateEntitlement");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateEntitlement(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateEntitlement(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerTracingStub::AsyncDeleteEntitlement(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "DeleteEntitlement");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "DeleteEntitlement");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteEntitlement(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteEntitlement(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerTracingStub::DeleteEntitlement(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "DeleteEntitlement");
+    grpc::ClientContext& context, Options options,
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "DeleteEntitlement");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteEntitlement(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteEntitlement(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerTracingStub::AsyncUpdateEntitlement(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "UpdateEntitlement");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "UpdateEntitlement");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateEntitlement(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateEntitlement(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerTracingStub::UpdateEntitlement(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "UpdateEntitlement");
+    grpc::ClientContext& context, Options options,
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "UpdateEntitlement");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateEntitlement(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateEntitlement(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse> PrivilegedAccessManagerTracingStub::ListGrants(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "ListGrants");
+StatusOr<google::cloud::privilegedaccessmanager::v1::ListGrantsResponse>
+PrivilegedAccessManagerTracingStub::ListGrants(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "ListGrants");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListGrants(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse> PrivilegedAccessManagerTracingStub::SearchGrants(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "SearchGrants");
+StatusOr<google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse>
+PrivilegedAccessManagerTracingStub::SearchGrants(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "SearchGrants");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchGrants(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerTracingStub::GetGrant(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "GetGrant");
+StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+PrivilegedAccessManagerTracingStub::GetGrant(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "GetGrant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetGrant(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerTracingStub::CreateGrant(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "CreateGrant");
+StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+PrivilegedAccessManagerTracingStub::CreateGrant(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "CreateGrant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateGrant(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerTracingStub::ApproveGrant(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "ApproveGrant");
+StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+PrivilegedAccessManagerTracingStub::ApproveGrant(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "ApproveGrant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ApproveGrant(context, options, request));
 }
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessManagerTracingStub::DenyGrant(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "DenyGrant");
+StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+PrivilegedAccessManagerTracingStub::DenyGrant(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "DenyGrant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -219,11 +268,14 @@ StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> PrivilegedAccessMana
 
 future<StatusOr<google::longrunning::Operation>>
 PrivilegedAccessManagerTracingStub::AsyncRevokeGrant(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "RevokeGrant");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "RevokeGrant");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRevokeGrant(cq, context, std::move(options), request);
@@ -232,54 +284,64 @@ PrivilegedAccessManagerTracingStub::AsyncRevokeGrant(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerTracingStub::RevokeGrant(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "RevokeGrant");
+    grpc::ClientContext& context, Options options,
+    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "RevokeGrant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RevokeGrant(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> PrivilegedAccessManagerTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+PrivilegedAccessManagerTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> PrivilegedAccessManagerTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+PrivilegedAccessManagerTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> PrivilegedAccessManagerTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+PrivilegedAccessManagerTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> PrivilegedAccessManagerTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+PrivilegedAccessManagerTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -287,10 +349,11 @@ StatusOr<google::longrunning::Operation> PrivilegedAccessManagerTracingStub::Get
 }
 
 Status PrivilegedAccessManagerTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.privilegedaccessmanager.v1.PrivilegedAccessManager",
+      "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -307,8 +370,7 @@ PrivilegedAccessManagerTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -321,14 +383,15 @@ future<Status> PrivilegedAccessManagerTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<PrivilegedAccessManagerStub> MakePrivilegedAccessManagerTracingStub(
+std::shared_ptr<PrivilegedAccessManagerStub>
+MakePrivilegedAccessManagerTracingStub(
     std::shared_ptr<PrivilegedAccessManagerStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<PrivilegedAccessManagerTracingStub>(std::move(stub));

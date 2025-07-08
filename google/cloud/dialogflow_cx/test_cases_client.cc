@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TestCasesClient::TestCasesClient(
     std::shared_ptr<TestCasesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TestCasesClient::~TestCasesClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
@@ -41,21 +41,25 @@ TestCasesClient::ListTestCases(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
-TestCasesClient::ListTestCases(google::cloud::dialogflow::cx::v3::ListTestCasesRequest request, Options opts) {
+TestCasesClient::ListTestCases(
+    google::cloud::dialogflow::cx::v3::ListTestCasesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTestCases(std::move(request));
 }
 
-Status
-TestCasesClient::BatchDeleteTestCases(std::string const& parent, Options opts) {
+Status TestCasesClient::BatchDeleteTestCases(std::string const& parent,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest request;
   request.set_parent(parent);
   return connection_->BatchDeleteTestCases(request);
 }
 
-Status
-TestCasesClient::BatchDeleteTestCases(google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const& request, Options opts) {
+Status TestCasesClient::BatchDeleteTestCases(
+    google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteTestCases(request);
 }
@@ -69,13 +73,18 @@ TestCasesClient::GetTestCase(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
-TestCasesClient::GetTestCase(google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request, Options opts) {
+TestCasesClient::GetTestCase(
+    google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTestCase(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
-TestCasesClient::CreateTestCase(std::string const& parent, google::cloud::dialogflow::cx::v3::TestCase const& test_case, Options opts) {
+TestCasesClient::CreateTestCase(
+    std::string const& parent,
+    google::cloud::dialogflow::cx::v3::TestCase const& test_case,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreateTestCaseRequest request;
   request.set_parent(parent);
@@ -84,13 +93,17 @@ TestCasesClient::CreateTestCase(std::string const& parent, google::cloud::dialog
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
-TestCasesClient::CreateTestCase(google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request, Options opts) {
+TestCasesClient::CreateTestCase(
+    google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTestCase(request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
-TestCasesClient::UpdateTestCase(google::cloud::dialogflow::cx::v3::TestCase const& test_case, google::protobuf::FieldMask const& update_mask, Options opts) {
+TestCasesClient::UpdateTestCase(
+    google::cloud::dialogflow::cx::v3::TestCase const& test_case,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest request;
   *request.mutable_test_case() = test_case;
@@ -99,85 +112,109 @@ TestCasesClient::UpdateTestCase(google::cloud::dialogflow::cx::v3::TestCase cons
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
-TestCasesClient::UpdateTestCase(google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request, Options opts) {
+TestCasesClient::UpdateTestCase(
+    google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTestCase(request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-TestCasesClient::RunTestCase(google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request, Options opts) {
+TestCasesClient::RunTestCase(
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTestCase(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesClient::RunTestCase(NoAwaitTag, google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TestCasesClient::RunTestCase(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTestCase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-TestCasesClient::RunTestCase(google::longrunning::Operation const& operation, Options opts) {
+TestCasesClient::RunTestCase(google::longrunning::Operation const& operation,
+                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTestCase(operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-TestCasesClient::BatchRunTestCases(google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request, Options opts) {
+TestCasesClient::BatchRunTestCases(
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchRunTestCases(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesClient::BatchRunTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TestCasesClient::BatchRunTestCases(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchRunTestCases(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-TestCasesClient::BatchRunTestCases(google::longrunning::Operation const& operation, Options opts) {
+TestCasesClient::BatchRunTestCases(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchRunTestCases(operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
-TestCasesClient::CalculateCoverage(google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request, Options opts) {
+TestCasesClient::CalculateCoverage(
+    google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CalculateCoverage(request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-TestCasesClient::ImportTestCases(google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request, Options opts) {
+TestCasesClient::ImportTestCases(
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportTestCases(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesClient::ImportTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TestCasesClient::ImportTestCases(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportTestCases(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-TestCasesClient::ImportTestCases(google::longrunning::Operation const& operation, Options opts) {
+TestCasesClient::ImportTestCases(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportTestCases(operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-TestCasesClient::ExportTestCases(google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request, Options opts) {
+TestCasesClient::ExportTestCases(
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportTestCases(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesClient::ExportTestCases(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TestCasesClient::ExportTestCases(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportTestCases(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-TestCasesClient::ExportTestCases(google::longrunning::Operation const& operation, Options opts) {
+TestCasesClient::ExportTestCases(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportTestCases(operation);
 }
@@ -191,7 +228,9 @@ TestCasesClient::ListTestCaseResults(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
-TestCasesClient::ListTestCaseResults(google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request, Options opts) {
+TestCasesClient::ListTestCaseResults(
+    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTestCaseResults(std::move(request));
 }
@@ -205,25 +244,27 @@ TestCasesClient::GetTestCaseResult(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
-TestCasesClient::GetTestCaseResult(google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request, Options opts) {
+TestCasesClient::GetTestCaseResult(
+    google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTestCaseResult(request);
 }
 
-StreamRange<google::cloud::location::Location>
-TestCasesClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> TestCasesClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-TestCasesClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> TestCasesClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-TestCasesClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> TestCasesClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -231,36 +272,35 @@ TestCasesClient::ListOperations(std::string const& name, std::string const& filt
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-TestCasesClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> TestCasesClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> TestCasesClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TestCasesClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-TestCasesClient::CancelOperation(std::string const& name, Options opts) {
+Status TestCasesClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-TestCasesClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status TestCasesClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -36,51 +36,61 @@ class DataAccessControlServiceTracingConnection
   ~DataAccessControlServiceTracingConnection() override = default;
 
   explicit DataAccessControlServiceTracingConnection(
-    std::shared_ptr<chronicle_v1::DataAccessControlServiceConnection> child);
+      std::shared_ptr<chronicle_v1::DataAccessControlServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-  CreateDataAccessLabel(google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> CreateDataAccessLabel(
+      google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request)
+      override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-  GetDataAccessLabel(google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> GetDataAccessLabel(
+      google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request)
+      override;
 
   StreamRange<google::cloud::chronicle::v1::DataAccessLabel>
-  ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest request) override;
+  ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest
+                           request) override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
-  UpdateDataAccessLabel(google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessLabel> UpdateDataAccessLabel(
+      google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request)
+      override;
 
-  Status
-  DeleteDataAccessLabel(google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) override;
+  Status DeleteDataAccessLabel(
+      google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request)
+      override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-  CreateDataAccessScope(google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope> CreateDataAccessScope(
+      google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request)
+      override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-  GetDataAccessScope(google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope> GetDataAccessScope(
+      google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request)
+      override;
 
   StreamRange<google::cloud::chronicle::v1::DataAccessScope>
-  ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest request) override;
+  ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest
+                           request) override;
 
-  StatusOr<google::cloud::chronicle::v1::DataAccessScope>
-  UpdateDataAccessScope(google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::DataAccessScope> UpdateDataAccessScope(
+      google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request)
+      override;
 
-  Status
-  DeleteDataAccessScope(google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) override;
+  Status DeleteDataAccessScope(
+      google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<chronicle_v1::DataAccessControlServiceConnection> child_;

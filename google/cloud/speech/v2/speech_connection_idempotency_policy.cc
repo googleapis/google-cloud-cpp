@@ -26,127 +26,156 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SpeechConnectionIdempotencyPolicy::~SpeechConnectionIdempotencyPolicy() = default;
+SpeechConnectionIdempotencyPolicy::~SpeechConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
 SpeechConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SpeechConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::CreateRecognizer(google::cloud::speech::v2::CreateRecognizerRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::CreateRecognizer(
+    google::cloud::speech::v2::CreateRecognizerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::ListRecognizers(google::cloud::speech::v2::ListRecognizersRequest) {  // NOLINT
+Idempotency SpeechConnectionIdempotencyPolicy::ListRecognizers(
+    google::cloud::speech::v2::ListRecognizersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::GetRecognizer(google::cloud::speech::v2::GetRecognizerRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::GetRecognizer(
+    google::cloud::speech::v2::GetRecognizerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::UpdateRecognizer(google::cloud::speech::v2::UpdateRecognizerRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::UpdateRecognizer(
+    google::cloud::speech::v2::UpdateRecognizerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::DeleteRecognizer(google::cloud::speech::v2::DeleteRecognizerRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::DeleteRecognizer(
+    google::cloud::speech::v2::DeleteRecognizerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::UndeleteRecognizer(google::cloud::speech::v2::UndeleteRecognizerRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::UndeleteRecognizer(
+    google::cloud::speech::v2::UndeleteRecognizerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::Recognize(google::cloud::speech::v2::RecognizeRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::Recognize(
+    google::cloud::speech::v2::RecognizeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::BatchRecognize(google::cloud::speech::v2::BatchRecognizeRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::BatchRecognize(
+    google::cloud::speech::v2::BatchRecognizeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::GetConfig(google::cloud::speech::v2::GetConfigRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::GetConfig(
+    google::cloud::speech::v2::GetConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::UpdateConfig(google::cloud::speech::v2::UpdateConfigRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::UpdateConfig(
+    google::cloud::speech::v2::UpdateConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::CreateCustomClass(google::cloud::speech::v2::CreateCustomClassRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::CreateCustomClass(
+    google::cloud::speech::v2::CreateCustomClassRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::ListCustomClasses(google::cloud::speech::v2::ListCustomClassesRequest) {  // NOLINT
+Idempotency SpeechConnectionIdempotencyPolicy::ListCustomClasses(
+    google::cloud::speech::v2::ListCustomClassesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::GetCustomClass(google::cloud::speech::v2::GetCustomClassRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::GetCustomClass(
+    google::cloud::speech::v2::GetCustomClassRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::UpdateCustomClass(google::cloud::speech::v2::UpdateCustomClassRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::UpdateCustomClass(
+    google::cloud::speech::v2::UpdateCustomClassRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::DeleteCustomClass(google::cloud::speech::v2::DeleteCustomClassRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::DeleteCustomClass(
+    google::cloud::speech::v2::DeleteCustomClassRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::UndeleteCustomClass(google::cloud::speech::v2::UndeleteCustomClassRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::UndeleteCustomClass(
+    google::cloud::speech::v2::UndeleteCustomClassRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::CreatePhraseSet(google::cloud::speech::v2::CreatePhraseSetRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::CreatePhraseSet(
+    google::cloud::speech::v2::CreatePhraseSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::ListPhraseSets(google::cloud::speech::v2::ListPhraseSetsRequest) {  // NOLINT
+Idempotency SpeechConnectionIdempotencyPolicy::ListPhraseSets(
+    google::cloud::speech::v2::ListPhraseSetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::GetPhraseSet(google::cloud::speech::v2::GetPhraseSetRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::GetPhraseSet(
+    google::cloud::speech::v2::GetPhraseSetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::UpdatePhraseSet(google::cloud::speech::v2::UpdatePhraseSetRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::UpdatePhraseSet(
+    google::cloud::speech::v2::UpdatePhraseSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::DeletePhraseSet(google::cloud::speech::v2::DeletePhraseSetRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::DeletePhraseSet(
+    google::cloud::speech::v2::DeletePhraseSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::UndeletePhraseSet(google::cloud::speech::v2::UndeletePhraseSetRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::UndeletePhraseSet(
+    google::cloud::speech::v2::UndeletePhraseSetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency SpeechConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SpeechConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SpeechConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency SpeechConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
-    MakeDefaultSpeechConnectionIdempotencyPolicy() {
+MakeDefaultSpeechConnectionIdempotencyPolicy() {
   return std::make_unique<SpeechConnectionIdempotencyPolicy>();
 }
 

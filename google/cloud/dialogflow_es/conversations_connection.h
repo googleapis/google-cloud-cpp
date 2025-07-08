@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/conversations_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversations_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -53,7 +53,8 @@ class ConversationsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConversationsLimitedErrorCountRetryPolicy : public ConversationsRetryPolicy {
+class ConversationsLimitedErrorCountRetryPolicy
+    : public ConversationsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,14 @@ class ConversationsLimitedErrorCountRetryPolicy : public ConversationsRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit ConversationsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ConversationsLimitedErrorCountRetryPolicy(
       ConversationsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ConversationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConversationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConversationsLimitedErrorCountRetryPolicy(
       ConversationsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ConversationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConversationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +91,9 @@ class ConversationsLimitedErrorCountRetryPolicy : public ConversationsRetryPolic
   using BaseType = ConversationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::ConversationsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::ConversationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +131,14 @@ class ConversationsLimitedTimeRetryPolicy : public ConversationsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ConversationsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ConversationsLimitedTimeRetryPolicy(ConversationsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ConversationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConversationsLimitedTimeRetryPolicy(ConversationsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ConversationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConversationsLimitedTimeRetryPolicy(
+      ConversationsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ConversationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConversationsLimitedTimeRetryPolicy(
+      ConversationsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ConversationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,7 +160,9 @@ class ConversationsLimitedTimeRetryPolicy : public ConversationsRetryPolicy {
   using BaseType = ConversationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::ConversationsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::ConversationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -177,52 +184,70 @@ class ConversationsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::dialogflow::v2::Conversation>
-  CreateConversation(google::cloud::dialogflow::v2::CreateConversationRequest const& request);
+  CreateConversation(
+      google::cloud::dialogflow::v2::CreateConversationRequest const& request);
 
   virtual StreamRange<google::cloud::dialogflow::v2::Conversation>
-  ListConversations(google::cloud::dialogflow::v2::ListConversationsRequest request);
+  ListConversations(
+      google::cloud::dialogflow::v2::ListConversationsRequest request);
+
+  virtual StatusOr<google::cloud::dialogflow::v2::Conversation> GetConversation(
+      google::cloud::dialogflow::v2::GetConversationRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::Conversation>
-  GetConversation(google::cloud::dialogflow::v2::GetConversationRequest const& request);
+  CompleteConversation(
+      google::cloud::dialogflow::v2::CompleteConversationRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Conversation>
-  CompleteConversation(google::cloud::dialogflow::v2::CompleteConversationRequest const& request);
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+  IngestContextReferences(
+      google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
-  IngestContextReferences(google::cloud::dialogflow::v2::IngestContextReferencesRequest const& request);
+  virtual StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
+      google::cloud::dialogflow::v2::ListMessagesRequest request);
 
-  virtual StreamRange<google::cloud::dialogflow::v2::Message>
-  ListMessages(google::cloud::dialogflow::v2::ListMessagesRequest request);
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
-  SuggestConversationSummary(google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const& request);
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+  GenerateStatelessSummary(
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
-  GenerateStatelessSummary(google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const& request);
-
-  virtual StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
-  GenerateStatelessSuggestion(google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const& request);
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+  GenerateStatelessSuggestion(
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+          request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
-  SearchKnowledge(google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);
+  SearchKnowledge(
+      google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
-  GenerateSuggestions(google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request);
+  GenerateSuggestions(
+      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

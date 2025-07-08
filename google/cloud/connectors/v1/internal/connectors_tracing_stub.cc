@@ -32,22 +32,24 @@ ConnectorsTracingStub::ConnectorsTracingStub(
     std::shared_ptr<ConnectorsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::connectors::v1::ListConnectionsResponse> ConnectorsTracingStub::ListConnections(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
+ConnectorsTracingStub::ListConnections(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "ListConnections");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConnections(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::Connection> ConnectorsTracingStub::GetConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::Connection>
+ConnectorsTracingStub::GetConnection(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetConnection");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +58,25 @@ StatusOr<google::cloud::connectors::v1::Connection> ConnectorsTracingStub::GetCo
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsTracingStub::AsyncCreateConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::connectors::v1::CreateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "CreateConnection");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "CreateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateConnection(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConnectorsTracingStub::CreateConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::connectors::v1::CreateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "CreateConnection");
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "CreateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +85,25 @@ ConnectorsTracingStub::CreateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsTracingStub::AsyncUpdateConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "UpdateConnection");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "UpdateConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateConnection(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConnectorsTracingStub::UpdateConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "UpdateConnection");
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "UpdateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,180 +112,206 @@ ConnectorsTracingStub::UpdateConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsTracingStub::AsyncDeleteConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "DeleteConnection");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "DeleteConnection");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteConnection(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteConnection(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConnectorsTracingStub::DeleteConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "DeleteConnection");
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "DeleteConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteConnection(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::ListProvidersResponse> ConnectorsTracingStub::ListProviders(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
+ConnectorsTracingStub::ListProviders(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListProvidersRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "ListProviders");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "ListProviders");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListProviders(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::Provider> ConnectorsTracingStub::GetProvider(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::Provider>
+ConnectorsTracingStub::GetProvider(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetProviderRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetProvider");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetProvider");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetProvider(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::ListConnectorsResponse> ConnectorsTracingStub::ListConnectors(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
+ConnectorsTracingStub::ListConnectors(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectorsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "ListConnectors");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "ListConnectors");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListConnectors(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::Connector> ConnectorsTracingStub::GetConnector(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::Connector>
+ConnectorsTracingStub::GetConnector(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetConnector");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetConnector");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetConnector(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse> ConnectorsTracingStub::ListConnectorVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::connectors::v1::ListConnectorVersionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "ListConnectorVersions");
+StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
+ConnectorsTracingStub::ListConnectorVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::connectors::v1::ListConnectorVersionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "ListConnectorVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConnectorVersions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListConnectorVersions(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::ConnectorVersion> ConnectorsTracingStub::GetConnectorVersion(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::ConnectorVersion>
+ConnectorsTracingStub::GetConnectorVersion(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetConnectorVersion");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetConnectorVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConnectorVersion(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetConnectorVersion(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata> ConnectorsTracingStub::GetConnectionSchemaMetadata(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetConnectionSchemaMetadata");
+StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
+ConnectorsTracingStub::GetConnectionSchemaMetadata(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetConnectionSchemaMetadata");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConnectionSchemaMetadata(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetConnectionSchemaMetadata(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsTracingStub::AsyncRefreshConnectionSchemaMetadata(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "RefreshConnectionSchemaMetadata");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "RefreshConnectionSchemaMetadata");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRefreshConnectionSchemaMetadata(cq, context, std::move(options), request);
+  auto f = child_->AsyncRefreshConnectionSchemaMetadata(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ConnectorsTracingStub::RefreshConnectionSchemaMetadata(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "RefreshConnectionSchemaMetadata");
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "RefreshConnectionSchemaMetadata");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RefreshConnectionSchemaMetadata(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->RefreshConnectionSchemaMetadata(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse> ConnectorsTracingStub::ListRuntimeEntitySchemas(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "ListRuntimeEntitySchemas");
+StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
+ConnectorsTracingStub::ListRuntimeEntitySchemas(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "ListRuntimeEntitySchemas");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListRuntimeEntitySchemas(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListRuntimeEntitySchemas(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse> ConnectorsTracingStub::ListRuntimeActionSchemas(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "ListRuntimeActionSchemas");
+StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
+ConnectorsTracingStub::ListRuntimeActionSchemas(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "ListRuntimeActionSchemas");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListRuntimeActionSchemas(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListRuntimeActionSchemas(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::RuntimeConfig> ConnectorsTracingStub::GetRuntimeConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::RuntimeConfig>
+ConnectorsTracingStub::GetRuntimeConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetRuntimeConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetRuntimeConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetRuntimeConfig(context, options, request));
 }
 
-StatusOr<google::cloud::connectors::v1::Settings> ConnectorsTracingStub::GetGlobalSettings(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::connectors::v1::Settings>
+ConnectorsTracingStub::GetGlobalSettings(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetGlobalSettings");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetGlobalSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetGlobalSettings(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetGlobalSettings(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ConnectorsTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ConnectorsTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -287,10 +319,10 @@ StatusOr<google::cloud::location::ListLocationsResponse> ConnectorsTracingStub::
 }
 
 StatusOr<google::cloud::location::Location> ConnectorsTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -298,10 +330,10 @@ StatusOr<google::cloud::location::Location> ConnectorsTracingStub::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> ConnectorsTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -309,32 +341,34 @@ StatusOr<google::iam::v1::Policy> ConnectorsTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ConnectorsTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> ConnectorsTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ConnectorsTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ConnectorsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ConnectorsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -342,10 +376,10 @@ StatusOr<google::longrunning::ListOperationsResponse> ConnectorsTracingStub::Lis
 }
 
 StatusOr<google::longrunning::Operation> ConnectorsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -353,10 +387,10 @@ StatusOr<google::longrunning::Operation> ConnectorsTracingStub::GetOperation(
 }
 
 Status ConnectorsTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -364,10 +398,10 @@ Status ConnectorsTracingStub::DeleteOperation(
 }
 
 Status ConnectorsTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.connectors.v1.Connectors",
+                                     "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -384,8 +418,7 @@ ConnectorsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -398,8 +431,8 @@ future<Status> ConnectorsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

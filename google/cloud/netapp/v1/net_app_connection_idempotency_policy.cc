@@ -26,279 +26,346 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NetAppConnectionIdempotencyPolicy::~NetAppConnectionIdempotencyPolicy() = default;
+NetAppConnectionIdempotencyPolicy::~NetAppConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<NetAppConnectionIdempotencyPolicy>
 NetAppConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<NetAppConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListStoragePools(google::cloud::netapp::v1::ListStoragePoolsRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListStoragePools(
+    google::cloud::netapp::v1::ListStoragePoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateStoragePool(google::cloud::netapp::v1::CreateStoragePoolRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateStoragePool(
+    google::cloud::netapp::v1::CreateStoragePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetStoragePool(google::cloud::netapp::v1::GetStoragePoolRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetStoragePool(
+    google::cloud::netapp::v1::GetStoragePoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateStoragePool(google::cloud::netapp::v1::UpdateStoragePoolRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateStoragePool(
+    google::cloud::netapp::v1::UpdateStoragePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteStoragePool(google::cloud::netapp::v1::DeleteStoragePoolRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteStoragePool(
+    google::cloud::netapp::v1::DeleteStoragePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ValidateDirectoryService(google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::ValidateDirectoryService(
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::SwitchActiveReplicaZone(google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::SwitchActiveReplicaZone(
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListVolumes(google::cloud::netapp::v1::ListVolumesRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListVolumes(
+    google::cloud::netapp::v1::ListVolumesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetVolume(google::cloud::netapp::v1::GetVolumeRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetVolume(
+    google::cloud::netapp::v1::GetVolumeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateVolume(google::cloud::netapp::v1::CreateVolumeRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateVolume(
+    google::cloud::netapp::v1::CreateVolumeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateVolume(google::cloud::netapp::v1::UpdateVolumeRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateVolume(
+    google::cloud::netapp::v1::UpdateVolumeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteVolume(google::cloud::netapp::v1::DeleteVolumeRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteVolume(
+    google::cloud::netapp::v1::DeleteVolumeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::RevertVolume(google::cloud::netapp::v1::RevertVolumeRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::RevertVolume(
+    google::cloud::netapp::v1::RevertVolumeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListSnapshots(google::cloud::netapp::v1::ListSnapshotsRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListSnapshots(
+    google::cloud::netapp::v1::ListSnapshotsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetSnapshot(google::cloud::netapp::v1::GetSnapshotRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetSnapshot(
+    google::cloud::netapp::v1::GetSnapshotRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateSnapshot(google::cloud::netapp::v1::CreateSnapshotRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateSnapshot(
+    google::cloud::netapp::v1::CreateSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteSnapshot(google::cloud::netapp::v1::DeleteSnapshotRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteSnapshot(
+    google::cloud::netapp::v1::DeleteSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateSnapshot(google::cloud::netapp::v1::UpdateSnapshotRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateSnapshot(
+    google::cloud::netapp::v1::UpdateSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListActiveDirectories(google::cloud::netapp::v1::ListActiveDirectoriesRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListActiveDirectories(
+    google::cloud::netapp::v1::ListActiveDirectoriesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetActiveDirectory(google::cloud::netapp::v1::GetActiveDirectoryRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetActiveDirectory(
+    google::cloud::netapp::v1::GetActiveDirectoryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateActiveDirectory(google::cloud::netapp::v1::CreateActiveDirectoryRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateActiveDirectory(
+    google::cloud::netapp::v1::CreateActiveDirectoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateActiveDirectory(google::cloud::netapp::v1::UpdateActiveDirectoryRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateActiveDirectory(
+    google::cloud::netapp::v1::UpdateActiveDirectoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteActiveDirectory(google::cloud::netapp::v1::DeleteActiveDirectoryRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteActiveDirectory(
+    google::cloud::netapp::v1::DeleteActiveDirectoryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListKmsConfigs(google::cloud::netapp::v1::ListKmsConfigsRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListKmsConfigs(
+    google::cloud::netapp::v1::ListKmsConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateKmsConfig(google::cloud::netapp::v1::CreateKmsConfigRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateKmsConfig(
+    google::cloud::netapp::v1::CreateKmsConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetKmsConfig(google::cloud::netapp::v1::GetKmsConfigRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetKmsConfig(
+    google::cloud::netapp::v1::GetKmsConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateKmsConfig(google::cloud::netapp::v1::UpdateKmsConfigRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateKmsConfig(
+    google::cloud::netapp::v1::UpdateKmsConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::EncryptVolumes(google::cloud::netapp::v1::EncryptVolumesRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::EncryptVolumes(
+    google::cloud::netapp::v1::EncryptVolumesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::VerifyKmsConfig(google::cloud::netapp::v1::VerifyKmsConfigRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::VerifyKmsConfig(
+    google::cloud::netapp::v1::VerifyKmsConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteKmsConfig(google::cloud::netapp::v1::DeleteKmsConfigRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteKmsConfig(
+    google::cloud::netapp::v1::DeleteKmsConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListReplications(google::cloud::netapp::v1::ListReplicationsRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListReplications(
+    google::cloud::netapp::v1::ListReplicationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetReplication(google::cloud::netapp::v1::GetReplicationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetReplication(
+    google::cloud::netapp::v1::GetReplicationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateReplication(google::cloud::netapp::v1::CreateReplicationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateReplication(
+    google::cloud::netapp::v1::CreateReplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteReplication(google::cloud::netapp::v1::DeleteReplicationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteReplication(
+    google::cloud::netapp::v1::DeleteReplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateReplication(google::cloud::netapp::v1::UpdateReplicationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateReplication(
+    google::cloud::netapp::v1::UpdateReplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::StopReplication(google::cloud::netapp::v1::StopReplicationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::StopReplication(
+    google::cloud::netapp::v1::StopReplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ResumeReplication(google::cloud::netapp::v1::ResumeReplicationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::ResumeReplication(
+    google::cloud::netapp::v1::ResumeReplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ReverseReplicationDirection(google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::ReverseReplicationDirection(
+    google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::EstablishPeering(google::cloud::netapp::v1::EstablishPeeringRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::SyncReplication(google::cloud::netapp::v1::SyncReplicationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateBackupVault(google::cloud::netapp::v1::CreateBackupVaultRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateBackupVault(
+    google::cloud::netapp::v1::CreateBackupVaultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetBackupVault(google::cloud::netapp::v1::GetBackupVaultRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetBackupVault(
+    google::cloud::netapp::v1::GetBackupVaultRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListBackupVaults(google::cloud::netapp::v1::ListBackupVaultsRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListBackupVaults(
+    google::cloud::netapp::v1::ListBackupVaultsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackupVault(google::cloud::netapp::v1::UpdateBackupVaultRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackupVault(
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackupVault(google::cloud::netapp::v1::DeleteBackupVaultRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackupVault(
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateBackup(google::cloud::netapp::v1::CreateBackupRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateBackup(
+    google::cloud::netapp::v1::CreateBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetBackup(google::cloud::netapp::v1::GetBackupRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetBackup(
+    google::cloud::netapp::v1::GetBackupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListBackups(google::cloud::netapp::v1::ListBackupsRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListBackups(
+    google::cloud::netapp::v1::ListBackupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackup(google::cloud::netapp::v1::DeleteBackupRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackup(
+    google::cloud::netapp::v1::DeleteBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackup(google::cloud::netapp::v1::UpdateBackupRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackup(
+    google::cloud::netapp::v1::UpdateBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateBackupPolicy(google::cloud::netapp::v1::CreateBackupPolicyRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateBackupPolicy(
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetBackupPolicy(google::cloud::netapp::v1::GetBackupPolicyRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetBackupPolicy(
+    google::cloud::netapp::v1::GetBackupPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListBackupPolicies(google::cloud::netapp::v1::ListBackupPoliciesRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListBackupPolicies(
+    google::cloud::netapp::v1::ListBackupPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackupPolicy(google::cloud::netapp::v1::UpdateBackupPolicyRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateBackupPolicy(
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackupPolicy(google::cloud::netapp::v1::DeleteBackupPolicyRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackupPolicy(
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListQuotaRules(google::cloud::netapp::v1::ListQuotaRulesRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListQuotaRules(
+    google::cloud::netapp::v1::ListQuotaRulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetQuotaRule(google::cloud::netapp::v1::GetQuotaRuleRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetQuotaRule(
+    google::cloud::netapp::v1::GetQuotaRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CreateQuotaRule(google::cloud::netapp::v1::CreateQuotaRuleRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CreateQuotaRule(
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::UpdateQuotaRule(google::cloud::netapp::v1::UpdateQuotaRuleRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateQuotaRule(
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteQuotaRule(google::cloud::netapp::v1::DeleteQuotaRuleRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteQuotaRule(
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency NetAppConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetAppConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency NetAppConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<NetAppConnectionIdempotencyPolicy>
-    MakeDefaultNetAppConnectionIdempotencyPolicy() {
+MakeDefaultNetAppConnectionIdempotencyPolicy() {
   return std::make_unique<NetAppConnectionIdempotencyPolicy>();
 }
 

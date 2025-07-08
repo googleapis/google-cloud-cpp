@@ -62,11 +62,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.Agent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+/// [google.cloud.dialogflow.v2.Agent]:
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
 ///
 class AgentsClient {
  public:
-  explicit AgentsClient(std::shared_ptr<AgentsConnection> connection, Options opts = {});
+  explicit AgentsClient(std::shared_ptr<AgentsConnection> connection,
+                        Options opts = {});
   ~AgentsClient();
 
   ///@{
@@ -110,8 +112,8 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Agent>
-  GetAgent(std::string const& parent, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -140,8 +142,9 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Agent>
-  GetAgent(google::cloud::dialogflow::v2::GetAgentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
+      google::cloud::dialogflow::v2::GetAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +172,8 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.SetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Agent>
-  SetAgent(google::cloud::dialogflow::v2::Agent const& agent, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
+      google::cloud::dialogflow::v2::Agent const& agent, Options opts = {});
 
   // clang-format off
   ///
@@ -203,8 +206,9 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.SetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Agent>
-  SetAgent(google::cloud::dialogflow::v2::SetAgentRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
+      google::cloud::dialogflow::v2::SetAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -226,8 +230,7 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L402}
   ///
   // clang-format on
-  Status
-  DeleteAgent(std::string const& parent, Options opts = {});
+  Status DeleteAgent(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -253,8 +256,9 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L402}
   ///
   // clang-format on
-  Status
-  DeleteAgent(google::cloud::dialogflow::v2::DeleteAgentRequest const& request, Options opts = {});
+  Status DeleteAgent(
+      google::cloud::dialogflow::v2::DeleteAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -294,8 +298,8 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.SearchAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Agent>
-  SearchAgents(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -339,8 +343,9 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.SearchAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Agent>
-  SearchAgents(google::cloud::dialogflow::v2::SearchAgentsRequest request, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
+      google::cloud::dialogflow::v2::SearchAgentsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -385,8 +390,8 @@ class AgentsClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  TrainAgent(std::string const& parent, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> TrainAgent(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -399,8 +404,9 @@ class AgentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  TrainAgent(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> TrainAgent(NoAwaitTag,
+                                                      std::string const& parent,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -449,8 +455,9 @@ class AgentsClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  TrainAgent(google::cloud::dialogflow::v2::TrainAgentRequest const& request, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> TrainAgent(
+      google::cloud::dialogflow::v2::TrainAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -463,8 +470,10 @@ class AgentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  TrainAgent(NoAwaitTag, google::cloud::dialogflow::v2::TrainAgentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> TrainAgent(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::TrainAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -475,8 +484,8 @@ class AgentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  TrainAgent(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> TrainAgent(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -531,8 +540,8 @@ class AgentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportAgent(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportAgent(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -578,7 +587,8 @@ class AgentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
-  ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request, Options opts = {});
+  ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -591,8 +601,10 @@ class AgentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportAgent(NoAwaitTag, google::cloud::dialogflow::v2::ExportAgentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportAgent(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -604,7 +616,8 @@ class AgentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
-  ExportAgent(google::longrunning::Operation const& operation, Options opts = {});
+  ExportAgent(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -667,8 +680,9 @@ class AgentsClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  ImportAgent(google::cloud::dialogflow::v2::ImportAgentRequest const& request, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> ImportAgent(
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -681,8 +695,10 @@ class AgentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportAgent(NoAwaitTag, google::cloud::dialogflow::v2::ImportAgentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportAgent(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -693,8 +709,8 @@ class AgentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  ImportAgent(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> ImportAgent(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -755,8 +771,9 @@ class AgentsClient {
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  RestoreAgent(google::cloud::dialogflow::v2::RestoreAgentRequest const& request, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> RestoreAgent(
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -769,8 +786,10 @@ class AgentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RestoreAgent(NoAwaitTag, google::cloud::dialogflow::v2::RestoreAgentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RestoreAgent(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -781,8 +800,8 @@ class AgentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>>
-  RestoreAgent(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>> RestoreAgent(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -812,8 +831,9 @@ class AgentsClient {
   /// [google.cloud.dialogflow.v2.ValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/v2/validation_result.proto#L70}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::ValidationResult>
-  GetValidationResult(google::cloud::dialogflow::v2::GetValidationResultRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(
+      google::cloud::dialogflow::v2::GetValidationResultRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -851,8 +871,8 @@ class AgentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -881,8 +901,9 @@ class AgentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -917,8 +938,8 @@ class AgentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -957,8 +978,8 @@ class AgentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -984,8 +1005,8 @@ class AgentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1016,8 +1037,9 @@ class AgentsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1051,8 +1073,7 @@ class AgentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1091,8 +1112,9 @@ class AgentsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AgentsConnection> connection_;

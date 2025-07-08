@@ -26,83 +26,108 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-StorageTransferServiceConnectionIdempotencyPolicy::~StorageTransferServiceConnectionIdempotencyPolicy() = default;
+StorageTransferServiceConnectionIdempotencyPolicy::
+    ~StorageTransferServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
 StorageTransferServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetGoogleServiceAccount(google::storagetransfer::v1::GetGoogleServiceAccountRequest const&) {
+Idempotency
+StorageTransferServiceConnectionIdempotencyPolicy::GetGoogleServiceAccount(
+    google::storagetransfer::v1::GetGoogleServiceAccountRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::CreateTransferJob(google::storagetransfer::v1::CreateTransferJobRequest const&) {
+Idempotency
+StorageTransferServiceConnectionIdempotencyPolicy::CreateTransferJob(
+    google::storagetransfer::v1::CreateTransferJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::UpdateTransferJob(google::storagetransfer::v1::UpdateTransferJobRequest const&) {
+Idempotency
+StorageTransferServiceConnectionIdempotencyPolicy::UpdateTransferJob(
+    google::storagetransfer::v1::UpdateTransferJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetTransferJob(google::storagetransfer::v1::GetTransferJobRequest const&) {
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetTransferJob(
+    google::storagetransfer::v1::GetTransferJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListTransferJobs(google::storagetransfer::v1::ListTransferJobsRequest) {  // NOLINT
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListTransferJobs(
+    google::storagetransfer::v1::ListTransferJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::PauseTransferOperation(google::storagetransfer::v1::PauseTransferOperationRequest const&) {
+Idempotency
+StorageTransferServiceConnectionIdempotencyPolicy::PauseTransferOperation(
+    google::storagetransfer::v1::PauseTransferOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ResumeTransferOperation(google::storagetransfer::v1::ResumeTransferOperationRequest const&) {
+Idempotency
+StorageTransferServiceConnectionIdempotencyPolicy::ResumeTransferOperation(
+    google::storagetransfer::v1::ResumeTransferOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const&) {
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::RunTransferJob(
+    google::storagetransfer::v1::RunTransferJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::DeleteTransferJob(google::storagetransfer::v1::DeleteTransferJobRequest const&) {
+Idempotency
+StorageTransferServiceConnectionIdempotencyPolicy::DeleteTransferJob(
+    google::storagetransfer::v1::DeleteTransferJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::CreateAgentPool(google::storagetransfer::v1::CreateAgentPoolRequest const&) {
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::CreateAgentPool(
+    google::storagetransfer::v1::CreateAgentPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::UpdateAgentPool(google::storagetransfer::v1::UpdateAgentPoolRequest const&) {
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::UpdateAgentPool(
+    google::storagetransfer::v1::UpdateAgentPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetAgentPool(google::storagetransfer::v1::GetAgentPoolRequest const&) {
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetAgentPool(
+    google::storagetransfer::v1::GetAgentPoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListAgentPools(google::storagetransfer::v1::ListAgentPoolsRequest) {  // NOLINT
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListAgentPools(
+    google::storagetransfer::v1::ListAgentPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::DeleteAgentPool(google::storagetransfer::v1::DeleteAgentPoolRequest const&) {
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::DeleteAgentPool(
+    google::storagetransfer::v1::DeleteAgentPoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageTransferServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
-    MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy() {
+MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy() {
   return std::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>();
 }
 

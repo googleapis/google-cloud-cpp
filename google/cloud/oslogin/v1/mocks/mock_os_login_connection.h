@@ -42,37 +42,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockOsLoginServiceConnection : public oslogin_v1::OsLoginServiceConnection {
+class MockOsLoginServiceConnection
+    : public oslogin_v1::OsLoginServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::oslogin::common::SshPublicKey>,
-  CreateSshPublicKey,
-  (google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::oslogin::common::SshPublicKey>,
+      CreateSshPublicKey,
+      (google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeletePosixAccount,
-  (google::cloud::oslogin::v1::DeletePosixAccountRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeletePosixAccount,
+      (google::cloud::oslogin::v1::DeletePosixAccountRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteSshPublicKey,
-  (google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteSshPublicKey,
+      (google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::oslogin::v1::LoginProfile>,
-  GetLoginProfile,
-  (google::cloud::oslogin::v1::GetLoginProfileRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::oslogin::v1::LoginProfile>, GetLoginProfile,
+      (google::cloud::oslogin::v1::GetLoginProfileRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::oslogin::common::SshPublicKey>,
-  GetSshPublicKey,
-  (google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::oslogin::common::SshPublicKey>, GetSshPublicKey,
+      (google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>,
-  ImportSshPublicKey,
-  (google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>,
+      ImportSshPublicKey,
+      (google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::oslogin::common::SshPublicKey>,
-  UpdateSshPublicKey,
-  (google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::oslogin::common::SshPublicKey>,
+      UpdateSshPublicKey,
+      (google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

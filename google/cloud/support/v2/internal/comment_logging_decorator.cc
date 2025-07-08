@@ -31,20 +31,16 @@ namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CommentServiceLogging::CommentServiceLogging(
-    std::shared_ptr<CommentServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<CommentServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceLogging::ListComments(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListCommentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::support::v2::ListCommentsRequest const& request) {
         return child_->ListComments(context, options, request);
       },
@@ -53,12 +49,10 @@ CommentServiceLogging::ListComments(
 
 StatusOr<google::cloud::support::v2::Comment>
 CommentServiceLogging::CreateComment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CreateCommentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::support::v2::CreateCommentRequest const& request) {
         return child_->CreateComment(context, options, request);
       },

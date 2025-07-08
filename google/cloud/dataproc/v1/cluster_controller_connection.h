@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_CLUSTER_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_CLUSTER_CONTROLLER_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/cluster_controller_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dataproc/v1/operations.pb.h>
 #include <google/cloud/dataproc/v1/clusters.pb.h>
+#include <google/cloud/dataproc/v1/operations.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -58,7 +58,8 @@ class ClusterControllerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ClusterControllerLimitedErrorCountRetryPolicy : public ClusterControllerRetryPolicy {
+class ClusterControllerLimitedErrorCountRetryPolicy
+    : public ClusterControllerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +69,14 @@ class ClusterControllerLimitedErrorCountRetryPolicy : public ClusterControllerRe
    *     @p maximum_failures == 0.
    */
   explicit ClusterControllerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ClusterControllerLimitedErrorCountRetryPolicy(
       ClusterControllerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ClusterControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ClusterControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ClusterControllerLimitedErrorCountRetryPolicy(
       ClusterControllerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ClusterControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ClusterControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,7 +96,9 @@ class ClusterControllerLimitedErrorCountRetryPolicy : public ClusterControllerRe
   using BaseType = ClusterControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dataproc_v1_internal::ClusterControllerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dataproc_v1_internal::ClusterControllerRetryTraits>
+      impl_;
 };
 
 /**
@@ -108,7 +111,8 @@ class ClusterControllerLimitedErrorCountRetryPolicy : public ClusterControllerRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ClusterControllerLimitedTimeRetryPolicy : public ClusterControllerRetryPolicy {
+class ClusterControllerLimitedTimeRetryPolicy
+    : public ClusterControllerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,12 +137,14 @@ class ClusterControllerLimitedTimeRetryPolicy : public ClusterControllerRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit ClusterControllerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ClusterControllerLimitedTimeRetryPolicy(ClusterControllerLimitedTimeRetryPolicy&& rhs) noexcept
-    : ClusterControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ClusterControllerLimitedTimeRetryPolicy(ClusterControllerLimitedTimeRetryPolicy const& rhs) noexcept
-    : ClusterControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ClusterControllerLimitedTimeRetryPolicy(
+      ClusterControllerLimitedTimeRetryPolicy&& rhs) noexcept
+      : ClusterControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ClusterControllerLimitedTimeRetryPolicy(
+      ClusterControllerLimitedTimeRetryPolicy const& rhs) noexcept
+      : ClusterControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,16 +166,18 @@ class ClusterControllerLimitedTimeRetryPolicy : public ClusterControllerRetryPol
   using BaseType = ClusterControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dataproc_v1_internal::ClusterControllerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dataproc_v1_internal::ClusterControllerRetryTraits>
+      impl_;
 };
 
 /**
  * The `ClusterControllerConnection` object for `ClusterControllerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ClusterControllerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ClusterControllerClient`.
+ * sets in `ClusterControllerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ClusterControllerClient`.
  *
  * To create a concrete instance, see `MakeClusterControllerConnection()`.
  *
@@ -181,97 +189,109 @@ class ClusterControllerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>>
-  CreateCluster(google::cloud::dataproc::v1::CreateClusterRequest const& request);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
+      google::cloud::dataproc::v1::CreateClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag, google::cloud::dataproc::v1::CreateClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::CreateClusterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>>
-  CreateCluster( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>>
-  UpdateCluster(google::cloud::dataproc::v1::UpdateClusterRequest const& request);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag, google::cloud::dataproc::v1::UpdateClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>>
-  UpdateCluster( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>>
-  StopCluster(google::cloud::dataproc::v1::StopClusterRequest const& request);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
+      google::cloud::dataproc::v1::StopClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  StopCluster(NoAwaitTag, google::cloud::dataproc::v1::StopClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> StopCluster(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::StopClusterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>>
-  StopCluster( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>>
-  StartCluster(google::cloud::dataproc::v1::StartClusterRequest const& request);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
+      google::cloud::dataproc::v1::StartClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  StartCluster(NoAwaitTag, google::cloud::dataproc::v1::StartClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> StartCluster(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::StartClusterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>>
-  StartCluster( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
-  DeleteCluster(google::cloud::dataproc::v1::DeleteClusterRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
+  DeleteCluster(
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteCluster(NoAwaitTag, google::cloud::dataproc::v1::DeleteClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteCluster(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
-  DeleteCluster( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
+  DeleteCluster(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::dataproc::v1::Cluster>
-  GetCluster(google::cloud::dataproc::v1::GetClusterRequest const& request);
+  virtual StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
+      google::cloud::dataproc::v1::GetClusterRequest const& request);
 
-  virtual StreamRange<google::cloud::dataproc::v1::Cluster>
-  ListClusters(google::cloud::dataproc::v1::ListClustersRequest request);
+  virtual StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
+      google::cloud::dataproc::v1::ListClustersRequest request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
-  DiagnoseCluster(google::cloud::dataproc::v1::DiagnoseClusterRequest const& request);
+  DiagnoseCluster(
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DiagnoseCluster(NoAwaitTag, google::cloud::dataproc::v1::DiagnoseClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DiagnoseCluster(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
-  DiagnoseCluster( google::longrunning::Operation const& operation);
+  DiagnoseCluster(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ClusterControllerConnection`.
+ * A factory function to construct an object of type
+ * `ClusterControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ClusterControllerClient.
+ * should be passed as an argument to the constructor of
+ * ClusterControllerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ClusterControllerConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ClusterControllerConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -282,8 +302,8 @@ class ClusterControllerConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `ClusterControllerConnection` created by
- * this function.
+ * @param options (optional) Configure the `ClusterControllerConnection` created
+ * by this function.
  */
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
     std::string const& location, Options options = {});

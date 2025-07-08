@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_INTERNAL_BACKUP_DR_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_INTERNAL_BACKUP_DR_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/backupdr/v1/backup_dr_connection.h"
 #include "google/cloud/backupdr/v1/backup_dr_connection_idempotency_policy.h"
 #include "google/cloud/backupdr/v1/backup_dr_options.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_retry_traits.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,248 +40,277 @@ namespace cloud {
 namespace backupdr_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BackupDRConnectionImpl
-    : public backupdr_v1::BackupDRConnection {
+class BackupDRConnectionImpl : public backupdr_v1::BackupDRConnection {
  public:
   ~BackupDRConnectionImpl() override = default;
 
   BackupDRConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<backupdr_v1_internal::BackupDRStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<backupdr_v1_internal::BackupDRStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::backupdr::v1::ManagementServer>
-  ListManagementServers(google::cloud::backupdr::v1::ListManagementServersRequest request) override;
+  ListManagementServers(
+      google::cloud::backupdr::v1::ListManagementServersRequest request)
+      override;
 
-  StatusOr<google::cloud::backupdr::v1::ManagementServer>
-  GetManagementServer(google::cloud::backupdr::v1::GetManagementServerRequest const& request) override;
+  StatusOr<google::cloud::backupdr::v1::ManagementServer> GetManagementServer(
+      google::cloud::backupdr::v1::GetManagementServerRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(google::cloud::backupdr::v1::CreateManagementServerRequest const& request) override;
+  CreateManagementServer(
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateManagementServer(NoAwaitTag,
-      google::cloud::backupdr::v1::CreateManagementServerRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateManagementServer(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
   CreateManagementServer(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteManagementServer(google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) override;
+  DeleteManagementServer(
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteManagementServer(NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteManagementServer(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteManagementServer(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
-  CreateBackupVault(google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) override;
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
+      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateBackupVault(NoAwaitTag,
-      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateBackupVault(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
-  CreateBackupVault(
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> CreateBackupVault(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::backupdr::v1::BackupVault>
-  ListBackupVaults(google::cloud::backupdr::v1::ListBackupVaultsRequest request) override;
+  StreamRange<google::cloud::backupdr::v1::BackupVault> ListBackupVaults(
+      google::cloud::backupdr::v1::ListBackupVaultsRequest request) override;
 
-  StreamRange<google::cloud::backupdr::v1::BackupVault>
-  FetchUsableBackupVaults(google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest request) override;
+  StreamRange<google::cloud::backupdr::v1::BackupVault> FetchUsableBackupVaults(
+      google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest request)
+      override;
 
-  StatusOr<google::cloud::backupdr::v1::BackupVault>
-  GetBackupVault(google::cloud::backupdr::v1::GetBackupVaultRequest const& request) override;
+  StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
+      google::cloud::backupdr::v1::GetBackupVaultRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
-  UpdateBackupVault(google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) override;
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
+      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateBackupVault(NoAwaitTag,
-      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateBackupVault(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
-  UpdateBackupVault(
+  future<StatusOr<google::cloud::backupdr::v1::BackupVault>> UpdateBackupVault(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupVault(google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) override;
+  DeleteBackupVault(google::cloud::backupdr::v1::DeleteBackupVaultRequest const&
+                        request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteBackupVault(NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteBackupVault(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupVault(
+  DeleteBackupVault(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
+      google::cloud::backupdr::v1::ListDataSourcesRequest request) override;
+
+  StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
+      google::cloud::backupdr::v1::GetDataSourceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
+      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateDataSource(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::backupdr::v1::DataSource>> UpdateDataSource(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::backupdr::v1::DataSource>
-  ListDataSources(google::cloud::backupdr::v1::ListDataSourcesRequest request) override;
+  StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
+      google::cloud::backupdr::v1::ListBackupsRequest request) override;
 
-  StatusOr<google::cloud::backupdr::v1::DataSource>
-  GetDataSource(google::cloud::backupdr::v1::GetDataSourceRequest const& request) override;
+  StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
+      google::cloud::backupdr::v1::GetBackupRequest const& request) override;
 
-  future<StatusOr<google::cloud::backupdr::v1::DataSource>>
-  UpdateDataSource(google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateDataSource(NoAwaitTag,
-      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) override;
-
-  future<StatusOr<google::cloud::backupdr::v1::DataSource>>
-  UpdateDataSource(
-      google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::backupdr::v1::Backup>
-  ListBackups(google::cloud::backupdr::v1::ListBackupsRequest request) override;
-
-  StatusOr<google::cloud::backupdr::v1::Backup>
-  GetBackup(google::cloud::backupdr::v1::GetBackupRequest const& request) override;
-
-  future<StatusOr<google::cloud::backupdr::v1::Backup>>
-  UpdateBackup(google::cloud::backupdr::v1::UpdateBackupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateBackup(NoAwaitTag,
+  future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
       google::cloud::backupdr::v1::UpdateBackupRequest const& request) override;
 
-  future<StatusOr<google::cloud::backupdr::v1::Backup>>
-  UpdateBackup(
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateBackupRequest const& request) override;
+
+  future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::backupdr::v1::Backup>>
-  DeleteBackup(google::cloud::backupdr::v1::DeleteBackupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteBackup(NoAwaitTag,
+  future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
       google::cloud::backupdr::v1::DeleteBackupRequest const& request) override;
 
-  future<StatusOr<google::cloud::backupdr::v1::Backup>>
-  DeleteBackup(
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteBackupRequest const& request) override;
+
+  future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
-  RestoreBackup(google::cloud::backupdr::v1::RestoreBackupRequest const& request) override;
+  RestoreBackup(google::cloud::backupdr::v1::RestoreBackupRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RestoreBackup(NoAwaitTag,
-      google::cloud::backupdr::v1::RestoreBackupRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RestoreBackup(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::RestoreBackupRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
-  RestoreBackup(
+  RestoreBackup(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> CreateBackupPlan(
+      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateBackupPlan(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>> CreateBackupPlan(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
-  CreateBackupPlan(google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) override;
+  StatusOr<google::cloud::backupdr::v1::BackupPlan> GetBackupPlan(
+      google::cloud::backupdr::v1::GetBackupPlanRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateBackupPlan(NoAwaitTag,
-      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) override;
-
-  future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
-  CreateBackupPlan(
-      google::longrunning::Operation const& operation) override;
-
-  StatusOr<google::cloud::backupdr::v1::BackupPlan>
-  GetBackupPlan(google::cloud::backupdr::v1::GetBackupPlanRequest const& request) override;
-
-  StreamRange<google::cloud::backupdr::v1::BackupPlan>
-  ListBackupPlans(google::cloud::backupdr::v1::ListBackupPlansRequest request) override;
+  StreamRange<google::cloud::backupdr::v1::BackupPlan> ListBackupPlans(
+      google::cloud::backupdr::v1::ListBackupPlansRequest request) override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupPlan(google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) override;
+  DeleteBackupPlan(google::cloud::backupdr::v1::DeleteBackupPlanRequest const&
+                       request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteBackupPlan(NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteBackupPlan(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupPlan(
-      google::longrunning::Operation const& operation) override;
+  DeleteBackupPlan(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  CreateBackupPlanAssociation(google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const& request) override;
+  CreateBackupPlanAssociation(
+      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateBackupPlanAssociation(NoAwaitTag,
-      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateBackupPlanAssociation(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
   CreateBackupPlanAssociation(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
-  GetBackupPlanAssociation(google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const& request) override;
+  GetBackupPlanAssociation(
+      google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
+          request) override;
 
   StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
-  ListBackupPlanAssociations(google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request) override;
+  ListBackupPlanAssociations(
+      google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteBackupPlanAssociation(google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const& request) override;
+  DeleteBackupPlanAssociation(
+      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteBackupPlanAssociation(NoAwaitTag,
-      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteBackupPlanAssociation(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteBackupPlanAssociation(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  TriggerBackup(google::cloud::backupdr::v1::TriggerBackupRequest const& request) override;
+  TriggerBackup(google::cloud::backupdr::v1::TriggerBackupRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  TriggerBackup(NoAwaitTag,
-      google::cloud::backupdr::v1::TriggerBackupRequest const& request) override;
+  StatusOr<google::longrunning::Operation> TriggerBackup(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::TriggerBackupRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
-  TriggerBackup(
-      google::longrunning::Operation const& operation) override;
+  TriggerBackup(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
-  InitializeService(google::cloud::backupdr::v1::InitializeServiceRequest const& request) override;
+  InitializeService(google::cloud::backupdr::v1::InitializeServiceRequest const&
+                        request) override;
 
-  StatusOr<google::longrunning::Operation>
-  InitializeService(NoAwaitTag,
-      google::cloud::backupdr::v1::InitializeServiceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> InitializeService(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
-  InitializeService(
-      google::longrunning::Operation const& operation) override;
+  InitializeService(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -29,34 +29,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReservationBlocksRestLogging::ReservationBlocksRestLogging(
     std::shared_ptr<ReservationBlocksRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
 ReservationBlocksRestLogging::GetReservationBlocksGetResponse(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        GetReservationBlocksGetResponseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request) {
-        return child_->GetReservationBlocksGetResponse(rest_context, options, request);
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservation_blocks::v1::
+                 GetReservationBlocksGetResponseRequest const& request) {
+        return child_->GetReservationBlocksGetResponse(rest_context, options,
+                                                       request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksListResponse>
 ReservationBlocksRestLogging::ListReservationBlocks(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        ListReservationBlocksRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservation_blocks::v1::
+                 ListReservationBlocksRequest const& request) {
         return child_->ListReservationBlocks(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -64,17 +65,19 @@ ReservationBlocksRestLogging::ListReservationBlocks(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationBlocksRestLogging::AsyncPerformMaintenance(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        PerformMaintenanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) {
-        return child_->AsyncPerformMaintenance(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::reservation_blocks::v1::
+                 PerformMaintenanceRequest const& request) {
+        return child_->AsyncPerformMaintenance(cq, std::move(rest_context),
+                                               std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -82,13 +85,13 @@ ReservationBlocksRestLogging::AsyncPerformMaintenance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationBlocksRestLogging::PerformMaintenance(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservation_blocks::v1::
+        PerformMaintenanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservation_blocks::v1::
+                 PerformMaintenanceRequest const& request) {
         return child_->PerformMaintenance(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -99,32 +102,35 @@ ReservationBlocksRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-ReservationBlocksRestLogging::AsyncCancelOperation(
+future<Status> ReservationBlocksRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

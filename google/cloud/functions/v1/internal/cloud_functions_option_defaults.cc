@@ -42,25 +42,35 @@ Options CloudFunctionsServiceDefaultOptions(Options options) {
   if (!options.has<functions_v1::CloudFunctionsServiceRetryPolicyOption>()) {
     options.set<functions_v1::CloudFunctionsServiceRetryPolicyOption>(
         functions_v1::CloudFunctionsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()) {
     options.set<functions_v1::CloudFunctionsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<functions_v1::CloudFunctionsServicePollingPolicyOption>()) {
     options.set<functions_v1::CloudFunctionsServicePollingPolicyOption>(
         GenericPollingPolicy<
             functions_v1::CloudFunctionsServiceRetryPolicyOption::Type,
             functions_v1::CloudFunctionsServiceBackoffPolicyOption::Type>(
-            options.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()->clone(),
+            options.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicyOption>(
-        functions_v1::MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<functions_v1::
+                    CloudFunctionsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicyOption>(
+        functions_v1::
+            MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

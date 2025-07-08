@@ -33,25 +33,25 @@ PredictionServiceStub::~PredictionServiceStub() = default;
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 DefaultPredictionServiceStub::Predict(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::automl::v1::PredictRequest const& request) {
-    google::cloud::automl::v1::PredictResponse response;
-    auto status =
-        grpc_stub_->Predict(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::automl::v1::PredictRequest const& request) {
+  google::cloud::automl::v1::PredictResponse response;
+  auto status = grpc_stub_->Predict(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPredictionServiceStub::AsyncBatchPredict(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::automl::v1::BatchPredictRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::automl::v1::BatchPredictRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::automl::v1::BatchPredictRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::automl::v1::BatchPredictRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::automl::v1::BatchPredictRequest const& request,
@@ -63,16 +63,14 @@ DefaultPredictionServiceStub::AsyncBatchPredict(
 
 StatusOr<google::longrunning::Operation>
 DefaultPredictionServiceStub::BatchPredict(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::automl::v1::BatchPredictRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->BatchPredict(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::BatchPredictRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchPredict(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -101,13 +99,14 @@ future<Status> DefaultPredictionServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

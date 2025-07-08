@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/engine_service.proto
 
 #include "google/cloud/discoveryengine/v1/engine_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/engine_options.h"
 #include "google/cloud/discoveryengine/v1/internal/engine_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/engine_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/engine_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/engine_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,48 +42,44 @@ future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
 EngineServiceConnection::CreateEngine(
     google::cloud::discoveryengine::v1::CreateEngineRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::discoveryengine::v1::Engine>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::discoveryengine::v1::Engine>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-EngineServiceConnection::CreateEngine(
+StatusOr<google::longrunning::Operation> EngineServiceConnection::CreateEngine(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateEngineRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-EngineServiceConnection::CreateEngine(
-    google::longrunning::Operation const&) {
+EngineServiceConnection::CreateEngine(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::discoveryengine::v1::Engine>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::discoveryengine::v1::Engine>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
 EngineServiceConnection::DeleteEngine(
     google::cloud::discoveryengine::v1::DeleteEngineRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-EngineServiceConnection::DeleteEngine(
+StatusOr<google::longrunning::Operation> EngineServiceConnection::DeleteEngine(
     NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteEngineRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-EngineServiceConnection::DeleteEngine(
-    google::longrunning::Operation const&) {
+EngineServiceConnection::DeleteEngine(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>
@@ -98,26 +94,28 @@ EngineServiceConnection::GetEngine(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::discoveryengine::v1::Engine> EngineServiceConnection::ListEngines(
-    google::cloud::discoveryengine::v1::ListEnginesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::discoveryengine::v1::Engine>
+EngineServiceConnection::ListEngines(
+    google::cloud::discoveryengine::v1::
+        ListEnginesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::Engine>>();
 }
 
-StreamRange<google::longrunning::Operation> EngineServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+EngineServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-EngineServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> EngineServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-EngineServiceConnection::CancelOperation(
+Status EngineServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -125,17 +123,19 @@ EngineServiceConnection::CancelOperation(
 std::shared_ptr<EngineServiceConnection> MakeEngineServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      EngineServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 EngineServicePolicyOptionList>(options,
+                                                                __func__);
   options = discoveryengine_v1_internal::EngineServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = discoveryengine_v1_internal::CreateDefaultEngineServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return discoveryengine_v1_internal::MakeEngineServiceTracingConnection(
-      std::make_shared<discoveryengine_v1_internal::EngineServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          discoveryengine_v1_internal::EngineServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

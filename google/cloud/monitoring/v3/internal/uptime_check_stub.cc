@@ -32,80 +32,77 @@ UptimeCheckServiceStub::~UptimeCheckServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
 DefaultUptimeCheckServiceStub::ListUptimeCheckConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
-    google::monitoring::v3::ListUptimeCheckConfigsResponse response;
-    auto status =
-        grpc_stub_->ListUptimeCheckConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
+  google::monitoring::v3::ListUptimeCheckConfigsResponse response;
+  auto status =
+      grpc_stub_->ListUptimeCheckConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::GetUptimeCheckConfig(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
-    google::monitoring::v3::UptimeCheckConfig response;
-    auto status =
-        grpc_stub_->GetUptimeCheckConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
+  google::monitoring::v3::UptimeCheckConfig response;
+  auto status = grpc_stub_->GetUptimeCheckConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::CreateUptimeCheckConfig(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
-    google::monitoring::v3::UptimeCheckConfig response;
-    auto status =
-        grpc_stub_->CreateUptimeCheckConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
+  google::monitoring::v3::UptimeCheckConfig response;
+  auto status =
+      grpc_stub_->CreateUptimeCheckConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::UpdateUptimeCheckConfig(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
-    google::monitoring::v3::UptimeCheckConfig response;
-    auto status =
-        grpc_stub_->UpdateUptimeCheckConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
+  google::monitoring::v3::UptimeCheckConfig response;
+  auto status =
+      grpc_stub_->UpdateUptimeCheckConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultUptimeCheckServiceStub::DeleteUptimeCheckConfig(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteUptimeCheckConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultUptimeCheckServiceStub::DeleteUptimeCheckConfig(
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteUptimeCheckConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
 DefaultUptimeCheckServiceStub::ListUptimeCheckIps(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
-    google::monitoring::v3::ListUptimeCheckIpsResponse response;
-    auto status =
-        grpc_stub_->ListUptimeCheckIps(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
+  google::monitoring::v3::ListUptimeCheckIpsResponse response;
+  auto status = grpc_stub_->ListUptimeCheckIps(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

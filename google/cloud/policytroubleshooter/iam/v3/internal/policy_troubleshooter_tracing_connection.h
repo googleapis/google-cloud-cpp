@@ -36,15 +36,21 @@ class PolicyTroubleshooterTracingConnection
   ~PolicyTroubleshooterTracingConnection() override = default;
 
   explicit PolicyTroubleshooterTracingConnection(
-    std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection> child);
+      std::shared_ptr<
+          policytroubleshooter_iam_v3::PolicyTroubleshooterConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::iam::v3::
+               TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(
+      google::cloud::policytroubleshooter::iam::v3::
+          TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection> child_;
+  std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -57,7 +63,8 @@ class PolicyTroubleshooterTracingConnection
  */
 std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection>
 MakePolicyTroubleshooterTracingConnection(
-    std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection> conn);
+    std::shared_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_iam_v3_internal

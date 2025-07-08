@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instance_templates/v1/instance_templates_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class InstanceTemplatesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InstanceTemplatesLimitedErrorCountRetryPolicy : public InstanceTemplatesRetryPolicy {
+class InstanceTemplatesLimitedErrorCountRetryPolicy
+    : public InstanceTemplatesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class InstanceTemplatesLimitedErrorCountRetryPolicy : public InstanceTemplatesRe
    *     @p maximum_failures == 0.
    */
   explicit InstanceTemplatesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   InstanceTemplatesLimitedErrorCountRetryPolicy(
       InstanceTemplatesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : InstanceTemplatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstanceTemplatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   InstanceTemplatesLimitedErrorCountRetryPolicy(
       InstanceTemplatesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : InstanceTemplatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstanceTemplatesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class InstanceTemplatesLimitedErrorCountRetryPolicy : public InstanceTemplatesRe
   using BaseType = InstanceTemplatesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_instance_templates_v1_internal::InstanceTemplatesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_instance_templates_v1_internal::InstanceTemplatesRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class InstanceTemplatesLimitedErrorCountRetryPolicy : public InstanceTemplatesRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InstanceTemplatesLimitedTimeRetryPolicy : public InstanceTemplatesRetryPolicy {
+class InstanceTemplatesLimitedTimeRetryPolicy
+    : public InstanceTemplatesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class InstanceTemplatesLimitedTimeRetryPolicy : public InstanceTemplatesRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit InstanceTemplatesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  InstanceTemplatesLimitedTimeRetryPolicy(InstanceTemplatesLimitedTimeRetryPolicy&& rhs) noexcept
-    : InstanceTemplatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  InstanceTemplatesLimitedTimeRetryPolicy(InstanceTemplatesLimitedTimeRetryPolicy const& rhs) noexcept
-    : InstanceTemplatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceTemplatesLimitedTimeRetryPolicy(
+      InstanceTemplatesLimitedTimeRetryPolicy&& rhs) noexcept
+      : InstanceTemplatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceTemplatesLimitedTimeRetryPolicy(
+      InstanceTemplatesLimitedTimeRetryPolicy const& rhs) noexcept
+      : InstanceTemplatesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,20 +163,23 @@ class InstanceTemplatesLimitedTimeRetryPolicy : public InstanceTemplatesRetryPol
   using BaseType = InstanceTemplatesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_instance_templates_v1_internal::InstanceTemplatesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_instance_templates_v1_internal::InstanceTemplatesRetryTraits>
+      impl_;
 };
 
 /**
  * The `InstanceTemplatesConnection` object for `InstanceTemplatesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `InstanceTemplatesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `InstanceTemplatesClient`.
+ * sets in `InstanceTemplatesClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `InstanceTemplatesClient`.
  *
  * To create a concrete instance, see `MakeInstanceTemplatesConnection()`.
  *
- * For mocking, see `compute_instance_templates_v1_mocks::MockInstanceTemplatesConnection`.
+ * For mocking, see
+ * `compute_instance_templates_v1_mocks::MockInstanceTemplatesConnection`.
  */
 class InstanceTemplatesConnection {
  public:
@@ -178,41 +187,58 @@ class InstanceTemplatesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
-  AggregatedListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::AggregatedListInstanceTemplatesRequest request);
+  virtual StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::InstanceTemplatesScopedList>>
+  AggregatedListInstanceTemplates(
+      google::cloud::cpp::compute::instance_templates::v1::
+          AggregatedListInstanceTemplatesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request);
+  DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                             DeleteInstanceTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceTemplate(NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest const& request);
+  DeleteInstanceTemplate(NoAwaitTag,
+                         google::cloud::cpp::compute::instance_templates::v1::
+                             DeleteInstanceTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstanceTemplate( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteInstanceTemplate(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::GetInstanceTemplateRequest const& request);
+  GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                          GetInstanceTemplateRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instance_templates::v1::
+          GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request);
+  InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
+                             InsertInstanceTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstanceTemplate(NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest const& request);
+  InsertInstanceTemplate(NoAwaitTag,
+                         google::cloud::cpp::compute::instance_templates::v1::
+                             InsertInstanceTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstanceTemplate( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertInstanceTemplate(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::ListInstanceTemplatesRequest request);
+  ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::
+                            ListInstanceTemplatesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instance_templates::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instance_templates::v1::
+          SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::instance_templates::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

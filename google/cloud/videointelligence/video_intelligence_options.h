@@ -28,20 +28,31 @@ namespace cloud {
 namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServicePollingPolicyOption directly.
-using ::google::cloud::videointelligence_v1::VideoIntelligenceServicePollingPolicyOption;
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServicePollingPolicyOption directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServicePollingPolicyOption;
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption directly.
-using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption;
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServiceBackoffPolicyOption;
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServicePolicyOptionList directly.
-using ::google::cloud::videointelligence_v1::VideoIntelligenceServicePolicyOptionList;
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServicePolicyOptionList directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServicePolicyOptionList;
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption directly.
-using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption;
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence

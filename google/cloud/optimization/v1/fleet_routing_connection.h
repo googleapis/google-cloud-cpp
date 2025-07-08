@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_FLEET_ROUTING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_FLEET_ROUTING_CONNECTION_H
 
+#include "google/cloud/optimization/v1/fleet_routing_connection_idempotency_policy.h"
+#include "google/cloud/optimization/v1/internal/fleet_routing_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
-#include "google/cloud/optimization/v1/fleet_routing_connection_idempotency_policy.h"
-#include "google/cloud/optimization/v1/internal/fleet_routing_retry_traits.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -55,7 +55,8 @@ class FleetRoutingRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FleetRoutingLimitedErrorCountRetryPolicy : public FleetRoutingRetryPolicy {
+class FleetRoutingLimitedErrorCountRetryPolicy
+    : public FleetRoutingRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class FleetRoutingLimitedErrorCountRetryPolicy : public FleetRoutingRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit FleetRoutingLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   FleetRoutingLimitedErrorCountRetryPolicy(
       FleetRoutingLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : FleetRoutingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FleetRoutingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FleetRoutingLimitedErrorCountRetryPolicy(
       FleetRoutingLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : FleetRoutingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FleetRoutingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class FleetRoutingLimitedErrorCountRetryPolicy : public FleetRoutingRetryPolicy 
   using BaseType = FleetRoutingRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<optimization_v1_internal::FleetRoutingRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      optimization_v1_internal::FleetRoutingRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +133,14 @@ class FleetRoutingLimitedTimeRetryPolicy : public FleetRoutingRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit FleetRoutingLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  FleetRoutingLimitedTimeRetryPolicy(FleetRoutingLimitedTimeRetryPolicy&& rhs) noexcept
-    : FleetRoutingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  FleetRoutingLimitedTimeRetryPolicy(FleetRoutingLimitedTimeRetryPolicy const& rhs) noexcept
-    : FleetRoutingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FleetRoutingLimitedTimeRetryPolicy(
+      FleetRoutingLimitedTimeRetryPolicy&& rhs) noexcept
+      : FleetRoutingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FleetRoutingLimitedTimeRetryPolicy(
+      FleetRoutingLimitedTimeRetryPolicy const& rhs) noexcept
+      : FleetRoutingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +162,9 @@ class FleetRoutingLimitedTimeRetryPolicy : public FleetRoutingRetryPolicy {
   using BaseType = FleetRoutingRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<optimization_v1_internal::FleetRoutingRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      optimization_v1_internal::FleetRoutingRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,19 +186,26 @@ class FleetRoutingConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const& request);
+  OptimizeTours(
+      google::cloud::optimization::v1::OptimizeToursRequest const& request);
 
-  virtual future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-  BatchOptimizeTours(google::cloud::optimization::v1::BatchOptimizeToursRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
+  BatchOptimizeTours(
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchOptimizeTours(NoAwaitTag, google::cloud::optimization::v1::BatchOptimizeToursRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchOptimizeTours(
+      NoAwaitTag,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-  BatchOptimizeTours( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
+  BatchOptimizeTours(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

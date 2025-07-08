@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V2_REPOSITORY_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V2_REPOSITORY_MANAGER_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_retry_traits.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -57,7 +57,8 @@ class RepositoryManagerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RepositoryManagerLimitedErrorCountRetryPolicy : public RepositoryManagerRetryPolicy {
+class RepositoryManagerLimitedErrorCountRetryPolicy
+    : public RepositoryManagerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,14 @@ class RepositoryManagerLimitedErrorCountRetryPolicy : public RepositoryManagerRe
    *     @p maximum_failures == 0.
    */
   explicit RepositoryManagerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RepositoryManagerLimitedErrorCountRetryPolicy(
       RepositoryManagerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RepositoryManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RepositoryManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RepositoryManagerLimitedErrorCountRetryPolicy(
       RepositoryManagerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RepositoryManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RepositoryManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +95,9 @@ class RepositoryManagerLimitedErrorCountRetryPolicy : public RepositoryManagerRe
   using BaseType = RepositoryManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<cloudbuild_v2_internal::RepositoryManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      cloudbuild_v2_internal::RepositoryManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -107,7 +110,8 @@ class RepositoryManagerLimitedErrorCountRetryPolicy : public RepositoryManagerRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RepositoryManagerLimitedTimeRetryPolicy : public RepositoryManagerRetryPolicy {
+class RepositoryManagerLimitedTimeRetryPolicy
+    : public RepositoryManagerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +136,14 @@ class RepositoryManagerLimitedTimeRetryPolicy : public RepositoryManagerRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit RepositoryManagerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RepositoryManagerLimitedTimeRetryPolicy(RepositoryManagerLimitedTimeRetryPolicy&& rhs) noexcept
-    : RepositoryManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RepositoryManagerLimitedTimeRetryPolicy(RepositoryManagerLimitedTimeRetryPolicy const& rhs) noexcept
-    : RepositoryManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RepositoryManagerLimitedTimeRetryPolicy(
+      RepositoryManagerLimitedTimeRetryPolicy&& rhs) noexcept
+      : RepositoryManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RepositoryManagerLimitedTimeRetryPolicy(
+      RepositoryManagerLimitedTimeRetryPolicy const& rhs) noexcept
+      : RepositoryManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,16 +165,18 @@ class RepositoryManagerLimitedTimeRetryPolicy : public RepositoryManagerRetryPol
   using BaseType = RepositoryManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<cloudbuild_v2_internal::RepositoryManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      cloudbuild_v2_internal::RepositoryManagerRetryTraits>
+      impl_;
 };
 
 /**
  * The `RepositoryManagerConnection` object for `RepositoryManagerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RepositoryManagerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `RepositoryManagerClient`.
+ * sets in `RepositoryManagerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `RepositoryManagerClient`.
  *
  * To create a concrete instance, see `MakeRepositoryManagerConnection()`.
  *
@@ -181,108 +189,135 @@ class RepositoryManagerConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(google::devtools::cloudbuild::v2::CreateConnectionRequest const& request);
+  CreateConnection(
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateConnection(NoAwaitTag, google::devtools::cloudbuild::v2::CreateConnectionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateConnection(
+      NoAwaitTag,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection( google::longrunning::Operation const& operation);
+  CreateConnection(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::devtools::cloudbuild::v2::Connection>
-  GetConnection(google::devtools::cloudbuild::v2::GetConnectionRequest const& request);
+  virtual StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
+      google::devtools::cloudbuild::v2::GetConnectionRequest const& request);
 
   virtual StreamRange<google::devtools::cloudbuild::v2::Connection>
-  ListConnections(google::devtools::cloudbuild::v2::ListConnectionsRequest request);
+  ListConnections(
+      google::devtools::cloudbuild::v2::ListConnectionsRequest request);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection(google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request);
+  UpdateConnection(
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateConnection(NoAwaitTag, google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateConnection(
+      NoAwaitTag,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection( google::longrunning::Operation const& operation);
+  UpdateConnection(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteConnection(google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request);
+  DeleteConnection(
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteConnection(NoAwaitTag, google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteConnection(
+      NoAwaitTag,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteConnection( google::longrunning::Operation const& operation);
+  DeleteConnection(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository(google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request);
+  CreateRepository(
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateRepository(NoAwaitTag, google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateRepository(
+      NoAwaitTag,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository( google::longrunning::Operation const& operation);
+  CreateRepository(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
-  BatchCreateRepositories(google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request);
+  virtual future<StatusOr<
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  BatchCreateRepositories(
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchCreateRepositories(NoAwaitTag, google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchCreateRepositories(
+      NoAwaitTag,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+          request);
 
-  virtual future<StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
-  BatchCreateRepositories( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  BatchCreateRepositories(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::devtools::cloudbuild::v2::Repository>
-  GetRepository(google::devtools::cloudbuild::v2::GetRepositoryRequest const& request);
+  virtual StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
+      google::devtools::cloudbuild::v2::GetRepositoryRequest const& request);
 
   virtual StreamRange<google::devtools::cloudbuild::v2::Repository>
-  ListRepositories(google::devtools::cloudbuild::v2::ListRepositoriesRequest request);
+  ListRepositories(
+      google::devtools::cloudbuild::v2::ListRepositoriesRequest request);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteRepository(google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request);
+  DeleteRepository(
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteRepository(NoAwaitTag, google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteRepository(
+      NoAwaitTag,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request);
 
   virtual future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteRepository( google::longrunning::Operation const& operation);
+  DeleteRepository(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
-  FetchReadWriteToken(google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const& request);
+  virtual StatusOr<
+      google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
+  FetchReadWriteToken(
+      google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
+          request);
 
   virtual StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-  FetchReadToken(google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request);
+  FetchReadToken(
+      google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request);
 
   virtual StreamRange<google::devtools::cloudbuild::v2::Repository>
-  FetchLinkableRepositories(google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest request);
+  FetchLinkableRepositories(
+      google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest
+          request);
 
   virtual StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
-  FetchGitRefs(google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request);
+  FetchGitRefs(
+      google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `RepositoryManagerConnection`.
+ * A factory function to construct an object of type
+ * `RepositoryManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of RepositoryManagerClient.
+ * should be passed as an argument to the constructor of
+ * RepositoryManagerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `RepositoryManagerConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `RepositoryManagerConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -292,8 +327,8 @@ class RepositoryManagerConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `RepositoryManagerConnection` created by
- * this function.
+ * @param options (optional) Configure the `RepositoryManagerConnection` created
+ * by this function.
  */
 std::shared_ptr<RepositoryManagerConnection> MakeRepositoryManagerConnection(
     Options options = {});

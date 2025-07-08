@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnection {
+class MockDataplexServiceConnection
+    : public dataplex_v1::DataplexServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,13 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateLake(Matcher<google::cloud::dataplex::v1::CreateLakeRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateLake(Matcher<google::cloud::dataplex::v1::CreateLakeRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>,
-  CreateLake,
-  (google::cloud::dataplex::v1::CreateLakeRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>, CreateLake,
+              (google::cloud::dataplex::v1::CreateLakeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,33 +66,34 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateLake(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateLake, (NoAwaitTag,
-    google::cloud::dataplex::v1::CreateLakeRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateLake(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>,
-  CreateLake, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateLake,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::CreateLakeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateLake(Matcher<google::cloud::dataplex::v1::UpdateLakeRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateLake(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>,
-  UpdateLake,
-  (google::cloud::dataplex::v1::UpdateLakeRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>, CreateLake,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateLake(Matcher<google::cloud::dataplex::v1::UpdateLakeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>, UpdateLake,
+              (google::cloud::dataplex::v1::UpdateLakeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -98,33 +101,35 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateLake(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateLake, (NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateLakeRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateLake,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::UpdateLakeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateLake(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateLake(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>,
-  UpdateLake, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>, UpdateLake,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteLake(Matcher<google::cloud::dataplex::v1::DeleteLakeRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteLake(Matcher<google::cloud::dataplex::v1::DeleteLakeRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteLake,
-  (google::cloud::dataplex::v1::DeleteLakeRequest const& request), (override));
-
+              DeleteLake,
+              (google::cloud::dataplex::v1::DeleteLakeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -132,45 +137,48 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteLake(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteLake, (NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteLakeRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteLake,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::DeleteLakeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteLake(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteLake(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteLake, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteLake, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Lake>),
-  ListLakes,
-  (google::cloud::dataplex::v1::ListLakesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Lake>), ListLakes,
+              (google::cloud::dataplex::v1::ListLakesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Lake>,
-  GetLake,
-  (google::cloud::dataplex::v1::GetLakeRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Lake>, GetLake,
+              (google::cloud::dataplex::v1::GetLakeRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Action>),
-  ListLakeActions,
-  (google::cloud::dataplex::v1::ListLakeActionsRequest request), (override));
+              ListLakeActions,
+              (google::cloud::dataplex::v1::ListLakeActionsRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateZone(Matcher<google::cloud::dataplex::v1::CreateZoneRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateZone(Matcher<google::cloud::dataplex::v1::CreateZoneRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>,
-  CreateZone,
-  (google::cloud::dataplex::v1::CreateZoneRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>, CreateZone,
+              (google::cloud::dataplex::v1::CreateZoneRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -178,33 +186,34 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateZone(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateZone, (NoAwaitTag,
-    google::cloud::dataplex::v1::CreateZoneRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateZone(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>,
-  CreateZone, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateZone,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::CreateZoneRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateZone(Matcher<google::cloud::dataplex::v1::UpdateZoneRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateZone(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>,
-  UpdateZone,
-  (google::cloud::dataplex::v1::UpdateZoneRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>, CreateZone,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateZone(Matcher<google::cloud::dataplex::v1::UpdateZoneRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>, UpdateZone,
+              (google::cloud::dataplex::v1::UpdateZoneRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -212,33 +221,35 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateZone(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateZone, (NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateZoneRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateZone,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::UpdateZoneRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateZone(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateZone(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>,
-  UpdateZone, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>, UpdateZone,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteZone(Matcher<google::cloud::dataplex::v1::DeleteZoneRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteZone(Matcher<google::cloud::dataplex::v1::DeleteZoneRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteZone,
-  (google::cloud::dataplex::v1::DeleteZoneRequest const& request), (override));
-
+              DeleteZone,
+              (google::cloud::dataplex::v1::DeleteZoneRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -246,45 +257,48 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteZone(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteZone, (NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteZoneRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteZone,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::DeleteZoneRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteZone(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteZone(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteZone, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteZone, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Zone>),
-  ListZones,
-  (google::cloud::dataplex::v1::ListZonesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Zone>), ListZones,
+              (google::cloud::dataplex::v1::ListZonesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Zone>,
-  GetZone,
-  (google::cloud::dataplex::v1::GetZoneRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Zone>, GetZone,
+              (google::cloud::dataplex::v1::GetZoneRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Action>),
-  ListZoneActions,
-  (google::cloud::dataplex::v1::ListZoneActionsRequest request), (override));
+              ListZoneActions,
+              (google::cloud::dataplex::v1::ListZoneActionsRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAsset(Matcher<google::cloud::dataplex::v1::CreateAssetRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateAsset(Matcher<google::cloud::dataplex::v1::CreateAssetRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>,
-  CreateAsset,
-  (google::cloud::dataplex::v1::CreateAssetRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>, CreateAsset,
+              (google::cloud::dataplex::v1::CreateAssetRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -292,33 +306,34 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateAsset(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateAsset, (NoAwaitTag,
-    google::cloud::dataplex::v1::CreateAssetRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAsset(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>,
-  CreateAsset, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAsset,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::CreateAssetRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateAsset(Matcher<google::cloud::dataplex::v1::UpdateAssetRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateAsset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>,
-  UpdateAsset,
-  (google::cloud::dataplex::v1::UpdateAssetRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>, CreateAsset,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAsset(Matcher<google::cloud::dataplex::v1::UpdateAssetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>, UpdateAsset,
+              (google::cloud::dataplex::v1::UpdateAssetRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -326,33 +341,35 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateAsset(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateAsset, (NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateAssetRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAsset,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::UpdateAssetRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateAsset(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateAsset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>,
-  UpdateAsset, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>, UpdateAsset,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteAsset(Matcher<google::cloud::dataplex::v1::DeleteAssetRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteAsset(Matcher<google::cloud::dataplex::v1::DeleteAssetRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteAsset,
-  (google::cloud::dataplex::v1::DeleteAssetRequest const& request), (override));
-
+              DeleteAsset,
+              (google::cloud::dataplex::v1::DeleteAssetRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -360,45 +377,48 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteAsset(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteAsset, (NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteAssetRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAsset,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::DeleteAssetRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteAsset(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteAsset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteAsset, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteAsset, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Asset>),
-  ListAssets,
-  (google::cloud::dataplex::v1::ListAssetsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Asset>), ListAssets,
+              (google::cloud::dataplex::v1::ListAssetsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Asset>,
-  GetAsset,
-  (google::cloud::dataplex::v1::GetAssetRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Asset>, GetAsset,
+              (google::cloud::dataplex::v1::GetAssetRequest const& request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Action>),
-  ListAssetActions,
-  (google::cloud::dataplex::v1::ListAssetActionsRequest request), (override));
+              ListAssetActions,
+              (google::cloud::dataplex::v1::ListAssetActionsRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateTask(Matcher<google::cloud::dataplex::v1::CreateTaskRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateTask(Matcher<google::cloud::dataplex::v1::CreateTaskRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>,
-  CreateTask,
-  (google::cloud::dataplex::v1::CreateTaskRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>, CreateTask,
+              (google::cloud::dataplex::v1::CreateTaskRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -406,33 +426,34 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateTask(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateTask, (NoAwaitTag,
-    google::cloud::dataplex::v1::CreateTaskRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateTask(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>,
-  CreateTask, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateTask,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::CreateTaskRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateTask(Matcher<google::cloud::dataplex::v1::UpdateTaskRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateTask(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>,
-  UpdateTask,
-  (google::cloud::dataplex::v1::UpdateTaskRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>, CreateTask,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateTask(Matcher<google::cloud::dataplex::v1::UpdateTaskRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>, UpdateTask,
+              (google::cloud::dataplex::v1::UpdateTaskRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -440,33 +461,35 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateTask(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateTask, (NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateTaskRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateTask,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::UpdateTaskRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateTask(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateTask(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>,
-  UpdateTask, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>, UpdateTask,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTask(Matcher<google::cloud::dataplex::v1::DeleteTaskRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteTask(Matcher<google::cloud::dataplex::v1::DeleteTaskRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteTask,
-  (google::cloud::dataplex::v1::DeleteTaskRequest const& request), (override));
-
+              DeleteTask,
+              (google::cloud::dataplex::v1::DeleteTaskRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -474,57 +497,61 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteTask(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteTask, (NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteTaskRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteTask,
+              (NoAwaitTag,
+               google::cloud::dataplex::v1::DeleteTaskRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTask(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteTask(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteTask, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteTask, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Task>),
-  ListTasks,
-  (google::cloud::dataplex::v1::ListTasksRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Task>), ListTasks,
+              (google::cloud::dataplex::v1::ListTasksRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Task>,
-  GetTask,
-  (google::cloud::dataplex::v1::GetTaskRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Task>, GetTask,
+              (google::cloud::dataplex::v1::GetTaskRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Job>),
-  ListJobs,
-  (google::cloud::dataplex::v1::ListJobsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Job>), ListJobs,
+              (google::cloud::dataplex::v1::ListJobsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::RunTaskResponse>,
-  RunTask,
-  (google::cloud::dataplex::v1::RunTaskRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::RunTaskResponse>, RunTask,
+              (google::cloud::dataplex::v1::RunTaskRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Job>,
-  GetJob,
-  (google::cloud::dataplex::v1::GetJobRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Job>, GetJob,
+              (google::cloud::dataplex::v1::GetJobRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelJob,
-  (google::cloud::dataplex::v1::CancelJobRequest const& request), (override));
+  MOCK_METHOD(Status, CancelJob,
+              (google::cloud::dataplex::v1::CancelJobRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateEnvironment(Matcher<google::cloud::dataplex::v1::CreateEnvironmentRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateEnvironment(Matcher<google::cloud::dataplex::v1::CreateEnvironmentRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Environment>>,
-  CreateEnvironment,
-  (google::cloud::dataplex::v1::CreateEnvironmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::Environment>>,
+      CreateEnvironment,
+      (google::cloud::dataplex::v1::CreateEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -532,33 +559,38 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateEnvironment(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateEnvironment, (NoAwaitTag,
-    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Environment>>,
-  CreateEnvironment, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEnvironment,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateEnvironment(Matcher<google::cloud::dataplex::v1::UpdateEnvironmentRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Environment>>,
-  UpdateEnvironment,
-  (google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request), (override));
+              CreateEnvironment,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEnvironment(Matcher<google::cloud::dataplex::v1::UpdateEnvironmentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::Environment>>,
+      UpdateEnvironment,
+      (google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -566,33 +598,38 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateEnvironment(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateEnvironment, (NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateEnvironment,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Environment>>,
-  UpdateEnvironment, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateEnvironment,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteEnvironment(Matcher<google::cloud::dataplex::v1::DeleteEnvironmentRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteEnvironment(Matcher<google::cloud::dataplex::v1::DeleteEnvironmentRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteEnvironment,
-  (google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
+      DeleteEnvironment,
+      (google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -600,69 +637,73 @@ class MockDataplexServiceConnection : public dataplex_v1::DataplexServiceConnect
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteEnvironment(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteEnvironment, (NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteEnvironment,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteEnvironment(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-  DeleteEnvironment, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteEnvironment,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Environment>),
-  ListEnvironments,
-  (google::cloud::dataplex::v1::ListEnvironmentsRequest request), (override));
+              ListEnvironments,
+              (google::cloud::dataplex::v1::ListEnvironmentsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Environment>,
-  GetEnvironment,
-  (google::cloud::dataplex::v1::GetEnvironmentRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::Environment>, GetEnvironment,
+      (google::cloud::dataplex::v1::GetEnvironmentRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Session>),
-  ListSessions,
-  (google::cloud::dataplex::v1::ListSessionsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::Session>), ListSessions,
+              (google::cloud::dataplex::v1::ListSessionsRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -25,15 +25,17 @@ namespace cloud {
 namespace automl_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AutoMlClient::AutoMlClient(
-    std::shared_ptr<AutoMlConnection> connection, Options opts)
+AutoMlClient::AutoMlClient(std::shared_ptr<AutoMlConnection> connection,
+                           Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AutoMlClient::~AutoMlClient() = default;
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
-AutoMlClient::CreateDataset(std::string const& parent, google::cloud::automl::v1::Dataset const& dataset, Options opts) {
+AutoMlClient::CreateDataset(std::string const& parent,
+                            google::cloud::automl::v1::Dataset const& dataset,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::CreateDatasetRequest request;
   request.set_parent(parent);
@@ -41,8 +43,9 @@ AutoMlClient::CreateDataset(std::string const& parent, google::cloud::automl::v1
   return connection_->CreateDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::CreateDataset(NoAwaitTag, std::string const& parent, google::cloud::automl::v1::Dataset const& dataset, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::CreateDataset(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::automl::v1::Dataset const& dataset, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::CreateDatasetRequest request;
   request.set_parent(parent);
@@ -51,53 +54,58 @@ AutoMlClient::CreateDataset(NoAwaitTag, std::string const& parent, google::cloud
 }
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
-AutoMlClient::CreateDataset(google::cloud::automl::v1::CreateDatasetRequest const& request, Options opts) {
+AutoMlClient::CreateDataset(
+    google::cloud::automl::v1::CreateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::CreateDataset(NoAwaitTag, google::cloud::automl::v1::CreateDatasetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::CreateDataset(
+    NoAwaitTag, google::cloud::automl::v1::CreateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
-AutoMlClient::CreateDataset(google::longrunning::Operation const& operation, Options opts) {
+AutoMlClient::CreateDataset(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(operation);
 }
 
-StatusOr<google::cloud::automl::v1::Dataset>
-AutoMlClient::GetDataset(std::string const& name, Options opts) {
+StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::GetDataset(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::GetDatasetRequest request;
   request.set_name(name);
   return connection_->GetDataset(request);
 }
 
-StatusOr<google::cloud::automl::v1::Dataset>
-AutoMlClient::GetDataset(google::cloud::automl::v1::GetDatasetRequest const& request, Options opts) {
+StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::GetDataset(
+    google::cloud::automl::v1::GetDatasetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataset(request);
 }
 
-StreamRange<google::cloud::automl::v1::Dataset>
-AutoMlClient::ListDatasets(std::string const& parent, Options opts) {
+StreamRange<google::cloud::automl::v1::Dataset> AutoMlClient::ListDatasets(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ListDatasetsRequest request;
   request.set_parent(parent);
   return connection_->ListDatasets(request);
 }
 
-StreamRange<google::cloud::automl::v1::Dataset>
-AutoMlClient::ListDatasets(google::cloud::automl::v1::ListDatasetsRequest request, Options opts) {
+StreamRange<google::cloud::automl::v1::Dataset> AutoMlClient::ListDatasets(
+    google::cloud::automl::v1::ListDatasetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDatasets(std::move(request));
 }
 
-StatusOr<google::cloud::automl::v1::Dataset>
-AutoMlClient::UpdateDataset(google::cloud::automl::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::UpdateDataset(
+    google::cloud::automl::v1::Dataset const& dataset,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::UpdateDatasetRequest request;
   *request.mutable_dataset() = dataset;
@@ -105,8 +113,9 @@ AutoMlClient::UpdateDataset(google::cloud::automl::v1::Dataset const& dataset, g
   return connection_->UpdateDataset(request);
 }
 
-StatusOr<google::cloud::automl::v1::Dataset>
-AutoMlClient::UpdateDataset(google::cloud::automl::v1::UpdateDatasetRequest const& request, Options opts) {
+StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::UpdateDataset(
+    google::cloud::automl::v1::UpdateDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataset(request);
 }
@@ -119,8 +128,8 @@ AutoMlClient::DeleteDataset(std::string const& name, Options opts) {
   return connection_->DeleteDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::DeleteDataset(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::DeleteDataset(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeleteDatasetRequest request;
   request.set_name(name);
@@ -128,25 +137,31 @@ AutoMlClient::DeleteDataset(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeleteDataset(google::cloud::automl::v1::DeleteDatasetRequest const& request, Options opts) {
+AutoMlClient::DeleteDataset(
+    google::cloud::automl::v1::DeleteDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::DeleteDataset(NoAwaitTag, google::cloud::automl::v1::DeleteDatasetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::DeleteDataset(
+    NoAwaitTag, google::cloud::automl::v1::DeleteDatasetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeleteDataset(google::longrunning::Operation const& operation, Options opts) {
+AutoMlClient::DeleteDataset(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(operation);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ImportData(std::string const& name, google::cloud::automl::v1::InputConfig const& input_config, Options opts) {
+AutoMlClient::ImportData(
+    std::string const& name,
+    google::cloud::automl::v1::InputConfig const& input_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ImportDataRequest request;
   request.set_name(name);
@@ -154,8 +169,9 @@ AutoMlClient::ImportData(std::string const& name, google::cloud::automl::v1::Inp
   return connection_->ImportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::ImportData(NoAwaitTag, std::string const& name, google::cloud::automl::v1::InputConfig const& input_config, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::ImportData(
+    NoAwaitTag, std::string const& name,
+    google::cloud::automl::v1::InputConfig const& input_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ImportDataRequest request;
   request.set_name(name);
@@ -164,25 +180,31 @@ AutoMlClient::ImportData(NoAwaitTag, std::string const& name, google::cloud::aut
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ImportData(google::cloud::automl::v1::ImportDataRequest const& request, Options opts) {
+AutoMlClient::ImportData(
+    google::cloud::automl::v1::ImportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::ImportData(NoAwaitTag, google::cloud::automl::v1::ImportDataRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::ImportData(
+    NoAwaitTag, google::cloud::automl::v1::ImportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ImportData(google::longrunning::Operation const& operation, Options opts) {
+AutoMlClient::ImportData(google::longrunning::Operation const& operation,
+                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(operation);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ExportData(std::string const& name, google::cloud::automl::v1::OutputConfig const& output_config, Options opts) {
+AutoMlClient::ExportData(
+    std::string const& name,
+    google::cloud::automl::v1::OutputConfig const& output_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ExportDataRequest request;
   request.set_name(name);
@@ -190,8 +212,10 @@ AutoMlClient::ExportData(std::string const& name, google::cloud::automl::v1::Out
   return connection_->ExportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::ExportData(NoAwaitTag, std::string const& name, google::cloud::automl::v1::OutputConfig const& output_config, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::ExportData(
+    NoAwaitTag, std::string const& name,
+    google::cloud::automl::v1::OutputConfig const& output_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ExportDataRequest request;
   request.set_name(name);
@@ -200,19 +224,22 @@ AutoMlClient::ExportData(NoAwaitTag, std::string const& name, google::cloud::aut
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ExportData(google::cloud::automl::v1::ExportDataRequest const& request, Options opts) {
+AutoMlClient::ExportData(
+    google::cloud::automl::v1::ExportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::ExportData(NoAwaitTag, google::cloud::automl::v1::ExportDataRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::ExportData(
+    NoAwaitTag, google::cloud::automl::v1::ExportDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ExportData(google::longrunning::Operation const& operation, Options opts) {
+AutoMlClient::ExportData(google::longrunning::Operation const& operation,
+                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(operation);
 }
@@ -226,13 +253,16 @@ AutoMlClient::GetAnnotationSpec(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
-AutoMlClient::GetAnnotationSpec(google::cloud::automl::v1::GetAnnotationSpecRequest const& request, Options opts) {
+AutoMlClient::GetAnnotationSpec(
+    google::cloud::automl::v1::GetAnnotationSpecRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAnnotationSpec(request);
 }
 
-future<StatusOr<google::cloud::automl::v1::Model>>
-AutoMlClient::CreateModel(std::string const& parent, google::cloud::automl::v1::Model const& model, Options opts) {
+future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
+    std::string const& parent, google::cloud::automl::v1::Model const& model,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::CreateModelRequest request;
   request.set_parent(parent);
@@ -240,8 +270,9 @@ AutoMlClient::CreateModel(std::string const& parent, google::cloud::automl::v1::
   return connection_->CreateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::CreateModel(NoAwaitTag, std::string const& parent, google::cloud::automl::v1::Model const& model, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::CreateModel(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::automl::v1::Model const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::CreateModelRequest request;
   request.set_parent(parent);
@@ -249,48 +280,50 @@ AutoMlClient::CreateModel(NoAwaitTag, std::string const& parent, google::cloud::
   return connection_->CreateModel(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::automl::v1::Model>>
-AutoMlClient::CreateModel(google::cloud::automl::v1::CreateModelRequest const& request, Options opts) {
+future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
+    google::cloud::automl::v1::CreateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::CreateModel(NoAwaitTag, google::cloud::automl::v1::CreateModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::CreateModel(
+    NoAwaitTag, google::cloud::automl::v1::CreateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::automl::v1::Model>>
-AutoMlClient::CreateModel(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateModel(operation);
 }
 
-StatusOr<google::cloud::automl::v1::Model>
-AutoMlClient::GetModel(std::string const& name, Options opts) {
+StatusOr<google::cloud::automl::v1::Model> AutoMlClient::GetModel(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::GetModelRequest request;
   request.set_name(name);
   return connection_->GetModel(request);
 }
 
-StatusOr<google::cloud::automl::v1::Model>
-AutoMlClient::GetModel(google::cloud::automl::v1::GetModelRequest const& request, Options opts) {
+StatusOr<google::cloud::automl::v1::Model> AutoMlClient::GetModel(
+    google::cloud::automl::v1::GetModelRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModel(request);
 }
 
-StreamRange<google::cloud::automl::v1::Model>
-AutoMlClient::ListModels(std::string const& parent, Options opts) {
+StreamRange<google::cloud::automl::v1::Model> AutoMlClient::ListModels(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ListModelsRequest request;
   request.set_parent(parent);
   return connection_->ListModels(request);
 }
 
-StreamRange<google::cloud::automl::v1::Model>
-AutoMlClient::ListModels(google::cloud::automl::v1::ListModelsRequest request, Options opts) {
+StreamRange<google::cloud::automl::v1::Model> AutoMlClient::ListModels(
+    google::cloud::automl::v1::ListModelsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModels(std::move(request));
 }
@@ -303,8 +336,8 @@ AutoMlClient::DeleteModel(std::string const& name, Options opts) {
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::DeleteModel(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::DeleteModel(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeleteModelRequest request;
   request.set_name(name);
@@ -312,25 +345,30 @@ AutoMlClient::DeleteModel(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeleteModel(google::cloud::automl::v1::DeleteModelRequest const& request, Options opts) {
+AutoMlClient::DeleteModel(
+    google::cloud::automl::v1::DeleteModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::DeleteModel(NoAwaitTag, google::cloud::automl::v1::DeleteModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::DeleteModel(
+    NoAwaitTag, google::cloud::automl::v1::DeleteModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeleteModel(google::longrunning::Operation const& operation, Options opts) {
+AutoMlClient::DeleteModel(google::longrunning::Operation const& operation,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(operation);
 }
 
-StatusOr<google::cloud::automl::v1::Model>
-AutoMlClient::UpdateModel(google::cloud::automl::v1::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::automl::v1::Model> AutoMlClient::UpdateModel(
+    google::cloud::automl::v1::Model const& model,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::UpdateModelRequest request;
   *request.mutable_model() = model;
@@ -338,8 +376,9 @@ AutoMlClient::UpdateModel(google::cloud::automl::v1::Model const& model, google:
   return connection_->UpdateModel(request);
 }
 
-StatusOr<google::cloud::automl::v1::Model>
-AutoMlClient::UpdateModel(google::cloud::automl::v1::UpdateModelRequest const& request, Options opts) {
+StatusOr<google::cloud::automl::v1::Model> AutoMlClient::UpdateModel(
+    google::cloud::automl::v1::UpdateModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModel(request);
 }
@@ -352,8 +391,8 @@ AutoMlClient::DeployModel(std::string const& name, Options opts) {
   return connection_->DeployModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::DeployModel(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::DeployModel(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeployModelRequest request;
   request.set_name(name);
@@ -361,19 +400,23 @@ AutoMlClient::DeployModel(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeployModel(google::cloud::automl::v1::DeployModelRequest const& request, Options opts) {
+AutoMlClient::DeployModel(
+    google::cloud::automl::v1::DeployModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeployModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::DeployModel(NoAwaitTag, google::cloud::automl::v1::DeployModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::DeployModel(
+    NoAwaitTag, google::cloud::automl::v1::DeployModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeployModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeployModel(google::longrunning::Operation const& operation, Options opts) {
+AutoMlClient::DeployModel(google::longrunning::Operation const& operation,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeployModel(operation);
 }
@@ -386,8 +429,8 @@ AutoMlClient::UndeployModel(std::string const& name, Options opts) {
   return connection_->UndeployModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::UndeployModel(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::UndeployModel(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::UndeployModelRequest request;
   request.set_name(name);
@@ -395,25 +438,32 @@ AutoMlClient::UndeployModel(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::UndeployModel(google::cloud::automl::v1::UndeployModelRequest const& request, Options opts) {
+AutoMlClient::UndeployModel(
+    google::cloud::automl::v1::UndeployModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeployModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::UndeployModel(NoAwaitTag, google::cloud::automl::v1::UndeployModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::UndeployModel(
+    NoAwaitTag, google::cloud::automl::v1::UndeployModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeployModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::UndeployModel(google::longrunning::Operation const& operation, Options opts) {
+AutoMlClient::UndeployModel(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeployModel(operation);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ExportModel(std::string const& name, google::cloud::automl::v1::ModelExportOutputConfig const& output_config, Options opts) {
+AutoMlClient::ExportModel(
+    std::string const& name,
+    google::cloud::automl::v1::ModelExportOutputConfig const& output_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ExportModelRequest request;
   request.set_name(name);
@@ -421,8 +471,10 @@ AutoMlClient::ExportModel(std::string const& name, google::cloud::automl::v1::Mo
   return connection_->ExportModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::ExportModel(NoAwaitTag, std::string const& name, google::cloud::automl::v1::ModelExportOutputConfig const& output_config, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::ExportModel(
+    NoAwaitTag, std::string const& name,
+    google::cloud::automl::v1::ModelExportOutputConfig const& output_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ExportModelRequest request;
   request.set_name(name);
@@ -431,19 +483,23 @@ AutoMlClient::ExportModel(NoAwaitTag, std::string const& name, google::cloud::au
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ExportModel(google::cloud::automl::v1::ExportModelRequest const& request, Options opts) {
+AutoMlClient::ExportModel(
+    google::cloud::automl::v1::ExportModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModel(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AutoMlClient::ExportModel(NoAwaitTag, google::cloud::automl::v1::ExportModelRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AutoMlClient::ExportModel(
+    NoAwaitTag, google::cloud::automl::v1::ExportModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ExportModel(google::longrunning::Operation const& operation, Options opts) {
+AutoMlClient::ExportModel(google::longrunning::Operation const& operation,
+                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModel(operation);
 }
@@ -457,13 +513,16 @@ AutoMlClient::GetModelEvaluation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
-AutoMlClient::GetModelEvaluation(google::cloud::automl::v1::GetModelEvaluationRequest const& request, Options opts) {
+AutoMlClient::GetModelEvaluation(
+    google::cloud::automl::v1::GetModelEvaluationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModelEvaluation(request);
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
-AutoMlClient::ListModelEvaluations(std::string const& parent, std::string const& filter, Options opts) {
+AutoMlClient::ListModelEvaluations(std::string const& parent,
+                                   std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::ListModelEvaluationsRequest request;
   request.set_parent(parent);
@@ -472,7 +531,9 @@ AutoMlClient::ListModelEvaluations(std::string const& parent, std::string const&
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
-AutoMlClient::ListModelEvaluations(google::cloud::automl::v1::ListModelEvaluationsRequest request, Options opts) {
+AutoMlClient::ListModelEvaluations(
+    google::cloud::automl::v1::ListModelEvaluationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModelEvaluations(std::move(request));
 }

@@ -26,34 +26,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PolicyBasedRoutingServiceConnectionIdempotencyPolicy::~PolicyBasedRoutingServiceConnectionIdempotencyPolicy() = default;
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::
+    ~PolicyBasedRoutingServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PolicyBasedRoutingServiceConnectionIdempotencyPolicy>
 PolicyBasedRoutingServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<PolicyBasedRoutingServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<PolicyBasedRoutingServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::ListPolicyBasedRoutes(google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest) {  // NOLINT
+Idempotency
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::ListPolicyBasedRoutes(
+    google::cloud::networkconnectivity::v1::
+        ListPolicyBasedRoutesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::GetPolicyBasedRoute(google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&) {
+Idempotency
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::GetPolicyBasedRoute(
+    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&) {
+Idempotency
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::CreatePolicyBasedRoute(
+    google::cloud::networkconnectivity::v1::
+        CreatePolicyBasedRouteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&) {
+Idempotency
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::DeletePolicyBasedRoute(
+    google::cloud::networkconnectivity::v1::
+        DeletePolicyBasedRouteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -63,33 +78,44 @@ Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyBasedRoutingServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency
+PolicyBasedRoutingServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PolicyBasedRoutingServiceConnectionIdempotencyPolicy>
-    MakeDefaultPolicyBasedRoutingServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<PolicyBasedRoutingServiceConnectionIdempotencyPolicy>();
+MakeDefaultPolicyBasedRoutingServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      PolicyBasedRoutingServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

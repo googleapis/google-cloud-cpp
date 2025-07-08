@@ -35,69 +35,72 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AssuredWorkloadsServiceLogging : public AssuredWorkloadsServiceStub {
  public:
   ~AssuredWorkloadsServiceLogging() override = default;
-  AssuredWorkloadsServiceLogging(std::shared_ptr<AssuredWorkloadsServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  AssuredWorkloadsServiceLogging(
+      std::shared_ptr<AssuredWorkloadsServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) override;
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
+      override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request)
+      override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse> RestrictAllowedResources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request) override;
+  StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::
+          RestrictAllowedResourcesRequest const& request) override;
 
   Status DeleteWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request)
+      override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request)
+      override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse> ListWorkloads(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) override;
+  StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
+  ListWorkloads(grpc::ClientContext& context, Options const& options,
+                google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&
+                    request) override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse> ListViolations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) override;
+  StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+  ListViolations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::ListViolationsRequest const& request)
+      override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::GetViolationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse> AcknowledgeViolation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request) override;
+  StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

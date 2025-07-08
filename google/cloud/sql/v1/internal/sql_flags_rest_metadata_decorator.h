@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_FLAGS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_FLAGS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_flags_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_flags_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_flags.pb.h>
 #include <memory>
@@ -41,7 +41,8 @@ class SqlFlagsServiceRestMetadata : public SqlFlagsServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlFlagsListRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

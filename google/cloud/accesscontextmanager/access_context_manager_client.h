@@ -25,12 +25,13 @@
 namespace google {
 namespace cloud {
 /// @deprecated This namespace exists for backwards compatibility. Use the
-///     types defined in accesscontextmanager_v1 instead of the aliases defined in
-///     this namespace.
+///     types defined in accesscontextmanager_v1 instead of the aliases defined
+///     in this namespace.
 namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use accesscontextmanager_v1::AccessContextManagerClient directly.
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerClient
+/// directly.
 using ::google::cloud::accesscontextmanager_v1::AccessContextManagerClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

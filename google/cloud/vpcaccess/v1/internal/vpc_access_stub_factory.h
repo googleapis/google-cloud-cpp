@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_INTERNAL_VPC_ACCESS_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_INTERNAL_VPC_ACCESS_STUB_FACTORY_H
 
+#include "google/cloud/vpcaccess/v1/internal/vpc_access_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vpcaccess/v1/internal/vpc_access_stub.h"
 #include <memory>
 
 namespace google {

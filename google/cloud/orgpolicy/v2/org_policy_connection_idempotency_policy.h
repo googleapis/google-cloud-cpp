@@ -36,45 +36,48 @@ class OrgPolicyConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest request);
+  virtual google::cloud::Idempotency ListConstraints(
+      google::cloud::orgpolicy::v2::ListConstraintsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest request);
+  virtual google::cloud::Idempotency ListPolicies(
+      google::cloud::orgpolicy::v2::ListPoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetPolicy(
+      google::cloud::orgpolicy::v2::GetPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request);
+  virtual google::cloud::Idempotency GetEffectivePolicy(
+      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const& request);
+  virtual google::cloud::Idempotency CreatePolicy(
+      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request);
+  virtual google::cloud::Idempotency UpdatePolicy(
+      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const& request);
+  virtual google::cloud::Idempotency DeletePolicy(
+      google::cloud::orgpolicy::v2::DeletePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateCustomConstraint(google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request);
+  virtual google::cloud::Idempotency CreateCustomConstraint(
+      google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateCustomConstraint(google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request);
+  virtual google::cloud::Idempotency UpdateCustomConstraint(
+      google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetCustomConstraint(google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request);
+  virtual google::cloud::Idempotency GetCustomConstraint(
+      google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListCustomConstraints(google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request);
+  virtual google::cloud::Idempotency ListCustomConstraints(
+      google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteCustomConstraint(google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request);
+  virtual google::cloud::Idempotency DeleteCustomConstraint(
+      google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+          request);
 };
 
 std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>
-    MakeDefaultOrgPolicyConnectionIdempotencyPolicy();
+MakeDefaultOrgPolicyConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_v2

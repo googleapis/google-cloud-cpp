@@ -46,94 +46,93 @@ MetricServiceMetadata::MetricServiceMetadata(
 
 StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
 MetricServiceMetadata::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListMonitoredResourceDescriptors(context, options, request);
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
 MetricServiceMetadata::GetMonitoredResourceDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMonitoredResourceDescriptor(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
 MetricServiceMetadata::ListMetricDescriptors(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListMetricDescriptors(context, options, request);
 }
 
 StatusOr<google::api::MetricDescriptor>
 MetricServiceMetadata::GetMetricDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetMetricDescriptorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMetricDescriptor(context, options, request);
 }
 
 StatusOr<google::api::MetricDescriptor>
 MetricServiceMetadata::CreateMetricDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateMetricDescriptor(context, options, request);
 }
 
-Status
-MetricServiceMetadata::DeleteMetricDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
+Status MetricServiceMetadata::DeleteMetricDescriptor(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMetricDescriptor(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListTimeSeriesResponse>
 MetricServiceMetadata::ListTimeSeries(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListTimeSeriesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListTimeSeries(context, options, request);
 }
 
-Status
-MetricServiceMetadata::CreateTimeSeries(
-    grpc::ClientContext& context,
-    Options const& options,
+Status MetricServiceMetadata::CreateTimeSeries(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateTimeSeries(context, options, request);
 }
 
-Status
-MetricServiceMetadata::CreateServiceTimeSeries(
-    grpc::ClientContext& context,
-    Options const& options,
+Status MetricServiceMetadata::CreateServiceTimeSeries(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CreateServiceTimeSeries(context, options, request);
 }
 
-future<Status>
-MetricServiceMetadata::AsyncCreateTimeSeries(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCreateTimeSeries(
-      cq, std::move(context), std::move(options), request);
+future<Status> MetricServiceMetadata::AsyncCreateTimeSeries(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCreateTimeSeries(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 void MetricServiceMetadata::SetMetadata(grpc::ClientContext& context,
@@ -145,8 +144,8 @@ void MetricServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void MetricServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

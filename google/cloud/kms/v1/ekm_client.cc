@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EkmServiceClient::EkmServiceClient(
     std::shared_ptr<EkmServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EkmServiceClient::~EkmServiceClient() = default;
 
 StreamRange<google::cloud::kms::v1::EkmConnection>
@@ -41,7 +41,8 @@ EkmServiceClient::ListEkmConnections(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::kms::v1::EkmConnection>
-EkmServiceClient::ListEkmConnections(google::cloud::kms::v1::ListEkmConnectionsRequest request, Options opts) {
+EkmServiceClient::ListEkmConnections(
+    google::cloud::kms::v1::ListEkmConnectionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEkmConnections(std::move(request));
 }
@@ -55,13 +56,17 @@ EkmServiceClient::GetEkmConnection(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceClient::GetEkmConnection(google::cloud::kms::v1::GetEkmConnectionRequest const& request, Options opts) {
+EkmServiceClient::GetEkmConnection(
+    google::cloud::kms::v1::GetEkmConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEkmConnection(request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceClient::CreateEkmConnection(std::string const& parent, std::string const& ekm_connection_id, google::cloud::kms::v1::EkmConnection const& ekm_connection, Options opts) {
+EkmServiceClient::CreateEkmConnection(
+    std::string const& parent, std::string const& ekm_connection_id,
+    google::cloud::kms::v1::EkmConnection const& ekm_connection, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::CreateEkmConnectionRequest request;
   request.set_parent(parent);
@@ -71,13 +76,17 @@ EkmServiceClient::CreateEkmConnection(std::string const& parent, std::string con
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceClient::CreateEkmConnection(google::cloud::kms::v1::CreateEkmConnectionRequest const& request, Options opts) {
+EkmServiceClient::CreateEkmConnection(
+    google::cloud::kms::v1::CreateEkmConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEkmConnection(request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceClient::UpdateEkmConnection(google::cloud::kms::v1::EkmConnection const& ekm_connection, google::protobuf::FieldMask const& update_mask, Options opts) {
+EkmServiceClient::UpdateEkmConnection(
+    google::cloud::kms::v1::EkmConnection const& ekm_connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::UpdateEkmConnectionRequest request;
   *request.mutable_ekm_connection() = ekm_connection;
@@ -86,27 +95,30 @@ EkmServiceClient::UpdateEkmConnection(google::cloud::kms::v1::EkmConnection cons
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
-EkmServiceClient::UpdateEkmConnection(google::cloud::kms::v1::UpdateEkmConnectionRequest const& request, Options opts) {
+EkmServiceClient::UpdateEkmConnection(
+    google::cloud::kms::v1::UpdateEkmConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEkmConnection(request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceClient::GetEkmConfig(std::string const& name, Options opts) {
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::GetEkmConfig(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::GetEkmConfigRequest request;
   request.set_name(name);
   return connection_->GetEkmConfig(request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceClient::GetEkmConfig(google::cloud::kms::v1::GetEkmConfigRequest const& request, Options opts) {
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::GetEkmConfig(
+    google::cloud::kms::v1::GetEkmConfigRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEkmConfig(request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceClient::UpdateEkmConfig(google::cloud::kms::v1::EkmConfig const& ekm_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::UpdateEkmConfig(
+    google::cloud::kms::v1::EkmConfig const& ekm_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::UpdateEkmConfigRequest request;
   *request.mutable_ekm_config() = ekm_config;
@@ -114,8 +126,9 @@ EkmServiceClient::UpdateEkmConfig(google::cloud::kms::v1::EkmConfig const& ekm_c
   return connection_->UpdateEkmConfig(request);
 }
 
-StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceClient::UpdateEkmConfig(google::cloud::kms::v1::UpdateEkmConfigRequest const& request, Options opts) {
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::UpdateEkmConfig(
+    google::cloud::kms::v1::UpdateEkmConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEkmConfig(request);
 }
@@ -129,51 +142,54 @@ EkmServiceClient::VerifyConnectivity(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-EkmServiceClient::VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const& request, Options opts) {
+EkmServiceClient::VerifyConnectivity(
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->VerifyConnectivity(request);
 }
 
-StreamRange<google::cloud::location::Location>
-EkmServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> EkmServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-EkmServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> EkmServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-EkmServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> EkmServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-EkmServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> EkmServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-EkmServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+EkmServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EkmServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EkmServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EkmServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EkmServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

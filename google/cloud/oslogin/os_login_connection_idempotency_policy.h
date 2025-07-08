@@ -26,10 +26,13 @@ namespace cloud {
 namespace oslogin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use oslogin_v1::MakeDefaultOsLoginServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::oslogin_v1::MakeDefaultOsLoginServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// oslogin_v1::MakeDefaultOsLoginServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::oslogin_v1::
+    MakeDefaultOsLoginServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use oslogin_v1::OsLoginServiceConnectionIdempotencyPolicy directly.
+/// @deprecated Use oslogin_v1::OsLoginServiceConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::oslogin_v1::OsLoginServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

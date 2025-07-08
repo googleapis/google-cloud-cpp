@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_DATASTORE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_DATASTORE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datastore/v1/datastore_connection.h"
 #include "google/cloud/datastore/v1/datastore_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct DatastoreConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-datastore-options
  */
 using DatastorePolicyOptionList =
-    OptionList<DatastoreRetryPolicyOption,
-               DatastoreBackoffPolicyOption,
+    OptionList<DatastoreRetryPolicyOption, DatastoreBackoffPolicyOption,
                DatastoreConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

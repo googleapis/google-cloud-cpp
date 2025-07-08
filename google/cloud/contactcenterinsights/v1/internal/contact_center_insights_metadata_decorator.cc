@@ -46,10 +46,11 @@ ContactCenterInsightsMetadata::ContactCenterInsightsMetadata(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsMetadata::CreateConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConversation(context, options, request);
 }
 
@@ -58,54 +59,61 @@ ContactCenterInsightsMetadata::AsyncUploadConversation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncUploadConversation(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncUploadConversation(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::UploadConversation(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->UploadConversation(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsMetadata::UpdateConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("conversation.name=", internal::UrlEncode(request.conversation().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("conversation.name=",
+                           internal::UrlEncode(request.conversation().name())));
   return child_->UpdateConversation(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsMetadata::GetConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConversation(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse>
 ContactCenterInsightsMetadata::ListConversations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListConversationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListConversationsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConversations(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConversation(context, options, request);
 }
 
@@ -114,45 +122,50 @@ ContactCenterInsightsMetadata::AsyncCreateAnalysis(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateAnalysis(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAnalysis(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::CreateAnalysis(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAnalysis(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsMetadata::GetAnalysis(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetAnalysisRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAnalysis(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse>
 ContactCenterInsightsMetadata::ListAnalyses(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListAnalysesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAnalyses(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteAnalysis(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteAnalysis(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAnalysis(context, options, request);
 }
 
@@ -161,18 +174,21 @@ ContactCenterInsightsMetadata::AsyncBulkAnalyzeConversations(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBulkAnalyzeConversations(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBulkAnalyzeConversations(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::BulkAnalyzeConversations(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BulkAnalyzeConversations(context, options, request);
 }
 
@@ -181,18 +197,21 @@ ContactCenterInsightsMetadata::AsyncBulkDeleteConversations(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBulkDeleteConversations(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBulkDeleteConversations(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::BulkDeleteConversations(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BulkDeleteConversations(context, options, request);
 }
 
@@ -201,18 +220,21 @@ ContactCenterInsightsMetadata::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncIngestConversations(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncIngestConversations(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::IngestConversations(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->IngestConversations(context, options, request);
 }
 
@@ -221,18 +243,21 @@ ContactCenterInsightsMetadata::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncExportInsightsData(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncExportInsightsData(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::ExportInsightsData(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ExportInsightsData(context, options, request);
 }
 
@@ -241,45 +266,52 @@ ContactCenterInsightsMetadata::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateIssueModel(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateIssueModel(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::CreateIssueModel(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 ContactCenterInsightsMetadata::UpdateIssueModel(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("issue_model.name=", internal::UrlEncode(request.issue_model().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("issue_model.name=",
+                           internal::UrlEncode(request.issue_model().name())));
   return child_->UpdateIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 ContactCenterInsightsMetadata::GetIssueModel(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetIssueModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
 ContactCenterInsightsMetadata::ListIssueModels(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListIssueModels(context, options, request);
 }
 
@@ -288,18 +320,21 @@ ContactCenterInsightsMetadata::AsyncDeleteIssueModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteIssueModel(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteIssueModel(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::DeleteIssueModel(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteIssueModel(context, options, request);
 }
 
@@ -308,18 +343,21 @@ ContactCenterInsightsMetadata::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeployIssueModel(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeployIssueModel(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::DeployIssueModel(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeployIssueModel(context, options, request);
 }
 
@@ -328,18 +366,21 @@ ContactCenterInsightsMetadata::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeployIssueModel(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncUndeployIssueModel(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::UndeployIssueModel(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UndeployIssueModel(context, options, request);
 }
 
@@ -348,18 +389,21 @@ ContactCenterInsightsMetadata::AsyncExportIssueModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncExportIssueModel(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportIssueModel(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::ExportIssueModel(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ExportIssueModel(context, options, request);
 }
 
@@ -368,189 +412,216 @@ ContactCenterInsightsMetadata::AsyncImportIssueModel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportIssueModel(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportIssueModel(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::ImportIssueModel(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsMetadata::GetIssue(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetIssue(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
 ContactCenterInsightsMetadata::ListIssues(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListIssuesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListIssues(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsMetadata::UpdateIssue(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateIssueRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("issue.name=", internal::UrlEncode(request.issue().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("issue.name=", internal::UrlEncode(request.issue().name())));
   return child_->UpdateIssue(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteIssue(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteIssue(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteIssue(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
+StatusOr<
+    google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
 ContactCenterInsightsMetadata::CalculateIssueModelStats(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("issue_model=", internal::UrlEncode(request.issue_model())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::
+        CalculateIssueModelStatsRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("issue_model=", internal::UrlEncode(request.issue_model())));
   return child_->CalculateIssueModelStats(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsMetadata::CreatePhraseMatcher(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePhraseMatcher(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsMetadata::GetPhraseMatcher(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPhraseMatcher(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse>
 ContactCenterInsightsMetadata::ListPhraseMatchers(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPhraseMatchers(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeletePhraseMatcher(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeletePhraseMatcher(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePhraseMatcher(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsMetadata::UpdatePhraseMatcher(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("phrase_matcher.name=", internal::UrlEncode(request.phrase_matcher().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("phrase_matcher.name=",
+                   internal::UrlEncode(request.phrase_matcher().name())));
   return child_->UpdatePhraseMatcher(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
 ContactCenterInsightsMetadata::CalculateStats(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CalculateStatsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("location=", internal::UrlEncode(request.location())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
   return child_->CalculateStats(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsMetadata::GetSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetSettingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSettings(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsMetadata::UpdateSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("settings.name=", internal::UrlEncode(request.settings().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("settings.name=",
+                           internal::UrlEncode(request.settings().name())));
   return child_->UpdateSettings(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
 ContactCenterInsightsMetadata::CreateAnalysisRule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAnalysisRule(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
 ContactCenterInsightsMetadata::GetAnalysisRule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAnalysisRule(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysisRulesResponse>
 ContactCenterInsightsMetadata::ListAnalysisRules(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAnalysisRules(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
 ContactCenterInsightsMetadata::UpdateAnalysisRule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("analysis_rule.name=", internal::UrlEncode(request.analysis_rule().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("analysis_rule.name=",
+                   internal::UrlEncode(request.analysis_rule().name())));
   return child_->UpdateAnalysisRule(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteAnalysisRule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteAnalysisRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAnalysisRule(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
 ContactCenterInsightsMetadata::GetEncryptionSpec(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEncryptionSpec(context, options, request);
 }
 
@@ -559,63 +630,73 @@ ContactCenterInsightsMetadata::AsyncInitializeEncryptionSpec(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("encryption_spec.name=", internal::UrlEncode(request.encryption_spec().name())));
-  return child_->AsyncInitializeEncryptionSpec(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("encryption_spec.name=",
+                   internal::UrlEncode(request.encryption_spec().name())));
+  return child_->AsyncInitializeEncryptionSpec(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::InitializeEncryptionSpec(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("encryption_spec.name=", internal::UrlEncode(request.encryption_spec().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("encryption_spec.name=",
+                   internal::UrlEncode(request.encryption_spec().name())));
   return child_->InitializeEncryptionSpec(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsMetadata::CreateView(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateViewRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateView(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsMetadata::GetView(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetView(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse>
 ContactCenterInsightsMetadata::ListViews(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListViewsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListViews(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsMetadata::UpdateView(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("view.name=", internal::UrlEncode(request.view().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("view.name=", internal::UrlEncode(request.view().name())));
   return child_->UpdateView(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteView(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteViewRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteView(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteView(context, options, request);
 }
 
@@ -624,126 +705,143 @@ ContactCenterInsightsMetadata::AsyncQueryMetrics(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("location=", internal::UrlEncode(request.location())));
-  return child_->AsyncQueryMetrics(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
+  return child_->AsyncQueryMetrics(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::QueryMetrics(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("location=", internal::UrlEncode(request.location())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
   return child_->QueryMetrics(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
 ContactCenterInsightsMetadata::CreateQaQuestion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateQaQuestion(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
 ContactCenterInsightsMetadata::GetQaQuestion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetQaQuestion(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
 ContactCenterInsightsMetadata::UpdateQaQuestion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("qa_question.name=", internal::UrlEncode(request.qa_question().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("qa_question.name=",
+                           internal::UrlEncode(request.qa_question().name())));
   return child_->UpdateQaQuestion(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteQaQuestion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteQaQuestion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteQaQuestion(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListQaQuestionsResponse>
 ContactCenterInsightsMetadata::ListQaQuestions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListQaQuestions(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
 ContactCenterInsightsMetadata::CreateQaScorecard(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateQaScorecard(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
 ContactCenterInsightsMetadata::GetQaScorecard(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetQaScorecard(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
 ContactCenterInsightsMetadata::UpdateQaScorecard(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("qa_scorecard.name=", internal::UrlEncode(request.qa_scorecard().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("qa_scorecard.name=",
+                           internal::UrlEncode(request.qa_scorecard().name())));
   return child_->UpdateQaScorecard(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteQaScorecard(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteQaScorecard(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteQaScorecard(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListQaScorecardsResponse>
 ContactCenterInsightsMetadata::ListQaScorecards(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListQaScorecards(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
 ContactCenterInsightsMetadata::CreateQaScorecardRevision(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateQaScorecardRevisionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::
+        CreateQaScorecardRevisionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateQaScorecardRevision(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
 ContactCenterInsightsMetadata::GetQaScorecardRevision(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetQaScorecardRevisionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::
+        GetQaScorecardRevisionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetQaScorecardRevision(context, options, request);
 }
 
@@ -752,108 +850,123 @@ ContactCenterInsightsMetadata::AsyncTuneQaScorecardRevision(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncTuneQaScorecardRevision(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::
+        TuneQaScorecardRevisionRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncTuneQaScorecardRevision(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::TuneQaScorecardRevision(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        TuneQaScorecardRevisionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->TuneQaScorecardRevision(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
 ContactCenterInsightsMetadata::DeployQaScorecardRevision(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeployQaScorecardRevisionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::
+        DeployQaScorecardRevisionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeployQaScorecardRevision(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
 ContactCenterInsightsMetadata::UndeployQaScorecardRevision(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UndeployQaScorecardRevisionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::
+        UndeployQaScorecardRevisionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UndeployQaScorecardRevision(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteQaScorecardRevision(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRevisionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteQaScorecardRevision(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::
+        DeleteQaScorecardRevisionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteQaScorecardRevision(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsResponse>
+StatusOr<
+    google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsResponse>
 ContactCenterInsightsMetadata::ListQaScorecardRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::
+        ListQaScorecardRevisionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListQaScorecardRevisions(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
 ContactCenterInsightsMetadata::CreateFeedbackLabel(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFeedbackLabel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListFeedbackLabelsResponse>
 ContactCenterInsightsMetadata::ListFeedbackLabels(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFeedbackLabels(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
 ContactCenterInsightsMetadata::GetFeedbackLabel(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFeedbackLabel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
 ContactCenterInsightsMetadata::UpdateFeedbackLabel(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("feedback_label.name=", internal::UrlEncode(request.feedback_label().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("feedback_label.name=",
+                   internal::UrlEncode(request.feedback_label().name())));
   return child_->UpdateFeedbackLabel(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::DeleteFeedbackLabel(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ContactCenterInsightsMetadata::DeleteFeedbackLabel(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteFeedbackLabel(context, options, request);
 }
 
-StatusOr<google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsResponse>
+StatusOr<
+    google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsResponse>
 ContactCenterInsightsMetadata::ListAllFeedbackLabels(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::
+        ListAllFeedbackLabelsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAllFeedbackLabels(context, options, request);
 }
 
@@ -862,18 +975,21 @@ ContactCenterInsightsMetadata::AsyncBulkUploadFeedbackLabels(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBulkUploadFeedbackLabels(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::
+        BulkUploadFeedbackLabelsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBulkUploadFeedbackLabels(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::BulkUploadFeedbackLabels(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkUploadFeedbackLabelsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BulkUploadFeedbackLabels(context, options, request);
 }
 
@@ -882,45 +998,47 @@ ContactCenterInsightsMetadata::AsyncBulkDownloadFeedbackLabels(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBulkDownloadFeedbackLabels(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::contactcenterinsights::v1::
+        BulkDownloadFeedbackLabelsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBulkDownloadFeedbackLabels(cq, std::move(context),
+                                                 std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::BulkDownloadFeedbackLabels(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        BulkDownloadFeedbackLabelsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BulkDownloadFeedbackLabels(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ContactCenterInsightsMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-ContactCenterInsightsMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ContactCenterInsightsMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -932,8 +1050,8 @@ ContactCenterInsightsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ContactCenterInsightsMetadata::AsyncCancelOperation(
@@ -943,21 +1061,21 @@ future<Status> ContactCenterInsightsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void ContactCenterInsightsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void ContactCenterInsightsMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ContactCenterInsightsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                                Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

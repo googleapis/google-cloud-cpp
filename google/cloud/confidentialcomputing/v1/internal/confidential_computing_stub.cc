@@ -32,54 +32,52 @@ ConfidentialComputingStub::~ConfidentialComputingStub() = default;
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 DefaultConfidentialComputingStub::CreateChallenge(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
-    google::cloud::confidentialcomputing::v1::Challenge response;
-    auto status =
-        grpc_stub_->CreateChallenge(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
+        request) {
+  google::cloud::confidentialcomputing::v1::Challenge response;
+  auto status = grpc_stub_->CreateChallenge(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 DefaultConfidentialComputingStub::VerifyAttestation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
-    google::cloud::confidentialcomputing::v1::VerifyAttestationResponse response;
-    auto status =
-        grpc_stub_->VerifyAttestation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
+        request) {
+  google::cloud::confidentialcomputing::v1::VerifyAttestationResponse response;
+  auto status = grpc_stub_->VerifyAttestation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultConfidentialComputingStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultConfidentialComputingStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

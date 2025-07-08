@@ -36,24 +36,32 @@ class DirectAccessServiceTracingConnection
   ~DirectAccessServiceTracingConnection() override = default;
 
   explicit DirectAccessServiceTracingConnection(
-    std::shared_ptr<devicestreaming_v1::DirectAccessServiceConnection> child);
+      std::shared_ptr<devicestreaming_v1::DirectAccessServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  CreateDeviceSession(google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) override;
+  CreateDeviceSession(
+      google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+          request) override;
 
   StreamRange<google::cloud::devicestreaming::v1::DeviceSession>
-  ListDeviceSessions(google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request) override;
+  ListDeviceSessions(
+      google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request)
+      override;
+
+  StatusOr<google::cloud::devicestreaming::v1::DeviceSession> GetDeviceSession(
+      google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+          request) override;
+
+  Status CancelDeviceSession(
+      google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+          request) override;
 
   StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  GetDeviceSession(google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) override;
-
-  Status
-  CancelDeviceSession(google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) override;
-
-  StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  UpdateDeviceSession(google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) override;
+  UpdateDeviceSession(
+      google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+          request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::devicestreaming::v1::AdbMessage,

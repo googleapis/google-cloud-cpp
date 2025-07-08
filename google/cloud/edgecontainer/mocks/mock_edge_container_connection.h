@@ -30,7 +30,8 @@ namespace cloud {
 namespace edgecontainer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use edgecontainer_v1_mocks::MockEdgeContainerConnection directly.
+/// @deprecated Use edgecontainer_v1_mocks::MockEdgeContainerConnection
+/// directly.
 using ::google::cloud::edgecontainer_v1_mocks::MockEdgeContainerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

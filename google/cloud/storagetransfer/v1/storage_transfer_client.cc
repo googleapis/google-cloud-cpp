@@ -28,78 +28,100 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StorageTransferServiceClient::StorageTransferServiceClient(
     std::shared_ptr<StorageTransferServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 StorageTransferServiceClient::~StorageTransferServiceClient() = default;
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
-StorageTransferServiceClient::GetGoogleServiceAccount(google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request, Options opts) {
+StorageTransferServiceClient::GetGoogleServiceAccount(
+    google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGoogleServiceAccount(request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceClient::CreateTransferJob(google::storagetransfer::v1::CreateTransferJobRequest const& request, Options opts) {
+StorageTransferServiceClient::CreateTransferJob(
+    google::storagetransfer::v1::CreateTransferJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTransferJob(request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceClient::UpdateTransferJob(google::storagetransfer::v1::UpdateTransferJobRequest const& request, Options opts) {
+StorageTransferServiceClient::UpdateTransferJob(
+    google::storagetransfer::v1::UpdateTransferJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTransferJob(request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceClient::GetTransferJob(google::storagetransfer::v1::GetTransferJobRequest const& request, Options opts) {
+StorageTransferServiceClient::GetTransferJob(
+    google::storagetransfer::v1::GetTransferJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTransferJob(request);
 }
 
 StreamRange<google::storagetransfer::v1::TransferJob>
-StorageTransferServiceClient::ListTransferJobs(google::storagetransfer::v1::ListTransferJobsRequest request, Options opts) {
+StorageTransferServiceClient::ListTransferJobs(
+    google::storagetransfer::v1::ListTransferJobsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTransferJobs(std::move(request));
 }
 
-Status
-StorageTransferServiceClient::PauseTransferOperation(google::storagetransfer::v1::PauseTransferOperationRequest const& request, Options opts) {
+Status StorageTransferServiceClient::PauseTransferOperation(
+    google::storagetransfer::v1::PauseTransferOperationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PauseTransferOperation(request);
 }
 
-Status
-StorageTransferServiceClient::ResumeTransferOperation(google::storagetransfer::v1::ResumeTransferOperationRequest const& request, Options opts) {
+Status StorageTransferServiceClient::ResumeTransferOperation(
+    google::storagetransfer::v1::ResumeTransferOperationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeTransferOperation(request);
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-StorageTransferServiceClient::RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const& request, Options opts) {
+StorageTransferServiceClient::RunTransferJob(
+    google::storagetransfer::v1::RunTransferJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTransferJob(request);
 }
 
 StatusOr<google::longrunning::Operation>
-StorageTransferServiceClient::RunTransferJob(NoAwaitTag, google::storagetransfer::v1::RunTransferJobRequest const& request, Options opts) {
+StorageTransferServiceClient::RunTransferJob(
+    NoAwaitTag,
+    google::storagetransfer::v1::RunTransferJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTransferJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-StorageTransferServiceClient::RunTransferJob(google::longrunning::Operation const& operation, Options opts) {
+StorageTransferServiceClient::RunTransferJob(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTransferJob(operation);
 }
 
-Status
-StorageTransferServiceClient::DeleteTransferJob(google::storagetransfer::v1::DeleteTransferJobRequest const& request, Options opts) {
+Status StorageTransferServiceClient::DeleteTransferJob(
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTransferJob(request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceClient::CreateAgentPool(std::string const& project_id, google::storagetransfer::v1::AgentPool const& agent_pool, std::string const& agent_pool_id, Options opts) {
+StorageTransferServiceClient::CreateAgentPool(
+    std::string const& project_id,
+    google::storagetransfer::v1::AgentPool const& agent_pool,
+    std::string const& agent_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storagetransfer::v1::CreateAgentPoolRequest request;
   request.set_project_id(project_id);
@@ -109,13 +131,17 @@ StorageTransferServiceClient::CreateAgentPool(std::string const& project_id, goo
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceClient::CreateAgentPool(google::storagetransfer::v1::CreateAgentPoolRequest const& request, Options opts) {
+StorageTransferServiceClient::CreateAgentPool(
+    google::storagetransfer::v1::CreateAgentPoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAgentPool(request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceClient::UpdateAgentPool(google::storagetransfer::v1::AgentPool const& agent_pool, google::protobuf::FieldMask const& update_mask, Options opts) {
+StorageTransferServiceClient::UpdateAgentPool(
+    google::storagetransfer::v1::AgentPool const& agent_pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storagetransfer::v1::UpdateAgentPoolRequest request;
   *request.mutable_agent_pool() = agent_pool;
@@ -124,13 +150,16 @@ StorageTransferServiceClient::UpdateAgentPool(google::storagetransfer::v1::Agent
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceClient::UpdateAgentPool(google::storagetransfer::v1::UpdateAgentPoolRequest const& request, Options opts) {
+StorageTransferServiceClient::UpdateAgentPool(
+    google::storagetransfer::v1::UpdateAgentPoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAgentPool(request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceClient::GetAgentPool(std::string const& name, Options opts) {
+StorageTransferServiceClient::GetAgentPool(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storagetransfer::v1::GetAgentPoolRequest request;
   request.set_name(name);
@@ -138,13 +167,16 @@ StorageTransferServiceClient::GetAgentPool(std::string const& name, Options opts
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceClient::GetAgentPool(google::storagetransfer::v1::GetAgentPoolRequest const& request, Options opts) {
+StorageTransferServiceClient::GetAgentPool(
+    google::storagetransfer::v1::GetAgentPoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAgentPool(request);
 }
 
 StreamRange<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceClient::ListAgentPools(std::string const& project_id, Options opts) {
+StorageTransferServiceClient::ListAgentPools(std::string const& project_id,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storagetransfer::v1::ListAgentPoolsRequest request;
   request.set_project_id(project_id);
@@ -152,27 +184,31 @@ StorageTransferServiceClient::ListAgentPools(std::string const& project_id, Opti
 }
 
 StreamRange<google::storagetransfer::v1::AgentPool>
-StorageTransferServiceClient::ListAgentPools(google::storagetransfer::v1::ListAgentPoolsRequest request, Options opts) {
+StorageTransferServiceClient::ListAgentPools(
+    google::storagetransfer::v1::ListAgentPoolsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAgentPools(std::move(request));
 }
 
-Status
-StorageTransferServiceClient::DeleteAgentPool(std::string const& name, Options opts) {
+Status StorageTransferServiceClient::DeleteAgentPool(std::string const& name,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::storagetransfer::v1::DeleteAgentPoolRequest request;
   request.set_name(name);
   return connection_->DeleteAgentPool(request);
 }
 
-Status
-StorageTransferServiceClient::DeleteAgentPool(google::storagetransfer::v1::DeleteAgentPoolRequest const& request, Options opts) {
+Status StorageTransferServiceClient::DeleteAgentPool(
+    google::storagetransfer::v1::DeleteAgentPoolRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAgentPool(request);
 }
 
 StreamRange<google::longrunning::Operation>
-StorageTransferServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StorageTransferServiceClient::ListOperations(std::string const& name,
+                                             std::string const& filter,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -181,13 +217,15 @@ StorageTransferServiceClient::ListOperations(std::string const& name, std::strin
 }
 
 StreamRange<google::longrunning::Operation>
-StorageTransferServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StorageTransferServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-StorageTransferServiceClient::GetOperation(std::string const& name, Options opts) {
+StorageTransferServiceClient::GetOperation(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -195,21 +233,22 @@ StorageTransferServiceClient::GetOperation(std::string const& name, Options opts
 }
 
 StatusOr<google::longrunning::Operation>
-StorageTransferServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StorageTransferServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-StorageTransferServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status StorageTransferServiceClient::CancelOperation(std::string const& name,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-StorageTransferServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status StorageTransferServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

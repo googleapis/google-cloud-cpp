@@ -32,22 +32,23 @@ EventServiceTracingStub::EventServiceTracingStub(
     std::shared_ptr<EventServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::talent::v4::ClientEvent> EventServiceTracingStub::CreateClientEvent(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::talent::v4::ClientEvent>
+EventServiceTracingStub::CreateClientEvent(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.EventService", "CreateClientEvent");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.EventService",
+                                     "CreateClientEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateClientEvent(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateClientEvent(context, options, request));
 }
 
 StatusOr<google::longrunning::Operation> EventServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.EventService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.EventService",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

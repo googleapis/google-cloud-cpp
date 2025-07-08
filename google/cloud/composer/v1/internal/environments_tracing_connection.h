@@ -36,146 +36,201 @@ class EnvironmentsTracingConnection
   ~EnvironmentsTracingConnection() override = default;
 
   explicit EnvironmentsTracingConnection(
-    std::shared_ptr<composer_v1::EnvironmentsConnection> child);
+      std::shared_ptr<composer_v1::EnvironmentsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request) override;
+  future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        CreateEnvironmentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateEnvironment(NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateEnvironment(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      CreateEnvironmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(
-      google::longrunning::Operation const& operation) override;
+  future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest const& request) override;
+  GetEnvironment(google::cloud::orchestration::airflow::service::v1::
+                     GetEnvironmentRequest const& request) override;
 
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-  ListEnvironments(google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest request) override;
+  ListEnvironments(google::cloud::orchestration::airflow::service::v1::
+                       ListEnvironmentsRequest request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request) override;
+  future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        UpdateEnvironmentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateEnvironment(NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      UpdateEnvironmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(
-      google::longrunning::Operation const& operation) override;
+  future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
+                        DeleteEnvironmentRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteEnvironment(NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      DeleteEnvironmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(
-      google::longrunning::Operation const& operation) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandResponse>
-  ExecuteAirflowCommand(google::cloud::orchestration::airflow::service::v1::ExecuteAirflowCommandRequest const& request) override;
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ExecuteAirflowCommandResponse>
+  ExecuteAirflowCommand(
+      google::cloud::orchestration::airflow::service::v1::
+          ExecuteAirflowCommandRequest const& request) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse>
-  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::StopAirflowCommandRequest const& request) override;
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               StopAirflowCommandResponse>
+  StopAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                         StopAirflowCommandRequest const& request) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse>
-  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::PollAirflowCommandRequest const& request) override;
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               PollAirflowCommandResponse>
+  PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::
+                         PollAirflowCommandRequest const& request) override;
 
-  StreamRange<google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse::ComposerWorkload>
-  ListWorkloads(google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest request) override;
+  StreamRange<google::cloud::orchestration::airflow::service::v1::
+                  ListWorkloadsResponse::ComposerWorkload>
+  ListWorkloads(
+      google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+          request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CheckUpgrade(NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CheckUpgrade(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      CheckUpgradeRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
-  CheckUpgrade(
-      google::longrunning::Operation const& operation) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  CreateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsSecretRequest const& request) override;
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsSecretRequest const& request) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsSecretRequest const& request) override;
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  GetUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsSecretRequest const& request) override;
 
-  StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsSecretsRequest request) override;
+  StreamRange<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  ListUserWorkloadsSecrets(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsSecretsRequest request) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
-  UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsSecretRequest const& request) override;
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsSecretRequest const& request) override;
 
-  Status
-  DeleteUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsSecretRequest const& request) override;
+  Status DeleteUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsSecretRequest const& request) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-  CreateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::CreateUserWorkloadsConfigMapRequest const& request) override;
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsConfigMapRequest const& request) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-  GetUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::GetUserWorkloadsConfigMapRequest const& request) override;
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  GetUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsConfigMapRequest const& request) override;
 
-  StreamRange<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-  ListUserWorkloadsConfigMaps(google::cloud::orchestration::airflow::service::v1::ListUserWorkloadsConfigMapsRequest request) override;
+  StreamRange<google::cloud::orchestration::airflow::service::v1::
+                  UserWorkloadsConfigMap>
+  ListUserWorkloadsConfigMaps(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsConfigMapsRequest request) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
-  UpdateUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::UpdateUserWorkloadsConfigMapRequest const& request) override;
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsConfigMapRequest const& request) override;
 
-  Status
-  DeleteUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::DeleteUserWorkloadsConfigMapRequest const& request) override;
+  Status DeleteUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsConfigMapRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
+                   SaveSnapshotRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  SaveSnapshot(NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest const& request) override;
+  StatusOr<google::longrunning::Operation> SaveSnapshot(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      SaveSnapshotRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot(
-      google::longrunning::Operation const& operation) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
+                   LoadSnapshotRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  LoadSnapshot(NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest const& request) override;
+  StatusOr<google::longrunning::Operation> LoadSnapshot(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      LoadSnapshotRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot(
-      google::longrunning::Operation const& operation) override;
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
-  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request) override;
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                      DatabaseFailoverResponse>>
+  DatabaseFailover(google::cloud::orchestration::airflow::service::v1::
+                       DatabaseFailoverRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DatabaseFailover(NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DatabaseFailover(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      DatabaseFailoverRequest const& request) override;
 
-  future<StatusOr<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverResponse>>
-  DatabaseFailover(
-      google::longrunning::Operation const& operation) override;
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                      DatabaseFailoverResponse>>
+  DatabaseFailover(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesResponse>
-  FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::FetchDatabasePropertiesRequest const& request) override;
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               FetchDatabasePropertiesResponse>
+  FetchDatabaseProperties(
+      google::cloud::orchestration::airflow::service::v1::
+          FetchDatabasePropertiesRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<composer_v1::EnvironmentsConnection> child_;

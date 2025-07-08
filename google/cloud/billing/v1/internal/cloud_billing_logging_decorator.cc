@@ -31,21 +31,18 @@ namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudBillingLogging::CloudBillingLogging(
-    std::shared_ptr<CloudBillingStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<CloudBillingStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingLogging::GetBillingAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::GetBillingAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::billing::v1::GetBillingAccountRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::billing::v1::GetBillingAccountRequest const& request) {
         return child_->GetBillingAccount(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ CloudBillingLogging::GetBillingAccount(
 
 StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse>
 CloudBillingLogging::ListBillingAccounts(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListBillingAccountsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::billing::v1::ListBillingAccountsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::billing::v1::ListBillingAccountsRequest const&
+                 request) {
         return child_->ListBillingAccounts(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ CloudBillingLogging::ListBillingAccounts(
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingLogging::UpdateBillingAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::billing::v1::UpdateBillingAccountRequest const&
+                 request) {
         return child_->UpdateBillingAccount(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +76,12 @@ CloudBillingLogging::UpdateBillingAccount(
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingLogging::CreateBillingAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::billing::v1::CreateBillingAccountRequest const&
+                 request) {
         return child_->CreateBillingAccount(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +89,12 @@ CloudBillingLogging::CreateBillingAccount(
 
 StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse>
 CloudBillingLogging::ListProjectBillingInfo(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListProjectBillingInfoRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::billing::v1::ListProjectBillingInfoRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::billing::v1::ListProjectBillingInfoRequest const&
+                 request) {
         return child_->ListProjectBillingInfo(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +102,12 @@ CloudBillingLogging::ListProjectBillingInfo(
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingLogging::GetProjectBillingInfo(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::billing::v1::GetProjectBillingInfoRequest const&
+                 request) {
         return child_->GetProjectBillingInfo(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,40 +115,34 @@ CloudBillingLogging::GetProjectBillingInfo(
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingLogging::UpdateProjectBillingInfo(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
+                 request) {
         return child_->UpdateProjectBillingInfo(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> CloudBillingLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> CloudBillingLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -165,12 +151,10 @@ CloudBillingLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudBillingLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -179,13 +163,12 @@ CloudBillingLogging::TestIamPermissions(
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingLogging::MoveBillingAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::billing::v1::MoveBillingAccountRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::billing::v1::MoveBillingAccountRequest const&
+                 request) {
         return child_->MoveBillingAccount(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

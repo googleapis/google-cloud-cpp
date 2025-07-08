@@ -36,12 +36,13 @@ class ConnectionServiceTracingConnection
   ~ConnectionServiceTracingConnection() override = default;
 
   explicit ConnectionServiceTracingConnection(
-    std::shared_ptr<apigeeconnect_v1::ConnectionServiceConnection> child);
+      std::shared_ptr<apigeeconnect_v1::ConnectionServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::apigeeconnect::v1::Connection>
-  ListConnections(google::cloud::apigeeconnect::v1::ListConnectionsRequest request) override;
+  StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest request)
+      override;
 
  private:
   std::shared_ptr<apigeeconnect_v1::ConnectionServiceConnection> child_;

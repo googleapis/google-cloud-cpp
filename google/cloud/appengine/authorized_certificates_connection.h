@@ -33,11 +33,15 @@ using ::google::cloud::appengine_v1::MakeAuthorizedCertificatesConnection;
 /// @deprecated Use appengine_v1::AuthorizedCertificatesConnection directly.
 using ::google::cloud::appengine_v1::AuthorizedCertificatesConnection;
 
-/// @deprecated Use appengine_v1::AuthorizedCertificatesLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::appengine_v1::AuthorizedCertificatesLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// appengine_v1::AuthorizedCertificatesLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::appengine_v1::
+    AuthorizedCertificatesLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use appengine_v1::AuthorizedCertificatesLimitedTimeRetryPolicy directly.
-using ::google::cloud::appengine_v1::AuthorizedCertificatesLimitedTimeRetryPolicy;
+/// @deprecated Use appengine_v1::AuthorizedCertificatesLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::appengine_v1::
+    AuthorizedCertificatesLimitedTimeRetryPolicy;
 
 /// @deprecated Use appengine_v1::AuthorizedCertificatesRetryPolicy directly.
 using ::google::cloud::appengine_v1::AuthorizedCertificatesRetryPolicy;

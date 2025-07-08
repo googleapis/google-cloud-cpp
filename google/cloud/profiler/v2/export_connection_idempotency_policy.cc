@@ -26,19 +26,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ExportServiceConnectionIdempotencyPolicy::~ExportServiceConnectionIdempotencyPolicy() = default;
+ExportServiceConnectionIdempotencyPolicy::
+    ~ExportServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ExportServiceConnectionIdempotencyPolicy>
 ExportServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ExportServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ExportServiceConnectionIdempotencyPolicy::ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest) {  // NOLINT
+Idempotency ExportServiceConnectionIdempotencyPolicy::ListProfiles(
+    google::devtools::cloudprofiler::v2::ListProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ExportServiceConnectionIdempotencyPolicy>
-    MakeDefaultExportServiceConnectionIdempotencyPolicy() {
+MakeDefaultExportServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ExportServiceConnectionIdempotencyPolicy>();
 }
 

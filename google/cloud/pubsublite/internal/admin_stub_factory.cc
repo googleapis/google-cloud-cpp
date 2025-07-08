@@ -17,17 +17,17 @@
 // source: google/cloud/pubsublite/v1/admin.proto
 
 #include "google/cloud/pubsublite/internal/admin_stub_factory.h"
+#include "google/cloud/pubsublite/internal/admin_auth_decorator.h"
+#include "google/cloud/pubsublite/internal/admin_logging_decorator.h"
+#include "google/cloud/pubsublite/internal/admin_metadata_decorator.h"
+#include "google/cloud/pubsublite/internal/admin_stub.h"
+#include "google/cloud/pubsublite/internal/admin_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsublite/internal/admin_auth_decorator.h"
-#include "google/cloud/pubsublite/internal/admin_logging_decorator.h"
-#include "google/cloud/pubsublite/internal/admin_metadata_decorator.h"
-#include "google/cloud/pubsublite/internal/admin_stub.h"
-#include "google/cloud/pubsublite/internal/admin_tracing_stub.h"
 #include <google/cloud/pubsublite/v1/admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -38,30 +38,27 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<AdminServiceStub>
-CreateDefaultAdminServiceStub(
+std::shared_ptr<AdminServiceStub> CreateDefaultAdminServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::pubsublite::v1::AdminService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::pubsublite::v1::AdminService::NewStub(channel);
   std::shared_ptr<AdminServiceStub> stub =
-    std::make_shared<DefaultAdminServiceStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultAdminServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<AdminServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<AdminServiceAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<AdminServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AdminServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

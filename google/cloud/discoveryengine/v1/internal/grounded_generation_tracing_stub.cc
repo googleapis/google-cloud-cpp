@@ -39,54 +39,67 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 GroundedGenerationServiceTracingStub::AsyncStreamGenerateGroundedContent(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.GroundedGenerationService", "StreamGenerateGroundedContent");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.GroundedGenerationService",
+      "StreamGenerateGroundedContent");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamGenerateGroundedContent(cq, context, std::move(options));
+  auto stream = child_->AsyncStreamGenerateGroundedContent(cq, context,
+                                                           std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
       google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse> GroundedGenerationServiceTracingStub::GenerateGroundedContent(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.GroundedGenerationService", "GenerateGroundedContent");
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+GroundedGenerationServiceTracingStub::GenerateGroundedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.GroundedGenerationService",
+      "GenerateGroundedContent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateGroundedContent(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateGroundedContent(context, options, request));
 }
 
-StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse> GroundedGenerationServiceTracingStub::CheckGrounding(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
+GroundedGenerationServiceTracingStub::CheckGrounding(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.GroundedGenerationService", "CheckGrounding");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.GroundedGenerationService",
+      "CheckGrounding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CheckGrounding(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> GroundedGenerationServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+GroundedGenerationServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.GroundedGenerationService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.GroundedGenerationService",
+      "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> GroundedGenerationServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+GroundedGenerationServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.GroundedGenerationService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.GroundedGenerationService",
+      "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -94,10 +107,11 @@ StatusOr<google::longrunning::Operation> GroundedGenerationServiceTracingStub::G
 }
 
 Status GroundedGenerationServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.GroundedGenerationService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.GroundedGenerationService",
+      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,10 +120,12 @@ Status GroundedGenerationServiceTracingStub::CancelOperation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<GroundedGenerationServiceStub> MakeGroundedGenerationServiceTracingStub(
+std::shared_ptr<GroundedGenerationServiceStub>
+MakeGroundedGenerationServiceTracingStub(
     std::shared_ptr<GroundedGenerationServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<GroundedGenerationServiceTracingStub>(std::move(stub));
+  return std::make_shared<GroundedGenerationServiceTracingStub>(
+      std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

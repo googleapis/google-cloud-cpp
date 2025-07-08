@@ -30,8 +30,10 @@ namespace cloud {
 namespace accesscontextmanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use accesscontextmanager_v1_mocks::MockAccessContextManagerConnection directly.
-using ::google::cloud::accesscontextmanager_v1_mocks::MockAccessContextManagerConnection;
+/// @deprecated Use
+/// accesscontextmanager_v1_mocks::MockAccessContextManagerConnection directly.
+using ::google::cloud::accesscontextmanager_v1_mocks::
+    MockAccessContextManagerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_mocks

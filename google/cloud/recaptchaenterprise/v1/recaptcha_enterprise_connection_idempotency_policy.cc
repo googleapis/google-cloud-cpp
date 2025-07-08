@@ -26,104 +26,153 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::~RecaptchaEnterpriseServiceConnectionIdempotencyPolicy() = default;
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::
+    ~RecaptchaEnterpriseServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>
 RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<
+      RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::CreateAssessment(google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::CreateAssessment(
+    google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::AnnotateAssessment(google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::AnnotateAssessment(
+    google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::CreateKey(google::cloud::recaptchaenterprise::v1::CreateKeyRequest const&) {
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::CreateKey(
+    google::cloud::recaptchaenterprise::v1::CreateKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListKeys(google::cloud::recaptchaenterprise::v1::ListKeysRequest) {  // NOLINT
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListKeys(
+    google::cloud::recaptchaenterprise::v1::ListKeysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::RetrieveLegacySecretKey(google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::RetrieveLegacySecretKey(
+    google::cloud::recaptchaenterprise::v1::
+        RetrieveLegacySecretKeyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetKey(google::cloud::recaptchaenterprise::v1::GetKeyRequest const&) {
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetKey(
+    google::cloud::recaptchaenterprise::v1::GetKeyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::UpdateKey(google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const&) {
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::UpdateKey(
+    google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::DeleteKey(google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const&) {
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::DeleteKey(
+    google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::MigrateKey(google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const&) {
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::MigrateKey(
+    google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::AddIpOverride(google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::AddIpOverride(
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::RemoveIpOverride(google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::RemoveIpOverride(
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListIpOverrides(google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest) {  // NOLINT
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListIpOverrides(
+    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetMetrics(google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&) {
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetMetrics(
+    google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::CreateFirewallPolicy(google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::CreateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        CreateFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListFirewallPolicies(google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest) {  // NOLINT
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ListFirewallPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetFirewallPolicy(google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::UpdateFirewallPolicy(google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::UpdateFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        UpdateFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::DeleteFirewallPolicy(google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::DeleteFirewallPolicy(
+    google::cloud::recaptchaenterprise::v1::
+        DeleteFirewallPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest const&) {
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ReorderFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListRelatedAccountGroups(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest) {  // NOLINT
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListRelatedAccountGroups(
+    google::cloud::recaptchaenterprise::v1::
+        ListRelatedAccountGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupMembershipsRequest) {  // NOLINT
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::
+    ListRelatedAccountGroupMemberships(
+        google::cloud::recaptchaenterprise::v1::
+            ListRelatedAccountGroupMembershipsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::SearchRelatedAccountGroupMemberships(google::cloud::recaptchaenterprise::v1::SearchRelatedAccountGroupMembershipsRequest) {  // NOLINT
+Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::
+    SearchRelatedAccountGroupMemberships(
+        google::cloud::recaptchaenterprise::v1::
+            SearchRelatedAccountGroupMembershipsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>
-    MakeDefaultRecaptchaEnterpriseServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>();
+MakeDefaultRecaptchaEnterpriseServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      RecaptchaEnterpriseServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

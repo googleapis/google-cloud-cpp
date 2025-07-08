@@ -34,58 +34,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SecuritySettingsServiceLogging : public SecuritySettingsServiceStub {
  public:
   ~SecuritySettingsServiceLogging() override = default;
-  SecuritySettingsServiceLogging(std::shared_ptr<SecuritySettingsServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  SecuritySettingsServiceLogging(
+      std::shared_ptr<SecuritySettingsServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
-  StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> CreateSecuritySettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
+  CreateSecuritySettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> GetSecuritySettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
+  GetSecuritySettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings> UpdateSecuritySettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
+  UpdateSecuritySettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse> ListSecuritySettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse>
+  ListSecuritySettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
+          request) override;
 
   Status DeleteSecuritySettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

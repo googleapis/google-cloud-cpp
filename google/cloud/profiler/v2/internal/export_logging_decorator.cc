@@ -31,21 +31,18 @@ namespace profiler_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ExportServiceLogging::ExportServiceLogging(
-    std::shared_ptr<ExportServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ExportServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
 ExportServiceLogging::ListProfiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::cloudprofiler::v2::ListProfilesRequest const&
+                 request) {
         return child_->ListProfiles(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

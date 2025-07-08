@@ -26,46 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() = default;
+ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
 ProjectsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ProjectsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::GetProject(
+    google::cloud::resourcemanager::v3::GetProjectRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest) {  // NOLINT
+Idempotency ProjectsConnectionIdempotencyPolicy::ListProjects(
+    google::cloud::resourcemanager::v3::ListProjectsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest) {  // NOLINT
+Idempotency ProjectsConnectionIdempotencyPolicy::SearchProjects(
+    google::cloud::resourcemanager::v3::SearchProjectsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::CreateProject(
+    google::cloud::resourcemanager::v3::CreateProjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::UpdateProject(
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::MoveProject(
+    google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::DeleteProject(
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::UndeleteProject(
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -75,16 +85,18 @@ Idempotency ProjectsConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
-    MakeDefaultProjectsConnectionIdempotencyPolicy() {
+MakeDefaultProjectsConnectionIdempotencyPolicy() {
   return std::make_unique<ProjectsConnectionIdempotencyPolicy>();
 }
 

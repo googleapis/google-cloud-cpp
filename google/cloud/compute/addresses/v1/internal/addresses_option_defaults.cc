@@ -35,32 +35,40 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AddressesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ADDRESSES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ADDRESSES_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_ADDRESSES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ADDRESSES_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_addresses_v1::AddressesRetryPolicyOption>()) {
     options.set<compute_addresses_v1::AddressesRetryPolicyOption>(
         compute_addresses_v1::AddressesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_addresses_v1::AddressesBackoffPolicyOption>()) {
     options.set<compute_addresses_v1::AddressesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<compute_addresses_v1::AddressesPollingPolicyOption>()) {
     options.set<compute_addresses_v1::AddressesPollingPolicyOption>(
         GenericPollingPolicy<
             compute_addresses_v1::AddressesRetryPolicyOption::Type,
             compute_addresses_v1::AddressesBackoffPolicyOption::Type>(
-            options.get<compute_addresses_v1::AddressesRetryPolicyOption>()->clone(),
+            options.get<compute_addresses_v1::AddressesRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>(
-        compute_addresses_v1::MakeDefaultAddressesConnectionIdempotencyPolicy());
+  if (!options.has<
+          compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>(
+            compute_addresses_v1::
+                MakeDefaultAddressesConnectionIdempotencyPolicy());
   }
 
   return options;

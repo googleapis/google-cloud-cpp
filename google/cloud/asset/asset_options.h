@@ -34,7 +34,8 @@ using ::google::cloud::asset_v1::AssetServicePollingPolicyOption;
 /// @deprecated Use asset_v1::AssetServiceBackoffPolicyOption directly.
 using ::google::cloud::asset_v1::AssetServiceBackoffPolicyOption;
 
-/// @deprecated Use asset_v1::AssetServiceConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use asset_v1::AssetServiceConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::asset_v1::AssetServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use asset_v1::AssetServicePolicyOptionList directly.

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_EDGE_NETWORK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_EDGE_NETWORK_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/edgenetwork/v1/edge_network_connection_idempotency_policy.h"
 #include "google/cloud/edgenetwork/v1/internal/edge_network_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class EdgeNetworkLimitedErrorCountRetryPolicy : public EdgeNetworkRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit EdgeNetworkLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   EdgeNetworkLimitedErrorCountRetryPolicy(
       EdgeNetworkLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EdgeNetworkLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EdgeNetworkLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EdgeNetworkLimitedErrorCountRetryPolicy(
       EdgeNetworkLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EdgeNetworkLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EdgeNetworkLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class EdgeNetworkLimitedErrorCountRetryPolicy : public EdgeNetworkRetryPolicy {
   using BaseType = EdgeNetworkRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<edgenetwork_v1_internal::EdgeNetworkRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      edgenetwork_v1_internal::EdgeNetworkRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,14 @@ class EdgeNetworkLimitedTimeRetryPolicy : public EdgeNetworkRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EdgeNetworkLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EdgeNetworkLimitedTimeRetryPolicy(EdgeNetworkLimitedTimeRetryPolicy&& rhs) noexcept
-    : EdgeNetworkLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EdgeNetworkLimitedTimeRetryPolicy(EdgeNetworkLimitedTimeRetryPolicy const& rhs) noexcept
-    : EdgeNetworkLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EdgeNetworkLimitedTimeRetryPolicy(
+      EdgeNetworkLimitedTimeRetryPolicy&& rhs) noexcept
+      : EdgeNetworkLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EdgeNetworkLimitedTimeRetryPolicy(
+      EdgeNetworkLimitedTimeRetryPolicy const& rhs) noexcept
+      : EdgeNetworkLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +162,9 @@ class EdgeNetworkLimitedTimeRetryPolicy : public EdgeNetworkRetryPolicy {
   using BaseType = EdgeNetworkRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<edgenetwork_v1_internal::EdgeNetworkRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      edgenetwork_v1_internal::EdgeNetworkRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,160 +186,193 @@ class EdgeNetworkConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
-  InitializeZone(google::cloud::edgenetwork::v1::InitializeZoneRequest const& request);
+  InitializeZone(
+      google::cloud::edgenetwork::v1::InitializeZoneRequest const& request);
 
-  virtual StreamRange<google::cloud::edgenetwork::v1::Zone>
-  ListZones(google::cloud::edgenetwork::v1::ListZonesRequest request);
+  virtual StreamRange<google::cloud::edgenetwork::v1::Zone> ListZones(
+      google::cloud::edgenetwork::v1::ListZonesRequest request);
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::Zone>
-  GetZone(google::cloud::edgenetwork::v1::GetZoneRequest const& request);
+  virtual StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
+      google::cloud::edgenetwork::v1::GetZoneRequest const& request);
 
-  virtual StreamRange<google::cloud::edgenetwork::v1::Network>
-  ListNetworks(google::cloud::edgenetwork::v1::ListNetworksRequest request);
+  virtual StreamRange<google::cloud::edgenetwork::v1::Network> ListNetworks(
+      google::cloud::edgenetwork::v1::ListNetworksRequest request);
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::Network>
-  GetNetwork(google::cloud::edgenetwork::v1::GetNetworkRequest const& request);
+  virtual StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
+      google::cloud::edgenetwork::v1::GetNetworkRequest const& request);
 
   virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
-  DiagnoseNetwork(google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request);
+  DiagnoseNetwork(
+      google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request);
 
   virtual future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-  CreateNetwork(google::cloud::edgenetwork::v1::CreateNetworkRequest const& request);
+  CreateNetwork(
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateNetwork(NoAwaitTag, google::cloud::edgenetwork::v1::CreateNetworkRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateNetwork(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request);
 
   virtual future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-  CreateNetwork( google::longrunning::Operation const& operation);
+  CreateNetwork(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request);
+  DeleteNetwork(
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteNetwork(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteNetwork( google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::edgenetwork::v1::Subnet>
-  ListSubnets(google::cloud::edgenetwork::v1::ListSubnetsRequest request);
-
-  virtual StatusOr<google::cloud::edgenetwork::v1::Subnet>
-  GetSubnet(google::cloud::edgenetwork::v1::GetSubnetRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  CreateSubnet(google::cloud::edgenetwork::v1::CreateSubnetRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::CreateSubnetRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  CreateSubnet( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  UpdateSubnet(google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  UpdateSubnet( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> DeleteNetwork(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request);
 
   virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request);
+  DeleteNetwork(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request);
+  virtual StreamRange<google::cloud::edgenetwork::v1::Subnet> ListSubnets(
+      google::cloud::edgenetwork::v1::ListSubnetsRequest request);
+
+  virtual StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
+      google::cloud::edgenetwork::v1::GetSubnetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateSubnet(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateSubnet(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteSubnet( google::longrunning::Operation const& operation);
+  DeleteSubnet(
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSubnet(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteSubnet(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::edgenetwork::v1::Interconnect>
-  ListInterconnects(google::cloud::edgenetwork::v1::ListInterconnectsRequest request);
+  ListInterconnects(
+      google::cloud::edgenetwork::v1::ListInterconnectsRequest request);
 
   virtual StatusOr<google::cloud::edgenetwork::v1::Interconnect>
-  GetInterconnect(google::cloud::edgenetwork::v1::GetInterconnectRequest const& request);
+  GetInterconnect(
+      google::cloud::edgenetwork::v1::GetInterconnectRequest const& request);
 
   virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
-  DiagnoseInterconnect(google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request);
+  DiagnoseInterconnect(
+      google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
+          request);
 
   virtual StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>
-  ListInterconnectAttachments(google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request);
+  ListInterconnectAttachments(
+      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest
+          request);
 
   virtual StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
-  GetInterconnectAttachment(google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request);
+  GetInterconnectAttachment(
+      google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-  CreateInterconnectAttachment(google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
+  CreateInterconnectAttachment(
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateInterconnectAttachment(NoAwaitTag, google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-  CreateInterconnectAttachment( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
+  CreateInterconnectAttachment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteInterconnectAttachment(google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request);
+  DeleteInterconnectAttachment(
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteInterconnectAttachment(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteInterconnectAttachment( google::longrunning::Operation const& operation);
+  DeleteInterconnectAttachment(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::edgenetwork::v1::Router>
-  ListRouters(google::cloud::edgenetwork::v1::ListRoutersRequest request);
+  virtual StreamRange<google::cloud::edgenetwork::v1::Router> ListRouters(
+      google::cloud::edgenetwork::v1::ListRoutersRequest request);
 
-  virtual StatusOr<google::cloud::edgenetwork::v1::Router>
-  GetRouter(google::cloud::edgenetwork::v1::GetRouterRequest const& request);
+  virtual StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
+      google::cloud::edgenetwork::v1::GetRouterRequest const& request);
 
   virtual StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
-  DiagnoseRouter(google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request);
+  DiagnoseRouter(
+      google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  CreateRouter(google::cloud::edgenetwork::v1::CreateRouterRequest const& request);
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::CreateRouterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateRouter(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  CreateRouter( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  UpdateRouter(google::cloud::edgenetwork::v1::UpdateRouterRequest const& request);
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::UpdateRouterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateRouter(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request);
 
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  UpdateRouter( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteRouter(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteRouterRequest const& request);
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteRouter( google::longrunning::Operation const& operation);
+  DeleteRouter(
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeleteRouter(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteRouter(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

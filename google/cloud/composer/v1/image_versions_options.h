@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_IMAGE_VERSIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_IMAGE_VERSIONS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/composer/v1/image_versions_connection.h"
 #include "google/cloud/composer/v1/image_versions_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct ImageVersionsConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-composer-options
  */
 using ImageVersionsPolicyOptionList =
-    OptionList<ImageVersionsRetryPolicyOption,
-               ImageVersionsBackoffPolicyOption,
+    OptionList<ImageVersionsRetryPolicyOption, ImageVersionsBackoffPolicyOption,
                ImageVersionsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,44 +32,52 @@ ExecutionsTracingStub::ExecutionsTracingStub(
     std::shared_ptr<ExecutionsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse> ExecutionsTracingStub::ListExecutions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.executions.v1.Executions", "ListExecutions");
+StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
+ExecutionsTracingStub::ListExecutions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::executions::v1::ListExecutionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.workflows.executions.v1.Executions", "ListExecutions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListExecutions(context, options, request));
 }
 
-StatusOr<google::cloud::workflows::executions::v1::Execution> ExecutionsTracingStub::CreateExecution(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.executions.v1.Executions", "CreateExecution");
+StatusOr<google::cloud::workflows::executions::v1::Execution>
+ExecutionsTracingStub::CreateExecution(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.workflows.executions.v1.Executions", "CreateExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateExecution(context, options, request));
 }
 
-StatusOr<google::cloud::workflows::executions::v1::Execution> ExecutionsTracingStub::GetExecution(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workflows::executions::v1::GetExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.executions.v1.Executions", "GetExecution");
+StatusOr<google::cloud::workflows::executions::v1::Execution>
+ExecutionsTracingStub::GetExecution(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::executions::v1::GetExecutionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.workflows.executions.v1.Executions", "GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetExecution(context, options, request));
 }
 
-StatusOr<google::cloud::workflows::executions::v1::Execution> ExecutionsTracingStub::CancelExecution(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.workflows.executions.v1.Executions", "CancelExecution");
+StatusOr<google::cloud::workflows::executions::v1::Execution>
+ExecutionsTracingStub::CancelExecution(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.workflows.executions.v1.Executions", "CancelExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

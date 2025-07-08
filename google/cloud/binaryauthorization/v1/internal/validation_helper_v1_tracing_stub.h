@@ -36,16 +36,20 @@ class ValidationHelperV1TracingStub : public ValidationHelperV1Stub {
  public:
   ~ValidationHelperV1TracingStub() override = default;
 
-  explicit ValidationHelperV1TracingStub(std::shared_ptr<ValidationHelperV1Stub> child);
+  explicit ValidationHelperV1TracingStub(
+      std::shared_ptr<ValidationHelperV1Stub> child);
 
-  StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse> ValidateAttestationOccurrence(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) override;
+  StatusOr<google::cloud::binaryauthorization::v1::
+               ValidateAttestationOccurrenceResponse>
+  ValidateAttestationOccurrence(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::
+          ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
   std::shared_ptr<ValidationHelperV1Stub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

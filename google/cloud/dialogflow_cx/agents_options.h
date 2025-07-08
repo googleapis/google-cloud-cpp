@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/agents_connection.h"
 #include "google/cloud/dialogflow_cx/agents_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct AgentsPollingPolicyOption {
  * @ingroup google-cloud-dialogflow_cx-options
  */
 using AgentsPolicyOptionList =
-    OptionList<AgentsRetryPolicyOption,
-               AgentsBackoffPolicyOption,
+    OptionList<AgentsRetryPolicyOption, AgentsBackoffPolicyOption,
                AgentsPollingPolicyOption,
                AgentsConnectionIdempotencyPolicyOption>;
 

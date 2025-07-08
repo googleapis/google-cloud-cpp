@@ -34,7 +34,8 @@ NodeGroupControllerTracingConnection::NodeGroupControllerTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerTracingConnection::CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+NodeGroupControllerTracingConnection::CreateNodeGroup(
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::CreateNodeGroup");
   internal::OTelScope scope(span);
@@ -43,12 +44,13 @@ NodeGroupControllerTracingConnection::CreateNodeGroup(google::cloud::dataproc::v
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerTracingConnection::CreateNodeGroup(
-    NoAwaitTag, google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::CreateNodeGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateNodeGroup(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateNodeGroup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
@@ -57,12 +59,12 @@ NodeGroupControllerTracingConnection::CreateNodeGroup(
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::CreateNodeGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateNodeGroup(operation));
+  return internal::EndSpan(std::move(span), child_->CreateNodeGroup(operation));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerTracingConnection::ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+NodeGroupControllerTracingConnection::ResizeNodeGroup(
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::ResizeNodeGroup");
   internal::OTelScope scope(span);
@@ -71,12 +73,13 @@ NodeGroupControllerTracingConnection::ResizeNodeGroup(google::cloud::dataproc::v
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerTracingConnection::ResizeNodeGroup(
-    NoAwaitTag, google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::ResizeNodeGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ResizeNodeGroup(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ResizeNodeGroup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
@@ -85,64 +88,77 @@ NodeGroupControllerTracingConnection::ResizeNodeGroup(
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::ResizeNodeGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->ResizeNodeGroup(operation));
+  return internal::EndSpan(std::move(span), child_->ResizeNodeGroup(operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
-NodeGroupControllerTracingConnection::GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::GetNodeGroup");
+NodeGroupControllerTracingConnection::GetNodeGroup(
+    google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::GetNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNodeGroup(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-NodeGroupControllerTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::SetIamPolicy");
+NodeGroupControllerTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-NodeGroupControllerTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::GetIamPolicy");
+NodeGroupControllerTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-NodeGroupControllerTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::TestIamPermissions");
+NodeGroupControllerTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-NodeGroupControllerTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::ListOperations");
+NodeGroupControllerTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-NodeGroupControllerTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::GetOperation");
+NodeGroupControllerTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-NodeGroupControllerTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::DeleteOperation");
+Status NodeGroupControllerTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-NodeGroupControllerTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::NodeGroupControllerConnection::CancelOperation");
+Status NodeGroupControllerTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::NodeGroupControllerConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -154,7 +170,8 @@ MakeNodeGroupControllerTracingConnection(
     std::shared_ptr<dataproc_v1::NodeGroupControllerConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<NodeGroupControllerTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<NodeGroupControllerTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -34,31 +34,43 @@ ExecutionsTracingConnection::ExecutionsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
-ExecutionsTracingConnection::ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
-  auto span = internal::MakeSpan("workflows_executions_v1::ExecutionsConnection::ListExecutions");
+ExecutionsTracingConnection::ListExecutions(
+    google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
+  auto span = internal::MakeSpan(
+      "workflows_executions_v1::ExecutionsConnection::ListExecutions");
   internal::OTelScope scope(span);
   auto sr = child_->ListExecutions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::workflows::executions::v1::Execution>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::workflows::executions::v1::Execution>(std::move(span),
+                                                           std::move(sr));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsTracingConnection::CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) {
-  auto span = internal::MakeSpan("workflows_executions_v1::ExecutionsConnection::CreateExecution");
+ExecutionsTracingConnection::CreateExecution(
+    google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workflows_executions_v1::ExecutionsConnection::CreateExecution");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateExecution(request));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsTracingConnection::GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request) {
-  auto span = internal::MakeSpan("workflows_executions_v1::ExecutionsConnection::GetExecution");
+ExecutionsTracingConnection::GetExecution(
+    google::cloud::workflows::executions::v1::GetExecutionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workflows_executions_v1::ExecutionsConnection::GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetExecution(request));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
-ExecutionsTracingConnection::CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) {
-  auto span = internal::MakeSpan("workflows_executions_v1::ExecutionsConnection::CancelExecution");
+ExecutionsTracingConnection::CancelExecution(
+    google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workflows_executions_v1::ExecutionsConnection::CancelExecution");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelExecution(request));
 }

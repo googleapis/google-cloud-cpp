@@ -33,10 +33,13 @@ using ::google::cloud::datacatalog_v1::MakePolicyTagManagerConnection;
 /// @deprecated Use datacatalog_v1::PolicyTagManagerConnection directly.
 using ::google::cloud::datacatalog_v1::PolicyTagManagerConnection;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::datacatalog_v1::PolicyTagManagerLimitedErrorCountRetryPolicy;
+/// @deprecated Use datacatalog_v1::PolicyTagManagerLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerLimitedTimeRetryPolicy directly.
+/// @deprecated Use datacatalog_v1::PolicyTagManagerLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::datacatalog_v1::PolicyTagManagerLimitedTimeRetryPolicy;
 
 /// @deprecated Use datacatalog_v1::PolicyTagManagerRetryPolicy directly.

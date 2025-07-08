@@ -33,16 +33,18 @@ VpcAccessServiceStub::~VpcAccessServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultVpcAccessServiceStub::AsyncCreateConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::vpcaccess::v1::CreateConnectorRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vpcaccess::v1::CreateConnectorRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateConnector(context, request, cq);
       },
       request, std::move(context));
@@ -50,56 +52,54 @@ DefaultVpcAccessServiceStub::AsyncCreateConnector(
 
 StatusOr<google::longrunning::Operation>
 DefaultVpcAccessServiceStub::CreateConnector(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateConnector(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 DefaultVpcAccessServiceStub::GetConnector(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
-    google::cloud::vpcaccess::v1::Connector response;
-    auto status =
-        grpc_stub_->GetConnector(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
+  google::cloud::vpcaccess::v1::Connector response;
+  auto status = grpc_stub_->GetConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 DefaultVpcAccessServiceStub::ListConnectors(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
-    google::cloud::vpcaccess::v1::ListConnectorsResponse response;
-    auto status =
-        grpc_stub_->ListConnectors(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
+  google::cloud::vpcaccess::v1::ListConnectorsResponse response;
+  auto status = grpc_stub_->ListConnectors(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultVpcAccessServiceStub::AsyncDeleteConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::vpcaccess::v1::DeleteConnectorRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteConnector(context, request, cq);
       },
       request, std::move(context));
@@ -107,55 +107,50 @@ DefaultVpcAccessServiceStub::AsyncDeleteConnector(
 
 StatusOr<google::longrunning::Operation>
 DefaultVpcAccessServiceStub::DeleteConnector(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteConnector(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultVpcAccessServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultVpcAccessServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultVpcAccessServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -184,13 +179,14 @@ future<Status> DefaultVpcAccessServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

@@ -33,11 +33,15 @@ using ::google::cloud::apigeeconnect_v1::MakeConnectionServiceConnection;
 /// @deprecated Use apigeeconnect_v1::ConnectionServiceConnection directly.
 using ::google::cloud::apigeeconnect_v1::ConnectionServiceConnection;
 
-/// @deprecated Use apigeeconnect_v1::ConnectionServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::apigeeconnect_v1::ConnectionServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// apigeeconnect_v1::ConnectionServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::apigeeconnect_v1::
+    ConnectionServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use apigeeconnect_v1::ConnectionServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::apigeeconnect_v1::ConnectionServiceLimitedTimeRetryPolicy;
+/// @deprecated Use apigeeconnect_v1::ConnectionServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::apigeeconnect_v1::
+    ConnectionServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use apigeeconnect_v1::ConnectionServiceRetryPolicy directly.
 using ::google::cloud::apigeeconnect_v1::ConnectionServiceRetryPolicy;

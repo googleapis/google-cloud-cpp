@@ -21,12 +21,12 @@
 
 #include "google/cloud/containeranalysis/v1/container_analysis_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/iam_updater.h"
 #include <memory>
 #include <string>
 
@@ -46,9 +46,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// analysis and is generally stored in a separate project, called a `Provider`.
 /// Multiple occurrences can refer to the same note.
 ///
-/// For example, an SSL vulnerability could affect multiple images. In this case,
-/// there would be one note for the vulnerability and an occurrence for each
-/// image with the vulnerability referring to that note.
+/// For example, an SSL vulnerability could affect multiple images. In this
+/// case, there would be one note for the vulnerability and an occurrence for
+/// each image with the vulnerability referring to that note.
 ///
 /// @par Equality
 ///
@@ -75,7 +75,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ContainerAnalysisClient {
  public:
-  explicit ContainerAnalysisClient(std::shared_ptr<ContainerAnalysisConnection> connection, Options opts = {});
+  explicit ContainerAnalysisClient(
+      std::shared_ptr<ContainerAnalysisConnection> connection,
+      Options opts = {});
   ~ContainerAnalysisClient();
 
   ///@{
@@ -88,10 +90,12 @@ class ContainerAnalysisClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ContainerAnalysisClient const& a, ContainerAnalysisClient const& b) {
+  friend bool operator==(ContainerAnalysisClient const& a,
+                         ContainerAnalysisClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ContainerAnalysisClient const& a, ContainerAnalysisClient const& b) {
+  friend bool operator!=(ContainerAnalysisClient const& a,
+                         ContainerAnalysisClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -130,8 +134,9 @@ class ContainerAnalysisClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -153,8 +158,9 @@ class ContainerAnalysisClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +196,8 @@ class ContainerAnalysisClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -223,8 +229,8 @@ class ContainerAnalysisClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +266,8 @@ class ContainerAnalysisClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -296,8 +302,9 @@ class ContainerAnalysisClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -332,8 +339,9 @@ class ContainerAnalysisClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +367,11 @@ class ContainerAnalysisClient {
   /// [google.devtools.containeranalysis.v1.VulnerabilityOccurrencesSummary]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-  GetVulnerabilityOccurrencesSummary(std::string const& parent, std::string const& filter, Options opts = {});
+  StatusOr<
+      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+  GetVulnerabilityOccurrencesSummary(std::string const& parent,
+                                     std::string const& filter,
+                                     Options opts = {});
 
   // clang-format off
   ///
@@ -389,8 +400,12 @@ class ContainerAnalysisClient {
   /// [google.devtools.containeranalysis.v1.VulnerabilityOccurrencesSummary]: @googleapis_reference_link{google/devtools/containeranalysis/v1/containeranalysis.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-  GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request, Options opts = {});
+  StatusOr<
+      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+  GetVulnerabilityOccurrencesSummary(
+      google::devtools::containeranalysis::v1::
+          GetVulnerabilityOccurrencesSummaryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -420,7 +435,9 @@ class ContainerAnalysisClient {
   ///
   // clang-format on
   StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
-  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const& request, Options opts = {});
+  ExportSBOM(
+      google::devtools::containeranalysis::v1::ExportSBOMRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ContainerAnalysisConnection> connection_;

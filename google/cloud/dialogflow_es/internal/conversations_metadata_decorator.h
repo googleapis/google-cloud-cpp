@@ -34,94 +34,93 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ConversationsMetadata : public ConversationsStub {
  public:
   ~ConversationsMetadata() override = default;
-  ConversationsMetadata(
-      std::shared_ptr<ConversationsStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  ConversationsMetadata(std::shared_ptr<ConversationsStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::CreateConversationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::CreateConversationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse> ListConversations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListConversationsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
+  ListConversations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::ListConversationsRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> GetConversation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetConversationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GetConversationRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CompleteConversation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::CompleteConversationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::CompleteConversationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse> IngestContextReferences(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::IngestContextReferencesRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+  IngestContextReferences(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+          request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse> ListMessages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListMessagesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::ListMessagesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse> SuggestConversationSummary(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse> GenerateStatelessSummary(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+  GenerateStatelessSummary(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse> GenerateStatelessSuggestion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+  GenerateStatelessSuggestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse> SearchKnowledge(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
+  SearchKnowledge(grpc::ClientContext& context, Options const& options,
+                  google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
+                      request) override;
 
-  StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse> GenerateSuggestions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+  GenerateSuggestions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

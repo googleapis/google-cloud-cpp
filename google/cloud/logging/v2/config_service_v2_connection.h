@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_CONFIG_SERVICE_V2_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_CONFIG_SERVICE_V2_CONNECTION_H
 
+#include "google/cloud/logging/v2/config_service_v2_connection_idempotency_policy.h"
+#include "google/cloud/logging/v2/internal/config_service_v2_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
-#include "google/cloud/logging/v2/config_service_v2_connection_idempotency_policy.h"
-#include "google/cloud/logging/v2/internal/config_service_v2_retry_traits.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -56,7 +56,8 @@ class ConfigServiceV2RetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConfigServiceV2LimitedErrorCountRetryPolicy : public ConfigServiceV2RetryPolicy {
+class ConfigServiceV2LimitedErrorCountRetryPolicy
+    : public ConfigServiceV2RetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ConfigServiceV2LimitedErrorCountRetryPolicy : public ConfigServiceV2RetryP
    *     @p maximum_failures == 0.
    */
   explicit ConfigServiceV2LimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ConfigServiceV2LimitedErrorCountRetryPolicy(
       ConfigServiceV2LimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ConfigServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConfigServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConfigServiceV2LimitedErrorCountRetryPolicy(
       ConfigServiceV2LimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ConfigServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConfigServiceV2LimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ConfigServiceV2LimitedErrorCountRetryPolicy : public ConfigServiceV2RetryP
   using BaseType = ConfigServiceV2RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<logging_v2_internal::ConfigServiceV2RetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      logging_v2_internal::ConfigServiceV2RetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class ConfigServiceV2LimitedErrorCountRetryPolicy : public ConfigServiceV2RetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConfigServiceV2LimitedTimeRetryPolicy : public ConfigServiceV2RetryPolicy {
+class ConfigServiceV2LimitedTimeRetryPolicy
+    : public ConfigServiceV2RetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class ConfigServiceV2LimitedTimeRetryPolicy : public ConfigServiceV2RetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit ConfigServiceV2LimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ConfigServiceV2LimitedTimeRetryPolicy(ConfigServiceV2LimitedTimeRetryPolicy&& rhs) noexcept
-    : ConfigServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConfigServiceV2LimitedTimeRetryPolicy(ConfigServiceV2LimitedTimeRetryPolicy const& rhs) noexcept
-    : ConfigServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConfigServiceV2LimitedTimeRetryPolicy(
+      ConfigServiceV2LimitedTimeRetryPolicy&& rhs) noexcept
+      : ConfigServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConfigServiceV2LimitedTimeRetryPolicy(
+      ConfigServiceV2LimitedTimeRetryPolicy const& rhs) noexcept
+      : ConfigServiceV2LimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +164,9 @@ class ConfigServiceV2LimitedTimeRetryPolicy : public ConfigServiceV2RetryPolicy 
   using BaseType = ConfigServiceV2RetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<logging_v2_internal::ConfigServiceV2RetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      logging_v2_internal::ConfigServiceV2RetryTraits>
+      impl_;
 };
 
 /**
@@ -179,151 +187,152 @@ class ConfigServiceV2Connection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::logging::v2::LogBucket>
-  ListBuckets(google::logging::v2::ListBucketsRequest request);
+  virtual StreamRange<google::logging::v2::LogBucket> ListBuckets(
+      google::logging::v2::ListBucketsRequest request);
 
-  virtual StatusOr<google::logging::v2::LogBucket>
-  GetBucket(google::logging::v2::GetBucketRequest const& request);
+  virtual StatusOr<google::logging::v2::LogBucket> GetBucket(
+      google::logging::v2::GetBucketRequest const& request);
 
-  virtual future<StatusOr<google::logging::v2::LogBucket>>
-  CreateBucketAsync(google::logging::v2::CreateBucketRequest const& request);
+  virtual future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
+      google::logging::v2::CreateBucketRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateBucketAsync(NoAwaitTag, google::logging::v2::CreateBucketRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateBucketAsync(
+      NoAwaitTag, google::logging::v2::CreateBucketRequest const& request);
 
-  virtual future<StatusOr<google::logging::v2::LogBucket>>
-  CreateBucketAsync( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::logging::v2::LogBucket>>
-  UpdateBucketAsync(google::logging::v2::UpdateBucketRequest const& request);
+  virtual future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
+      google::logging::v2::UpdateBucketRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateBucketAsync(NoAwaitTag, google::logging::v2::UpdateBucketRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateBucketAsync(
+      NoAwaitTag, google::logging::v2::UpdateBucketRequest const& request);
 
-  virtual future<StatusOr<google::logging::v2::LogBucket>>
-  UpdateBucketAsync( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
+      google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::logging::v2::LogBucket>
-  CreateBucket(google::logging::v2::CreateBucketRequest const& request);
+  virtual StatusOr<google::logging::v2::LogBucket> CreateBucket(
+      google::logging::v2::CreateBucketRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogBucket>
-  UpdateBucket(google::logging::v2::UpdateBucketRequest const& request);
+  virtual StatusOr<google::logging::v2::LogBucket> UpdateBucket(
+      google::logging::v2::UpdateBucketRequest const& request);
 
-  virtual Status
-  DeleteBucket(google::logging::v2::DeleteBucketRequest const& request);
+  virtual Status DeleteBucket(
+      google::logging::v2::DeleteBucketRequest const& request);
 
-  virtual Status
-  UndeleteBucket(google::logging::v2::UndeleteBucketRequest const& request);
+  virtual Status UndeleteBucket(
+      google::logging::v2::UndeleteBucketRequest const& request);
 
-  virtual StreamRange<google::logging::v2::LogView>
-  ListViews(google::logging::v2::ListViewsRequest request);
+  virtual StreamRange<google::logging::v2::LogView> ListViews(
+      google::logging::v2::ListViewsRequest request);
 
-  virtual StatusOr<google::logging::v2::LogView>
-  GetView(google::logging::v2::GetViewRequest const& request);
+  virtual StatusOr<google::logging::v2::LogView> GetView(
+      google::logging::v2::GetViewRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogView>
-  CreateView(google::logging::v2::CreateViewRequest const& request);
+  virtual StatusOr<google::logging::v2::LogView> CreateView(
+      google::logging::v2::CreateViewRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogView>
-  UpdateView(google::logging::v2::UpdateViewRequest const& request);
+  virtual StatusOr<google::logging::v2::LogView> UpdateView(
+      google::logging::v2::UpdateViewRequest const& request);
 
-  virtual Status
-  DeleteView(google::logging::v2::DeleteViewRequest const& request);
+  virtual Status DeleteView(
+      google::logging::v2::DeleteViewRequest const& request);
 
-  virtual StreamRange<google::logging::v2::LogSink>
-  ListSinks(google::logging::v2::ListSinksRequest request);
+  virtual StreamRange<google::logging::v2::LogSink> ListSinks(
+      google::logging::v2::ListSinksRequest request);
 
-  virtual StatusOr<google::logging::v2::LogSink>
-  GetSink(google::logging::v2::GetSinkRequest const& request);
+  virtual StatusOr<google::logging::v2::LogSink> GetSink(
+      google::logging::v2::GetSinkRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogSink>
-  CreateSink(google::logging::v2::CreateSinkRequest const& request);
+  virtual StatusOr<google::logging::v2::LogSink> CreateSink(
+      google::logging::v2::CreateSinkRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogSink>
-  UpdateSink(google::logging::v2::UpdateSinkRequest const& request);
+  virtual StatusOr<google::logging::v2::LogSink> UpdateSink(
+      google::logging::v2::UpdateSinkRequest const& request);
 
-  virtual Status
-  DeleteSink(google::logging::v2::DeleteSinkRequest const& request);
+  virtual Status DeleteSink(
+      google::logging::v2::DeleteSinkRequest const& request);
 
-  virtual future<StatusOr<google::logging::v2::Link>>
-  CreateLink(google::logging::v2::CreateLinkRequest const& request);
+  virtual future<StatusOr<google::logging::v2::Link>> CreateLink(
+      google::logging::v2::CreateLinkRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateLink(NoAwaitTag, google::logging::v2::CreateLinkRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateLink(
+      NoAwaitTag, google::logging::v2::CreateLinkRequest const& request);
 
-  virtual future<StatusOr<google::logging::v2::Link>>
-  CreateLink( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::logging::v2::Link>> CreateLink(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::logging::v2::LinkMetadata>>
-  DeleteLink(google::logging::v2::DeleteLinkRequest const& request);
+  virtual future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
+      google::logging::v2::DeleteLinkRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteLink(NoAwaitTag, google::logging::v2::DeleteLinkRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteLink(
+      NoAwaitTag, google::logging::v2::DeleteLinkRequest const& request);
 
-  virtual future<StatusOr<google::logging::v2::LinkMetadata>>
-  DeleteLink( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
+      google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::logging::v2::Link>
-  ListLinks(google::logging::v2::ListLinksRequest request);
+  virtual StreamRange<google::logging::v2::Link> ListLinks(
+      google::logging::v2::ListLinksRequest request);
 
-  virtual StatusOr<google::logging::v2::Link>
-  GetLink(google::logging::v2::GetLinkRequest const& request);
+  virtual StatusOr<google::logging::v2::Link> GetLink(
+      google::logging::v2::GetLinkRequest const& request);
 
-  virtual StreamRange<google::logging::v2::LogExclusion>
-  ListExclusions(google::logging::v2::ListExclusionsRequest request);
+  virtual StreamRange<google::logging::v2::LogExclusion> ListExclusions(
+      google::logging::v2::ListExclusionsRequest request);
 
-  virtual StatusOr<google::logging::v2::LogExclusion>
-  GetExclusion(google::logging::v2::GetExclusionRequest const& request);
+  virtual StatusOr<google::logging::v2::LogExclusion> GetExclusion(
+      google::logging::v2::GetExclusionRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogExclusion>
-  CreateExclusion(google::logging::v2::CreateExclusionRequest const& request);
+  virtual StatusOr<google::logging::v2::LogExclusion> CreateExclusion(
+      google::logging::v2::CreateExclusionRequest const& request);
 
-  virtual StatusOr<google::logging::v2::LogExclusion>
-  UpdateExclusion(google::logging::v2::UpdateExclusionRequest const& request);
+  virtual StatusOr<google::logging::v2::LogExclusion> UpdateExclusion(
+      google::logging::v2::UpdateExclusionRequest const& request);
 
-  virtual Status
-  DeleteExclusion(google::logging::v2::DeleteExclusionRequest const& request);
+  virtual Status DeleteExclusion(
+      google::logging::v2::DeleteExclusionRequest const& request);
 
-  virtual StatusOr<google::logging::v2::CmekSettings>
-  GetCmekSettings(google::logging::v2::GetCmekSettingsRequest const& request);
+  virtual StatusOr<google::logging::v2::CmekSettings> GetCmekSettings(
+      google::logging::v2::GetCmekSettingsRequest const& request);
 
-  virtual StatusOr<google::logging::v2::CmekSettings>
-  UpdateCmekSettings(google::logging::v2::UpdateCmekSettingsRequest const& request);
+  virtual StatusOr<google::logging::v2::CmekSettings> UpdateCmekSettings(
+      google::logging::v2::UpdateCmekSettingsRequest const& request);
 
-  virtual StatusOr<google::logging::v2::Settings>
-  GetSettings(google::logging::v2::GetSettingsRequest const& request);
+  virtual StatusOr<google::logging::v2::Settings> GetSettings(
+      google::logging::v2::GetSettingsRequest const& request);
 
-  virtual StatusOr<google::logging::v2::Settings>
-  UpdateSettings(google::logging::v2::UpdateSettingsRequest const& request);
+  virtual StatusOr<google::logging::v2::Settings> UpdateSettings(
+      google::logging::v2::UpdateSettingsRequest const& request);
 
   virtual future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
   CopyLogEntries(google::logging::v2::CopyLogEntriesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CopyLogEntries(NoAwaitTag, google::logging::v2::CopyLogEntriesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CopyLogEntries(
+      NoAwaitTag, google::logging::v2::CopyLogEntriesRequest const& request);
 
   virtual future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
-  CopyLogEntries( google::longrunning::Operation const& operation);
+  CopyLogEntries(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ConfigServiceV2Connection`.
+ * A factory function to construct an object of type
+ * `ConfigServiceV2Connection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of ConfigServiceV2Client.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ConfigServiceV2Connection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ConfigServiceV2Connection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -333,8 +342,8 @@ class ConfigServiceV2Connection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ConfigServiceV2Connection` created by
- * this function.
+ * @param options (optional) Configure the `ConfigServiceV2Connection` created
+ * by this function.
  */
 std::shared_ptr<ConfigServiceV2Connection> MakeConfigServiceV2Connection(
     Options options = {});

@@ -34,56 +34,70 @@ AnswerRecordsTracingConnection::AnswerRecordsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::v2::AnswerRecord>
-AnswerRecordsTracingConnection::ListAnswerRecords(google::cloud::dialogflow::v2::ListAnswerRecordsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::AnswerRecordsConnection::ListAnswerRecords");
+AnswerRecordsTracingConnection::ListAnswerRecords(
+    google::cloud::dialogflow::v2::ListAnswerRecordsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::AnswerRecordsConnection::ListAnswerRecords");
   internal::OTelScope scope(span);
   auto sr = child_->ListAnswerRecords(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::AnswerRecord>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::AnswerRecord>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
-AnswerRecordsTracingConnection::UpdateAnswerRecord(google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::AnswerRecordsConnection::UpdateAnswerRecord");
+AnswerRecordsTracingConnection::UpdateAnswerRecord(
+    google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::AnswerRecordsConnection::UpdateAnswerRecord");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateAnswerRecord(request));
 }
 
 StreamRange<google::cloud::location::Location>
-AnswerRecordsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::AnswerRecordsConnection::ListLocations");
+AnswerRecordsTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::AnswerRecordsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-AnswerRecordsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::AnswerRecordsConnection::GetLocation");
+AnswerRecordsTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::AnswerRecordsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-AnswerRecordsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::AnswerRecordsConnection::ListOperations");
+AnswerRecordsTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::AnswerRecordsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AnswerRecordsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::AnswerRecordsConnection::GetOperation");
+AnswerRecordsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::AnswerRecordsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-AnswerRecordsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::AnswerRecordsConnection::CancelOperation");
+Status AnswerRecordsTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::AnswerRecordsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

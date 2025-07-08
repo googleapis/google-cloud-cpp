@@ -44,143 +44,132 @@ GrafeasMetadata::GrafeasMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<grafeas::v1::Occurrence>
-GrafeasMetadata::GetOccurrence(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::Occurrence> GrafeasMetadata::GetOccurrence(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::GetOccurrenceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOccurrence(context, options, request);
 }
 
-StatusOr<grafeas::v1::ListOccurrencesResponse>
-GrafeasMetadata::ListOccurrences(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::ListOccurrencesResponse> GrafeasMetadata::ListOccurrences(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListOccurrencesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListOccurrences(context, options, request);
 }
 
-Status
-GrafeasMetadata::DeleteOccurrence(
-    grpc::ClientContext& context,
-    Options const& options,
+Status GrafeasMetadata::DeleteOccurrence(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::DeleteOccurrenceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOccurrence(context, options, request);
 }
 
-StatusOr<grafeas::v1::Occurrence>
-GrafeasMetadata::CreateOccurrence(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::Occurrence> GrafeasMetadata::CreateOccurrence(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::CreateOccurrenceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateOccurrence(context, options, request);
 }
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
 GrafeasMetadata::BatchCreateOccurrences(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::BatchCreateOccurrencesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCreateOccurrences(context, options, request);
 }
 
-StatusOr<grafeas::v1::Occurrence>
-GrafeasMetadata::UpdateOccurrence(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::Occurrence> GrafeasMetadata::UpdateOccurrence(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::UpdateOccurrenceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateOccurrence(context, options, request);
 }
 
-StatusOr<grafeas::v1::Note>
-GrafeasMetadata::GetOccurrenceNote(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::Note> GrafeasMetadata::GetOccurrenceNote(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::GetOccurrenceNoteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOccurrenceNote(context, options, request);
 }
 
-StatusOr<grafeas::v1::Note>
-GrafeasMetadata::GetNote(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::Note> GrafeasMetadata::GetNote(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::GetNoteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNote(context, options, request);
 }
 
-StatusOr<grafeas::v1::ListNotesResponse>
-GrafeasMetadata::ListNotes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::ListNotesResponse> GrafeasMetadata::ListNotes(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListNotesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNotes(context, options, request);
 }
 
-Status
-GrafeasMetadata::DeleteNote(
-    grpc::ClientContext& context,
-    Options const& options,
+Status GrafeasMetadata::DeleteNote(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::DeleteNoteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteNote(context, options, request);
 }
 
-StatusOr<grafeas::v1::Note>
-GrafeasMetadata::CreateNote(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::Note> GrafeasMetadata::CreateNote(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::CreateNoteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateNote(context, options, request);
 }
 
 StatusOr<grafeas::v1::BatchCreateNotesResponse>
 GrafeasMetadata::BatchCreateNotes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::BatchCreateNotesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCreateNotes(context, options, request);
 }
 
-StatusOr<grafeas::v1::Note>
-GrafeasMetadata::UpdateNote(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<grafeas::v1::Note> GrafeasMetadata::UpdateNote(
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::UpdateNoteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateNote(context, options, request);
 }
 
 StatusOr<grafeas::v1::ListNoteOccurrencesResponse>
 GrafeasMetadata::ListNoteOccurrences(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListNoteOccurrencesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListNoteOccurrences(context, options, request);
 }
 
 void GrafeasMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                  Options const& options,
+                                  std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void GrafeasMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                  Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

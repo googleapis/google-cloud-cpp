@@ -36,47 +36,48 @@ class SessionControllerConnectionIdempotencyPolicy {
   virtual ~SessionControllerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SessionControllerConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SessionControllerConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateSession(google::cloud::dataproc::v1::CreateSessionRequest const& request);
+  virtual google::cloud::Idempotency CreateSession(
+      google::cloud::dataproc::v1::CreateSessionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetSession(google::cloud::dataproc::v1::GetSessionRequest const& request);
+  virtual google::cloud::Idempotency GetSession(
+      google::cloud::dataproc::v1::GetSessionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSessions(google::cloud::dataproc::v1::ListSessionsRequest request);
+  virtual google::cloud::Idempotency ListSessions(
+      google::cloud::dataproc::v1::ListSessionsRequest request);
 
-  virtual google::cloud::Idempotency
-  TerminateSession(google::cloud::dataproc::v1::TerminateSessionRequest const& request);
+  virtual google::cloud::Idempotency TerminateSession(
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSession(google::cloud::dataproc::v1::DeleteSessionRequest const& request);
+  virtual google::cloud::Idempotency DeleteSession(
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<SessionControllerConnectionIdempotencyPolicy>
-    MakeDefaultSessionControllerConnectionIdempotencyPolicy();
+MakeDefaultSessionControllerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1

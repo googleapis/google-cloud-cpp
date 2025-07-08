@@ -31,45 +31,45 @@ ReferenceListServiceAuth::ReferenceListServiceAuth(
     std::shared_ptr<ReferenceListServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::chronicle::v1::ReferenceList> ReferenceListServiceAuth::GetReferenceList(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ReferenceList>
+ReferenceListServiceAuth::GetReferenceList(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetReferenceListRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetReferenceList(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse> ReferenceListServiceAuth::ListReferenceLists(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ListReferenceListsResponse>
+ReferenceListServiceAuth::ListReferenceLists(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListReferenceListsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListReferenceLists(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ReferenceList> ReferenceListServiceAuth::CreateReferenceList(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ReferenceList>
+ReferenceListServiceAuth::CreateReferenceList(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateReferenceListRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateReferenceList(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::ReferenceList> ReferenceListServiceAuth::UpdateReferenceList(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::ReferenceList>
+ReferenceListServiceAuth::UpdateReferenceList(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateReferenceListRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateReferenceList(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ReferenceListServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ReferenceListServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +77,7 @@ StatusOr<google::longrunning::ListOperationsResponse> ReferenceListServiceAuth::
 }
 
 StatusOr<google::longrunning::Operation> ReferenceListServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +85,7 @@ StatusOr<google::longrunning::Operation> ReferenceListServiceAuth::GetOperation(
 }
 
 Status ReferenceListServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,8 +93,7 @@ Status ReferenceListServiceAuth::DeleteOperation(
 }
 
 Status ReferenceListServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

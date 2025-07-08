@@ -28,15 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-SimulatorTracingStub::SimulatorTracingStub(
-    std::shared_ptr<SimulatorStub> child)
+SimulatorTracingStub::SimulatorTracingStub(std::shared_ptr<SimulatorStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::policysimulator::v1::Replay> SimulatorTracingStub::GetReplay(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::policysimulator::v1::Replay>
+SimulatorTracingStub::GetReplay(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policysimulator::v1::GetReplayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.policysimulator.v1.Simulator", "GetReplay");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.policysimulator.v1.Simulator", "GetReplay");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -45,45 +45,48 @@ StatusOr<google::cloud::policysimulator::v1::Replay> SimulatorTracingStub::GetRe
 
 future<StatusOr<google::longrunning::Operation>>
 SimulatorTracingStub::AsyncCreateReplay(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.policysimulator.v1.Simulator", "CreateReplay");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.policysimulator.v1.Simulator", "CreateReplay");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateReplay(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-SimulatorTracingStub::CreateReplay(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.policysimulator.v1.Simulator", "CreateReplay");
+StatusOr<google::longrunning::Operation> SimulatorTracingStub::CreateReplay(
+    grpc::ClientContext& context, Options options,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.policysimulator.v1.Simulator", "CreateReplay");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateReplay(context, options, request));
 }
 
-StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse> SimulatorTracingStub::ListReplayResults(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::policysimulator::v1::ListReplayResultsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.policysimulator.v1.Simulator", "ListReplayResults");
+StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
+SimulatorTracingStub::ListReplayResults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::policysimulator::v1::ListReplayResultsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.policysimulator.v1.Simulator", "ListReplayResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListReplayResults(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListReplayResults(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> SimulatorTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+SimulatorTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.policysimulator.v1.Simulator", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.policysimulator.v1.Simulator", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -91,10 +94,10 @@ StatusOr<google::longrunning::ListOperationsResponse> SimulatorTracingStub::List
 }
 
 StatusOr<google::longrunning::Operation> SimulatorTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.policysimulator.v1.Simulator", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.policysimulator.v1.Simulator", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -111,8 +114,7 @@ SimulatorTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -125,8 +127,8 @@ future<Status> SimulatorTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

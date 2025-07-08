@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_HUB_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_HUB_STUB_FACTORY_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/networkconnectivity/v1/internal/hub_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

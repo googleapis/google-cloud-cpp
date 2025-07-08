@@ -34,14 +34,16 @@ class ValidationHelperV1ConnectionIdempotencyPolicy {
   virtual ~ValidationHelperV1ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ValidateAttestationOccurrence(google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request);
+  virtual google::cloud::Idempotency ValidateAttestationOccurrence(
+      google::cloud::binaryauthorization::v1::
+          ValidateAttestationOccurrenceRequest const& request);
 };
 
 std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>
-    MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy();
+MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_v1

@@ -17,9 +17,9 @@
 // source: google/cloud/gkemulticloud/v1/aws_service.proto
 
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_connection_impl.h"
+#include "google/cloud/gkemulticloud/v1/internal/aws_clusters_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/gkemulticloud/v1/internal/aws_clusters_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,80 +33,90 @@ namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<gkemulticloud_v1::AwsClustersRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<gkemulticloud_v1::AwsClustersRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<gkemulticloud_v1::AwsClustersBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<gkemulticloud_v1::AwsClustersBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<gkemulticloud_v1::AwsClustersPollingPolicyOption>()->clone();
+  return options.get<gkemulticloud_v1::AwsClustersPollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 AwsClustersConnectionImpl::AwsClustersConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<gkemulticloud_v1_internal::AwsClustersStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AwsClustersConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      AwsClustersConnection::options())) {}
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersConnectionImpl::CreateAwsCluster(google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
+AwsClustersConnectionImpl::CreateAwsCluster(
+    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateAwsCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gkemulticloud::v1::AwsCluster>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
-     return stub->AsyncCreateAwsCluster(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsCluster>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsCluster>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
+              request) {
+        return stub->AsyncCreateAwsCluster(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsCluster>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::CreateAwsCluster(
-      NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAwsCluster(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
+                 request) {
         return stub_->CreateAwsCluster(context, options, request);
       },
       *current, request, __func__);
@@ -114,78 +124,93 @@ AwsClustersConnectionImpl::CreateAwsCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersConnectionImpl::CreateAwsCluster(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::gkemulticloud::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateAwsCluster",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAwsCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::gkemulticloud::v1::AwsCluster>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsCluster>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsCluster>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-AwsClustersConnectionImpl::UpdateAwsCluster(google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
+AwsClustersConnectionImpl::UpdateAwsCluster(
+    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateAwsCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gkemulticloud::v1::AwsCluster>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
-     return stub->AsyncUpdateAwsCluster(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsCluster>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsCluster>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
+              request) {
+        return stub->AsyncUpdateAwsCluster(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsCluster>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::UpdateAwsCluster(
-      NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAwsCluster(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
+                 request) {
         return stub_->UpdateAwsCluster(context, options, request);
       },
       *current, request, __func__);
@@ -193,69 +218,86 @@ AwsClustersConnectionImpl::UpdateAwsCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersConnectionImpl::UpdateAwsCluster(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::gkemulticloud::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateAwsCluster",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAwsCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::gkemulticloud::v1::AwsCluster>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsCluster>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsCluster>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
-AwsClustersConnectionImpl::GetAwsCluster(google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
+AwsClustersConnectionImpl::GetAwsCluster(
+    google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsCluster(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
+             google::cloud::gkemulticloud::v1::GetAwsClusterRequest const&
+                 request) {
         return stub_->GetAwsCluster(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
-AwsClustersConnectionImpl::ListAwsClusters(google::cloud::gkemulticloud::v1::ListAwsClustersRequest request) {
+AwsClustersConnectionImpl::ListAwsClusters(
+    google::cloud::gkemulticloud::v1::ListAwsClustersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAwsClusters(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& r) {
+          Options const& options,
+          google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::gkemulticloud::v1::ListAwsClustersRequest const&
+                    request) {
               return stub->ListAwsClusters(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::gkemulticloud::v1::ListAwsClustersResponse r) {
-        std::vector<google::cloud::gkemulticloud::v1::AwsCluster> result(r.aws_clusters().size());
+        std::vector<google::cloud::gkemulticloud::v1::AwsCluster> result(
+            r.aws_clusters().size());
         auto& messages = *r.mutable_aws_clusters();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -263,49 +305,56 @@ AwsClustersConnectionImpl::ListAwsClusters(google::cloud::gkemulticloud::v1::Lis
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AwsClustersConnectionImpl::DeleteAwsCluster(google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
+AwsClustersConnectionImpl::DeleteAwsCluster(
+    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteAwsCluster(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gkemulticloud::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
-     return stub->AsyncDeleteAwsCluster(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::gkemulticloud::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkemulticloud::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
+              request) {
+        return stub->AsyncDeleteAwsCluster(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkemulticloud::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::DeleteAwsCluster(
-      NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAwsCluster(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
+                 request) {
         return stub_->DeleteAwsCluster(context, options, request);
       },
       *current, request, __func__);
@@ -313,104 +362,126 @@ AwsClustersConnectionImpl::DeleteAwsCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnectionImpl::DeleteAwsCluster(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::gkemulticloud::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteAwsCluster",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAwsCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::gkemulticloud::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::gkemulticloud::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkemulticloud::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
-AwsClustersConnectionImpl::GenerateAwsClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const& request) {
+AwsClustersConnectionImpl::GenerateAwsClusterAgentToken(
+    google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAwsClusterAgentToken(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const& request) {
+             google::cloud::gkemulticloud::v1::
+                 GenerateAwsClusterAgentTokenRequest const& request) {
         return stub_->GenerateAwsClusterAgentToken(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
-AwsClustersConnectionImpl::GenerateAwsAccessToken(google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const& request) {
+AwsClustersConnectionImpl::GenerateAwsAccessToken(
+    google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAwsAccessToken(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
+              request) {
         return stub_->GenerateAwsAccessToken(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersConnectionImpl::CreateAwsNodePool(google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
+AwsClustersConnectionImpl::CreateAwsNodePool(
+    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateAwsNodePool(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gkemulticloud::v1::AwsNodePool>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
-     return stub->AsyncCreateAwsNodePool(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsNodePool>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsNodePool>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
+              request) {
+        return stub->AsyncCreateAwsNodePool(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsNodePool>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::CreateAwsNodePool(
-      NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAwsNodePool(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
+                 request) {
         return stub_->CreateAwsNodePool(context, options, request);
       },
       *current, request, __func__);
@@ -418,78 +489,93 @@ AwsClustersConnectionImpl::CreateAwsNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnectionImpl::CreateAwsNodePool(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::gkemulticloud::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateAwsNodePool",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAwsNodePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::gkemulticloud::v1::AwsNodePool>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsNodePool>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsNodePool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsNodePool>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersConnectionImpl::UpdateAwsNodePool(google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
+AwsClustersConnectionImpl::UpdateAwsNodePool(
+    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateAwsNodePool(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gkemulticloud::v1::AwsNodePool>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
-     return stub->AsyncUpdateAwsNodePool(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsNodePool>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsNodePool>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
+              request) {
+        return stub->AsyncUpdateAwsNodePool(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsNodePool>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::UpdateAwsNodePool(
-      NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAwsNodePool(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
+                 request) {
         return stub_->UpdateAwsNodePool(context, options, request);
       },
       *current, request, __func__);
@@ -497,78 +583,94 @@ AwsClustersConnectionImpl::UpdateAwsNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnectionImpl::UpdateAwsNodePool(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::gkemulticloud::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateAwsNodePool",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAwsNodePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::gkemulticloud::v1::AwsNodePool>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsNodePool>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsNodePool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsNodePool>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request) {
+AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RollbackAwsNodePoolUpdate(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gkemulticloud::v1::AwsNodePool>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request) {
-     return stub->AsyncRollbackAwsNodePoolUpdate(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsNodePool>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsNodePool>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::gkemulticloud::v1::
+                         RollbackAwsNodePoolUpdateRequest const& request) {
+        return stub->AsyncRollbackAwsNodePoolUpdate(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsNodePool>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
-      NoAwaitTag, google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RollbackAwsNodePoolUpdate(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::
+                 RollbackAwsNodePoolUpdateRequest const& request) {
         return stub_->RollbackAwsNodePoolUpdate(context, options, request);
       },
       *current, request, __func__);
@@ -576,69 +678,86 @@ AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::gkemulticloud::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-        internal::InvalidArgumentError("operation does not correspond to RollbackAwsNodePoolUpdate",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RollbackAwsNodePoolUpdate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::gkemulticloud::v1::AwsNodePool>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::gkemulticloud::v1::AwsNodePool>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AwsNodePool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AwsNodePool>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
-AwsClustersConnectionImpl::GetAwsNodePool(google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
+AwsClustersConnectionImpl::GetAwsNodePool(
+    google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsNodePool(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
+             google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const&
+                 request) {
         return stub_->GetAwsNodePool(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
-AwsClustersConnectionImpl::ListAwsNodePools(google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request) {
+AwsClustersConnectionImpl::ListAwsNodePools(
+    google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListAwsNodePools(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& r) {
+          Options const& options,
+          google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const&
+                    request) {
               return stub->ListAwsNodePools(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse r) {
-        std::vector<google::cloud::gkemulticloud::v1::AwsNodePool> result(r.aws_node_pools().size());
+        std::vector<google::cloud::gkemulticloud::v1::AwsNodePool> result(
+            r.aws_node_pools().size());
         auto& messages = *r.mutable_aws_node_pools();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -646,49 +765,56 @@ AwsClustersConnectionImpl::ListAwsNodePools(google::cloud::gkemulticloud::v1::Li
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-AwsClustersConnectionImpl::DeleteAwsNodePool(google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
+AwsClustersConnectionImpl::DeleteAwsNodePool(
+    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteAwsNodePool(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::gkemulticloud::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
-     return stub->AsyncDeleteAwsNodePool(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::gkemulticloud::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::gkemulticloud::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+              request) {
+        return stub->AsyncDeleteAwsNodePool(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkemulticloud::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::DeleteAwsNodePool(
-      NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
+    NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAwsNodePool(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+                 request) {
         return stub_->DeleteAwsNodePool(context, options, request);
       },
       *current, request, __func__);
@@ -696,85 +822,105 @@ AwsClustersConnectionImpl::DeleteAwsNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnectionImpl::DeleteAwsNodePool(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::gkemulticloud::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteAwsNodePool",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAwsNodePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::gkemulticloud::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::gkemulticloud::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkemulticloud::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
-AwsClustersConnectionImpl::GetAwsOpenIdConfig(google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request) {
+AwsClustersConnectionImpl::GetAwsOpenIdConfig(
+    google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsOpenIdConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request) {
+             google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
+                 request) {
         return stub_->GetAwsOpenIdConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
-AwsClustersConnectionImpl::GetAwsJsonWebKeys(google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
+AwsClustersConnectionImpl::GetAwsJsonWebKeys(
+    google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsJsonWebKeys(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
+             google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
+                 request) {
         return stub_->GetAwsJsonWebKeys(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
-AwsClustersConnectionImpl::GetAwsServerConfig(google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const& request) {
+AwsClustersConnectionImpl::GetAwsServerConfig(
+    google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsServerConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const& request) {
+             google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
+                 request) {
         return stub_->GetAwsServerConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-AwsClustersConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+AwsClustersConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -784,7 +930,8 @@ AwsClustersConnectionImpl::ListOperations(google::longrunning::ListOperationsReq
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -792,7 +939,8 @@ AwsClustersConnectionImpl::ListOperations(google::longrunning::ListOperationsReq
 }
 
 StatusOr<google::longrunning::Operation>
-AwsClustersConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+AwsClustersConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -804,8 +952,8 @@ AwsClustersConnectionImpl::GetOperation(google::longrunning::GetOperationRequest
       *current, request, __func__);
 }
 
-Status
-AwsClustersConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status AwsClustersConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -817,8 +965,8 @@ AwsClustersConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationR
       *current, request, __func__);
 }
 
-Status
-AwsClustersConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status AwsClustersConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

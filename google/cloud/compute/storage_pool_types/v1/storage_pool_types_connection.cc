@@ -17,11 +17,11 @@
 // source: google/cloud/compute/storage_pool_types/v1/storage_pool_types.proto
 
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_option_defaults.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_tracing_connection.h"
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,20 +36,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StoragePoolTypesConnection::~StoragePoolTypesConnection() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>> StoragePoolTypesConnection::AggregatedListStoragePoolTypes(
-    google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+StoragePoolTypesConnection::AggregatedListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        AggregatedListStoragePoolTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>>();
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             StoragePoolTypesScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
 StoragePoolTypesConnection::GetStoragePoolType(
-    google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const&) {
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        GetStoragePoolTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::StoragePoolType> StoragePoolTypesConnection::ListStoragePoolTypes(
-    google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
+StoragePoolTypesConnection::ListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        ListStoragePoolTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>>();
 }

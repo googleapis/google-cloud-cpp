@@ -36,17 +36,25 @@ class StoragePoolTypesRestStub {
  public:
   virtual ~StoragePoolTypesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList> AggregatedListStoragePoolTypes(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList>
+  AggregatedListStoragePoolTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pool_types::v1::
+          AggregatedListStoragePoolTypesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
+  GetStoragePoolType(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::storage_pool_types::v1::
+                         GetStoragePoolTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeList> ListStoragePoolTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeList>
+  ListStoragePoolTypes(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::storage_pool_types::v1::
+                           ListStoragePoolTypesRequest const& request) = 0;
 };
 
 class DefaultStoragePoolTypesRestStub : public StoragePoolTypesRestStub {
@@ -55,20 +63,26 @@ class DefaultStoragePoolTypesRestStub : public StoragePoolTypesRestStub {
 
   explicit DefaultStoragePoolTypesRestStub(Options options);
   DefaultStoragePoolTypesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList> AggregatedListStoragePoolTypes(
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeAggregatedList>
+  AggregatedListStoragePoolTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pool_types::v1::
+          AggregatedListStoragePoolTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pool_types::v1::
+          GetStoragePoolTypeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeList> ListStoragePoolTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolTypeList>
+  ListStoragePoolTypes(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::storage_pool_types::v1::
+                           ListStoragePoolTypesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

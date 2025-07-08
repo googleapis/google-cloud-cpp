@@ -25,11 +25,11 @@ namespace cloud {
 namespace dataform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DataformClient::DataformClient(
-    std::shared_ptr<DataformConnection> connection, Options opts)
+DataformClient::DataformClient(std::shared_ptr<DataformConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataformClient::~DataformClient() = default;
 
 StreamRange<google::cloud::dataform::v1::Repository>
@@ -41,27 +41,33 @@ DataformClient::ListRepositories(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataform::v1::Repository>
-DataformClient::ListRepositories(google::cloud::dataform::v1::ListRepositoriesRequest request, Options opts) {
+DataformClient::ListRepositories(
+    google::cloud::dataform::v1::ListRepositoriesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRepositories(std::move(request));
 }
 
-StatusOr<google::cloud::dataform::v1::Repository>
-DataformClient::GetRepository(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataform::v1::Repository> DataformClient::GetRepository(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::GetRepositoryRequest request;
   request.set_name(name);
   return connection_->GetRepository(request);
 }
 
-StatusOr<google::cloud::dataform::v1::Repository>
-DataformClient::GetRepository(google::cloud::dataform::v1::GetRepositoryRequest const& request, Options opts) {
+StatusOr<google::cloud::dataform::v1::Repository> DataformClient::GetRepository(
+    google::cloud::dataform::v1::GetRepositoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRepository(request);
 }
 
 StatusOr<google::cloud::dataform::v1::Repository>
-DataformClient::CreateRepository(std::string const& parent, google::cloud::dataform::v1::Repository const& repository, std::string const& repository_id, Options opts) {
+DataformClient::CreateRepository(
+    std::string const& parent,
+    google::cloud::dataform::v1::Repository const& repository,
+    std::string const& repository_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::CreateRepositoryRequest request;
   request.set_parent(parent);
@@ -71,13 +77,17 @@ DataformClient::CreateRepository(std::string const& parent, google::cloud::dataf
 }
 
 StatusOr<google::cloud::dataform::v1::Repository>
-DataformClient::CreateRepository(google::cloud::dataform::v1::CreateRepositoryRequest const& request, Options opts) {
+DataformClient::CreateRepository(
+    google::cloud::dataform::v1::CreateRepositoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(request);
 }
 
 StatusOr<google::cloud::dataform::v1::Repository>
-DataformClient::UpdateRepository(google::cloud::dataform::v1::Repository const& repository, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataformClient::UpdateRepository(
+    google::cloud::dataform::v1::Repository const& repository,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::UpdateRepositoryRequest request;
   *request.mutable_repository() = repository;
@@ -86,57 +96,74 @@ DataformClient::UpdateRepository(google::cloud::dataform::v1::Repository const& 
 }
 
 StatusOr<google::cloud::dataform::v1::Repository>
-DataformClient::UpdateRepository(google::cloud::dataform::v1::UpdateRepositoryRequest const& request, Options opts) {
+DataformClient::UpdateRepository(
+    google::cloud::dataform::v1::UpdateRepositoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRepository(request);
 }
 
-Status
-DataformClient::DeleteRepository(std::string const& name, Options opts) {
+Status DataformClient::DeleteRepository(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::DeleteRepositoryRequest request;
   request.set_name(name);
   return connection_->DeleteRepository(request);
 }
 
-Status
-DataformClient::DeleteRepository(google::cloud::dataform::v1::DeleteRepositoryRequest const& request, Options opts) {
+Status DataformClient::DeleteRepository(
+    google::cloud::dataform::v1::DeleteRepositoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(request);
 }
 
 StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
-DataformClient::CommitRepositoryChanges(google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request, Options opts) {
+DataformClient::CommitRepositoryChanges(
+    google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CommitRepositoryChanges(request);
 }
 
 StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
-DataformClient::ReadRepositoryFile(google::cloud::dataform::v1::ReadRepositoryFileRequest const& request, Options opts) {
+DataformClient::ReadRepositoryFile(
+    google::cloud::dataform::v1::ReadRepositoryFileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadRepositoryFile(request);
 }
 
 StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-DataformClient::QueryRepositoryDirectoryContents(google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest request, Options opts) {
+DataformClient::QueryRepositoryDirectoryContents(
+    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryRepositoryDirectoryContents(std::move(request));
 }
 
 StreamRange<google::cloud::dataform::v1::CommitLogEntry>
-DataformClient::FetchRepositoryHistory(google::cloud::dataform::v1::FetchRepositoryHistoryRequest request, Options opts) {
+DataformClient::FetchRepositoryHistory(
+    google::cloud::dataform::v1::FetchRepositoryHistoryRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchRepositoryHistory(std::move(request));
 }
 
-StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
-DataformClient::ComputeRepositoryAccessTokenStatus(google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request, Options opts) {
+StatusOr<
+    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
+DataformClient::ComputeRepositoryAccessTokenStatus(
+    google::cloud::dataform::v1::
+        ComputeRepositoryAccessTokenStatusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ComputeRepositoryAccessTokenStatus(request);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
-DataformClient::FetchRemoteBranches(google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request, Options opts) {
+DataformClient::FetchRemoteBranches(
+    google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchRemoteBranches(request);
 }
@@ -150,27 +177,32 @@ DataformClient::ListWorkspaces(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataform::v1::Workspace>
-DataformClient::ListWorkspaces(google::cloud::dataform::v1::ListWorkspacesRequest request, Options opts) {
+DataformClient::ListWorkspaces(
+    google::cloud::dataform::v1::ListWorkspacesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkspaces(std::move(request));
 }
 
-StatusOr<google::cloud::dataform::v1::Workspace>
-DataformClient::GetWorkspace(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataform::v1::Workspace> DataformClient::GetWorkspace(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::GetWorkspaceRequest request;
   request.set_name(name);
   return connection_->GetWorkspace(request);
 }
 
-StatusOr<google::cloud::dataform::v1::Workspace>
-DataformClient::GetWorkspace(google::cloud::dataform::v1::GetWorkspaceRequest const& request, Options opts) {
+StatusOr<google::cloud::dataform::v1::Workspace> DataformClient::GetWorkspace(
+    google::cloud::dataform::v1::GetWorkspaceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWorkspace(request);
 }
 
 StatusOr<google::cloud::dataform::v1::Workspace>
-DataformClient::CreateWorkspace(std::string const& parent, google::cloud::dataform::v1::Workspace const& workspace, std::string const& workspace_id, Options opts) {
+DataformClient::CreateWorkspace(
+    std::string const& parent,
+    google::cloud::dataform::v1::Workspace const& workspace,
+    std::string const& workspace_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::CreateWorkspaceRequest request;
   request.set_parent(parent);
@@ -180,123 +212,156 @@ DataformClient::CreateWorkspace(std::string const& parent, google::cloud::datafo
 }
 
 StatusOr<google::cloud::dataform::v1::Workspace>
-DataformClient::CreateWorkspace(google::cloud::dataform::v1::CreateWorkspaceRequest const& request, Options opts) {
+DataformClient::CreateWorkspace(
+    google::cloud::dataform::v1::CreateWorkspaceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkspace(request);
 }
 
-Status
-DataformClient::DeleteWorkspace(std::string const& name, Options opts) {
+Status DataformClient::DeleteWorkspace(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::DeleteWorkspaceRequest request;
   request.set_name(name);
   return connection_->DeleteWorkspace(request);
 }
 
-Status
-DataformClient::DeleteWorkspace(google::cloud::dataform::v1::DeleteWorkspaceRequest const& request, Options opts) {
+Status DataformClient::DeleteWorkspace(
+    google::cloud::dataform::v1::DeleteWorkspaceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkspace(request);
 }
 
 StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
-DataformClient::InstallNpmPackages(google::cloud::dataform::v1::InstallNpmPackagesRequest const& request, Options opts) {
+DataformClient::InstallNpmPackages(
+    google::cloud::dataform::v1::InstallNpmPackagesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InstallNpmPackages(request);
 }
 
 StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse>
-DataformClient::PullGitCommits(google::cloud::dataform::v1::PullGitCommitsRequest const& request, Options opts) {
+DataformClient::PullGitCommits(
+    google::cloud::dataform::v1::PullGitCommitsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PullGitCommits(request);
 }
 
 StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse>
-DataformClient::PushGitCommits(google::cloud::dataform::v1::PushGitCommitsRequest const& request, Options opts) {
+DataformClient::PushGitCommits(
+    google::cloud::dataform::v1::PushGitCommitsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PushGitCommits(request);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
-DataformClient::FetchFileGitStatuses(google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request, Options opts) {
+DataformClient::FetchFileGitStatuses(
+    google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchFileGitStatuses(request);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
-DataformClient::FetchGitAheadBehind(google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request, Options opts) {
+DataformClient::FetchGitAheadBehind(
+    google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchGitAheadBehind(request);
 }
 
 StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
-DataformClient::CommitWorkspaceChanges(google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request, Options opts) {
+DataformClient::CommitWorkspaceChanges(
+    google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CommitWorkspaceChanges(request);
 }
 
 StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
-DataformClient::ResetWorkspaceChanges(google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request, Options opts) {
+DataformClient::ResetWorkspaceChanges(
+    google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetWorkspaceChanges(request);
 }
 
 StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse>
-DataformClient::FetchFileDiff(google::cloud::dataform::v1::FetchFileDiffRequest const& request, Options opts) {
+DataformClient::FetchFileDiff(
+    google::cloud::dataform::v1::FetchFileDiffRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchFileDiff(request);
 }
 
 StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-DataformClient::QueryDirectoryContents(google::cloud::dataform::v1::QueryDirectoryContentsRequest request, Options opts) {
+DataformClient::QueryDirectoryContents(
+    google::cloud::dataform::v1::QueryDirectoryContentsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryDirectoryContents(std::move(request));
 }
 
 StreamRange<google::cloud::dataform::v1::SearchResult>
-DataformClient::SearchFiles(google::cloud::dataform::v1::SearchFilesRequest request, Options opts) {
+DataformClient::SearchFiles(
+    google::cloud::dataform::v1::SearchFilesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchFiles(std::move(request));
 }
 
 StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse>
-DataformClient::MakeDirectory(google::cloud::dataform::v1::MakeDirectoryRequest const& request, Options opts) {
+DataformClient::MakeDirectory(
+    google::cloud::dataform::v1::MakeDirectoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MakeDirectory(request);
 }
 
 StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
-DataformClient::RemoveDirectory(google::cloud::dataform::v1::RemoveDirectoryRequest const& request, Options opts) {
+DataformClient::RemoveDirectory(
+    google::cloud::dataform::v1::RemoveDirectoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveDirectory(request);
 }
 
 StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse>
-DataformClient::MoveDirectory(google::cloud::dataform::v1::MoveDirectoryRequest const& request, Options opts) {
+DataformClient::MoveDirectory(
+    google::cloud::dataform::v1::MoveDirectoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveDirectory(request);
 }
 
 StatusOr<google::cloud::dataform::v1::ReadFileResponse>
-DataformClient::ReadFile(google::cloud::dataform::v1::ReadFileRequest const& request, Options opts) {
+DataformClient::ReadFile(
+    google::cloud::dataform::v1::ReadFileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReadFile(request);
 }
 
 StatusOr<google::cloud::dataform::v1::RemoveFileResponse>
-DataformClient::RemoveFile(google::cloud::dataform::v1::RemoveFileRequest const& request, Options opts) {
+DataformClient::RemoveFile(
+    google::cloud::dataform::v1::RemoveFileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveFile(request);
 }
 
 StatusOr<google::cloud::dataform::v1::MoveFileResponse>
-DataformClient::MoveFile(google::cloud::dataform::v1::MoveFileRequest const& request, Options opts) {
+DataformClient::MoveFile(
+    google::cloud::dataform::v1::MoveFileRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveFile(request);
 }
 
 StatusOr<google::cloud::dataform::v1::WriteFileResponse>
-DataformClient::WriteFile(google::cloud::dataform::v1::WriteFileRequest const& request, Options opts) {
+DataformClient::WriteFile(
+    google::cloud::dataform::v1::WriteFileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->WriteFile(request);
 }
@@ -310,7 +375,9 @@ DataformClient::ListReleaseConfigs(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataform::v1::ReleaseConfig>
-DataformClient::ListReleaseConfigs(google::cloud::dataform::v1::ListReleaseConfigsRequest request, Options opts) {
+DataformClient::ListReleaseConfigs(
+    google::cloud::dataform::v1::ListReleaseConfigsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReleaseConfigs(std::move(request));
 }
@@ -324,13 +391,18 @@ DataformClient::GetReleaseConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformClient::GetReleaseConfig(google::cloud::dataform::v1::GetReleaseConfigRequest const& request, Options opts) {
+DataformClient::GetReleaseConfig(
+    google::cloud::dataform::v1::GetReleaseConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReleaseConfig(request);
 }
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformClient::CreateReleaseConfig(std::string const& parent, google::cloud::dataform::v1::ReleaseConfig const& release_config, std::string const& release_config_id, Options opts) {
+DataformClient::CreateReleaseConfig(
+    std::string const& parent,
+    google::cloud::dataform::v1::ReleaseConfig const& release_config,
+    std::string const& release_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::CreateReleaseConfigRequest request;
   request.set_parent(parent);
@@ -340,13 +412,17 @@ DataformClient::CreateReleaseConfig(std::string const& parent, google::cloud::da
 }
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformClient::CreateReleaseConfig(google::cloud::dataform::v1::CreateReleaseConfigRequest const& request, Options opts) {
+DataformClient::CreateReleaseConfig(
+    google::cloud::dataform::v1::CreateReleaseConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReleaseConfig(request);
 }
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformClient::UpdateReleaseConfig(google::cloud::dataform::v1::ReleaseConfig const& release_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataformClient::UpdateReleaseConfig(
+    google::cloud::dataform::v1::ReleaseConfig const& release_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::UpdateReleaseConfigRequest request;
   *request.mutable_release_config() = release_config;
@@ -355,27 +431,31 @@ DataformClient::UpdateReleaseConfig(google::cloud::dataform::v1::ReleaseConfig c
 }
 
 StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-DataformClient::UpdateReleaseConfig(google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request, Options opts) {
+DataformClient::UpdateReleaseConfig(
+    google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateReleaseConfig(request);
 }
 
-Status
-DataformClient::DeleteReleaseConfig(std::string const& name, Options opts) {
+Status DataformClient::DeleteReleaseConfig(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::DeleteReleaseConfigRequest request;
   request.set_name(name);
   return connection_->DeleteReleaseConfig(request);
 }
 
-Status
-DataformClient::DeleteReleaseConfig(google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request, Options opts) {
+Status DataformClient::DeleteReleaseConfig(
+    google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReleaseConfig(request);
 }
 
 StreamRange<google::cloud::dataform::v1::CompilationResult>
-DataformClient::ListCompilationResults(std::string const& parent, Options opts) {
+DataformClient::ListCompilationResults(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::ListCompilationResultsRequest request;
   request.set_parent(parent);
@@ -383,7 +463,9 @@ DataformClient::ListCompilationResults(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::dataform::v1::CompilationResult>
-DataformClient::ListCompilationResults(google::cloud::dataform::v1::ListCompilationResultsRequest request, Options opts) {
+DataformClient::ListCompilationResults(
+    google::cloud::dataform::v1::ListCompilationResultsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCompilationResults(std::move(request));
 }
@@ -397,13 +479,18 @@ DataformClient::GetCompilationResult(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataform::v1::CompilationResult>
-DataformClient::GetCompilationResult(google::cloud::dataform::v1::GetCompilationResultRequest const& request, Options opts) {
+DataformClient::GetCompilationResult(
+    google::cloud::dataform::v1::GetCompilationResultRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCompilationResult(request);
 }
 
 StatusOr<google::cloud::dataform::v1::CompilationResult>
-DataformClient::CreateCompilationResult(std::string const& parent, google::cloud::dataform::v1::CompilationResult const& compilation_result, Options opts) {
+DataformClient::CreateCompilationResult(
+    std::string const& parent,
+    google::cloud::dataform::v1::CompilationResult const& compilation_result,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::CreateCompilationResultRequest request;
   request.set_parent(parent);
@@ -412,13 +499,17 @@ DataformClient::CreateCompilationResult(std::string const& parent, google::cloud
 }
 
 StatusOr<google::cloud::dataform::v1::CompilationResult>
-DataformClient::CreateCompilationResult(google::cloud::dataform::v1::CreateCompilationResultRequest const& request, Options opts) {
+DataformClient::CreateCompilationResult(
+    google::cloud::dataform::v1::CreateCompilationResultRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCompilationResult(request);
 }
 
 StreamRange<google::cloud::dataform::v1::CompilationResultAction>
-DataformClient::QueryCompilationResultActions(google::cloud::dataform::v1::QueryCompilationResultActionsRequest request, Options opts) {
+DataformClient::QueryCompilationResultActions(
+    google::cloud::dataform::v1::QueryCompilationResultActionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryCompilationResultActions(std::move(request));
 }
@@ -432,7 +523,9 @@ DataformClient::ListWorkflowConfigs(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataform::v1::WorkflowConfig>
-DataformClient::ListWorkflowConfigs(google::cloud::dataform::v1::ListWorkflowConfigsRequest request, Options opts) {
+DataformClient::ListWorkflowConfigs(
+    google::cloud::dataform::v1::ListWorkflowConfigsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkflowConfigs(std::move(request));
 }
@@ -446,13 +539,18 @@ DataformClient::GetWorkflowConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformClient::GetWorkflowConfig(google::cloud::dataform::v1::GetWorkflowConfigRequest const& request, Options opts) {
+DataformClient::GetWorkflowConfig(
+    google::cloud::dataform::v1::GetWorkflowConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWorkflowConfig(request);
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformClient::CreateWorkflowConfig(std::string const& parent, google::cloud::dataform::v1::WorkflowConfig const& workflow_config, std::string const& workflow_config_id, Options opts) {
+DataformClient::CreateWorkflowConfig(
+    std::string const& parent,
+    google::cloud::dataform::v1::WorkflowConfig const& workflow_config,
+    std::string const& workflow_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::CreateWorkflowConfigRequest request;
   request.set_parent(parent);
@@ -462,13 +560,17 @@ DataformClient::CreateWorkflowConfig(std::string const& parent, google::cloud::d
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformClient::CreateWorkflowConfig(google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request, Options opts) {
+DataformClient::CreateWorkflowConfig(
+    google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkflowConfig(request);
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformClient::UpdateWorkflowConfig(google::cloud::dataform::v1::WorkflowConfig const& workflow_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataformClient::UpdateWorkflowConfig(
+    google::cloud::dataform::v1::WorkflowConfig const& workflow_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::UpdateWorkflowConfigRequest request;
   *request.mutable_workflow_config() = workflow_config;
@@ -477,27 +579,31 @@ DataformClient::UpdateWorkflowConfig(google::cloud::dataform::v1::WorkflowConfig
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-DataformClient::UpdateWorkflowConfig(google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request, Options opts) {
+DataformClient::UpdateWorkflowConfig(
+    google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkflowConfig(request);
 }
 
-Status
-DataformClient::DeleteWorkflowConfig(std::string const& name, Options opts) {
+Status DataformClient::DeleteWorkflowConfig(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::DeleteWorkflowConfigRequest request;
   request.set_name(name);
   return connection_->DeleteWorkflowConfig(request);
 }
 
-Status
-DataformClient::DeleteWorkflowConfig(google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request, Options opts) {
+Status DataformClient::DeleteWorkflowConfig(
+    google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkflowConfig(request);
 }
 
 StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
-DataformClient::ListWorkflowInvocations(std::string const& parent, Options opts) {
+DataformClient::ListWorkflowInvocations(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::ListWorkflowInvocationsRequest request;
   request.set_parent(parent);
@@ -505,7 +611,9 @@ DataformClient::ListWorkflowInvocations(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
-DataformClient::ListWorkflowInvocations(google::cloud::dataform::v1::ListWorkflowInvocationsRequest request, Options opts) {
+DataformClient::ListWorkflowInvocations(
+    google::cloud::dataform::v1::ListWorkflowInvocationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkflowInvocations(std::move(request));
 }
@@ -519,13 +627,18 @@ DataformClient::GetWorkflowInvocation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-DataformClient::GetWorkflowInvocation(google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request, Options opts) {
+DataformClient::GetWorkflowInvocation(
+    google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetWorkflowInvocation(request);
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-DataformClient::CreateWorkflowInvocation(std::string const& parent, google::cloud::dataform::v1::WorkflowInvocation const& workflow_invocation, Options opts) {
+DataformClient::CreateWorkflowInvocation(
+    std::string const& parent,
+    google::cloud::dataform::v1::WorkflowInvocation const& workflow_invocation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::CreateWorkflowInvocationRequest request;
   request.set_parent(parent);
@@ -534,53 +647,62 @@ DataformClient::CreateWorkflowInvocation(std::string const& parent, google::clou
 }
 
 StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-DataformClient::CreateWorkflowInvocation(google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request, Options opts) {
+DataformClient::CreateWorkflowInvocation(
+    google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkflowInvocation(request);
 }
 
-Status
-DataformClient::DeleteWorkflowInvocation(std::string const& name, Options opts) {
+Status DataformClient::DeleteWorkflowInvocation(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::DeleteWorkflowInvocationRequest request;
   request.set_name(name);
   return connection_->DeleteWorkflowInvocation(request);
 }
 
-Status
-DataformClient::DeleteWorkflowInvocation(google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request, Options opts) {
+Status DataformClient::DeleteWorkflowInvocation(
+    google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkflowInvocation(request);
 }
 
 StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
-DataformClient::CancelWorkflowInvocation(google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request, Options opts) {
+DataformClient::CancelWorkflowInvocation(
+    google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelWorkflowInvocation(request);
 }
 
 StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>
-DataformClient::QueryWorkflowInvocationActions(google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest request, Options opts) {
+DataformClient::QueryWorkflowInvocationActions(
+    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryWorkflowInvocationActions(std::move(request));
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformClient::GetConfig(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataform::v1::Config> DataformClient::GetConfig(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::GetConfigRequest request;
   request.set_name(name);
   return connection_->GetConfig(request);
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformClient::GetConfig(google::cloud::dataform::v1::GetConfigRequest const& request, Options opts) {
+StatusOr<google::cloud::dataform::v1::Config> DataformClient::GetConfig(
+    google::cloud::dataform::v1::GetConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConfig(request);
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformClient::UpdateConfig(google::cloud::dataform::v1::Config const& config, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::dataform::v1::Config> DataformClient::UpdateConfig(
+    google::cloud::dataform::v1::Config const& config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataform::v1::UpdateConfigRequest request;
   *request.mutable_config() = config;
@@ -588,38 +710,40 @@ DataformClient::UpdateConfig(google::cloud::dataform::v1::Config const& config, 
   return connection_->UpdateConfig(request);
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformClient::UpdateConfig(google::cloud::dataform::v1::UpdateConfigRequest const& request, Options opts) {
+StatusOr<google::cloud::dataform::v1::Config> DataformClient::UpdateConfig(
+    google::cloud::dataform::v1::UpdateConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConfig(request);
 }
 
-StreamRange<google::cloud::location::Location>
-DataformClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> DataformClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-DataformClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> DataformClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataformClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> DataformClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataformClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> DataformClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataformClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+DataformClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

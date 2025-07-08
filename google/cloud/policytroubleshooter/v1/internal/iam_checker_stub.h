@@ -35,25 +35,32 @@ class IamCheckerStub {
  public:
   virtual ~IamCheckerStub() = 0;
 
-  virtual StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(grpc::ClientContext& context, Options const& options,
+                        google::cloud::policytroubleshooter::v1::
+                            TroubleshootIamPolicyRequest const& request) = 0;
 };
 
 class DefaultIamCheckerStub : public IamCheckerStub {
  public:
   explicit DefaultIamCheckerStub(
-      std::unique_ptr<google::cloud::policytroubleshooter::v1::IamChecker::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::policytroubleshooter::v1::IamChecker::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<
+      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::policytroubleshooter::v1::
+          TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::policytroubleshooter::v1::IamChecker::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::policytroubleshooter::v1::IamChecker::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,7 +34,8 @@ using ::google::cloud::apikeys_v2::ApiKeysPollingPolicyOption;
 /// @deprecated Use apikeys_v2::ApiKeysBackoffPolicyOption directly.
 using ::google::cloud::apikeys_v2::ApiKeysBackoffPolicyOption;
 
-/// @deprecated Use apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use apikeys_v2::ApiKeysPolicyOptionList directly.

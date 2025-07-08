@@ -24,10 +24,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/aiplatform/v1/specialist_pool_service.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/aiplatform/v1/specialist_pool_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,103 +40,103 @@ class SpecialistPoolServiceStub {
  public:
   virtual ~SpecialistPoolServiceStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateSpecialistPool(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateSpecialistPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) = 0;
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
+  GetSpecialistPool(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse> ListSpecialistPools(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
+  ListSpecialistPools(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSpecialistPool(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteSpecialistPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateSpecialistPool(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateSpecialistPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) = 0;
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -149,10 +149,14 @@ class SpecialistPoolServiceStub {
 class DefaultSpecialistPoolServiceStub : public SpecialistPoolServiceStub {
  public:
   DefaultSpecialistPoolServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::SpecialistPoolService::StubInterface> grpc_stub,
+      std::unique_ptr<
+          google::cloud::aiplatform::v1::SpecialistPoolService::StubInterface>
+          grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
@@ -162,93 +166,87 @@ class DefaultSpecialistPoolServiceStub : public SpecialistPoolServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse> ListSpecialistPools(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
+  ListSpecialistPools(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSpecialistPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSpecialistPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) override;
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -264,10 +262,14 @@ class DefaultSpecialistPoolServiceStub : public SpecialistPoolServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::SpecialistPoolService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::aiplatform::v1::SpecialistPoolService::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

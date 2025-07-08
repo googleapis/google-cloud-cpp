@@ -39,13 +39,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServicesConnection::~ServicesConnection() = default;
 
 StreamRange<google::appengine::v1::Service> ServicesConnection::ListServices(
-    google::appengine::v1::ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::appengine::v1::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::Service>>();
 }
 
-StatusOr<google::appengine::v1::Service>
-ServicesConnection::GetService(
+StatusOr<google::appengine::v1::Service> ServicesConnection::GetService(
     google::appengine::v1::GetServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -54,64 +54,56 @@ future<StatusOr<google::appengine::v1::Service>>
 ServicesConnection::UpdateService(
     google::appengine::v1::UpdateServiceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ServicesConnection::UpdateService(
-    NoAwaitTag,
-    google::appengine::v1::UpdateServiceRequest const&) {
+StatusOr<google::longrunning::Operation> ServicesConnection::UpdateService(
+    NoAwaitTag, google::appengine::v1::UpdateServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Service>>
-ServicesConnection::UpdateService(
-    google::longrunning::Operation const&) {
+ServicesConnection::UpdateService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesConnection::DeleteService(
     google::appengine::v1::DeleteServiceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::OperationMetadataV1>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::OperationMetadataV1>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ServicesConnection::DeleteService(
-    NoAwaitTag,
-    google::appengine::v1::DeleteServiceRequest const&) {
+StatusOr<google::longrunning::Operation> ServicesConnection::DeleteService(
+    NoAwaitTag, google::appengine::v1::DeleteServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-ServicesConnection::DeleteService(
-    google::longrunning::Operation const&) {
+ServicesConnection::DeleteService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::OperationMetadataV1>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::OperationMetadataV1>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<ServicesConnection> MakeServicesConnection(
-    Options options) {
+std::shared_ptr<ServicesConnection> MakeServicesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ServicesPolicyOptionList>(options, __func__);
-  options = appengine_v1_internal::ServicesDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ServicesPolicyOptionList>(options, __func__);
+  options = appengine_v1_internal::ServicesDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = appengine_v1_internal::CreateDefaultServicesStub(
-    std::move(auth), options);
+  auto stub = appengine_v1_internal::CreateDefaultServicesStub(std::move(auth),
+                                                               options);
   return appengine_v1_internal::MakeServicesTracingConnection(
       std::make_shared<appengine_v1_internal::ServicesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,7 +34,9 @@ TargetPoolsTracingConnection::TargetPoolsTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsTracingConnection::AddHealthCheck(google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) {
+TargetPoolsTracingConnection::AddHealthCheck(
+    google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::AddHealthCheck");
   internal::OTelScope scope(span);
@@ -43,12 +45,14 @@ TargetPoolsTracingConnection::AddHealthCheck(google::cloud::cpp::compute::target
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsTracingConnection::AddHealthCheck(
-    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const& request) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::AddHealthCheck");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AddHealthCheck(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->AddHealthCheck(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -57,12 +61,13 @@ TargetPoolsTracingConnection::AddHealthCheck(
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::AddHealthCheck");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->AddHealthCheck(operation));
+  return internal::EndSpan(std::move(span), child_->AddHealthCheck(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsTracingConnection::AddInstance(google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) {
+TargetPoolsTracingConnection::AddInstance(
+    google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::AddInstance");
   internal::OTelScope scope(span);
@@ -71,12 +76,13 @@ TargetPoolsTracingConnection::AddInstance(google::cloud::cpp::compute::target_po
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsTracingConnection::AddInstance(
-    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::AddInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AddInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->AddInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -85,21 +91,28 @@ TargetPoolsTracingConnection::AddInstance(
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::AddInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->AddInstance(operation));
+  return internal::EndSpan(std::move(span), child_->AddInstance(operation));
 }
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
-TargetPoolsTracingConnection::AggregatedListTargetPools(google::cloud::cpp::compute::target_pools::v1::AggregatedListTargetPoolsRequest request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::AggregatedListTargetPools");
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
+TargetPoolsTracingConnection::AggregatedListTargetPools(
+    google::cloud::cpp::compute::target_pools::v1::
+        AggregatedListTargetPoolsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::"
+      "AggregatedListTargetPools");
   internal::OTelScope scope(span);
   auto sr = child_->AggregatedListTargetPools(std::move(request));
-  return internal::MakeTracedStreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>(
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsTracingConnection::DeleteTargetPool(google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) {
+TargetPoolsTracingConnection::DeleteTargetPool(
+    google::cloud::cpp::compute::target_pools::v1::
+        DeleteTargetPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::DeleteTargetPool");
   internal::OTelScope scope(span);
@@ -108,12 +121,13 @@ TargetPoolsTracingConnection::DeleteTargetPool(google::cloud::cpp::compute::targ
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsTracingConnection::DeleteTargetPool(
-    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                    DeleteTargetPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::DeleteTargetPool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteTargetPool(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteTargetPool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -123,25 +137,33 @@ TargetPoolsTracingConnection::DeleteTargetPool(
       "compute_target_pools_v1::TargetPoolsConnection::DeleteTargetPool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteTargetPool(operation));
+                           child_->DeleteTargetPool(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsTracingConnection::GetTargetPool(google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::GetTargetPool");
+TargetPoolsTracingConnection::GetTargetPool(
+    google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::GetTargetPool");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTargetPool(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
-TargetPoolsTracingConnection::GetHealth(google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::GetHealth");
+TargetPoolsTracingConnection::GetHealth(
+    google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::GetHealth");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetHealth(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsTracingConnection::InsertTargetPool(google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) {
+TargetPoolsTracingConnection::InsertTargetPool(
+    google::cloud::cpp::compute::target_pools::v1::
+        InsertTargetPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::InsertTargetPool");
   internal::OTelScope scope(span);
@@ -150,12 +172,13 @@ TargetPoolsTracingConnection::InsertTargetPool(google::cloud::cpp::compute::targ
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsTracingConnection::InsertTargetPool(
-    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                    InsertTargetPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::InsertTargetPool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertTargetPool(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertTargetPool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -165,20 +188,26 @@ TargetPoolsTracingConnection::InsertTargetPool(
       "compute_target_pools_v1::TargetPoolsConnection::InsertTargetPool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->InsertTargetPool(operation));
+                           child_->InsertTargetPool(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsTracingConnection::ListTargetPools(google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::ListTargetPools");
+TargetPoolsTracingConnection::ListTargetPools(
+    google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::ListTargetPools");
   internal::OTelScope scope(span);
   auto sr = child_->ListTargetPools(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::TargetPool>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::TargetPool>(std::move(span),
+                                                   std::move(sr));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsTracingConnection::RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) {
+TargetPoolsTracingConnection::RemoveHealthCheck(
+    google::cloud::cpp::compute::target_pools::v1::
+        RemoveHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::RemoveHealthCheck");
   internal::OTelScope scope(span);
@@ -187,12 +216,13 @@ TargetPoolsTracingConnection::RemoveHealthCheck(google::cloud::cpp::compute::tar
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsTracingConnection::RemoveHealthCheck(
-    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                    RemoveHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::RemoveHealthCheck");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RemoveHealthCheck(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RemoveHealthCheck(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -202,11 +232,13 @@ TargetPoolsTracingConnection::RemoveHealthCheck(
       "compute_target_pools_v1::TargetPoolsConnection::RemoveHealthCheck");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->RemoveHealthCheck(operation));
+                           child_->RemoveHealthCheck(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsTracingConnection::RemoveInstance(google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) {
+TargetPoolsTracingConnection::RemoveInstance(
+    google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::RemoveInstance");
   internal::OTelScope scope(span);
@@ -215,12 +247,14 @@ TargetPoolsTracingConnection::RemoveInstance(google::cloud::cpp::compute::target
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsTracingConnection::RemoveInstance(
-    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const& request) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::RemoveInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RemoveInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RemoveInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -229,12 +263,13 @@ TargetPoolsTracingConnection::RemoveInstance(
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::RemoveInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->RemoveInstance(operation));
+  return internal::EndSpan(std::move(span), child_->RemoveInstance(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsTracingConnection::SetBackup(google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) {
+TargetPoolsTracingConnection::SetBackup(
+    google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::SetBackup");
   internal::OTelScope scope(span);
@@ -243,12 +278,13 @@ TargetPoolsTracingConnection::SetBackup(google::cloud::cpp::compute::target_pool
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsTracingConnection::SetBackup(
-    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const& request) {
+    NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::SetBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetBackup(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -257,12 +293,13 @@ TargetPoolsTracingConnection::SetBackup(
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::SetBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->SetBackup(operation));
+  return internal::EndSpan(std::move(span), child_->SetBackup(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-TargetPoolsTracingConnection::SetSecurityPolicy(google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) {
+TargetPoolsTracingConnection::SetSecurityPolicy(
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::SetSecurityPolicy");
   internal::OTelScope scope(span);
@@ -271,12 +308,13 @@ TargetPoolsTracingConnection::SetSecurityPolicy(google::cloud::cpp::compute::tar
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsTracingConnection::SetSecurityPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                    SetSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::SetSecurityPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetSecurityPolicy(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->SetSecurityPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -286,7 +324,7 @@ TargetPoolsTracingConnection::SetSecurityPolicy(
       "compute_target_pools_v1::TargetPoolsConnection::SetSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->SetSecurityPolicy(operation));
+                           child_->SetSecurityPolicy(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

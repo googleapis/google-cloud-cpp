@@ -36,71 +36,95 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SnapshotsRestMetadata : public SnapshotsRestStub {
  public:
   ~SnapshotsRestMetadata() override = default;
-  explicit SnapshotsRestMetadata(
-      std::shared_ptr<SnapshotsRestStub> child,
-      std::string api_client_header = "");
+  explicit SnapshotsRestMetadata(std::shared_ptr<SnapshotsRestStub> child,
+                                 std::string api_client_header = "");
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteSnapshot(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertSnapshot(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertSnapshot(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SnapshotList> ListSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+          request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::snapshots::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::global_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

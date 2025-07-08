@@ -34,7 +34,8 @@ using ::google::cloud::workflows_v1::WorkflowsPollingPolicyOption;
 /// @deprecated Use workflows_v1::WorkflowsBackoffPolicyOption directly.
 using ::google::cloud::workflows_v1::WorkflowsBackoffPolicyOption;
 
-/// @deprecated Use workflows_v1::WorkflowsConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use workflows_v1::WorkflowsConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::workflows_v1::WorkflowsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use workflows_v1::WorkflowsPolicyOptionList directly.

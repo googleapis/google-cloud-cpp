@@ -36,96 +36,96 @@ class IAMConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<IAMConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListServiceAccounts(google::iam::admin::v1::ListServiceAccountsRequest request);
+  virtual google::cloud::Idempotency ListServiceAccounts(
+      google::iam::admin::v1::ListServiceAccountsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetServiceAccount(google::iam::admin::v1::GetServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency GetServiceAccount(
+      google::iam::admin::v1::GetServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateServiceAccount(google::iam::admin::v1::CreateServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency CreateServiceAccount(
+      google::iam::admin::v1::CreateServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PatchServiceAccount(google::iam::admin::v1::PatchServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency PatchServiceAccount(
+      google::iam::admin::v1::PatchServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteServiceAccount(google::iam::admin::v1::DeleteServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency DeleteServiceAccount(
+      google::iam::admin::v1::DeleteServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UndeleteServiceAccount(google::iam::admin::v1::UndeleteServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency UndeleteServiceAccount(
+      google::iam::admin::v1::UndeleteServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency
-  EnableServiceAccount(google::iam::admin::v1::EnableServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency EnableServiceAccount(
+      google::iam::admin::v1::EnableServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DisableServiceAccount(google::iam::admin::v1::DisableServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency DisableServiceAccount(
+      google::iam::admin::v1::DisableServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListServiceAccountKeys(google::iam::admin::v1::ListServiceAccountKeysRequest const& request);
+  virtual google::cloud::Idempotency ListServiceAccountKeys(
+      google::iam::admin::v1::ListServiceAccountKeysRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetServiceAccountKey(google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
+  virtual google::cloud::Idempotency GetServiceAccountKey(
+      google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateServiceAccountKey(google::iam::admin::v1::CreateServiceAccountKeyRequest const& request);
+  virtual google::cloud::Idempotency CreateServiceAccountKey(
+      google::iam::admin::v1::CreateServiceAccountKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UploadServiceAccountKey(google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
+  virtual google::cloud::Idempotency UploadServiceAccountKey(
+      google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteServiceAccountKey(google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
+  virtual google::cloud::Idempotency DeleteServiceAccountKey(
+      google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DisableServiceAccountKey(google::iam::admin::v1::DisableServiceAccountKeyRequest const& request);
+  virtual google::cloud::Idempotency DisableServiceAccountKey(
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  EnableServiceAccountKey(google::iam::admin::v1::EnableServiceAccountKeyRequest const& request);
+  virtual google::cloud::Idempotency EnableServiceAccountKey(
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  QueryGrantableRoles(google::iam::admin::v1::QueryGrantableRolesRequest request);
+  virtual google::cloud::Idempotency QueryGrantableRoles(
+      google::iam::admin::v1::QueryGrantableRolesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListRoles(google::iam::admin::v1::ListRolesRequest request);
+  virtual google::cloud::Idempotency ListRoles(
+      google::iam::admin::v1::ListRolesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetRole(google::iam::admin::v1::GetRoleRequest const& request);
+  virtual google::cloud::Idempotency GetRole(
+      google::iam::admin::v1::GetRoleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateRole(google::iam::admin::v1::CreateRoleRequest const& request);
+  virtual google::cloud::Idempotency CreateRole(
+      google::iam::admin::v1::CreateRoleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateRole(google::iam::admin::v1::UpdateRoleRequest const& request);
+  virtual google::cloud::Idempotency UpdateRole(
+      google::iam::admin::v1::UpdateRoleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteRole(google::iam::admin::v1::DeleteRoleRequest const& request);
+  virtual google::cloud::Idempotency DeleteRole(
+      google::iam::admin::v1::DeleteRoleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UndeleteRole(google::iam::admin::v1::UndeleteRoleRequest const& request);
+  virtual google::cloud::Idempotency UndeleteRole(
+      google::iam::admin::v1::UndeleteRoleRequest const& request);
 
-  virtual google::cloud::Idempotency
-  QueryTestablePermissions(google::iam::admin::v1::QueryTestablePermissionsRequest request);
+  virtual google::cloud::Idempotency QueryTestablePermissions(
+      google::iam::admin::v1::QueryTestablePermissionsRequest request);
 
-  virtual google::cloud::Idempotency
-  QueryAuditableServices(google::iam::admin::v1::QueryAuditableServicesRequest const& request);
+  virtual google::cloud::Idempotency QueryAuditableServices(
+      google::iam::admin::v1::QueryAuditableServicesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LintPolicy(google::iam::admin::v1::LintPolicyRequest const& request);
+  virtual google::cloud::Idempotency LintPolicy(
+      google::iam::admin::v1::LintPolicyRequest const& request);
 };
 
 std::unique_ptr<IAMConnectionIdempotencyPolicy>
-    MakeDefaultIAMConnectionIdempotencyPolicy();
+MakeDefaultIAMConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_admin_v1
 }  // namespace cloud
 }  // namespace google

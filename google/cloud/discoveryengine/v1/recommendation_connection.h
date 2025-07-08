@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_RECOMMENDATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_RECOMMENDATION_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/recommendation_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/recommendation_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -43,7 +43,8 @@ class RecommendationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `RecommendationServiceConnection` based on counting errors.
+ * A retry policy for `RecommendationServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +53,8 @@ class RecommendationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RecommendationServiceLimitedErrorCountRetryPolicy : public RecommendationServiceRetryPolicy {
+class RecommendationServiceLimitedErrorCountRetryPolicy
+    : public RecommendationServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +63,18 @@ class RecommendationServiceLimitedErrorCountRetryPolicy : public RecommendationS
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit RecommendationServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit RecommendationServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   RecommendationServiceLimitedErrorCountRetryPolicy(
       RecommendationServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RecommendationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RecommendationServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   RecommendationServiceLimitedErrorCountRetryPolicy(
       RecommendationServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RecommendationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RecommendationServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +94,9 @@ class RecommendationServiceLimitedErrorCountRetryPolicy : public RecommendationS
   using BaseType = RecommendationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::RecommendationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      discoveryengine_v1_internal::RecommendationServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +109,8 @@ class RecommendationServiceLimitedErrorCountRetryPolicy : public RecommendationS
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RecommendationServiceLimitedTimeRetryPolicy : public RecommendationServiceRetryPolicy {
+class RecommendationServiceLimitedTimeRetryPolicy
+    : public RecommendationServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +135,14 @@ class RecommendationServiceLimitedTimeRetryPolicy : public RecommendationService
   template <typename DurationRep, typename DurationPeriod>
   explicit RecommendationServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RecommendationServiceLimitedTimeRetryPolicy(RecommendationServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : RecommendationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RecommendationServiceLimitedTimeRetryPolicy(RecommendationServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : RecommendationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RecommendationServiceLimitedTimeRetryPolicy(
+      RecommendationServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : RecommendationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RecommendationServiceLimitedTimeRetryPolicy(
+      RecommendationServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : RecommendationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +164,24 @@ class RecommendationServiceLimitedTimeRetryPolicy : public RecommendationService
   using BaseType = RecommendationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::RecommendationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      discoveryengine_v1_internal::RecommendationServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `RecommendationServiceConnection` object for `RecommendationServiceClient`.
+ * The `RecommendationServiceConnection` object for
+ * `RecommendationServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RecommendationServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `RecommendationServiceClient`.
+ * sets in `RecommendationServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `RecommendationServiceClient`.
  *
  * To create a concrete instance, see `MakeRecommendationServiceConnection()`.
  *
- * For mocking, see `discoveryengine_v1_mocks::MockRecommendationServiceConnection`.
+ * For mocking, see
+ * `discoveryengine_v1_mocks::MockRecommendationServiceConnection`.
  */
 class RecommendationServiceConnection {
  public:
@@ -176,27 +190,30 @@ class RecommendationServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::discoveryengine::v1::RecommendResponse>
-  Recommend(google::cloud::discoveryengine::v1::RecommendRequest const& request);
+  Recommend(
+      google::cloud::discoveryengine::v1::RecommendRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `RecommendationServiceConnection`.
+ * A factory function to construct an object of type
+ * `RecommendationServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of RecommendationServiceClient.
+ * should be passed as an argument to the constructor of
+ * RecommendationServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `RecommendationServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `RecommendationServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -206,11 +223,11 @@ class RecommendationServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `RecommendationServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `RecommendationServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<RecommendationServiceConnection> MakeRecommendationServiceConnection(
-    Options options = {});
+std::shared_ptr<RecommendationServiceConnection>
+MakeRecommendationServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

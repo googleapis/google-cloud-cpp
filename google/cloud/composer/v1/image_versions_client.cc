@@ -28,26 +28,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImageVersionsClient::ImageVersionsClient(
     std::shared_ptr<ImageVersionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ImageVersionsClient::~ImageVersionsClient() = default;
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-ImageVersionsClient::ListImageVersions(std::string const& parent, Options opts) {
+ImageVersionsClient::ListImageVersions(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request;
+  google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
+      request;
   request.set_parent(parent);
   return connection_->ListImageVersions(request);
 }
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-ImageVersionsClient::ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request, Options opts) {
+ImageVersionsClient::ListImageVersions(
+    google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListImageVersions(std::move(request));
 }
 
-StreamRange<google::longrunning::Operation>
-ImageVersionsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> ImageVersionsClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -55,36 +60,36 @@ ImageVersionsClient::ListOperations(std::string const& name, std::string const& 
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-ImageVersionsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> ImageVersionsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-ImageVersionsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ImageVersionsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ImageVersionsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ImageVersionsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-ImageVersionsClient::DeleteOperation(std::string const& name, Options opts) {
+Status ImageVersionsClient::DeleteOperation(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-ImageVersionsClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status ImageVersionsClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }

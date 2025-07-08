@@ -34,32 +34,40 @@ class TargetHttpProxiesConnectionIdempotencyPolicy {
   virtual ~TargetHttpProxiesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TargetHttpProxiesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<TargetHttpProxiesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest request);
+  virtual google::cloud::Idempotency AggregatedListTargetHttpProxies(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          AggregatedListTargetHttpProxiesRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const& request);
+  virtual google::cloud::Idempotency DeleteTargetHttpProxy(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          DeleteTargetHttpProxyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxyRequest const& request);
+  virtual google::cloud::Idempotency GetTargetHttpProxy(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          GetTargetHttpProxyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const& request);
+  virtual google::cloud::Idempotency InsertTargetHttpProxy(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          InsertTargetHttpProxyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest request);
+  virtual google::cloud::Idempotency ListTargetHttpProxies(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          ListTargetHttpProxiesRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const& request);
+  virtual google::cloud::Idempotency PatchTargetHttpProxy(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          PatchTargetHttpProxyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetUrlMap(google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request);
+  virtual google::cloud::Idempotency SetUrlMap(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          SetUrlMapRequest const& request);
 };
 
 std::unique_ptr<TargetHttpProxiesConnectionIdempotencyPolicy>
-    MakeDefaultTargetHttpProxiesConnectionIdempotencyPolicy();
+MakeDefaultTargetHttpProxiesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_http_proxies_v1

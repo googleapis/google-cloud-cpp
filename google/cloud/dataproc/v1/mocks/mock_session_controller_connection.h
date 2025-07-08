@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `SessionControllerClient`. To do so,
- * construct an object of type `SessionControllerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `SessionControllerClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSessionControllerConnection : public dataproc_v1::SessionControllerConnection {
+class MockSessionControllerConnection
+    : public dataproc_v1::SessionControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,14 @@ class MockSessionControllerConnection : public dataproc_v1::SessionControllerCon
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSession(Matcher<google::cloud::dataproc::v1::CreateSessionRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateSession(Matcher<google::cloud::dataproc::v1::CreateSessionRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
-  CreateSession,
-  (google::cloud::dataproc::v1::CreateSessionRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::Session>>, CreateSession,
+      (google::cloud::dataproc::v1::CreateSessionRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,41 +67,45 @@ class MockSessionControllerConnection : public dataproc_v1::SessionControllerCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateSession(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateSession, (NoAwaitTag,
-    google::cloud::dataproc::v1::CreateSessionRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSession(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
-  CreateSession, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Session>,
-  GetSession,
-  (google::cloud::dataproc::v1::GetSessionRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Session>),
-  ListSessions,
-  (google::cloud::dataproc::v1::ListSessionsRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateSession,
+      (NoAwaitTag,
+       google::cloud::dataproc::v1::CreateSessionRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, TerminateSession(Matcher<google::cloud::dataproc::v1::TerminateSessionRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateSession(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
-  TerminateSession,
-  (google::cloud::dataproc::v1::TerminateSessionRequest const& request), (override));
+              CreateSession, (google::longrunning::Operation const& operation),
+              (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Session>, GetSession,
+              (google::cloud::dataproc::v1::GetSessionRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::dataproc::v1::Session>), ListSessions,
+              (google::cloud::dataproc::v1::ListSessionsRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// TerminateSession(Matcher<google::cloud::dataproc::v1::TerminateSessionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::Session>>, TerminateSession,
+      (google::cloud::dataproc::v1::TerminateSessionRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +113,37 @@ class MockSessionControllerConnection : public dataproc_v1::SessionControllerCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, TerminateSession(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  TerminateSession, (NoAwaitTag,
-    google::cloud::dataproc::v1::TerminateSessionRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, TerminateSession(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
-  TerminateSession, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, TerminateSession,
+      (NoAwaitTag,
+       google::cloud::dataproc::v1::TerminateSessionRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSession(Matcher<google::cloud::dataproc::v1::DeleteSessionRequest const&>(_)))
+  /// EXPECT_CALL(*mock, TerminateSession(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
-  DeleteSession,
-  (google::cloud::dataproc::v1::DeleteSessionRequest const& request), (override));
+              TerminateSession,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSession(Matcher<google::cloud::dataproc::v1::DeleteSessionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::Session>>, DeleteSession,
+      (google::cloud::dataproc::v1::DeleteSessionRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,49 +151,51 @@ class MockSessionControllerConnection : public dataproc_v1::SessionControllerCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSession(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteSession, (NoAwaitTag,
-    google::cloud::dataproc::v1::DeleteSessionRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSession,
+      (NoAwaitTag,
+       google::cloud::dataproc::v1::DeleteSessionRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSession(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSession(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
-  DeleteSession, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteSession, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

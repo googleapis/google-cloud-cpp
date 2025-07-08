@@ -30,30 +30,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 NetworkProfilesTracingConnection::NetworkProfilesTracingConnection(
-    std::shared_ptr<compute_network_profiles_v1::NetworkProfilesConnection> child)
+    std::shared_ptr<compute_network_profiles_v1::NetworkProfilesConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesTracingConnection::GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) {
-  auto span = internal::MakeSpan("compute_network_profiles_v1::NetworkProfilesConnection::GetNetworkProfile");
+NetworkProfilesTracingConnection::GetNetworkProfile(
+    google::cloud::cpp::compute::network_profiles::v1::
+        GetNetworkProfileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_profiles_v1::NetworkProfilesConnection::"
+      "GetNetworkProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNetworkProfile(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
-NetworkProfilesTracingConnection::ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request) {
-  auto span = internal::MakeSpan("compute_network_profiles_v1::NetworkProfilesConnection::ListNetworkProfiles");
+NetworkProfilesTracingConnection::ListNetworkProfiles(
+    google::cloud::cpp::compute::network_profiles::v1::
+        ListNetworkProfilesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_network_profiles_v1::NetworkProfilesConnection::"
+      "ListNetworkProfiles");
   internal::OTelScope scope(span);
   auto sr = child_->ListNetworkProfiles(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::NetworkProfile>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::NetworkProfile>(std::move(span),
+                                                       std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_network_profiles_v1::NetworkProfilesConnection>
 MakeNetworkProfilesTracingConnection(
-    std::shared_ptr<compute_network_profiles_v1::NetworkProfilesConnection> conn) {
+    std::shared_ptr<compute_network_profiles_v1::NetworkProfilesConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<NetworkProfilesTracingConnection>(std::move(conn));

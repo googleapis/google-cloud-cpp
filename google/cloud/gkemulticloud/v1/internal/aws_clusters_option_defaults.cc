@@ -19,9 +19,9 @@
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_option_defaults.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,32 +34,40 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options AwsClustersDefaultOptions(std::string const& location, Options options) {
+Options AwsClustersDefaultOptions(std::string const& location,
+                                  Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_AWS_CLUSTERS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_AWS_CLUSTERS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_AWS_CLUSTERS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_AWS_CLUSTERS_AUTHORITY",
       absl::StrCat(location, "-", "gkemulticloud.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<gkemulticloud_v1::AwsClustersRetryPolicyOption>()) {
     options.set<gkemulticloud_v1::AwsClustersRetryPolicyOption>(
         gkemulticloud_v1::AwsClustersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<gkemulticloud_v1::AwsClustersBackoffPolicyOption>()) {
     options.set<gkemulticloud_v1::AwsClustersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<gkemulticloud_v1::AwsClustersPollingPolicyOption>()) {
     options.set<gkemulticloud_v1::AwsClustersPollingPolicyOption>(
         GenericPollingPolicy<
             gkemulticloud_v1::AwsClustersRetryPolicyOption::Type,
             gkemulticloud_v1::AwsClustersBackoffPolicyOption::Type>(
-            options.get<gkemulticloud_v1::AwsClustersRetryPolicyOption>()->clone(),
+            options.get<gkemulticloud_v1::AwsClustersRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>()) {
     options.set<gkemulticloud_v1::AwsClustersConnectionIdempotencyPolicyOption>(
         gkemulticloud_v1::MakeDefaultAwsClustersConnectionIdempotencyPolicy());
   }

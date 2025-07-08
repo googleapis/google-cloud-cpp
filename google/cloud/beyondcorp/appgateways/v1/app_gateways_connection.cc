@@ -17,12 +17,12 @@
 // source: google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto
 
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_options.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_connection_impl.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_option_defaults.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_stub_factory.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AppGatewaysServiceConnection::~AppGatewaysServiceConnection() = default;
 
-StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway> AppGatewaysServiceConnection::ListAppGateways(
-    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
+AppGatewaysServiceConnection::ListAppGateways(
+    google::cloud::beyondcorp::appgateways::v1::
+        ListAppGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>>();
 }
@@ -52,54 +54,60 @@ AppGatewaysServiceConnection::GetAppGateway(
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
 AppGatewaysServiceConnection::CreateAppGateway(
-    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&) {
+    google::cloud::beyondcorp::appgateways::v1::
+        CreateAppGatewayRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceConnection::CreateAppGateway(
-    NoAwaitTag,
-    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&) {
+    NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::
+                    CreateAppGatewayRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
 AppGatewaysServiceConnection::CreateAppGateway(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+future<StatusOr<
+    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceConnection::DeleteAppGateway(
-    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::beyondcorp::appgateways::v1::
+        DeleteAppGatewayRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceConnection::DeleteAppGateway(
-    NoAwaitTag,
-    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&) {
+    NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::
+                    DeleteAppGatewayRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+future<StatusOr<
+    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceConnection::DeleteAppGateway(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> AppGatewaysServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+AppGatewaysServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -110,14 +118,12 @@ AppGatewaysServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-AppGatewaysServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> AppGatewaysServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-AppGatewaysServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> AppGatewaysServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -128,8 +134,10 @@ AppGatewaysServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> AppGatewaysServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+AppGatewaysServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -140,14 +148,12 @@ AppGatewaysServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AppGatewaysServiceConnection::DeleteOperation(
+Status AppGatewaysServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AppGatewaysServiceConnection::CancelOperation(
+Status AppGatewaysServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -155,17 +161,22 @@ AppGatewaysServiceConnection::CancelOperation(
 std::shared_ptr<AppGatewaysServiceConnection> MakeAppGatewaysServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AppGatewaysServicePolicyOptionList>(options, __func__);
-  options = beyondcorp_appgateways_v1_internal::AppGatewaysServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AppGatewaysServicePolicyOptionList>(options,
+                                                                     __func__);
+  options =
+      beyondcorp_appgateways_v1_internal::AppGatewaysServiceDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = beyondcorp_appgateways_v1_internal::CreateDefaultAppGatewaysServiceStub(
-    std::move(auth), options);
-  return beyondcorp_appgateways_v1_internal::MakeAppGatewaysServiceTracingConnection(
-      std::make_shared<beyondcorp_appgateways_v1_internal::AppGatewaysServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      beyondcorp_appgateways_v1_internal::CreateDefaultAppGatewaysServiceStub(
+          std::move(auth), options);
+  return beyondcorp_appgateways_v1_internal::
+      MakeAppGatewaysServiceTracingConnection(
+          std::make_shared<beyondcorp_appgateways_v1_internal::
+                               AppGatewaysServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

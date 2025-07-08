@@ -29,59 +29,82 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-EssentialContactsServiceTracingConnection::EssentialContactsServiceTracingConnection(
-    std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection> child)
+EssentialContactsServiceTracingConnection::
+    EssentialContactsServiceTracingConnection(
+        std::shared_ptr<
+            essentialcontacts_v1::EssentialContactsServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceTracingConnection::CreateContact(google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
-  auto span = internal::MakeSpan("essentialcontacts_v1::EssentialContactsServiceConnection::CreateContact");
+EssentialContactsServiceTracingConnection::CreateContact(
+    google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
+  auto span = internal::MakeSpan(
+      "essentialcontacts_v1::EssentialContactsServiceConnection::"
+      "CreateContact");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateContact(request));
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceTracingConnection::UpdateContact(google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
-  auto span = internal::MakeSpan("essentialcontacts_v1::EssentialContactsServiceConnection::UpdateContact");
+EssentialContactsServiceTracingConnection::UpdateContact(
+    google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
+  auto span = internal::MakeSpan(
+      "essentialcontacts_v1::EssentialContactsServiceConnection::"
+      "UpdateContact");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateContact(request));
 }
 
 StreamRange<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceTracingConnection::ListContacts(google::cloud::essentialcontacts::v1::ListContactsRequest request) {
-  auto span = internal::MakeSpan("essentialcontacts_v1::EssentialContactsServiceConnection::ListContacts");
+EssentialContactsServiceTracingConnection::ListContacts(
+    google::cloud::essentialcontacts::v1::ListContactsRequest request) {
+  auto span = internal::MakeSpan(
+      "essentialcontacts_v1::EssentialContactsServiceConnection::ListContacts");
   internal::OTelScope scope(span);
   auto sr = child_->ListContacts(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::essentialcontacts::v1::Contact>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::essentialcontacts::v1::Contact>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceTracingConnection::GetContact(google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
-  auto span = internal::MakeSpan("essentialcontacts_v1::EssentialContactsServiceConnection::GetContact");
+EssentialContactsServiceTracingConnection::GetContact(
+    google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
+  auto span = internal::MakeSpan(
+      "essentialcontacts_v1::EssentialContactsServiceConnection::GetContact");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetContact(request));
 }
 
-Status
-EssentialContactsServiceTracingConnection::DeleteContact(google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
-  auto span = internal::MakeSpan("essentialcontacts_v1::EssentialContactsServiceConnection::DeleteContact");
+Status EssentialContactsServiceTracingConnection::DeleteContact(
+    google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
+  auto span = internal::MakeSpan(
+      "essentialcontacts_v1::EssentialContactsServiceConnection::"
+      "DeleteContact");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteContact(request));
 }
 
 StreamRange<google::cloud::essentialcontacts::v1::Contact>
-EssentialContactsServiceTracingConnection::ComputeContacts(google::cloud::essentialcontacts::v1::ComputeContactsRequest request) {
-  auto span = internal::MakeSpan("essentialcontacts_v1::EssentialContactsServiceConnection::ComputeContacts");
+EssentialContactsServiceTracingConnection::ComputeContacts(
+    google::cloud::essentialcontacts::v1::ComputeContactsRequest request) {
+  auto span = internal::MakeSpan(
+      "essentialcontacts_v1::EssentialContactsServiceConnection::"
+      "ComputeContacts");
   internal::OTelScope scope(span);
   auto sr = child_->ComputeContacts(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::essentialcontacts::v1::Contact>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::essentialcontacts::v1::Contact>(std::move(span),
+                                                     std::move(sr));
 }
 
-Status
-EssentialContactsServiceTracingConnection::SendTestMessage(google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request) {
-  auto span = internal::MakeSpan("essentialcontacts_v1::EssentialContactsServiceConnection::SendTestMessage");
+Status EssentialContactsServiceTracingConnection::SendTestMessage(
+    google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "essentialcontacts_v1::EssentialContactsServiceConnection::"
+      "SendTestMessage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SendTestMessage(request));
 }
@@ -90,10 +113,12 @@ EssentialContactsServiceTracingConnection::SendTestMessage(google::cloud::essent
 
 std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection>
 MakeEssentialContactsServiceTracingConnection(
-    std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection> conn) {
+    std::shared_ptr<essentialcontacts_v1::EssentialContactsServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<EssentialContactsServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<EssentialContactsServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

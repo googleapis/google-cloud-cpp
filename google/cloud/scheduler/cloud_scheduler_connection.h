@@ -33,7 +33,8 @@ using ::google::cloud::scheduler_v1::MakeCloudSchedulerConnection;
 /// @deprecated Use scheduler_v1::CloudSchedulerConnection directly.
 using ::google::cloud::scheduler_v1::CloudSchedulerConnection;
 
-/// @deprecated Use scheduler_v1::CloudSchedulerLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use scheduler_v1::CloudSchedulerLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::scheduler_v1::CloudSchedulerLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use scheduler_v1::CloudSchedulerLimitedTimeRetryPolicy directly.

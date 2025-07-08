@@ -33,7 +33,8 @@ using ::google::cloud::profiler_v2::MakeProfilerServiceConnection;
 /// @deprecated Use profiler_v2::ProfilerServiceConnection directly.
 using ::google::cloud::profiler_v2::ProfilerServiceConnection;
 
-/// @deprecated Use profiler_v2::ProfilerServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use profiler_v2::ProfilerServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::profiler_v2::ProfilerServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use profiler_v2::ProfilerServiceLimitedTimeRetryPolicy directly.

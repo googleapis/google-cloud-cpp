@@ -34,45 +34,57 @@ RuleSetServiceTracingConnection::RuleSetServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceTracingConnection::CreateRuleSet(google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::RuleSetServiceConnection::CreateRuleSet");
+RuleSetServiceTracingConnection::CreateRuleSet(
+    google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::RuleSetServiceConnection::CreateRuleSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateRuleSet(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceTracingConnection::GetRuleSet(google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::RuleSetServiceConnection::GetRuleSet");
+RuleSetServiceTracingConnection::GetRuleSet(
+    google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::RuleSetServiceConnection::GetRuleSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRuleSet(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceTracingConnection::UpdateRuleSet(google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::RuleSetServiceConnection::UpdateRuleSet");
+RuleSetServiceTracingConnection::UpdateRuleSet(
+    google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::RuleSetServiceConnection::UpdateRuleSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateRuleSet(request));
 }
 
-Status
-RuleSetServiceTracingConnection::DeleteRuleSet(google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::RuleSetServiceConnection::DeleteRuleSet");
+Status RuleSetServiceTracingConnection::DeleteRuleSet(
+    google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::RuleSetServiceConnection::DeleteRuleSet");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteRuleSet(request));
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceTracingConnection::ListRuleSets(google::cloud::contentwarehouse::v1::ListRuleSetsRequest request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::RuleSetServiceConnection::ListRuleSets");
+RuleSetServiceTracingConnection::ListRuleSets(
+    google::cloud::contentwarehouse::v1::ListRuleSetsRequest request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::RuleSetServiceConnection::ListRuleSets");
   internal::OTelScope scope(span);
   auto sr = child_->ListRuleSets(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::contentwarehouse::v1::RuleSet>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::contentwarehouse::v1::RuleSet>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-RuleSetServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::RuleSetServiceConnection::GetOperation");
+RuleSetServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::RuleSetServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

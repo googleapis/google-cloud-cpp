@@ -34,132 +34,147 @@ CloudTasksTracingConnection::CloudTasksTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::tasks::v2::Queue>
-CloudTasksTracingConnection::ListQueues(google::cloud::tasks::v2::ListQueuesRequest request) {
+CloudTasksTracingConnection::ListQueues(
+    google::cloud::tasks::v2::ListQueuesRequest request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::ListQueues");
   internal::OTelScope scope(span);
   auto sr = child_->ListQueues(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tasks::v2::Queue>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksTracingConnection::GetQueue(google::cloud::tasks::v2::GetQueueRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Queue> CloudTasksTracingConnection::GetQueue(
+    google::cloud::tasks::v2::GetQueueRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::GetQueue");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetQueue(request));
 }
 
 StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksTracingConnection::CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const& request) {
+CloudTasksTracingConnection::CreateQueue(
+    google::cloud::tasks::v2::CreateQueueRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::CreateQueue");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateQueue(request));
 }
 
 StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksTracingConnection::UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const& request) {
+CloudTasksTracingConnection::UpdateQueue(
+    google::cloud::tasks::v2::UpdateQueueRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::UpdateQueue");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateQueue(request));
 }
 
-Status
-CloudTasksTracingConnection::DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const& request) {
+Status CloudTasksTracingConnection::DeleteQueue(
+    google::cloud::tasks::v2::DeleteQueueRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::DeleteQueue");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteQueue(request));
 }
 
 StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksTracingConnection::PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const& request) {
+CloudTasksTracingConnection::PurgeQueue(
+    google::cloud::tasks::v2::PurgeQueueRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::PurgeQueue");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PurgeQueue(request));
 }
 
 StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksTracingConnection::PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const& request) {
+CloudTasksTracingConnection::PauseQueue(
+    google::cloud::tasks::v2::PauseQueueRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::PauseQueue");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PauseQueue(request));
 }
 
 StatusOr<google::cloud::tasks::v2::Queue>
-CloudTasksTracingConnection::ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const& request) {
+CloudTasksTracingConnection::ResumeQueue(
+    google::cloud::tasks::v2::ResumeQueueRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::ResumeQueue");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResumeQueue(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudTasksTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy> CloudTasksTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("tasks_v2::CloudTasksConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudTasksTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy> CloudTasksTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("tasks_v2::CloudTasksConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudTasksTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::TestIamPermissions");
+CloudTasksTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span =
+      internal::MakeSpan("tasks_v2::CloudTasksConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::cloud::tasks::v2::Task>
-CloudTasksTracingConnection::ListTasks(google::cloud::tasks::v2::ListTasksRequest request) {
+CloudTasksTracingConnection::ListTasks(
+    google::cloud::tasks::v2::ListTasksRequest request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::ListTasks");
   internal::OTelScope scope(span);
   auto sr = child_->ListTasks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tasks::v2::Task>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksTracingConnection::GetTask(google::cloud::tasks::v2::GetTaskRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingConnection::GetTask(
+    google::cloud::tasks::v2::GetTaskRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::GetTask");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTask(request));
 }
 
 StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksTracingConnection::CreateTask(google::cloud::tasks::v2::CreateTaskRequest const& request) {
+CloudTasksTracingConnection::CreateTask(
+    google::cloud::tasks::v2::CreateTaskRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::CreateTask");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTask(request));
 }
 
-Status
-CloudTasksTracingConnection::DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request) {
+Status CloudTasksTracingConnection::DeleteTask(
+    google::cloud::tasks::v2::DeleteTaskRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::DeleteTask");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTask(request));
 }
 
-StatusOr<google::cloud::tasks::v2::Task>
-CloudTasksTracingConnection::RunTask(google::cloud::tasks::v2::RunTaskRequest const& request) {
+StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingConnection::RunTask(
+    google::cloud::tasks::v2::RunTaskRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::RunTask");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RunTask(request));
 }
 
 StreamRange<google::cloud::location::Location>
-CloudTasksTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::ListLocations");
+CloudTasksTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span =
+      internal::MakeSpan("tasks_v2::CloudTasksConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-CloudTasksTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+CloudTasksTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto span = internal::MakeSpan("tasks_v2::CloudTasksConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
@@ -167,8 +182,7 @@ CloudTasksTracingConnection::GetLocation(google::cloud::location::GetLocationReq
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<tasks_v2::CloudTasksConnection>
-MakeCloudTasksTracingConnection(
+std::shared_ptr<tasks_v2::CloudTasksConnection> MakeCloudTasksTracingConnection(
     std::shared_ptr<tasks_v2::CloudTasksConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

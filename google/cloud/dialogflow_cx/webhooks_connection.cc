@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/webhook.proto
 
 #include "google/cloud/dialogflow_cx/webhooks_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/webhooks_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WebhooksConnection::~WebhooksConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::Webhook> WebhooksConnection::ListWebhooks(
-    google::cloud::dialogflow::cx::v3::ListWebhooksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
+WebhooksConnection::ListWebhooks(
+    google::cloud::dialogflow::cx::v3::
+        ListWebhooksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Webhook>>();
 }
@@ -62,38 +64,37 @@ WebhooksConnection::UpdateWebhook(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-WebhooksConnection::DeleteWebhook(
+Status WebhooksConnection::DeleteWebhook(
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> WebhooksConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+WebhooksConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-WebhooksConnection::GetLocation(
+StatusOr<google::cloud::location::Location> WebhooksConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> WebhooksConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-WebhooksConnection::GetOperation(
+StatusOr<google::longrunning::Operation> WebhooksConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-WebhooksConnection::CancelOperation(
+Status WebhooksConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -101,21 +102,20 @@ WebhooksConnection::CancelOperation(
 std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      WebhooksPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::WebhooksDefaultOptions(
-      location, std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 WebhooksPolicyOptionList>(options, __func__);
+  options = dialogflow_cx_internal::WebhooksDefaultOptions(location,
+                                                           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = dialogflow_cx_internal::CreateDefaultWebhooksStub(
-    std::move(auth), options);
+  auto stub = dialogflow_cx_internal::CreateDefaultWebhooksStub(std::move(auth),
+                                                                options);
   return dialogflow_cx_internal::MakeWebhooksTracingConnection(
       std::make_shared<dialogflow_cx_internal::WebhooksConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
-    Options options) {
+std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(Options options) {
   return MakeWebhooksConnection(std::string{}, std::move(options));
 }
 

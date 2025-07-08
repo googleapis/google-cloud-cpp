@@ -34,8 +34,10 @@ using ::google::cloud::serviceusage_v1::ServiceUsagePollingPolicyOption;
 /// @deprecated Use serviceusage_v1::ServiceUsageBackoffPolicyOption directly.
 using ::google::cloud::serviceusage_v1::ServiceUsageBackoffPolicyOption;
 
-/// @deprecated Use serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::serviceusage_v1::
+    ServiceUsageConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use serviceusage_v1::ServiceUsagePolicyOptionList directly.
 using ::google::cloud::serviceusage_v1::ServiceUsagePolicyOptionList;

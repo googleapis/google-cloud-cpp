@@ -36,65 +36,70 @@ class RuleServiceTracingConnection
   ~RuleServiceTracingConnection() override = default;
 
   explicit RuleServiceTracingConnection(
-    std::shared_ptr<chronicle_v1::RuleServiceConnection> child);
+      std::shared_ptr<chronicle_v1::RuleServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::chronicle::v1::Rule>
-  CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Rule> CreateRule(
+      google::cloud::chronicle::v1::CreateRuleRequest const& request) override;
 
-  StatusOr<google::cloud::chronicle::v1::Rule>
-  GetRule(google::cloud::chronicle::v1::GetRuleRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Rule> GetRule(
+      google::cloud::chronicle::v1::GetRuleRequest const& request) override;
 
-  StreamRange<google::cloud::chronicle::v1::Rule>
-  ListRules(google::cloud::chronicle::v1::ListRulesRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::Rule> ListRules(
+      google::cloud::chronicle::v1::ListRulesRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::Rule>
-  UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Rule> UpdateRule(
+      google::cloud::chronicle::v1::UpdateRuleRequest const& request) override;
 
-  Status
-  DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const& request) override;
+  Status DeleteRule(
+      google::cloud::chronicle::v1::DeleteRuleRequest const& request) override;
 
-  StreamRange<google::cloud::chronicle::v1::Rule>
-  ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::Rule> ListRuleRevisions(
+      google::cloud::chronicle::v1::ListRuleRevisionsRequest request) override;
 
-  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-  CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) override;
+  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateRetrohunt(NoAwaitTag,
-      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateRetrohunt(
+      NoAwaitTag,
+      google::cloud::chronicle::v1::CreateRetrohuntRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-  CreateRetrohunt(
+  future<StatusOr<google::cloud::chronicle::v1::Retrohunt>> CreateRetrohunt(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::chronicle::v1::Retrohunt>
-  GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::Retrohunt> GetRetrohunt(
+      google::cloud::chronicle::v1::GetRetrohuntRequest const& request)
+      override;
 
-  StreamRange<google::cloud::chronicle::v1::Retrohunt>
-  ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::Retrohunt> ListRetrohunts(
+      google::cloud::chronicle::v1::ListRetrohuntsRequest request) override;
 
-  StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-  GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::RuleDeployment> GetRuleDeployment(
+      google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request)
+      override;
 
-  StreamRange<google::cloud::chronicle::v1::RuleDeployment>
-  ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest request) override;
+  StreamRange<google::cloud::chronicle::v1::RuleDeployment> ListRuleDeployments(
+      google::cloud::chronicle::v1::ListRuleDeploymentsRequest request)
+      override;
 
-  StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-  UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) override;
+  StatusOr<google::cloud::chronicle::v1::RuleDeployment> UpdateRuleDeployment(
+      google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<chronicle_v1::RuleServiceConnection> child_;

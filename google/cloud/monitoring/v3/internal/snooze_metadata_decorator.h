@@ -34,34 +34,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SnoozeServiceMetadata : public SnoozeServiceStub {
  public:
   ~SnoozeServiceMetadata() override = default;
-  SnoozeServiceMetadata(
-      std::shared_ptr<SnoozeServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  SnoozeServiceMetadata(std::shared_ptr<SnoozeServiceStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListSnoozesResponse> ListSnoozes(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListSnoozesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

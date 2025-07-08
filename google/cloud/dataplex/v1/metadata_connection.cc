@@ -17,14 +17,14 @@
 // source: google/cloud/dataplex/v1/metadata.proto
 
 #include "google/cloud/dataplex/v1/metadata_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dataplex/v1/internal/metadata_connection_impl.h"
 #include "google/cloud/dataplex/v1/internal/metadata_option_defaults.h"
 #include "google/cloud/dataplex/v1/internal/metadata_stub_factory.h"
 #include "google/cloud/dataplex/v1/internal/metadata_tracing_connection.h"
 #include "google/cloud/dataplex/v1/metadata_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -50,8 +50,7 @@ MetadataServiceConnection::UpdateEntity(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MetadataServiceConnection::DeleteEntity(
+Status MetadataServiceConnection::DeleteEntity(
     google::cloud::dataplex::v1::DeleteEntityRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -62,8 +61,10 @@ MetadataServiceConnection::GetEntity(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataplex::v1::Entity> MetadataServiceConnection::ListEntities(
-    google::cloud::dataplex::v1::ListEntitiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::Entity>
+MetadataServiceConnection::ListEntities(
+    google::cloud::dataplex::v1::
+        ListEntitiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::Entity>>();
 }
@@ -74,8 +75,7 @@ MetadataServiceConnection::CreatePartition(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MetadataServiceConnection::DeletePartition(
+Status MetadataServiceConnection::DeletePartition(
     google::cloud::dataplex::v1::DeletePartitionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -86,14 +86,18 @@ MetadataServiceConnection::GetPartition(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataplex::v1::Partition> MetadataServiceConnection::ListPartitions(
-    google::cloud::dataplex::v1::ListPartitionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::Partition>
+MetadataServiceConnection::ListPartitions(
+    google::cloud::dataplex::v1::
+        ListPartitionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::Partition>>();
 }
 
-StreamRange<google::cloud::location::Location> MetadataServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+MetadataServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -104,14 +108,12 @@ MetadataServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-MetadataServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> MetadataServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-MetadataServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> MetadataServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -122,8 +124,10 @@ MetadataServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> MetadataServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+MetadataServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -134,14 +138,12 @@ MetadataServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MetadataServiceConnection::DeleteOperation(
+Status MetadataServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MetadataServiceConnection::CancelOperation(
+Status MetadataServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -149,17 +151,18 @@ MetadataServiceConnection::CancelOperation(
 std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      MetadataServicePolicyOptionList>(options, __func__);
-  options = dataplex_v1_internal::MetadataServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 MetadataServicePolicyOptionList>(options,
+                                                                  __func__);
+  options =
+      dataplex_v1_internal::MetadataServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataplex_v1_internal::CreateDefaultMetadataServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dataplex_v1_internal::MakeMetadataServiceTracingConnection(
       std::make_shared<dataplex_v1_internal::MetadataServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_TRACING_STUB_H
 
+#include "google/cloud/talent/v4/internal/tenant_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/talent/v4/internal/tenant_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,38 +39,33 @@ class TenantServiceTracingStub : public TenantServiceStub {
   explicit TenantServiceTracingStub(std::shared_ptr<TenantServiceStub> child);
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateTenantRequest const& request) override;
 
   Status DeleteTenant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListTenantsResponse> ListTenants(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListTenantsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<TenantServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

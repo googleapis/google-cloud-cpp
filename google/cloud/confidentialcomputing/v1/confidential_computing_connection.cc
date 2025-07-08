@@ -17,13 +17,13 @@
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_options.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_connection_impl.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_option_defaults.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub_factory.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -50,8 +50,10 @@ ConfidentialComputingConnection::VerifyAttestation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> ConfidentialComputingConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ConfidentialComputingConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -62,20 +64,25 @@ ConfidentialComputingConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ConfidentialComputingConnection> MakeConfidentialComputingConnection(
-    Options options) {
+std::shared_ptr<ConfidentialComputingConnection>
+MakeConfidentialComputingConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ConfidentialComputingPolicyOptionList>(options, __func__);
-  options = confidentialcomputing_v1_internal::ConfidentialComputingDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ConfidentialComputingPolicyOptionList>(
+      options, __func__);
+  options =
+      confidentialcomputing_v1_internal::ConfidentialComputingDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = confidentialcomputing_v1_internal::CreateDefaultConfidentialComputingStub(
-    std::move(auth), options);
-  return confidentialcomputing_v1_internal::MakeConfidentialComputingTracingConnection(
-      std::make_shared<confidentialcomputing_v1_internal::ConfidentialComputingConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      confidentialcomputing_v1_internal::CreateDefaultConfidentialComputingStub(
+          std::move(auth), options);
+  return confidentialcomputing_v1_internal::
+      MakeConfidentialComputingTracingConnection(
+          std::make_shared<confidentialcomputing_v1_internal::
+                               ConfidentialComputingConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

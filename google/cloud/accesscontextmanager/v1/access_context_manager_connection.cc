@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessContextManagerConnection::~AccessContextManagerConnection() = default;
 
-StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy> AccessContextManagerConnection::ListAccessPolicies(
-    google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
+AccessContextManagerConnection::ListAccessPolicies(
+    google::identity::accesscontextmanager::v1::
+        ListAccessPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>();
 }
@@ -54,8 +56,8 @@ future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnection::CreateAccessPolicy(
     google::identity::accesscontextmanager::v1::AccessPolicy const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -63,67 +65,75 @@ AccessContextManagerConnection::CreateAccessPolicy(
     NoAwaitTag,
     google::identity::accesscontextmanager::v1::AccessPolicy const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnection::CreateAccessPolicy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnection::UpdateAccessPolicy(
-    google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        UpdateAccessPolicyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::UpdateAccessPolicy(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    UpdateAccessPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnection::UpdateAccessPolicy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteAccessPolicy(
-    google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        DeleteAccessPolicyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   AccessContextManagerOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::DeleteAccessPolicy(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    DeleteAccessPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteAccessPolicy(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   AccessContextManagerOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::identity::accesscontextmanager::v1::AccessLevel> AccessContextManagerConnection::ListAccessLevels(
-    google::identity::accesscontextmanager::v1::ListAccessLevelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
+AccessContextManagerConnection::ListAccessLevels(
+    google::identity::accesscontextmanager::v1::
+        ListAccessLevelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>();
 }
@@ -136,324 +146,366 @@ AccessContextManagerConnection::GetAccessLevel(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnection::CreateAccessLevel(
-    google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        CreateAccessLevelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CreateAccessLevel(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    CreateAccessLevelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnection::CreateAccessLevel(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnection::UpdateAccessLevel(
-    google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        UpdateAccessLevelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::UpdateAccessLevel(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    UpdateAccessLevelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnection::UpdateAccessLevel(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteAccessLevel(
-    google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        DeleteAccessLevelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   AccessContextManagerOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::DeleteAccessLevel(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    DeleteAccessLevelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteAccessLevel(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   AccessContextManagerOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
+future<StatusOr<
+    google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
 AccessContextManagerConnection::ReplaceAccessLevels(
-    google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::identity::accesscontextmanager::v1::
+        ReplaceAccessLevelsRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::ReplaceAccessLevels(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    ReplaceAccessLevelsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
+future<StatusOr<
+    google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
 AccessContextManagerConnection::ReplaceAccessLevels(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter> AccessContextManagerConnection::ListServicePerimeters(
-    google::identity::accesscontextmanager::v1::ListServicePerimetersRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>>();
+StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
+AccessContextManagerConnection::ListServicePerimeters(
+    google::identity::accesscontextmanager::v1::
+        ListServicePerimetersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::identity::accesscontextmanager::v1::ServicePerimeter>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
 AccessContextManagerConnection::GetServicePerimeter(
-    google::identity::accesscontextmanager::v1::GetServicePerimeterRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        GetServicePerimeterRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnection::CreateServicePerimeter(
-    google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        CreateServicePerimeterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CreateServicePerimeter(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    CreateServicePerimeterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnection::CreateServicePerimeter(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnection::UpdateServicePerimeter(
-    google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        UpdateServicePerimeterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::UpdateServicePerimeter(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    UpdateServicePerimeterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnection::UpdateServicePerimeter(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteServicePerimeter(
-    google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        DeleteServicePerimeterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   AccessContextManagerOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::DeleteServicePerimeter(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    DeleteServicePerimeterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteServicePerimeter(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   AccessContextManagerOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    ReplaceServicePerimetersResponse>>
 AccessContextManagerConnection::ReplaceServicePerimeters(
-    google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        ReplaceServicePerimetersRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   ReplaceServicePerimetersResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::ReplaceServicePerimeters(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    ReplaceServicePerimetersRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    ReplaceServicePerimetersResponse>>
 AccessContextManagerConnection::ReplaceServicePerimeters(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   ReplaceServicePerimetersResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    CommitServicePerimetersResponse>>
 AccessContextManagerConnection::CommitServicePerimeters(
-    google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        CommitServicePerimetersRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   CommitServicePerimetersResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CommitServicePerimeters(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    CommitServicePerimetersRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    CommitServicePerimetersResponse>>
 AccessContextManagerConnection::CommitServicePerimeters(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   CommitServicePerimetersResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding> AccessContextManagerConnection::ListGcpUserAccessBindings(
-    google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>();
+StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
+AccessContextManagerConnection::ListGcpUserAccessBindings(
+    google::identity::accesscontextmanager::v1::
+        ListGcpUserAccessBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>();
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
 AccessContextManagerConnection::GetGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        GetGcpUserAccessBindingRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+future<
+    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerConnection::CreateGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::identity::accesscontextmanager::v1::
+        CreateGcpUserAccessBindingRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CreateGcpUserAccessBinding(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    CreateGcpUserAccessBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+future<
+    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerConnection::CreateGcpUserAccessBinding(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+future<
+    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerConnection::UpdateGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::identity::accesscontextmanager::v1::
+        UpdateGcpUserAccessBindingRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::UpdateGcpUserAccessBinding(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    UpdateGcpUserAccessBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+future<
+    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerConnection::UpdateGcpUserAccessBinding(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    GcpUserAccessBindingOperationMetadata>>
 AccessContextManagerConnection::DeleteGcpUserAccessBinding(
-    google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const&) {
+    google::identity::accesscontextmanager::v1::
+        DeleteGcpUserAccessBindingRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   GcpUserAccessBindingOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::DeleteGcpUserAccessBinding(
-    NoAwaitTag,
-    google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const&) {
+    NoAwaitTag, google::identity::accesscontextmanager::v1::
+                    DeleteGcpUserAccessBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
+future<StatusOr<google::identity::accesscontextmanager::v1::
+                    GcpUserAccessBindingOperationMetadata>>
 AccessContextManagerConnection::DeleteGcpUserAccessBinding(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::identity::accesscontextmanager::v1::
+                   GcpUserAccessBindingOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::iam::v1::Policy>
-AccessContextManagerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> AccessContextManagerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-AccessContextManagerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> AccessContextManagerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -470,20 +522,25 @@ AccessContextManagerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AccessContextManagerConnection> MakeAccessContextManagerConnection(
-    Options options) {
+std::shared_ptr<AccessContextManagerConnection>
+MakeAccessContextManagerConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AccessContextManagerPolicyOptionList>(options, __func__);
-  options = accesscontextmanager_v1_internal::AccessContextManagerDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AccessContextManagerPolicyOptionList>(
+      options, __func__);
+  options =
+      accesscontextmanager_v1_internal::AccessContextManagerDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = accesscontextmanager_v1_internal::CreateDefaultAccessContextManagerStub(
-    std::move(auth), options);
-  return accesscontextmanager_v1_internal::MakeAccessContextManagerTracingConnection(
-      std::make_shared<accesscontextmanager_v1_internal::AccessContextManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      accesscontextmanager_v1_internal::CreateDefaultAccessContextManagerStub(
+          std::move(auth), options);
+  return accesscontextmanager_v1_internal::
+      MakeAccessContextManagerTracingConnection(
+          std::make_shared<accesscontextmanager_v1_internal::
+                               AccessContextManagerConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

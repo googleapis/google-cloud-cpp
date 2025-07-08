@@ -34,11 +34,12 @@ class SqlEventsServiceConnectionIdempotencyPolicy {
   virtual ~SqlEventsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlEventsServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SqlEventsServiceConnectionIdempotencyPolicy> clone()
+      const;
 };
 
 std::unique_ptr<SqlEventsServiceConnectionIdempotencyPolicy>
-    MakeDefaultSqlEventsServiceConnectionIdempotencyPolicy();
+MakeDefaultSqlEventsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_CONFIDENTIAL_COMPUTING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_CONFIDENTIAL_COMPUTING_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection_idempotency_policy.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -43,7 +43,8 @@ class ConfidentialComputingRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `ConfidentialComputingConnection` based on counting errors.
+ * A retry policy for `ConfidentialComputingConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +53,8 @@ class ConfidentialComputingRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConfidentialComputingLimitedErrorCountRetryPolicy : public ConfidentialComputingRetryPolicy {
+class ConfidentialComputingLimitedErrorCountRetryPolicy
+    : public ConfidentialComputingRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +63,18 @@ class ConfidentialComputingLimitedErrorCountRetryPolicy : public ConfidentialCom
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ConfidentialComputingLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit ConfidentialComputingLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   ConfidentialComputingLimitedErrorCountRetryPolicy(
       ConfidentialComputingLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ConfidentialComputingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConfidentialComputingLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   ConfidentialComputingLimitedErrorCountRetryPolicy(
       ConfidentialComputingLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ConfidentialComputingLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConfidentialComputingLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +94,9 @@ class ConfidentialComputingLimitedErrorCountRetryPolicy : public ConfidentialCom
   using BaseType = ConfidentialComputingRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +109,8 @@ class ConfidentialComputingLimitedErrorCountRetryPolicy : public ConfidentialCom
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConfidentialComputingLimitedTimeRetryPolicy : public ConfidentialComputingRetryPolicy {
+class ConfidentialComputingLimitedTimeRetryPolicy
+    : public ConfidentialComputingRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +135,14 @@ class ConfidentialComputingLimitedTimeRetryPolicy : public ConfidentialComputing
   template <typename DurationRep, typename DurationPeriod>
   explicit ConfidentialComputingLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ConfidentialComputingLimitedTimeRetryPolicy(ConfidentialComputingLimitedTimeRetryPolicy&& rhs) noexcept
-    : ConfidentialComputingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConfidentialComputingLimitedTimeRetryPolicy(ConfidentialComputingLimitedTimeRetryPolicy const& rhs) noexcept
-    : ConfidentialComputingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConfidentialComputingLimitedTimeRetryPolicy(
+      ConfidentialComputingLimitedTimeRetryPolicy&& rhs) noexcept
+      : ConfidentialComputingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConfidentialComputingLimitedTimeRetryPolicy(
+      ConfidentialComputingLimitedTimeRetryPolicy const& rhs) noexcept
+      : ConfidentialComputingLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +164,24 @@ class ConfidentialComputingLimitedTimeRetryPolicy : public ConfidentialComputing
   using BaseType = ConfidentialComputingRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      confidentialcomputing_v1_internal::ConfidentialComputingRetryTraits>
+      impl_;
 };
 
 /**
- * The `ConfidentialComputingConnection` object for `ConfidentialComputingClient`.
+ * The `ConfidentialComputingConnection` object for
+ * `ConfidentialComputingClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ConfidentialComputingClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ConfidentialComputingClient`.
+ * sets in `ConfidentialComputingClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ConfidentialComputingClient`.
  *
  * To create a concrete instance, see `MakeConfidentialComputingConnection()`.
  *
- * For mocking, see `confidentialcomputing_v1_mocks::MockConfidentialComputingConnection`.
+ * For mocking, see
+ * `confidentialcomputing_v1_mocks::MockConfidentialComputingConnection`.
  */
 class ConfidentialComputingConnection {
  public:
@@ -176,41 +190,49 @@ class ConfidentialComputingConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
-  CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request);
+  CreateChallenge(
+      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
-  VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request);
+  virtual StatusOr<
+      google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
+  VerifyAttestation(
+      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ConfidentialComputingConnection`.
+ * A factory function to construct an object of type
+ * `ConfidentialComputingConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ConfidentialComputingClient.
+ * should be passed as an argument to the constructor of
+ * ConfidentialComputingClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ConfidentialComputingConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ConfidentialComputingConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::confidentialcomputing_v1::ConfidentialComputingPolicyOptionList`
+ * -
+ * `google::cloud::confidentialcomputing_v1::ConfidentialComputingPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ConfidentialComputingConnection` created by
- * this function.
+ * @param options (optional) Configure the `ConfidentialComputingConnection`
+ * created by this function.
  */
-std::shared_ptr<ConfidentialComputingConnection> MakeConfidentialComputingConnection(
-    Options options = {});
+std::shared_ptr<ConfidentialComputingConnection>
+MakeConfidentialComputingConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1

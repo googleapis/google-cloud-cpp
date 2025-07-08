@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_WORKFLOW_TEMPLATE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_WORKFLOW_TEMPLATE_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_retry_traits.h"
 #include "google/cloud/dataproc/v1/internal/workflow_template_stub.h"
 #include "google/cloud/dataproc/v1/workflow_template_connection.h"
 #include "google/cloud/dataproc/v1/workflow_template_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/workflow_template_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,69 +46,83 @@ class WorkflowTemplateServiceConnectionImpl
   ~WorkflowTemplateServiceConnectionImpl() override = default;
 
   WorkflowTemplateServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dataproc_v1_internal::WorkflowTemplateServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dataproc_v1_internal::WorkflowTemplateServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  CreateWorkflowTemplate(google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) override;
+  CreateWorkflowTemplate(
+      google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  GetWorkflowTemplate(google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) override;
+  StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
+      google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request) override;
+  InstantiateWorkflowTemplate(
+      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  InstantiateWorkflowTemplate(NoAwaitTag,
-      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const& request) override;
+  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateInlineWorkflowTemplate(google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request) override;
+  InstantiateInlineWorkflowTemplate(
+      google::cloud::dataproc::v1::
+          InstantiateInlineWorkflowTemplateRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  InstantiateInlineWorkflowTemplate(NoAwaitTag,
-      google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const& request) override;
+  StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::
+          InstantiateInlineWorkflowTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
-  UpdateWorkflowTemplate(google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) override;
+  UpdateWorkflowTemplate(
+      google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request)
+      override;
 
   StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-  ListWorkflowTemplates(google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request) override;
+  ListWorkflowTemplates(
+      google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request)
+      override;
 
-  Status
-  DeleteWorkflowTemplate(google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) override;
+  Status DeleteWorkflowTemplate(
+      google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_SERVING_CONFIG_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_SERVING_CONFIG_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/retail/v2/internal/serving_config_retry_traits.h"
 #include "google/cloud/retail/v2/internal/serving_config_stub.h"
 #include "google/cloud/retail/v2/serving_config_connection.h"
 #include "google/cloud/retail/v2/serving_config_connection_idempotency_policy.h"
 #include "google/cloud/retail/v2/serving_config_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,38 +43,42 @@ class ServingConfigServiceConnectionImpl
   ~ServingConfigServiceConnectionImpl() override = default;
 
   ServingConfigServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_v2_internal::ServingConfigServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<retail_v2_internal::ServingConfigServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::retail::v2::ServingConfig>
-  CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::ServingConfig> CreateServingConfig(
+      google::cloud::retail::v2::CreateServingConfigRequest const& request)
+      override;
 
-  Status
-  DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const& request) override;
+  Status DeleteServingConfig(
+      google::cloud::retail::v2::DeleteServingConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::ServingConfig>
-  UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::ServingConfig> UpdateServingConfig(
+      google::cloud::retail::v2::UpdateServingConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::ServingConfig>
-  GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::ServingConfig> GetServingConfig(
+      google::cloud::retail::v2::GetServingConfigRequest const& request)
+      override;
 
-  StreamRange<google::cloud::retail::v2::ServingConfig>
-  ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest request) override;
+  StreamRange<google::cloud::retail::v2::ServingConfig> ListServingConfigs(
+      google::cloud::retail::v2::ListServingConfigsRequest request) override;
 
-  StatusOr<google::cloud::retail::v2::ServingConfig>
-  AddControl(google::cloud::retail::v2::AddControlRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::ServingConfig> AddControl(
+      google::cloud::retail::v2::AddControlRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::ServingConfig>
-  RemoveControl(google::cloud::retail::v2::RemoveControlRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
+      google::cloud::retail::v2::RemoveControlRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

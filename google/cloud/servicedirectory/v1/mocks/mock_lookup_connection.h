@@ -42,21 +42,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockLookupServiceConnection : public servicedirectory_v1::LookupServiceConnection {
+class MockLookupServiceConnection
+    : public servicedirectory_v1::LookupServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>,
-  ResolveService,
-  (google::cloud::servicedirectory::v1::ResolveServiceRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>,
+      ResolveService,
+      (google::cloud::servicedirectory::v1::ResolveServiceRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

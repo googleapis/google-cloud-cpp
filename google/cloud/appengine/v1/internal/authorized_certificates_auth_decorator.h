@@ -38,30 +38,34 @@ class AuthorizedCertificatesAuth : public AuthorizedCertificatesStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<AuthorizedCertificatesStub> child);
 
-  StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse> ListAuthorizedCertificates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::ListAuthorizedCertificatesRequest const& request) override;
+  StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
+  ListAuthorizedCertificates(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::ListAuthorizedCertificatesRequest const& request)
+      override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate> GetAuthorizedCertificate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::GetAuthorizedCertificateRequest const& request) override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate>
+  GetAuthorizedCertificate(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::GetAuthorizedCertificateRequest const& request)
+      override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate> CreateAuthorizedCertificate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::CreateAuthorizedCertificateRequest const& request) override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate>
+  CreateAuthorizedCertificate(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
+      override;
 
-  StatusOr<google::appengine::v1::AuthorizedCertificate> UpdateAuthorizedCertificate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) override;
+  StatusOr<google::appengine::v1::AuthorizedCertificate>
+  UpdateAuthorizedCertificate(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
+      override;
 
   Status DeleteAuthorizedCertificate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
+      override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

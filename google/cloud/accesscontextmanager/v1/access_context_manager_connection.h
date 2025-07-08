@@ -56,7 +56,8 @@ class AccessContextManagerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AccessContextManagerLimitedErrorCountRetryPolicy : public AccessContextManagerRetryPolicy {
+class AccessContextManagerLimitedErrorCountRetryPolicy
+    : public AccessContextManagerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,15 +66,18 @@ class AccessContextManagerLimitedErrorCountRetryPolicy : public AccessContextMan
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit AccessContextManagerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit AccessContextManagerLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   AccessContextManagerLimitedErrorCountRetryPolicy(
       AccessContextManagerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AccessContextManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AccessContextManagerLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   AccessContextManagerLimitedErrorCountRetryPolicy(
       AccessContextManagerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AccessContextManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AccessContextManagerLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +97,9 @@ class AccessContextManagerLimitedErrorCountRetryPolicy : public AccessContextMan
   using BaseType = AccessContextManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<accesscontextmanager_v1_internal::AccessContextManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      accesscontextmanager_v1_internal::AccessContextManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +112,8 @@ class AccessContextManagerLimitedErrorCountRetryPolicy : public AccessContextMan
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AccessContextManagerLimitedTimeRetryPolicy : public AccessContextManagerRetryPolicy {
+class AccessContextManagerLimitedTimeRetryPolicy
+    : public AccessContextManagerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +138,14 @@ class AccessContextManagerLimitedTimeRetryPolicy : public AccessContextManagerRe
   template <typename DurationRep, typename DurationPeriod>
   explicit AccessContextManagerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AccessContextManagerLimitedTimeRetryPolicy(AccessContextManagerLimitedTimeRetryPolicy&& rhs) noexcept
-    : AccessContextManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AccessContextManagerLimitedTimeRetryPolicy(AccessContextManagerLimitedTimeRetryPolicy const& rhs) noexcept
-    : AccessContextManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AccessContextManagerLimitedTimeRetryPolicy(
+      AccessContextManagerLimitedTimeRetryPolicy&& rhs) noexcept
+      : AccessContextManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AccessContextManagerLimitedTimeRetryPolicy(
+      AccessContextManagerLimitedTimeRetryPolicy const& rhs) noexcept
+      : AccessContextManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,20 +167,23 @@ class AccessContextManagerLimitedTimeRetryPolicy : public AccessContextManagerRe
   using BaseType = AccessContextManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<accesscontextmanager_v1_internal::AccessContextManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      accesscontextmanager_v1_internal::AccessContextManagerRetryTraits>
+      impl_;
 };
 
 /**
  * The `AccessContextManagerConnection` object for `AccessContextManagerClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `AccessContextManagerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `AccessContextManagerClient`.
+ * sets in `AccessContextManagerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AccessContextManagerClient`.
  *
  * To create a concrete instance, see `MakeAccessContextManagerConnection()`.
  *
- * For mocking, see `accesscontextmanager_v1_mocks::MockAccessContextManagerConnection`.
+ * For mocking, see
+ * `accesscontextmanager_v1_mocks::MockAccessContextManagerConnection`.
  */
 class AccessContextManagerConnection {
  public:
@@ -180,200 +192,282 @@ class AccessContextManagerConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
-  ListAccessPolicies(google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest request);
+  ListAccessPolicies(
+      google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
+          request);
 
   virtual StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-  GetAccessPolicy(google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const& request);
+  GetAccessPolicy(
+      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
+          request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  CreateAccessPolicy(google::identity::accesscontextmanager::v1::AccessPolicy const& request);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
+  CreateAccessPolicy(
+      google::identity::accesscontextmanager::v1::AccessPolicy const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAccessPolicy(NoAwaitTag, google::identity::accesscontextmanager::v1::AccessPolicy const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAccessPolicy(
+      NoAwaitTag,
+      google::identity::accesscontextmanager::v1::AccessPolicy const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  CreateAccessPolicy( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
+  CreateAccessPolicy(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy(google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
+  UpdateAccessPolicy(google::identity::accesscontextmanager::v1::
+                         UpdateAccessPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAccessPolicy(NoAwaitTag, google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      UpdateAccessPolicyRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
+  UpdateAccessPolicy(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy(google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              AccessContextManagerOperationMetadata>>
+  DeleteAccessPolicy(google::identity::accesscontextmanager::v1::
+                         DeleteAccessPolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAccessPolicy(NoAwaitTag, google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      DeleteAccessPolicyRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              AccessContextManagerOperationMetadata>>
+  DeleteAccessPolicy(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-  ListAccessLevels(google::identity::accesscontextmanager::v1::ListAccessLevelsRequest request);
+  ListAccessLevels(
+      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
+          request);
 
   virtual StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-  GetAccessLevel(google::identity::accesscontextmanager::v1::GetAccessLevelRequest const& request);
+  GetAccessLevel(
+      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
+          request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel(google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
+  CreateAccessLevel(google::identity::accesscontextmanager::v1::
+                        CreateAccessLevelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAccessLevel(NoAwaitTag, google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAccessLevel(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      CreateAccessLevelRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
+  CreateAccessLevel(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel(google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
+  UpdateAccessLevel(google::identity::accesscontextmanager::v1::
+                        UpdateAccessLevelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAccessLevel(NoAwaitTag, google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateAccessLevel(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      UpdateAccessLevelRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
+  UpdateAccessLevel(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel(google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              AccessContextManagerOperationMetadata>>
+  DeleteAccessLevel(google::identity::accesscontextmanager::v1::
+                        DeleteAccessLevelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAccessLevel(NoAwaitTag, google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAccessLevel(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      DeleteAccessLevelRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              AccessContextManagerOperationMetadata>>
+  DeleteAccessLevel(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-  ReplaceAccessLevels(google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request);
+  virtual future<StatusOr<
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
+  ReplaceAccessLevels(google::identity::accesscontextmanager::v1::
+                          ReplaceAccessLevelsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ReplaceAccessLevels(NoAwaitTag, google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ReplaceAccessLevels(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      ReplaceAccessLevelsRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-  ReplaceAccessLevels( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
+  ReplaceAccessLevels(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  ListServicePerimeters(google::identity::accesscontextmanager::v1::ListServicePerimetersRequest request);
+  virtual StreamRange<
+      google::identity::accesscontextmanager::v1::ServicePerimeter>
+  ListServicePerimeters(
+      google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
+          request);
 
   virtual StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(google::identity::accesscontextmanager::v1::GetServicePerimeterRequest const& request);
+  GetServicePerimeter(google::identity::accesscontextmanager::v1::
+                          GetServicePerimeterRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  CreateServicePerimeter(google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
+  CreateServicePerimeter(google::identity::accesscontextmanager::v1::
+                             CreateServicePerimeterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateServicePerimeter(NoAwaitTag, google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateServicePerimeter(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      CreateServicePerimeterRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  CreateServicePerimeter( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
+  CreateServicePerimeter(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  UpdateServicePerimeter(google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
+  UpdateServicePerimeter(google::identity::accesscontextmanager::v1::
+                             UpdateServicePerimeterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateServicePerimeter(NoAwaitTag, google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      UpdateServicePerimeterRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  UpdateServicePerimeter( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
+  UpdateServicePerimeter(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteServicePerimeter(google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              AccessContextManagerOperationMetadata>>
+  DeleteServicePerimeter(google::identity::accesscontextmanager::v1::
+                             DeleteServicePerimeterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteServicePerimeter(NoAwaitTag, google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      DeleteServicePerimeterRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata>>
-  DeleteServicePerimeter( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              AccessContextManagerOperationMetadata>>
+  DeleteServicePerimeter(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>
-  ReplaceServicePerimeters(google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              ReplaceServicePerimetersResponse>>
+  ReplaceServicePerimeters(google::identity::accesscontextmanager::v1::
+                               ReplaceServicePerimetersRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ReplaceServicePerimeters(NoAwaitTag, google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ReplaceServicePerimeters(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      ReplaceServicePerimetersRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersResponse>>
-  ReplaceServicePerimeters( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              ReplaceServicePerimetersResponse>>
+  ReplaceServicePerimeters(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>
-  CommitServicePerimeters(google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              CommitServicePerimetersResponse>>
+  CommitServicePerimeters(google::identity::accesscontextmanager::v1::
+                              CommitServicePerimetersRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CommitServicePerimeters(NoAwaitTag, google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CommitServicePerimeters(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      CommitServicePerimetersRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse>>
-  CommitServicePerimeters( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              CommitServicePerimetersResponse>>
+  CommitServicePerimeters(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest request);
+  virtual StreamRange<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
+  ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::
+                                ListGcpUserAccessBindingsRequest request);
 
-  virtual StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::GetGcpUserAccessBindingRequest const& request);
+  virtual StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
+  GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::
+                              GetGcpUserAccessBindingRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  CreateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request);
+  virtual future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  CreateGcpUserAccessBinding(
+      google::identity::accesscontextmanager::v1::
+          CreateGcpUserAccessBindingRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateGcpUserAccessBinding(NoAwaitTag, google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      CreateGcpUserAccessBindingRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  CreateGcpUserAccessBinding( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  CreateGcpUserAccessBinding(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  UpdateGcpUserAccessBinding(google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request);
+  virtual future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  UpdateGcpUserAccessBinding(
+      google::identity::accesscontextmanager::v1::
+          UpdateGcpUserAccessBindingRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateGcpUserAccessBinding(NoAwaitTag, google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      UpdateGcpUserAccessBindingRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  UpdateGcpUserAccessBinding( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
+  UpdateGcpUserAccessBinding(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
-  DeleteGcpUserAccessBinding(google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              GcpUserAccessBindingOperationMetadata>>
+  DeleteGcpUserAccessBinding(
+      google::identity::accesscontextmanager::v1::
+          DeleteGcpUserAccessBindingRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteGcpUserAccessBinding(NoAwaitTag, google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      DeleteGcpUserAccessBindingRequest const& request);
 
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBindingOperationMetadata>>
-  DeleteGcpUserAccessBinding( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
+                              GcpUserAccessBindingOperationMetadata>>
+  DeleteGcpUserAccessBinding(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `AccessContextManagerConnection`.
+ * A factory function to construct an object of type
+ * `AccessContextManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AccessContextManagerClient.
+ * should be passed as an argument to the constructor of
+ * AccessContextManagerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AccessContextManagerConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `AccessContextManagerConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::accesscontextmanager_v1::AccessContextManagerPolicyOptionList`
+ * -
+ * `google::cloud::accesscontextmanager_v1::AccessContextManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AccessContextManagerConnection` created by
- * this function.
+ * @param options (optional) Configure the `AccessContextManagerConnection`
+ * created by this function.
  */
-std::shared_ptr<AccessContextManagerConnection> MakeAccessContextManagerConnection(
-    Options options = {});
+std::shared_ptr<AccessContextManagerConnection>
+MakeAccessContextManagerConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_v1

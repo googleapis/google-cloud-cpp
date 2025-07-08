@@ -34,21 +34,24 @@ SpecialistPoolServiceTracingConnection::SpecialistPoolServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-SpecialistPoolServiceTracingConnection::CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+SpecialistPoolServiceTracingConnection::CreateSpecialistPool(
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::CreateSpecialistPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateSpecialistPool(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateSpecialistPool(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceTracingConnection::CreateSpecialistPool(
-    NoAwaitTag, google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::CreateSpecialistPool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateSpecialistPool(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateSpecialistPool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
@@ -58,41 +61,49 @@ SpecialistPoolServiceTracingConnection::CreateSpecialistPool(
       "aiplatform_v1::SpecialistPoolServiceConnection::CreateSpecialistPool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateSpecialistPool(operation));
+                           child_->CreateSpecialistPool(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
-SpecialistPoolServiceTracingConnection::GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::GetSpecialistPool");
+SpecialistPoolServiceTracingConnection::GetSpecialistPool(
+    google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::GetSpecialistPool");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSpecialistPool(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-SpecialistPoolServiceTracingConnection::ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::ListSpecialistPools");
+SpecialistPoolServiceTracingConnection::ListSpecialistPools(
+    google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::ListSpecialistPools");
   internal::OTelScope scope(span);
   auto sr = child_->ListSpecialistPools(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::SpecialistPool>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::SpecialistPool>(std::move(span),
+                                                     std::move(sr));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-SpecialistPoolServiceTracingConnection::DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+SpecialistPoolServiceTracingConnection::DeleteSpecialistPool(
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::DeleteSpecialistPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteSpecialistPool(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteSpecialistPool(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceTracingConnection::DeleteSpecialistPool(
-    NoAwaitTag, google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::DeleteSpecialistPool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSpecialistPool(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSpecialistPool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -102,25 +113,28 @@ SpecialistPoolServiceTracingConnection::DeleteSpecialistPool(
       "aiplatform_v1::SpecialistPoolServiceConnection::DeleteSpecialistPool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteSpecialistPool(operation));
+                           child_->DeleteSpecialistPool(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-SpecialistPoolServiceTracingConnection::UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+SpecialistPoolServiceTracingConnection::UpdateSpecialistPool(
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::UpdateSpecialistPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateSpecialistPool(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateSpecialistPool(request));
 }
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceTracingConnection::UpdateSpecialistPool(
-    NoAwaitTag, google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::SpecialistPoolServiceConnection::UpdateSpecialistPool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateSpecialistPool(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateSpecialistPool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
@@ -130,79 +144,97 @@ SpecialistPoolServiceTracingConnection::UpdateSpecialistPool(
       "aiplatform_v1::SpecialistPoolServiceConnection::UpdateSpecialistPool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateSpecialistPool(operation));
+                           child_->UpdateSpecialistPool(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-SpecialistPoolServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::ListLocations");
+SpecialistPoolServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-SpecialistPoolServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::GetLocation");
+SpecialistPoolServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-SpecialistPoolServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::SetIamPolicy");
+SpecialistPoolServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-SpecialistPoolServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::GetIamPolicy");
+SpecialistPoolServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SpecialistPoolServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::TestIamPermissions");
+SpecialistPoolServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-SpecialistPoolServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::ListOperations");
+SpecialistPoolServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SpecialistPoolServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::GetOperation");
+SpecialistPoolServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-SpecialistPoolServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::DeleteOperation");
+Status SpecialistPoolServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-SpecialistPoolServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::CancelOperation");
+Status SpecialistPoolServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 StatusOr<google::longrunning::Operation>
-SpecialistPoolServiceTracingConnection::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::SpecialistPoolServiceConnection::WaitOperation");
+SpecialistPoolServiceTracingConnection::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::SpecialistPoolServiceConnection::WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }
@@ -214,7 +246,8 @@ MakeSpecialistPoolServiceTracingConnection(
     std::shared_ptr<aiplatform_v1::SpecialistPoolServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SpecialistPoolServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<SpecialistPoolServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

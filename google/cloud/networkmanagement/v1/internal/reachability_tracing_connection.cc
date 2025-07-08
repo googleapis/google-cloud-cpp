@@ -34,196 +34,254 @@ ReachabilityServiceTracingConnection::ReachabilityServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-ReachabilityServiceTracingConnection::ListConnectivityTests(google::cloud::networkmanagement::v1::ListConnectivityTestsRequest request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::ListConnectivityTests");
+ReachabilityServiceTracingConnection::ListConnectivityTests(
+    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "ListConnectivityTests");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnectivityTests(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkmanagement::v1::ConnectivityTest>(std::move(span),
+                                                              std::move(sr));
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
-ReachabilityServiceTracingConnection::GetConnectivityTest(google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::GetConnectivityTest");
+ReachabilityServiceTracingConnection::GetConnectivityTest(
+    google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "GetConnectivityTest");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnectivityTest(request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-ReachabilityServiceTracingConnection::CreateConnectivityTest(google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
+ReachabilityServiceTracingConnection::CreateConnectivityTest(
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::CreateConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "CreateConnectivityTest");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateConnectivityTest(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConnectivityTest(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceTracingConnection::CreateConnectivityTest(
-    NoAwaitTag, google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
+    NoAwaitTag,
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::CreateConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "CreateConnectivityTest");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateConnectivityTest(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateConnectivityTest(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::CreateConnectivityTest(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::CreateConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "CreateConnectivityTest");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateConnectivityTest(operation));
-}
-
-future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-ReachabilityServiceTracingConnection::UpdateConnectivityTest(google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
-  auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::UpdateConnectivityTest");
-  internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateConnectivityTest(request));
-}
-
-StatusOr<google::longrunning::Operation>
-ReachabilityServiceTracingConnection::UpdateConnectivityTest(
-    NoAwaitTag, google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
-  auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::UpdateConnectivityTest");
-  opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateConnectivityTest(
-      NoAwaitTag{}, request));
+                           child_->CreateConnectivityTest(operation));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::UpdateConnectivityTest(
-    google::longrunning::Operation const& operation) {
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::UpdateConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "UpdateConnectivityTest");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateConnectivityTest(operation));
+                           child_->UpdateConnectivityTest(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceTracingConnection::UpdateConnectivityTest(
+    NoAwaitTag,
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "UpdateConnectivityTest");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateConnectivityTest(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-ReachabilityServiceTracingConnection::RerunConnectivityTest(google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
+ReachabilityServiceTracingConnection::UpdateConnectivityTest(
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::RerunConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "UpdateConnectivityTest");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RerunConnectivityTest(request));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateConnectivityTest(operation));
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+ReachabilityServiceTracingConnection::RerunConnectivityTest(
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "RerunConnectivityTest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RerunConnectivityTest(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceTracingConnection::RerunConnectivityTest(
-    NoAwaitTag, google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
+    NoAwaitTag,
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::RerunConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "RerunConnectivityTest");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RerunConnectivityTest(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->RerunConnectivityTest(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::RerunConnectivityTest(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::RerunConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "RerunConnectivityTest");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->RerunConnectivityTest(operation));
+                           child_->RerunConnectivityTest(operation));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-ReachabilityServiceTracingConnection::DeleteConnectivityTest(google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
+ReachabilityServiceTracingConnection::DeleteConnectivityTest(
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::DeleteConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "DeleteConnectivityTest");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteConnectivityTest(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConnectivityTest(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceTracingConnection::DeleteConnectivityTest(
-    NoAwaitTag, google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
+    NoAwaitTag,
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::DeleteConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "DeleteConnectivityTest");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteConnectivityTest(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteConnectivityTest(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceTracingConnection::DeleteConnectivityTest(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "networkmanagement_v1::ReachabilityServiceConnection::DeleteConnectivityTest");
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "DeleteConnectivityTest");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteConnectivityTest(operation));
+                           child_->DeleteConnectivityTest(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-ReachabilityServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::ListLocations");
+ReachabilityServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ReachabilityServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::GetLocation");
+ReachabilityServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-ReachabilityServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::SetIamPolicy");
+ReachabilityServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-ReachabilityServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::GetIamPolicy");
+ReachabilityServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ReachabilityServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::TestIamPermissions");
+ReachabilityServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ReachabilityServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::ListOperations");
+ReachabilityServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ReachabilityServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::GetOperation");
+ReachabilityServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ReachabilityServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::DeleteOperation");
+Status ReachabilityServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-ReachabilityServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("networkmanagement_v1::ReachabilityServiceConnection::CancelOperation");
+Status ReachabilityServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -235,7 +293,8 @@ MakeReachabilityServiceTracingConnection(
     std::shared_ptr<networkmanagement_v1::ReachabilityServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ReachabilityServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<ReachabilityServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

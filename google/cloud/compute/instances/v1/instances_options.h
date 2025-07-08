@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCES_V1_INSTANCES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCES_V1_INSTANCES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instances/v1/instances_connection.h"
 #include "google/cloud/compute/instances/v1/instances_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct InstancesPollingPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using InstancesPolicyOptionList =
-    OptionList<InstancesRetryPolicyOption,
-               InstancesBackoffPolicyOption,
+    OptionList<InstancesRetryPolicyOption, InstancesBackoffPolicyOption,
                InstancesPollingPolicyOption,
                InstancesConnectionIdempotencyPolicyOption>;
 

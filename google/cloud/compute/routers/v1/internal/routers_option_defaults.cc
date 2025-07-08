@@ -35,30 +35,36 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RoutersDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ROUTERS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ROUTERS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_ROUTERS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ROUTERS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_routers_v1::RoutersRetryPolicyOption>()) {
     options.set<compute_routers_v1::RoutersRetryPolicyOption>(
         compute_routers_v1::RoutersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_routers_v1::RoutersBackoffPolicyOption>()) {
     options.set<compute_routers_v1::RoutersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<compute_routers_v1::RoutersPollingPolicyOption>()) {
     options.set<compute_routers_v1::RoutersPollingPolicyOption>(
         GenericPollingPolicy<
             compute_routers_v1::RoutersRetryPolicyOption::Type,
             compute_routers_v1::RoutersBackoffPolicyOption::Type>(
-            options.get<compute_routers_v1::RoutersRetryPolicyOption>()->clone(),
+            options.get<compute_routers_v1::RoutersRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_routers_v1::RoutersConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          compute_routers_v1::RoutersConnectionIdempotencyPolicyOption>()) {
     options.set<compute_routers_v1::RoutersConnectionIdempotencyPolicyOption>(
         compute_routers_v1::MakeDefaultRoutersConnectionIdempotencyPolicy());
   }

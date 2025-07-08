@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataplexServiceClient::DataplexServiceClient(
     std::shared_ptr<DataplexServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataplexServiceClient::~DataplexServiceClient() = default;
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
-DataplexServiceClient::CreateLake(std::string const& parent, google::cloud::dataplex::v1::Lake const& lake, std::string const& lake_id, Options opts) {
+DataplexServiceClient::CreateLake(std::string const& parent,
+                                  google::cloud::dataplex::v1::Lake const& lake,
+                                  std::string const& lake_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateLakeRequest request;
   request.set_parent(parent);
@@ -42,8 +44,10 @@ DataplexServiceClient::CreateLake(std::string const& parent, google::cloud::data
   return connection_->CreateLake(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateLake(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Lake const& lake, std::string const& lake_id, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::CreateLake(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::Lake const& lake, std::string const& lake_id,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateLakeRequest request;
   request.set_parent(parent);
@@ -53,25 +57,31 @@ DataplexServiceClient::CreateLake(NoAwaitTag, std::string const& parent, google:
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
-DataplexServiceClient::CreateLake(google::cloud::dataplex::v1::CreateLakeRequest const& request, Options opts) {
+DataplexServiceClient::CreateLake(
+    google::cloud::dataplex::v1::CreateLakeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLake(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateLake(NoAwaitTag, google::cloud::dataplex::v1::CreateLakeRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::CreateLake(
+    NoAwaitTag, google::cloud::dataplex::v1::CreateLakeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLake(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
-DataplexServiceClient::CreateLake(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::CreateLake(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLake(operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
-DataplexServiceClient::UpdateLake(google::cloud::dataplex::v1::Lake const& lake, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataplexServiceClient::UpdateLake(
+    google::cloud::dataplex::v1::Lake const& lake,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateLakeRequest request;
   *request.mutable_lake() = lake;
@@ -79,8 +89,9 @@ DataplexServiceClient::UpdateLake(google::cloud::dataplex::v1::Lake const& lake,
   return connection_->UpdateLake(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateLake(NoAwaitTag, google::cloud::dataplex::v1::Lake const& lake, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::UpdateLake(
+    NoAwaitTag, google::cloud::dataplex::v1::Lake const& lake,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateLakeRequest request;
   *request.mutable_lake() = lake;
@@ -89,19 +100,23 @@ DataplexServiceClient::UpdateLake(NoAwaitTag, google::cloud::dataplex::v1::Lake 
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
-DataplexServiceClient::UpdateLake(google::cloud::dataplex::v1::UpdateLakeRequest const& request, Options opts) {
+DataplexServiceClient::UpdateLake(
+    google::cloud::dataplex::v1::UpdateLakeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLake(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateLake(NoAwaitTag, google::cloud::dataplex::v1::UpdateLakeRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::UpdateLake(
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateLakeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLake(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
-DataplexServiceClient::UpdateLake(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::UpdateLake(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLake(operation);
 }
@@ -114,8 +129,8 @@ DataplexServiceClient::DeleteLake(std::string const& name, Options opts) {
   return connection_->DeleteLake(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteLake(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::DeleteLake(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteLakeRequest request;
   request.set_name(name);
@@ -123,53 +138,58 @@ DataplexServiceClient::DeleteLake(NoAwaitTag, std::string const& name, Options o
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteLake(google::cloud::dataplex::v1::DeleteLakeRequest const& request, Options opts) {
+DataplexServiceClient::DeleteLake(
+    google::cloud::dataplex::v1::DeleteLakeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLake(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteLake(NoAwaitTag, google::cloud::dataplex::v1::DeleteLakeRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::DeleteLake(
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteLakeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLake(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteLake(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::DeleteLake(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLake(operation);
 }
 
-StreamRange<google::cloud::dataplex::v1::Lake>
-DataplexServiceClient::ListLakes(std::string const& parent, Options opts) {
+StreamRange<google::cloud::dataplex::v1::Lake> DataplexServiceClient::ListLakes(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::ListLakesRequest request;
   request.set_parent(parent);
   return connection_->ListLakes(request);
 }
 
-StreamRange<google::cloud::dataplex::v1::Lake>
-DataplexServiceClient::ListLakes(google::cloud::dataplex::v1::ListLakesRequest request, Options opts) {
+StreamRange<google::cloud::dataplex::v1::Lake> DataplexServiceClient::ListLakes(
+    google::cloud::dataplex::v1::ListLakesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLakes(std::move(request));
 }
 
-StatusOr<google::cloud::dataplex::v1::Lake>
-DataplexServiceClient::GetLake(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Lake> DataplexServiceClient::GetLake(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::GetLakeRequest request;
   request.set_name(name);
   return connection_->GetLake(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Lake>
-DataplexServiceClient::GetLake(google::cloud::dataplex::v1::GetLakeRequest const& request, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Lake> DataplexServiceClient::GetLake(
+    google::cloud::dataplex::v1::GetLakeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLake(request);
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceClient::ListLakeActions(std::string const& parent, Options opts) {
+DataplexServiceClient::ListLakeActions(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::ListLakeActionsRequest request;
   request.set_parent(parent);
@@ -177,13 +197,16 @@ DataplexServiceClient::ListLakeActions(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceClient::ListLakeActions(google::cloud::dataplex::v1::ListLakeActionsRequest request, Options opts) {
+DataplexServiceClient::ListLakeActions(
+    google::cloud::dataplex::v1::ListLakeActionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLakeActions(std::move(request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
-DataplexServiceClient::CreateZone(std::string const& parent, google::cloud::dataplex::v1::Zone const& zone, std::string const& zone_id, Options opts) {
+DataplexServiceClient::CreateZone(std::string const& parent,
+                                  google::cloud::dataplex::v1::Zone const& zone,
+                                  std::string const& zone_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateZoneRequest request;
   request.set_parent(parent);
@@ -192,8 +215,10 @@ DataplexServiceClient::CreateZone(std::string const& parent, google::cloud::data
   return connection_->CreateZone(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateZone(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Zone const& zone, std::string const& zone_id, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::CreateZone(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::Zone const& zone, std::string const& zone_id,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateZoneRequest request;
   request.set_parent(parent);
@@ -203,25 +228,31 @@ DataplexServiceClient::CreateZone(NoAwaitTag, std::string const& parent, google:
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
-DataplexServiceClient::CreateZone(google::cloud::dataplex::v1::CreateZoneRequest const& request, Options opts) {
+DataplexServiceClient::CreateZone(
+    google::cloud::dataplex::v1::CreateZoneRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateZone(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateZone(NoAwaitTag, google::cloud::dataplex::v1::CreateZoneRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::CreateZone(
+    NoAwaitTag, google::cloud::dataplex::v1::CreateZoneRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateZone(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
-DataplexServiceClient::CreateZone(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::CreateZone(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateZone(operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
-DataplexServiceClient::UpdateZone(google::cloud::dataplex::v1::Zone const& zone, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataplexServiceClient::UpdateZone(
+    google::cloud::dataplex::v1::Zone const& zone,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateZoneRequest request;
   *request.mutable_zone() = zone;
@@ -229,8 +260,9 @@ DataplexServiceClient::UpdateZone(google::cloud::dataplex::v1::Zone const& zone,
   return connection_->UpdateZone(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateZone(NoAwaitTag, google::cloud::dataplex::v1::Zone const& zone, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::UpdateZone(
+    NoAwaitTag, google::cloud::dataplex::v1::Zone const& zone,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateZoneRequest request;
   *request.mutable_zone() = zone;
@@ -239,19 +271,23 @@ DataplexServiceClient::UpdateZone(NoAwaitTag, google::cloud::dataplex::v1::Zone 
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
-DataplexServiceClient::UpdateZone(google::cloud::dataplex::v1::UpdateZoneRequest const& request, Options opts) {
+DataplexServiceClient::UpdateZone(
+    google::cloud::dataplex::v1::UpdateZoneRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateZone(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateZone(NoAwaitTag, google::cloud::dataplex::v1::UpdateZoneRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::UpdateZone(
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateZoneRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateZone(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
-DataplexServiceClient::UpdateZone(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::UpdateZone(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateZone(operation);
 }
@@ -264,8 +300,8 @@ DataplexServiceClient::DeleteZone(std::string const& name, Options opts) {
   return connection_->DeleteZone(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteZone(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::DeleteZone(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteZoneRequest request;
   request.set_name(name);
@@ -273,53 +309,58 @@ DataplexServiceClient::DeleteZone(NoAwaitTag, std::string const& name, Options o
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteZone(google::cloud::dataplex::v1::DeleteZoneRequest const& request, Options opts) {
+DataplexServiceClient::DeleteZone(
+    google::cloud::dataplex::v1::DeleteZoneRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteZone(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteZone(NoAwaitTag, google::cloud::dataplex::v1::DeleteZoneRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::DeleteZone(
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteZoneRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteZone(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteZone(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::DeleteZone(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteZone(operation);
 }
 
-StreamRange<google::cloud::dataplex::v1::Zone>
-DataplexServiceClient::ListZones(std::string const& parent, Options opts) {
+StreamRange<google::cloud::dataplex::v1::Zone> DataplexServiceClient::ListZones(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::ListZonesRequest request;
   request.set_parent(parent);
   return connection_->ListZones(request);
 }
 
-StreamRange<google::cloud::dataplex::v1::Zone>
-DataplexServiceClient::ListZones(google::cloud::dataplex::v1::ListZonesRequest request, Options opts) {
+StreamRange<google::cloud::dataplex::v1::Zone> DataplexServiceClient::ListZones(
+    google::cloud::dataplex::v1::ListZonesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListZones(std::move(request));
 }
 
-StatusOr<google::cloud::dataplex::v1::Zone>
-DataplexServiceClient::GetZone(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Zone> DataplexServiceClient::GetZone(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::GetZoneRequest request;
   request.set_name(name);
   return connection_->GetZone(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Zone>
-DataplexServiceClient::GetZone(google::cloud::dataplex::v1::GetZoneRequest const& request, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Zone> DataplexServiceClient::GetZone(
+    google::cloud::dataplex::v1::GetZoneRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetZone(request);
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceClient::ListZoneActions(std::string const& parent, Options opts) {
+DataplexServiceClient::ListZoneActions(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::ListZoneActionsRequest request;
   request.set_parent(parent);
@@ -327,13 +368,16 @@ DataplexServiceClient::ListZoneActions(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceClient::ListZoneActions(google::cloud::dataplex::v1::ListZoneActionsRequest request, Options opts) {
+DataplexServiceClient::ListZoneActions(
+    google::cloud::dataplex::v1::ListZoneActionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListZoneActions(std::move(request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
-DataplexServiceClient::CreateAsset(std::string const& parent, google::cloud::dataplex::v1::Asset const& asset, std::string const& asset_id, Options opts) {
+DataplexServiceClient::CreateAsset(
+    std::string const& parent, google::cloud::dataplex::v1::Asset const& asset,
+    std::string const& asset_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateAssetRequest request;
   request.set_parent(parent);
@@ -342,8 +386,10 @@ DataplexServiceClient::CreateAsset(std::string const& parent, google::cloud::dat
   return connection_->CreateAsset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateAsset(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Asset const& asset, std::string const& asset_id, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::CreateAsset(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::Asset const& asset,
+    std::string const& asset_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateAssetRequest request;
   request.set_parent(parent);
@@ -353,25 +399,31 @@ DataplexServiceClient::CreateAsset(NoAwaitTag, std::string const& parent, google
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
-DataplexServiceClient::CreateAsset(google::cloud::dataplex::v1::CreateAssetRequest const& request, Options opts) {
+DataplexServiceClient::CreateAsset(
+    google::cloud::dataplex::v1::CreateAssetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAsset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateAsset(NoAwaitTag, google::cloud::dataplex::v1::CreateAssetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::CreateAsset(
+    NoAwaitTag, google::cloud::dataplex::v1::CreateAssetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAsset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
-DataplexServiceClient::CreateAsset(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::CreateAsset(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAsset(operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
-DataplexServiceClient::UpdateAsset(google::cloud::dataplex::v1::Asset const& asset, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataplexServiceClient::UpdateAsset(
+    google::cloud::dataplex::v1::Asset const& asset,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateAssetRequest request;
   *request.mutable_asset() = asset;
@@ -379,8 +431,9 @@ DataplexServiceClient::UpdateAsset(google::cloud::dataplex::v1::Asset const& ass
   return connection_->UpdateAsset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateAsset(NoAwaitTag, google::cloud::dataplex::v1::Asset const& asset, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::UpdateAsset(
+    NoAwaitTag, google::cloud::dataplex::v1::Asset const& asset,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateAssetRequest request;
   *request.mutable_asset() = asset;
@@ -389,19 +442,23 @@ DataplexServiceClient::UpdateAsset(NoAwaitTag, google::cloud::dataplex::v1::Asse
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
-DataplexServiceClient::UpdateAsset(google::cloud::dataplex::v1::UpdateAssetRequest const& request, Options opts) {
+DataplexServiceClient::UpdateAsset(
+    google::cloud::dataplex::v1::UpdateAssetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAsset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateAsset(NoAwaitTag, google::cloud::dataplex::v1::UpdateAssetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::UpdateAsset(
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateAssetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAsset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
-DataplexServiceClient::UpdateAsset(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::UpdateAsset(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAsset(operation);
 }
@@ -414,8 +471,8 @@ DataplexServiceClient::DeleteAsset(std::string const& name, Options opts) {
   return connection_->DeleteAsset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteAsset(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::DeleteAsset(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteAssetRequest request;
   request.set_name(name);
@@ -423,19 +480,23 @@ DataplexServiceClient::DeleteAsset(NoAwaitTag, std::string const& name, Options 
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteAsset(google::cloud::dataplex::v1::DeleteAssetRequest const& request, Options opts) {
+DataplexServiceClient::DeleteAsset(
+    google::cloud::dataplex::v1::DeleteAssetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAsset(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteAsset(NoAwaitTag, google::cloud::dataplex::v1::DeleteAssetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::DeleteAsset(
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteAssetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAsset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteAsset(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::DeleteAsset(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAsset(operation);
 }
@@ -449,27 +510,29 @@ DataplexServiceClient::ListAssets(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataplex::v1::Asset>
-DataplexServiceClient::ListAssets(google::cloud::dataplex::v1::ListAssetsRequest request, Options opts) {
+DataplexServiceClient::ListAssets(
+    google::cloud::dataplex::v1::ListAssetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAssets(std::move(request));
 }
 
-StatusOr<google::cloud::dataplex::v1::Asset>
-DataplexServiceClient::GetAsset(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Asset> DataplexServiceClient::GetAsset(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::GetAssetRequest request;
   request.set_name(name);
   return connection_->GetAsset(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Asset>
-DataplexServiceClient::GetAsset(google::cloud::dataplex::v1::GetAssetRequest const& request, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Asset> DataplexServiceClient::GetAsset(
+    google::cloud::dataplex::v1::GetAssetRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAsset(request);
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceClient::ListAssetActions(std::string const& parent, Options opts) {
+DataplexServiceClient::ListAssetActions(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::ListAssetActionsRequest request;
   request.set_parent(parent);
@@ -477,13 +540,17 @@ DataplexServiceClient::ListAssetActions(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
-DataplexServiceClient::ListAssetActions(google::cloud::dataplex::v1::ListAssetActionsRequest request, Options opts) {
+DataplexServiceClient::ListAssetActions(
+    google::cloud::dataplex::v1::ListAssetActionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAssetActions(std::move(request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
-DataplexServiceClient::CreateTask(std::string const& parent, google::cloud::dataplex::v1::Task const& task, std::string const& task_id, Options opts) {
+DataplexServiceClient::CreateTask(std::string const& parent,
+                                  google::cloud::dataplex::v1::Task const& task,
+                                  std::string const& task_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateTaskRequest request;
   request.set_parent(parent);
@@ -492,8 +559,10 @@ DataplexServiceClient::CreateTask(std::string const& parent, google::cloud::data
   return connection_->CreateTask(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateTask(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Task const& task, std::string const& task_id, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::CreateTask(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::Task const& task, std::string const& task_id,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateTaskRequest request;
   request.set_parent(parent);
@@ -503,25 +572,31 @@ DataplexServiceClient::CreateTask(NoAwaitTag, std::string const& parent, google:
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
-DataplexServiceClient::CreateTask(google::cloud::dataplex::v1::CreateTaskRequest const& request, Options opts) {
+DataplexServiceClient::CreateTask(
+    google::cloud::dataplex::v1::CreateTaskRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTask(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateTask(NoAwaitTag, google::cloud::dataplex::v1::CreateTaskRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::CreateTask(
+    NoAwaitTag, google::cloud::dataplex::v1::CreateTaskRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTask(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
-DataplexServiceClient::CreateTask(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::CreateTask(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTask(operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
-DataplexServiceClient::UpdateTask(google::cloud::dataplex::v1::Task const& task, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataplexServiceClient::UpdateTask(
+    google::cloud::dataplex::v1::Task const& task,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateTaskRequest request;
   *request.mutable_task() = task;
@@ -529,8 +604,9 @@ DataplexServiceClient::UpdateTask(google::cloud::dataplex::v1::Task const& task,
   return connection_->UpdateTask(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateTask(NoAwaitTag, google::cloud::dataplex::v1::Task const& task, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::UpdateTask(
+    NoAwaitTag, google::cloud::dataplex::v1::Task const& task,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateTaskRequest request;
   *request.mutable_task() = task;
@@ -539,19 +615,23 @@ DataplexServiceClient::UpdateTask(NoAwaitTag, google::cloud::dataplex::v1::Task 
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
-DataplexServiceClient::UpdateTask(google::cloud::dataplex::v1::UpdateTaskRequest const& request, Options opts) {
+DataplexServiceClient::UpdateTask(
+    google::cloud::dataplex::v1::UpdateTaskRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTask(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateTask(NoAwaitTag, google::cloud::dataplex::v1::UpdateTaskRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::UpdateTask(
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateTaskRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTask(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
-DataplexServiceClient::UpdateTask(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::UpdateTask(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTask(operation);
 }
@@ -564,8 +644,8 @@ DataplexServiceClient::DeleteTask(std::string const& name, Options opts) {
   return connection_->DeleteTask(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteTask(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::DeleteTask(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteTaskRequest request;
   request.set_name(name);
@@ -573,61 +653,65 @@ DataplexServiceClient::DeleteTask(NoAwaitTag, std::string const& name, Options o
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteTask(google::cloud::dataplex::v1::DeleteTaskRequest const& request, Options opts) {
+DataplexServiceClient::DeleteTask(
+    google::cloud::dataplex::v1::DeleteTaskRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTask(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteTask(NoAwaitTag, google::cloud::dataplex::v1::DeleteTaskRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::DeleteTask(
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteTaskRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTask(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteTask(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::DeleteTask(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTask(operation);
 }
 
-StreamRange<google::cloud::dataplex::v1::Task>
-DataplexServiceClient::ListTasks(std::string const& parent, Options opts) {
+StreamRange<google::cloud::dataplex::v1::Task> DataplexServiceClient::ListTasks(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::ListTasksRequest request;
   request.set_parent(parent);
   return connection_->ListTasks(request);
 }
 
-StreamRange<google::cloud::dataplex::v1::Task>
-DataplexServiceClient::ListTasks(google::cloud::dataplex::v1::ListTasksRequest request, Options opts) {
+StreamRange<google::cloud::dataplex::v1::Task> DataplexServiceClient::ListTasks(
+    google::cloud::dataplex::v1::ListTasksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTasks(std::move(request));
 }
 
-StatusOr<google::cloud::dataplex::v1::Task>
-DataplexServiceClient::GetTask(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Task> DataplexServiceClient::GetTask(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::GetTaskRequest request;
   request.set_name(name);
   return connection_->GetTask(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Task>
-DataplexServiceClient::GetTask(google::cloud::dataplex::v1::GetTaskRequest const& request, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Task> DataplexServiceClient::GetTask(
+    google::cloud::dataplex::v1::GetTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTask(request);
 }
 
-StreamRange<google::cloud::dataplex::v1::Job>
-DataplexServiceClient::ListJobs(std::string const& parent, Options opts) {
+StreamRange<google::cloud::dataplex::v1::Job> DataplexServiceClient::ListJobs(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::ListJobsRequest request;
   request.set_parent(parent);
   return connection_->ListJobs(request);
 }
 
-StreamRange<google::cloud::dataplex::v1::Job>
-DataplexServiceClient::ListJobs(google::cloud::dataplex::v1::ListJobsRequest request, Options opts) {
+StreamRange<google::cloud::dataplex::v1::Job> DataplexServiceClient::ListJobs(
+    google::cloud::dataplex::v1::ListJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(std::move(request));
 }
@@ -641,41 +725,45 @@ DataplexServiceClient::RunTask(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
-DataplexServiceClient::RunTask(google::cloud::dataplex::v1::RunTaskRequest const& request, Options opts) {
+DataplexServiceClient::RunTask(
+    google::cloud::dataplex::v1::RunTaskRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunTask(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Job>
-DataplexServiceClient::GetJob(std::string const& name, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceClient::GetJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::GetJobRequest request;
   request.set_name(name);
   return connection_->GetJob(request);
 }
 
-StatusOr<google::cloud::dataplex::v1::Job>
-DataplexServiceClient::GetJob(google::cloud::dataplex::v1::GetJobRequest const& request, Options opts) {
+StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceClient::GetJob(
+    google::cloud::dataplex::v1::GetJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
 
-Status
-DataplexServiceClient::CancelJob(std::string const& name, Options opts) {
+Status DataplexServiceClient::CancelJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CancelJobRequest request;
   request.set_name(name);
   return connection_->CancelJob(request);
 }
 
-Status
-DataplexServiceClient::CancelJob(google::cloud::dataplex::v1::CancelJobRequest const& request, Options opts) {
+Status DataplexServiceClient::CancelJob(
+    google::cloud::dataplex::v1::CancelJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelJob(request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
-DataplexServiceClient::CreateEnvironment(std::string const& parent, google::cloud::dataplex::v1::Environment const& environment, std::string const& environment_id, Options opts) {
+DataplexServiceClient::CreateEnvironment(
+    std::string const& parent,
+    google::cloud::dataplex::v1::Environment const& environment,
+    std::string const& environment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateEnvironmentRequest request;
   request.set_parent(parent);
@@ -685,7 +773,10 @@ DataplexServiceClient::CreateEnvironment(std::string const& parent, google::clou
 }
 
 StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateEnvironment(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::Environment const& environment, std::string const& environment_id, Options opts) {
+DataplexServiceClient::CreateEnvironment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::Environment const& environment,
+    std::string const& environment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::CreateEnvironmentRequest request;
   request.set_parent(parent);
@@ -695,25 +786,33 @@ DataplexServiceClient::CreateEnvironment(NoAwaitTag, std::string const& parent, 
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
-DataplexServiceClient::CreateEnvironment(google::cloud::dataplex::v1::CreateEnvironmentRequest const& request, Options opts) {
+DataplexServiceClient::CreateEnvironment(
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnvironment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataplexServiceClient::CreateEnvironment(NoAwaitTag, google::cloud::dataplex::v1::CreateEnvironmentRequest const& request, Options opts) {
+DataplexServiceClient::CreateEnvironment(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnvironment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
-DataplexServiceClient::CreateEnvironment(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::CreateEnvironment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEnvironment(operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
-DataplexServiceClient::UpdateEnvironment(google::cloud::dataplex::v1::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataplexServiceClient::UpdateEnvironment(
+    google::cloud::dataplex::v1::Environment const& environment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateEnvironmentRequest request;
   *request.mutable_environment() = environment;
@@ -722,7 +821,9 @@ DataplexServiceClient::UpdateEnvironment(google::cloud::dataplex::v1::Environmen
 }
 
 StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateEnvironment(NoAwaitTag, google::cloud::dataplex::v1::Environment const& environment, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataplexServiceClient::UpdateEnvironment(
+    NoAwaitTag, google::cloud::dataplex::v1::Environment const& environment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateEnvironmentRequest request;
   *request.mutable_environment() = environment;
@@ -731,25 +832,32 @@ DataplexServiceClient::UpdateEnvironment(NoAwaitTag, google::cloud::dataplex::v1
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
-DataplexServiceClient::UpdateEnvironment(google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request, Options opts) {
+DataplexServiceClient::UpdateEnvironment(
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnvironment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataplexServiceClient::UpdateEnvironment(NoAwaitTag, google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request, Options opts) {
+DataplexServiceClient::UpdateEnvironment(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnvironment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
-DataplexServiceClient::UpdateEnvironment(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::UpdateEnvironment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEnvironment(operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteEnvironment(std::string const& name, Options opts) {
+DataplexServiceClient::DeleteEnvironment(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteEnvironmentRequest request;
   request.set_name(name);
@@ -757,7 +865,8 @@ DataplexServiceClient::DeleteEnvironment(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteEnvironment(NoAwaitTag, std::string const& name, Options opts) {
+DataplexServiceClient::DeleteEnvironment(NoAwaitTag, std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteEnvironmentRequest request;
   request.set_name(name);
@@ -765,25 +874,32 @@ DataplexServiceClient::DeleteEnvironment(NoAwaitTag, std::string const& name, Op
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteEnvironment(google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request, Options opts) {
+DataplexServiceClient::DeleteEnvironment(
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnvironment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DataplexServiceClient::DeleteEnvironment(NoAwaitTag, google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request, Options opts) {
+DataplexServiceClient::DeleteEnvironment(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnvironment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-DataplexServiceClient::DeleteEnvironment(google::longrunning::Operation const& operation, Options opts) {
+DataplexServiceClient::DeleteEnvironment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEnvironment(operation);
 }
 
 StreamRange<google::cloud::dataplex::v1::Environment>
-DataplexServiceClient::ListEnvironments(std::string const& parent, Options opts) {
+DataplexServiceClient::ListEnvironments(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::ListEnvironmentsRequest request;
   request.set_parent(parent);
@@ -791,7 +907,9 @@ DataplexServiceClient::ListEnvironments(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::dataplex::v1::Environment>
-DataplexServiceClient::ListEnvironments(google::cloud::dataplex::v1::ListEnvironmentsRequest request, Options opts) {
+DataplexServiceClient::ListEnvironments(
+    google::cloud::dataplex::v1::ListEnvironmentsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEnvironments(std::move(request));
 }
@@ -805,7 +923,9 @@ DataplexServiceClient::GetEnvironment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataplex::v1::Environment>
-DataplexServiceClient::GetEnvironment(google::cloud::dataplex::v1::GetEnvironmentRequest const& request, Options opts) {
+DataplexServiceClient::GetEnvironment(
+    google::cloud::dataplex::v1::GetEnvironmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEnvironment(request);
 }
@@ -819,43 +939,47 @@ DataplexServiceClient::ListSessions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dataplex::v1::Session>
-DataplexServiceClient::ListSessions(google::cloud::dataplex::v1::ListSessionsRequest request, Options opts) {
+DataplexServiceClient::ListSessions(
+    google::cloud::dataplex::v1::ListSessionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSessions(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>
-DataplexServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+DataplexServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-DataplexServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> DataplexServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataplexServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> DataplexServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataplexServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> DataplexServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataplexServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+DataplexServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-DataplexServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+DataplexServiceClient::ListOperations(std::string const& name,
+                                      std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -864,49 +988,50 @@ DataplexServiceClient::ListOperations(std::string const& name, std::string const
 }
 
 StreamRange<google::longrunning::Operation>
-DataplexServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+DataplexServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DataplexServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DataplexServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-DataplexServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status DataplexServiceClient::DeleteOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-DataplexServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status DataplexServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-DataplexServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status DataplexServiceClient::CancelOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-DataplexServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status DataplexServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

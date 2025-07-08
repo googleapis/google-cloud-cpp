@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/flows_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/flows_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,9 +30,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/struct.pb.h>
 #include <google/cloud/dialogflow/cx/v3/flow.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/protobuf/struct.pb.h>
 #include <memory>
 #include <string>
 
@@ -68,14 +68,14 @@ class FlowsLimitedErrorCountRetryPolicy : public FlowsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit FlowsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   FlowsLimitedErrorCountRetryPolicy(
       FlowsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : FlowsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FlowsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FlowsLimitedErrorCountRetryPolicy(
       FlowsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : FlowsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FlowsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,7 +95,9 @@ class FlowsLimitedErrorCountRetryPolicy : public FlowsRetryPolicy {
   using BaseType = FlowsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::FlowsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_cx_internal::FlowsRetryTraits>
+      impl_;
 };
 
 /**
@@ -133,12 +135,12 @@ class FlowsLimitedTimeRetryPolicy : public FlowsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit FlowsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   FlowsLimitedTimeRetryPolicy(FlowsLimitedTimeRetryPolicy&& rhs) noexcept
-    : FlowsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : FlowsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   FlowsLimitedTimeRetryPolicy(FlowsLimitedTimeRetryPolicy const& rhs) noexcept
-    : FlowsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : FlowsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -152,15 +154,16 @@ class FlowsLimitedTimeRetryPolicy : public FlowsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<FlowsRetryPolicy> clone() const override {
-    return std::make_unique<FlowsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<FlowsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = FlowsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::FlowsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_cx_internal::FlowsRetryTraits>
+      impl_;
 };
 
 /**
@@ -181,68 +184,80 @@ class FlowsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  CreateFlow(google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
+      google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request);
 
-  virtual Status
-  DeleteFlow(google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request);
+  virtual Status DeleteFlow(
+      google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request);
 
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Flow>
-  ListFlows(google::cloud::dialogflow::cx::v3::ListFlowsRequest request);
+  virtual StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
+      google::cloud::dialogflow::cx::v3::ListFlowsRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  GetFlow(google::cloud::dialogflow::cx::v3::GetFlowRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
+      google::cloud::dialogflow::cx::v3::GetFlowRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-  UpdateFlow(google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
+      google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>>
-  TrainFlow(google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
+  virtual future<StatusOr<google::protobuf::Struct>> TrainFlow(
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  TrainFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> TrainFlow(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
 
-  virtual future<StatusOr<google::protobuf::Struct>>
-  TrainFlow( google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  ValidateFlow(google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request);
+  virtual future<StatusOr<google::protobuf::Struct>> TrainFlow(
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  GetFlowValidationResult(google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const& request);
+  ValidateFlow(
+      google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow(google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
+  GetFlowValidationResult(
+      google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
+  ImportFlow(
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> ImportFlow(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow(google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
+  ImportFlow(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ExportFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
+  ExportFlow(
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> ExportFlow(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
+  ExportFlow(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -277,8 +292,7 @@ std::shared_ptr<FlowsConnection> MakeFlowsConnection(
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<FlowsConnection> MakeFlowsConnection(
-    Options options = {});
+std::shared_ptr<FlowsConnection> MakeFlowsConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

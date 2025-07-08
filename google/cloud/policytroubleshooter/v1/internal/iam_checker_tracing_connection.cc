@@ -33,8 +33,11 @@ IamCheckerTracingConnection::IamCheckerTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-IamCheckerTracingConnection::TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("policytroubleshooter_v1::IamCheckerConnection::TroubleshootIamPolicy");
+IamCheckerTracingConnection::TroubleshootIamPolicy(
+    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "policytroubleshooter_v1::IamCheckerConnection::TroubleshootIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TroubleshootIamPolicy(request));
 }

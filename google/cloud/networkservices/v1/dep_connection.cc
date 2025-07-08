@@ -17,17 +17,17 @@
 // source: google/cloud/networkservices/v1/dep.proto
 
 #include "google/cloud/networkservices/v1/dep_connection.h"
+#include "google/cloud/networkservices/v1/dep_options.h"
+#include "google/cloud/networkservices/v1/internal/dep_connection_impl.h"
+#include "google/cloud/networkservices/v1/internal/dep_option_defaults.h"
+#include "google/cloud/networkservices/v1/internal/dep_stub_factory.h"
+#include "google/cloud/networkservices/v1/internal/dep_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/networkservices/v1/dep_options.h"
-#include "google/cloud/networkservices/v1/internal/dep_connection_impl.h"
-#include "google/cloud/networkservices/v1/internal/dep_option_defaults.h"
-#include "google/cloud/networkservices/v1/internal/dep_stub_factory.h"
-#include "google/cloud/networkservices/v1/internal/dep_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DepServiceConnection::~DepServiceConnection() = default;
 
-StreamRange<google::cloud::networkservices::v1::LbTrafficExtension> DepServiceConnection::ListLbTrafficExtensions(
-    google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>
+DepServiceConnection::ListLbTrafficExtensions(
+    google::cloud::networkservices::v1::
+        ListLbTrafficExtensionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkservices::v1::LbTrafficExtension>>();
 }
@@ -52,78 +54,83 @@ DepServiceConnection::GetLbTrafficExtension(
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceConnection::CreateLbTrafficExtension(
-    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&) {
+    google::cloud::networkservices::v1::
+        CreateLbTrafficExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnection::CreateLbTrafficExtension(
-    NoAwaitTag,
-    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&) {
+    NoAwaitTag, google::cloud::networkservices::v1::
+                    CreateLbTrafficExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceConnection::CreateLbTrafficExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceConnection::UpdateLbTrafficExtension(
-    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&) {
+    google::cloud::networkservices::v1::
+        UpdateLbTrafficExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnection::UpdateLbTrafficExtension(
-    NoAwaitTag,
-    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&) {
+    NoAwaitTag, google::cloud::networkservices::v1::
+                    UpdateLbTrafficExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceConnection::UpdateLbTrafficExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceConnection::DeleteLbTrafficExtension(
-    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&) {
+    google::cloud::networkservices::v1::
+        DeleteLbTrafficExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnection::DeleteLbTrafficExtension(
-    NoAwaitTag,
-    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&) {
+    NoAwaitTag, google::cloud::networkservices::v1::
+                    DeleteLbTrafficExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceConnection::DeleteLbTrafficExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::networkservices::v1::LbRouteExtension> DepServiceConnection::ListLbRouteExtensions(
-    google::cloud::networkservices::v1::ListLbRouteExtensionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
+DepServiceConnection::ListLbRouteExtensions(
+    google::cloud::networkservices::v1::
+        ListLbRouteExtensionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkservices::v1::LbRouteExtension>>();
 }
@@ -138,8 +145,8 @@ future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceConnection::CreateLbRouteExtension(
     google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -147,23 +154,23 @@ DepServiceConnection::CreateLbRouteExtension(
     NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceConnection::CreateLbRouteExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceConnection::UpdateLbRouteExtension(
     google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -171,23 +178,23 @@ DepServiceConnection::UpdateLbRouteExtension(
     NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceConnection::UpdateLbRouteExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceConnection::DeleteLbRouteExtension(
     google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -195,19 +202,21 @@ DepServiceConnection::DeleteLbRouteExtension(
     NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceConnection::DeleteLbRouteExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::networkservices::v1::AuthzExtension> DepServiceConnection::ListAuthzExtensions(
-    google::cloud::networkservices::v1::ListAuthzExtensionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::networkservices::v1::AuthzExtension>
+DepServiceConnection::ListAuthzExtensions(
+    google::cloud::networkservices::v1::
+        ListAuthzExtensionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkservices::v1::AuthzExtension>>();
 }
@@ -222,8 +231,8 @@ future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
 DepServiceConnection::CreateAuthzExtension(
     google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::AuthzExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::AuthzExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -231,23 +240,23 @@ DepServiceConnection::CreateAuthzExtension(
     NoAwaitTag,
     google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
 DepServiceConnection::CreateAuthzExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::AuthzExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::AuthzExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
 DepServiceConnection::UpdateAuthzExtension(
     google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::AuthzExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::AuthzExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -255,23 +264,23 @@ DepServiceConnection::UpdateAuthzExtension(
     NoAwaitTag,
     google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::AuthzExtension>>
 DepServiceConnection::UpdateAuthzExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::AuthzExtension>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::AuthzExtension>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceConnection::DeleteAuthzExtension(
     google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -279,37 +288,36 @@ DepServiceConnection::DeleteAuthzExtension(
     NoAwaitTag,
     google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceConnection::DeleteAuthzExtension(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> DepServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+DepServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-DepServiceConnection::GetLocation(
+StatusOr<google::cloud::location::Location> DepServiceConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-DepServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> DepServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-DepServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> DepServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -320,26 +328,25 @@ DepServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> DepServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+DepServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-DepServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> DepServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DepServiceConnection::DeleteOperation(
+Status DepServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DepServiceConnection::CancelOperation(
+Status DepServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -347,17 +354,17 @@ DepServiceConnection::CancelOperation(
 std::shared_ptr<DepServiceConnection> MakeDepServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DepServicePolicyOptionList>(options, __func__);
-  options = networkservices_v1_internal::DepServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 DepServicePolicyOptionList>(options, __func__);
+  options =
+      networkservices_v1_internal::DepServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = networkservices_v1_internal::CreateDefaultDepServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return networkservices_v1_internal::MakeDepServiceTracingConnection(
       std::make_shared<networkservices_v1_internal::DepServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,17 +17,17 @@
 // source: google/cloud/redis/cluster/v1/cloud_redis_cluster.proto
 
 #include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_stub_factory.h"
+#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_auth_decorator.h"
+#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_logging_decorator.h"
+#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_metadata_decorator.h"
+#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_stub.h"
+#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_auth_decorator.h"
-#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_logging_decorator.h"
-#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_metadata_decorator.h"
-#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_stub.h"
-#include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_tracing_stub.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -39,31 +39,30 @@ namespace cloud {
 namespace redis_cluster_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CloudRedisClusterStub>
-CreateDefaultCloudRedisClusterStub(
+std::shared_ptr<CloudRedisClusterStub> CreateDefaultCloudRedisClusterStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::redis::cluster::v1::CloudRedisCluster::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::redis::cluster::v1::CloudRedisCluster::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudRedisClusterStub> stub =
-    std::make_shared<DefaultCloudRedisClusterStub>(
-      std::move(service_grpc_stub), std::move(service_locations_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultCloudRedisClusterStub>(
+          std::move(service_grpc_stub), std::move(service_locations_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<CloudRedisClusterAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<CloudRedisClusterAuth>(std::move(auth),
+                                                   std::move(stub));
   }
   stub = std::make_shared<CloudRedisClusterMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudRedisClusterLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

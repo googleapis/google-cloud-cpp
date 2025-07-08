@@ -26,27 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-StoragePoolTypesConnectionIdempotencyPolicy::~StoragePoolTypesConnectionIdempotencyPolicy() = default;
+StoragePoolTypesConnectionIdempotencyPolicy::
+    ~StoragePoolTypesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<StoragePoolTypesConnectionIdempotencyPolicy>
 StoragePoolTypesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<StoragePoolTypesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency StoragePoolTypesConnectionIdempotencyPolicy::AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest) {  // NOLINT
+Idempotency
+StoragePoolTypesConnectionIdempotencyPolicy::AggregatedListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        AggregatedListStoragePoolTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StoragePoolTypesConnectionIdempotencyPolicy::GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const&) {
+Idempotency StoragePoolTypesConnectionIdempotencyPolicy::GetStoragePoolType(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        GetStoragePoolTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StoragePoolTypesConnectionIdempotencyPolicy::ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest) {  // NOLINT
+Idempotency StoragePoolTypesConnectionIdempotencyPolicy::ListStoragePoolTypes(
+    google::cloud::cpp::compute::storage_pool_types::v1::
+        ListStoragePoolTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<StoragePoolTypesConnectionIdempotencyPolicy>
-    MakeDefaultStoragePoolTypesConnectionIdempotencyPolicy() {
+MakeDefaultStoragePoolTypesConnectionIdempotencyPolicy() {
   return std::make_unique<StoragePoolTypesConnectionIdempotencyPolicy>();
 }
 

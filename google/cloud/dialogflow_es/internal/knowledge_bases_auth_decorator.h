@@ -38,54 +38,50 @@ class KnowledgeBasesAuth : public KnowledgeBasesStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<KnowledgeBasesStub> child);
 
-  StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse> ListKnowledgeBases(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
+  ListKnowledgeBases(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> GetKnowledgeBase(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> CreateKnowledgeBase(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request)
+      override;
 
   Status DeleteKnowledgeBase(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

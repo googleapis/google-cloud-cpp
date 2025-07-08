@@ -17,10 +17,10 @@
 // source: google/cloud/managedkafka/v1/managed_kafka.proto
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,37 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ManagedKafkaDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_MANAGED_KAFKA_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_MANAGED_KAFKA_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_MANAGED_KAFKA_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_MANAGED_KAFKA_AUTHORITY",
       "managedkafka.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<managedkafka_v1::ManagedKafkaRetryPolicyOption>()) {
     options.set<managedkafka_v1::ManagedKafkaRetryPolicyOption>(
         managedkafka_v1::ManagedKafkaLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<managedkafka_v1::ManagedKafkaBackoffPolicyOption>()) {
     options.set<managedkafka_v1::ManagedKafkaBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<managedkafka_v1::ManagedKafkaPollingPolicyOption>()) {
     options.set<managedkafka_v1::ManagedKafkaPollingPolicyOption>(
         GenericPollingPolicy<
             managedkafka_v1::ManagedKafkaRetryPolicyOption::Type,
             managedkafka_v1::ManagedKafkaBackoffPolicyOption::Type>(
-            options.get<managedkafka_v1::ManagedKafkaRetryPolicyOption>()->clone(),
+            options.get<managedkafka_v1::ManagedKafkaRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<managedkafka_v1::ManagedKafkaConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          managedkafka_v1::ManagedKafkaConnectionIdempotencyPolicyOption>()) {
     options.set<managedkafka_v1::ManagedKafkaConnectionIdempotencyPolicyOption>(
         managedkafka_v1::MakeDefaultManagedKafkaConnectionIdempotencyPolicy());
   }

@@ -31,46 +31,51 @@ LineageAuth::LineageAuth(
     std::shared_ptr<LineageStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse> LineageAuth::ProcessOpenLineageRunEvent(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventRequest const& request) {
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
+LineageAuth::ProcessOpenLineageRunEvent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::
+        ProcessOpenLineageRunEventRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ProcessOpenLineageRunEvent(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Process> LineageAuth::CreateProcess(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::CreateProcessRequest const& request) {
+StatusOr<google::cloud::datacatalog::lineage::v1::Process>
+LineageAuth::CreateProcess(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateProcess(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Process> LineageAuth::UpdateProcess(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const& request) {
+StatusOr<google::cloud::datacatalog::lineage::v1::Process>
+LineageAuth::UpdateProcess(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateProcess(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::Process> LineageAuth::GetProcess(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::lineage::v1::Process>
+LineageAuth::GetProcess(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetProcess(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse> LineageAuth::ListProcesses(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::ListProcessesRequest const& request) {
+StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
+LineageAuth::ListProcesses(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListProcesses(context, options, request);
@@ -78,36 +83,36 @@ StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse> Lineage
 
 future<StatusOr<google::longrunning::Operation>>
 LineageAuth::AsyncDeleteProcess(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteProcess(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteProcess(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-LineageAuth::DeleteProcess(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const& request) {
+StatusOr<google::longrunning::Operation> LineageAuth::DeleteProcess(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteProcess(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageAuth::CreateRun(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -115,8 +120,7 @@ StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageAuth::CreateRun(
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageAuth::UpdateRun(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -124,109 +128,112 @@ StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageAuth::UpdateRun(
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageAuth::GetRun(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRun(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse> LineageAuth::ListRuns(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse>
+LineageAuth::ListRuns(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListRuns(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-LineageAuth::AsyncDeleteRun(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> LineageAuth::AsyncDeleteRun(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteRun(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteRun(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-LineageAuth::DeleteRun(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+StatusOr<google::longrunning::Operation> LineageAuth::DeleteRun(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteRun(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent> LineageAuth::CreateLineageEvent(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const& request) {
+StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
+LineageAuth::CreateLineageEvent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateLineageEvent(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent> LineageAuth::GetLineageEvent(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const& request) {
+StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
+LineageAuth::GetLineageEvent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLineageEvent(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse> LineageAuth::ListLineageEvents(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const& request) {
+StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
+LineageAuth::ListLineageEvents(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLineageEvents(context, options, request);
 }
 
 Status LineageAuth::DeleteLineageEvent(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteLineageEvent(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse> LineageAuth::SearchLinks(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::SearchLinksRequest const& request) {
+StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
+LineageAuth::SearchLinks(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchLinks(context, options, request);
 }
 
-StatusOr<google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse> LineageAuth::BatchSearchLinkProcesses(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest const& request) {
+StatusOr<
+    google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
+LineageAuth::BatchSearchLinkProcesses(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::lineage::v1::
+        BatchSearchLinkProcessesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchSearchLinkProcesses(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> LineageAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+LineageAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -234,8 +241,7 @@ StatusOr<google::longrunning::ListOperationsResponse> LineageAuth::ListOperation
 }
 
 StatusOr<google::longrunning::Operation> LineageAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -243,8 +249,7 @@ StatusOr<google::longrunning::Operation> LineageAuth::GetOperation(
 }
 
 Status LineageAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -252,30 +257,29 @@ Status LineageAuth::DeleteOperation(
 }
 
 Status LineageAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelOperation(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-LineageAuth::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>> LineageAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -284,13 +288,14 @@ future<Status> LineageAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

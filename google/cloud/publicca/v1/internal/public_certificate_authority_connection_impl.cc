@@ -17,11 +17,11 @@
 // source: google/cloud/security/publicca/v1/service.proto
 
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_connection_impl.h"
+#include "google/cloud/publicca/v1/internal/public_certificate_authority_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/publicca/v1/internal/public_certificate_authority_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,38 +33,53 @@ namespace {
 
 std::unique_ptr<publicca_v1::PublicCertificateAuthorityServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options.get<publicca_v1::PublicCertificateAuthorityServiceRetryPolicyOption>()->clone();
+  return options
+      .get<publicca_v1::PublicCertificateAuthorityServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<publicca_v1::PublicCertificateAuthorityServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<publicca_v1::PublicCertificateAuthorityServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<publicca_v1::PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>
+std::unique_ptr<
+    publicca_v1::PublicCertificateAuthorityServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<publicca_v1::PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<
+          publicca_v1::
+              PublicCertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
-PublicCertificateAuthorityServiceConnectionImpl::PublicCertificateAuthorityServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<publicca_v1_internal::PublicCertificateAuthorityServiceStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        PublicCertificateAuthorityServiceConnection::options())) {}
+PublicCertificateAuthorityServiceConnectionImpl::
+    PublicCertificateAuthorityServiceConnectionImpl(
+        std::unique_ptr<google::cloud::BackgroundThreads> background,
+        std::shared_ptr<
+            publicca_v1_internal::PublicCertificateAuthorityServiceStub>
+            stub,
+        Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options),
+          PublicCertificateAuthorityServiceConnection::options())) {}
 
 StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
-PublicCertificateAuthorityServiceConnectionImpl::CreateExternalAccountKey(google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
+PublicCertificateAuthorityServiceConnectionImpl::CreateExternalAccountKey(
+    google::cloud::security::publicca::v1::
+        CreateExternalAccountKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateExternalAccountKey(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
+             google::cloud::security::publicca::v1::
+                 CreateExternalAccountKeyRequest const& request) {
         return stub_->CreateExternalAccountKey(context, options, request);
       },
       *current, request, __func__);

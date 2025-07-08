@@ -30,7 +30,8 @@ namespace cloud {
 namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceClient directly.
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceClient
+/// directly.
 using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

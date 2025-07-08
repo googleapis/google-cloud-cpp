@@ -32,11 +32,12 @@ CompletionTracingStub::CompletionTracingStub(
     std::shared_ptr<CompletionStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompletionTracingStub::CompleteQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
+CompletionTracingStub::CompleteQuery(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.Completion", "CompleteQuery");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.Completion",
+                                     "CompleteQuery");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,10 +45,10 @@ StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompletionTracingStub
 }
 
 StatusOr<google::longrunning::Operation> CompletionTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.Completion", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.Completion",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

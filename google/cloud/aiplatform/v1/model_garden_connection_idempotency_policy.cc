@@ -26,26 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ModelGardenServiceConnectionIdempotencyPolicy::~ModelGardenServiceConnectionIdempotencyPolicy() = default;
+ModelGardenServiceConnectionIdempotencyPolicy::
+    ~ModelGardenServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy>
 ModelGardenServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ModelGardenServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetPublisherModel(
+    google::cloud::aiplatform::v1::GetPublisherModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::Deploy(google::cloud::aiplatform::v1::DeployRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::Deploy(
+    google::cloud::aiplatform::v1::DeployRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -55,36 +60,43 @@ Idempotency ModelGardenServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelGardenServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency ModelGardenServiceConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ModelGardenServiceConnectionIdempotencyPolicy>
-    MakeDefaultModelGardenServiceConnectionIdempotencyPolicy() {
+MakeDefaultModelGardenServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ModelGardenServiceConnectionIdempotencyPolicy>();
 }
 

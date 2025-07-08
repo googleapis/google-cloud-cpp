@@ -32,8 +32,7 @@ DatastoreAuth::DatastoreAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::datastore::v1::LookupResponse> DatastoreAuth::Lookup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::LookupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,26 +40,25 @@ StatusOr<google::datastore::v1::LookupResponse> DatastoreAuth::Lookup(
 }
 
 StatusOr<google::datastore::v1::RunQueryResponse> DatastoreAuth::RunQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunQueryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RunQuery(context, options, request);
 }
 
-StatusOr<google::datastore::v1::RunAggregationQueryResponse> DatastoreAuth::RunAggregationQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::RunAggregationQueryResponse>
+DatastoreAuth::RunAggregationQuery(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunAggregationQueryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RunAggregationQuery(context, options, request);
 }
 
-StatusOr<google::datastore::v1::BeginTransactionResponse> DatastoreAuth::BeginTransaction(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::datastore::v1::BeginTransactionResponse>
+DatastoreAuth::BeginTransaction(
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::BeginTransactionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +66,7 @@ StatusOr<google::datastore::v1::BeginTransactionResponse> DatastoreAuth::BeginTr
 }
 
 StatusOr<google::datastore::v1::CommitResponse> DatastoreAuth::Commit(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::CommitRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +74,7 @@ StatusOr<google::datastore::v1::CommitResponse> DatastoreAuth::Commit(
 }
 
 StatusOr<google::datastore::v1::RollbackResponse> DatastoreAuth::Rollback(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RollbackRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +82,7 @@ StatusOr<google::datastore::v1::RollbackResponse> DatastoreAuth::Rollback(
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse> DatastoreAuth::AllocateIds(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::AllocateIdsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,17 +90,16 @@ StatusOr<google::datastore::v1::AllocateIdsResponse> DatastoreAuth::AllocateIds(
 }
 
 StatusOr<google::datastore::v1::ReserveIdsResponse> DatastoreAuth::ReserveIds(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::ReserveIdsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReserveIds(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DatastoreAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DatastoreAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -113,8 +107,7 @@ StatusOr<google::longrunning::ListOperationsResponse> DatastoreAuth::ListOperati
 }
 
 StatusOr<google::longrunning::Operation> DatastoreAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +115,7 @@ StatusOr<google::longrunning::Operation> DatastoreAuth::GetOperation(
 }
 
 Status DatastoreAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -131,8 +123,7 @@ Status DatastoreAuth::DeleteOperation(
 }
 
 Status DatastoreAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -39,39 +39,39 @@ class UptimeCheckServiceMetadata : public UptimeCheckServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse> ListUptimeCheckConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) override;
+  StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
+  ListUptimeCheckConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::ListUptimeCheckConfigsRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::GetUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::GetUptimeCheckConfigRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request)
+      override;
 
   Status DeleteUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request)
+      override;
 
-  StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse> ListUptimeCheckIps(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::ListUptimeCheckIpsRequest const& request) override;
+  StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
+  ListUptimeCheckIps(grpc::ClientContext& context, Options const& options,
+                     google::monitoring::v3::ListUptimeCheckIpsRequest const&
+                         request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

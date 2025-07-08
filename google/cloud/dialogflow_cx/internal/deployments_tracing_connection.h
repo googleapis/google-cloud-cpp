@@ -36,30 +36,32 @@ class DeploymentsTracingConnection
   ~DeploymentsTracingConnection() override = default;
 
   explicit DeploymentsTracingConnection(
-    std::shared_ptr<dialogflow_cx::DeploymentsConnection> child);
+      std::shared_ptr<dialogflow_cx::DeploymentsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
-  ListDeployments(google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
+      google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
-  GetDeployment(google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
+      google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::DeploymentsConnection> child_;

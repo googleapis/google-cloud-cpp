@@ -32,80 +32,70 @@ GroupServiceStub::~GroupServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListGroupsResponse>
 DefaultGroupServiceStub::ListGroups(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::ListGroupsRequest const& request) {
-    google::monitoring::v3::ListGroupsResponse response;
-    auto status =
-        grpc_stub_->ListGroups(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::ListGroupsRequest const& request) {
+  google::monitoring::v3::ListGroupsResponse response;
+  auto status = grpc_stub_->ListGroups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::monitoring::v3::Group>
-DefaultGroupServiceStub::GetGroup(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::GetGroupRequest const& request) {
-    google::monitoring::v3::Group response;
-    auto status =
-        grpc_stub_->GetGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::GetGroup(
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::GetGroupRequest const& request) {
+  google::monitoring::v3::Group response;
+  auto status = grpc_stub_->GetGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::monitoring::v3::Group>
-DefaultGroupServiceStub::CreateGroup(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::CreateGroupRequest const& request) {
-    google::monitoring::v3::Group response;
-    auto status =
-        grpc_stub_->CreateGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::CreateGroup(
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::CreateGroupRequest const& request) {
+  google::monitoring::v3::Group response;
+  auto status = grpc_stub_->CreateGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::monitoring::v3::Group>
-DefaultGroupServiceStub::UpdateGroup(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::UpdateGroupRequest const& request) {
-    google::monitoring::v3::Group response;
-    auto status =
-        grpc_stub_->UpdateGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::monitoring::v3::Group> DefaultGroupServiceStub::UpdateGroup(
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::UpdateGroupRequest const& request) {
+  google::monitoring::v3::Group response;
+  auto status = grpc_stub_->UpdateGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultGroupServiceStub::DeleteGroup(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::DeleteGroupRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultGroupServiceStub::DeleteGroup(
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::DeleteGroupRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::monitoring::v3::ListGroupMembersResponse>
 DefaultGroupServiceStub::ListGroupMembers(
-  grpc::ClientContext& context, Options const&,
-  google::monitoring::v3::ListGroupMembersRequest const& request) {
-    google::monitoring::v3::ListGroupMembersResponse response;
-    auto status =
-        grpc_stub_->ListGroupMembers(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::monitoring::v3::ListGroupMembersRequest const& request) {
+  google::monitoring::v3::ListGroupMembersResponse response;
+  auto status = grpc_stub_->ListGroupMembers(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

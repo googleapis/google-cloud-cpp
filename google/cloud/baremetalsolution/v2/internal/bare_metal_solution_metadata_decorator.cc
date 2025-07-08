@@ -46,19 +46,19 @@ BareMetalSolutionMetadata::BareMetalSolutionMetadata(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
 BareMetalSolutionMetadata::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListInstancesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionMetadata::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetInstance(context, options, request);
 }
 
@@ -67,27 +67,33 @@ BareMetalSolutionMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("instance.name=", internal::UrlEncode(request.instance().name())));
-  return child_->AsyncUpdateInstance(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->AsyncUpdateInstance(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::UpdateInstance(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("instance.name=", internal::UrlEncode(request.instance().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
   return child_->UpdateInstance(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionMetadata::RenameInstance(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::RenameInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RenameInstance(context, options, request);
 }
 
@@ -97,17 +103,18 @@ BareMetalSolutionMetadata::AsyncResetInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncResetInstance(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncResetInstance(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::ResetInstance(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResetInstance(context, options, request);
 }
 
@@ -117,17 +124,18 @@ BareMetalSolutionMetadata::AsyncStartInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStartInstance(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStartInstance(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::StartInstance(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->StartInstance(context, options, request);
 }
 
@@ -137,17 +145,18 @@ BareMetalSolutionMetadata::AsyncStopInstance(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStopInstance(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStopInstance(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::StopInstance(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->StopInstance(context, options, request);
 }
 
@@ -156,18 +165,21 @@ BareMetalSolutionMetadata::AsyncEnableInteractiveSerialConsole(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncEnableInteractiveSerialConsole(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::EnableInteractiveSerialConsole(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->EnableInteractiveSerialConsole(context, options, request);
 }
 
@@ -176,18 +188,21 @@ BareMetalSolutionMetadata::AsyncDisableInteractiveSerialConsole(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDisableInteractiveSerialConsole(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::DisableInteractiveSerialConsole(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DisableInteractiveSerialConsole(context, options, request);
 }
 
@@ -197,62 +212,63 @@ BareMetalSolutionMetadata::AsyncDetachLun(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("instance=", internal::UrlEncode(request.instance())));
-  return child_->AsyncDetachLun(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->AsyncDetachLun(cq, std::move(context), std::move(options),
+                                request);
 }
 
-StatusOr<google::longrunning::Operation>
-BareMetalSolutionMetadata::DetachLun(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> BareMetalSolutionMetadata::DetachLun(
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
   return child_->DetachLun(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
 BareMetalSolutionMetadata::ListSSHKeys(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSSHKeys(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
 BareMetalSolutionMetadata::CreateSSHKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSSHKey(context, options, request);
 }
 
-Status
-BareMetalSolutionMetadata::DeleteSSHKey(
-    grpc::ClientContext& context,
-    Options const& options,
+Status BareMetalSolutionMetadata::DeleteSSHKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSSHKey(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
 BareMetalSolutionMetadata::ListVolumes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListVolumesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVolumes(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionMetadata::GetVolume(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVolume(context, options, request);
 }
 
@@ -262,26 +278,29 @@ BareMetalSolutionMetadata::AsyncUpdateVolume(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("volume.name=", internal::UrlEncode(request.volume().name())));
-  return child_->AsyncUpdateVolume(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("volume.name=",
+                           internal::UrlEncode(request.volume().name())));
+  return child_->AsyncUpdateVolume(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::UpdateVolume(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("volume.name=", internal::UrlEncode(request.volume().name())));
+  SetMetadata(context, options,
+              absl::StrCat("volume.name=",
+                           internal::UrlEncode(request.volume().name())));
   return child_->UpdateVolume(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionMetadata::RenameVolume(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RenameVolume(context, options, request);
 }
 
@@ -291,17 +310,17 @@ BareMetalSolutionMetadata::AsyncEvictVolume(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncEvictVolume(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncEvictVolume(cq, std::move(context), std::move(options),
+                                  request);
 }
 
-StatusOr<google::longrunning::Operation>
-BareMetalSolutionMetadata::EvictVolume(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> BareMetalSolutionMetadata::EvictVolume(
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->EvictVolume(context, options, request);
 }
 
@@ -311,44 +330,47 @@ BareMetalSolutionMetadata::AsyncResizeVolume(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("volume=", internal::UrlEncode(request.volume())));
-  return child_->AsyncResizeVolume(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("volume=", internal::UrlEncode(request.volume())));
+  return child_->AsyncResizeVolume(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::ResizeVolume(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("volume=", internal::UrlEncode(request.volume())));
+  SetMetadata(context, options,
+              absl::StrCat("volume=", internal::UrlEncode(request.volume())));
   return child_->ResizeVolume(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
 BareMetalSolutionMetadata::ListNetworks(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListNetworksRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNetworks(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
 BareMetalSolutionMetadata::ListNetworkUsage(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("location=", internal::UrlEncode(request.location())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
   return child_->ListNetworkUsage(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionMetadata::GetNetwork(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNetwork(context, options, request);
 }
 
@@ -358,26 +380,30 @@ BareMetalSolutionMetadata::AsyncUpdateNetwork(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("network.name=", internal::UrlEncode(request.network().name())));
-  return child_->AsyncUpdateNetwork(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("network.name=",
+                           internal::UrlEncode(request.network().name())));
+  return child_->AsyncUpdateNetwork(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::UpdateNetwork(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("network.name=", internal::UrlEncode(request.network().name())));
+  SetMetadata(context, options,
+              absl::StrCat("network.name=",
+                           internal::UrlEncode(request.network().name())));
   return child_->UpdateNetwork(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionMetadata::CreateVolumeSnapshot(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateVolumeSnapshot(context, options, request);
 }
 
@@ -386,63 +412,70 @@ BareMetalSolutionMetadata::AsyncRestoreVolumeSnapshot(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("volume_snapshot=", internal::UrlEncode(request.volume_snapshot())));
-  return child_->AsyncRestoreVolumeSnapshot(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("volume_snapshot=",
+                           internal::UrlEncode(request.volume_snapshot())));
+  return child_->AsyncRestoreVolumeSnapshot(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::RestoreVolumeSnapshot(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("volume_snapshot=", internal::UrlEncode(request.volume_snapshot())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("volume_snapshot=",
+                           internal::UrlEncode(request.volume_snapshot())));
   return child_->RestoreVolumeSnapshot(context, options, request);
 }
 
-Status
-BareMetalSolutionMetadata::DeleteVolumeSnapshot(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status BareMetalSolutionMetadata::DeleteVolumeSnapshot(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteVolumeSnapshot(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionMetadata::GetVolumeSnapshot(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetVolumeSnapshot(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
 BareMetalSolutionMetadata::ListVolumeSnapshots(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListVolumeSnapshots(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
 BareMetalSolutionMetadata::GetLun(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLun(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse>
 BareMetalSolutionMetadata::ListLuns(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListLunsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListLuns(context, options, request);
 }
 
@@ -452,35 +485,35 @@ BareMetalSolutionMetadata::AsyncEvictLun(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncEvictLun(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncEvictLun(cq, std::move(context), std::move(options),
+                               request);
 }
 
-StatusOr<google::longrunning::Operation>
-BareMetalSolutionMetadata::EvictLun(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> BareMetalSolutionMetadata::EvictLun(
+    grpc::ClientContext& context, Options options,
     google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->EvictLun(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionMetadata::GetNfsShare(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNfsShare(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
 BareMetalSolutionMetadata::ListNfsShares(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNfsShares(context, options, request);
 }
 
@@ -489,18 +522,23 @@ BareMetalSolutionMetadata::AsyncUpdateNfsShare(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("nfs_share.name=", internal::UrlEncode(request.nfs_share().name())));
-  return child_->AsyncUpdateNfsShare(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("nfs_share.name=",
+                           internal::UrlEncode(request.nfs_share().name())));
+  return child_->AsyncUpdateNfsShare(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::UpdateNfsShare(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("nfs_share.name=", internal::UrlEncode(request.nfs_share().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("nfs_share.name=",
+                           internal::UrlEncode(request.nfs_share().name())));
   return child_->UpdateNfsShare(context, options, request);
 }
 
@@ -509,27 +547,31 @@ BareMetalSolutionMetadata::AsyncCreateNfsShare(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateNfsShare(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateNfsShare(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::CreateNfsShare(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateNfsShare(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionMetadata::RenameNfsShare(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::RenameNfsShareRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RenameNfsShare(context, options, request);
 }
 
@@ -538,99 +580,109 @@ BareMetalSolutionMetadata::AsyncDeleteNfsShare(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteNfsShare(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteNfsShare(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionMetadata::DeleteNfsShare(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteNfsShare(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
 BareMetalSolutionMetadata::ListProvisioningQuotas(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListProvisioningQuotas(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
 BareMetalSolutionMetadata::SubmitProvisioningConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SubmitProvisioningConfig(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionMetadata::GetProvisioningConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetProvisioningConfig(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionMetadata::CreateProvisioningConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateProvisioningConfig(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionMetadata::UpdateProvisioningConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("provisioning_config.name=", internal::UrlEncode(request.provisioning_config().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("provisioning_config.name=",
+                   internal::UrlEncode(request.provisioning_config().name())));
   return child_->UpdateProvisioningConfig(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionMetadata::RenameNetwork(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RenameNetwork(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
 BareMetalSolutionMetadata::ListOSImages(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListOSImagesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListOSImages(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 BareMetalSolutionMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 BareMetalSolutionMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
@@ -642,8 +694,8 @@ BareMetalSolutionMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> BareMetalSolutionMetadata::AsyncCancelOperation(
@@ -653,21 +705,21 @@ future<Status> BareMetalSolutionMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void BareMetalSolutionMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                            Options const& options,
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void BareMetalSolutionMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                            Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

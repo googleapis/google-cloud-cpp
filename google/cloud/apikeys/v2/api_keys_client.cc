@@ -25,15 +25,16 @@ namespace cloud {
 namespace apikeys_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ApiKeysClient::ApiKeysClient(
-    std::shared_ptr<ApiKeysConnection> connection, Options opts)
+ApiKeysClient::ApiKeysClient(std::shared_ptr<ApiKeysConnection> connection,
+                             Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ApiKeysClient::~ApiKeysClient() = default;
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::CreateKey(std::string const& parent, google::api::apikeys::v2::Key const& key, std::string const& key_id, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::CreateKey(
+    std::string const& parent, google::api::apikeys::v2::Key const& key,
+    std::string const& key_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::apikeys::v2::CreateKeyRequest request;
   request.set_parent(parent);
@@ -42,8 +43,10 @@ ApiKeysClient::CreateKey(std::string const& parent, google::api::apikeys::v2::Ke
   return connection_->CreateKey(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::CreateKey(NoAwaitTag, std::string const& parent, google::api::apikeys::v2::Key const& key, std::string const& key_id, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::CreateKey(
+    NoAwaitTag, std::string const& parent,
+    google::api::apikeys::v2::Key const& key, std::string const& key_id,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::apikeys::v2::CreateKeyRequest request;
   request.set_parent(parent);
@@ -52,48 +55,49 @@ ApiKeysClient::CreateKey(NoAwaitTag, std::string const& parent, google::api::api
   return connection_->CreateKey(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::CreateKey(
+    google::api::apikeys::v2::CreateKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateKey(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::CreateKey(NoAwaitTag, google::api::apikeys::v2::CreateKeyRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::CreateKey(
+    NoAwaitTag, google::api::apikeys::v2::CreateKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateKey(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::CreateKey(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::CreateKey(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateKey(operation);
 }
 
-StreamRange<google::api::apikeys::v2::Key>
-ApiKeysClient::ListKeys(std::string const& parent, Options opts) {
+StreamRange<google::api::apikeys::v2::Key> ApiKeysClient::ListKeys(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::apikeys::v2::ListKeysRequest request;
   request.set_parent(parent);
   return connection_->ListKeys(request);
 }
 
-StreamRange<google::api::apikeys::v2::Key>
-ApiKeysClient::ListKeys(google::api::apikeys::v2::ListKeysRequest request, Options opts) {
+StreamRange<google::api::apikeys::v2::Key> ApiKeysClient::ListKeys(
+    google::api::apikeys::v2::ListKeysRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListKeys(std::move(request));
 }
 
-StatusOr<google::api::apikeys::v2::Key>
-ApiKeysClient::GetKey(std::string const& name, Options opts) {
+StatusOr<google::api::apikeys::v2::Key> ApiKeysClient::GetKey(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::apikeys::v2::GetKeyRequest request;
   request.set_name(name);
   return connection_->GetKey(request);
 }
 
-StatusOr<google::api::apikeys::v2::Key>
-ApiKeysClient::GetKey(google::api::apikeys::v2::GetKeyRequest const& request, Options opts) {
+StatusOr<google::api::apikeys::v2::Key> ApiKeysClient::GetKey(
+    google::api::apikeys::v2::GetKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetKey(request);
 }
@@ -107,13 +111,16 @@ ApiKeysClient::GetKeyString(std::string const& name, Options opts) {
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-ApiKeysClient::GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request, Options opts) {
+ApiKeysClient::GetKeyString(
+    google::api::apikeys::v2::GetKeyStringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetKeyString(request);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::UpdateKey(google::api::apikeys::v2::Key const& key, google::protobuf::FieldMask const& update_mask, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::UpdateKey(
+    google::api::apikeys::v2::Key const& key,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::apikeys::v2::UpdateKeyRequest request;
   *request.mutable_key() = key;
@@ -121,8 +128,9 @@ ApiKeysClient::UpdateKey(google::api::apikeys::v2::Key const& key, google::proto
   return connection_->UpdateKey(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::UpdateKey(NoAwaitTag, google::api::apikeys::v2::Key const& key, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::UpdateKey(
+    NoAwaitTag, google::api::apikeys::v2::Key const& key,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::apikeys::v2::UpdateKeyRequest request;
   *request.mutable_key() = key;
@@ -130,92 +138,95 @@ ApiKeysClient::UpdateKey(NoAwaitTag, google::api::apikeys::v2::Key const& key, g
   return connection_->UpdateKey(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::UpdateKey(
+    google::api::apikeys::v2::UpdateKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateKey(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::UpdateKey(NoAwaitTag, google::api::apikeys::v2::UpdateKeyRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::UpdateKey(
+    NoAwaitTag, google::api::apikeys::v2::UpdateKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateKey(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::UpdateKey(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::UpdateKey(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateKey(operation);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::DeleteKey(std::string const& name, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::DeleteKey(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::apikeys::v2::DeleteKeyRequest request;
   request.set_name(name);
   return connection_->DeleteKey(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::DeleteKey(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::DeleteKey(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::api::apikeys::v2::DeleteKeyRequest request;
   request.set_name(name);
   return connection_->DeleteKey(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::DeleteKey(
+    google::api::apikeys::v2::DeleteKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteKey(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::DeleteKey(NoAwaitTag, google::api::apikeys::v2::DeleteKeyRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::DeleteKey(
+    NoAwaitTag, google::api::apikeys::v2::DeleteKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteKey(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::DeleteKey(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::DeleteKey(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteKey(operation);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::UndeleteKey(
+    google::api::apikeys::v2::UndeleteKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteKey(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::UndeleteKey(NoAwaitTag, google::api::apikeys::v2::UndeleteKeyRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::UndeleteKey(
+    NoAwaitTag, google::api::apikeys::v2::UndeleteKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteKey(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::api::apikeys::v2::Key>>
-ApiKeysClient::UndeleteKey(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysClient::UndeleteKey(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteKey(operation);
 }
 
-StatusOr<google::api::apikeys::v2::LookupKeyResponse>
-ApiKeysClient::LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request, Options opts) {
+StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysClient::LookupKey(
+    google::api::apikeys::v2::LookupKeyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LookupKey(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApiKeysClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ApiKeysClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

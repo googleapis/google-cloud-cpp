@@ -30,8 +30,10 @@ namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_analyticshub_v1_mocks::MockAnalyticsHubServiceConnection directly.
-using ::google::cloud::bigquery_analyticshub_v1_mocks::MockAnalyticsHubServiceConnection;
+/// @deprecated Use
+/// bigquery_analyticshub_v1_mocks::MockAnalyticsHubServiceConnection directly.
+using ::google::cloud::bigquery_analyticshub_v1_mocks::
+    MockAnalyticsHubServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

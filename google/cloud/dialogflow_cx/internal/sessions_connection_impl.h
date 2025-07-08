@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_SESSIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_SESSIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_retry_traits.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_stub.h"
 #include "google/cloud/dialogflow_cx/sessions_connection.h"
 #include "google/cloud/dialogflow_cx/sessions_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/sessions_options.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -42,52 +42,58 @@ void SessionsServerStreamingDetectIntentStreamingUpdater(
     google::cloud::dialogflow::cx::v3::DetectIntentResponse const& response,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest& request);
 
-class SessionsConnectionImpl
-    : public dialogflow_cx::SessionsConnection {
+class SessionsConnectionImpl : public dialogflow_cx::SessionsConnection {
  public:
   ~SessionsConnectionImpl() override = default;
 
   SessionsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_cx_internal::SessionsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dialogflow_cx_internal::SessionsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) override;
+  DetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
+                   request) override;
 
   StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  ServerStreamingDetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) override;
+  ServerStreamingDetectIntent(
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent() override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
-  MatchIntent(google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
+      google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) override;
+  FulfillIntent(google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
+                    request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
-  SubmitAnswerFeedback(google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const& request) override;
+  SubmitAnswerFeedback(
+      google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
+          request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -36,56 +36,64 @@ class LicensesTracingConnection
   ~LicensesTracingConnection() override = default;
 
   explicit LicensesTracingConnection(
-    std::shared_ptr<compute_licenses_v1::LicensesConnection> child);
+      std::shared_ptr<compute_licenses_v1::LicensesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteLicense(google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteLicense(NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
+      NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteLicense(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::License>
-  GetLicense(google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
+      google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertLicense(google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertLicense(NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
+      NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertLicense(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::License>
-  ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateLicense(google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateLicense(NoAwaitTag,
-      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateLicense(
+      NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::UpdateLicenseRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateLicense(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateLicense(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

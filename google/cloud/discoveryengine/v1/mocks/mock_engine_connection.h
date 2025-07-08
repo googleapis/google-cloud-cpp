@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockEngineServiceConnection : public discoveryengine_v1::EngineServiceConnection {
+class MockEngineServiceConnection
+    : public discoveryengine_v1::EngineServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockEngineServiceConnection : public discoveryengine_v1::EngineServiceConn
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateEngine(Matcher<google::cloud::discoveryengine::v1::CreateEngineRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateEngine(Matcher<google::cloud::discoveryengine::v1::CreateEngineRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Engine>>,
-  CreateEngine,
-  (google::cloud::discoveryengine::v1::CreateEngineRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::discoveryengine::v1::Engine>>,
+      CreateEngine,
+      (google::cloud::discoveryengine::v1::CreateEngineRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,33 +68,39 @@ class MockEngineServiceConnection : public discoveryengine_v1::EngineServiceConn
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateEngine(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateEngine, (NoAwaitTag,
-    google::cloud::discoveryengine::v1::CreateEngineRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEngine,
+      (NoAwaitTag,
+       google::cloud::discoveryengine::v1::CreateEngineRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateEngine(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateEngine(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Engine>>,
-  CreateEngine, (
-    google::longrunning::Operation const& operation), (override));
+              CreateEngine, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteEngine(Matcher<google::cloud::discoveryengine::v1::DeleteEngineRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteEngine(Matcher<google::cloud::discoveryengine::v1::DeleteEngineRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,
-  DeleteEngine,
-  (google::cloud::discoveryengine::v1::DeleteEngineRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,
+      DeleteEngine,
+      (google::cloud::discoveryengine::v1::DeleteEngineRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -98,45 +108,51 @@ class MockEngineServiceConnection : public discoveryengine_v1::EngineServiceConn
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteEngine(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteEngine, (NoAwaitTag,
-    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteEngine,
+      (NoAwaitTag,
+       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteEngine(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteEngine(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,
-  DeleteEngine, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,
+      DeleteEngine, (google::longrunning::Operation const& operation),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Engine>,
-  UpdateEngine,
-  (google::cloud::discoveryengine::v1::UpdateEngineRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Engine>, UpdateEngine,
+      (google::cloud::discoveryengine::v1::UpdateEngineRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::Engine>,
-  GetEngine,
-  (google::cloud::discoveryengine::v1::GetEngineRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::discoveryengine::v1::Engine>, GetEngine,
+      (google::cloud::discoveryengine::v1::GetEngineRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::discoveryengine::v1::Engine>),
-  ListEngines,
-  (google::cloud::discoveryengine::v1::ListEnginesRequest request), (override));
+              ListEngines,
+              (google::cloud::discoveryengine::v1::ListEnginesRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

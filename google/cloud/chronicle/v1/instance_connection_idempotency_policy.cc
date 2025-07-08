@@ -26,35 +26,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-InstanceServiceConnectionIdempotencyPolicy::~InstanceServiceConnectionIdempotencyPolicy() = default;
+InstanceServiceConnectionIdempotencyPolicy::
+    ~InstanceServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<InstanceServiceConnectionIdempotencyPolicy>
 InstanceServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<InstanceServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency InstanceServiceConnectionIdempotencyPolicy::GetInstance(google::cloud::chronicle::v1::GetInstanceRequest const&) {
+Idempotency InstanceServiceConnectionIdempotencyPolicy::GetInstance(
+    google::cloud::chronicle::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency InstanceServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency InstanceServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InstanceServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency InstanceServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InstanceServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency InstanceServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<InstanceServiceConnectionIdempotencyPolicy>
-    MakeDefaultInstanceServiceConnectionIdempotencyPolicy() {
+MakeDefaultInstanceServiceConnectionIdempotencyPolicy() {
   return std::make_unique<InstanceServiceConnectionIdempotencyPolicy>();
 }
 

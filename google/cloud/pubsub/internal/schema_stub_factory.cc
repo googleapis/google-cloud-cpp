@@ -17,17 +17,17 @@
 // source: google/pubsub/v1/schema.proto
 
 #include "google/cloud/pubsub/internal/schema_stub_factory.h"
+#include "google/cloud/pubsub/internal/schema_auth_decorator.h"
+#include "google/cloud/pubsub/internal/schema_logging_decorator.h"
+#include "google/cloud/pubsub/internal/schema_metadata_decorator.h"
+#include "google/cloud/pubsub/internal/schema_stub.h"
+#include "google/cloud/pubsub/internal/schema_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsub/internal/schema_auth_decorator.h"
-#include "google/cloud/pubsub/internal/schema_logging_decorator.h"
-#include "google/cloud/pubsub/internal/schema_metadata_decorator.h"
-#include "google/cloud/pubsub/internal/schema_stub.h"
-#include "google/cloud/pubsub/internal/schema_tracing_stub.h"
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/pubsub/v1/schema.grpc.pb.h>
 #include <memory>
@@ -38,29 +38,27 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SchemaServiceStub>
-CreateDefaultSchemaServiceStub(
+std::shared_ptr<SchemaServiceStub> CreateDefaultSchemaServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::pubsub::v1::SchemaService::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<SchemaServiceStub> stub =
-    std::make_shared<DefaultSchemaServiceStub>(std::move(service_grpc_stub), std::move(service_iampolicy_stub));
+      std::make_shared<DefaultSchemaServiceStub>(
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<SchemaServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub =
+        std::make_shared<SchemaServiceAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<SchemaServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SchemaServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

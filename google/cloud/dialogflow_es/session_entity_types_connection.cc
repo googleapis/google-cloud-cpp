@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/session_entity_type.proto
 
 #include "google/cloud/dialogflow_es/session_entity_types_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_tracing_connection.h"
 #include "google/cloud/dialogflow_es/session_entity_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SessionEntityTypesConnection::~SessionEntityTypesConnection() = default;
 
-StreamRange<google::cloud::dialogflow::v2::SessionEntityType> SessionEntityTypesConnection::ListSessionEntityTypes(
-    google::cloud::dialogflow::v2::ListSessionEntityTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::SessionEntityType>
+SessionEntityTypesConnection::ListSessionEntityTypes(
+    google::cloud::dialogflow::v2::
+        ListSessionEntityTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::SessionEntityType>>();
 }
@@ -62,14 +64,15 @@ SessionEntityTypesConnection::UpdateSessionEntityType(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-SessionEntityTypesConnection::DeleteSessionEntityType(
+Status SessionEntityTypesConnection::DeleteSessionEntityType(
     google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> SessionEntityTypesConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+SessionEntityTypesConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -80,8 +83,10 @@ SessionEntityTypesConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> SessionEntityTypesConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+SessionEntityTypesConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -92,8 +97,7 @@ SessionEntityTypesConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-SessionEntityTypesConnection::CancelOperation(
+Status SessionEntityTypesConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -101,17 +105,19 @@ SessionEntityTypesConnection::CancelOperation(
 std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      SessionEntityTypesPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 SessionEntityTypesPolicyOptionList>(options,
+                                                                     __func__);
   options = dialogflow_es_internal::SessionEntityTypesDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultSessionEntityTypesStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dialogflow_es_internal::MakeSessionEntityTypesTracingConnection(
-      std::make_shared<dialogflow_es_internal::SessionEntityTypesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          dialogflow_es_internal::SessionEntityTypesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(

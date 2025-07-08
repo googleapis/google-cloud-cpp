@@ -32,15 +32,14 @@ ExportServiceStub::~ExportServiceStub() = default;
 
 StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
 DefaultExportServiceStub::ListProfiles(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
-    google::devtools::cloudprofiler::v2::ListProfilesResponse response;
-    auto status =
-        grpc_stub_->ListProfiles(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
+  google::devtools::cloudprofiler::v2::ListProfilesResponse response;
+  auto status = grpc_stub_->ListProfiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

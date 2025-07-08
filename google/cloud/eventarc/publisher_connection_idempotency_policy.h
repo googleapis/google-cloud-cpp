@@ -26,11 +26,16 @@ namespace cloud {
 namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use eventarc_publishing_v1::MakeDefaultPublisherConnectionIdempotencyPolicy directly.
-using ::google::cloud::eventarc_publishing_v1::MakeDefaultPublisherConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// eventarc_publishing_v1::MakeDefaultPublisherConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::eventarc_publishing_v1::
+    MakeDefaultPublisherConnectionIdempotencyPolicy;
 
-/// @deprecated Use eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy directly.
-using ::google::cloud::eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy;
+/// @deprecated Use eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::eventarc_publishing_v1::
+    PublisherConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc

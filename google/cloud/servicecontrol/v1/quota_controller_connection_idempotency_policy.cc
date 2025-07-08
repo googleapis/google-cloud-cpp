@@ -26,19 +26,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-QuotaControllerConnectionIdempotencyPolicy::~QuotaControllerConnectionIdempotencyPolicy() = default;
+QuotaControllerConnectionIdempotencyPolicy::
+    ~QuotaControllerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
 QuotaControllerConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<QuotaControllerConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency QuotaControllerConnectionIdempotencyPolicy::AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const&) {
+Idempotency QuotaControllerConnectionIdempotencyPolicy::AllocateQuota(
+    google::api::servicecontrol::v1::AllocateQuotaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
-    MakeDefaultQuotaControllerConnectionIdempotencyPolicy() {
+MakeDefaultQuotaControllerConnectionIdempotencyPolicy() {
   return std::make_unique<QuotaControllerConnectionIdempotencyPolicy>();
 }
 

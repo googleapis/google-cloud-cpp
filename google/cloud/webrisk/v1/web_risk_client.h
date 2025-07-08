@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_WEB_RISK_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_WEB_RISK_CLIENT_H
 
+#include "google/cloud/webrisk/v1/web_risk_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/webrisk/v1/web_risk_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class WebRiskServiceClient {
  public:
-  explicit WebRiskServiceClient(std::shared_ptr<WebRiskServiceConnection> connection, Options opts = {});
+  explicit WebRiskServiceClient(
+      std::shared_ptr<WebRiskServiceConnection> connection, Options opts = {});
   ~WebRiskServiceClient();
 
   ///@{
@@ -77,10 +78,12 @@ class WebRiskServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(WebRiskServiceClient const& a, WebRiskServiceClient const& b) {
+  friend bool operator==(WebRiskServiceClient const& a,
+                         WebRiskServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(WebRiskServiceClient const& a, WebRiskServiceClient const& b) {
+  friend bool operator!=(WebRiskServiceClient const& a,
+                         WebRiskServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -121,7 +124,12 @@ class WebRiskServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-  ComputeThreatListDiff(google::cloud::webrisk::v1::ThreatType threat_type, std::string const& version_token, google::cloud::webrisk::v1::ComputeThreatListDiffRequest::Constraints const& constraints, Options opts = {});
+  ComputeThreatListDiff(
+      google::cloud::webrisk::v1::ThreatType threat_type,
+      std::string const& version_token,
+      google::cloud::webrisk::v1::ComputeThreatListDiffRequest::
+          Constraints const& constraints,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -156,7 +164,9 @@ class WebRiskServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-  ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request, Options opts = {});
+  ComputeThreatListDiff(
+      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +196,10 @@ class WebRiskServiceClient {
   /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
   // clang-format on
-  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
-  SearchUris(std::string const& uri, std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types, Options opts = {});
+  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
+      std::string const& uri,
+      std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -220,8 +232,9 @@ class WebRiskServiceClient {
   /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
   // clang-format on
-  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
-  SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request, Options opts = {});
+  StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
+      google::cloud::webrisk::v1::SearchUrisRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -254,8 +267,10 @@ class WebRiskServiceClient {
   /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
-  SearchHashes(std::string const& hash_prefix, std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types, Options opts = {});
+  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
+      std::string const& hash_prefix,
+      std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -288,8 +303,9 @@ class WebRiskServiceClient {
   /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
-  SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
+      google::cloud::webrisk::v1::SearchHashesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -321,8 +337,10 @@ class WebRiskServiceClient {
   /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L372}
   ///
   // clang-format on
-  StatusOr<google::cloud::webrisk::v1::Submission>
-  CreateSubmission(std::string const& parent, google::cloud::webrisk::v1::Submission const& submission, Options opts = {});
+  StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
+      std::string const& parent,
+      google::cloud::webrisk::v1::Submission const& submission,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -357,8 +375,9 @@ class WebRiskServiceClient {
   /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L372}
   ///
   // clang-format on
-  StatusOr<google::cloud::webrisk::v1::Submission>
-  CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
+      google::cloud::webrisk::v1::CreateSubmissionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -400,8 +419,10 @@ class WebRiskServiceClient {
   /// [google.cloud.webrisk.v1.SubmitUriRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L508}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::webrisk::v1::Submission>>
-  SubmitUri(std::string const& parent, google::cloud::webrisk::v1::Submission const& submission, Options opts = {});
+  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      std::string const& parent,
+      google::cloud::webrisk::v1::Submission const& submission,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -414,8 +435,10 @@ class WebRiskServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SubmitUri(NoAwaitTag, std::string const& parent, google::cloud::webrisk::v1::Submission const& submission, Options opts = {});
+  StatusOr<google::longrunning::Operation> SubmitUri(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::webrisk::v1::Submission const& submission,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -460,8 +483,9 @@ class WebRiskServiceClient {
   /// [google.cloud.webrisk.v1.SubmitUriRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L508}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::webrisk::v1::Submission>>
-  SubmitUri(google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      google::cloud::webrisk::v1::SubmitUriRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -474,8 +498,9 @@ class WebRiskServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SubmitUri(NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> SubmitUri(
+      NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -486,8 +511,8 @@ class WebRiskServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::webrisk::v1::Submission>>
-  SubmitUri(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -522,8 +547,8 @@ class WebRiskServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -562,8 +587,8 @@ class WebRiskServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -589,8 +614,8 @@ class WebRiskServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -621,8 +646,9 @@ class WebRiskServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -646,8 +672,7 @@ class WebRiskServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -676,8 +701,9 @@ class WebRiskServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -711,8 +737,7 @@ class WebRiskServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -751,8 +776,9 @@ class WebRiskServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<WebRiskServiceConnection> connection_;

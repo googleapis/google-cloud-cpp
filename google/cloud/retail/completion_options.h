@@ -34,8 +34,10 @@ using ::google::cloud::retail_v2::CompletionServicePollingPolicyOption;
 /// @deprecated Use retail_v2::CompletionServiceBackoffPolicyOption directly.
 using ::google::cloud::retail_v2::CompletionServiceBackoffPolicyOption;
 
-/// @deprecated Use retail_v2::CompletionServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::retail_v2::CompletionServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// retail_v2::CompletionServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::retail_v2::
+    CompletionServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use retail_v2::CompletionServicePolicyOptionList directly.
 using ::google::cloud::retail_v2::CompletionServicePolicyOptionList;

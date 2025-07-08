@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_SECURITY_CENTER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_SECURITY_CENTER_CLIENT_H
 
+#include "google/cloud/securitycenter/v2/security_center_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/securitycenter/v2/security_center_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/iam_updater.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -66,7 +66,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SecurityCenterClient {
  public:
-  explicit SecurityCenterClient(std::shared_ptr<SecurityCenterConnection> connection, Options opts = {});
+  explicit SecurityCenterClient(
+      std::shared_ptr<SecurityCenterConnection> connection, Options opts = {});
   ~SecurityCenterClient();
 
   ///@{
@@ -79,10 +80,12 @@ class SecurityCenterClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SecurityCenterClient const& a, SecurityCenterClient const& b) {
+  friend bool operator==(SecurityCenterClient const& a,
+                         SecurityCenterClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SecurityCenterClient const& a, SecurityCenterClient const& b) {
+  friend bool operator!=(SecurityCenterClient const& a,
+                         SecurityCenterClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,8 +116,13 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.BatchCreateResourceValueConfigsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L925}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsResponse>
-  BatchCreateResourceValueConfigs(std::string const& parent, std::vector<google::cloud::securitycenter::v2::CreateResourceValueConfigRequest> const& requests, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::
+               BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(
+      std::string const& parent,
+      std::vector<google::cloud::securitycenter::v2::
+                      CreateResourceValueConfigRequest> const& requests,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -144,8 +152,12 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.BatchCreateResourceValueConfigsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L925}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsResponse>
-  BatchCreateResourceValueConfigs(google::cloud::securitycenter::v2::BatchCreateResourceValueConfigsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::
+               BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(
+      google::cloud::securitycenter::v2::
+          BatchCreateResourceValueConfigsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -202,8 +214,8 @@ class SecurityCenterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkMuteFindings(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -243,7 +255,9 @@ class SecurityCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
-  BulkMuteFindings(google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request, Options opts = {});
+  BulkMuteFindings(
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -256,8 +270,10 @@ class SecurityCenterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkMuteFindings(NoAwaitTag, google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      NoAwaitTag,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -269,7 +285,8 @@ class SecurityCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
-  BulkMuteFindings(google::longrunning::Operation const& operation, Options opts = {});
+  BulkMuteFindings(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -302,7 +319,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  CreateBigQueryExport(std::string const& parent, google::cloud::securitycenter::v2::BigQueryExport const& big_query_export, std::string const& big_query_export_id, Options opts = {});
+  CreateBigQueryExport(
+      std::string const& parent,
+      google::cloud::securitycenter::v2::BigQueryExport const& big_query_export,
+      std::string const& big_query_export_id, Options opts = {});
 
   // clang-format off
   ///
@@ -332,7 +352,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  CreateBigQueryExport(google::cloud::securitycenter::v2::CreateBigQueryExportRequest const& request, Options opts = {});
+  CreateBigQueryExport(
+      google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -367,8 +390,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L80}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Finding>
-  CreateFinding(std::string const& parent, google::cloud::securitycenter::v2::Finding const& finding, std::string const& finding_id, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Finding> CreateFinding(
+      std::string const& parent,
+      google::cloud::securitycenter::v2::Finding const& finding,
+      std::string const& finding_id, Options opts = {});
 
   // clang-format off
   ///
@@ -398,8 +423,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L80}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Finding>
-  CreateFinding(google::cloud::securitycenter::v2::CreateFindingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Finding> CreateFinding(
+      google::cloud::securitycenter::v2::CreateFindingRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -431,8 +457,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
-  CreateMuteConfig(std::string const& parent, google::cloud::securitycenter::v2::MuteConfig const& mute_config, std::string const& mute_config_id, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig> CreateMuteConfig(
+      std::string const& parent,
+      google::cloud::securitycenter::v2::MuteConfig const& mute_config,
+      std::string const& mute_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -461,8 +489,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
-  CreateMuteConfig(google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig> CreateMuteConfig(
+      google::cloud::securitycenter::v2::CreateMuteConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -497,7 +526,11 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  CreateNotificationConfig(std::string const& parent, google::cloud::securitycenter::v2::NotificationConfig const& notification_config, std::string const& config_id, Options opts = {});
+  CreateNotificationConfig(
+      std::string const& parent,
+      google::cloud::securitycenter::v2::NotificationConfig const&
+          notification_config,
+      std::string const& config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -527,7 +560,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  CreateNotificationConfig(google::cloud::securitycenter::v2::CreateNotificationConfigRequest const& request, Options opts = {});
+  CreateNotificationConfig(
+      google::cloud::securitycenter::v2::CreateNotificationConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -554,8 +590,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Source>
-  CreateSource(std::string const& parent, google::cloud::securitycenter::v2::Source const& source, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Source> CreateSource(
+      std::string const& parent,
+      google::cloud::securitycenter::v2::Source const& source,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -584,8 +622,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Source>
-  CreateSource(google::cloud::securitycenter::v2::CreateSourceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Source> CreateSource(
+      google::cloud::securitycenter::v2::CreateSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -612,8 +651,7 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1124}
   ///
   // clang-format on
-  Status
-  DeleteBigQueryExport(std::string const& name, Options opts = {});
+  Status DeleteBigQueryExport(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -639,8 +677,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1124}
   ///
   // clang-format on
-  Status
-  DeleteBigQueryExport(google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const& request, Options opts = {});
+  Status DeleteBigQueryExport(
+      google::cloud::securitycenter::v2::DeleteBigQueryExportRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -671,8 +711,7 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1142}
   ///
   // clang-format on
-  Status
-  DeleteMuteConfig(std::string const& name, Options opts = {});
+  Status DeleteMuteConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -699,8 +738,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1142}
   ///
   // clang-format on
-  Status
-  DeleteMuteConfig(google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request, Options opts = {});
+  Status DeleteMuteConfig(
+      google::cloud::securitycenter::v2::DeleteMuteConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -729,8 +769,7 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1162}
   ///
   // clang-format on
-  Status
-  DeleteNotificationConfig(std::string const& name, Options opts = {});
+  Status DeleteNotificationConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -756,8 +795,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1162}
   ///
   // clang-format on
-  Status
-  DeleteNotificationConfig(google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const& request, Options opts = {});
+  Status DeleteNotificationConfig(
+      google::cloud::securitycenter::v2::DeleteNotificationConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -778,8 +819,7 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.DeleteResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1181}
   ///
   // clang-format on
-  Status
-  DeleteResourceValueConfig(std::string const& name, Options opts = {});
+  Status DeleteResourceValueConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -805,8 +845,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.DeleteResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1181}
   ///
   // clang-format on
-  Status
-  DeleteResourceValueConfig(google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const& request, Options opts = {});
+  Status DeleteResourceValueConfig(
+      google::cloud::securitycenter::v2::DeleteResourceValueConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -836,8 +878,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1216}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  GetBigQueryExport(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::BigQueryExport> GetBigQueryExport(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -866,8 +908,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1216}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  GetBigQueryExport(google::cloud::securitycenter::v2::GetBigQueryExportRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::BigQueryExport> GetBigQueryExport(
+      google::cloud::securitycenter::v2::GetBigQueryExportRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -896,8 +940,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Simulation]: @googleapis_reference_link{google/cloud/securitycenter/v2/simulation.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Simulation>
-  GetSimulation(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Simulation> GetSimulation(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -927,8 +971,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Simulation]: @googleapis_reference_link{google/cloud/securitycenter/v2/simulation.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Simulation>
-  GetSimulation(google::cloud::securitycenter::v2::GetSimulationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Simulation> GetSimulation(
+      google::cloud::securitycenter::v2::GetSimulationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -955,8 +1000,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.ValuedResource]: @googleapis_reference_link{google/cloud/securitycenter/v2/valued_resource.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::ValuedResource>
-  GetValuedResource(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::ValuedResource> GetValuedResource(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -985,8 +1030,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.ValuedResource]: @googleapis_reference_link{google/cloud/securitycenter/v2/valued_resource.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::ValuedResource>
-  GetValuedResource(google::cloud::securitycenter::v2::GetValuedResourceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::ValuedResource> GetValuedResource(
+      google::cloud::securitycenter::v2::GetValuedResourceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1011,8 +1058,8 @@ class SecurityCenterClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -1041,8 +1088,8 @@ class SecurityCenterClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1076,8 +1123,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
-  GetMuteConfig(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig> GetMuteConfig(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1107,8 +1154,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
-  GetMuteConfig(google::cloud::securitycenter::v2::GetMuteConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig> GetMuteConfig(
+      google::cloud::securitycenter::v2::GetMuteConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1171,7 +1219,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  GetNotificationConfig(google::cloud::securitycenter::v2::GetNotificationConfigRequest const& request, Options opts = {});
+  GetNotificationConfig(
+      google::cloud::securitycenter::v2::GetNotificationConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1227,7 +1278,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
-  GetResourceValueConfig(google::cloud::securitycenter::v2::GetResourceValueConfigRequest const& request, Options opts = {});
+  GetResourceValueConfig(
+      google::cloud::securitycenter::v2::GetResourceValueConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1252,8 +1306,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Source>
-  GetSource(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Source> GetSource(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1282,8 +1336,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Source>
-  GetSource(google::cloud::securitycenter::v2::GetSourceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Source> GetSource(
+      google::cloud::securitycenter::v2::GetSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1352,8 +1407,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1406}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::GroupResult>
-  GroupFindings(std::string const& parent, std::string const& group_by, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::GroupResult> GroupFindings(
+      std::string const& parent, std::string const& group_by,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1404,8 +1460,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1406}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::GroupResult>
-  GroupFindings(google::cloud::securitycenter::v2::GroupFindingsRequest request, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::GroupResult> GroupFindings(
+      google::cloud::securitycenter::v2::GroupFindingsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1445,8 +1502,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.ListAttackPathsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1416}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::AttackPath>
-  ListAttackPaths(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::AttackPath> ListAttackPaths(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1485,8 +1542,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.ListAttackPathsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1416}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::AttackPath>
-  ListAttackPaths(google::cloud::securitycenter::v2::ListAttackPathsRequest request, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::AttackPath> ListAttackPaths(
+      google::cloud::securitycenter::v2::ListAttackPathsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1570,7 +1628,9 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::BigQueryExport>
-  ListBigQueryExports(google::cloud::securitycenter::v2::ListBigQueryExportsRequest request, Options opts = {});
+  ListBigQueryExports(
+      google::cloud::securitycenter::v2::ListBigQueryExportsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1630,7 +1690,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1642}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::ListFindingsResult>
+  StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::
+                  ListFindingsResult>
   ListFindings(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -1677,8 +1738,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1642}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::ListFindingsResult>
-  ListFindings(google::cloud::securitycenter::v2::ListFindingsRequest request, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::
+                  ListFindingsResult>
+  ListFindings(google::cloud::securitycenter::v2::ListFindingsRequest request,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -1717,8 +1780,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::MuteConfig>
-  ListMuteConfigs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::MuteConfig> ListMuteConfigs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1757,8 +1820,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::MuteConfig>
-  ListMuteConfigs(google::cloud::securitycenter::v2::ListMuteConfigsRequest request, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::MuteConfig> ListMuteConfigs(
+      google::cloud::securitycenter::v2::ListMuteConfigsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1835,7 +1899,9 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::NotificationConfig>
-  ListNotificationConfigs(google::cloud::securitycenter::v2::ListNotificationConfigsRequest request, Options opts = {});
+  ListNotificationConfigs(
+      google::cloud::securitycenter::v2::ListNotificationConfigsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1910,7 +1976,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::ResourceValueConfig>
-  ListResourceValueConfigs(google::cloud::securitycenter::v2::ListResourceValueConfigsRequest request, Options opts = {});
+  ListResourceValueConfigs(
+      google::cloud::securitycenter::v2::ListResourceValueConfigsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1945,8 +2014,8 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::Source>
-  ListSources(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::Source> ListSources(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1984,8 +2053,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
-  StreamRange<google::cloud::securitycenter::v2::Source>
-  ListSources(google::cloud::securitycenter::v2::ListSourcesRequest request, Options opts = {});
+  StreamRange<google::cloud::securitycenter::v2::Source> ListSources(
+      google::cloud::securitycenter::v2::ListSourcesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2063,7 +2133,9 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::ValuedResource>
-  ListValuedResources(google::cloud::securitycenter::v2::ListValuedResourcesRequest request, Options opts = {});
+  ListValuedResources(
+      google::cloud::securitycenter::v2::ListValuedResourcesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2103,8 +2175,10 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1921}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Finding>
-  SetFindingState(std::string const& name, google::cloud::securitycenter::v2::Finding::State state, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Finding> SetFindingState(
+      std::string const& name,
+      google::cloud::securitycenter::v2::Finding::State state,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2134,8 +2208,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1921}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Finding>
-  SetFindingState(google::cloud::securitycenter::v2::SetFindingStateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Finding> SetFindingState(
+      google::cloud::securitycenter::v2::SetFindingStateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2164,8 +2239,9 @@ class SecurityCenterClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -2187,8 +2263,9 @@ class SecurityCenterClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -2217,8 +2294,8 @@ class SecurityCenterClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2258,8 +2335,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1949}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Finding>
-  SetMute(std::string const& name, google::cloud::securitycenter::v2::Finding::Mute mute, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Finding> SetMute(
+      std::string const& name,
+      google::cloud::securitycenter::v2::Finding::Mute mute, Options opts = {});
 
   // clang-format off
   ///
@@ -2289,8 +2367,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1949}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Finding>
-  SetMute(google::cloud::securitycenter::v2::SetMuteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Finding> SetMute(
+      google::cloud::securitycenter::v2::SetMuteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2319,8 +2398,9 @@ class SecurityCenterClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2349,8 +2429,9 @@ class SecurityCenterClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2377,7 +2458,9 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  UpdateBigQueryExport(google::cloud::securitycenter::v2::BigQueryExport const& big_query_export, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateBigQueryExport(
+      google::cloud::securitycenter::v2::BigQueryExport const& big_query_export,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2407,7 +2490,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
-  UpdateBigQueryExport(google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const& request, Options opts = {});
+  UpdateBigQueryExport(
+      google::cloud::securitycenter::v2::UpdateBigQueryExportRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2436,7 +2522,9 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
-  UpdateExternalSystem(google::cloud::securitycenter::v2::ExternalSystem const& external_system, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateExternalSystem(
+      google::cloud::securitycenter::v2::ExternalSystem const& external_system,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2467,7 +2555,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
-  UpdateExternalSystem(google::cloud::securitycenter::v2::UpdateExternalSystemRequest const& request, Options opts = {});
+  UpdateExternalSystem(
+      google::cloud::securitycenter::v2::UpdateExternalSystemRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2505,8 +2596,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1998}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Finding>
-  UpdateFinding(google::cloud::securitycenter::v2::Finding const& finding, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Finding> UpdateFinding(
+      google::cloud::securitycenter::v2::Finding const& finding,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2537,8 +2629,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1998}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Finding>
-  UpdateFinding(google::cloud::securitycenter::v2::UpdateFindingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Finding> UpdateFinding(
+      google::cloud::securitycenter::v2::UpdateFindingRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2565,8 +2658,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2018}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
-  UpdateMuteConfig(google::cloud::securitycenter::v2::MuteConfig const& mute_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig> UpdateMuteConfig(
+      google::cloud::securitycenter::v2::MuteConfig const& mute_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2596,8 +2690,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2018}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::MuteConfig>
-  UpdateMuteConfig(google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::MuteConfig> UpdateMuteConfig(
+      google::cloud::securitycenter::v2::UpdateMuteConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2626,7 +2721,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  UpdateNotificationConfig(google::cloud::securitycenter::v2::NotificationConfig const& notification_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateNotificationConfig(
+      google::cloud::securitycenter::v2::NotificationConfig const&
+          notification_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2657,7 +2755,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
-  UpdateNotificationConfig(google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const& request, Options opts = {});
+  UpdateNotificationConfig(
+      google::cloud::securitycenter::v2::UpdateNotificationConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2688,7 +2789,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
-  UpdateResourceValueConfig(google::cloud::securitycenter::v2::ResourceValueConfig const& resource_value_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateResourceValueConfig(
+      google::cloud::securitycenter::v2::ResourceValueConfig const&
+          resource_value_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2718,7 +2822,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
-  UpdateResourceValueConfig(google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const& request, Options opts = {});
+  UpdateResourceValueConfig(
+      google::cloud::securitycenter::v2::UpdateResourceValueConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2750,7 +2857,9 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
-  UpdateSecurityMarks(google::cloud::securitycenter::v2::SecurityMarks const& security_marks, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateSecurityMarks(
+      google::cloud::securitycenter::v2::SecurityMarks const& security_marks,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2782,7 +2891,10 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
-  UpdateSecurityMarks(google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const& request, Options opts = {});
+  UpdateSecurityMarks(
+      google::cloud::securitycenter::v2::UpdateSecurityMarksRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2809,8 +2921,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2068}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Source>
-  UpdateSource(google::cloud::securitycenter::v2::Source const& source, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Source> UpdateSource(
+      google::cloud::securitycenter::v2::Source const& source,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2839,8 +2952,9 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v2.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2068}
   ///
   // clang-format on
-  StatusOr<google::cloud::securitycenter::v2::Source>
-  UpdateSource(google::cloud::securitycenter::v2::UpdateSourceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::securitycenter::v2::Source> UpdateSource(
+      google::cloud::securitycenter::v2::UpdateSourceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2875,8 +2989,8 @@ class SecurityCenterClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2915,8 +3029,8 @@ class SecurityCenterClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2942,8 +3056,8 @@ class SecurityCenterClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2974,8 +3088,9 @@ class SecurityCenterClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2999,8 +3114,7 @@ class SecurityCenterClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3029,8 +3143,9 @@ class SecurityCenterClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3064,8 +3179,7 @@ class SecurityCenterClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3104,8 +3218,9 @@ class SecurityCenterClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SecurityCenterConnection> connection_;

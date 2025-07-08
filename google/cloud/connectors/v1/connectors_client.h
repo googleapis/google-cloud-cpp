@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConnectorsClient {
  public:
-  explicit ConnectorsClient(std::shared_ptr<ConnectorsConnection> connection, Options opts = {});
+  explicit ConnectorsClient(std::shared_ptr<ConnectorsConnection> connection,
+                            Options opts = {});
   ~ConnectorsClient();
 
   ///@{
@@ -117,8 +118,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L270}
   ///
   // clang-format on
-  StreamRange<google::cloud::connectors::v1::Connection>
-  ListConnections(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::connectors::v1::Connection> ListConnections(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -156,8 +157,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L270}
   ///
   // clang-format on
-  StreamRange<google::cloud::connectors::v1::Connection>
-  ListConnections(google::cloud::connectors::v1::ListConnectionsRequest request, Options opts = {});
+  StreamRange<google::cloud::connectors::v1::Connection> ListConnections(
+      google::cloud::connectors::v1::ListConnectionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -182,8 +184,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L310}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::Connection>
-  GetConnection(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -212,8 +214,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L310}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::Connection>
-  GetConnection(google::cloud::connectors::v1::GetConnectionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
+      google::cloud::connectors::v1::GetConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -248,8 +251,10 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L326}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::connectors::v1::Connection>>
-  CreateConnection(std::string const& parent, google::cloud::connectors::v1::Connection const& connection, std::string const& connection_id, Options opts = {});
+  future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
+      std::string const& parent,
+      google::cloud::connectors::v1::Connection const& connection,
+      std::string const& connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -262,8 +267,10 @@ class ConnectorsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateConnection(NoAwaitTag, std::string const& parent, google::cloud::connectors::v1::Connection const& connection, std::string const& connection_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::connectors::v1::Connection const& connection,
+      std::string const& connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -299,8 +306,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L326}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::connectors::v1::Connection>>
-  CreateConnection(google::cloud::connectors::v1::CreateConnectionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
+      google::cloud::connectors::v1::CreateConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -313,8 +321,10 @@ class ConnectorsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateConnection(NoAwaitTag, google::cloud::connectors::v1::CreateConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      NoAwaitTag,
+      google::cloud::connectors::v1::CreateConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -325,8 +335,8 @@ class ConnectorsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::connectors::v1::Connection>>
-  CreateConnection(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +383,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L345}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::connectors::v1::Connection>>
-  UpdateConnection(google::cloud::connectors::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
+      google::cloud::connectors::v1::Connection const& connection,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -387,8 +398,9 @@ class ConnectorsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateConnection(NoAwaitTag, google::cloud::connectors::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      NoAwaitTag, google::cloud::connectors::v1::Connection const& connection,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +436,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L345}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::connectors::v1::Connection>>
-  UpdateConnection(google::cloud::connectors::v1::UpdateConnectionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -438,8 +451,10 @@ class ConnectorsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateConnection(NoAwaitTag, google::cloud::connectors::v1::UpdateConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      NoAwaitTag,
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -450,8 +465,8 @@ class ConnectorsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::connectors::v1::Connection>>
-  UpdateConnection(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -497,8 +512,8 @@ class ConnectorsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteConnection(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -535,7 +550,9 @@ class ConnectorsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-  DeleteConnection(google::cloud::connectors::v1::DeleteConnectionRequest const& request, Options opts = {});
+  DeleteConnection(
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -548,8 +565,10 @@ class ConnectorsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteConnection(NoAwaitTag, google::cloud::connectors::v1::DeleteConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      NoAwaitTag,
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -561,7 +580,8 @@ class ConnectorsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-  DeleteConnection(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteConnection(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -596,8 +616,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Provider]: @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L30}
   ///
   // clang-format on
-  StreamRange<google::cloud::connectors::v1::Provider>
-  ListProviders(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::connectors::v1::Provider> ListProviders(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -635,8 +655,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Provider]: @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L30}
   ///
   // clang-format on
-  StreamRange<google::cloud::connectors::v1::Provider>
-  ListProviders(google::cloud::connectors::v1::ListProvidersRequest request, Options opts = {});
+  StreamRange<google::cloud::connectors::v1::Provider> ListProviders(
+      google::cloud::connectors::v1::ListProvidersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -662,8 +683,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Provider]: @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::Provider>
-  GetProvider(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::Provider> GetProvider(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -692,8 +713,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Provider]: @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::Provider>
-  GetProvider(google::cloud::connectors::v1::GetProviderRequest const& request, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::Provider> GetProvider(
+      google::cloud::connectors::v1::GetProviderRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -728,8 +750,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.ListConnectorsRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::connectors::v1::Connector>
-  ListConnectors(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::connectors::v1::Connector> ListConnectors(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -767,8 +789,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.ListConnectorsRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::connectors::v1::Connector>
-  ListConnectors(google::cloud::connectors::v1::ListConnectorsRequest request, Options opts = {});
+  StreamRange<google::cloud::connectors::v1::Connector> ListConnectors(
+      google::cloud::connectors::v1::ListConnectorsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -794,8 +817,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.GetConnectorRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L75}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::Connector>
-  GetConnector(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -824,8 +847,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.GetConnectorRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L75}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::Connector>
-  GetConnector(google::cloud::connectors::v1::GetConnectorRequest const& request, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
+      google::cloud::connectors::v1::GetConnectorRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -900,7 +924,9 @@ class ConnectorsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::connectors::v1::ConnectorVersion>
-  ListConnectorVersions(google::cloud::connectors::v1::ListConnectorVersionsRequest request, Options opts = {});
+  ListConnectorVersions(
+      google::cloud::connectors::v1::ListConnectorVersionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -926,8 +952,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.GetConnectorVersionRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::ConnectorVersion>
-  GetConnectorVersion(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::ConnectorVersion> GetConnectorVersion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -956,8 +982,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.GetConnectorVersionRequest]: @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::ConnectorVersion>
-  GetConnectorVersion(google::cloud::connectors::v1::GetConnectorVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::ConnectorVersion> GetConnectorVersion(
+      google::cloud::connectors::v1::GetConnectorVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1016,7 +1043,10 @@ class ConnectorsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
-  GetConnectionSchemaMetadata(google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request, Options opts = {});
+  GetConnectionSchemaMetadata(
+      google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1063,8 +1093,8 @@ class ConnectorsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RefreshConnectionSchemaMetadata(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1101,7 +1131,10 @@ class ConnectorsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
-  RefreshConnectionSchemaMetadata(google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request, Options opts = {});
+  RefreshConnectionSchemaMetadata(
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1114,8 +1147,11 @@ class ConnectorsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RefreshConnectionSchemaMetadata(NoAwaitTag, google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
+      NoAwaitTag,
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1127,7 +1163,8 @@ class ConnectorsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
-  RefreshConnectionSchemaMetadata(google::longrunning::Operation const& operation, Options opts = {});
+  RefreshConnectionSchemaMetadata(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1202,7 +1239,9 @@ class ConnectorsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
-  ListRuntimeEntitySchemas(google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request, Options opts = {});
+  ListRuntimeEntitySchemas(
+      google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1277,7 +1316,9 @@ class ConnectorsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
-  ListRuntimeActionSchemas(google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request, Options opts = {});
+  ListRuntimeActionSchemas(
+      google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1303,8 +1344,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.RuntimeConfig]: @googleapis_reference_link{google/cloud/connectors/v1/runtime.proto#L43}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::RuntimeConfig>
-  GetRuntimeConfig(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::RuntimeConfig> GetRuntimeConfig(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1334,8 +1375,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.RuntimeConfig]: @googleapis_reference_link{google/cloud/connectors/v1/runtime.proto#L43}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::RuntimeConfig>
-  GetRuntimeConfig(google::cloud::connectors::v1::GetRuntimeConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::RuntimeConfig> GetRuntimeConfig(
+      google::cloud::connectors::v1::GetRuntimeConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1360,8 +1402,8 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Settings]: @googleapis_reference_link{google/cloud/connectors/v1/settings.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::Settings>
-  GetGlobalSettings(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1391,8 +1433,9 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Settings]: @googleapis_reference_link{google/cloud/connectors/v1/settings.proto#L39}
   ///
   // clang-format on
-  StatusOr<google::cloud::connectors::v1::Settings>
-  GetGlobalSettings(google::cloud::connectors::v1::GetGlobalSettingsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
+      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1430,8 +1473,8 @@ class ConnectorsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1460,8 +1503,9 @@ class ConnectorsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1493,8 +1537,8 @@ class ConnectorsClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1525,8 +1569,8 @@ class ConnectorsClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1561,8 +1605,9 @@ class ConnectorsClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1597,8 +1642,8 @@ class ConnectorsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1637,8 +1682,8 @@ class ConnectorsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1664,8 +1709,8 @@ class ConnectorsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1696,8 +1741,9 @@ class ConnectorsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1721,8 +1767,7 @@ class ConnectorsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1751,8 +1796,9 @@ class ConnectorsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1786,8 +1832,7 @@ class ConnectorsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1826,8 +1871,9 @@ class ConnectorsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConnectorsConnection> connection_;

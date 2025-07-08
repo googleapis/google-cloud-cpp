@@ -36,91 +36,120 @@ class ConversationModelsTracingConnection
   ~ConversationModelsTracingConnection() override = default;
 
   explicit ConversationModelsTracingConnection(
-    std::shared_ptr<dialogflow_es::ConversationModelsConnection> child);
+      std::shared_ptr<dialogflow_es::ConversationModelsConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) override;
+  CreateConversationModel(
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateConversationModel(NoAwaitTag,
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateConversationModel(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
   CreateConversationModel(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
-  GetConversationModel(google::cloud::dialogflow::v2::GetConversationModelRequest const& request) override;
+  GetConversationModel(
+      google::cloud::dialogflow::v2::GetConversationModelRequest const& request)
+      override;
 
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
-  ListConversationModels(google::cloud::dialogflow::v2::ListConversationModelsRequest request) override;
+  ListConversationModels(
+      google::cloud::dialogflow::v2::ListConversationModelsRequest request)
+      override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel(google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) override;
+  future<StatusOr<
+      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  DeleteConversationModel(
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteConversationModel(NoAwaitTag,
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteConversationModel(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  future<StatusOr<
+      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
   DeleteConversationModel(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel(google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) override;
+  future<StatusOr<
+      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  DeployConversationModel(
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeployConversationModel(NoAwaitTag,
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeployConversationModel(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  future<StatusOr<
+      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
   DeployConversationModel(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel(google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) override;
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      UndeployConversationModelOperationMetadata>>
+  UndeployConversationModel(
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UndeployConversationModel(NoAwaitTag,
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UndeployConversationModel(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      UndeployConversationModelOperationMetadata>>
   UndeployConversationModel(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  GetConversationModelEvaluation(google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const& request) override;
+  GetConversationModelEvaluation(
+      google::cloud::dialogflow::v2::
+          GetConversationModelEvaluationRequest const& request) override;
 
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  ListConversationModelEvaluations(google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest request) override;
+  ListConversationModelEvaluations(
+      google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
+          request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
-  CreateConversationModelEvaluation(google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) override;
+  CreateConversationModelEvaluation(
+      google::cloud::dialogflow::v2::
+          CreateConversationModelEvaluationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateConversationModelEvaluation(NoAwaitTag,
-      google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::
+          CreateConversationModelEvaluationRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::ConversationModelsConnection> child_;

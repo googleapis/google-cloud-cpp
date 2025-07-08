@@ -26,34 +26,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AppGatewaysServiceConnectionIdempotencyPolicy::~AppGatewaysServiceConnectionIdempotencyPolicy() = default;
+AppGatewaysServiceConnectionIdempotencyPolicy::
+    ~AppGatewaysServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
 AppGatewaysServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListAppGateways(google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest) {  // NOLINT
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListAppGateways(
+    google::cloud::beyondcorp::appgateways::v1::
+        ListAppGatewaysRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetAppGateway(google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::CreateAppGateway(google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::CreateAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::
+        CreateAppGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::DeleteAppGateway(google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::DeleteAppGateway(
+    google::cloud::beyondcorp::appgateways::v1::
+        DeleteAppGatewayRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -63,32 +73,38 @@ Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
-    MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy() {
+MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>();
 }
 

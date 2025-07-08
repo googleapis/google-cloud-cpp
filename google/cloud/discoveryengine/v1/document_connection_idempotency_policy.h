@@ -35,44 +35,47 @@ class DocumentServiceConnectionIdempotencyPolicy {
   virtual ~DocumentServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  GetDocument(google::cloud::discoveryengine::v1::GetDocumentRequest const& request);
+  virtual google::cloud::Idempotency GetDocument(
+      google::cloud::discoveryengine::v1::GetDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDocuments(google::cloud::discoveryengine::v1::ListDocumentsRequest request);
+  virtual google::cloud::Idempotency ListDocuments(
+      google::cloud::discoveryengine::v1::ListDocumentsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateDocument(google::cloud::discoveryengine::v1::CreateDocumentRequest const& request);
+  virtual google::cloud::Idempotency CreateDocument(
+      google::cloud::discoveryengine::v1::CreateDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateDocument(google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request);
+  virtual google::cloud::Idempotency UpdateDocument(
+      google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteDocument(google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request);
+  virtual google::cloud::Idempotency DeleteDocument(
+      google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportDocuments(google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request);
+  virtual google::cloud::Idempotency ImportDocuments(
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  PurgeDocuments(google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
+  virtual google::cloud::Idempotency PurgeDocuments(
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request);
+  virtual google::cloud::Idempotency BatchGetDocumentsMetadata(
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>
-    MakeDefaultDocumentServiceConnectionIdempotencyPolicy();
+MakeDefaultDocumentServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

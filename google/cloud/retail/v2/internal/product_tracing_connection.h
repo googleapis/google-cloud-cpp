@@ -36,107 +36,118 @@ class ProductServiceTracingConnection
   ~ProductServiceTracingConnection() override = default;
 
   explicit ProductServiceTracingConnection(
-    std::shared_ptr<retail_v2::ProductServiceConnection> child);
+      std::shared_ptr<retail_v2::ProductServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::retail::v2::Product>
-  CreateProduct(google::cloud::retail::v2::CreateProductRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Product> CreateProduct(
+      google::cloud::retail::v2::CreateProductRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::Product>
-  GetProduct(google::cloud::retail::v2::GetProductRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Product> GetProduct(
+      google::cloud::retail::v2::GetProductRequest const& request) override;
 
-  StreamRange<google::cloud::retail::v2::Product>
-  ListProducts(google::cloud::retail::v2::ListProductsRequest request) override;
+  StreamRange<google::cloud::retail::v2::Product> ListProducts(
+      google::cloud::retail::v2::ListProductsRequest request) override;
 
-  StatusOr<google::cloud::retail::v2::Product>
-  UpdateProduct(google::cloud::retail::v2::UpdateProductRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
+      google::cloud::retail::v2::UpdateProductRequest const& request) override;
 
-  Status
-  DeleteProduct(google::cloud::retail::v2::DeleteProductRequest const& request) override;
-
-  future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-  PurgeProducts(google::cloud::retail::v2::PurgeProductsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  PurgeProducts(NoAwaitTag,
-      google::cloud::retail::v2::PurgeProductsRequest const& request) override;
+  Status DeleteProduct(
+      google::cloud::retail::v2::DeleteProductRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
   PurgeProducts(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
-  future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(google::cloud::retail::v2::ImportProductsRequest const& request) override;
+  StatusOr<google::longrunning::Operation> PurgeProducts(
+      NoAwaitTag,
+      google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportProducts(NoAwaitTag,
-      google::cloud::retail::v2::ImportProductsRequest const& request) override;
+  future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
+  PurgeProducts(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
   ImportProducts(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
-  future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportProducts(
+      NoAwaitTag,
+      google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  SetInventory(NoAwaitTag,
-      google::cloud::retail::v2::SetInventoryRequest const& request) override;
+  future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
+  ImportProducts(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::retail::v2::SetInventoryRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> SetInventory(
+      NoAwaitTag,
+      google::cloud::retail::v2::SetInventoryRequest const& request) override;
+
+  future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
+  SetInventory(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) override;
+  AddFulfillmentPlaces(
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  AddFulfillmentPlaces(NoAwaitTag,
-      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
+      NoAwaitTag,
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) override;
+  RemoveFulfillmentPlaces(
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  RemoveFulfillmentPlaces(NoAwaitTag,
-      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
+      NoAwaitTag,
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(google::cloud::retail::v2::AddLocalInventoriesRequest const& request) override;
+  AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  AddLocalInventories(NoAwaitTag,
-      google::cloud::retail::v2::AddLocalInventoriesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> AddLocalInventories(
+      NoAwaitTag,
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(
-      google::longrunning::Operation const& operation) override;
+  AddLocalInventories(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-  RemoveLocalInventories(google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) override;
+  RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  RemoveLocalInventories(NoAwaitTag,
-      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RemoveLocalInventories(
+      NoAwaitTag,
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
   RemoveLocalInventories(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::ProductServiceConnection> child_;

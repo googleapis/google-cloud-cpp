@@ -35,32 +35,50 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PacketMirroringsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PACKET_MIRRORINGS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_PACKET_MIRRORINGS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_PACKET_MIRRORINGS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_PACKET_MIRRORINGS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()) {
-    options.set<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>(
+  if (!options.has<
+          compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()) {
+    options.set<
+        compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>(
         compute_packet_mirrorings_v1::PacketMirroringsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption>()) {
-    options.set<compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<compute_packet_mirrorings_v1::
+                       PacketMirroringsBackoffPolicyOption>()) {
+    options
+        .set<compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<compute_packet_mirrorings_v1::PacketMirroringsPollingPolicyOption>()) {
-    options.set<compute_packet_mirrorings_v1::PacketMirroringsPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption::Type,
-            compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption::Type>(
-            options.get<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+  if (!options.has<compute_packet_mirrorings_v1::
+                       PacketMirroringsPollingPolicyOption>()) {
+    options
+        .set<compute_packet_mirrorings_v1::PacketMirroringsPollingPolicyOption>(
+            GenericPollingPolicy<compute_packet_mirrorings_v1::
+                                     PacketMirroringsRetryPolicyOption::Type,
+                                 compute_packet_mirrorings_v1::
+                                     PacketMirroringsBackoffPolicyOption::Type>(
+                options
+                    .get<compute_packet_mirrorings_v1::
+                             PacketMirroringsRetryPolicyOption>()
+                    ->clone(),
+                ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                         std::chrono::minutes(5),
+                                         kBackoffScaling)
+                    .clone())
+                .clone());
   }
-  if (!options.has<compute_packet_mirrorings_v1::PacketMirroringsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_packet_mirrorings_v1::PacketMirroringsConnectionIdempotencyPolicyOption>(
-        compute_packet_mirrorings_v1::MakeDefaultPacketMirroringsConnectionIdempotencyPolicy());
+  if (!options.has<compute_packet_mirrorings_v1::
+                       PacketMirroringsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_packet_mirrorings_v1::
+                    PacketMirroringsConnectionIdempotencyPolicyOption>(
+        compute_packet_mirrorings_v1::
+            MakeDefaultPacketMirroringsConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -17,9 +17,9 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_connection_impl.h"
+#include "google/cloud/containeranalysis/v1/internal/container_analysis_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/containeranalysis/v1/internal/container_analysis_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -33,32 +33,39 @@ namespace {
 
 std::unique_ptr<containeranalysis_v1::ContainerAnalysisRetryPolicy>
 retry_policy(Options const& options) {
-  return options.get<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()->clone();
+  return options
+      .get<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<containeranalysis_v1::ContainerAnalysisBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy>
+std::unique_ptr<
+    containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<containeranalysis_v1::
+               ContainerAnalysisConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 ContainerAnalysisConnectionImpl::ContainerAnalysisConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<containeranalysis_v1_internal::ContainerAnalysisStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ContainerAnalysisConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), ContainerAnalysisConnection::options())) {}
 
-StatusOr<google::iam::v1::Policy>
-ContainerAnalysisConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -70,8 +77,8 @@ ContainerAnalysisConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyReque
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-ContainerAnalysisConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -84,7 +91,8 @@ ContainerAnalysisConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyReque
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ContainerAnalysisConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+ContainerAnalysisConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -96,27 +104,34 @@ ContainerAnalysisConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPerm
       *current, request, __func__);
 }
 
-StatusOr<google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-ContainerAnalysisConnectionImpl::GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
+StatusOr<
+    google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
+ContainerAnalysisConnectionImpl::GetVulnerabilityOccurrencesSummary(
+    google::devtools::containeranalysis::v1::
+        GetVulnerabilityOccurrencesSummaryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVulnerabilityOccurrencesSummary(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request) {
-        return stub_->GetVulnerabilityOccurrencesSummary(context, options, request);
+             google::devtools::containeranalysis::v1::
+                 GetVulnerabilityOccurrencesSummaryRequest const& request) {
+        return stub_->GetVulnerabilityOccurrencesSummary(context, options,
+                                                         request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
-ContainerAnalysisConnectionImpl::ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+ContainerAnalysisConnectionImpl::ExportSBOM(
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportSBOM(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) {
         return stub_->ExportSBOM(context, options, request);
       },
       *current, request, __func__);

@@ -31,18 +31,18 @@ EdgeNetworkAuth::EdgeNetworkAuth(
     std::shared_ptr<EdgeNetworkStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse> EdgeNetworkAuth::InitializeZone(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
+EdgeNetworkAuth::InitializeZone(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->InitializeZone(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse> EdgeNetworkAuth::ListZones(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse>
+EdgeNetworkAuth::ListZones(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListZonesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,17 +50,16 @@ StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse> EdgeNetworkAuth::Lis
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Zone> EdgeNetworkAuth::GetZone(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetZone(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse> EdgeNetworkAuth::ListNetworks(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse>
+EdgeNetworkAuth::ListNetworks(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListNetworksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,17 +67,16 @@ StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse> EdgeNetworkAuth::
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Network> EdgeNetworkAuth::GetNetwork(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetNetwork(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse> EdgeNetworkAuth::DiagnoseNetwork(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
+EdgeNetworkAuth::DiagnoseNetwork(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -87,28 +85,27 @@ StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse> EdgeNetworkAut
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncCreateNetwork(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateNetwork(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateNetwork(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkAuth::CreateNetwork(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::CreateNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateNetwork(context, options, request);
@@ -116,36 +113,35 @@ EdgeNetworkAuth::CreateNetwork(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncDeleteNetwork(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteNetwork(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteNetwork(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkAuth::DeleteNetwork(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::DeleteNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteNetwork(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse> EdgeNetworkAuth::ListSubnets(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse>
+EdgeNetworkAuth::ListSubnets(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -153,8 +149,7 @@ StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse> EdgeNetworkAuth::L
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Subnet> EdgeNetworkAuth::GetSubnet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -163,28 +158,27 @@ StatusOr<google::cloud::edgenetwork::v1::Subnet> EdgeNetworkAuth::GetSubnet(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncCreateSubnet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateSubnet(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateSubnet(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkAuth::CreateSubnet(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::CreateSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSubnet(context, options, request);
@@ -192,28 +186,27 @@ EdgeNetworkAuth::CreateSubnet(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncUpdateSubnet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateSubnet(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateSubnet(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkAuth::UpdateSubnet(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::UpdateSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSubnet(context, options, request);
@@ -221,73 +214,75 @@ EdgeNetworkAuth::UpdateSubnet(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncDeleteSubnet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteSubnet(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteSubnet(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkAuth::DeleteSubnet(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::DeleteSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSubnet(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse> EdgeNetworkAuth::ListInterconnects(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
+EdgeNetworkAuth::ListInterconnects(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListInterconnects(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Interconnect> EdgeNetworkAuth::GetInterconnect(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::Interconnect>
+EdgeNetworkAuth::GetInterconnect(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetInterconnect(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse> EdgeNetworkAuth::DiagnoseInterconnect(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request) {
+StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
+EdgeNetworkAuth::DiagnoseInterconnect(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DiagnoseInterconnect(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse> EdgeNetworkAuth::ListInterconnectAttachments(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const& request) {
+StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse>
+EdgeNetworkAuth::ListInterconnectAttachments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListInterconnectAttachments(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment> EdgeNetworkAuth::GetInterconnectAttachment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request) {
+StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
+EdgeNetworkAuth::GetInterconnectAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetInterconnectAttachment(context, options, request);
@@ -295,14 +290,16 @@ StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment> EdgeNetworkAuth
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncCreateInterconnectAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -314,9 +311,9 @@ EdgeNetworkAuth::AsyncCreateInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkAuth::CreateInterconnectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateInterconnectAttachment(context, options, request);
@@ -324,14 +321,16 @@ EdgeNetworkAuth::CreateInterconnectAttachment(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncDeleteInterconnectAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -343,17 +342,17 @@ EdgeNetworkAuth::AsyncDeleteInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkAuth::DeleteInterconnectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteInterconnectAttachment(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse> EdgeNetworkAuth::ListRouters(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse>
+EdgeNetworkAuth::ListRouters(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListRoutersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -361,17 +360,16 @@ StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse> EdgeNetworkAuth::L
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Router> EdgeNetworkAuth::GetRouter(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRouter(context, options, request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse> EdgeNetworkAuth::DiagnoseRouter(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
+EdgeNetworkAuth::DiagnoseRouter(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -380,28 +378,27 @@ StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse> EdgeNetworkAuth
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncCreateRouter(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateRouter(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateRouter(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkAuth::CreateRouter(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::CreateRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateRouter(context, options, request);
@@ -409,28 +406,27 @@ EdgeNetworkAuth::CreateRouter(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncUpdateRouter(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateRouter(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateRouter(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkAuth::UpdateRouter(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::UpdateRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateRouter(context, options, request);
@@ -438,36 +434,35 @@ EdgeNetworkAuth::UpdateRouter(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncDeleteRouter(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteRouter(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteRouter(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkAuth::DeleteRouter(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::DeleteRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteRouter(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> EdgeNetworkAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+EdgeNetworkAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -475,17 +470,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> EdgeNetworkAuth::ListLo
 }
 
 StatusOr<google::cloud::location::Location> EdgeNetworkAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> EdgeNetworkAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+EdgeNetworkAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -493,8 +487,7 @@ StatusOr<google::longrunning::ListOperationsResponse> EdgeNetworkAuth::ListOpera
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -502,8 +495,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkAuth::GetOperation(
 }
 
 Status EdgeNetworkAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -511,8 +503,7 @@ Status EdgeNetworkAuth::DeleteOperation(
 }
 
 Status EdgeNetworkAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -526,15 +517,16 @@ EdgeNetworkAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -543,13 +535,14 @@ future<Status> EdgeNetworkAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

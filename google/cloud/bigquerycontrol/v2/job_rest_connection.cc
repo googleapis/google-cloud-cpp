@@ -36,15 +36,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<JobServiceConnection> MakeJobServiceConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      JobServicePolicyOptionList>(options, __func__);
-  options = bigquerycontrol_v2_internal::JobServiceDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, JobServicePolicyOptionList>(
+      options, __func__);
+  options =
+      bigquerycontrol_v2_internal::JobServiceDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = bigquerycontrol_v2_internal::CreateDefaultJobServiceRestStub(
-      options);
+  auto stub =
+      bigquerycontrol_v2_internal::CreateDefaultJobServiceRestStub(options);
   return bigquerycontrol_v2_internal::MakeJobServiceTracingConnection(
       std::make_shared<
           bigquerycontrol_v2_internal::JobServiceRestConnectionImpl>(

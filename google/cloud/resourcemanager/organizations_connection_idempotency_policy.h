@@ -26,11 +26,16 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use resourcemanager_v3::MakeDefaultOrganizationsConnectionIdempotencyPolicy directly.
-using ::google::cloud::resourcemanager_v3::MakeDefaultOrganizationsConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// resourcemanager_v3::MakeDefaultOrganizationsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::resourcemanager_v3::
+    MakeDefaultOrganizationsConnectionIdempotencyPolicy;
 
-/// @deprecated Use resourcemanager_v3::OrganizationsConnectionIdempotencyPolicy directly.
-using ::google::cloud::resourcemanager_v3::OrganizationsConnectionIdempotencyPolicy;
+/// @deprecated Use resourcemanager_v3::OrganizationsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::resourcemanager_v3::
+    OrganizationsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager

@@ -39,9 +39,11 @@ class ProjectServiceRestMetadata : public ProjectServiceRestStub {
       std::shared_ptr<ProjectServiceRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse> GetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetServiceAccountRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
+  GetServiceAccount(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::bigquery::v2::GetServiceAccountRequest const&
+                        request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -37,75 +37,106 @@ class StoragePoolsRestStub {
  public:
   virtual ~StoragePoolsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolAggregatedList> AggregatedListStoragePools(
+  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolAggregatedList>
+  AggregatedListStoragePools(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          AggregatedListStoragePoolsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteStoragePool(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteStoragePool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request) = 0;
+      google::cloud::cpp::compute::storage_pools::v1::
+          DeleteStoragePoolRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteStoragePool(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::compute::storage_pools::v1::
+                        DeleteStoragePoolRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          GetStoragePoolRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertStoragePool(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertStoragePool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request) = 0;
+      google::cloud::cpp::compute::storage_pools::v1::
+          InsertStoragePoolRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertStoragePool(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::compute::storage_pools::v1::
+                        InsertStoragePoolRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolList> ListStoragePools(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolList>
+  ListStoragePools(google::cloud::rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::cpp::compute::storage_pools::v1::
+                       ListStoragePoolsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolListDisks> ListDisks(
+  virtual StatusOr<google::cloud::cpp::compute::v1::StoragePoolListDisks>
+  ListDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::storage_pools::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateStoragePool(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateStoragePool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request) = 0;
+      google::cloud::cpp::compute::storage_pools::v1::
+          UpdateStoragePoolRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateStoragePool(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::compute::storage_pools::v1::
+                        UpdateStoragePoolRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultStoragePoolsRestStub : public StoragePoolsRestStub {
@@ -115,78 +146,107 @@ class DefaultStoragePoolsRestStub : public StoragePoolsRestStub {
   explicit DefaultStoragePoolsRestStub(Options options);
   DefaultStoragePoolsRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
-      std::shared_ptr<rest_internal::RestClient> operations,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolAggregatedList> AggregatedListStoragePools(
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolAggregatedList>
+  AggregatedListStoragePools(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          AggregatedListStoragePoolsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteStoragePool(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteStoragePool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request) override;
+      google::cloud::cpp::compute::storage_pools::v1::
+          DeleteStoragePoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          DeleteStoragePoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          GetStoragePoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertStoragePool(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertStoragePool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request) override;
+      google::cloud::cpp::compute::storage_pools::v1::
+          InsertStoragePoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          InsertStoragePoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::StoragePoolList> ListStoragePools(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          ListStoragePoolsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::StoragePoolListDisks> ListDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::storage_pools::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateStoragePool(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateStoragePool(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request) override;
+      google::cloud::cpp::compute::storage_pools::v1::
+          UpdateStoragePoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          UpdateStoragePoolRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

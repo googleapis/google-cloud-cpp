@@ -26,42 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudBillingConnectionIdempotencyPolicy::~CloudBillingConnectionIdempotencyPolicy() = default;
+CloudBillingConnectionIdempotencyPolicy::
+    ~CloudBillingConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
 CloudBillingConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudBillingConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const&) {
+Idempotency CloudBillingConnectionIdempotencyPolicy::GetBillingAccount(
+    google::cloud::billing::v1::GetBillingAccountRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest) {  // NOLINT
+Idempotency CloudBillingConnectionIdempotencyPolicy::ListBillingAccounts(
+    google::cloud::billing::v1::ListBillingAccountsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const&) {
+Idempotency CloudBillingConnectionIdempotencyPolicy::UpdateBillingAccount(
+    google::cloud::billing::v1::UpdateBillingAccountRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const&) {
+Idempotency CloudBillingConnectionIdempotencyPolicy::CreateBillingAccount(
+    google::cloud::billing::v1::CreateBillingAccountRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest) {  // NOLINT
+Idempotency CloudBillingConnectionIdempotencyPolicy::ListProjectBillingInfo(
+    google::cloud::billing::v1::ListProjectBillingInfoRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const&) {
+Idempotency CloudBillingConnectionIdempotencyPolicy::GetProjectBillingInfo(
+    google::cloud::billing::v1::GetProjectBillingInfoRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&) {
+Idempotency CloudBillingConnectionIdempotencyPolicy::UpdateProjectBillingInfo(
+    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency CloudBillingConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -71,16 +80,18 @@ Idempotency CloudBillingConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency CloudBillingConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudBillingConnectionIdempotencyPolicy::MoveBillingAccount(google::cloud::billing::v1::MoveBillingAccountRequest const&) {
+Idempotency CloudBillingConnectionIdempotencyPolicy::MoveBillingAccount(
+    google::cloud::billing::v1::MoveBillingAccountRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
-    MakeDefaultCloudBillingConnectionIdempotencyPolicy() {
+MakeDefaultCloudBillingConnectionIdempotencyPolicy() {
   return std::make_unique<CloudBillingConnectionIdempotencyPolicy>();
 }
 

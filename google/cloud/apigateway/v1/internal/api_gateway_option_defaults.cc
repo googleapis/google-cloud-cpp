@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ApiGatewayServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_API_GATEWAY_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_API_GATEWAY_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_API_GATEWAY_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_API_GATEWAY_SERVICE_AUTHORITY",
       "apigateway.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()) {
     options.set<apigateway_v1::ApiGatewayServiceRetryPolicyOption>(
         apigateway_v1::ApiGatewayServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>()) {
     options.set<apigateway_v1::ApiGatewayServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<apigateway_v1::ApiGatewayServicePollingPolicyOption>()) {
     options.set<apigateway_v1::ApiGatewayServicePollingPolicyOption>(
         GenericPollingPolicy<
             apigateway_v1::ApiGatewayServiceRetryPolicyOption::Type,
             apigateway_v1::ApiGatewayServiceBackoffPolicyOption::Type>(
-            options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()->clone(),
+            options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption>(
-        apigateway_v1::MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy());
+  if (!options.has<apigateway_v1::
+                       ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<apigateway_v1::ApiGatewayServiceConnectionIdempotencyPolicyOption>(
+            apigateway_v1::
+                MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy());
   }
 
   return options;

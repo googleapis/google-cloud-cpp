@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_cx/internal/test_cases_option_defaults.h"
 #include "google/cloud/dialogflow_cx/test_cases_connection.h"
 #include "google/cloud/dialogflow_cx/test_cases_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -36,30 +36,35 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TestCasesDefaultOptions(std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TEST_CASES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TEST_CASES_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_TEST_CASES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TEST_CASES_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_cx::TestCasesRetryPolicyOption>()) {
     options.set<dialogflow_cx::TestCasesRetryPolicyOption>(
-        dialogflow_cx::TestCasesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        dialogflow_cx::TestCasesLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dialogflow_cx::TestCasesBackoffPolicyOption>()) {
     options.set<dialogflow_cx::TestCasesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<dialogflow_cx::TestCasesPollingPolicyOption>()) {
     options.set<dialogflow_cx::TestCasesPollingPolicyOption>(
-        GenericPollingPolicy<
-            dialogflow_cx::TestCasesRetryPolicyOption::Type,
-            dialogflow_cx::TestCasesBackoffPolicyOption::Type>(
+        GenericPollingPolicy<dialogflow_cx::TestCasesRetryPolicyOption::Type,
+                             dialogflow_cx::TestCasesBackoffPolicyOption::Type>(
             options.get<dialogflow_cx::TestCasesRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<dialogflow_cx::TestCasesConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<dialogflow_cx::TestCasesConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_cx::TestCasesConnectionIdempotencyPolicyOption>(
         dialogflow_cx::MakeDefaultTestCasesConnectionIdempotencyPolicy());
   }

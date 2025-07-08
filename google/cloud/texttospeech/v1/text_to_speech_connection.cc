@@ -17,17 +17,17 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/v1/text_to_speech_connection.h"
+#include "google/cloud/texttospeech/v1/internal/text_to_speech_connection_impl.h"
+#include "google/cloud/texttospeech/v1/internal/text_to_speech_option_defaults.h"
+#include "google/cloud/texttospeech/v1/internal/text_to_speech_stub_factory.h"
+#include "google/cloud/texttospeech/v1/internal/text_to_speech_tracing_connection.h"
+#include "google/cloud/texttospeech/v1/text_to_speech_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/texttospeech/v1/internal/text_to_speech_connection_impl.h"
-#include "google/cloud/texttospeech/v1/internal/text_to_speech_option_defaults.h"
-#include "google/cloud/texttospeech/v1/internal/text_to_speech_stub_factory.h"
-#include "google/cloud/texttospeech/v1/internal/text_to_speech_tracing_connection.h"
-#include "google/cloud/texttospeech/v1/text_to_speech_options.h"
 #include <memory>
 #include <utility>
 
@@ -61,14 +61,15 @@ TextToSpeechConnection::AsyncStreamingSynthesize() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation> TextToSpeechConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+TextToSpeechConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-TextToSpeechConnection::GetOperation(
+StatusOr<google::longrunning::Operation> TextToSpeechConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -76,17 +77,18 @@ TextToSpeechConnection::GetOperation(
 std::shared_ptr<TextToSpeechConnection> MakeTextToSpeechConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TextToSpeechPolicyOptionList>(options, __func__);
-  options = texttospeech_v1_internal::TextToSpeechDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TextToSpeechPolicyOptionList>(options,
+                                                               __func__);
+  options =
+      texttospeech_v1_internal::TextToSpeechDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = texttospeech_v1_internal::CreateDefaultTextToSpeechStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return texttospeech_v1_internal::MakeTextToSpeechTracingConnection(
       std::make_shared<texttospeech_v1_internal::TextToSpeechConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,58 +34,73 @@ EntityTypesTracingConnection::EntityTypesTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::v2::EntityType>
-EntityTypesTracingConnection::ListEntityTypes(google::cloud::dialogflow::v2::ListEntityTypesRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::ListEntityTypes");
+EntityTypesTracingConnection::ListEntityTypes(
+    google::cloud::dialogflow::v2::ListEntityTypesRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::ListEntityTypes");
   internal::OTelScope scope(span);
   auto sr = child_->ListEntityTypes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::EntityType>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::EntityType>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
-EntityTypesTracingConnection::GetEntityType(google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::GetEntityType");
+EntityTypesTracingConnection::GetEntityType(
+    google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::EntityTypesConnection::GetEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
-EntityTypesTracingConnection::CreateEntityType(google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::CreateEntityType");
+EntityTypesTracingConnection::CreateEntityType(
+    google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::CreateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
-EntityTypesTracingConnection::UpdateEntityType(google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::UpdateEntityType");
+EntityTypesTracingConnection::UpdateEntityType(
+    google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::UpdateEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateEntityType(request));
 }
 
-Status
-EntityTypesTracingConnection::DeleteEntityType(google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::DeleteEntityType");
+Status EntityTypesTracingConnection::DeleteEntityType(
+    google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::DeleteEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteEntityType(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
-EntityTypesTracingConnection::BatchUpdateEntityTypes(google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request) {
+EntityTypesTracingConnection::BatchUpdateEntityTypes(
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntityTypes");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchUpdateEntityTypes(request));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchUpdateEntityTypes(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EntityTypesTracingConnection::BatchUpdateEntityTypes(
-    NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntityTypes");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchUpdateEntityTypes(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->BatchUpdateEntityTypes(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
@@ -95,81 +110,92 @@ EntityTypesTracingConnection::BatchUpdateEntityTypes(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntityTypes");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->BatchUpdateEntityTypes(operation));
-}
-
-future<StatusOr<google::protobuf::Struct>>
-EntityTypesTracingConnection::BatchDeleteEntityTypes(google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
-  internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchDeleteEntityTypes(request));
-}
-
-StatusOr<google::longrunning::Operation>
-EntityTypesTracingConnection::BatchDeleteEntityTypes(
-    NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
-  opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchDeleteEntityTypes(
-      NoAwaitTag{}, request));
+                           child_->BatchUpdateEntityTypes(operation));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchDeleteEntityTypes(
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteEntityTypes(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::BatchDeleteEntityTypes(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchDeleteEntityTypes(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesTracingConnection::BatchDeleteEntityTypes(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->BatchDeleteEntityTypes(operation));
-}
-
-future<StatusOr<google::protobuf::Struct>>
-EntityTypesTracingConnection::BatchCreateEntities(google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
-  internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchCreateEntities(request));
-}
-
-StatusOr<google::longrunning::Operation>
-EntityTypesTracingConnection::BatchCreateEntities(
-    NoAwaitTag, google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
-  auto span = internal::MakeSpan(
-      "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
-  opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchCreateEntities(
-      NoAwaitTag{}, request));
+                           child_->BatchDeleteEntityTypes(operation));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchCreateEntities(
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreateEntities(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::BatchCreateEntities(
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->BatchCreateEntities(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesTracingConnection::BatchCreateEntities(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->BatchCreateEntities(operation));
+                           child_->BatchCreateEntities(operation));
 }
 
 future<StatusOr<google::protobuf::Struct>>
-EntityTypesTracingConnection::BatchUpdateEntities(google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
+EntityTypesTracingConnection::BatchUpdateEntities(
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntities");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchUpdateEntities(request));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchUpdateEntities(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EntityTypesTracingConnection::BatchUpdateEntities(
-    NoAwaitTag, google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntities");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchUpdateEntities(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchUpdateEntities(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -179,25 +205,28 @@ EntityTypesTracingConnection::BatchUpdateEntities(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntities");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->BatchUpdateEntities(operation));
+                           child_->BatchUpdateEntities(operation));
 }
 
 future<StatusOr<google::protobuf::Struct>>
-EntityTypesTracingConnection::BatchDeleteEntities(google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
+EntityTypesTracingConnection::BatchDeleteEntities(
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchDeleteEntities");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchDeleteEntities(request));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteEntities(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EntityTypesTracingConnection::BatchDeleteEntities(
-    NoAwaitTag, google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchDeleteEntities");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchDeleteEntities(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchDeleteEntities(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -207,44 +236,53 @@ EntityTypesTracingConnection::BatchDeleteEntities(
       "dialogflow_es::EntityTypesConnection::BatchDeleteEntities");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->BatchDeleteEntities(operation));
+                           child_->BatchDeleteEntities(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-EntityTypesTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::ListLocations");
+EntityTypesTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::EntityTypesConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-EntityTypesTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::GetLocation");
+EntityTypesTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::EntityTypesConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-EntityTypesTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::ListOperations");
+EntityTypesTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-EntityTypesTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::GetOperation");
+EntityTypesTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::EntityTypesConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-EntityTypesTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EntityTypesConnection::CancelOperation");
+Status EntityTypesTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

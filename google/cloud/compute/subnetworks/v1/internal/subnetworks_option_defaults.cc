@@ -35,32 +35,40 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SubnetworksDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SUBNETWORKS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SUBNETWORKS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_SUBNETWORKS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SUBNETWORKS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()) {
     options.set<compute_subnetworks_v1::SubnetworksRetryPolicyOption>(
         compute_subnetworks_v1::SubnetworksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>()) {
     options.set<compute_subnetworks_v1::SubnetworksBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<compute_subnetworks_v1::SubnetworksPollingPolicyOption>()) {
     options.set<compute_subnetworks_v1::SubnetworksPollingPolicyOption>(
         GenericPollingPolicy<
             compute_subnetworks_v1::SubnetworksRetryPolicyOption::Type,
             compute_subnetworks_v1::SubnetworksBackoffPolicyOption::Type>(
-            options.get<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()->clone(),
+            options.get<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_subnetworks_v1::SubnetworksConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_subnetworks_v1::SubnetworksConnectionIdempotencyPolicyOption>(
-        compute_subnetworks_v1::MakeDefaultSubnetworksConnectionIdempotencyPolicy());
+  if (!options.has<compute_subnetworks_v1::
+                       SubnetworksConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        compute_subnetworks_v1::SubnetworksConnectionIdempotencyPolicyOption>(
+        compute_subnetworks_v1::
+            MakeDefaultSubnetworksConnectionIdempotencyPolicy());
   }
 
   return options;

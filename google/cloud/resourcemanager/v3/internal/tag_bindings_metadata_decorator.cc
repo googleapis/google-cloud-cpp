@@ -46,8 +46,7 @@ TagBindingsMetadata::TagBindingsMetadata(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
 TagBindingsMetadata::ListTagBindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) {
   SetMetadata(context, options);
   return child_->ListTagBindings(context, options, request);
@@ -58,17 +57,17 @@ TagBindingsMetadata::AsyncCreateTagBinding(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) {
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+        request) {
   SetMetadata(*context, *options);
-  return child_->AsyncCreateTagBinding(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCreateTagBinding(cq, std::move(context),
+                                       std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsMetadata::CreateTagBinding(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) {
+StatusOr<google::longrunning::Operation> TagBindingsMetadata::CreateTagBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+        request) {
   SetMetadata(context, options);
   return child_->CreateTagBinding(context, options, request);
 }
@@ -78,36 +77,37 @@ TagBindingsMetadata::AsyncDeleteTagBinding(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTagBinding(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteTagBinding(cq, std::move(context),
+                                       std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsMetadata::DeleteTagBinding(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+StatusOr<google::longrunning::Operation> TagBindingsMetadata::DeleteTagBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTagBinding(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
 TagBindingsMetadata::ListEffectiveTags(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
+        request) {
   SetMetadata(context, options);
   return child_->ListEffectiveTags(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> TagBindingsMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -119,8 +119,8 @@ TagBindingsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> TagBindingsMetadata::AsyncCancelOperation(
@@ -130,21 +130,21 @@ future<Status> TagBindingsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void TagBindingsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                      Options const& options,
+                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void TagBindingsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                      Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

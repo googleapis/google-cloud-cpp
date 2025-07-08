@@ -55,7 +55,8 @@ struct AdvisoryNotificationsServiceBackoffPolicyOption {
  * @ingroup google-cloud-advisorynotifications-options
  */
 struct AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>;
 };
 
 /**

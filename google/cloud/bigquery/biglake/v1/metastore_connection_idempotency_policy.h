@@ -34,56 +34,62 @@ class MetastoreServiceConnectionIdempotencyPolicy {
   virtual ~MetastoreServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MetastoreServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<MetastoreServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateCatalog(google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request);
+  virtual google::cloud::Idempotency CreateCatalog(
+      google::cloud::bigquery::biglake::v1::CreateCatalogRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteCatalog(google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request);
+  virtual google::cloud::Idempotency DeleteCatalog(
+      google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetCatalog(google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request);
+  virtual google::cloud::Idempotency GetCatalog(
+      google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListCatalogs(google::cloud::bigquery::biglake::v1::ListCatalogsRequest request);
+  virtual google::cloud::Idempotency ListCatalogs(
+      google::cloud::bigquery::biglake::v1::ListCatalogsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateDatabase(google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request);
+  virtual google::cloud::Idempotency CreateDatabase(
+      google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteDatabase(google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request);
+  virtual google::cloud::Idempotency DeleteDatabase(
+      google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateDatabase(google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request);
+  virtual google::cloud::Idempotency UpdateDatabase(
+      google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetDatabase(google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request);
+  virtual google::cloud::Idempotency GetDatabase(
+      google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDatabases(google::cloud::bigquery::biglake::v1::ListDatabasesRequest request);
+  virtual google::cloud::Idempotency ListDatabases(
+      google::cloud::bigquery::biglake::v1::ListDatabasesRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateTable(google::cloud::bigquery::biglake::v1::CreateTableRequest const& request);
+  virtual google::cloud::Idempotency CreateTable(
+      google::cloud::bigquery::biglake::v1::CreateTableRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTable(google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request);
+  virtual google::cloud::Idempotency DeleteTable(
+      google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTable(google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request);
+  virtual google::cloud::Idempotency UpdateTable(
+      google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RenameTable(google::cloud::bigquery::biglake::v1::RenameTableRequest const& request);
+  virtual google::cloud::Idempotency RenameTable(
+      google::cloud::bigquery::biglake::v1::RenameTableRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTable(google::cloud::bigquery::biglake::v1::GetTableRequest const& request);
+  virtual google::cloud::Idempotency GetTable(
+      google::cloud::bigquery::biglake::v1::GetTableRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTables(google::cloud::bigquery::biglake::v1::ListTablesRequest request);
+  virtual google::cloud::Idempotency ListTables(
+      google::cloud::bigquery::biglake::v1::ListTablesRequest request);
 };
 
 std::unique_ptr<MetastoreServiceConnectionIdempotencyPolicy>
-    MakeDefaultMetastoreServiceConnectionIdempotencyPolicy();
+MakeDefaultMetastoreServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_biglake_v1

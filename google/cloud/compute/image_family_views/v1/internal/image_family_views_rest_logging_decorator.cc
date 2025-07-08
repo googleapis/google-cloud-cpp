@@ -29,20 +29,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ImageFamilyViewsRestLogging::ImageFamilyViewsRestLogging(
     std::shared_ptr<ImageFamilyViewsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
 ImageFamilyViewsRestLogging::GetImageFamilyView(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::image_family_views::v1::
+        GetImageFamilyViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::image_family_views::v1::
+                 GetImageFamilyViewRequest const& request) {
         return child_->GetImageFamilyView(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

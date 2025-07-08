@@ -36,30 +36,38 @@ class OsLoginServiceTracingConnection
   ~OsLoginServiceTracingConnection() override = default;
 
   explicit OsLoginServiceTracingConnection(
-    std::shared_ptr<oslogin_v1::OsLoginServiceConnection> child);
+      std::shared_ptr<oslogin_v1::OsLoginServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  CreateSshPublicKey(google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
 
-  Status
-  DeletePosixAccount(google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) override;
+  Status DeletePosixAccount(
+      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
+      override;
 
-  Status
-  DeleteSshPublicKey(google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) override;
+  Status DeleteSshPublicKey(
+      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oslogin::v1::LoginProfile>
-  GetLoginProfile(google::cloud::oslogin::v1::GetLoginProfileRequest const& request) override;
+  StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
+      google::cloud::oslogin::v1::GetLoginProfileRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  GetSshPublicKey(google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
+      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request)
+      override;
 
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-  ImportSshPublicKey(google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) override;
+  ImportSshPublicKey(
+      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  UpdateSshPublicKey(google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
+      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request)
+      override;
 
  private:
   std::shared_ptr<oslogin_v1::OsLoginServiceConnection> child_;

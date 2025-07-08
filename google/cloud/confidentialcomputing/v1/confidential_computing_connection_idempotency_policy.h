@@ -35,23 +35,26 @@ class ConfidentialComputingConnectionIdempotencyPolicy {
   virtual ~ConfidentialComputingConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConfidentialComputingConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ConfidentialComputingConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request);
+  virtual google::cloud::Idempotency CreateChallenge(
+      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request);
+  virtual google::cloud::Idempotency VerifyAttestation(
+      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 std::unique_ptr<ConfidentialComputingConnectionIdempotencyPolicy>
-    MakeDefaultConfidentialComputingConnectionIdempotencyPolicy();
+MakeDefaultConfidentialComputingConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1

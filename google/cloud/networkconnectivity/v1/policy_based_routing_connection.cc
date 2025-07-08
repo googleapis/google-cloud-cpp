@@ -17,17 +17,17 @@
 // source: google/cloud/networkconnectivity/v1/policy_based_routing.proto
 
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.h"
+#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_connection_impl.h"
+#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_option_defaults.h"
+#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_stub_factory.h"
+#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_tracing_connection.h"
+#include "google/cloud/networkconnectivity/v1/policy_based_routing_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_connection_impl.h"
-#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_option_defaults.h"
-#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_stub_factory.h"
-#include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_tracing_connection.h"
-#include "google/cloud/networkconnectivity/v1/policy_based_routing_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,10 +36,13 @@ namespace cloud {
 namespace networkconnectivity_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PolicyBasedRoutingServiceConnection::~PolicyBasedRoutingServiceConnection() = default;
+PolicyBasedRoutingServiceConnection::~PolicyBasedRoutingServiceConnection() =
+    default;
 
-StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute> PolicyBasedRoutingServiceConnection::ListPolicyBasedRoutes(
-    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
+PolicyBasedRoutingServiceConnection::ListPolicyBasedRoutes(
+    google::cloud::networkconnectivity::v1::
+        ListPolicyBasedRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>();
 }
@@ -52,54 +55,58 @@ PolicyBasedRoutingServiceConnection::GetPolicyBasedRoute(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
 PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&) {
+    google::cloud::networkconnectivity::v1::
+        CreatePolicyBasedRouteRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&) {
+    NoAwaitTag, google::cloud::networkconnectivity::v1::
+                    CreatePolicyBasedRouteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
 PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&) {
+    google::cloud::networkconnectivity::v1::
+        DeletePolicyBasedRouteRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
-    NoAwaitTag,
-    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&) {
+    NoAwaitTag, google::cloud::networkconnectivity::v1::
+                    DeletePolicyBasedRouteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> PolicyBasedRoutingServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+PolicyBasedRoutingServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -128,8 +135,10 @@ PolicyBasedRoutingServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> PolicyBasedRoutingServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+PolicyBasedRoutingServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -140,32 +149,34 @@ PolicyBasedRoutingServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-PolicyBasedRoutingServiceConnection::DeleteOperation(
+Status PolicyBasedRoutingServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-PolicyBasedRoutingServiceConnection::CancelOperation(
+Status PolicyBasedRoutingServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<PolicyBasedRoutingServiceConnection> MakePolicyBasedRoutingServiceConnection(
-    Options options) {
+std::shared_ptr<PolicyBasedRoutingServiceConnection>
+MakePolicyBasedRoutingServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      PolicyBasedRoutingServicePolicyOptionList>(options, __func__);
-  options = networkconnectivity_v1_internal::PolicyBasedRoutingServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 PolicyBasedRoutingServicePolicyOptionList>(
+      options, __func__);
+  options =
+      networkconnectivity_v1_internal::PolicyBasedRoutingServiceDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = networkconnectivity_v1_internal::CreateDefaultPolicyBasedRoutingServiceStub(
-    std::move(auth), options);
-  return networkconnectivity_v1_internal::MakePolicyBasedRoutingServiceTracingConnection(
-      std::make_shared<networkconnectivity_v1_internal::PolicyBasedRoutingServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub = networkconnectivity_v1_internal::
+      CreateDefaultPolicyBasedRoutingServiceStub(std::move(auth), options);
+  return networkconnectivity_v1_internal::
+      MakePolicyBasedRoutingServiceTracingConnection(
+          std::make_shared<networkconnectivity_v1_internal::
+                               PolicyBasedRoutingServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

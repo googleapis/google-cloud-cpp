@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PolicyBindingsClient::PolicyBindingsClient(
     std::shared_ptr<PolicyBindingsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PolicyBindingsClient::~PolicyBindingsClient() = default;
 
 future<StatusOr<google::iam::v3::PolicyBinding>>
-PolicyBindingsClient::CreatePolicyBinding(std::string const& parent, google::iam::v3::PolicyBinding const& policy_binding, std::string const& policy_binding_id, Options opts) {
+PolicyBindingsClient::CreatePolicyBinding(
+    std::string const& parent,
+    google::iam::v3::PolicyBinding const& policy_binding,
+    std::string const& policy_binding_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::CreatePolicyBindingRequest request;
   request.set_parent(parent);
@@ -43,7 +46,10 @@ PolicyBindingsClient::CreatePolicyBinding(std::string const& parent, google::iam
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBindingsClient::CreatePolicyBinding(NoAwaitTag, std::string const& parent, google::iam::v3::PolicyBinding const& policy_binding, std::string const& policy_binding_id, Options opts) {
+PolicyBindingsClient::CreatePolicyBinding(
+    NoAwaitTag, std::string const& parent,
+    google::iam::v3::PolicyBinding const& policy_binding,
+    std::string const& policy_binding_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::CreatePolicyBindingRequest request;
   request.set_parent(parent);
@@ -53,39 +59,45 @@ PolicyBindingsClient::CreatePolicyBinding(NoAwaitTag, std::string const& parent,
 }
 
 future<StatusOr<google::iam::v3::PolicyBinding>>
-PolicyBindingsClient::CreatePolicyBinding(google::iam::v3::CreatePolicyBindingRequest const& request, Options opts) {
+PolicyBindingsClient::CreatePolicyBinding(
+    google::iam::v3::CreatePolicyBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicyBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBindingsClient::CreatePolicyBinding(NoAwaitTag, google::iam::v3::CreatePolicyBindingRequest const& request, Options opts) {
+PolicyBindingsClient::CreatePolicyBinding(
+    NoAwaitTag, google::iam::v3::CreatePolicyBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicyBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::iam::v3::PolicyBinding>>
-PolicyBindingsClient::CreatePolicyBinding(google::longrunning::Operation const& operation, Options opts) {
+PolicyBindingsClient::CreatePolicyBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicyBinding(operation);
 }
 
-StatusOr<google::iam::v3::PolicyBinding>
-PolicyBindingsClient::GetPolicyBinding(std::string const& name, Options opts) {
+StatusOr<google::iam::v3::PolicyBinding> PolicyBindingsClient::GetPolicyBinding(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::GetPolicyBindingRequest request;
   request.set_name(name);
   return connection_->GetPolicyBinding(request);
 }
 
-StatusOr<google::iam::v3::PolicyBinding>
-PolicyBindingsClient::GetPolicyBinding(google::iam::v3::GetPolicyBindingRequest const& request, Options opts) {
+StatusOr<google::iam::v3::PolicyBinding> PolicyBindingsClient::GetPolicyBinding(
+    google::iam::v3::GetPolicyBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPolicyBinding(request);
 }
 
 future<StatusOr<google::iam::v3::PolicyBinding>>
-PolicyBindingsClient::UpdatePolicyBinding(google::iam::v3::PolicyBinding const& policy_binding, google::protobuf::FieldMask const& update_mask, Options opts) {
+PolicyBindingsClient::UpdatePolicyBinding(
+    google::iam::v3::PolicyBinding const& policy_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::UpdatePolicyBindingRequest request;
   *request.mutable_policy_binding() = policy_binding;
@@ -94,7 +106,9 @@ PolicyBindingsClient::UpdatePolicyBinding(google::iam::v3::PolicyBinding const& 
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBindingsClient::UpdatePolicyBinding(NoAwaitTag, google::iam::v3::PolicyBinding const& policy_binding, google::protobuf::FieldMask const& update_mask, Options opts) {
+PolicyBindingsClient::UpdatePolicyBinding(
+    NoAwaitTag, google::iam::v3::PolicyBinding const& policy_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::UpdatePolicyBindingRequest request;
   *request.mutable_policy_binding() = policy_binding;
@@ -103,25 +117,30 @@ PolicyBindingsClient::UpdatePolicyBinding(NoAwaitTag, google::iam::v3::PolicyBin
 }
 
 future<StatusOr<google::iam::v3::PolicyBinding>>
-PolicyBindingsClient::UpdatePolicyBinding(google::iam::v3::UpdatePolicyBindingRequest const& request, Options opts) {
+PolicyBindingsClient::UpdatePolicyBinding(
+    google::iam::v3::UpdatePolicyBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePolicyBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBindingsClient::UpdatePolicyBinding(NoAwaitTag, google::iam::v3::UpdatePolicyBindingRequest const& request, Options opts) {
+PolicyBindingsClient::UpdatePolicyBinding(
+    NoAwaitTag, google::iam::v3::UpdatePolicyBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePolicyBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::iam::v3::PolicyBinding>>
-PolicyBindingsClient::UpdatePolicyBinding(google::longrunning::Operation const& operation, Options opts) {
+PolicyBindingsClient::UpdatePolicyBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePolicyBinding(operation);
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PolicyBindingsClient::DeletePolicyBinding(std::string const& name, Options opts) {
+PolicyBindingsClient::DeletePolicyBinding(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::DeletePolicyBindingRequest request;
   request.set_name(name);
@@ -129,7 +148,8 @@ PolicyBindingsClient::DeletePolicyBinding(std::string const& name, Options opts)
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBindingsClient::DeletePolicyBinding(NoAwaitTag, std::string const& name, Options opts) {
+PolicyBindingsClient::DeletePolicyBinding(NoAwaitTag, std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::DeletePolicyBindingRequest request;
   request.set_name(name);
@@ -137,25 +157,30 @@ PolicyBindingsClient::DeletePolicyBinding(NoAwaitTag, std::string const& name, O
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PolicyBindingsClient::DeletePolicyBinding(google::iam::v3::DeletePolicyBindingRequest const& request, Options opts) {
+PolicyBindingsClient::DeletePolicyBinding(
+    google::iam::v3::DeletePolicyBindingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicyBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyBindingsClient::DeletePolicyBinding(NoAwaitTag, google::iam::v3::DeletePolicyBindingRequest const& request, Options opts) {
+PolicyBindingsClient::DeletePolicyBinding(
+    NoAwaitTag, google::iam::v3::DeletePolicyBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicyBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::iam::v3::OperationMetadata>>
-PolicyBindingsClient::DeletePolicyBinding(google::longrunning::Operation const& operation, Options opts) {
+PolicyBindingsClient::DeletePolicyBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicyBinding(operation);
 }
 
 StreamRange<google::iam::v3::PolicyBinding>
-PolicyBindingsClient::ListPolicyBindings(std::string const& parent, Options opts) {
+PolicyBindingsClient::ListPolicyBindings(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::ListPolicyBindingsRequest request;
   request.set_parent(parent);
@@ -163,13 +188,16 @@ PolicyBindingsClient::ListPolicyBindings(std::string const& parent, Options opts
 }
 
 StreamRange<google::iam::v3::PolicyBinding>
-PolicyBindingsClient::ListPolicyBindings(google::iam::v3::ListPolicyBindingsRequest request, Options opts) {
+PolicyBindingsClient::ListPolicyBindings(
+    google::iam::v3::ListPolicyBindingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPolicyBindings(std::move(request));
 }
 
 StreamRange<google::iam::v3::PolicyBinding>
-PolicyBindingsClient::SearchTargetPolicyBindings(std::string const& parent, std::string const& target, Options opts) {
+PolicyBindingsClient::SearchTargetPolicyBindings(std::string const& parent,
+                                                 std::string const& target,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v3::SearchTargetPolicyBindingsRequest request;
   request.set_parent(parent);
@@ -178,21 +206,22 @@ PolicyBindingsClient::SearchTargetPolicyBindings(std::string const& parent, std:
 }
 
 StreamRange<google::iam::v3::PolicyBinding>
-PolicyBindingsClient::SearchTargetPolicyBindings(google::iam::v3::SearchTargetPolicyBindingsRequest request, Options opts) {
+PolicyBindingsClient::SearchTargetPolicyBindings(
+    google::iam::v3::SearchTargetPolicyBindingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchTargetPolicyBindings(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-PolicyBindingsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> PolicyBindingsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-PolicyBindingsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> PolicyBindingsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

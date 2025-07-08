@@ -32,80 +32,73 @@ RuleSetServiceStub::~RuleSetServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::CreateRuleSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
-    google::cloud::contentwarehouse::v1::RuleSet response;
-    auto status =
-        grpc_stub_->CreateRuleSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
+  google::cloud::contentwarehouse::v1::RuleSet response;
+  auto status = grpc_stub_->CreateRuleSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::GetRuleSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
-    google::cloud::contentwarehouse::v1::RuleSet response;
-    auto status =
-        grpc_stub_->GetRuleSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
+  google::cloud::contentwarehouse::v1::RuleSet response;
+  auto status = grpc_stub_->GetRuleSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::UpdateRuleSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
-    google::cloud::contentwarehouse::v1::RuleSet response;
-    auto status =
-        grpc_stub_->UpdateRuleSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
+  google::cloud::contentwarehouse::v1::RuleSet response;
+  auto status = grpc_stub_->UpdateRuleSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultRuleSetServiceStub::DeleteRuleSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteRuleSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultRuleSetServiceStub::DeleteRuleSet(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteRuleSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 DefaultRuleSetServiceStub::ListRuleSets(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
-    google::cloud::contentwarehouse::v1::ListRuleSetsResponse response;
-    auto status =
-        grpc_stub_->ListRuleSets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
+  google::cloud::contentwarehouse::v1::ListRuleSetsResponse response;
+  auto status = grpc_stub_->ListRuleSets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultRuleSetServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

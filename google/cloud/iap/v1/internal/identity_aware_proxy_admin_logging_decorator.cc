@@ -32,19 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IdentityAwareProxyAdminServiceLogging::IdentityAwareProxyAdminServiceLogging(
     std::shared_ptr<IdentityAwareProxyAdminServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -53,12 +49,10 @@ IdentityAwareProxyAdminServiceLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -67,12 +61,10 @@ IdentityAwareProxyAdminServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IdentityAwareProxyAdminServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -81,12 +73,10 @@ IdentityAwareProxyAdminServiceLogging::TestIamPermissions(
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceLogging::GetIapSettings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::GetIapSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::iap::v1::GetIapSettingsRequest const& request) {
         return child_->GetIapSettings(context, options, request);
       },
@@ -95,12 +85,10 @@ IdentityAwareProxyAdminServiceLogging::GetIapSettings(
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceLogging::UpdateIapSettings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
         return child_->UpdateIapSettings(context, options, request);
       },
@@ -109,27 +97,28 @@ IdentityAwareProxyAdminServiceLogging::UpdateIapSettings(
 
 StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
 IdentityAwareProxyAdminServiceLogging::ValidateIapAttributeExpression(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const& request) {
-        return child_->ValidateIapAttributeExpression(context, options, request);
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+              request) {
+        return child_->ValidateIapAttributeExpression(context, options,
+                                                      request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 IdentityAwareProxyAdminServiceLogging::ListTunnelDestGroups(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
         return child_->ListTunnelDestGroups(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,13 +126,12 @@ IdentityAwareProxyAdminServiceLogging::ListTunnelDestGroups(
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceLogging::CreateTunnelDestGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
         return child_->CreateTunnelDestGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,27 +139,23 @@ IdentityAwareProxyAdminServiceLogging::CreateTunnelDestGroup(
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceLogging::GetTunnelDestGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
         return child_->GetTunnelDestGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-IdentityAwareProxyAdminServiceLogging::DeleteTunnelDestGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+Status IdentityAwareProxyAdminServiceLogging::DeleteTunnelDestGroup(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
         return child_->DeleteTunnelDestGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -179,13 +163,12 @@ IdentityAwareProxyAdminServiceLogging::DeleteTunnelDestGroup(
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceLogging::UpdateTunnelDestGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
         return child_->UpdateTunnelDestGroup(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

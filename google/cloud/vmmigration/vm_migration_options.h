@@ -34,8 +34,10 @@ using ::google::cloud::vmmigration_v1::VmMigrationPollingPolicyOption;
 /// @deprecated Use vmmigration_v1::VmMigrationBackoffPolicyOption directly.
 using ::google::cloud::vmmigration_v1::VmMigrationBackoffPolicyOption;
 
-/// @deprecated Use vmmigration_v1::VmMigrationConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::vmmigration_v1::VmMigrationConnectionIdempotencyPolicyOption;
+/// @deprecated Use vmmigration_v1::VmMigrationConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::vmmigration_v1::
+    VmMigrationConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use vmmigration_v1::VmMigrationPolicyOptionList directly.
 using ::google::cloud::vmmigration_v1::VmMigrationPolicyOptionList;

@@ -28,14 +28,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BackendServicesClient::BackendServicesClient(
     std::shared_ptr<BackendServicesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BackendServicesClient::~BackendServicesClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::AddSignedUrlKey(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SignedUrlKey const& signed_url_key_resource, Options opts) {
+BackendServicesClient::AddSignedUrlKey(
+    std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::SignedUrlKey const&
+        signed_url_key_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   *request.mutable_signed_url_key_resource() = signed_url_key_resource;
@@ -43,9 +48,14 @@ BackendServicesClient::AddSignedUrlKey(std::string const& project, std::string c
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::AddSignedUrlKey(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SignedUrlKey const& signed_url_key_resource, Options opts) {
+BackendServicesClient::AddSignedUrlKey(
+    NoAwaitTag, std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::SignedUrlKey const&
+        signed_url_key_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   *request.mutable_signed_url_key_resource() = signed_url_key_resource;
@@ -53,77 +63,111 @@ BackendServicesClient::AddSignedUrlKey(NoAwaitTag, std::string const& project, s
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request, Options opts) {
+BackendServicesClient::AddSignedUrlKey(
+    google::cloud::cpp::compute::backend_services::v1::
+        AddSignedUrlKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddSignedUrlKey(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::AddSignedUrlKey(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request, Options opts) {
+BackendServicesClient::AddSignedUrlKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::backend_services::v1::
+        AddSignedUrlKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddSignedUrlKey(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::AddSignedUrlKey(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+BackendServicesClient::AddSignedUrlKey(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddSignedUrlKey(operation);
 }
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
-BackendServicesClient::AggregatedListBackendServices(std::string const& project, Options opts) {
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
+BackendServicesClient::AggregatedListBackendServices(std::string const& project,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest request;
+  google::cloud::cpp::compute::backend_services::v1::
+      AggregatedListBackendServicesRequest request;
   request.set_project(project);
   return connection_->AggregatedListBackendServices(request);
 }
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
-BackendServicesClient::AggregatedListBackendServices(google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest request, Options opts) {
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
+BackendServicesClient::AggregatedListBackendServices(
+    google::cloud::cpp::compute::backend_services::v1::
+        AggregatedListBackendServicesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListBackendServices(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::DeleteBackendService(std::string const& project, std::string const& backend_service, Options opts) {
+BackendServicesClient::DeleteBackendService(std::string const& project,
+                                            std::string const& backend_service,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   return connection_->DeleteBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::DeleteBackendService(NoAwaitTag, std::string const& project, std::string const& backend_service, Options opts) {
+BackendServicesClient::DeleteBackendService(NoAwaitTag,
+                                            std::string const& project,
+                                            std::string const& backend_service,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   return connection_->DeleteBackendService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::DeleteBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        DeleteBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::DeleteBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::DeleteBackendService(
+    NoAwaitTag,
+    google::cloud::cpp::compute::backend_services::v1::
+        DeleteBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackendService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::DeleteBackendService(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+BackendServicesClient::DeleteBackendService(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackendService(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::DeleteSignedUrlKey(std::string const& project, std::string const& backend_service, std::string const& key_name, Options opts) {
+BackendServicesClient::DeleteSignedUrlKey(std::string const& project,
+                                          std::string const& backend_service,
+                                          std::string const& key_name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   request.set_key_name(key_name);
@@ -131,9 +175,14 @@ BackendServicesClient::DeleteSignedUrlKey(std::string const& project, std::strin
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::DeleteSignedUrlKey(NoAwaitTag, std::string const& project, std::string const& backend_service, std::string const& key_name, Options opts) {
+BackendServicesClient::DeleteSignedUrlKey(NoAwaitTag,
+                                          std::string const& project,
+                                          std::string const& backend_service,
+                                          std::string const& key_name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   request.set_key_name(key_name);
@@ -141,115 +190,165 @@ BackendServicesClient::DeleteSignedUrlKey(NoAwaitTag, std::string const& project
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request, Options opts) {
+BackendServicesClient::DeleteSignedUrlKey(
+    google::cloud::cpp::compute::backend_services::v1::
+        DeleteSignedUrlKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSignedUrlKey(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::DeleteSignedUrlKey(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request, Options opts) {
+BackendServicesClient::DeleteSignedUrlKey(
+    NoAwaitTag,
+    google::cloud::cpp::compute::backend_services::v1::
+        DeleteSignedUrlKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSignedUrlKey(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::DeleteSignedUrlKey(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+BackendServicesClient::DeleteSignedUrlKey(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSignedUrlKey(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesClient::GetBackendService(std::string const& project, std::string const& backend_service, Options opts) {
+BackendServicesClient::GetBackendService(std::string const& project,
+                                         std::string const& backend_service,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   return connection_->GetBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesClient::GetBackendService(google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::GetBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-BackendServicesClient::GetHealth(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::ResourceGroupReference const& resource_group_reference_resource, Options opts) {
+BackendServicesClient::GetHealth(
+    std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::ResourceGroupReference const&
+        resource_group_reference_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::backend_services::v1::GetHealthRequest request;
   request.set_project(project);
   request.set_backend_service(backend_service);
-  *request.mutable_resource_group_reference_resource() = resource_group_reference_resource;
+  *request.mutable_resource_group_reference_resource() =
+      resource_group_reference_resource;
   return connection_->GetHealth(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-BackendServicesClient::GetHealth(google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request, Options opts) {
+BackendServicesClient::GetHealth(
+    google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetHealth(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesClient::GetIamPolicy(std::string const& project, std::string const& resource, Options opts) {
+BackendServicesClient::GetIamPolicy(std::string const& project,
+                                    std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesClient::GetIamPolicy(google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request, Options opts) {
+BackendServicesClient::GetIamPolicy(
+    google::cloud::cpp::compute::backend_services::v1::
+        GetIamPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::InsertBackendService(std::string const& project, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts) {
+BackendServicesClient::InsertBackendService(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::BackendService const&
+        backend_service_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest
+      request;
   request.set_project(project);
   *request.mutable_backend_service_resource() = backend_service_resource;
   return connection_->InsertBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::InsertBackendService(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts) {
+BackendServicesClient::InsertBackendService(
+    NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::BackendService const&
+        backend_service_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest
+      request;
   request.set_project(project);
   *request.mutable_backend_service_resource() = backend_service_resource;
   return connection_->InsertBackendService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::InsertBackendService(google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::InsertBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        InsertBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::InsertBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::InsertBackendService(
+    NoAwaitTag,
+    google::cloud::cpp::compute::backend_services::v1::
+        InsertBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertBackendService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::InsertBackendService(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+BackendServicesClient::InsertBackendService(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertBackendService(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesClient::ListBackendServices(std::string const& project, Options opts) {
+BackendServicesClient::ListBackendServices(std::string const& project,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request;
+  google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest
+      request;
   request.set_project(project);
   return connection_->ListBackendServices(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesClient::ListBackendServices(google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request, Options opts) {
+BackendServicesClient::ListBackendServices(
+    google::cloud::cpp::compute::backend_services::v1::
+        ListBackendServicesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBackendServices(std::move(request));
 }
@@ -263,15 +362,23 @@ BackendServicesClient::ListUsable(std::string const& project, Options opts) {
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesClient::ListUsable(google::cloud::cpp::compute::backend_services::v1::ListUsableRequest request, Options opts) {
+BackendServicesClient::ListUsable(
+    google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListUsable(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::PatchBackendService(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts) {
+BackendServicesClient::PatchBackendService(
+    std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::BackendService const&
+        backend_service_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   *request.mutable_backend_service_resource() = backend_service_resource;
@@ -279,9 +386,14 @@ BackendServicesClient::PatchBackendService(std::string const& project, std::stri
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::PatchBackendService(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts) {
+BackendServicesClient::PatchBackendService(
+    NoAwaitTag, std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::BackendService const&
+        backend_service_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   *request.mutable_backend_service_resource() = backend_service_resource;
@@ -289,135 +401,206 @@ BackendServicesClient::PatchBackendService(NoAwaitTag, std::string const& projec
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::PatchBackendService(google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::PatchBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        PatchBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::PatchBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::PatchBackendService(
+    NoAwaitTag,
+    google::cloud::cpp::compute::backend_services::v1::
+        PatchBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchBackendService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::PatchBackendService(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+BackendServicesClient::PatchBackendService(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchBackendService(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::SetEdgeSecurityPolicy(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts) {
+BackendServicesClient::SetEdgeSecurityPolicy(
+    std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+        security_policy_reference_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::
+      SetEdgeSecurityPolicyRequest request;
   request.set_project(project);
   request.set_backend_service(backend_service);
-  *request.mutable_security_policy_reference_resource() = security_policy_reference_resource;
+  *request.mutable_security_policy_reference_resource() =
+      security_policy_reference_resource;
   return connection_->SetEdgeSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::SetEdgeSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts) {
+BackendServicesClient::SetEdgeSecurityPolicy(
+    NoAwaitTag, std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+        security_policy_reference_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::
+      SetEdgeSecurityPolicyRequest request;
   request.set_project(project);
   request.set_backend_service(backend_service);
-  *request.mutable_security_policy_reference_resource() = security_policy_reference_resource;
+  *request.mutable_security_policy_reference_resource() =
+      security_policy_reference_resource;
   return connection_->SetEdgeSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request, Options opts) {
+BackendServicesClient::SetEdgeSecurityPolicy(
+    google::cloud::cpp::compute::backend_services::v1::
+        SetEdgeSecurityPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetEdgeSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::SetEdgeSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request, Options opts) {
+BackendServicesClient::SetEdgeSecurityPolicy(
+    NoAwaitTag,
+    google::cloud::cpp::compute::backend_services::v1::
+        SetEdgeSecurityPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetEdgeSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::SetEdgeSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+BackendServicesClient::SetEdgeSecurityPolicy(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetEdgeSecurityPolicy(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesClient::SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts) {
+BackendServicesClient::SetIamPolicy(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+        global_set_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_policy_request_resource() = global_set_policy_request_resource;
+  *request.mutable_global_set_policy_request_resource() =
+      global_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesClient::SetIamPolicy(google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request, Options opts) {
+BackendServicesClient::SetIamPolicy(
+    google::cloud::cpp::compute::backend_services::v1::
+        SetIamPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::SetSecurityPolicy(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts) {
+BackendServicesClient::SetSecurityPolicy(
+    std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+        security_policy_reference_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
-  *request.mutable_security_policy_reference_resource() = security_policy_reference_resource;
+  *request.mutable_security_policy_reference_resource() =
+      security_policy_reference_resource;
   return connection_->SetSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::SetSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts) {
+BackendServicesClient::SetSecurityPolicy(
+    NoAwaitTag, std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+        security_policy_reference_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest request;
+  google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
-  *request.mutable_security_policy_reference_resource() = security_policy_reference_resource;
+  *request.mutable_security_policy_reference_resource() =
+      security_policy_reference_resource;
   return connection_->SetSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request, Options opts) {
+BackendServicesClient::SetSecurityPolicy(
+    google::cloud::cpp::compute::backend_services::v1::
+        SetSecurityPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSecurityPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request, Options opts) {
+BackendServicesClient::SetSecurityPolicy(
+    NoAwaitTag,
+    google::cloud::cpp::compute::backend_services::v1::
+        SetSecurityPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSecurityPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+BackendServicesClient::SetSecurityPolicy(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSecurityPolicy(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-BackendServicesClient::TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
+BackendServicesClient::TestIamPermissions(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest request;
+  google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-BackendServicesClient::TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest const& request, Options opts) {
+BackendServicesClient::TestIamPermissions(
+    google::cloud::cpp::compute::backend_services::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::UpdateBackendService(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts) {
+BackendServicesClient::UpdateBackendService(
+    std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::BackendService const&
+        backend_service_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   *request.mutable_backend_service_resource() = backend_service_resource;
@@ -425,9 +608,14 @@ BackendServicesClient::UpdateBackendService(std::string const& project, std::str
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::UpdateBackendService(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts) {
+BackendServicesClient::UpdateBackendService(
+    NoAwaitTag, std::string const& project, std::string const& backend_service,
+    google::cloud::cpp::compute::v1::BackendService const&
+        backend_service_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest request;
+  google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest
+      request;
   request.set_project(project);
   request.set_backend_service(backend_service);
   *request.mutable_backend_service_resource() = backend_service_resource;
@@ -435,19 +623,27 @@ BackendServicesClient::UpdateBackendService(NoAwaitTag, std::string const& proje
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::UpdateBackendService(
+    google::cloud::cpp::compute::backend_services::v1::
+        UpdateBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackendService(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesClient::UpdateBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request, Options opts) {
+BackendServicesClient::UpdateBackendService(
+    NoAwaitTag,
+    google::cloud::cpp::compute::backend_services::v1::
+        UpdateBackendServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackendService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-BackendServicesClient::UpdateBackendService(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+BackendServicesClient::UpdateBackendService(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackendService(operation);
 }

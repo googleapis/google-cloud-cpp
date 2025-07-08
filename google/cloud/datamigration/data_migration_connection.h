@@ -27,17 +27,22 @@ namespace cloud {
 namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datamigration_v1::MakeDataMigrationServiceConnection directly.
+/// @deprecated Use datamigration_v1::MakeDataMigrationServiceConnection
+/// directly.
 using ::google::cloud::datamigration_v1::MakeDataMigrationServiceConnection;
 
 /// @deprecated Use datamigration_v1::DataMigrationServiceConnection directly.
 using ::google::cloud::datamigration_v1::DataMigrationServiceConnection;
 
-/// @deprecated Use datamigration_v1::DataMigrationServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::datamigration_v1::DataMigrationServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// datamigration_v1::DataMigrationServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::datamigration_v1::
+    DataMigrationServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use datamigration_v1::DataMigrationServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::datamigration_v1::DataMigrationServiceLimitedTimeRetryPolicy;
+/// @deprecated Use datamigration_v1::DataMigrationServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::datamigration_v1::
+    DataMigrationServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use datamigration_v1::DataMigrationServiceRetryPolicy directly.
 using ::google::cloud::datamigration_v1::DataMigrationServiceRetryPolicy;

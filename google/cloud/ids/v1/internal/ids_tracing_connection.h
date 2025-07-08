@@ -30,42 +30,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class IDSTracingConnection
-    : public ids_v1::IDSConnection {
+class IDSTracingConnection : public ids_v1::IDSConnection {
  public:
   ~IDSTracingConnection() override = default;
 
-  explicit IDSTracingConnection(
-    std::shared_ptr<ids_v1::IDSConnection> child);
+  explicit IDSTracingConnection(std::shared_ptr<ids_v1::IDSConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::ids::v1::Endpoint>
-  ListEndpoints(google::cloud::ids::v1::ListEndpointsRequest request) override;
+  StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
+      google::cloud::ids::v1::ListEndpointsRequest request) override;
 
-  StatusOr<google::cloud::ids::v1::Endpoint>
-  GetEndpoint(google::cloud::ids::v1::GetEndpointRequest const& request) override;
+  StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
+      google::cloud::ids::v1::GetEndpointRequest const& request) override;
 
-  future<StatusOr<google::cloud::ids::v1::Endpoint>>
-  CreateEndpoint(google::cloud::ids::v1::CreateEndpointRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateEndpoint(NoAwaitTag,
+  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
-  future<StatusOr<google::cloud::ids::v1::Endpoint>>
-  CreateEndpoint(
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      NoAwaitTag,
+      google::cloud::ids::v1::CreateEndpointRequest const& request) override;
+
+  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-  DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteEndpoint(NoAwaitTag,
+  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
-  future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-  DeleteEndpoint(
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      NoAwaitTag,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
+
+  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       google::longrunning::Operation const& operation) override;
 
  private:
@@ -80,8 +76,7 @@ class IDSTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<ids_v1::IDSConnection>
-MakeIDSTracingConnection(
+std::shared_ptr<ids_v1::IDSConnection> MakeIDSTracingConnection(
     std::shared_ptr<ids_v1::IDSConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

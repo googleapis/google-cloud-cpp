@@ -38,76 +38,75 @@ DefaultGroundedGenerationServiceStub::AsyncStreamGenerateGroundedContent(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  return google::cloud::internal::MakeStreamingReadWriteRpc<google::cloud::discoveryengine::v1::GenerateGroundedContentRequest, google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>(
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-        return grpc_stub_->PrepareAsyncStreamGenerateGroundedContent(context, cq);
+        return grpc_stub_->PrepareAsyncStreamGenerateGroundedContent(context,
+                                                                     cq);
       });
 }
 
 StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
 DefaultGroundedGenerationServiceStub::GenerateGroundedContent(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) {
-    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse response;
-    auto status =
-        grpc_stub_->GenerateGroundedContent(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  google::cloud::discoveryengine::v1::GenerateGroundedContentResponse response;
+  auto status =
+      grpc_stub_->GenerateGroundedContent(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 DefaultGroundedGenerationServiceStub::CheckGrounding(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
-    google::cloud::discoveryengine::v1::CheckGroundingResponse response;
-    auto status =
-        grpc_stub_->CheckGrounding(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
+  google::cloud::discoveryengine::v1::CheckGroundingResponse response;
+  auto status = grpc_stub_->CheckGrounding(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultGroundedGenerationServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultGroundedGenerationServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultGroundedGenerationServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultGroundedGenerationServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

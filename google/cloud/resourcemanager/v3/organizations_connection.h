@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_ORGANIZATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_ORGANIZATIONS_CONNECTION_H
 
+#include "google/cloud/resourcemanager/v3/internal/organizations_retry_traits.h"
+#include "google/cloud/resourcemanager/v3/organizations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/v3/internal/organizations_retry_traits.h"
-#include "google/cloud/resourcemanager/v3/organizations_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -53,7 +53,8 @@ class OrganizationsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class OrganizationsLimitedErrorCountRetryPolicy : public OrganizationsRetryPolicy {
+class OrganizationsLimitedErrorCountRetryPolicy
+    : public OrganizationsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,14 @@ class OrganizationsLimitedErrorCountRetryPolicy : public OrganizationsRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit OrganizationsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   OrganizationsLimitedErrorCountRetryPolicy(
       OrganizationsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : OrganizationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : OrganizationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   OrganizationsLimitedErrorCountRetryPolicy(
       OrganizationsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : OrganizationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : OrganizationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +91,9 @@ class OrganizationsLimitedErrorCountRetryPolicy : public OrganizationsRetryPolic
   using BaseType = OrganizationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<resourcemanager_v3_internal::OrganizationsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      resourcemanager_v3_internal::OrganizationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +131,14 @@ class OrganizationsLimitedTimeRetryPolicy : public OrganizationsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit OrganizationsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  OrganizationsLimitedTimeRetryPolicy(OrganizationsLimitedTimeRetryPolicy&& rhs) noexcept
-    : OrganizationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  OrganizationsLimitedTimeRetryPolicy(OrganizationsLimitedTimeRetryPolicy const& rhs) noexcept
-    : OrganizationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OrganizationsLimitedTimeRetryPolicy(
+      OrganizationsLimitedTimeRetryPolicy&& rhs) noexcept
+      : OrganizationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OrganizationsLimitedTimeRetryPolicy(
+      OrganizationsLimitedTimeRetryPolicy const& rhs) noexcept
+      : OrganizationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,7 +160,9 @@ class OrganizationsLimitedTimeRetryPolicy : public OrganizationsRetryPolicy {
   using BaseType = OrganizationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<resourcemanager_v3_internal::OrganizationsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      resourcemanager_v3_internal::OrganizationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -177,22 +184,25 @@ class OrganizationsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::resourcemanager::v3::Organization>
-  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request);
+  GetOrganization(
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const&
+          request);
 
   virtual StreamRange<google::cloud::resourcemanager::v3::Organization>
-  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request);
+  SearchOrganizations(
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

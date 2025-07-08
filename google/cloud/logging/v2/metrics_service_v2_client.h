@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_METRICS_SERVICE_V2_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_METRICS_SERVICE_V2_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/logging/v2/metrics_service_v2_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MetricsServiceV2Client {
  public:
-  explicit MetricsServiceV2Client(std::shared_ptr<MetricsServiceV2Connection> connection, Options opts = {});
+  explicit MetricsServiceV2Client(
+      std::shared_ptr<MetricsServiceV2Connection> connection,
+      Options opts = {});
   ~MetricsServiceV2Client();
 
   ///@{
@@ -75,10 +77,12 @@ class MetricsServiceV2Client {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MetricsServiceV2Client const& a, MetricsServiceV2Client const& b) {
+  friend bool operator==(MetricsServiceV2Client const& a,
+                         MetricsServiceV2Client const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MetricsServiceV2Client const& a, MetricsServiceV2Client const& b) {
+  friend bool operator!=(MetricsServiceV2Client const& a,
+                         MetricsServiceV2Client const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +120,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogMetric>
-  ListLogMetrics(std::string const& parent, Options opts = {});
+  StreamRange<google::logging::v2::LogMetric> ListLogMetrics(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -155,8 +159,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogMetric>
-  ListLogMetrics(google::logging::v2::ListLogMetricsRequest request, Options opts = {});
+  StreamRange<google::logging::v2::LogMetric> ListLogMetrics(
+      google::logging::v2::ListLogMetricsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -182,8 +186,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric>
-  GetLogMetric(std::string const& metric_name, Options opts = {});
+  StatusOr<google::logging::v2::LogMetric> GetLogMetric(
+      std::string const& metric_name, Options opts = {});
 
   // clang-format off
   ///
@@ -212,8 +216,9 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric>
-  GetLogMetric(google::logging::v2::GetLogMetricRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogMetric> GetLogMetric(
+      google::logging::v2::GetLogMetricRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -243,8 +248,9 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric>
-  CreateLogMetric(std::string const& parent, google::logging::v2::LogMetric const& metric, Options opts = {});
+  StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
+      std::string const& parent, google::logging::v2::LogMetric const& metric,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -273,8 +279,9 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric>
-  CreateLogMetric(google::logging::v2::CreateLogMetricRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
+      google::logging::v2::CreateLogMetricRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -305,8 +312,9 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.UpdateLogMetricRequest]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L309}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric>
-  UpdateLogMetric(std::string const& metric_name, google::logging::v2::LogMetric const& metric, Options opts = {});
+  StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
+      std::string const& metric_name,
+      google::logging::v2::LogMetric const& metric, Options opts = {});
 
   // clang-format off
   ///
@@ -335,8 +343,9 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.UpdateLogMetricRequest]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L309}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric>
-  UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const& request, Options opts = {});
+  StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
+      google::logging::v2::UpdateLogMetricRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -359,8 +368,7 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.DeleteLogMetricRequest]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L329}
   ///
   // clang-format on
-  Status
-  DeleteLogMetric(std::string const& metric_name, Options opts = {});
+  Status DeleteLogMetric(std::string const& metric_name, Options opts = {});
 
   // clang-format off
   ///
@@ -386,8 +394,9 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.DeleteLogMetricRequest]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L329}
   ///
   // clang-format on
-  Status
-  DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const& request, Options opts = {});
+  Status DeleteLogMetric(
+      google::logging::v2::DeleteLogMetricRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -422,8 +431,8 @@ class MetricsServiceV2Client {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -462,8 +471,8 @@ class MetricsServiceV2Client {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -489,8 +498,8 @@ class MetricsServiceV2Client {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -521,8 +530,9 @@ class MetricsServiceV2Client {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -556,8 +566,7 @@ class MetricsServiceV2Client {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -596,8 +605,9 @@ class MetricsServiceV2Client {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<MetricsServiceV2Connection> connection_;

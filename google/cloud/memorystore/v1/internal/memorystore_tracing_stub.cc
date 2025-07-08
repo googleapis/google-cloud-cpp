@@ -32,22 +32,24 @@ MemorystoreTracingStub::MemorystoreTracingStub(
     std::shared_ptr<MemorystoreStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::memorystore::v1::ListInstancesResponse> MemorystoreTracingStub::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memorystore::v1::ListInstancesResponse>
+MemorystoreTracingStub::ListInstances(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::ListInstancesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "ListInstances");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInstances(context, options, request));
 }
 
-StatusOr<google::cloud::memorystore::v1::Instance> MemorystoreTracingStub::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memorystore::v1::Instance>
+MemorystoreTracingStub::GetInstance(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "GetInstance");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +58,24 @@ StatusOr<google::cloud::memorystore::v1::Instance> MemorystoreTracingStub::GetIn
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "CreateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "CreateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreTracingStub::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "CreateInstance");
+StatusOr<google::longrunning::Operation> MemorystoreTracingStub::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "CreateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +84,24 @@ MemorystoreTracingStub::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "UpdateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "UpdateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreTracingStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "UpdateInstance");
+StatusOr<google::longrunning::Operation> MemorystoreTracingStub::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "UpdateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,103 +110,116 @@ MemorystoreTracingStub::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "DeleteInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreTracingStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "DeleteInstance");
+StatusOr<google::longrunning::Operation> MemorystoreTracingStub::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteInstance(context, options, request));
 }
 
-StatusOr<google::cloud::memorystore::v1::CertificateAuthority> MemorystoreTracingStub::GetCertificateAuthority(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "GetCertificateAuthority");
+StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
+MemorystoreTracingStub::GetCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetCertificateAuthority");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetCertificateAuthority(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetCertificateAuthority(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncRescheduleMaintenance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "RescheduleMaintenance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "RescheduleMaintenance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRescheduleMaintenance(cq, context, std::move(options), request);
+  auto f = child_->AsyncRescheduleMaintenance(cq, context, std::move(options),
+                                              request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 MemorystoreTracingStub::RescheduleMaintenance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "RescheduleMaintenance");
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "RescheduleMaintenance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RescheduleMaintenance(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->RescheduleMaintenance(context, options, request));
 }
 
-StatusOr<google::cloud::memorystore::v1::ListBackupCollectionsResponse> MemorystoreTracingStub::ListBackupCollections(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::memorystore::v1::ListBackupCollectionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "ListBackupCollections");
+StatusOr<google::cloud::memorystore::v1::ListBackupCollectionsResponse>
+MemorystoreTracingStub::ListBackupCollections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListBackupCollectionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListBackupCollections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListBackupCollections(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListBackupCollections(context, options, request));
 }
 
-StatusOr<google::cloud::memorystore::v1::BackupCollection> MemorystoreTracingStub::GetBackupCollection(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memorystore::v1::BackupCollection>
+MemorystoreTracingStub::GetBackupCollection(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::GetBackupCollectionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "GetBackupCollection");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetBackupCollection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetBackupCollection(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetBackupCollection(context, options, request));
 }
 
-StatusOr<google::cloud::memorystore::v1::ListBackupsResponse> MemorystoreTracingStub::ListBackups(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memorystore::v1::ListBackupsResponse>
+MemorystoreTracingStub::ListBackups(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::ListBackupsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "ListBackups");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListBackups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListBackups(context, options, request));
 }
 
-StatusOr<google::cloud::memorystore::v1::Backup> MemorystoreTracingStub::GetBackup(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memorystore::v1::Backup>
+MemorystoreTracingStub::GetBackup(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::GetBackupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "GetBackup");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -211,23 +228,23 @@ StatusOr<google::cloud::memorystore::v1::Backup> MemorystoreTracingStub::GetBack
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncDeleteBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "DeleteBackup");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteBackup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreTracingStub::DeleteBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "DeleteBackup");
+StatusOr<google::longrunning::Operation> MemorystoreTracingStub::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -236,23 +253,23 @@ MemorystoreTracingStub::DeleteBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncExportBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "ExportBackup");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ExportBackup");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncExportBackup(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreTracingStub::ExportBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "ExportBackup");
+StatusOr<google::longrunning::Operation> MemorystoreTracingStub::ExportBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ExportBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -261,34 +278,36 @@ MemorystoreTracingStub::ExportBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreTracingStub::AsyncBackupInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "BackupInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "BackupInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBackupInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncBackupInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreTracingStub::BackupInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "BackupInstance");
+StatusOr<google::longrunning::Operation> MemorystoreTracingStub::BackupInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "BackupInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->BackupInstance(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> MemorystoreTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+MemorystoreTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -296,21 +315,22 @@ StatusOr<google::cloud::location::ListLocationsResponse> MemorystoreTracingStub:
 }
 
 StatusOr<google::cloud::location::Location> MemorystoreTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> MemorystoreTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+MemorystoreTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -318,10 +338,10 @@ StatusOr<google::longrunning::ListOperationsResponse> MemorystoreTracingStub::Li
 }
 
 StatusOr<google::longrunning::Operation> MemorystoreTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -329,10 +349,10 @@ StatusOr<google::longrunning::Operation> MemorystoreTracingStub::GetOperation(
 }
 
 Status MemorystoreTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -340,10 +360,10 @@ Status MemorystoreTracingStub::DeleteOperation(
 }
 
 Status MemorystoreTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.memorystore.v1.Memorystore",
+                                     "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -360,8 +380,7 @@ MemorystoreTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -374,8 +393,8 @@ future<Status> MemorystoreTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

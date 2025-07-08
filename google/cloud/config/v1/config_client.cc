@@ -25,11 +25,11 @@ namespace cloud {
 namespace config_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ConfigClient::ConfigClient(
-    std::shared_ptr<ConfigConnection> connection, Options opts)
+ConfigClient::ConfigClient(std::shared_ptr<ConfigConnection> connection,
+                           Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ConfigClient::~ConfigClient() = default;
 
 StreamRange<google::cloud::config::v1::Deployment>
@@ -41,27 +41,32 @@ ConfigClient::ListDeployments(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::config::v1::Deployment>
-ConfigClient::ListDeployments(google::cloud::config::v1::ListDeploymentsRequest request, Options opts) {
+ConfigClient::ListDeployments(
+    google::cloud::config::v1::ListDeploymentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeployments(std::move(request));
 }
 
-StatusOr<google::cloud::config::v1::Deployment>
-ConfigClient::GetDeployment(std::string const& name, Options opts) {
+StatusOr<google::cloud::config::v1::Deployment> ConfigClient::GetDeployment(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::GetDeploymentRequest request;
   request.set_name(name);
   return connection_->GetDeployment(request);
 }
 
-StatusOr<google::cloud::config::v1::Deployment>
-ConfigClient::GetDeployment(google::cloud::config::v1::GetDeploymentRequest const& request, Options opts) {
+StatusOr<google::cloud::config::v1::Deployment> ConfigClient::GetDeployment(
+    google::cloud::config::v1::GetDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDeployment(request);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::CreateDeployment(std::string const& parent, google::cloud::config::v1::Deployment const& deployment, std::string const& deployment_id, Options opts) {
+ConfigClient::CreateDeployment(
+    std::string const& parent,
+    google::cloud::config::v1::Deployment const& deployment,
+    std::string const& deployment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::CreateDeploymentRequest request;
   request.set_parent(parent);
@@ -70,8 +75,10 @@ ConfigClient::CreateDeployment(std::string const& parent, google::cloud::config:
   return connection_->CreateDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::CreateDeployment(NoAwaitTag, std::string const& parent, google::cloud::config::v1::Deployment const& deployment, std::string const& deployment_id, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::CreateDeployment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::config::v1::Deployment const& deployment,
+    std::string const& deployment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::CreateDeploymentRequest request;
   request.set_parent(parent);
@@ -81,25 +88,32 @@ ConfigClient::CreateDeployment(NoAwaitTag, std::string const& parent, google::cl
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::CreateDeployment(google::cloud::config::v1::CreateDeploymentRequest const& request, Options opts) {
+ConfigClient::CreateDeployment(
+    google::cloud::config::v1::CreateDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::CreateDeployment(NoAwaitTag, google::cloud::config::v1::CreateDeploymentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::CreateDeployment(
+    NoAwaitTag,
+    google::cloud::config::v1::CreateDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeployment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::CreateDeployment(google::longrunning::Operation const& operation, Options opts) {
+ConfigClient::CreateDeployment(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeployment(operation);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::UpdateDeployment(google::cloud::config::v1::Deployment const& deployment, google::protobuf::FieldMask const& update_mask, Options opts) {
+ConfigClient::UpdateDeployment(
+    google::cloud::config::v1::Deployment const& deployment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::UpdateDeploymentRequest request;
   *request.mutable_deployment() = deployment;
@@ -107,8 +121,9 @@ ConfigClient::UpdateDeployment(google::cloud::config::v1::Deployment const& depl
   return connection_->UpdateDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::UpdateDeployment(NoAwaitTag, google::cloud::config::v1::Deployment const& deployment, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::UpdateDeployment(
+    NoAwaitTag, google::cloud::config::v1::Deployment const& deployment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::UpdateDeploymentRequest request;
   *request.mutable_deployment() = deployment;
@@ -117,19 +132,24 @@ ConfigClient::UpdateDeployment(NoAwaitTag, google::cloud::config::v1::Deployment
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::UpdateDeployment(google::cloud::config::v1::UpdateDeploymentRequest const& request, Options opts) {
+ConfigClient::UpdateDeployment(
+    google::cloud::config::v1::UpdateDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::UpdateDeployment(NoAwaitTag, google::cloud::config::v1::UpdateDeploymentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::UpdateDeployment(
+    NoAwaitTag,
+    google::cloud::config::v1::UpdateDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDeployment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::UpdateDeployment(google::longrunning::Operation const& operation, Options opts) {
+ConfigClient::UpdateDeployment(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDeployment(operation);
 }
@@ -142,8 +162,8 @@ ConfigClient::DeleteDeployment(std::string const& name, Options opts) {
   return connection_->DeleteDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::DeleteDeployment(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::DeleteDeployment(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::DeleteDeploymentRequest request;
   request.set_name(name);
@@ -151,93 +171,104 @@ ConfigClient::DeleteDeployment(NoAwaitTag, std::string const& name, Options opts
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::DeleteDeployment(google::cloud::config::v1::DeleteDeploymentRequest const& request, Options opts) {
+ConfigClient::DeleteDeployment(
+    google::cloud::config::v1::DeleteDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::DeleteDeployment(NoAwaitTag, google::cloud::config::v1::DeleteDeploymentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::DeleteDeployment(
+    NoAwaitTag,
+    google::cloud::config::v1::DeleteDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDeployment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::DeleteDeployment(google::longrunning::Operation const& operation, Options opts) {
+ConfigClient::DeleteDeployment(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDeployment(operation);
 }
 
-StreamRange<google::cloud::config::v1::Revision>
-ConfigClient::ListRevisions(std::string const& parent, Options opts) {
+StreamRange<google::cloud::config::v1::Revision> ConfigClient::ListRevisions(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::ListRevisionsRequest request;
   request.set_parent(parent);
   return connection_->ListRevisions(request);
 }
 
-StreamRange<google::cloud::config::v1::Revision>
-ConfigClient::ListRevisions(google::cloud::config::v1::ListRevisionsRequest request, Options opts) {
+StreamRange<google::cloud::config::v1::Revision> ConfigClient::ListRevisions(
+    google::cloud::config::v1::ListRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRevisions(std::move(request));
 }
 
-StatusOr<google::cloud::config::v1::Revision>
-ConfigClient::GetRevision(std::string const& name, Options opts) {
+StatusOr<google::cloud::config::v1::Revision> ConfigClient::GetRevision(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::GetRevisionRequest request;
   request.set_name(name);
   return connection_->GetRevision(request);
 }
 
-StatusOr<google::cloud::config::v1::Revision>
-ConfigClient::GetRevision(google::cloud::config::v1::GetRevisionRequest const& request, Options opts) {
+StatusOr<google::cloud::config::v1::Revision> ConfigClient::GetRevision(
+    google::cloud::config::v1::GetRevisionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRevision(request);
 }
 
-StatusOr<google::cloud::config::v1::Resource>
-ConfigClient::GetResource(std::string const& name, Options opts) {
+StatusOr<google::cloud::config::v1::Resource> ConfigClient::GetResource(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::GetResourceRequest request;
   request.set_name(name);
   return connection_->GetResource(request);
 }
 
-StatusOr<google::cloud::config::v1::Resource>
-ConfigClient::GetResource(google::cloud::config::v1::GetResourceRequest const& request, Options opts) {
+StatusOr<google::cloud::config::v1::Resource> ConfigClient::GetResource(
+    google::cloud::config::v1::GetResourceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetResource(request);
 }
 
-StreamRange<google::cloud::config::v1::Resource>
-ConfigClient::ListResources(std::string const& parent, Options opts) {
+StreamRange<google::cloud::config::v1::Resource> ConfigClient::ListResources(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::ListResourcesRequest request;
   request.set_parent(parent);
   return connection_->ListResources(request);
 }
 
-StreamRange<google::cloud::config::v1::Resource>
-ConfigClient::ListResources(google::cloud::config::v1::ListResourcesRequest request, Options opts) {
+StreamRange<google::cloud::config::v1::Resource> ConfigClient::ListResources(
+    google::cloud::config::v1::ListResourcesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListResources(std::move(request));
 }
 
 StatusOr<google::cloud::config::v1::Statefile>
-ConfigClient::ExportDeploymentStatefile(google::cloud::config::v1::ExportDeploymentStatefileRequest const& request, Options opts) {
+ConfigClient::ExportDeploymentStatefile(
+    google::cloud::config::v1::ExportDeploymentStatefileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportDeploymentStatefile(request);
 }
 
 StatusOr<google::cloud::config::v1::Statefile>
-ConfigClient::ExportRevisionStatefile(google::cloud::config::v1::ExportRevisionStatefileRequest const& request, Options opts) {
+ConfigClient::ExportRevisionStatefile(
+    google::cloud::config::v1::ExportRevisionStatefileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportRevisionStatefile(request);
 }
 
-StatusOr<google::cloud::config::v1::Statefile>
-ConfigClient::ImportStatefile(std::string const& parent, std::int64_t lock_id, Options opts) {
+StatusOr<google::cloud::config::v1::Statefile> ConfigClient::ImportStatefile(
+    std::string const& parent, std::int64_t lock_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::ImportStatefileRequest request;
   request.set_parent(parent);
@@ -245,22 +276,23 @@ ConfigClient::ImportStatefile(std::string const& parent, std::int64_t lock_id, O
   return connection_->ImportStatefile(request);
 }
 
-StatusOr<google::cloud::config::v1::Statefile>
-ConfigClient::ImportStatefile(google::cloud::config::v1::ImportStatefileRequest const& request, Options opts) {
+StatusOr<google::cloud::config::v1::Statefile> ConfigClient::ImportStatefile(
+    google::cloud::config::v1::ImportStatefileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportStatefile(request);
 }
 
-Status
-ConfigClient::DeleteStatefile(std::string const& name, Options opts) {
+Status ConfigClient::DeleteStatefile(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::DeleteStatefileRequest request;
   request.set_name(name);
   return connection_->DeleteStatefile(request);
 }
 
-Status
-ConfigClient::DeleteStatefile(google::cloud::config::v1::DeleteStatefileRequest const& request, Options opts) {
+Status ConfigClient::DeleteStatefile(
+    google::cloud::config::v1::DeleteStatefileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStatefile(request);
 }
@@ -273,8 +305,8 @@ ConfigClient::LockDeployment(std::string const& name, Options opts) {
   return connection_->LockDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::LockDeployment(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::LockDeployment(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::LockDeploymentRequest request;
   request.set_name(name);
@@ -282,25 +314,30 @@ ConfigClient::LockDeployment(NoAwaitTag, std::string const& name, Options opts) 
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::LockDeployment(google::cloud::config::v1::LockDeploymentRequest const& request, Options opts) {
+ConfigClient::LockDeployment(
+    google::cloud::config::v1::LockDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LockDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::LockDeployment(NoAwaitTag, google::cloud::config::v1::LockDeploymentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::LockDeployment(
+    NoAwaitTag, google::cloud::config::v1::LockDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LockDeployment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::LockDeployment(google::longrunning::Operation const& operation, Options opts) {
+ConfigClient::LockDeployment(google::longrunning::Operation const& operation,
+                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LockDeployment(operation);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::UnlockDeployment(std::string const& name, std::int64_t lock_id, Options opts) {
+ConfigClient::UnlockDeployment(std::string const& name, std::int64_t lock_id,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::UnlockDeploymentRequest request;
   request.set_name(name);
@@ -308,8 +345,8 @@ ConfigClient::UnlockDeployment(std::string const& name, std::int64_t lock_id, Op
   return connection_->UnlockDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::UnlockDeployment(NoAwaitTag, std::string const& name, std::int64_t lock_id, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::UnlockDeployment(
+    NoAwaitTag, std::string const& name, std::int64_t lock_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::UnlockDeploymentRequest request;
   request.set_name(name);
@@ -318,39 +355,47 @@ ConfigClient::UnlockDeployment(NoAwaitTag, std::string const& name, std::int64_t
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::UnlockDeployment(google::cloud::config::v1::UnlockDeploymentRequest const& request, Options opts) {
+ConfigClient::UnlockDeployment(
+    google::cloud::config::v1::UnlockDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UnlockDeployment(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::UnlockDeployment(NoAwaitTag, google::cloud::config::v1::UnlockDeploymentRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::UnlockDeployment(
+    NoAwaitTag,
+    google::cloud::config::v1::UnlockDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UnlockDeployment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
-ConfigClient::UnlockDeployment(google::longrunning::Operation const& operation, Options opts) {
+ConfigClient::UnlockDeployment(google::longrunning::Operation const& operation,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UnlockDeployment(operation);
 }
 
-StatusOr<google::cloud::config::v1::LockInfo>
-ConfigClient::ExportLockInfo(std::string const& name, Options opts) {
+StatusOr<google::cloud::config::v1::LockInfo> ConfigClient::ExportLockInfo(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::ExportLockInfoRequest request;
   request.set_name(name);
   return connection_->ExportLockInfo(request);
 }
 
-StatusOr<google::cloud::config::v1::LockInfo>
-ConfigClient::ExportLockInfo(google::cloud::config::v1::ExportLockInfoRequest const& request, Options opts) {
+StatusOr<google::cloud::config::v1::LockInfo> ConfigClient::ExportLockInfo(
+    google::cloud::config::v1::ExportLockInfoRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportLockInfo(request);
 }
 
 future<StatusOr<google::cloud::config::v1::Preview>>
-ConfigClient::CreatePreview(std::string const& parent, google::cloud::config::v1::Preview const& preview, Options opts) {
+ConfigClient::CreatePreview(std::string const& parent,
+                            google::cloud::config::v1::Preview const& preview,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::CreatePreviewRequest request;
   request.set_parent(parent);
@@ -358,8 +403,9 @@ ConfigClient::CreatePreview(std::string const& parent, google::cloud::config::v1
   return connection_->CreatePreview(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::CreatePreview(NoAwaitTag, std::string const& parent, google::cloud::config::v1::Preview const& preview, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::CreatePreview(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::config::v1::Preview const& preview, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::CreatePreviewRequest request;
   request.set_parent(parent);
@@ -368,47 +414,51 @@ ConfigClient::CreatePreview(NoAwaitTag, std::string const& parent, google::cloud
 }
 
 future<StatusOr<google::cloud::config::v1::Preview>>
-ConfigClient::CreatePreview(google::cloud::config::v1::CreatePreviewRequest const& request, Options opts) {
+ConfigClient::CreatePreview(
+    google::cloud::config::v1::CreatePreviewRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePreview(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::CreatePreview(NoAwaitTag, google::cloud::config::v1::CreatePreviewRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::CreatePreview(
+    NoAwaitTag, google::cloud::config::v1::CreatePreviewRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePreview(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::config::v1::Preview>>
-ConfigClient::CreatePreview(google::longrunning::Operation const& operation, Options opts) {
+ConfigClient::CreatePreview(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePreview(operation);
 }
 
-StatusOr<google::cloud::config::v1::Preview>
-ConfigClient::GetPreview(std::string const& name, Options opts) {
+StatusOr<google::cloud::config::v1::Preview> ConfigClient::GetPreview(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::GetPreviewRequest request;
   request.set_name(name);
   return connection_->GetPreview(request);
 }
 
-StatusOr<google::cloud::config::v1::Preview>
-ConfigClient::GetPreview(google::cloud::config::v1::GetPreviewRequest const& request, Options opts) {
+StatusOr<google::cloud::config::v1::Preview> ConfigClient::GetPreview(
+    google::cloud::config::v1::GetPreviewRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPreview(request);
 }
 
-StreamRange<google::cloud::config::v1::Preview>
-ConfigClient::ListPreviews(std::string const& parent, Options opts) {
+StreamRange<google::cloud::config::v1::Preview> ConfigClient::ListPreviews(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::ListPreviewsRequest request;
   request.set_parent(parent);
   return connection_->ListPreviews(request);
 }
 
-StreamRange<google::cloud::config::v1::Preview>
-ConfigClient::ListPreviews(google::cloud::config::v1::ListPreviewsRequest request, Options opts) {
+StreamRange<google::cloud::config::v1::Preview> ConfigClient::ListPreviews(
+    google::cloud::config::v1::ListPreviewsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPreviews(std::move(request));
 }
@@ -421,8 +471,8 @@ ConfigClient::DeletePreview(std::string const& name, Options opts) {
   return connection_->DeletePreview(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::DeletePreview(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::DeletePreview(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::config::v1::DeletePreviewRequest request;
   request.set_name(name);
@@ -430,25 +480,31 @@ ConfigClient::DeletePreview(NoAwaitTag, std::string const& name, Options opts) {
 }
 
 future<StatusOr<google::cloud::config::v1::Preview>>
-ConfigClient::DeletePreview(google::cloud::config::v1::DeletePreviewRequest const& request, Options opts) {
+ConfigClient::DeletePreview(
+    google::cloud::config::v1::DeletePreviewRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePreview(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::DeletePreview(NoAwaitTag, google::cloud::config::v1::DeletePreviewRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::DeletePreview(
+    NoAwaitTag, google::cloud::config::v1::DeletePreviewRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePreview(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::config::v1::Preview>>
-ConfigClient::DeletePreview(google::longrunning::Operation const& operation, Options opts) {
+ConfigClient::DeletePreview(google::longrunning::Operation const& operation,
+                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePreview(operation);
 }
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
-ConfigClient::ExportPreviewResult(google::cloud::config::v1::ExportPreviewResultRequest const& request, Options opts) {
+ConfigClient::ExportPreviewResult(
+    google::cloud::config::v1::ExportPreviewResultRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportPreviewResult(request);
 }
@@ -462,7 +518,9 @@ ConfigClient::ListTerraformVersions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::config::v1::TerraformVersion>
-ConfigClient::ListTerraformVersions(google::cloud::config::v1::ListTerraformVersionsRequest request, Options opts) {
+ConfigClient::ListTerraformVersions(
+    google::cloud::config::v1::ListTerraformVersionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTerraformVersions(std::move(request));
 }
@@ -476,43 +534,46 @@ ConfigClient::GetTerraformVersion(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::config::v1::TerraformVersion>
-ConfigClient::GetTerraformVersion(google::cloud::config::v1::GetTerraformVersionRequest const& request, Options opts) {
+ConfigClient::GetTerraformVersion(
+    google::cloud::config::v1::GetTerraformVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTerraformVersion(request);
 }
 
-StreamRange<google::cloud::location::Location>
-ConfigClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> ConfigClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-ConfigClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> ConfigClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ConfigClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> ConfigClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ConfigClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> ConfigClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ConfigClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+ConfigClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation>
-ConfigClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> ConfigClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -520,50 +581,48 @@ ConfigClient::ListOperations(std::string const& name, std::string const& filter,
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-ConfigClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> ConfigClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ConfigClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ConfigClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-ConfigClient::DeleteOperation(std::string const& name, Options opts) {
+Status ConfigClient::DeleteOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-ConfigClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status ConfigClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-ConfigClient::CancelOperation(std::string const& name, Options opts) {
+Status ConfigClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-ConfigClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status ConfigClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -33,82 +33,79 @@ CloudBuildStub::~CloudBuildStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncCreateBuild(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v1::CreateBuildRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::cloudbuild::v1::CreateBuildRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateBuild(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudBuildStub::CreateBuild(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateBuild(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudBuildStub::CreateBuild(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBuild(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 DefaultCloudBuildStub::GetBuild(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
-    google::devtools::cloudbuild::v1::Build response;
-    auto status =
-        grpc_stub_->GetBuild(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
+  google::devtools::cloudbuild::v1::Build response;
+  auto status = grpc_stub_->GetBuild(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
 DefaultCloudBuildStub::ListBuilds(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
-    google::devtools::cloudbuild::v1::ListBuildsResponse response;
-    auto status =
-        grpc_stub_->ListBuilds(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
+  google::devtools::cloudbuild::v1::ListBuildsResponse response;
+  auto status = grpc_stub_->ListBuilds(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 DefaultCloudBuildStub::CancelBuild(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
-    google::devtools::cloudbuild::v1::Build response;
-    auto status =
-        grpc_stub_->CancelBuild(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
+  google::devtools::cloudbuild::v1::Build response;
+  auto status = grpc_stub_->CancelBuild(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncRetryBuild(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v1::RetryBuildRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::cloudbuild::v1::RetryBuildRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
@@ -118,171 +115,165 @@ DefaultCloudBuildStub::AsyncRetryBuild(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudBuildStub::RetryBuild(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RetryBuild(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudBuildStub::RetryBuild(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RetryBuild(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncApproveBuild(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v1::ApproveBuildRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::cloudbuild::v1::ApproveBuildRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncApproveBuild(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudBuildStub::ApproveBuild(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ApproveBuild(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudBuildStub::ApproveBuild(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ApproveBuild(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::CreateBuildTrigger(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request) {
-    google::devtools::cloudbuild::v1::BuildTrigger response;
-    auto status =
-        grpc_stub_->CreateBuildTrigger(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
+        request) {
+  google::devtools::cloudbuild::v1::BuildTrigger response;
+  auto status = grpc_stub_->CreateBuildTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::GetBuildTrigger(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
-    google::devtools::cloudbuild::v1::BuildTrigger response;
-    auto status =
-        grpc_stub_->GetBuildTrigger(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
+  google::devtools::cloudbuild::v1::BuildTrigger response;
+  auto status = grpc_stub_->GetBuildTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
 DefaultCloudBuildStub::ListBuildTriggers(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
-    google::devtools::cloudbuild::v1::ListBuildTriggersResponse response;
-    auto status =
-        grpc_stub_->ListBuildTriggers(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
+  google::devtools::cloudbuild::v1::ListBuildTriggersResponse response;
+  auto status = grpc_stub_->ListBuildTriggers(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultCloudBuildStub::DeleteBuildTrigger(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteBuildTrigger(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCloudBuildStub::DeleteBuildTrigger(
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteBuildTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 DefaultCloudBuildStub::UpdateBuildTrigger(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request) {
-    google::devtools::cloudbuild::v1::BuildTrigger response;
-    auto status =
-        grpc_stub_->UpdateBuildTrigger(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
+        request) {
+  google::devtools::cloudbuild::v1::BuildTrigger response;
+  auto status = grpc_stub_->UpdateBuildTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncRunBuildTrigger(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v1::RunBuildTriggerRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
+             google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRunBuildTrigger(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultCloudBuildStub::RunBuildTrigger(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RunBuildTrigger(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultCloudBuildStub::RunBuildTrigger(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunBuildTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 DefaultCloudBuildStub::ReceiveTriggerWebhook(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request) {
-    google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse response;
-    auto status =
-        grpc_stub_->ReceiveTriggerWebhook(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
+        request) {
+  google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse response;
+  auto status = grpc_stub_->ReceiveTriggerWebhook(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncCreateWorkerPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v1::CreateWorkerPoolRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
+             google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateWorkerPool(context, request, cq);
       },
@@ -291,42 +282,41 @@ DefaultCloudBuildStub::AsyncCreateWorkerPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudBuildStub::CreateWorkerPool(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateWorkerPool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWorkerPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 DefaultCloudBuildStub::GetWorkerPool(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
-    google::devtools::cloudbuild::v1::WorkerPool response;
-    auto status =
-        grpc_stub_->GetWorkerPool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
+  google::devtools::cloudbuild::v1::WorkerPool response;
+  auto status = grpc_stub_->GetWorkerPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncDeleteWorkerPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
+             google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteWorkerPool(context, request, cq);
       },
@@ -335,29 +325,29 @@ DefaultCloudBuildStub::AsyncDeleteWorkerPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudBuildStub::DeleteWorkerPool(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteWorkerPool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteWorkerPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncUpdateWorkerPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
+             google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateWorkerPool(context, request, cq);
       },
@@ -366,29 +356,26 @@ DefaultCloudBuildStub::AsyncUpdateWorkerPool(
 
 StatusOr<google::longrunning::Operation>
 DefaultCloudBuildStub::UpdateWorkerPool(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateWorkerPool(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateWorkerPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
 DefaultCloudBuildStub::ListWorkerPools(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
-    google::devtools::cloudbuild::v1::ListWorkerPoolsResponse response;
-    auto status =
-        grpc_stub_->ListWorkerPools(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
+  google::devtools::cloudbuild::v1::ListWorkerPoolsResponse response;
+  auto status = grpc_stub_->ListWorkerPools(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -417,13 +404,14 @@ future<Status> DefaultCloudBuildStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

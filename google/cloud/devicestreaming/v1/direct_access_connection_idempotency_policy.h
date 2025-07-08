@@ -34,26 +34,31 @@ class DirectAccessServiceConnectionIdempotencyPolicy {
   virtual ~DirectAccessServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DirectAccessServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<DirectAccessServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateDeviceSession(google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request);
+  virtual google::cloud::Idempotency CreateDeviceSession(
+      google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDeviceSessions(google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request);
+  virtual google::cloud::Idempotency ListDeviceSessions(
+      google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDeviceSession(google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request);
+  virtual google::cloud::Idempotency GetDeviceSession(
+      google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CancelDeviceSession(google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request);
+  virtual google::cloud::Idempotency CancelDeviceSession(
+      google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateDeviceSession(google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request);
+  virtual google::cloud::Idempotency UpdateDeviceSession(
+      google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+          request);
 };
 
 std::unique_ptr<DirectAccessServiceConnectionIdempotencyPolicy>
-    MakeDefaultDirectAccessServiceConnectionIdempotencyPolicy();
+MakeDefaultDirectAccessServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace devicestreaming_v1

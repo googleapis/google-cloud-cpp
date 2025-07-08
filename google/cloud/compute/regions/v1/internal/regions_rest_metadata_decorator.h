@@ -35,17 +35,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionsRestMetadata : public RegionsRestStub {
  public:
   ~RegionsRestMetadata() override = default;
-  explicit RegionsRestMetadata(
-      std::shared_ptr<RegionsRestStub> child,
-      std::string api_client_header = "");
+  explicit RegionsRestMetadata(std::shared_ptr<RegionsRestStub> child,
+                               std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::regions::v1::GetRegionRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionList> ListRegions(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::regions::v1::ListRegionsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

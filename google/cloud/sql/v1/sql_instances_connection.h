@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCES_CONNECTION_H
 
+#include "google/cloud/sql/v1/internal/sql_instances_retry_traits.h"
+#include "google/cloud/sql/v1/sql_instances_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/sql/v1/internal/sql_instances_retry_traits.h"
-#include "google/cloud/sql/v1/sql_instances_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,7 +52,8 @@ class SqlInstancesServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlInstancesServiceLimitedErrorCountRetryPolicy : public SqlInstancesServiceRetryPolicy {
+class SqlInstancesServiceLimitedErrorCountRetryPolicy
+    : public SqlInstancesServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,16 @@ class SqlInstancesServiceLimitedErrorCountRetryPolicy : public SqlInstancesServi
    *     @p maximum_failures == 0.
    */
   explicit SqlInstancesServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SqlInstancesServiceLimitedErrorCountRetryPolicy(
       SqlInstancesServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SqlInstancesServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlInstancesServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   SqlInstancesServiceLimitedErrorCountRetryPolicy(
       SqlInstancesServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SqlInstancesServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlInstancesServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +92,9 @@ class SqlInstancesServiceLimitedErrorCountRetryPolicy : public SqlInstancesServi
   using BaseType = SqlInstancesServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlInstancesServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      sql_v1_internal::SqlInstancesServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +107,8 @@ class SqlInstancesServiceLimitedErrorCountRetryPolicy : public SqlInstancesServi
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlInstancesServiceLimitedTimeRetryPolicy : public SqlInstancesServiceRetryPolicy {
+class SqlInstancesServiceLimitedTimeRetryPolicy
+    : public SqlInstancesServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +133,14 @@ class SqlInstancesServiceLimitedTimeRetryPolicy : public SqlInstancesServiceRetr
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlInstancesServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SqlInstancesServiceLimitedTimeRetryPolicy(SqlInstancesServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SqlInstancesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlInstancesServiceLimitedTimeRetryPolicy(SqlInstancesServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SqlInstancesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlInstancesServiceLimitedTimeRetryPolicy(
+      SqlInstancesServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SqlInstancesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlInstancesServiceLimitedTimeRetryPolicy(
+      SqlInstancesServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SqlInstancesServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +162,18 @@ class SqlInstancesServiceLimitedTimeRetryPolicy : public SqlInstancesServiceRetr
   using BaseType = SqlInstancesServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlInstancesServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      sql_v1_internal::SqlInstancesServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `SqlInstancesServiceConnection` object for `SqlInstancesServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SqlInstancesServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `SqlInstancesServiceClient`.
+ * sets in `SqlInstancesServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `SqlInstancesServiceClient`.
  *
  * To create a concrete instance, see `MakeSqlInstancesServiceConnection()`.
  *
@@ -175,107 +185,126 @@ class SqlInstancesServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  AddServerCa(google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> AddServerCa(
+      google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Clone(google::cloud::sql::v1::SqlInstancesCloneRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Clone(
+      google::cloud::sql::v1::SqlInstancesCloneRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Delete(google::cloud::sql::v1::SqlInstancesDeleteRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Delete(
+      google::cloud::sql::v1::SqlInstancesDeleteRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  DemoteMaster(google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> DemoteMaster(
+      google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Demote(google::cloud::sql::v1::SqlInstancesDemoteRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Demote(
+      google::cloud::sql::v1::SqlInstancesDemoteRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Export(google::cloud::sql::v1::SqlInstancesExportRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Export(
+      google::cloud::sql::v1::SqlInstancesExportRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Failover(google::cloud::sql::v1::SqlInstancesFailoverRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Failover(
+      google::cloud::sql::v1::SqlInstancesFailoverRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Reencrypt(google::cloud::sql::v1::SqlInstancesReencryptRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Reencrypt(
+      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::DatabaseInstance>
-  Get(google::cloud::sql::v1::SqlInstancesGetRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::DatabaseInstance> Get(
+      google::cloud::sql::v1::SqlInstancesGetRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Import(google::cloud::sql::v1::SqlInstancesImportRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Import(
+      google::cloud::sql::v1::SqlInstancesImportRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Insert(google::cloud::sql::v1::SqlInstancesInsertRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Insert(
+      google::cloud::sql::v1::SqlInstancesInsertRequest const& request);
 
-  virtual StreamRange<google::cloud::sql::v1::DatabaseInstance>
-  List(google::cloud::sql::v1::SqlInstancesListRequest request);
+  virtual StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
+      google::cloud::sql::v1::SqlInstancesListRequest request);
 
   virtual StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
-  ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request);
+  ListServerCas(
+      google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Patch(google::cloud::sql::v1::SqlInstancesPatchRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Patch(
+      google::cloud::sql::v1::SqlInstancesPatchRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  PromoteReplica(google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> PromoteReplica(
+      google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Switchover(google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Switchover(
+      google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  ResetSslConfig(google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> ResetSslConfig(
+      google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Restart(google::cloud::sql::v1::SqlInstancesRestartRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Restart(
+      google::cloud::sql::v1::SqlInstancesRestartRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  RestoreBackup(google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> RestoreBackup(
+      google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  RotateServerCa(google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> RotateServerCa(
+      google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  StartReplica(google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> StartReplica(
+      google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  StopReplica(google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> StopReplica(
+      google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  TruncateLog(google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> TruncateLog(
+      google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Update(google::cloud::sql::v1::SqlInstancesUpdateRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Update(
+      google::cloud::sql::v1::SqlInstancesUpdateRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::SslCert>
-  CreateEphemeral(google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::SslCert> CreateEphemeral(
+      google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  RescheduleMaintenance(google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> RescheduleMaintenance(
+      google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
-  VerifyExternalSyncSettings(google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const& request);
+  virtual StatusOr<
+      google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
+  VerifyExternalSyncSettings(
+      google::cloud::sql::v1::
+          SqlInstancesVerifyExternalSyncSettingsRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  StartExternalSync(google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> StartExternalSync(
+      google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  PerformDiskShrink(google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> PerformDiskShrink(
+      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
-  GetDiskShrinkConfig(google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const& request);
+  virtual StatusOr<
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
+  GetDiskShrinkConfig(
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  ResetReplicaSize(google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
+      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
-  GetLatestRecoveryTime(google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const& request);
+  virtual StatusOr<
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
+  GetLatestRecoveryTime(
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+          request);
 
   virtual StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
-  AcquireSsrsLease(google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const& request);
+  AcquireSsrsLease(
+      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+          request);
 
   virtual StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
-  ReleaseSsrsLease(google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const& request);
+  ReleaseSsrsLease(
+      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

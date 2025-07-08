@@ -17,17 +17,17 @@
 // source: google/cloud/speech/v1/cloud_speech_adaptation.proto
 
 #include "google/cloud/speech/v1/adaptation_connection.h"
+#include "google/cloud/speech/v1/adaptation_options.h"
+#include "google/cloud/speech/v1/internal/adaptation_connection_impl.h"
+#include "google/cloud/speech/v1/internal/adaptation_option_defaults.h"
+#include "google/cloud/speech/v1/internal/adaptation_stub_factory.h"
+#include "google/cloud/speech/v1/internal/adaptation_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/speech/v1/adaptation_options.h"
-#include "google/cloud/speech/v1/internal/adaptation_connection_impl.h"
-#include "google/cloud/speech/v1/internal/adaptation_option_defaults.h"
-#include "google/cloud/speech/v1/internal/adaptation_stub_factory.h"
-#include "google/cloud/speech/v1/internal/adaptation_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -50,8 +50,10 @@ AdaptationConnection::GetPhraseSet(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::speech::v1::PhraseSet> AdaptationConnection::ListPhraseSet(
-    google::cloud::speech::v1::ListPhraseSetRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::speech::v1::PhraseSet>
+AdaptationConnection::ListPhraseSet(
+    google::cloud::speech::v1::
+        ListPhraseSetRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::speech::v1::PhraseSet>>();
 }
@@ -62,8 +64,7 @@ AdaptationConnection::UpdatePhraseSet(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AdaptationConnection::DeletePhraseSet(
+Status AdaptationConnection::DeletePhraseSet(
     google::cloud::speech::v1::DeletePhraseSetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -80,8 +81,10 @@ AdaptationConnection::GetCustomClass(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::speech::v1::CustomClass> AdaptationConnection::ListCustomClasses(
-    google::cloud::speech::v1::ListCustomClassesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::speech::v1::CustomClass>
+AdaptationConnection::ListCustomClasses(
+    google::cloud::speech::v1::
+        ListCustomClassesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::speech::v1::CustomClass>>();
 }
@@ -92,20 +95,20 @@ AdaptationConnection::UpdateCustomClass(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AdaptationConnection::DeleteCustomClass(
+Status AdaptationConnection::DeleteCustomClass(
     google::cloud::speech::v1::DeleteCustomClassRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> AdaptationConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+AdaptationConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-AdaptationConnection::GetOperation(
+StatusOr<google::longrunning::Operation> AdaptationConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -113,17 +116,16 @@ AdaptationConnection::GetOperation(
 std::shared_ptr<AdaptationConnection> MakeAdaptationConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AdaptationPolicyOptionList>(options, __func__);
-  options = speech_v1_internal::AdaptationDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AdaptationPolicyOptionList>(options, __func__);
+  options = speech_v1_internal::AdaptationDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = speech_v1_internal::CreateDefaultAdaptationStub(
-    std::move(auth), options);
+  auto stub =
+      speech_v1_internal::CreateDefaultAdaptationStub(std::move(auth), options);
   return speech_v1_internal::MakeAdaptationTracingConnection(
       std::make_shared<speech_v1_internal::AdaptationConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

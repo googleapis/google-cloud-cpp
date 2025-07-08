@@ -32,22 +32,24 @@ CloudFunctionsServiceTracingStub::CloudFunctionsServiceTracingStub(
     std::shared_ptr<CloudFunctionsServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::functions::v1::ListFunctionsResponse> CloudFunctionsServiceTracingStub::ListFunctions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::functions::v1::ListFunctionsResponse>
+CloudFunctionsServiceTracingStub::ListFunctions(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::ListFunctionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "ListFunctions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "ListFunctions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListFunctions(context, options, request));
 }
 
-StatusOr<google::cloud::functions::v1::CloudFunction> CloudFunctionsServiceTracingStub::GetFunction(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::functions::v1::CloudFunction>
+CloudFunctionsServiceTracingStub::GetFunction(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GetFunctionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "GetFunction");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "GetFunction");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +58,25 @@ StatusOr<google::cloud::functions::v1::CloudFunction> CloudFunctionsServiceTraci
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceTracingStub::AsyncCreateFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::CreateFunctionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "CreateFunction");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "CreateFunction");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateFunction(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateFunction(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceTracingStub::CreateFunction(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::functions::v1::CreateFunctionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "CreateFunction");
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "CreateFunction");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +85,25 @@ CloudFunctionsServiceTracingStub::CreateFunction(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceTracingStub::AsyncUpdateFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "UpdateFunction");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "UpdateFunction");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateFunction(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateFunction(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceTracingStub::UpdateFunction(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "UpdateFunction");
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "UpdateFunction");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,122 +112,133 @@ CloudFunctionsServiceTracingStub::UpdateFunction(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceTracingStub::AsyncDeleteFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "DeleteFunction");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "DeleteFunction");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteFunction(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteFunction(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceTracingStub::DeleteFunction(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "DeleteFunction");
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "DeleteFunction");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteFunction(context, options, request));
 }
 
-StatusOr<google::cloud::functions::v1::CallFunctionResponse> CloudFunctionsServiceTracingStub::CallFunction(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::functions::v1::CallFunctionResponse>
+CloudFunctionsServiceTracingStub::CallFunction(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::CallFunctionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "CallFunction");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "CallFunction");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CallFunction(context, options, request));
 }
 
-StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse> CloudFunctionsServiceTracingStub::GenerateUploadUrl(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
+CloudFunctionsServiceTracingStub::GenerateUploadUrl(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateUploadUrlRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "GenerateUploadUrl");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "GenerateUploadUrl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateUploadUrl(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GenerateUploadUrl(context, options, request));
 }
 
-StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse> CloudFunctionsServiceTracingStub::GenerateDownloadUrl(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
+CloudFunctionsServiceTracingStub::GenerateDownloadUrl(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "GenerateDownloadUrl");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "GenerateDownloadUrl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateDownloadUrl(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GenerateDownloadUrl(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy> CloudFunctionsServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy>
+CloudFunctionsServiceTracingStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::Policy> CloudFunctionsServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy>
+CloudFunctionsServiceTracingStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> CloudFunctionsServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+CloudFunctionsServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> CloudFunctionsServiceTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+CloudFunctionsServiceTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> CloudFunctionsServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+CloudFunctionsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> CloudFunctionsServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.functions.v1.CloudFunctionsService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -238,8 +255,7 @@ CloudFunctionsServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -252,8 +268,8 @@ future<Status> CloudFunctionsServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

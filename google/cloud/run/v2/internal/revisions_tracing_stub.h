@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_REVISIONS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_REVISIONS_TRACING_STUB_H
 
+#include "google/cloud/run/v2/internal/revisions_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/run/v2/internal/revisions_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,13 +39,11 @@ class RevisionsTracingStub : public RevisionsStub {
   explicit RevisionsTracingStub(std::shared_ptr<RevisionsStub> child);
 
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetRevisionRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListRevisionsResponse> ListRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListRevisionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRevision(
@@ -55,28 +53,23 @@ class RevisionsTracingStub : public RevisionsStub {
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRevision(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -93,7 +86,8 @@ class RevisionsTracingStub : public RevisionsStub {
 
  private:
   std::shared_ptr<RevisionsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

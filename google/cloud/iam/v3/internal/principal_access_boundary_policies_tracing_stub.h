@@ -32,63 +32,73 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class PrincipalAccessBoundaryPoliciesTracingStub : public PrincipalAccessBoundaryPoliciesStub {
+class PrincipalAccessBoundaryPoliciesTracingStub
+    : public PrincipalAccessBoundaryPoliciesStub {
  public:
   ~PrincipalAccessBoundaryPoliciesTracingStub() override = default;
 
-  explicit PrincipalAccessBoundaryPoliciesTracingStub(std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> child);
+  explicit PrincipalAccessBoundaryPoliciesTracingStub(
+      std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> child);
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreatePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreatePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy> GetPrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) override;
+  StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
+  GetPrincipalAccessBoundaryPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request)
+      override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdatePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeletePrincipalAccessBoundaryPolicy(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeletePrincipalAccessBoundaryPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeletePrincipalAccessBoundaryPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse> ListPrincipalAccessBoundaryPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const& request) override;
+  StatusOr<google::iam::v3::ListPrincipalAccessBoundaryPoliciesResponse>
+  ListPrincipalAccessBoundaryPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest const&
+          request) override;
 
-  StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse> SearchPrincipalAccessBoundaryPolicyBindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const& request) override;
+  StatusOr<google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsResponse>
+  SearchPrincipalAccessBoundaryPolicyBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -105,7 +115,8 @@ class PrincipalAccessBoundaryPoliciesTracingStub : public PrincipalAccessBoundar
 
  private:
   std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -116,7 +127,8 @@ class PrincipalAccessBoundaryPoliciesTracingStub : public PrincipalAccessBoundar
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> MakePrincipalAccessBoundaryPoliciesTracingStub(
+std::shared_ptr<PrincipalAccessBoundaryPoliciesStub>
+MakePrincipalAccessBoundaryPoliciesTracingStub(
     std::shared_ptr<PrincipalAccessBoundaryPoliciesStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

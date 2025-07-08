@@ -36,42 +36,42 @@ class GkeHubConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<GkeHubConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListMemberships(google::cloud::gkehub::v1::ListMembershipsRequest request);
+  virtual google::cloud::Idempotency ListMemberships(
+      google::cloud::gkehub::v1::ListMembershipsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListFeatures(google::cloud::gkehub::v1::ListFeaturesRequest request);
+  virtual google::cloud::Idempotency ListFeatures(
+      google::cloud::gkehub::v1::ListFeaturesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetMembership(google::cloud::gkehub::v1::GetMembershipRequest const& request);
+  virtual google::cloud::Idempotency GetMembership(
+      google::cloud::gkehub::v1::GetMembershipRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetFeature(google::cloud::gkehub::v1::GetFeatureRequest const& request);
+  virtual google::cloud::Idempotency GetFeature(
+      google::cloud::gkehub::v1::GetFeatureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateMembership(google::cloud::gkehub::v1::CreateMembershipRequest const& request);
+  virtual google::cloud::Idempotency CreateMembership(
+      google::cloud::gkehub::v1::CreateMembershipRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateFeature(google::cloud::gkehub::v1::CreateFeatureRequest const& request);
+  virtual google::cloud::Idempotency CreateFeature(
+      google::cloud::gkehub::v1::CreateFeatureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const& request);
+  virtual google::cloud::Idempotency DeleteMembership(
+      google::cloud::gkehub::v1::DeleteMembershipRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const& request);
+  virtual google::cloud::Idempotency DeleteFeature(
+      google::cloud::gkehub::v1::DeleteFeatureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateMembership(google::cloud::gkehub::v1::UpdateMembershipRequest const& request);
+  virtual google::cloud::Idempotency UpdateMembership(
+      google::cloud::gkehub::v1::UpdateMembershipRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateFeature(google::cloud::gkehub::v1::UpdateFeatureRequest const& request);
+  virtual google::cloud::Idempotency UpdateFeature(
+      google::cloud::gkehub::v1::UpdateFeatureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GenerateConnectManifest(google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request);
+  virtual google::cloud::Idempotency GenerateConnectManifest(
+      google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request);
 };
 
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>
-    MakeDefaultGkeHubConnectionIdempotencyPolicy();
+MakeDefaultGkeHubConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_v1

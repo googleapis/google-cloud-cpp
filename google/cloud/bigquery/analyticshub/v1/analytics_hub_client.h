@@ -69,23 +69,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AnalyticsHubServiceClient {
  public:
-  explicit AnalyticsHubServiceClient(std::shared_ptr<AnalyticsHubServiceConnection> connection, Options opts = {});
+  explicit AnalyticsHubServiceClient(
+      std::shared_ptr<AnalyticsHubServiceConnection> connection,
+      Options opts = {});
   ~AnalyticsHubServiceClient();
 
   ///@{
   /// @name Copy and move support
   AnalyticsHubServiceClient(AnalyticsHubServiceClient const&) = default;
-  AnalyticsHubServiceClient& operator=(AnalyticsHubServiceClient const&) = default;
+  AnalyticsHubServiceClient& operator=(AnalyticsHubServiceClient const&) =
+      default;
   AnalyticsHubServiceClient(AnalyticsHubServiceClient&&) = default;
   AnalyticsHubServiceClient& operator=(AnalyticsHubServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AnalyticsHubServiceClient const& a, AnalyticsHubServiceClient const& b) {
+  friend bool operator==(AnalyticsHubServiceClient const& a,
+                         AnalyticsHubServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AnalyticsHubServiceClient const& a, AnalyticsHubServiceClient const& b) {
+  friend bool operator!=(AnalyticsHubServiceClient const& a,
+                         AnalyticsHubServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -162,7 +167,10 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  ListDataExchanges(google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request, Options opts = {});
+  ListDataExchanges(
+      google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -238,7 +246,10 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  ListOrgDataExchanges(google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest request, Options opts = {});
+  ListOrgDataExchanges(
+      google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -294,7 +305,10 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  GetDataExchange(google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request, Options opts = {});
+  GetDataExchange(
+      google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -321,7 +335,11 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  CreateDataExchange(std::string const& parent, google::cloud::bigquery::analyticshub::v1::DataExchange const& data_exchange, Options opts = {});
+  CreateDataExchange(
+      std::string const& parent,
+      google::cloud::bigquery::analyticshub::v1::DataExchange const&
+          data_exchange,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -351,7 +369,9 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  CreateDataExchange(google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request, Options opts = {});
+  CreateDataExchange(google::cloud::bigquery::analyticshub::v1::
+                         CreateDataExchangeRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -379,7 +399,10 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::DataExchange const& data_exchange, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDataExchange(
+      google::cloud::bigquery::analyticshub::v1::DataExchange const&
+          data_exchange,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -409,7 +432,9 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request, Options opts = {});
+  UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::
+                         UpdateDataExchangeRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -431,8 +456,7 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1027}
   ///
   // clang-format on
-  Status
-  DeleteDataExchange(std::string const& name, Options opts = {});
+  Status DeleteDataExchange(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -458,8 +482,9 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.DeleteDataExchangeRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1027}
   ///
   // clang-format on
-  Status
-  DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request, Options opts = {});
+  Status DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::
+                                DeleteDataExchangeRequest const& request,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -493,8 +518,8 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
-  ListListings(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::bigquery::analyticshub::v1::Listing> ListListings(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -532,8 +557,9 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
   ///
   // clang-format on
-  StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
-  ListListings(google::cloud::bigquery::analyticshub::v1::ListListingsRequest request, Options opts = {});
+  StreamRange<google::cloud::bigquery::analyticshub::v1::Listing> ListListings(
+      google::cloud::bigquery::analyticshub::v1::ListListingsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -558,8 +584,8 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  GetListing(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> GetListing(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -588,8 +614,10 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> GetListing(
+      google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -615,8 +643,10 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  CreateListing(std::string const& parent, google::cloud::bigquery::analyticshub::v1::Listing const& listing, Options opts = {});
+  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> CreateListing(
+      std::string const& parent,
+      google::cloud::bigquery::analyticshub::v1::Listing const& listing,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -645,8 +675,10 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.Listing]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L510}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  CreateListing(google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> CreateListing(
+      google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -673,8 +705,9 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1100}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  UpdateListing(google::cloud::bigquery::analyticshub::v1::Listing const& listing, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
+      google::cloud::bigquery::analyticshub::v1::Listing const& listing,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -703,8 +736,10 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1100}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  UpdateListing(google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
+      google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -726,8 +761,7 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1112}
   ///
   // clang-format on
-  Status
-  DeleteListing(std::string const& name, Options opts = {});
+  Status DeleteListing(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -753,8 +787,10 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.DeleteListingRequest]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1112}
   ///
   // clang-format on
-  Status
-  DeleteListing(google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request, Options opts = {});
+  Status DeleteListing(
+      google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -820,7 +856,10 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-  SubscribeListing(google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request, Options opts = {});
+  SubscribeListing(
+      google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -855,7 +894,8 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1191}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+  future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
   SubscribeDataExchange(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -869,8 +909,8 @@ class AnalyticsHubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SubscribeDataExchange(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> SubscribeDataExchange(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -909,8 +949,11 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.SubscribeDataExchangeResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1191}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-  SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+  SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::
+                            SubscribeDataExchangeRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -923,8 +966,11 @@ class AnalyticsHubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SubscribeDataExchange(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> SubscribeDataExchange(
+      NoAwaitTag,
+      google::cloud::bigquery::analyticshub::v1::
+          SubscribeDataExchangeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -935,8 +981,10 @@ class AnalyticsHubServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-  SubscribeDataExchange(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+  SubscribeDataExchange(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -970,7 +1018,8 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1209}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+  future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
   RefreshSubscription(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -984,8 +1033,8 @@ class AnalyticsHubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RefreshSubscription(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> RefreshSubscription(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1023,8 +1072,11 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.RefreshSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1209}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+  RefreshSubscription(google::cloud::bigquery::analyticshub::v1::
+                          RefreshSubscriptionRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1037,8 +1089,11 @@ class AnalyticsHubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RefreshSubscription(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RefreshSubscription(
+      NoAwaitTag,
+      google::cloud::bigquery::analyticshub::v1::
+          RefreshSubscriptionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1049,8 +1104,10 @@ class AnalyticsHubServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+  RefreshSubscription(google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1106,7 +1163,10 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
-  GetSubscription(google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request, Options opts = {});
+  GetSubscription(
+      google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1180,7 +1240,10 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-  ListSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request, Options opts = {});
+  ListSubscriptions(
+      google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1217,7 +1280,8 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-  ListSharedResourceSubscriptions(std::string const& resource, Options opts = {});
+  ListSharedResourceSubscriptions(std::string const& resource,
+                                  Options opts = {});
 
   // clang-format off
   ///
@@ -1256,7 +1320,10 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-  ListSharedResourceSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest request, Options opts = {});
+  ListSharedResourceSubscriptions(
+      google::cloud::bigquery::analyticshub::v1::
+          ListSharedResourceSubscriptionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1281,7 +1348,8 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1320}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+  StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
   RevokeSubscription(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1311,8 +1379,11 @@ class AnalyticsHubServiceClient {
   /// [google.cloud.bigquery.analyticshub.v1.RevokeSubscriptionResponse]: @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L1320}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
-  RevokeSubscription(google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
+  RevokeSubscription(google::cloud::bigquery::analyticshub::v1::
+                         RevokeSubscriptionRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1358,8 +1429,8 @@ class AnalyticsHubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSubscription(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSubscription(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1396,7 +1467,9 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request, Options opts = {});
+  DeleteSubscription(google::cloud::bigquery::analyticshub::v1::
+                         DeleteSubscriptionRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1409,8 +1482,11 @@ class AnalyticsHubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSubscription(NoAwaitTag, google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSubscription(
+      NoAwaitTag,
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteSubscriptionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1422,7 +1498,8 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteSubscription(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1451,8 +1528,8 @@ class AnalyticsHubServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1481,8 +1558,8 @@ class AnalyticsHubServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1511,8 +1588,9 @@ class AnalyticsHubServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AnalyticsHubServiceConnection> connection_;

@@ -17,12 +17,12 @@
 // source: google/cloud/discoveryengine/v1/conversational_search_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_auth_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_logging_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_metadata_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_stub.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -42,25 +42,27 @@ std::shared_ptr<ConversationalSearchServiceStub>
 CreateDefaultConversationalSearchServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::discoveryengine::v1::ConversationalSearchService::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::discoveryengine::v1::ConversationalSearchService::NewStub(
+          channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<ConversationalSearchServiceStub> stub =
-    std::make_shared<DefaultConversationalSearchServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub));
+      std::make_shared<DefaultConversationalSearchServiceStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ConversationalSearchServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ConversationalSearchServiceAuth>(std::move(auth),
+                                                             std::move(stub));
   }
   stub = std::make_shared<ConversationalSearchServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ConversationalSearchServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

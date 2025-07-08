@@ -46,37 +46,44 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Intent>),
-  ListIntents,
-  (google::cloud::dialogflow::v2::ListIntentsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Intent>), ListIntents,
+              (google::cloud::dialogflow::v2::ListIntentsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Intent>,
-  GetIntent,
-  (google::cloud::dialogflow::v2::GetIntentRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Intent>, GetIntent,
+              (google::cloud::dialogflow::v2::GetIntentRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Intent>,
-  CreateIntent,
-  (google::cloud::dialogflow::v2::CreateIntentRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::v2::Intent>, CreateIntent,
+      (google::cloud::dialogflow::v2::CreateIntentRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Intent>,
-  UpdateIntent,
-  (google::cloud::dialogflow::v2::UpdateIntentRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::v2::Intent>, UpdateIntent,
+      (google::cloud::dialogflow::v2::UpdateIntentRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteIntent,
-  (google::cloud::dialogflow::v2::DeleteIntentRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteIntent,
+      (google::cloud::dialogflow::v2::DeleteIntentRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchUpdateIntents(Matcher<google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchUpdateIntents(Matcher<google::cloud::dialogflow::v2::BatchUpdateIntentsRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
-  BatchUpdateIntents,
-  (google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
+      BatchUpdateIntents,
+      (google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -84,33 +91,39 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchUpdateIntents(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  BatchUpdateIntents, (NoAwaitTag,
-    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchUpdateIntents(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
-  BatchUpdateIntents, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchUpdateIntents,
+      (NoAwaitTag,
+       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchDeleteIntents(Matcher<google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchUpdateIntents(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
-  BatchDeleteIntents,
-  (google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
+      BatchUpdateIntents, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteIntents(Matcher<google::cloud::dialogflow::v2::BatchDeleteIntentsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::protobuf::Struct>>, BatchDeleteIntents,
+      (google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -118,41 +131,41 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchDeleteIntents(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  BatchDeleteIntents, (NoAwaitTag,
-    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchDeleteIntents,
+      (NoAwaitTag,
+       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchDeleteIntents(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteIntents(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
-  BatchDeleteIntents, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchDeleteIntents,
+              (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

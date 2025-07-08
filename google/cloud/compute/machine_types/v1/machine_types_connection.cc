@@ -17,11 +17,11 @@
 // source: google/cloud/compute/machine_types/v1/machine_types.proto
 
 #include "google/cloud/compute/machine_types/v1/machine_types_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_option_defaults.h"
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_tracing_connection.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,20 +36,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineTypesConnection::~MachineTypesConnection() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>> MachineTypesConnection::AggregatedListMachineTypes(
-    google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::MachineTypesScopedList>>>();
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::MachineTypesScopedList>>
+MachineTypesConnection::AggregatedListMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::
+        AggregatedListMachineTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::MachineTypesScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
 MachineTypesConnection::GetMachineType(
-    google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&) {
+    google::cloud::cpp::compute::machine_types::v1::
+        GetMachineTypeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::MachineType> MachineTypesConnection::ListMachineTypes(
-    google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::MachineType>
+MachineTypesConnection::ListMachineTypes(
+    google::cloud::cpp::compute::machine_types::v1::
+        ListMachineTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::MachineType>>();
 }

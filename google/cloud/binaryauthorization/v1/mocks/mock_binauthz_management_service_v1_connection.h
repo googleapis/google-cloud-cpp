@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `BinauthzManagementServiceV1Connection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `BinauthzManagementServiceV1Client`. To do so,
- * construct an object of type `BinauthzManagementServiceV1Client` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `BinauthzManagementServiceV1Client`.
+ * To do so, construct an object of type `BinauthzManagementServiceV1Client`
+ * with an instance of this class. Then use the Google Test framework functions
+ * to program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,37 +42,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockBinauthzManagementServiceV1Connection : public binaryauthorization_v1::BinauthzManagementServiceV1Connection {
+class MockBinauthzManagementServiceV1Connection
+    : public binaryauthorization_v1::BinauthzManagementServiceV1Connection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::Policy>,
-  GetPolicy,
-  (google::cloud::binaryauthorization::v1::GetPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::binaryauthorization::v1::Policy>, GetPolicy,
+      (google::cloud::binaryauthorization::v1::GetPolicyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::Policy>,
-  UpdatePolicy,
-  (google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::binaryauthorization::v1::Policy>, UpdatePolicy,
+      (google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::binaryauthorization::v1::Attestor>,
+      CreateAttestor,
+      (google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::Attestor>,
-  CreateAttestor,
-  (google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request), (override));
+              GetAttestor,
+              (google::cloud::binaryauthorization::v1::GetAttestorRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::Attestor>,
-  GetAttestor,
-  (google::cloud::binaryauthorization::v1::GetAttestorRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::binaryauthorization::v1::Attestor>,
+      UpdateAttestor,
+      (google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::Attestor>,
-  UpdateAttestor,
-  (google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::binaryauthorization::v1::Attestor>),
+      ListAttestors,
+      (google::cloud::binaryauthorization::v1::ListAttestorsRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::binaryauthorization::v1::Attestor>),
-  ListAttestors,
-  (google::cloud::binaryauthorization::v1::ListAttestorsRequest request), (override));
-
-  MOCK_METHOD(Status,
-  DeleteAttestor,
-  (google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteAttestor,
+      (google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

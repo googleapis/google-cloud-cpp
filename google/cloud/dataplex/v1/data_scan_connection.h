@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_SCAN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_SCAN_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/data_scan_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/data_scan_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class DataScanServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataScanServiceLimitedErrorCountRetryPolicy : public DataScanServiceRetryPolicy {
+class DataScanServiceLimitedErrorCountRetryPolicy
+    : public DataScanServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class DataScanServiceLimitedErrorCountRetryPolicy : public DataScanServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit DataScanServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DataScanServiceLimitedErrorCountRetryPolicy(
       DataScanServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DataScanServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataScanServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataScanServiceLimitedErrorCountRetryPolicy(
       DataScanServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DataScanServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataScanServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class DataScanServiceLimitedErrorCountRetryPolicy : public DataScanServiceRetryP
   using BaseType = DataScanServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dataplex_v1_internal::DataScanServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dataplex_v1_internal::DataScanServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class DataScanServiceLimitedErrorCountRetryPolicy : public DataScanServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DataScanServiceLimitedTimeRetryPolicy : public DataScanServiceRetryPolicy {
+class DataScanServiceLimitedTimeRetryPolicy
+    : public DataScanServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class DataScanServiceLimitedTimeRetryPolicy : public DataScanServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit DataScanServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DataScanServiceLimitedTimeRetryPolicy(DataScanServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DataScanServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataScanServiceLimitedTimeRetryPolicy(DataScanServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DataScanServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataScanServiceLimitedTimeRetryPolicy(
+      DataScanServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DataScanServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataScanServiceLimitedTimeRetryPolicy(
+      DataScanServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataScanServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +164,9 @@ class DataScanServiceLimitedTimeRetryPolicy : public DataScanServiceRetryPolicy 
   using BaseType = DataScanServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dataplex_v1_internal::DataScanServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dataplex_v1_internal::DataScanServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,87 +188,98 @@ class DataScanServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  CreateDataScan(google::cloud::dataplex::v1::CreateDataScanRequest const& request);
+  CreateDataScan(
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateDataScan(NoAwaitTag, google::cloud::dataplex::v1::CreateDataScanRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  CreateDataScan( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  UpdateDataScan(google::cloud::dataplex::v1::UpdateDataScanRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateDataScan(NoAwaitTag, google::cloud::dataplex::v1::UpdateDataScanRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  UpdateDataScan( google::longrunning::Operation const& operation);
+  CreateDataScan(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
+  UpdateDataScan(
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
+  UpdateDataScan(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan(google::cloud::dataplex::v1::DeleteDataScanRequest const& request);
+  DeleteDataScan(
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteDataScan(NoAwaitTag, google::cloud::dataplex::v1::DeleteDataScanRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan( google::longrunning::Operation const& operation);
+  DeleteDataScan(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::dataplex::v1::DataScan>
-  GetDataScan(google::cloud::dataplex::v1::GetDataScanRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
+      google::cloud::dataplex::v1::GetDataScanRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::DataScan>
-  ListDataScans(google::cloud::dataplex::v1::ListDataScansRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::DataScan> ListDataScans(
+      google::cloud::dataplex::v1::ListDataScansRequest request);
 
   virtual StatusOr<google::cloud::dataplex::v1::RunDataScanResponse>
   RunDataScan(google::cloud::dataplex::v1::RunDataScanRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::DataScanJob>
-  GetDataScanJob(google::cloud::dataplex::v1::GetDataScanJobRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
+      google::cloud::dataplex::v1::GetDataScanJobRequest const& request);
 
   virtual StreamRange<google::cloud::dataplex::v1::DataScanJob>
-  ListDataScanJobs(google::cloud::dataplex::v1::ListDataScanJobsRequest request);
+  ListDataScanJobs(
+      google::cloud::dataplex::v1::ListDataScanJobsRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
-  GenerateDataQualityRules(google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const& request);
+  virtual StatusOr<
+      google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
+  GenerateDataQualityRules(
+      google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `DataScanServiceConnection`.
+ * A factory function to construct an object of type
+ * `DataScanServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of DataScanServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DataScanServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `DataScanServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -270,8 +289,8 @@ class DataScanServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DataScanServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `DataScanServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<DataScanServiceConnection> MakeDataScanServiceConnection(
     Options options = {});

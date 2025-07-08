@@ -69,7 +69,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FunctionServiceClient {
  public:
-  explicit FunctionServiceClient(std::shared_ptr<FunctionServiceConnection> connection, Options opts = {});
+  explicit FunctionServiceClient(
+      std::shared_ptr<FunctionServiceConnection> connection, Options opts = {});
   ~FunctionServiceClient();
 
   ///@{
@@ -82,10 +83,12 @@ class FunctionServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(FunctionServiceClient const& a, FunctionServiceClient const& b) {
+  friend bool operator==(FunctionServiceClient const& a,
+                         FunctionServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FunctionServiceClient const& a, FunctionServiceClient const& b) {
+  friend bool operator!=(FunctionServiceClient const& a,
+                         FunctionServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,8 +115,8 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L875}
   ///
   // clang-format on
-  StatusOr<google::cloud::functions::v2::Function>
-  GetFunction(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::functions::v2::Function> GetFunction(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -142,8 +145,9 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L875}
   ///
   // clang-format on
-  StatusOr<google::cloud::functions::v2::Function>
-  GetFunction(google::cloud::functions::v2::GetFunctionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::functions::v2::Function> GetFunction(
+      google::cloud::functions::v2::GetFunctionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -181,8 +185,8 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L894}
   ///
   // clang-format on
-  StreamRange<google::cloud::functions::v2::Function>
-  ListFunctions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::functions::v2::Function> ListFunctions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -220,8 +224,9 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L894}
   ///
   // clang-format on
-  StreamRange<google::cloud::functions::v2::Function>
-  ListFunctions(google::cloud::functions::v2::ListFunctionsRequest request, Options opts = {});
+  StreamRange<google::cloud::functions::v2::Function> ListFunctions(
+      google::cloud::functions::v2::ListFunctionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -261,8 +266,10 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::functions::v2::Function>>
-  CreateFunction(std::string const& parent, google::cloud::functions::v2::Function const& function, std::string const& function_id, Options opts = {});
+  future<StatusOr<google::cloud::functions::v2::Function>> CreateFunction(
+      std::string const& parent,
+      google::cloud::functions::v2::Function const& function,
+      std::string const& function_id, Options opts = {});
 
   // clang-format off
   ///
@@ -275,8 +282,10 @@ class FunctionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateFunction(NoAwaitTag, std::string const& parent, google::cloud::functions::v2::Function const& function, std::string const& function_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateFunction(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::functions::v2::Function const& function,
+      std::string const& function_id, Options opts = {});
 
   // clang-format off
   ///
@@ -314,8 +323,9 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::functions::v2::Function>>
-  CreateFunction(google::cloud::functions::v2::CreateFunctionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::functions::v2::Function>> CreateFunction(
+      google::cloud::functions::v2::CreateFunctionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -328,8 +338,10 @@ class FunctionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateFunction(NoAwaitTag, google::cloud::functions::v2::CreateFunctionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateFunction(
+      NoAwaitTag,
+      google::cloud::functions::v2::CreateFunctionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -340,8 +352,8 @@ class FunctionServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::functions::v2::Function>>
-  CreateFunction(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::functions::v2::Function>> CreateFunction(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -374,8 +386,9 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L967}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::functions::v2::Function>>
-  UpdateFunction(google::cloud::functions::v2::Function const& function, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::functions::v2::Function>> UpdateFunction(
+      google::cloud::functions::v2::Function const& function,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -388,8 +401,9 @@ class FunctionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateFunction(NoAwaitTag, google::cloud::functions::v2::Function const& function, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateFunction(
+      NoAwaitTag, google::cloud::functions::v2::Function const& function,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +439,9 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L967}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::functions::v2::Function>>
-  UpdateFunction(google::cloud::functions::v2::UpdateFunctionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::functions::v2::Function>> UpdateFunction(
+      google::cloud::functions::v2::UpdateFunctionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +454,10 @@ class FunctionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateFunction(NoAwaitTag, google::cloud::functions::v2::UpdateFunctionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateFunction(
+      NoAwaitTag,
+      google::cloud::functions::v2::UpdateFunctionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -451,8 +468,8 @@ class FunctionServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::functions::v2::Function>>
-  UpdateFunction(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::functions::v2::Function>> UpdateFunction(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -499,8 +516,8 @@ class FunctionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteFunction(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteFunction(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -539,7 +556,9 @@ class FunctionServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
-  DeleteFunction(google::cloud::functions::v2::DeleteFunctionRequest const& request, Options opts = {});
+  DeleteFunction(
+      google::cloud::functions::v2::DeleteFunctionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -552,8 +571,10 @@ class FunctionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteFunction(NoAwaitTag, google::cloud::functions::v2::DeleteFunctionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteFunction(
+      NoAwaitTag,
+      google::cloud::functions::v2::DeleteFunctionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -565,7 +586,8 @@ class FunctionServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
-  DeleteFunction(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteFunction(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -617,7 +639,9 @@ class FunctionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
-  GenerateUploadUrl(google::cloud::functions::v2::GenerateUploadUrlRequest const& request, Options opts = {});
+  GenerateUploadUrl(
+      google::cloud::functions::v2::GenerateUploadUrlRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -651,7 +675,9 @@ class FunctionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
-  GenerateDownloadUrl(google::cloud::functions::v2::GenerateDownloadUrlRequest const& request, Options opts = {});
+  GenerateDownloadUrl(
+      google::cloud::functions::v2::GenerateDownloadUrlRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -676,8 +702,8 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.ListRuntimesResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1078}
   ///
   // clang-format on
-  StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
-  ListRuntimes(std::string const& parent, Options opts = {});
+  StatusOr<google::cloud::functions::v2::ListRuntimesResponse> ListRuntimes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -706,8 +732,9 @@ class FunctionServiceClient {
   /// [google.cloud.functions.v2.ListRuntimesResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1078}
   ///
   // clang-format on
-  StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
-  ListRuntimes(google::cloud::functions::v2::ListRuntimesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::functions::v2::ListRuntimesResponse> ListRuntimes(
+      google::cloud::functions::v2::ListRuntimesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -745,8 +772,8 @@ class FunctionServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -778,8 +805,8 @@ class FunctionServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -810,8 +837,8 @@ class FunctionServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -846,8 +873,9 @@ class FunctionServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -882,8 +910,8 @@ class FunctionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -922,8 +950,8 @@ class FunctionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -949,8 +977,8 @@ class FunctionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -981,8 +1009,9 @@ class FunctionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<FunctionServiceConnection> connection_;

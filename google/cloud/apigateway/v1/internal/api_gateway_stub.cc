@@ -33,38 +33,37 @@ ApiGatewayServiceStub::~ApiGatewayServiceStub() = default;
 
 StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
 DefaultApiGatewayServiceStub::ListGateways(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
-    google::cloud::apigateway::v1::ListGatewaysResponse response;
-    auto status =
-        grpc_stub_->ListGateways(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
+  google::cloud::apigateway::v1::ListGatewaysResponse response;
+  auto status = grpc_stub_->ListGateways(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
 DefaultApiGatewayServiceStub::GetGateway(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::apigateway::v1::GetGatewayRequest const& request) {
-    google::cloud::apigateway::v1::Gateway response;
-    auto status =
-        grpc_stub_->GetGateway(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apigateway::v1::GetGatewayRequest const& request) {
+  google::cloud::apigateway::v1::Gateway response;
+  auto status = grpc_stub_->GetGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncCreateGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::CreateGatewayRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::CreateGatewayRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::apigateway::v1::CreateGatewayRequest const& request,
@@ -76,26 +75,25 @@ DefaultApiGatewayServiceStub::AsyncCreateGateway(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::CreateGateway(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateGateway(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::UpdateGatewayRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::UpdateGatewayRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
@@ -107,26 +105,25 @@ DefaultApiGatewayServiceStub::AsyncUpdateGateway(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::UpdateGateway(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateGateway(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::DeleteGatewayRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::DeleteGatewayRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
@@ -138,52 +135,49 @@ DefaultApiGatewayServiceStub::AsyncDeleteGateway(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::DeleteGateway(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteGateway(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
 DefaultApiGatewayServiceStub::ListApis(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::apigateway::v1::ListApisRequest const& request) {
-    google::cloud::apigateway::v1::ListApisResponse response;
-    auto status =
-        grpc_stub_->ListApis(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apigateway::v1::ListApisRequest const& request) {
+  google::cloud::apigateway::v1::ListApisResponse response;
+  auto status = grpc_stub_->ListApis(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apigateway::v1::Api>
 DefaultApiGatewayServiceStub::GetApi(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::apigateway::v1::GetApiRequest const& request) {
-    google::cloud::apigateway::v1::Api response;
-    auto status =
-        grpc_stub_->GetApi(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apigateway::v1::GetApiRequest const& request) {
+  google::cloud::apigateway::v1::Api response;
+  auto status = grpc_stub_->GetApi(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncCreateApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::CreateApiRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::CreateApiRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::CreateApiRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::apigateway::v1::CreateApiRequest const& request,
@@ -195,26 +189,25 @@ DefaultApiGatewayServiceStub::AsyncCreateApi(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::CreateApi(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::CreateApiRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateApi(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateApi(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::UpdateApiRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::UpdateApiRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::UpdateApiRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::apigateway::v1::UpdateApiRequest const& request,
@@ -226,26 +219,25 @@ DefaultApiGatewayServiceStub::AsyncUpdateApi(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::UpdateApi(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::UpdateApiRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateApi(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateApi(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::DeleteApiRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::DeleteApiRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::DeleteApiRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::apigateway::v1::DeleteApiRequest const& request,
@@ -257,56 +249,54 @@ DefaultApiGatewayServiceStub::AsyncDeleteApi(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::DeleteApi(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::DeleteApiRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteApi(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteApi(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
 DefaultApiGatewayServiceStub::ListApiConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
-    google::cloud::apigateway::v1::ListApiConfigsResponse response;
-    auto status =
-        grpc_stub_->ListApiConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
+  google::cloud::apigateway::v1::ListApiConfigsResponse response;
+  auto status = grpc_stub_->ListApiConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
 DefaultApiGatewayServiceStub::GetApiConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
-    google::cloud::apigateway::v1::ApiConfig response;
-    auto status =
-        grpc_stub_->GetApiConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
+  google::cloud::apigateway::v1::ApiConfig response;
+  auto status = grpc_stub_->GetApiConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncCreateApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::CreateApiConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::CreateApiConfigRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateApiConfig(context, request, cq);
       },
       request, std::move(context));
@@ -314,30 +304,30 @@ DefaultApiGatewayServiceStub::AsyncCreateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::CreateApiConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateApiConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateApiConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::UpdateApiConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::UpdateApiConfigRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateApiConfig(context, request, cq);
       },
       request, std::move(context));
@@ -345,30 +335,30 @@ DefaultApiGatewayServiceStub::AsyncUpdateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::UpdateApiConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateApiConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateApiConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::apigateway::v1::DeleteApiConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::apigateway::v1::DeleteApiConfigRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteApiConfig(context, request, cq);
       },
       request, std::move(context));
@@ -376,16 +366,14 @@ DefaultApiGatewayServiceStub::AsyncDeleteApiConfig(
 
 StatusOr<google::longrunning::Operation>
 DefaultApiGatewayServiceStub::DeleteApiConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteApiConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteApiConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -414,13 +402,14 @@ future<Status> DefaultApiGatewayServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

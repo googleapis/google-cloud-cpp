@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_INTERNAL_METRICS_SCOPES_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_INTERNAL_METRICS_SCOPES_TRACING_STUB_H
 
-#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -39,36 +39,40 @@ class MetricsScopesTracingStub : public MetricsScopesStub {
   explicit MetricsScopesTracingStub(std::shared_ptr<MetricsScopesStub> child);
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
+          request) override;
 
-  StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse> ListMetricsScopesByMonitoredProject(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) override;
+  StatusOr<google::monitoring::metricsscope::v1::
+               ListMetricsScopesByMonitoredProjectResponse>
+  ListMetricsScopesByMonitoredProject(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::metricsscope::v1::
+          ListMetricsScopesByMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -84,7 +88,8 @@ class MetricsScopesTracingStub : public MetricsScopesStub {
 
  private:
   std::shared_ptr<MetricsScopesStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

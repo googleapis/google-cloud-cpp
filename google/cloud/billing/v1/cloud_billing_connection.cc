@@ -17,12 +17,12 @@
 // source: google/cloud/billing/v1/cloud_billing.proto
 
 #include "google/cloud/billing/v1/cloud_billing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/billing/v1/cloud_billing_options.h"
 #include "google/cloud/billing/v1/internal/cloud_billing_connection_impl.h"
 #include "google/cloud/billing/v1/internal/cloud_billing_option_defaults.h"
 #include "google/cloud/billing/v1/internal/cloud_billing_stub_factory.h"
 #include "google/cloud/billing/v1/internal/cloud_billing_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -44,8 +44,10 @@ CloudBillingConnection::GetBillingAccount(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::billing::v1::BillingAccount> CloudBillingConnection::ListBillingAccounts(
-    google::cloud::billing::v1::ListBillingAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::billing::v1::BillingAccount>
+CloudBillingConnection::ListBillingAccounts(
+    google::cloud::billing::v1::
+        ListBillingAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::BillingAccount>>();
 }
@@ -62,8 +64,10 @@ CloudBillingConnection::CreateBillingAccount(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::billing::v1::ProjectBillingInfo> CloudBillingConnection::ListProjectBillingInfo(
-    google::cloud::billing::v1::ListProjectBillingInfoRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
+CloudBillingConnection::ListProjectBillingInfo(
+    google::cloud::billing::v1::
+        ListProjectBillingInfoRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>();
 }
@@ -80,14 +84,12 @@ CloudBillingConnection::UpdateProjectBillingInfo(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> CloudBillingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> CloudBillingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -107,17 +109,17 @@ CloudBillingConnection::MoveBillingAccount(
 std::shared_ptr<CloudBillingConnection> MakeCloudBillingConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      CloudBillingPolicyOptionList>(options, __func__);
-  options = billing_v1_internal::CloudBillingDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 CloudBillingPolicyOptionList>(options,
+                                                               __func__);
+  options = billing_v1_internal::CloudBillingDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = billing_v1_internal::CreateDefaultCloudBillingStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return billing_v1_internal::MakeCloudBillingTracingConnection(
       std::make_shared<billing_v1_internal::CloudBillingConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -39,13 +39,11 @@ class IDSStub {
   virtual ~IDSStub() = 0;
 
   virtual StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::ids::v1::ListEndpointsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::ids::v1::GetEndpointRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpoint(
@@ -55,8 +53,7 @@ class IDSStub {
       google::cloud::ids::v1::CreateEndpointRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateEndpoint(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::ids::v1::CreateEndpointRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
@@ -66,14 +63,13 @@ class IDSStub {
       google::cloud::ids::v1::DeleteEndpointRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -87,18 +83,17 @@ class DefaultIDSStub : public IDSStub {
  public:
   DefaultIDSStub(
       std::unique_ptr<google::cloud::ids::v1::IDS::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::ids::v1::ListEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::ids::v1::GetEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpoint(
@@ -108,8 +103,7 @@ class DefaultIDSStub : public IDSStub {
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
@@ -119,8 +113,7 @@ class DefaultIDSStub : public IDSStub {
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -137,7 +130,8 @@ class DefaultIDSStub : public IDSStub {
 
  private:
   std::unique_ptr<google::cloud::ids::v1::IDS::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

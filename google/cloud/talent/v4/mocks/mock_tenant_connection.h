@@ -46,29 +46,29 @@ class MockTenantServiceConnection : public talent_v4::TenantServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>,
-  CreateTenant,
-  (google::cloud::talent::v4::CreateTenantRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, CreateTenant,
+              (google::cloud::talent::v4::CreateTenantRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>,
-  GetTenant,
-  (google::cloud::talent::v4::GetTenantRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, GetTenant,
+              (google::cloud::talent::v4::GetTenantRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>,
-  UpdateTenant,
-  (google::cloud::talent::v4::UpdateTenantRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, UpdateTenant,
+              (google::cloud::talent::v4::UpdateTenantRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteTenant,
-  (google::cloud::talent::v4::DeleteTenantRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteTenant,
+              (google::cloud::talent::v4::DeleteTenantRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Tenant>),
-  ListTenants,
-  (google::cloud::talent::v4::ListTenantsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::talent::v4::Tenant>), ListTenants,
+              (google::cloud::talent::v4::ListTenantsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

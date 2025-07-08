@@ -36,15 +36,18 @@ class SqlConnectServiceTracingConnection
   ~SqlConnectServiceTracingConnection() override = default;
 
   explicit SqlConnectServiceTracingConnection(
-    std::shared_ptr<sql_v1::SqlConnectServiceConnection> child);
+      std::shared_ptr<sql_v1::SqlConnectServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::sql::v1::ConnectSettings>
-  GetConnectSettings(google::cloud::sql::v1::GetConnectSettingsRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
+      google::cloud::sql::v1::GetConnectSettingsRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-  GenerateEphemeralCert(google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) override;
+  GenerateEphemeralCert(
+      google::cloud::sql::v1::GenerateEphemeralCertRequest const& request)
+      override;
 
  private:
   std::shared_ptr<sql_v1::SqlConnectServiceConnection> child_;

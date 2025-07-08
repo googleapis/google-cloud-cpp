@@ -17,11 +17,11 @@
 // source: google/cloud/compute/zones/v1/zones.proto
 
 #include "google/cloud/compute/zones/v1/zones_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/zones/v1/internal/zones_option_defaults.h"
 #include "google/cloud/compute/zones/v1/internal/zones_tracing_connection.h"
 #include "google/cloud/compute/zones/v1/zones_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,14 +36,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ZonesConnection::~ZonesConnection() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::Zone>
-ZonesConnection::GetZone(
+StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesConnection::GetZone(
     google::cloud::cpp::compute::zones::v1::GetZoneRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Zone> ZonesConnection::ListZones(
-    google::cloud::cpp::compute::zones::v1::ListZonesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::cpp::compute::zones::v1::
+        ListZonesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Zone>>();
 }

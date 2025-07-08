@@ -50,269 +50,294 @@ SecurityCenterMetadata::AsyncBulkMuteFindings(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBulkMuteFindings(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBulkMuteFindings(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterMetadata::BulkMuteFindings(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BulkMuteFindings(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterMetadata::CreateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateSecurityHealthAnalyticsCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterMetadata::CreateSource(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSource(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterMetadata::CreateFinding(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateFinding(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterMetadata::CreateMuteConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMuteConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterMetadata::CreateNotificationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::CreateNotificationConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateNotificationConfig(context, options, request);
 }
 
-Status
-SecurityCenterMetadata::DeleteMuteConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SecurityCenterMetadata::DeleteMuteConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMuteConfig(context, options, request);
 }
 
-Status
-SecurityCenterMetadata::DeleteNotificationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status SecurityCenterMetadata::DeleteNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteNotificationConfig(context, options, request);
 }
 
-Status
-SecurityCenterMetadata::DeleteSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, options, request);
+Status SecurityCenterMetadata::DeleteSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Simulation>
 SecurityCenterMetadata::GetSimulation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetSimulationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSimulation(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ValuedResource>
 SecurityCenterMetadata::GetValuedResource(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetValuedResourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetValuedResource(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterMetadata::GetBigQueryExport(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetBigQueryExportRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBigQueryExport(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecurityCenterMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> SecurityCenterMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterMetadata::GetMuteConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMuteConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterMetadata::GetNotificationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetNotificationConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNotificationConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterMetadata::GetOrganizationSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOrganizationSettings(context, options, request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::EffectiveSecurityHealthAnalyticsCustomModule>
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveSecurityHealthAnalyticsCustomModule>
 SecurityCenterMetadata::GetEffectiveSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterMetadata::GetSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSecurityHealthAnalyticsCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetSecurityHealthAnalyticsCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterMetadata::GetSource(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetSourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSource(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::GroupAssetsResponse>
 SecurityCenterMetadata::GroupAssets(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GroupAssetsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GroupAssets(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::GroupFindingsResponse>
 SecurityCenterMetadata::GroupFindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GroupFindingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->GroupFindings(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListAssetsResponse>
 SecurityCenterMetadata::ListAssets(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListAssetsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAssets(context, options, request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
+StatusOr<google::cloud::securitycenter::v1::
+             ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterMetadata::ListDescendantSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListDescendantSecurityHealthAnalyticsCustomModulesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+            request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
 SecurityCenterMetadata::ListFindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListFindingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListFindings(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListMuteConfigsResponse>
 SecurityCenterMetadata::ListMuteConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMuteConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListNotificationConfigsResponse>
 SecurityCenterMetadata::ListNotificationConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListNotificationConfigsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListNotificationConfigsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNotificationConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
+StatusOr<google::cloud::securitycenter::v1::
+             ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterMetadata::ListEffectiveSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+            request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(
+      context, options, request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesResponse>
+StatusOr<google::cloud::securitycenter::v1::
+             ListSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterMetadata::ListSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSecurityHealthAnalyticsCustomModules(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListSecurityHealthAnalyticsCustomModules(context, options,
+                                                          request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse>
 SecurityCenterMetadata::ListSources(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListSourcesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSources(context, options, request);
 }
 
@@ -321,351 +346,413 @@ SecurityCenterMetadata::AsyncRunAssetDiscovery(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncRunAssetDiscovery(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncRunAssetDiscovery(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterMetadata::RunAssetDiscovery(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->RunAssetDiscovery(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterMetadata::SetFindingState(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SetFindingState(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterMetadata::SetMute(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::SetMuteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SetMute(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SecurityCenterMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> SecurityCenterMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecurityCenterMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleResponse>
+StatusOr<google::cloud::securitycenter::v1::
+             SimulateSecurityHealthAnalyticsCustomModuleResponse>
 SecurityCenterMetadata::SimulateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, options,
+                                                             request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterMetadata::UpdateExternalSystem(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::UpdateExternalSystemRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("external_system.name=", internal::UrlEncode(request.external_system().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("external_system.name=",
+                   internal::UrlEncode(request.external_system().name())));
   return child_->UpdateExternalSystem(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterMetadata::UpdateFinding(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("finding.name=", internal::UrlEncode(request.finding().name())));
+  SetMetadata(context, options,
+              absl::StrCat("finding.name=",
+                           internal::UrlEncode(request.finding().name())));
   return child_->UpdateFinding(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterMetadata::UpdateMuteConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("mute_config.name=", internal::UrlEncode(request.mute_config().name())));
+  SetMetadata(context, options,
+              absl::StrCat("mute_config.name=",
+                           internal::UrlEncode(request.mute_config().name())));
   return child_->UpdateMuteConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterMetadata::UpdateNotificationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("notification_config.name=", internal::UrlEncode(request.notification_config().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("notification_config.name=",
+                   internal::UrlEncode(request.notification_config().name())));
   return child_->UpdateNotificationConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterMetadata::UpdateOrganizationSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("organization_settings.name=", internal::UrlEncode(request.organization_settings().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat(
+                  "organization_settings.name=",
+                  internal::UrlEncode(request.organization_settings().name())));
   return child_->UpdateOrganizationSettings(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterMetadata::UpdateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("security_health_analytics_custom_module.name=", internal::UrlEncode(request.security_health_analytics_custom_module().name())));
-  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat(
+          "security_health_analytics_custom_module.name=",
+          internal::UrlEncode(
+              request.security_health_analytics_custom_module().name())));
+  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterMetadata::UpdateSource(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("source.name=", internal::UrlEncode(request.source().name())));
+  SetMetadata(context, options,
+              absl::StrCat("source.name=",
+                           internal::UrlEncode(request.source().name())));
   return child_->UpdateSource(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
 SecurityCenterMetadata::UpdateSecurityMarks(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("security_marks.name=", internal::UrlEncode(request.security_marks().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("security_marks.name=",
+                   internal::UrlEncode(request.security_marks().name())));
   return child_->UpdateSecurityMarks(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterMetadata::CreateBigQueryExport(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBigQueryExport(context, options, request);
 }
 
-Status
-SecurityCenterMetadata::DeleteBigQueryExport(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status SecurityCenterMetadata::DeleteBigQueryExport(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBigQueryExport(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterMetadata::UpdateBigQueryExport(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("big_query_export.name=", internal::UrlEncode(request.big_query_export().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("big_query_export.name=",
+                   internal::UrlEncode(request.big_query_export().name())));
   return child_->UpdateBigQueryExport(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
 SecurityCenterMetadata::ListBigQueryExports(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListBigQueryExportsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBigQueryExports(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
 SecurityCenterMetadata::CreateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::CreateEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateEventThreatDetectionCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        CreateEventThreatDetectionCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
-Status
-SecurityCenterMetadata::DeleteEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::DeleteEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteEventThreatDetectionCustomModule(context, options, request);
+Status SecurityCenterMetadata::DeleteEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        DeleteEventThreatDetectionCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
 SecurityCenterMetadata::GetEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        GetEventThreatDetectionCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEventThreatDetectionCustomModule(context, options, request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesResponse>
+StatusOr<google::cloud::securitycenter::v1::
+             ListDescendantEventThreatDetectionCustomModulesResponse>
 SecurityCenterMetadata::ListDescendantEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListDescendantEventThreatDetectionCustomModulesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDescendantEventThreatDetectionCustomModules(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListDescendantEventThreatDetectionCustomModulesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDescendantEventThreatDetectionCustomModules(
+      context, options, request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesResponse>
+StatusOr<google::cloud::securitycenter::v1::
+             ListEventThreatDetectionCustomModulesResponse>
 SecurityCenterMetadata::ListEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListEventThreatDetectionCustomModulesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEventThreatDetectionCustomModules(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListEventThreatDetectionCustomModulesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListEventThreatDetectionCustomModules(context, options,
+                                                       request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
 SecurityCenterMetadata::UpdateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::UpdateEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("event_threat_detection_custom_module.name=", internal::UrlEncode(request.event_threat_detection_custom_module().name())));
-  return child_->UpdateEventThreatDetectionCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        UpdateEventThreatDetectionCustomModuleRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("event_threat_detection_custom_module.name=",
+                   internal::UrlEncode(
+                       request.event_threat_detection_custom_module().name())));
+  return child_->UpdateEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleResponse>
+StatusOr<google::cloud::securitycenter::v1::
+             ValidateEventThreatDetectionCustomModuleResponse>
 SecurityCenterMetadata::ValidateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ValidateEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ValidateEventThreatDetectionCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ValidateEventThreatDetectionCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ValidateEventThreatDetectionCustomModule(context, options,
+                                                          request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule>
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveEventThreatDetectionCustomModule>
 SecurityCenterMetadata::GetEffectiveEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEffectiveEventThreatDetectionCustomModule(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetEffectiveEventThreatDetectionCustomModule(context, options,
+                                                              request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesResponse>
+StatusOr<google::cloud::securitycenter::v1::
+             ListEffectiveEventThreatDetectionCustomModulesResponse>
 SecurityCenterMetadata::ListEffectiveEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListEffectiveEventThreatDetectionCustomModulesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEffectiveEventThreatDetectionCustomModules(context, options, request);
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListEffectiveEventThreatDetectionCustomModulesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListEffectiveEventThreatDetectionCustomModules(
+      context, options, request);
 }
 
-StatusOr<google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+StatusOr<
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
 SecurityCenterMetadata::BatchCreateResourceValueConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        BatchCreateResourceValueConfigsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCreateResourceValueConfigs(context, options, request);
 }
 
-Status
-SecurityCenterMetadata::DeleteResourceValueConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status SecurityCenterMetadata::DeleteResourceValueConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteResourceValueConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
 SecurityCenterMetadata::GetResourceValueConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetResourceValueConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListResourceValueConfigsResponse>
 SecurityCenterMetadata::ListResourceValueConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListResourceValueConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
 SecurityCenterMetadata::UpdateResourceValueConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource_value_config.name=", internal::UrlEncode(request.resource_value_config().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat(
+                  "resource_value_config.name=",
+                  internal::UrlEncode(request.resource_value_config().name())));
   return child_->UpdateResourceValueConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListValuedResourcesResponse>
 SecurityCenterMetadata::ListValuedResources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::securitycenter::v1::ListValuedResourcesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListValuedResources(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListAttackPathsResponse>
 SecurityCenterMetadata::ListAttackPaths(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListAttackPathsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAttackPaths(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SecurityCenterMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-SecurityCenterMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> SecurityCenterMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-SecurityCenterMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SecurityCenterMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-SecurityCenterMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SecurityCenterMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -677,8 +764,8 @@ SecurityCenterMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> SecurityCenterMetadata::AsyncCancelOperation(
@@ -688,21 +775,21 @@ future<Status> SecurityCenterMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

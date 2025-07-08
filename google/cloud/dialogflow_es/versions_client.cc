@@ -25,11 +25,11 @@ namespace cloud {
 namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-VersionsClient::VersionsClient(
-    std::shared_ptr<VersionsConnection> connection, Options opts)
+VersionsClient::VersionsClient(std::shared_ptr<VersionsConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 VersionsClient::~VersionsClient() = default;
 
 StreamRange<google::cloud::dialogflow::v2::Version>
@@ -41,27 +41,30 @@ VersionsClient::ListVersions(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::v2::Version>
-VersionsClient::ListVersions(google::cloud::dialogflow::v2::ListVersionsRequest request, Options opts) {
+VersionsClient::ListVersions(
+    google::cloud::dialogflow::v2::ListVersionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVersions(std::move(request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsClient::GetVersion(std::string const& name, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Version> VersionsClient::GetVersion(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::GetVersionRequest request;
   request.set_name(name);
   return connection_->GetVersion(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsClient::GetVersion(google::cloud::dialogflow::v2::GetVersionRequest const& request, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Version> VersionsClient::GetVersion(
+    google::cloud::dialogflow::v2::GetVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVersion(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsClient::CreateVersion(std::string const& parent, google::cloud::dialogflow::v2::Version const& version, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Version> VersionsClient::CreateVersion(
+    std::string const& parent,
+    google::cloud::dialogflow::v2::Version const& version, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateVersionRequest request;
   request.set_parent(parent);
@@ -69,14 +72,16 @@ VersionsClient::CreateVersion(std::string const& parent, google::cloud::dialogfl
   return connection_->CreateVersion(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsClient::CreateVersion(google::cloud::dialogflow::v2::CreateVersionRequest const& request, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Version> VersionsClient::CreateVersion(
+    google::cloud::dialogflow::v2::CreateVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVersion(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsClient::UpdateVersion(google::cloud::dialogflow::v2::Version const& version, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Version> VersionsClient::UpdateVersion(
+    google::cloud::dialogflow::v2::Version const& version,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateVersionRequest request;
   *request.mutable_version() = version;
@@ -84,40 +89,41 @@ VersionsClient::UpdateVersion(google::cloud::dialogflow::v2::Version const& vers
   return connection_->UpdateVersion(request);
 }
 
-StatusOr<google::cloud::dialogflow::v2::Version>
-VersionsClient::UpdateVersion(google::cloud::dialogflow::v2::UpdateVersionRequest const& request, Options opts) {
+StatusOr<google::cloud::dialogflow::v2::Version> VersionsClient::UpdateVersion(
+    google::cloud::dialogflow::v2::UpdateVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVersion(request);
 }
 
-Status
-VersionsClient::DeleteVersion(std::string const& name, Options opts) {
+Status VersionsClient::DeleteVersion(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::DeleteVersionRequest request;
   request.set_name(name);
   return connection_->DeleteVersion(request);
 }
 
-Status
-VersionsClient::DeleteVersion(google::cloud::dialogflow::v2::DeleteVersionRequest const& request, Options opts) {
+Status VersionsClient::DeleteVersion(
+    google::cloud::dialogflow::v2::DeleteVersionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(request);
 }
 
-StreamRange<google::cloud::location::Location>
-VersionsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> VersionsClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-VersionsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> VersionsClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-VersionsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> VersionsClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -125,36 +131,35 @@ VersionsClient::ListOperations(std::string const& name, std::string const& filte
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-VersionsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> VersionsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-VersionsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> VersionsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VersionsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VersionsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-VersionsClient::CancelOperation(std::string const& name, Options opts) {
+Status VersionsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-VersionsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status VersionsClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -32,80 +32,73 @@ CompanyServiceStub::~CompanyServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::CreateCompany(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::CreateCompanyRequest const& request) {
-    google::cloud::talent::v4::Company response;
-    auto status =
-        grpc_stub_->CreateCompany(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::CreateCompanyRequest const& request) {
+  google::cloud::talent::v4::Company response;
+  auto status = grpc_stub_->CreateCompany(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::GetCompany(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::GetCompanyRequest const& request) {
-    google::cloud::talent::v4::Company response;
-    auto status =
-        grpc_stub_->GetCompany(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::GetCompanyRequest const& request) {
+  google::cloud::talent::v4::Company response;
+  auto status = grpc_stub_->GetCompany(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::talent::v4::Company>
 DefaultCompanyServiceStub::UpdateCompany(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::UpdateCompanyRequest const& request) {
-    google::cloud::talent::v4::Company response;
-    auto status =
-        grpc_stub_->UpdateCompany(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::UpdateCompanyRequest const& request) {
+  google::cloud::talent::v4::Company response;
+  auto status = grpc_stub_->UpdateCompany(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultCompanyServiceStub::DeleteCompany(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::DeleteCompanyRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteCompany(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultCompanyServiceStub::DeleteCompany(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::DeleteCompanyRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteCompany(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 DefaultCompanyServiceStub::ListCompanies(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::ListCompaniesRequest const& request) {
-    google::cloud::talent::v4::ListCompaniesResponse response;
-    auto status =
-        grpc_stub_->ListCompanies(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::ListCompaniesRequest const& request) {
+  google::cloud::talent::v4::ListCompaniesResponse response;
+  auto status = grpc_stub_->ListCompanies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultCompanyServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

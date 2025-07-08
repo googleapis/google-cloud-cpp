@@ -34,8 +34,10 @@ using ::google::cloud::notebooks_v1::NotebookServicePollingPolicyOption;
 /// @deprecated Use notebooks_v1::NotebookServiceBackoffPolicyOption directly.
 using ::google::cloud::notebooks_v1::NotebookServiceBackoffPolicyOption;
 
-/// @deprecated Use notebooks_v1::NotebookServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::notebooks_v1::NotebookServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// notebooks_v1::NotebookServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::notebooks_v1::
+    NotebookServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use notebooks_v1::NotebookServicePolicyOptionList directly.
 using ::google::cloud::notebooks_v1::NotebookServicePolicyOptionList;

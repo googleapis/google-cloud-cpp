@@ -17,12 +17,12 @@
 // source: google/cloud/dialogflow/cx/v3/changelog.proto
 
 #include "google/cloud/dialogflow_cx/internal/changelogs_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_auth_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_stub.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -39,30 +39,31 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ChangelogsStub>
-CreateDefaultChangelogsStub(
+std::shared_ptr<ChangelogsStub> CreateDefaultChangelogsStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::dialogflow::cx::v3::Changelogs::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::dialogflow::cx::v3::Changelogs::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ChangelogsStub> stub =
-    std::make_shared<DefaultChangelogsStub>(std::move(service_grpc_stub), std::move(service_operations_stub), std::move(service_locations_stub));
+      std::make_shared<DefaultChangelogsStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ChangelogsAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ChangelogsAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<ChangelogsMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ChangelogsLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

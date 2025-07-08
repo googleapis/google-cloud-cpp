@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_OPERATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_OPERATIONS_CONNECTION_H
 
+#include "google/cloud/sql/v1/internal/sql_operations_retry_traits.h"
+#include "google/cloud/sql/v1/sql_operations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/sql/v1/internal/sql_operations_retry_traits.h"
-#include "google/cloud/sql/v1/sql_operations_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,7 +52,8 @@ class SqlOperationsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlOperationsServiceLimitedErrorCountRetryPolicy : public SqlOperationsServiceRetryPolicy {
+class SqlOperationsServiceLimitedErrorCountRetryPolicy
+    : public SqlOperationsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +62,18 @@ class SqlOperationsServiceLimitedErrorCountRetryPolicy : public SqlOperationsSer
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit SqlOperationsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit SqlOperationsServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   SqlOperationsServiceLimitedErrorCountRetryPolicy(
       SqlOperationsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SqlOperationsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlOperationsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   SqlOperationsServiceLimitedErrorCountRetryPolicy(
       SqlOperationsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SqlOperationsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlOperationsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +93,9 @@ class SqlOperationsServiceLimitedErrorCountRetryPolicy : public SqlOperationsSer
   using BaseType = SqlOperationsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlOperationsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      sql_v1_internal::SqlOperationsServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +108,8 @@ class SqlOperationsServiceLimitedErrorCountRetryPolicy : public SqlOperationsSer
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlOperationsServiceLimitedTimeRetryPolicy : public SqlOperationsServiceRetryPolicy {
+class SqlOperationsServiceLimitedTimeRetryPolicy
+    : public SqlOperationsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +134,14 @@ class SqlOperationsServiceLimitedTimeRetryPolicy : public SqlOperationsServiceRe
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlOperationsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SqlOperationsServiceLimitedTimeRetryPolicy(SqlOperationsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SqlOperationsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlOperationsServiceLimitedTimeRetryPolicy(SqlOperationsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SqlOperationsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlOperationsServiceLimitedTimeRetryPolicy(
+      SqlOperationsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SqlOperationsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlOperationsServiceLimitedTimeRetryPolicy(
+      SqlOperationsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SqlOperationsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,16 +163,18 @@ class SqlOperationsServiceLimitedTimeRetryPolicy : public SqlOperationsServiceRe
   using BaseType = SqlOperationsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlOperationsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      sql_v1_internal::SqlOperationsServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `SqlOperationsServiceConnection` object for `SqlOperationsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SqlOperationsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `SqlOperationsServiceClient`.
+ * sets in `SqlOperationsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `SqlOperationsServiceClient`.
  *
  * To create a concrete instance, see `MakeSqlOperationsServiceConnection()`.
  *
@@ -175,14 +186,14 @@ class SqlOperationsServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Get(google::cloud::sql::v1::SqlOperationsGetRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Get(
+      google::cloud::sql::v1::SqlOperationsGetRequest const& request);
 
-  virtual StreamRange<google::cloud::sql::v1::Operation>
-  List(google::cloud::sql::v1::SqlOperationsListRequest request);
+  virtual StreamRange<google::cloud::sql::v1::Operation> List(
+      google::cloud::sql::v1::SqlOperationsListRequest request);
 
-  virtual Status
-  Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const& request);
+  virtual Status Cancel(
+      google::cloud::sql::v1::SqlOperationsCancelRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

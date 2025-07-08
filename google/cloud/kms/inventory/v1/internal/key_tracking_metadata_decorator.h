@@ -39,19 +39,20 @@ class KeyTrackingServiceMetadata : public KeyTrackingServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary> GetProtectedResourcesSummary(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request) override;
+  StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
+  GetProtectedResourcesSummary(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::inventory::v1::
+          GetProtectedResourcesSummaryRequest const& request) override;
 
-  StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse> SearchProtectedResources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const& request) override;
+  StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
+  SearchProtectedResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
+          request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

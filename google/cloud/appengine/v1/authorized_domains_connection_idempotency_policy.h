@@ -34,14 +34,15 @@ class AuthorizedDomainsConnectionIdempotencyPolicy {
   virtual ~AuthorizedDomainsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request);
+  virtual google::cloud::Idempotency ListAuthorizedDomains(
+      google::appengine::v1::ListAuthorizedDomainsRequest request);
 };
 
 std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
-    MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy();
+MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_v1

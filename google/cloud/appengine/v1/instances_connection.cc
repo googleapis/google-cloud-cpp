@@ -39,13 +39,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstancesConnection::~InstancesConnection() = default;
 
 StreamRange<google::appengine::v1::Instance> InstancesConnection::ListInstances(
-    google::appengine::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::appengine::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::Instance>>();
 }
 
-StatusOr<google::appengine::v1::Instance>
-InstancesConnection::GetInstance(
+StatusOr<google::appengine::v1::Instance> InstancesConnection::GetInstance(
     google::appengine::v1::GetInstanceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -54,64 +54,56 @@ future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 InstancesConnection::DeleteInstance(
     google::appengine::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::OperationMetadataV1>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::OperationMetadataV1>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-InstancesConnection::DeleteInstance(
-    NoAwaitTag,
-    google::appengine::v1::DeleteInstanceRequest const&) {
+StatusOr<google::longrunning::Operation> InstancesConnection::DeleteInstance(
+    NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-InstancesConnection::DeleteInstance(
-    google::longrunning::Operation const&) {
+InstancesConnection::DeleteInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::OperationMetadataV1>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::OperationMetadataV1>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
 InstancesConnection::DebugInstance(
     google::appengine::v1::DebugInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-InstancesConnection::DebugInstance(
-    NoAwaitTag,
-    google::appengine::v1::DebugInstanceRequest const&) {
+StatusOr<google::longrunning::Operation> InstancesConnection::DebugInstance(
+    NoAwaitTag, google::appengine::v1::DebugInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
-InstancesConnection::DebugInstance(
-    google::longrunning::Operation const&) {
+InstancesConnection::DebugInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<InstancesConnection> MakeInstancesConnection(
-    Options options) {
+std::shared_ptr<InstancesConnection> MakeInstancesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      InstancesPolicyOptionList>(options, __func__);
-  options = appengine_v1_internal::InstancesDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 InstancesPolicyOptionList>(options, __func__);
+  options = appengine_v1_internal::InstancesDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = appengine_v1_internal::CreateDefaultInstancesStub(
-    std::move(auth), options);
+  auto stub = appengine_v1_internal::CreateDefaultInstancesStub(std::move(auth),
+                                                                options);
   return appengine_v1_internal::MakeInstancesTracingConnection(
       std::make_shared<appengine_v1_internal::InstancesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

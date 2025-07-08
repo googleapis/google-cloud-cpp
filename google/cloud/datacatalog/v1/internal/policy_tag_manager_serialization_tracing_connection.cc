@@ -29,57 +29,77 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-PolicyTagManagerSerializationTracingConnection::PolicyTagManagerSerializationTracingConnection(
-    std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection> child)
+PolicyTagManagerSerializationTracingConnection::
+    PolicyTagManagerSerializationTracingConnection(
+        std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection>
+            child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerSerializationTracingConnection::ReplaceTaxonomy(google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
-  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerSerializationConnection::ReplaceTaxonomy");
+PolicyTagManagerSerializationTracingConnection::ReplaceTaxonomy(
+    google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "ReplaceTaxonomy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ReplaceTaxonomy(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
-PolicyTagManagerSerializationTracingConnection::ImportTaxonomies(google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
-  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerSerializationConnection::ImportTaxonomies");
+PolicyTagManagerSerializationTracingConnection::ImportTaxonomies(
+    google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "ImportTaxonomies");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ImportTaxonomies(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
-PolicyTagManagerSerializationTracingConnection::ExportTaxonomies(google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
-  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerSerializationConnection::ExportTaxonomies");
+PolicyTagManagerSerializationTracingConnection::ExportTaxonomies(
+    google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "ExportTaxonomies");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ExportTaxonomies(request));
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyTagManagerSerializationTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerSerializationConnection::ListOperations");
+PolicyTagManagerSerializationTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyTagManagerSerializationTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerSerializationConnection::GetOperation");
+PolicyTagManagerSerializationTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-PolicyTagManagerSerializationTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerSerializationConnection::DeleteOperation");
+Status PolicyTagManagerSerializationTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-PolicyTagManagerSerializationTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("datacatalog_v1::PolicyTagManagerSerializationConnection::CancelOperation");
+Status PolicyTagManagerSerializationTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -88,10 +108,12 @@ PolicyTagManagerSerializationTracingConnection::CancelOperation(google::longrunn
 
 std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection>
 MakePolicyTagManagerSerializationTracingConnection(
-    std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection> conn) {
+    std::shared_ptr<datacatalog_v1::PolicyTagManagerSerializationConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<PolicyTagManagerSerializationTracingConnection>(std::move(conn));
+    conn = std::make_shared<PolicyTagManagerSerializationTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

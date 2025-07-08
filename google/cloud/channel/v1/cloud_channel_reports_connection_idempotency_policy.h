@@ -35,32 +35,33 @@ class CloudChannelReportsServiceConnectionIdempotencyPolicy {
   virtual ~CloudChannelReportsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudChannelReportsServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<CloudChannelReportsServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request);
+  virtual google::cloud::Idempotency RunReportJob(
+      google::cloud::channel::v1::RunReportJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest request);
+  virtual google::cloud::Idempotency FetchReportResults(
+      google::cloud::channel::v1::FetchReportResultsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListReports(google::cloud::channel::v1::ListReportsRequest request);
+  virtual google::cloud::Idempotency ListReports(
+      google::cloud::channel::v1::ListReportsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<CloudChannelReportsServiceConnectionIdempotencyPolicy>
-    MakeDefaultCloudChannelReportsServiceConnectionIdempotencyPolicy();
+MakeDefaultCloudChannelReportsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_v1

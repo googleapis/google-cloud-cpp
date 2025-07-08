@@ -35,65 +35,75 @@ class SiteSearchEngineServiceConnectionIdempotencyPolicy {
   virtual ~SiteSearchEngineServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SiteSearchEngineServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<SiteSearchEngineServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  GetSiteSearchEngine(google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request);
+  virtual google::cloud::Idempotency GetSiteSearchEngine(
+      google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateTargetSite(google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request);
+  virtual google::cloud::Idempotency CreateTargetSite(
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  BatchCreateTargetSites(google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request);
+  virtual google::cloud::Idempotency BatchCreateTargetSites(
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetTargetSite(google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request);
+  virtual google::cloud::Idempotency GetTargetSite(
+      google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateTargetSite(google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request);
+  virtual google::cloud::Idempotency UpdateTargetSite(
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteTargetSite(google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request);
+  virtual google::cloud::Idempotency DeleteTargetSite(
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListTargetSites(google::cloud::discoveryengine::v1::ListTargetSitesRequest request);
+  virtual google::cloud::Idempotency ListTargetSites(
+      google::cloud::discoveryengine::v1::ListTargetSitesRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateSitemap(google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
+  virtual google::cloud::Idempotency CreateSitemap(
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteSitemap(google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
+  virtual google::cloud::Idempotency DeleteSitemap(
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request);
 
-  virtual google::cloud::Idempotency
-  FetchSitemaps(google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request);
+  virtual google::cloud::Idempotency FetchSitemaps(
+      google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  EnableAdvancedSiteSearch(google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request);
+  virtual google::cloud::Idempotency EnableAdvancedSiteSearch(
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DisableAdvancedSiteSearch(google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request);
+  virtual google::cloud::Idempotency DisableAdvancedSiteSearch(
+      google::cloud::discoveryengine::v1::
+          DisableAdvancedSiteSearchRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RecrawlUris(google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
+  virtual google::cloud::Idempotency RecrawlUris(
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BatchVerifyTargetSites(google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request);
+  virtual google::cloud::Idempotency BatchVerifyTargetSites(
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  FetchDomainVerificationStatus(google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest request);
+  virtual google::cloud::Idempotency FetchDomainVerificationStatus(
+      google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<SiteSearchEngineServiceConnectionIdempotencyPolicy>
-    MakeDefaultSiteSearchEngineServiceConnectionIdempotencyPolicy();
+MakeDefaultSiteSearchEngineServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1

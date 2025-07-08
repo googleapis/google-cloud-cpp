@@ -28,26 +28,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AppConnectorsServiceClient::AppConnectorsServiceClient(
     std::shared_ptr<AppConnectorsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AppConnectorsServiceClient::~AppConnectorsServiceClient() = default;
 
 StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceClient::ListAppConnectors(std::string const& parent, Options opts) {
+AppConnectorsServiceClient::ListAppConnectors(std::string const& parent,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
+      request;
   request.set_parent(parent);
   return connection_->ListAppConnectors(request);
 }
 
 StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceClient::ListAppConnectors(google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest request, Options opts) {
+AppConnectorsServiceClient::ListAppConnectors(
+    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAppConnectors(std::move(request));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceClient::GetAppConnector(std::string const& name, Options opts) {
+AppConnectorsServiceClient::GetAppConnector(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest request;
   request.set_name(name);
@@ -55,15 +61,23 @@ AppConnectorsServiceClient::GetAppConnector(std::string const& name, Options opt
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
-AppConnectorsServiceClient::GetAppConnector(google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::GetAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAppConnector(request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::CreateAppConnector(std::string const& parent, google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, std::string const& app_connector_id, Options opts) {
+AppConnectorsServiceClient::CreateAppConnector(
+    std::string const& parent,
+    google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+        app_connector,
+    std::string const& app_connector_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest
+      request;
   request.set_parent(parent);
   *request.mutable_app_connector() = app_connector;
   request.set_app_connector_id(app_connector_id);
@@ -71,9 +85,14 @@ AppConnectorsServiceClient::CreateAppConnector(std::string const& parent, google
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::CreateAppConnector(NoAwaitTag, std::string const& parent, google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, std::string const& app_connector_id, Options opts) {
+AppConnectorsServiceClient::CreateAppConnector(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+        app_connector,
+    std::string const& app_connector_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest
+      request;
   request.set_parent(parent);
   *request.mutable_app_connector() = app_connector;
   request.set_app_connector_id(app_connector_id);
@@ -81,95 +100,140 @@ AppConnectorsServiceClient::CreateAppConnector(NoAwaitTag, std::string const& pa
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::CreateAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAppConnector(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::CreateAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::CreateAppConnector(
+    NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAppConnector(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::CreateAppConnector(google::longrunning::Operation const& operation, Options opts) {
+AppConnectorsServiceClient::CreateAppConnector(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAppConnector(operation);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, google::protobuf::FieldMask const& update_mask, Options opts) {
+AppConnectorsServiceClient::UpdateAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+        app_connector,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest
+      request;
   *request.mutable_app_connector() = app_connector;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateAppConnector(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::UpdateAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::AppConnector const& app_connector, google::protobuf::FieldMask const& update_mask, Options opts) {
+AppConnectorsServiceClient::UpdateAppConnector(
+    NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+        app_connector,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest
+      request;
   *request.mutable_app_connector() = app_connector;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateAppConnector(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::UpdateAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAppConnector(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::UpdateAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::UpdateAppConnector(
+    NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAppConnector(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::UpdateAppConnector(google::longrunning::Operation const& operation, Options opts) {
+AppConnectorsServiceClient::UpdateAppConnector(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAppConnector(operation);
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-AppConnectorsServiceClient::DeleteAppConnector(std::string const& name, Options opts) {
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                    AppConnectorOperationMetadata>>
+AppConnectorsServiceClient::DeleteAppConnector(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest
+      request;
   request.set_name(name);
   return connection_->DeleteAppConnector(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::DeleteAppConnector(NoAwaitTag, std::string const& name, Options opts) {
+AppConnectorsServiceClient::DeleteAppConnector(NoAwaitTag,
+                                               std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest request;
+  google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest
+      request;
   request.set_name(name);
   return connection_->DeleteAppConnector(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-AppConnectorsServiceClient::DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request, Options opts) {
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                    AppConnectorOperationMetadata>>
+AppConnectorsServiceClient::DeleteAppConnector(
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAppConnector(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::DeleteAppConnector(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request, Options opts) {
+AppConnectorsServiceClient::DeleteAppConnector(
+    NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAppConnector(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnectorOperationMetadata>>
-AppConnectorsServiceClient::DeleteAppConnector(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                    AppConnectorOperationMetadata>>
+AppConnectorsServiceClient::DeleteAppConnector(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAppConnector(operation);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::ReportStatus(std::string const& app_connector, google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const& resource_info, Options opts) {
+AppConnectorsServiceClient::ReportStatus(
+    std::string const& app_connector,
+    google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
+        resource_info,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest request;
   request.set_app_connector(app_connector);
@@ -178,7 +242,11 @@ AppConnectorsServiceClient::ReportStatus(std::string const& app_connector, googl
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::ReportStatus(NoAwaitTag, std::string const& app_connector, google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const& resource_info, Options opts) {
+AppConnectorsServiceClient::ReportStatus(
+    NoAwaitTag, std::string const& app_connector,
+    google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
+        resource_info,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest request;
   request.set_app_connector(app_connector);
@@ -187,55 +255,68 @@ AppConnectorsServiceClient::ReportStatus(NoAwaitTag, std::string const& app_conn
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::ReportStatus(google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request, Options opts) {
+AppConnectorsServiceClient::ReportStatus(
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReportStatus(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::ReportStatus(NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request, Options opts) {
+AppConnectorsServiceClient::ReportStatus(
+    NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReportStatus(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-AppConnectorsServiceClient::ReportStatus(google::longrunning::Operation const& operation, Options opts) {
+AppConnectorsServiceClient::ReportStatus(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReportStatus(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-AppConnectorsServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+AppConnectorsServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-AppConnectorsServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+AppConnectorsServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-AppConnectorsServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> AppConnectorsServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-AppConnectorsServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> AppConnectorsServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AppConnectorsServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+AppConnectorsServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-AppConnectorsServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+AppConnectorsServiceClient::ListOperations(std::string const& name,
+                                           std::string const& filter,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -244,13 +325,15 @@ AppConnectorsServiceClient::ListOperations(std::string const& name, std::string 
 }
 
 StreamRange<google::longrunning::Operation>
-AppConnectorsServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+AppConnectorsServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::GetOperation(std::string const& name, Options opts) {
+AppConnectorsServiceClient::GetOperation(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -258,35 +341,36 @@ AppConnectorsServiceClient::GetOperation(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-AppConnectorsServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+AppConnectorsServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-AppConnectorsServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status AppConnectorsServiceClient::DeleteOperation(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-AppConnectorsServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status AppConnectorsServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-AppConnectorsServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status AppConnectorsServiceClient::CancelOperation(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-AppConnectorsServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status AppConnectorsServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

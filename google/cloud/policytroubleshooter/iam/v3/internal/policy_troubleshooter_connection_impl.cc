@@ -17,11 +17,11 @@
 // source: google/cloud/policytroubleshooter/iam/v3/troubleshooter.proto
 
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_connection_impl.h"
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,38 +33,52 @@ namespace {
 
 std::unique_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterRetryPolicy>
 retry_policy(Options const& options) {
-  return options.get<policytroubleshooter_iam_v3::PolicyTroubleshooterRetryPolicyOption>()->clone();
+  return options
+      .get<policytroubleshooter_iam_v3::PolicyTroubleshooterRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<policytroubleshooter_iam_v3::PolicyTroubleshooterBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<policytroubleshooter_iam_v3::
+               PolicyTroubleshooterBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<policytroubleshooter_iam_v3::PolicyTroubleshooterConnectionIdempotencyPolicy>
+std::unique_ptr<policytroubleshooter_iam_v3::
+                    PolicyTroubleshooterConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<policytroubleshooter_iam_v3::PolicyTroubleshooterConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<policytroubleshooter_iam_v3::
+               PolicyTroubleshooterConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 PolicyTroubleshooterConnectionImpl::PolicyTroubleshooterConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<policytroubleshooter_iam_v3_internal::PolicyTroubleshooterStub> stub,
+    std::shared_ptr<
+        policytroubleshooter_iam_v3_internal::PolicyTroubleshooterStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        PolicyTroubleshooterConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), PolicyTroubleshooterConnection::options())) {}
 
-StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
-PolicyTroubleshooterConnectionImpl::TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
+StatusOr<
+    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+PolicyTroubleshooterConnectionImpl::TroubleshootIamPolicy(
+    google::cloud::policytroubleshooter::iam::v3::
+        TroubleshootIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TroubleshootIamPolicy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
+             google::cloud::policytroubleshooter::iam::v3::
+                 TroubleshootIamPolicyRequest const& request) {
         return stub_->TroubleshootIamPolicy(context, options, request);
       },
       *current, request, __func__);

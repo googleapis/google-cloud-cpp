@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_retry_traits.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
 #include "google/cloud/kms/inventory/v1/key_dashboard_connection.h"
 #include "google/cloud/kms/inventory/v1/key_dashboard_connection_idempotency_policy.h"
 #include "google/cloud/kms/inventory/v1/key_dashboard_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,14 +43,15 @@ class KeyDashboardServiceConnectionImpl
   ~KeyDashboardServiceConnectionImpl() override = default;
 
   KeyDashboardServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<kms_inventory_v1_internal::KeyDashboardServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<kms_inventory_v1_internal::KeyDashboardServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::kms::v1::CryptoKey>
-  ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest request) override;
+  StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
+      google::cloud::kms::inventory::v1::ListCryptoKeysRequest request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

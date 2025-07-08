@@ -33,32 +33,38 @@ TasksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TasksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TasksConnectionIdempotencyPolicy::GetTask(google::cloud::run::v2::GetTaskRequest const&) {
+Idempotency TasksConnectionIdempotencyPolicy::GetTask(
+    google::cloud::run::v2::GetTaskRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TasksConnectionIdempotencyPolicy::ListTasks(google::cloud::run::v2::ListTasksRequest) {  // NOLINT
+Idempotency TasksConnectionIdempotencyPolicy::ListTasks(
+    google::cloud::run::v2::ListTasksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TasksConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency TasksConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TasksConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TasksConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TasksConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency TasksConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TasksConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency TasksConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TasksConnectionIdempotencyPolicy>
-    MakeDefaultTasksConnectionIdempotencyPolicy() {
+MakeDefaultTasksConnectionIdempotencyPolicy() {
   return std::make_unique<TasksConnectionIdempotencyPolicy>();
 }
 

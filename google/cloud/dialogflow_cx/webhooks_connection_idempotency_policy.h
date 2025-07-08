@@ -38,39 +38,39 @@ class WebhooksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<WebhooksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListWebhooks(google::cloud::dialogflow::cx::v3::ListWebhooksRequest request);
+  virtual google::cloud::Idempotency ListWebhooks(
+      google::cloud::dialogflow::cx::v3::ListWebhooksRequest request);
 
-  virtual google::cloud::Idempotency
-  GetWebhook(google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request);
+  virtual google::cloud::Idempotency GetWebhook(
+      google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateWebhook(google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request);
+  virtual google::cloud::Idempotency CreateWebhook(
+      google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateWebhook(google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request);
+  virtual google::cloud::Idempotency UpdateWebhook(
+      google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteWebhook(google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request);
+  virtual google::cloud::Idempotency DeleteWebhook(
+      google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
-    MakeDefaultWebhooksConnectionIdempotencyPolicy();
+MakeDefaultWebhooksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

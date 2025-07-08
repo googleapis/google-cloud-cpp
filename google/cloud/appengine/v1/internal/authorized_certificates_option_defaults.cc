@@ -42,16 +42,23 @@ Options AuthorizedCertificatesDefaultOptions(Options options) {
   if (!options.has<appengine_v1::AuthorizedCertificatesRetryPolicyOption>()) {
     options.set<appengine_v1::AuthorizedCertificatesRetryPolicyOption>(
         appengine_v1::AuthorizedCertificatesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<appengine_v1::AuthorizedCertificatesBackoffPolicyOption>()) {
     options.set<appengine_v1::AuthorizedCertificatesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
-    options.set<appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicyOption>(
-        appengine_v1::MakeDefaultAuthorizedCertificatesConnectionIdempotencyPolicy());
+  if (!options.has<
+          appengine_v1::
+              AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicyOption>(
+        appengine_v1::
+            MakeDefaultAuthorizedCertificatesConnectionIdempotencyPolicy());
   }
 
   return options;

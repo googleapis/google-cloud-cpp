@@ -26,44 +26,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PolicyTagManagerSerializationConnectionIdempotencyPolicy::~PolicyTagManagerSerializationConnectionIdempotencyPolicy() = default;
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::
+    ~PolicyTagManagerSerializationConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
 PolicyTagManagerSerializationConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<PolicyTagManagerSerializationConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<
+      PolicyTagManagerSerializationConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PolicyTagManagerSerializationConnectionIdempotencyPolicy::ReplaceTaxonomy(google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&) {
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::ReplaceTaxonomy(
+    google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyTagManagerSerializationConnectionIdempotencyPolicy::ImportTaxonomies(google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&) {
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::ImportTaxonomies(
+    google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyTagManagerSerializationConnectionIdempotencyPolicy::ExportTaxonomies(google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&) {
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::ExportTaxonomies(
+    google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyTagManagerSerializationConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyTagManagerSerializationConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PolicyTagManagerSerializationConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PolicyTagManagerSerializationConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
-    MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy() {
-  return std::make_unique<PolicyTagManagerSerializationConnectionIdempotencyPolicy>();
+MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      PolicyTagManagerSerializationConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_INTERNAL_FORWARDING_RULES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_INTERNAL_FORWARDING_RULES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/forwarding_rules/v1/forwarding_rules_connection.h"
 #include "google/cloud/compute/forwarding_rules/v1/forwarding_rules_connection_idempotency_policy.h"
 #include "google/cloud/compute/forwarding_rules/v1/forwarding_rules_options.h"
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_rest_stub.h"
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,97 +44,121 @@ class ForwardingRulesRestConnectionImpl
   ~ForwardingRulesRestConnectionImpl() override = default;
 
   ForwardingRulesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_forwarding_rules_v1_internal::ForwardingRulesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_forwarding_rules_v1_internal::ForwardingRulesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
-  AggregatedListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::AggregatedListForwardingRulesRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
+  AggregatedListForwardingRules(
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          AggregatedListForwardingRulesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const& request) override;
+  DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                           DeleteForwardingRuleRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteForwardingRule(NoAwaitTag,
-      google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRule(
+      NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::
+                      DeleteForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteForwardingRule(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::GetForwardingRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRule(
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          GetForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const& request) override;
+  InsertForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                           InsertForwardingRuleRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertForwardingRule(NoAwaitTag,
-      google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRule(
+      NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::
+                      InsertForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertForwardingRule(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
-  ListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::ListForwardingRulesRequest request) override;
+  ListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
+                          ListForwardingRulesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const& request) override;
+  PatchForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                          PatchForwardingRuleRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchForwardingRule(NoAwaitTag,
-      google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRule(
+      NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::
+                      PatchForwardingRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchForwardingRule(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTarget(google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
+      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetTarget(NoAwaitTag,
-      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
+      NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTarget(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<compute_forwarding_rules_v1::ForwardingRulesRetryPolicy>
+  static std::unique_ptr<
+      compute_forwarding_rules_v1::ForwardingRulesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()->clone();
+    return options
+        .get<compute_forwarding_rules_v1::ForwardingRulesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_forwarding_rules_v1::ForwardingRulesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_forwarding_rules_v1::ForwardingRulesConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_forwarding_rules_v1::ForwardingRulesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_forwarding_rules_v1::ForwardingRulesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_forwarding_rules_v1::
+                 ForwardingRulesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_forwarding_rules_v1::ForwardingRulesPollingPolicyOption>()->clone();
+    return options
+        .get<compute_forwarding_rules_v1::ForwardingRulesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_forwarding_rules_v1_internal::ForwardingRulesRestStub> stub_;
+  std::shared_ptr<compute_forwarding_rules_v1_internal::ForwardingRulesRestStub>
+      stub_;
   Options options_;
 };
 

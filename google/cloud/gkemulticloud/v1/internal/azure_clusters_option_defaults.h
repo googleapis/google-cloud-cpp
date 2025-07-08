@@ -28,7 +28,8 @@ namespace cloud {
 namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options AzureClustersDefaultOptions(std::string const& location, Options options);
+Options AzureClustersDefaultOptions(std::string const& location,
+                                    Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal

@@ -17,14 +17,14 @@
 // source: google/datastore/v1/datastore.proto
 
 #include "google/cloud/datastore/v1/datastore_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/datastore/v1/datastore_options.h"
 #include "google/cloud/datastore/v1/internal/datastore_connection_impl.h"
 #include "google/cloud/datastore/v1/internal/datastore_option_defaults.h"
 #include "google/cloud/datastore/v1/internal/datastore_stub_factory.h"
 #include "google/cloud/datastore/v1/internal/datastore_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,14 +38,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastoreConnection::~DatastoreConnection() = default;
 
-StatusOr<google::datastore::v1::LookupResponse>
-DatastoreConnection::Lookup(
+StatusOr<google::datastore::v1::LookupResponse> DatastoreConnection::Lookup(
     google::datastore::v1::LookupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::datastore::v1::RunQueryResponse>
-DatastoreConnection::RunQuery(
+StatusOr<google::datastore::v1::RunQueryResponse> DatastoreConnection::RunQuery(
     google::datastore::v1::RunQueryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -62,14 +60,12 @@ DatastoreConnection::BeginTransaction(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::datastore::v1::CommitResponse>
-DatastoreConnection::Commit(
+StatusOr<google::datastore::v1::CommitResponse> DatastoreConnection::Commit(
     google::datastore::v1::CommitRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::datastore::v1::RollbackResponse>
-DatastoreConnection::Rollback(
+StatusOr<google::datastore::v1::RollbackResponse> DatastoreConnection::Rollback(
     google::datastore::v1::RollbackRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -87,43 +83,39 @@ DatastoreConnection::ReserveIds(
 }
 
 StreamRange<google::longrunning::Operation> DatastoreConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-DatastoreConnection::GetOperation(
+StatusOr<google::longrunning::Operation> DatastoreConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DatastoreConnection::DeleteOperation(
+Status DatastoreConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DatastoreConnection::CancelOperation(
+Status DatastoreConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DatastoreConnection> MakeDatastoreConnection(
-    Options options) {
+std::shared_ptr<DatastoreConnection> MakeDatastoreConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DatastorePolicyOptionList>(options, __func__);
-  options = datastore_v1_internal::DatastoreDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 DatastorePolicyOptionList>(options, __func__);
+  options = datastore_v1_internal::DatastoreDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = datastore_v1_internal::CreateDefaultDatastoreStub(
-    std::move(auth), options);
+  auto stub = datastore_v1_internal::CreateDefaultDatastoreStub(std::move(auth),
+                                                                options);
   return datastore_v1_internal::MakeDatastoreTracingConnection(
       std::make_shared<datastore_v1_internal::DatastoreConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

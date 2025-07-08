@@ -28,72 +28,78 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AssetServiceClient::AssetServiceClient(
     std::shared_ptr<AssetServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AssetServiceClient::~AssetServiceClient() = default;
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
-AssetServiceClient::ExportAssets(google::cloud::asset::v1::ExportAssetsRequest const& request, Options opts) {
+AssetServiceClient::ExportAssets(
+    google::cloud::asset::v1::ExportAssetsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAssets(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AssetServiceClient::ExportAssets(NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AssetServiceClient::ExportAssets(
+    NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAssets(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
-AssetServiceClient::ExportAssets(google::longrunning::Operation const& operation, Options opts) {
+AssetServiceClient::ExportAssets(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportAssets(operation);
 }
 
-StreamRange<google::cloud::asset::v1::Asset>
-AssetServiceClient::ListAssets(std::string const& parent, Options opts) {
+StreamRange<google::cloud::asset::v1::Asset> AssetServiceClient::ListAssets(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::ListAssetsRequest request;
   request.set_parent(parent);
   return connection_->ListAssets(request);
 }
 
-StreamRange<google::cloud::asset::v1::Asset>
-AssetServiceClient::ListAssets(google::cloud::asset::v1::ListAssetsRequest request, Options opts) {
+StreamRange<google::cloud::asset::v1::Asset> AssetServiceClient::ListAssets(
+    google::cloud::asset::v1::ListAssetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAssets(std::move(request));
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
-AssetServiceClient::BatchGetAssetsHistory(google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request, Options opts) {
+AssetServiceClient::BatchGetAssetsHistory(
+    google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchGetAssetsHistory(request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed>
-AssetServiceClient::CreateFeed(std::string const& parent, Options opts) {
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceClient::CreateFeed(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::CreateFeedRequest request;
   request.set_parent(parent);
   return connection_->CreateFeed(request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed>
-AssetServiceClient::CreateFeed(google::cloud::asset::v1::CreateFeedRequest const& request, Options opts) {
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceClient::CreateFeed(
+    google::cloud::asset::v1::CreateFeedRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeed(request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed>
-AssetServiceClient::GetFeed(std::string const& name, Options opts) {
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceClient::GetFeed(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::GetFeedRequest request;
   request.set_name(name);
   return connection_->GetFeed(request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed>
-AssetServiceClient::GetFeed(google::cloud::asset::v1::GetFeedRequest const& request, Options opts) {
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceClient::GetFeed(
+    google::cloud::asset::v1::GetFeedRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFeed(request);
 }
@@ -107,41 +113,43 @@ AssetServiceClient::ListFeeds(std::string const& parent, Options opts) {
 }
 
 StatusOr<google::cloud::asset::v1::ListFeedsResponse>
-AssetServiceClient::ListFeeds(google::cloud::asset::v1::ListFeedsRequest const& request, Options opts) {
+AssetServiceClient::ListFeeds(
+    google::cloud::asset::v1::ListFeedsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFeeds(request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed>
-AssetServiceClient::UpdateFeed(google::cloud::asset::v1::Feed const& feed, Options opts) {
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceClient::UpdateFeed(
+    google::cloud::asset::v1::Feed const& feed, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::UpdateFeedRequest request;
   *request.mutable_feed() = feed;
   return connection_->UpdateFeed(request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed>
-AssetServiceClient::UpdateFeed(google::cloud::asset::v1::UpdateFeedRequest const& request, Options opts) {
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceClient::UpdateFeed(
+    google::cloud::asset::v1::UpdateFeedRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeed(request);
 }
 
-Status
-AssetServiceClient::DeleteFeed(std::string const& name, Options opts) {
+Status AssetServiceClient::DeleteFeed(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::DeleteFeedRequest request;
   request.set_name(name);
   return connection_->DeleteFeed(request);
 }
 
-Status
-AssetServiceClient::DeleteFeed(google::cloud::asset::v1::DeleteFeedRequest const& request, Options opts) {
+Status AssetServiceClient::DeleteFeed(
+    google::cloud::asset::v1::DeleteFeedRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeed(request);
 }
 
 StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-AssetServiceClient::SearchAllResources(std::string const& scope, std::string const& query, std::vector<std::string> const& asset_types, Options opts) {
+AssetServiceClient::SearchAllResources(
+    std::string const& scope, std::string const& query,
+    std::vector<std::string> const& asset_types, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::SearchAllResourcesRequest request;
   request.set_scope(scope);
@@ -151,13 +159,16 @@ AssetServiceClient::SearchAllResources(std::string const& scope, std::string con
 }
 
 StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-AssetServiceClient::SearchAllResources(google::cloud::asset::v1::SearchAllResourcesRequest request, Options opts) {
+AssetServiceClient::SearchAllResources(
+    google::cloud::asset::v1::SearchAllResourcesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchAllResources(std::move(request));
 }
 
 StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-AssetServiceClient::SearchAllIamPolicies(std::string const& scope, std::string const& query, Options opts) {
+AssetServiceClient::SearchAllIamPolicies(std::string const& scope,
+                                         std::string const& query,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::SearchAllIamPoliciesRequest request;
   request.set_scope(scope);
@@ -166,49 +177,64 @@ AssetServiceClient::SearchAllIamPolicies(std::string const& scope, std::string c
 }
 
 StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-AssetServiceClient::SearchAllIamPolicies(google::cloud::asset::v1::SearchAllIamPoliciesRequest request, Options opts) {
+AssetServiceClient::SearchAllIamPolicies(
+    google::cloud::asset::v1::SearchAllIamPoliciesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchAllIamPolicies(std::move(request));
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
-AssetServiceClient::AnalyzeIamPolicy(google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request, Options opts) {
+AssetServiceClient::AnalyzeIamPolicy(
+    google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeIamPolicy(request);
 }
 
 future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
-AssetServiceClient::AnalyzeIamPolicyLongrunning(google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request, Options opts) {
+AssetServiceClient::AnalyzeIamPolicyLongrunning(
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeIamPolicyLongrunning(request);
 }
 
 StatusOr<google::longrunning::Operation>
-AssetServiceClient::AnalyzeIamPolicyLongrunning(NoAwaitTag, google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request, Options opts) {
+AssetServiceClient::AnalyzeIamPolicyLongrunning(
+    NoAwaitTag,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeIamPolicyLongrunning(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
-AssetServiceClient::AnalyzeIamPolicyLongrunning(google::longrunning::Operation const& operation, Options opts) {
+AssetServiceClient::AnalyzeIamPolicyLongrunning(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeIamPolicyLongrunning(operation);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
-AssetServiceClient::AnalyzeMove(google::cloud::asset::v1::AnalyzeMoveRequest const& request, Options opts) {
+AssetServiceClient::AnalyzeMove(
+    google::cloud::asset::v1::AnalyzeMoveRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeMove(request);
 }
 
 StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
-AssetServiceClient::QueryAssets(google::cloud::asset::v1::QueryAssetsRequest const& request, Options opts) {
+AssetServiceClient::QueryAssets(
+    google::cloud::asset::v1::QueryAssetsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->QueryAssets(request);
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
-AssetServiceClient::CreateSavedQuery(std::string const& parent, google::cloud::asset::v1::SavedQuery const& saved_query, std::string const& saved_query_id, Options opts) {
+AssetServiceClient::CreateSavedQuery(
+    std::string const& parent,
+    google::cloud::asset::v1::SavedQuery const& saved_query,
+    std::string const& saved_query_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::CreateSavedQueryRequest request;
   request.set_parent(parent);
@@ -218,7 +244,9 @@ AssetServiceClient::CreateSavedQuery(std::string const& parent, google::cloud::a
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
-AssetServiceClient::CreateSavedQuery(google::cloud::asset::v1::CreateSavedQueryRequest const& request, Options opts) {
+AssetServiceClient::CreateSavedQuery(
+    google::cloud::asset::v1::CreateSavedQueryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSavedQuery(request);
 }
@@ -232,7 +260,9 @@ AssetServiceClient::GetSavedQuery(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
-AssetServiceClient::GetSavedQuery(google::cloud::asset::v1::GetSavedQueryRequest const& request, Options opts) {
+AssetServiceClient::GetSavedQuery(
+    google::cloud::asset::v1::GetSavedQueryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSavedQuery(request);
 }
@@ -246,13 +276,16 @@ AssetServiceClient::ListSavedQueries(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::asset::v1::SavedQuery>
-AssetServiceClient::ListSavedQueries(google::cloud::asset::v1::ListSavedQueriesRequest request, Options opts) {
+AssetServiceClient::ListSavedQueries(
+    google::cloud::asset::v1::ListSavedQueriesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSavedQueries(std::move(request));
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
-AssetServiceClient::UpdateSavedQuery(google::cloud::asset::v1::SavedQuery const& saved_query, google::protobuf::FieldMask const& update_mask, Options opts) {
+AssetServiceClient::UpdateSavedQuery(
+    google::cloud::asset::v1::SavedQuery const& saved_query,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::UpdateSavedQueryRequest request;
   *request.mutable_saved_query() = saved_query;
@@ -261,33 +294,43 @@ AssetServiceClient::UpdateSavedQuery(google::cloud::asset::v1::SavedQuery const&
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
-AssetServiceClient::UpdateSavedQuery(google::cloud::asset::v1::UpdateSavedQueryRequest const& request, Options opts) {
+AssetServiceClient::UpdateSavedQuery(
+    google::cloud::asset::v1::UpdateSavedQueryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSavedQuery(request);
 }
 
-Status
-AssetServiceClient::DeleteSavedQuery(std::string const& name, Options opts) {
+Status AssetServiceClient::DeleteSavedQuery(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::DeleteSavedQueryRequest request;
   request.set_name(name);
   return connection_->DeleteSavedQuery(request);
 }
 
-Status
-AssetServiceClient::DeleteSavedQuery(google::cloud::asset::v1::DeleteSavedQueryRequest const& request, Options opts) {
+Status AssetServiceClient::DeleteSavedQuery(
+    google::cloud::asset::v1::DeleteSavedQueryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSavedQuery(request);
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
-AssetServiceClient::BatchGetEffectiveIamPolicies(google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const& request, Options opts) {
+AssetServiceClient::BatchGetEffectiveIamPolicies(
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchGetEffectiveIamPolicies(request);
 }
 
-StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
-AssetServiceClient::AnalyzeOrgPolicies(std::string const& scope, std::string const& constraint, std::string const& filter, Options opts) {
+StreamRange<
+    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+AssetServiceClient::AnalyzeOrgPolicies(std::string const& scope,
+                                       std::string const& constraint,
+                                       std::string const& filter,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request;
   request.set_scope(scope);
@@ -296,14 +339,19 @@ AssetServiceClient::AnalyzeOrgPolicies(std::string const& scope, std::string con
   return connection_->AnalyzeOrgPolicies(request);
 }
 
-StreamRange<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
-AssetServiceClient::AnalyzeOrgPolicies(google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request, Options opts) {
+StreamRange<
+    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+AssetServiceClient::AnalyzeOrgPolicies(
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeOrgPolicies(std::move(request));
 }
 
-StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
-AssetServiceClient::AnalyzeOrgPolicyGovernedContainers(std::string const& scope, std::string const& constraint, std::string const& filter, Options opts) {
+StreamRange<google::cloud::asset::v1::
+                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+AssetServiceClient::AnalyzeOrgPolicyGovernedContainers(
+    std::string const& scope, std::string const& constraint,
+    std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest request;
   request.set_scope(scope);
@@ -312,14 +360,20 @@ AssetServiceClient::AnalyzeOrgPolicyGovernedContainers(std::string const& scope,
   return connection_->AnalyzeOrgPolicyGovernedContainers(request);
 }
 
-StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
-AssetServiceClient::AnalyzeOrgPolicyGovernedContainers(google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest request, Options opts) {
+StreamRange<google::cloud::asset::v1::
+                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+AssetServiceClient::AnalyzeOrgPolicyGovernedContainers(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeOrgPolicyGovernedContainers(std::move(request));
 }
 
-StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
-AssetServiceClient::AnalyzeOrgPolicyGovernedAssets(std::string const& scope, std::string const& constraint, std::string const& filter, Options opts) {
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+                GovernedAsset>
+AssetServiceClient::AnalyzeOrgPolicyGovernedAssets(
+    std::string const& scope, std::string const& constraint,
+    std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request;
   request.set_scope(scope);
@@ -328,22 +382,25 @@ AssetServiceClient::AnalyzeOrgPolicyGovernedAssets(std::string const& scope, std
   return connection_->AnalyzeOrgPolicyGovernedAssets(request);
 }
 
-StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
-AssetServiceClient::AnalyzeOrgPolicyGovernedAssets(google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request, Options opts) {
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+                GovernedAsset>
+AssetServiceClient::AnalyzeOrgPolicyGovernedAssets(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeOrgPolicyGovernedAssets(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AssetServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AssetServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AssetServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AssetServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

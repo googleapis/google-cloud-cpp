@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_DATASTREAM_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_DATASTREAM_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datastream/v1/datastream_connection_idempotency_policy.h"
 #include "google/cloud/datastream/v1/internal/datastream_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class DatastreamLimitedErrorCountRetryPolicy : public DatastreamRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DatastreamLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DatastreamLimitedErrorCountRetryPolicy(
       DatastreamLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DatastreamLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DatastreamLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DatastreamLimitedErrorCountRetryPolicy(
       DatastreamLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DatastreamLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DatastreamLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class DatastreamLimitedErrorCountRetryPolicy : public DatastreamRetryPolicy {
   using BaseType = DatastreamRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<datastream_v1_internal::DatastreamRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      datastream_v1_internal::DatastreamRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,14 @@ class DatastreamLimitedTimeRetryPolicy : public DatastreamRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DatastreamLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DatastreamLimitedTimeRetryPolicy(DatastreamLimitedTimeRetryPolicy&& rhs) noexcept
-    : DatastreamLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DatastreamLimitedTimeRetryPolicy(DatastreamLimitedTimeRetryPolicy const& rhs) noexcept
-    : DatastreamLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatastreamLimitedTimeRetryPolicy(
+      DatastreamLimitedTimeRetryPolicy&& rhs) noexcept
+      : DatastreamLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatastreamLimitedTimeRetryPolicy(
+      DatastreamLimitedTimeRetryPolicy const& rhs) noexcept
+      : DatastreamLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +162,9 @@ class DatastreamLimitedTimeRetryPolicy : public DatastreamRetryPolicy {
   using BaseType = DatastreamRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<datastream_v1_internal::DatastreamRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      datastream_v1_internal::DatastreamRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,166 +186,206 @@ class DatastreamConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::datastream::v1::ConnectionProfile>
-  ListConnectionProfiles(google::cloud::datastream::v1::ListConnectionProfilesRequest request);
+  ListConnectionProfiles(
+      google::cloud::datastream::v1::ListConnectionProfilesRequest request);
 
   virtual StatusOr<google::cloud::datastream::v1::ConnectionProfile>
-  GetConnectionProfile(google::cloud::datastream::v1::GetConnectionProfileRequest const& request);
+  GetConnectionProfile(
+      google::cloud::datastream::v1::GetConnectionProfileRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  CreateConnectionProfile(google::cloud::datastream::v1::CreateConnectionProfileRequest const& request);
+  CreateConnectionProfile(
+      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::CreateConnectionProfileRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  CreateConnectionProfile( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  UpdateConnectionProfile(google::cloud::datastream::v1::UpdateConnectionProfileRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::UpdateConnectionProfileRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      NoAwaitTag,
+      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  UpdateConnectionProfile( google::longrunning::Operation const& operation);
+  CreateConnectionProfile(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+  UpdateConnectionProfile(
+      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      NoAwaitTag,
+      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+  UpdateConnectionProfile(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteConnectionProfile(google::cloud::datastream::v1::DeleteConnectionProfileRequest const& request);
+  DeleteConnectionProfile(
+      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteConnectionProfile(NoAwaitTag, google::cloud::datastream::v1::DeleteConnectionProfileRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteConnectionProfile( google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
-  DiscoverConnectionProfile(google::cloud::datastream::v1::DiscoverConnectionProfileRequest const& request);
-
-  virtual StreamRange<google::cloud::datastream::v1::Stream>
-  ListStreams(google::cloud::datastream::v1::ListStreamsRequest request);
-
-  virtual StatusOr<google::cloud::datastream::v1::Stream>
-  GetStream(google::cloud::datastream::v1::GetStreamRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::Stream>>
-  CreateStream(google::cloud::datastream::v1::CreateStreamRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateStream(NoAwaitTag, google::cloud::datastream::v1::CreateStreamRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::Stream>>
-  CreateStream( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::Stream>>
-  UpdateStream(google::cloud::datastream::v1::UpdateStreamRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateStream(NoAwaitTag, google::cloud::datastream::v1::UpdateStreamRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::Stream>>
-  UpdateStream( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      NoAwaitTag,
+      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteStream(google::cloud::datastream::v1::DeleteStreamRequest const& request);
+  DeleteConnectionProfile(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteStream(NoAwaitTag, google::cloud::datastream::v1::DeleteStreamRequest const& request);
+  virtual StatusOr<
+      google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
+  DiscoverConnectionProfile(
+      google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::datastream::v1::Stream> ListStreams(
+      google::cloud::datastream::v1::ListStreamsRequest request);
+
+  virtual StatusOr<google::cloud::datastream::v1::Stream> GetStream(
+      google::cloud::datastream::v1::GetStreamRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
+      google::cloud::datastream::v1::CreateStreamRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::CreateStreamRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
+      google::cloud::datastream::v1::UpdateStreamRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::UpdateStreamRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteStream( google::longrunning::Operation const& operation);
+  DeleteStream(
+      google::cloud::datastream::v1::DeleteStreamRequest const& request);
 
-  virtual future<StatusOr<google::cloud::datastream::v1::Stream>>
-  RunStream(google::cloud::datastream::v1::RunStreamRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::DeleteStreamRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RunStream(NoAwaitTag, google::cloud::datastream::v1::RunStreamRequest const& request);
+  virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeleteStream(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::datastream::v1::Stream>>
-  RunStream( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
+      google::cloud::datastream::v1::RunStreamRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RunStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::RunStreamRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
+      google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
+      google::cloud::datastream::v1::GetStreamObjectRequest const& request);
 
   virtual StatusOr<google::cloud::datastream::v1::StreamObject>
-  GetStreamObject(google::cloud::datastream::v1::GetStreamObjectRequest const& request);
-
-  virtual StatusOr<google::cloud::datastream::v1::StreamObject>
-  LookupStreamObject(google::cloud::datastream::v1::LookupStreamObjectRequest const& request);
+  LookupStreamObject(
+      google::cloud::datastream::v1::LookupStreamObjectRequest const& request);
 
   virtual StreamRange<google::cloud::datastream::v1::StreamObject>
-  ListStreamObjects(google::cloud::datastream::v1::ListStreamObjectsRequest request);
+  ListStreamObjects(
+      google::cloud::datastream::v1::ListStreamObjectsRequest request);
 
   virtual StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
-  StartBackfillJob(google::cloud::datastream::v1::StartBackfillJobRequest const& request);
+  StartBackfillJob(
+      google::cloud::datastream::v1::StartBackfillJobRequest const& request);
 
   virtual StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
-  StopBackfillJob(google::cloud::datastream::v1::StopBackfillJobRequest const& request);
+  StopBackfillJob(
+      google::cloud::datastream::v1::StopBackfillJobRequest const& request);
 
-  virtual StreamRange<std::string>
-  FetchStaticIps(google::cloud::datastream::v1::FetchStaticIpsRequest request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-  CreatePrivateConnection(google::cloud::datastream::v1::CreatePrivateConnectionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreatePrivateConnection(NoAwaitTag, google::cloud::datastream::v1::CreatePrivateConnectionRequest const& request);
+  virtual StreamRange<std::string> FetchStaticIps(
+      google::cloud::datastream::v1::FetchStaticIpsRequest request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-  CreatePrivateConnection( google::longrunning::Operation const& operation);
+  CreatePrivateConnection(
+      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      NoAwaitTag,
+      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
+  CreatePrivateConnection(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::datastream::v1::PrivateConnection>
-  GetPrivateConnection(google::cloud::datastream::v1::GetPrivateConnectionRequest const& request);
+  GetPrivateConnection(
+      google::cloud::datastream::v1::GetPrivateConnectionRequest const&
+          request);
 
   virtual StreamRange<google::cloud::datastream::v1::PrivateConnection>
-  ListPrivateConnections(google::cloud::datastream::v1::ListPrivateConnectionsRequest request);
+  ListPrivateConnections(
+      google::cloud::datastream::v1::ListPrivateConnectionsRequest request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeletePrivateConnection(google::cloud::datastream::v1::DeletePrivateConnectionRequest const& request);
+  DeletePrivateConnection(
+      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeletePrivateConnection(NoAwaitTag, google::cloud::datastream::v1::DeletePrivateConnectionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      NoAwaitTag,
+      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeletePrivateConnection( google::longrunning::Operation const& operation);
+  DeletePrivateConnection(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::datastream::v1::Route>>
-  CreateRoute(google::cloud::datastream::v1::CreateRouteRequest const& request);
+  virtual future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
+      google::cloud::datastream::v1::CreateRouteRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateRoute(NoAwaitTag, google::cloud::datastream::v1::CreateRouteRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateRoute(
+      NoAwaitTag,
+      google::cloud::datastream::v1::CreateRouteRequest const& request);
 
-  virtual future<StatusOr<google::cloud::datastream::v1::Route>>
-  CreateRoute( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
+      google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::datastream::v1::Route>
-  GetRoute(google::cloud::datastream::v1::GetRouteRequest const& request);
+  virtual StatusOr<google::cloud::datastream::v1::Route> GetRoute(
+      google::cloud::datastream::v1::GetRouteRequest const& request);
 
-  virtual StreamRange<google::cloud::datastream::v1::Route>
-  ListRoutes(google::cloud::datastream::v1::ListRoutesRequest request);
+  virtual StreamRange<google::cloud::datastream::v1::Route> ListRoutes(
+      google::cloud::datastream::v1::ListRoutesRequest request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteRoute(NoAwaitTag, google::cloud::datastream::v1::DeleteRouteRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteRoute(
+      NoAwaitTag,
+      google::cloud::datastream::v1::DeleteRouteRequest const& request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteRoute( google::longrunning::Operation const& operation);
+  DeleteRoute(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

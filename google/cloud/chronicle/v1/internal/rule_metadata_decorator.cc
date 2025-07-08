@@ -44,57 +44,54 @@ RuleServiceMetadata::RuleServiceMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceMetadata::CreateRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceMetadata::CreateRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateRuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRule(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceMetadata::GetRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceMetadata::GetRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRule(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ListRulesResponse>
 RuleServiceMetadata::ListRules(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRulesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRules(context, options, request);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceMetadata::UpdateRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceMetadata::UpdateRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("rule.name=", internal::UrlEncode(request.rule().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("rule.name=", internal::UrlEncode(request.rule().name())));
   return child_->UpdateRule(context, options, request);
 }
 
-Status
-RuleServiceMetadata::DeleteRule(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RuleServiceMetadata::DeleteRule(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRule(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ListRuleRevisionsResponse>
 RuleServiceMetadata::ListRuleRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListRuleRevisions(context, options, request);
 }
 
@@ -104,98 +101,97 @@ RuleServiceMetadata::AsyncCreateRetrohunt(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRetrohunt(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateRetrohunt(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-StatusOr<google::longrunning::Operation>
-RuleServiceMetadata::CreateRetrohunt(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> RuleServiceMetadata::CreateRetrohunt(
+    grpc::ClientContext& context, Options options,
     google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRetrohunt(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::Retrohunt>
 RuleServiceMetadata::GetRetrohunt(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRetrohunt(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ListRetrohuntsResponse>
 RuleServiceMetadata::ListRetrohunts(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRetrohunts(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
 RuleServiceMetadata::GetRuleDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRuleDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ListRuleDeploymentsResponse>
 RuleServiceMetadata::ListRuleDeployments(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRuleDeployments(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
 RuleServiceMetadata::UpdateRuleDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("rule_deployment.name=", internal::UrlEncode(request.rule_deployment().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("rule_deployment.name=",
+                   internal::UrlEncode(request.rule_deployment().name())));
   return child_->UpdateRuleDeployment(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 RuleServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-RuleServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> RuleServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-RuleServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RuleServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-RuleServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RuleServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -207,8 +203,8 @@ RuleServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> RuleServiceMetadata::AsyncCancelOperation(
@@ -218,21 +214,21 @@ future<Status> RuleServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void RuleServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                      Options const& options,
+                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void RuleServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                      Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

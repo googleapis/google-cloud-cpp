@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BudgetServiceClient {
  public:
-  explicit BudgetServiceClient(std::shared_ptr<BudgetServiceConnection> connection, Options opts = {});
+  explicit BudgetServiceClient(
+      std::shared_ptr<BudgetServiceConnection> connection, Options opts = {});
   ~BudgetServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class BudgetServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BudgetServiceClient const& a, BudgetServiceClient const& b) {
+  friend bool operator==(BudgetServiceClient const& a,
+                         BudgetServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BudgetServiceClient const& a, BudgetServiceClient const& b) {
+  friend bool operator!=(BudgetServiceClient const& a,
+                         BudgetServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +112,10 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  CreateBudget(std::string const& parent, google::cloud::billing::budgets::v1::Budget const& budget, Options opts = {});
+  StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
+      std::string const& parent,
+      google::cloud::billing::budgets::v1::Budget const& budget,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -141,8 +146,9 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  CreateBudget(google::cloud::billing::budgets::v1::CreateBudgetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
+      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -177,8 +183,9 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  UpdateBudget(google::cloud::billing::budgets::v1::Budget const& budget, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
+      google::cloud::billing::budgets::v1::Budget const& budget,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -211,8 +218,9 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  UpdateBudget(google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
+      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -242,8 +250,8 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.GetBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  GetBudget(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -277,8 +285,9 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.GetBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
   ///
   // clang-format on
-  StatusOr<google::cloud::billing::budgets::v1::Budget>
-  GetBudget(google::cloud::billing::budgets::v1::GetBudgetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
+      google::cloud::billing::budgets::v1::GetBudgetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -317,8 +326,8 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::budgets::v1::Budget>
-  ListBudgets(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -361,8 +370,9 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
   ///
   // clang-format on
-  StreamRange<google::cloud::billing::budgets::v1::Budget>
-  ListBudgets(google::cloud::billing::budgets::v1::ListBudgetsRequest request, Options opts = {});
+  StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
+      google::cloud::billing::budgets::v1::ListBudgetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -384,8 +394,7 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L182}
   ///
   // clang-format on
-  Status
-  DeleteBudget(std::string const& name, Options opts = {});
+  Status DeleteBudget(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -411,8 +420,9 @@ class BudgetServiceClient {
   /// [google.cloud.billing.budgets.v1.DeleteBudgetRequest]: @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L182}
   ///
   // clang-format on
-  Status
-  DeleteBudget(google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request, Options opts = {});
+  Status DeleteBudget(
+      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<BudgetServiceConnection> connection_;

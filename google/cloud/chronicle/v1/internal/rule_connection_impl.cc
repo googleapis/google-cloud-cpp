@@ -17,8 +17,8 @@
 // source: google/cloud/chronicle/v1/rule.proto
 
 #include "google/cloud/chronicle/v1/internal/rule_connection_impl.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/chronicle/v1/internal/rule_option_defaults.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
@@ -33,38 +33,40 @@ namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<chronicle_v1::RuleServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<chronicle_v1::RuleServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<chronicle_v1::RuleServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<chronicle_v1::RuleServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<chronicle_v1::RuleServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<chronicle_v1::RuleServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<chronicle_v1::RuleServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<chronicle_v1::RuleServicePollingPolicyOption>()->clone();
 }
 
-} // namespace
+}  // namespace
 
 RuleServiceConnectionImpl::RuleServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<chronicle_v1_internal::RuleServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        RuleServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      RuleServiceConnection::options())) {}
 
 StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceConnectionImpl::CreateRule(google::cloud::chronicle::v1::CreateRuleRequest const& request) {
+RuleServiceConnectionImpl::CreateRule(
+    google::cloud::chronicle::v1::CreateRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -76,8 +78,8 @@ RuleServiceConnectionImpl::CreateRule(google::cloud::chronicle::v1::CreateRuleRe
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceConnectionImpl::GetRule(google::cloud::chronicle::v1::GetRuleRequest const& request) {
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceConnectionImpl::GetRule(
+    google::cloud::chronicle::v1::GetRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -90,27 +92,33 @@ RuleServiceConnectionImpl::GetRule(google::cloud::chronicle::v1::GetRuleRequest 
 }
 
 StreamRange<google::cloud::chronicle::v1::Rule>
-RuleServiceConnectionImpl::ListRules(google::cloud::chronicle::v1::ListRulesRequest request) {
+RuleServiceConnectionImpl::ListRules(
+    google::cloud::chronicle::v1::ListRulesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListRules(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::chronicle::v1::Rule>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::chronicle::v1::Rule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::chronicle::v1::ListRulesRequest const& r) {
+          Options const& options,
+          google::cloud::chronicle::v1::ListRulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::chronicle::v1::ListRulesRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::chronicle::v1::ListRulesRequest const& request) {
               return stub->ListRules(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::chronicle::v1::ListRulesResponse r) {
-        std::vector<google::cloud::chronicle::v1::Rule> result(r.rules().size());
+        std::vector<google::cloud::chronicle::v1::Rule> result(
+            r.rules().size());
         auto& messages = *r.mutable_rules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -118,7 +126,8 @@ RuleServiceConnectionImpl::ListRules(google::cloud::chronicle::v1::ListRulesRequ
 }
 
 StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceConnectionImpl::UpdateRule(google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
+RuleServiceConnectionImpl::UpdateRule(
+    google::cloud::chronicle::v1::UpdateRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -130,8 +139,8 @@ RuleServiceConnectionImpl::UpdateRule(google::cloud::chronicle::v1::UpdateRuleRe
       *current, request, __func__);
 }
 
-Status
-RuleServiceConnectionImpl::DeleteRule(google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
+Status RuleServiceConnectionImpl::DeleteRule(
+    google::cloud::chronicle::v1::DeleteRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -144,27 +153,33 @@ RuleServiceConnectionImpl::DeleteRule(google::cloud::chronicle::v1::DeleteRuleRe
 }
 
 StreamRange<google::cloud::chronicle::v1::Rule>
-RuleServiceConnectionImpl::ListRuleRevisions(google::cloud::chronicle::v1::ListRuleRevisionsRequest request) {
+RuleServiceConnectionImpl::ListRuleRevisions(
+    google::cloud::chronicle::v1::ListRuleRevisionsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListRuleRevisions(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::chronicle::v1::Rule>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::chronicle::v1::Rule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::chronicle::v1::ListRuleRevisionsRequest const& r) {
+          Options const& options,
+          google::cloud::chronicle::v1::ListRuleRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::chronicle::v1::ListRuleRevisionsRequest const& request) {
+                   google::cloud::chronicle::v1::ListRuleRevisionsRequest const&
+                       request) {
               return stub->ListRuleRevisions(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::chronicle::v1::ListRuleRevisionsResponse r) {
-        std::vector<google::cloud::chronicle::v1::Rule> result(r.rules().size());
+        std::vector<google::cloud::chronicle::v1::Rule> result(
+            r.rules().size());
         auto& messages = *r.mutable_rules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -172,42 +187,48 @@ RuleServiceConnectionImpl::ListRuleRevisions(google::cloud::chronicle::v1::ListR
 }
 
 future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-RuleServiceConnectionImpl::CreateRetrohunt(google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+RuleServiceConnectionImpl::CreateRetrohunt(
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateRetrohunt(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::chronicle::v1::Retrohunt>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
-     return stub->AsyncCreateRetrohunt(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::chronicle::v1::Retrohunt>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::chronicle::v1::Retrohunt>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+        return stub->AsyncCreateRetrohunt(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::chronicle::v1::Retrohunt>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 RuleServiceConnectionImpl::CreateRetrohunt(
-      NoAwaitTag, google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
+    NoAwaitTag,
+    google::cloud::chronicle::v1::CreateRetrohuntRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -222,36 +243,43 @@ RuleServiceConnectionImpl::CreateRetrohunt(
 
 future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
 RuleServiceConnectionImpl::CreateRetrohunt(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::chronicle::v1::RetrohuntMetadata>()) {
+  if (!operation.metadata()
+           .Is<typename google::cloud::chronicle::v1::RetrohuntMetadata>()) {
     return make_ready_future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateRetrohunt",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateRetrohunt",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::chronicle::v1::Retrohunt>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::chronicle::v1::Retrohunt>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::chronicle::v1::Retrohunt>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::chronicle::v1::Retrohunt>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::chronicle::v1::Retrohunt>
-RuleServiceConnectionImpl::GetRetrohunt(google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
+RuleServiceConnectionImpl::GetRetrohunt(
+    google::cloud::chronicle::v1::GetRetrohuntRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -264,27 +292,33 @@ RuleServiceConnectionImpl::GetRetrohunt(google::cloud::chronicle::v1::GetRetrohu
 }
 
 StreamRange<google::cloud::chronicle::v1::Retrohunt>
-RuleServiceConnectionImpl::ListRetrohunts(google::cloud::chronicle::v1::ListRetrohuntsRequest request) {
+RuleServiceConnectionImpl::ListRetrohunts(
+    google::cloud::chronicle::v1::ListRetrohuntsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListRetrohunts(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::chronicle::v1::Retrohunt>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::chronicle::v1::Retrohunt>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::chronicle::v1::ListRetrohuntsRequest const& r) {
+          Options const& options,
+          google::cloud::chronicle::v1::ListRetrohuntsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::chronicle::v1::ListRetrohuntsRequest const& request) {
+                   google::cloud::chronicle::v1::ListRetrohuntsRequest const&
+                       request) {
               return stub->ListRetrohunts(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::chronicle::v1::ListRetrohuntsResponse r) {
-        std::vector<google::cloud::chronicle::v1::Retrohunt> result(r.retrohunts().size());
+        std::vector<google::cloud::chronicle::v1::Retrohunt> result(
+            r.retrohunts().size());
         auto& messages = *r.mutable_retrohunts();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -292,40 +326,49 @@ RuleServiceConnectionImpl::ListRetrohunts(google::cloud::chronicle::v1::ListRetr
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceConnectionImpl::GetRuleDeployment(google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
+RuleServiceConnectionImpl::GetRuleDeployment(
+    google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRuleDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::GetRuleDeploymentRequest const& request) {
+             google::cloud::chronicle::v1::GetRuleDeploymentRequest const&
+                 request) {
         return stub_->GetRuleDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceConnectionImpl::ListRuleDeployments(google::cloud::chronicle::v1::ListRuleDeploymentsRequest request) {
+RuleServiceConnectionImpl::ListRuleDeployments(
+    google::cloud::chronicle::v1::ListRuleDeploymentsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListRuleDeployments(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::chronicle::v1::RuleDeployment>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::chronicle::v1::RuleDeployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& r) {
+          Options const& options,
+          google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::chronicle::v1::ListRuleDeploymentsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::chronicle::v1::ListRuleDeploymentsRequest const&
+                    request) {
               return stub->ListRuleDeployments(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::chronicle::v1::ListRuleDeploymentsResponse r) {
-        std::vector<google::cloud::chronicle::v1::RuleDeployment> result(r.rule_deployments().size());
+        std::vector<google::cloud::chronicle::v1::RuleDeployment> result(
+            r.rule_deployments().size());
         auto& messages = *r.mutable_rule_deployments();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -333,30 +376,36 @@ RuleServiceConnectionImpl::ListRuleDeployments(google::cloud::chronicle::v1::Lis
 }
 
 StatusOr<google::cloud::chronicle::v1::RuleDeployment>
-RuleServiceConnectionImpl::UpdateRuleDeployment(google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
+RuleServiceConnectionImpl::UpdateRuleDeployment(
+    google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateRuleDeployment(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const& request) {
+             google::cloud::chronicle::v1::UpdateRuleDeploymentRequest const&
+                 request) {
         return stub_->UpdateRuleDeployment(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-RuleServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+RuleServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<chronicle_v1::RuleServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -366,7 +415,8 @@ RuleServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsReq
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -374,7 +424,8 @@ RuleServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsReq
 }
 
 StatusOr<google::longrunning::Operation>
-RuleServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+RuleServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -386,8 +437,8 @@ RuleServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest
       *current, request, __func__);
 }
 
-Status
-RuleServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status RuleServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -399,8 +450,8 @@ RuleServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationR
       *current, request, __func__);
 }
 
-Status
-RuleServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status RuleServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

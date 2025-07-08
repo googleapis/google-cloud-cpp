@@ -31,36 +31,36 @@ BudgetServiceAuth::BudgetServiceAuth(
     std::shared_ptr<BudgetServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::billing::budgets::v1::Budget> BudgetServiceAuth::CreateBudget(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::billing::budgets::v1::Budget>
+BudgetServiceAuth::CreateBudget(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBudget(context, options, request);
 }
 
-StatusOr<google::cloud::billing::budgets::v1::Budget> BudgetServiceAuth::UpdateBudget(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::billing::budgets::v1::Budget>
+BudgetServiceAuth::UpdateBudget(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateBudget(context, options, request);
 }
 
-StatusOr<google::cloud::billing::budgets::v1::Budget> BudgetServiceAuth::GetBudget(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::billing::budgets::v1::Budget>
+BudgetServiceAuth::GetBudget(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBudget(context, options, request);
 }
 
-StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse> BudgetServiceAuth::ListBudgets(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
+BudgetServiceAuth::ListBudgets(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +68,7 @@ StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse> BudgetService
 }
 
 Status BudgetServiceAuth::DeleteBudget(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

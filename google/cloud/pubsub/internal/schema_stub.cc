@@ -30,173 +30,154 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SchemaServiceStub::~SchemaServiceStub() = default;
 
-StatusOr<google::pubsub::v1::Schema>
-DefaultSchemaServiceStub::CreateSchema(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::CreateSchemaRequest const& request) {
-    google::pubsub::v1::Schema response;
-    auto status =
-        grpc_stub_->CreateSchema(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::CreateSchema(
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::CreateSchemaRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->CreateSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::pubsub::v1::Schema>
-DefaultSchemaServiceStub::GetSchema(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::GetSchemaRequest const& request) {
-    google::pubsub::v1::Schema response;
-    auto status =
-        grpc_stub_->GetSchema(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::GetSchema(
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::GetSchemaRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->GetSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::ListSchemasResponse>
 DefaultSchemaServiceStub::ListSchemas(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::ListSchemasRequest const& request) {
-    google::pubsub::v1::ListSchemasResponse response;
-    auto status =
-        grpc_stub_->ListSchemas(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::ListSchemasRequest const& request) {
+  google::pubsub::v1::ListSchemasResponse response;
+  auto status = grpc_stub_->ListSchemas(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
 DefaultSchemaServiceStub::ListSchemaRevisions(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
-    google::pubsub::v1::ListSchemaRevisionsResponse response;
-    auto status =
-        grpc_stub_->ListSchemaRevisions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
+  google::pubsub::v1::ListSchemaRevisionsResponse response;
+  auto status = grpc_stub_->ListSchemaRevisions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::pubsub::v1::Schema>
-DefaultSchemaServiceStub::CommitSchema(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::CommitSchemaRequest const& request) {
-    google::pubsub::v1::Schema response;
-    auto status =
-        grpc_stub_->CommitSchema(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::CommitSchema(
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::CommitSchemaRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->CommitSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::pubsub::v1::Schema>
-DefaultSchemaServiceStub::RollbackSchema(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::RollbackSchemaRequest const& request) {
-    google::pubsub::v1::Schema response;
-    auto status =
-        grpc_stub_->RollbackSchema(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::RollbackSchema(
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::RollbackSchemaRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->RollbackSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::Schema>
 DefaultSchemaServiceStub::DeleteSchemaRevision(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
-    google::pubsub::v1::Schema response;
-    auto status =
-        grpc_stub_->DeleteSchemaRevision(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->DeleteSchemaRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultSchemaServiceStub::DeleteSchema(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::DeleteSchemaRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteSchema(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultSchemaServiceStub::DeleteSchema(
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::DeleteSchemaRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
 DefaultSchemaServiceStub::ValidateSchema(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::ValidateSchemaRequest const& request) {
-    google::pubsub::v1::ValidateSchemaResponse response;
-    auto status =
-        grpc_stub_->ValidateSchema(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::ValidateSchemaRequest const& request) {
+  google::pubsub::v1::ValidateSchemaResponse response;
+  auto status = grpc_stub_->ValidateSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
 DefaultSchemaServiceStub::ValidateMessage(
-  grpc::ClientContext& context, Options const&,
-  google::pubsub::v1::ValidateMessageRequest const& request) {
-    google::pubsub::v1::ValidateMessageResponse response;
-    auto status =
-        grpc_stub_->ValidateMessage(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::ValidateMessageRequest const& request) {
+  google::pubsub::v1::ValidateMessageResponse response;
+  auto status = grpc_stub_->ValidateMessage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultSchemaServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultSchemaServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultSchemaServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultSchemaServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultSchemaServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

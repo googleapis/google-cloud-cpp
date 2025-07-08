@@ -26,87 +26,119 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SiteSearchEngineServiceConnectionIdempotencyPolicy::~SiteSearchEngineServiceConnectionIdempotencyPolicy() = default;
+SiteSearchEngineServiceConnectionIdempotencyPolicy::
+    ~SiteSearchEngineServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SiteSearchEngineServiceConnectionIdempotencyPolicy>
 SiteSearchEngineServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SiteSearchEngineServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<SiteSearchEngineServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::GetSiteSearchEngine(google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&) {
+Idempotency
+SiteSearchEngineServiceConnectionIdempotencyPolicy::GetSiteSearchEngine(
+    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::CreateTargetSite(google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&) {
+Idempotency
+SiteSearchEngineServiceConnectionIdempotencyPolicy::CreateTargetSite(
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::BatchCreateTargetSites(google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&) {
+Idempotency
+SiteSearchEngineServiceConnectionIdempotencyPolicy::BatchCreateTargetSites(
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::GetTargetSite(google::cloud::discoveryengine::v1::GetTargetSiteRequest const&) {
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::GetTargetSite(
+    google::cloud::discoveryengine::v1::GetTargetSiteRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::UpdateTargetSite(google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&) {
+Idempotency
+SiteSearchEngineServiceConnectionIdempotencyPolicy::UpdateTargetSite(
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::DeleteTargetSite(google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&) {
+Idempotency
+SiteSearchEngineServiceConnectionIdempotencyPolicy::DeleteTargetSite(
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::ListTargetSites(google::cloud::discoveryengine::v1::ListTargetSitesRequest) {  // NOLINT
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::ListTargetSites(
+    google::cloud::discoveryengine::v1::ListTargetSitesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::CreateSitemap(google::cloud::discoveryengine::v1::CreateSitemapRequest const&) {
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::CreateSitemap(
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::DeleteSitemap(google::cloud::discoveryengine::v1::DeleteSitemapRequest const&) {
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::DeleteSitemap(
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::FetchSitemaps(google::cloud::discoveryengine::v1::FetchSitemapsRequest const&) {
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::FetchSitemaps(
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::EnableAdvancedSiteSearch(google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&) {
+Idempotency
+SiteSearchEngineServiceConnectionIdempotencyPolicy::EnableAdvancedSiteSearch(
+    google::cloud::discoveryengine::v1::
+        EnableAdvancedSiteSearchRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::DisableAdvancedSiteSearch(google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&) {
+Idempotency
+SiteSearchEngineServiceConnectionIdempotencyPolicy::DisableAdvancedSiteSearch(
+    google::cloud::discoveryengine::v1::
+        DisableAdvancedSiteSearchRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::RecrawlUris(google::cloud::discoveryengine::v1::RecrawlUrisRequest const&) {
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::RecrawlUris(
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::BatchVerifyTargetSites(google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&) {
+Idempotency
+SiteSearchEngineServiceConnectionIdempotencyPolicy::BatchVerifyTargetSites(
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::FetchDomainVerificationStatus(google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest) {  // NOLINT
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::
+    FetchDomainVerificationStatus(
+        google::cloud::discoveryengine::v1::
+            FetchDomainVerificationStatusRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SiteSearchEngineServiceConnectionIdempotencyPolicy>
-    MakeDefaultSiteSearchEngineServiceConnectionIdempotencyPolicy() {
+MakeDefaultSiteSearchEngineServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SiteSearchEngineServiceConnectionIdempotencyPolicy>();
 }
 

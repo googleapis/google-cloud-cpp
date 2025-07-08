@@ -35,23 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GlobalOperationsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_GLOBAL_OPERATIONS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_GLOBAL_OPERATIONS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_GLOBAL_OPERATIONS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_GLOBAL_OPERATIONS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()) {
-    options.set<compute_global_operations_v1::GlobalOperationsRetryPolicyOption>(
+  if (!options.has<
+          compute_global_operations_v1::GlobalOperationsRetryPolicyOption>()) {
+    options.set<
+        compute_global_operations_v1::GlobalOperationsRetryPolicyOption>(
         compute_global_operations_v1::GlobalOperationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_global_operations_v1::GlobalOperationsBackoffPolicyOption>()) {
-    options.set<compute_global_operations_v1::GlobalOperationsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<compute_global_operations_v1::
+                       GlobalOperationsBackoffPolicyOption>()) {
+    options
+        .set<compute_global_operations_v1::GlobalOperationsBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<compute_global_operations_v1::GlobalOperationsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_global_operations_v1::GlobalOperationsConnectionIdempotencyPolicyOption>(
-        compute_global_operations_v1::MakeDefaultGlobalOperationsConnectionIdempotencyPolicy());
+  if (!options.has<compute_global_operations_v1::
+                       GlobalOperationsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_global_operations_v1::
+                    GlobalOperationsConnectionIdempotencyPolicyOption>(
+        compute_global_operations_v1::
+            MakeDefaultGlobalOperationsConnectionIdempotencyPolicy());
   }
 
   return options;

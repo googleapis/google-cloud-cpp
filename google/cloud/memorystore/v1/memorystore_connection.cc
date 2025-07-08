@@ -17,17 +17,17 @@
 // source: google/cloud/memorystore/v1/memorystore.proto
 
 #include "google/cloud/memorystore/v1/memorystore_connection.h"
+#include "google/cloud/memorystore/v1/internal/memorystore_connection_impl.h"
+#include "google/cloud/memorystore/v1/internal/memorystore_option_defaults.h"
+#include "google/cloud/memorystore/v1/internal/memorystore_stub_factory.h"
+#include "google/cloud/memorystore/v1/internal/memorystore_tracing_connection.h"
+#include "google/cloud/memorystore/v1/memorystore_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/memorystore/v1/internal/memorystore_connection_impl.h"
-#include "google/cloud/memorystore/v1/internal/memorystore_option_defaults.h"
-#include "google/cloud/memorystore/v1/internal/memorystore_stub_factory.h"
-#include "google/cloud/memorystore/v1/internal/memorystore_tracing_connection.h"
-#include "google/cloud/memorystore/v1/memorystore_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MemorystoreConnection::~MemorystoreConnection() = default;
 
-StreamRange<google::cloud::memorystore::v1::Instance> MemorystoreConnection::ListInstances(
-    google::cloud::memorystore::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::memorystore::v1::Instance>
+MemorystoreConnection::ListInstances(
+    google::cloud::memorystore::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::memorystore::v1::Instance>>();
 }
@@ -54,72 +56,63 @@ future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreConnection::CreateInstance(
     google::cloud::memorystore::v1::CreateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreConnection::CreateInstance(
-    NoAwaitTag,
-    google::cloud::memorystore::v1::CreateInstanceRequest const&) {
+StatusOr<google::longrunning::Operation> MemorystoreConnection::CreateInstance(
+    NoAwaitTag, google::cloud::memorystore::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
-MemorystoreConnection::CreateInstance(
-    google::longrunning::Operation const&) {
+MemorystoreConnection::CreateInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreConnection::UpdateInstance(
     google::cloud::memorystore::v1::UpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreConnection::UpdateInstance(
-    NoAwaitTag,
-    google::cloud::memorystore::v1::UpdateInstanceRequest const&) {
+StatusOr<google::longrunning::Operation> MemorystoreConnection::UpdateInstance(
+    NoAwaitTag, google::cloud::memorystore::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
-MemorystoreConnection::UpdateInstance(
-    google::longrunning::Operation const&) {
+MemorystoreConnection::UpdateInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
 MemorystoreConnection::DeleteInstance(
     google::cloud::memorystore::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreConnection::DeleteInstance(
-    NoAwaitTag,
-    google::cloud::memorystore::v1::DeleteInstanceRequest const&) {
+StatusOr<google::longrunning::Operation> MemorystoreConnection::DeleteInstance(
+    NoAwaitTag, google::cloud::memorystore::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-MemorystoreConnection::DeleteInstance(
-    google::longrunning::Operation const&) {
+MemorystoreConnection::DeleteInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
@@ -132,8 +125,8 @@ future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreConnection::RescheduleMaintenance(
     google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -141,19 +134,21 @@ MemorystoreConnection::RescheduleMaintenance(
     NoAwaitTag,
     google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreConnection::RescheduleMaintenance(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::memorystore::v1::BackupCollection> MemorystoreConnection::ListBackupCollections(
-    google::cloud::memorystore::v1::ListBackupCollectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::memorystore::v1::BackupCollection>
+MemorystoreConnection::ListBackupCollections(
+    google::cloud::memorystore::v1::
+        ListBackupCollectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::memorystore::v1::BackupCollection>>();
 }
@@ -164,8 +159,10 @@ MemorystoreConnection::GetBackupCollection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::memorystore::v1::Backup> MemorystoreConnection::ListBackups(
-    google::cloud::memorystore::v1::ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::memorystore::v1::Backup>
+MemorystoreConnection::ListBackups(
+    google::cloud::memorystore::v1::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::memorystore::v1::Backup>>();
 }
@@ -180,106 +177,97 @@ future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
 MemorystoreConnection::DeleteBackup(
     google::cloud::memorystore::v1::DeleteBackupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreConnection::DeleteBackup(
-    NoAwaitTag,
-    google::cloud::memorystore::v1::DeleteBackupRequest const&) {
+StatusOr<google::longrunning::Operation> MemorystoreConnection::DeleteBackup(
+    NoAwaitTag, google::cloud::memorystore::v1::DeleteBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-MemorystoreConnection::DeleteBackup(
-    google::longrunning::Operation const&) {
+MemorystoreConnection::DeleteBackup(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Backup>>
 MemorystoreConnection::ExportBackup(
     google::cloud::memorystore::v1::ExportBackupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Backup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreConnection::ExportBackup(
-    NoAwaitTag,
-    google::cloud::memorystore::v1::ExportBackupRequest const&) {
+StatusOr<google::longrunning::Operation> MemorystoreConnection::ExportBackup(
+    NoAwaitTag, google::cloud::memorystore::v1::ExportBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Backup>>
-MemorystoreConnection::ExportBackup(
-    google::longrunning::Operation const&) {
+MemorystoreConnection::ExportBackup(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Backup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
 MemorystoreConnection::BackupInstance(
     google::cloud::memorystore::v1::BackupInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreConnection::BackupInstance(
-    NoAwaitTag,
-    google::cloud::memorystore::v1::BackupInstanceRequest const&) {
+StatusOr<google::longrunning::Operation> MemorystoreConnection::BackupInstance(
+    NoAwaitTag, google::cloud::memorystore::v1::BackupInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::memorystore::v1::Instance>>
-MemorystoreConnection::BackupInstance(
-    google::longrunning::Operation const&) {
+MemorystoreConnection::BackupInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::memorystore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::memorystore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> MemorystoreConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+MemorystoreConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-MemorystoreConnection::GetLocation(
+StatusOr<google::cloud::location::Location> MemorystoreConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> MemorystoreConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+MemorystoreConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreConnection::GetOperation(
+StatusOr<google::longrunning::Operation> MemorystoreConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MemorystoreConnection::DeleteOperation(
+Status MemorystoreConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-MemorystoreConnection::CancelOperation(
+Status MemorystoreConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -287,17 +275,18 @@ MemorystoreConnection::CancelOperation(
 std::shared_ptr<MemorystoreConnection> MakeMemorystoreConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      MemorystorePolicyOptionList>(options, __func__);
-  options = memorystore_v1_internal::MemorystoreDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 MemorystorePolicyOptionList>(options,
+                                                              __func__);
+  options =
+      memorystore_v1_internal::MemorystoreDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = memorystore_v1_internal::CreateDefaultMemorystoreStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return memorystore_v1_internal::MakeMemorystoreTracingConnection(
       std::make_shared<memorystore_v1_internal::MemorystoreConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,99 +32,122 @@ TransitionRouteGroupsTracingStub::TransitionRouteGroupsTracingStub(
     std::shared_ptr<TransitionRouteGroupsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse> TransitionRouteGroupsTracingStub::ListTransitionRouteGroups(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "ListTransitionRouteGroups");
+StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
+TransitionRouteGroupsTracingStub::ListTransitionRouteGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "ListTransitionRouteGroups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListTransitionRouteGroups(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListTransitionRouteGroups(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> TransitionRouteGroupsTracingStub::GetTransitionRouteGroup(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "GetTransitionRouteGroup");
+StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+TransitionRouteGroupsTracingStub::GetTransitionRouteGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "GetTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetTransitionRouteGroup(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetTransitionRouteGroup(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> TransitionRouteGroupsTracingStub::CreateTransitionRouteGroup(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "CreateTransitionRouteGroup");
+StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+TransitionRouteGroupsTracingStub::CreateTransitionRouteGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "CreateTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateTransitionRouteGroup(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateTransitionRouteGroup(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> TransitionRouteGroupsTracingStub::UpdateTransitionRouteGroup(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "UpdateTransitionRouteGroup");
+StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+TransitionRouteGroupsTracingStub::UpdateTransitionRouteGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "UpdateTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateTransitionRouteGroup(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateTransitionRouteGroup(context, options, request));
 }
 
 Status TransitionRouteGroupsTracingStub::DeleteTransitionRouteGroup(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "DeleteTransitionRouteGroup");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "DeleteTransitionRouteGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteTransitionRouteGroup(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteTransitionRouteGroup(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> TransitionRouteGroupsTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+TransitionRouteGroupsTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> TransitionRouteGroupsTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+TransitionRouteGroupsTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> TransitionRouteGroupsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+TransitionRouteGroupsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> TransitionRouteGroupsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+TransitionRouteGroupsTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -132,10 +155,10 @@ StatusOr<google::longrunning::Operation> TransitionRouteGroupsTracingStub::GetOp
 }
 
 Status TransitionRouteGroupsTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

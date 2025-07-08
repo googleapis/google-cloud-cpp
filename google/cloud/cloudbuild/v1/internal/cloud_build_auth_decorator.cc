@@ -33,45 +33,43 @@ CloudBuildAuth::CloudBuildAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncCreateBuild(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateBuild(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateBuild(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudBuildAuth::CreateBuild(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudBuildAuth::CreateBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBuild(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildAuth::GetBuild(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBuild(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse> CloudBuildAuth::ListBuilds(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
+CloudBuildAuth::ListBuilds(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -79,8 +77,7 @@ StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse> CloudBuildAuth::L
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildAuth::CancelBuild(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -89,28 +86,27 @@ StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildAuth::CancelBuild(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncRetryBuild(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRetryBuild(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRetryBuild(cq, *std::move(context),
+                                      std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudBuildAuth::RetryBuild(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudBuildAuth::RetryBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RetryBuild(context, options, request);
@@ -118,54 +114,54 @@ CloudBuildAuth::RetryBuild(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncApproveBuild(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncApproveBuild(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncApproveBuild(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudBuildAuth::ApproveBuild(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudBuildAuth::ApproveBuild(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ApproveBuild(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CloudBuildAuth::CreateBuildTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request) {
+StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+CloudBuildAuth::CreateBuildTrigger(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBuildTrigger(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CloudBuildAuth::GetBuildTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+CloudBuildAuth::GetBuildTrigger(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBuildTrigger(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse> CloudBuildAuth::ListBuildTriggers(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
+CloudBuildAuth::ListBuildTriggers(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -173,18 +169,19 @@ StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse> CloudBuild
 }
 
 Status CloudBuildAuth::DeleteBuildTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBuildTrigger(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CloudBuildAuth::UpdateBuildTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request) {
+StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+CloudBuildAuth::UpdateBuildTrigger(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateBuildTrigger(context, options, request);
@@ -192,37 +189,37 @@ StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CloudBuildAuth::UpdateB
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncRunBuildTrigger(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRunBuildTrigger(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRunBuildTrigger(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudBuildAuth::RunBuildTrigger(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudBuildAuth::RunBuildTrigger(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RunBuildTrigger(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse> CloudBuildAuth::ReceiveTriggerWebhook(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request) {
+StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
+CloudBuildAuth::ReceiveTriggerWebhook(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReceiveTriggerWebhook(context, options, request);
@@ -230,36 +227,35 @@ StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse> CloudB
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncCreateWorkerPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateWorkerPool(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateWorkerPool(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudBuildAuth::CreateWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudBuildAuth::CreateWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWorkerPool(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::WorkerPool> CloudBuildAuth::GetWorkerPool(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
+CloudBuildAuth::GetWorkerPool(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -268,28 +264,27 @@ StatusOr<google::devtools::cloudbuild::v1::WorkerPool> CloudBuildAuth::GetWorker
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncDeleteWorkerPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteWorkerPool(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteWorkerPool(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudBuildAuth::DeleteWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudBuildAuth::DeleteWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWorkerPool(context, options, request);
@@ -297,36 +292,35 @@ CloudBuildAuth::DeleteWorkerPool(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildAuth::AsyncUpdateWorkerPool(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateWorkerPool(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateWorkerPool(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudBuildAuth::UpdateWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudBuildAuth::UpdateWorkerPool(
+    grpc::ClientContext& context, Options options,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateWorkerPool(context, options, request);
 }
 
-StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse> CloudBuildAuth::ListWorkerPools(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
+CloudBuildAuth::ListWorkerPools(
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -340,15 +334,16 @@ CloudBuildAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -357,13 +352,14 @@ future<Status> CloudBuildAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

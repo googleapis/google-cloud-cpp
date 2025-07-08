@@ -36,31 +36,32 @@ class ConfidentialComputingTracingStub : public ConfidentialComputingStub {
  public:
   ~ConfidentialComputingTracingStub() override = default;
 
-  explicit ConfidentialComputingTracingStub(std::shared_ptr<ConfidentialComputingStub> child);
+  explicit ConfidentialComputingTracingStub(
+      std::shared_ptr<ConfidentialComputingStub> child);
 
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
+          request) override;
 
-  StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse> VerifyAttestation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) override;
+  StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
+  VerifyAttestation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::shared_ptr<ConfidentialComputingStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

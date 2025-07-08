@@ -60,11 +60,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.Context]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+/// [google.cloud.dialogflow.v2.Context]:
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
 ///
 class ContextsClient {
  public:
-  explicit ContextsClient(std::shared_ptr<ContextsConnection> connection, Options opts = {});
+  explicit ContextsClient(std::shared_ptr<ContextsConnection> connection,
+                          Options opts = {});
   ~ContextsClient();
 
   ///@{
@@ -120,8 +122,8 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.ListContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L224}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Context>
-  ListContexts(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Context> ListContexts(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -159,8 +161,9 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.ListContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L224}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Context>
-  ListContexts(google::cloud::dialogflow::v2::ListContextsRequest request, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Context> ListContexts(
+      google::cloud::dialogflow::v2::ListContextsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -188,8 +191,8 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.GetContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L260}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Context>
-  GetContext(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +221,9 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.GetContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L260}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Context>
-  GetContext(google::cloud::dialogflow::v2::GetContextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
+      google::cloud::dialogflow::v2::GetContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -250,8 +254,9 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.CreateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L277}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Context>
-  CreateContext(std::string const& parent, google::cloud::dialogflow::v2::Context const& context, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
+      std::string const& parent,
+      google::cloud::dialogflow::v2::Context const& context, Options opts = {});
 
   // clang-format off
   ///
@@ -282,8 +287,9 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.CreateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L277}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Context>
-  CreateContext(google::cloud::dialogflow::v2::CreateContextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
+      google::cloud::dialogflow::v2::CreateContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -308,8 +314,9 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.UpdateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L297}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Context>
-  UpdateContext(google::cloud::dialogflow::v2::Context const& context, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
+      google::cloud::dialogflow::v2::Context const& context,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -338,8 +345,9 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.UpdateContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L297}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Context>
-  UpdateContext(google::cloud::dialogflow::v2::UpdateContextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
+      google::cloud::dialogflow::v2::UpdateContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -364,8 +372,7 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.DeleteContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L308}
   ///
   // clang-format on
-  Status
-  DeleteContext(std::string const& name, Options opts = {});
+  Status DeleteContext(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -391,8 +398,9 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.DeleteContextRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L308}
   ///
   // clang-format on
-  Status
-  DeleteContext(google::cloud::dialogflow::v2::DeleteContextRequest const& request, Options opts = {});
+  Status DeleteContext(
+      google::cloud::dialogflow::v2::DeleteContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -416,8 +424,7 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.DeleteAllContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L325}
   ///
   // clang-format on
-  Status
-  DeleteAllContexts(std::string const& parent, Options opts = {});
+  Status DeleteAllContexts(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -443,8 +450,9 @@ class ContextsClient {
   /// [google.cloud.dialogflow.v2.DeleteAllContextsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L325}
   ///
   // clang-format on
-  Status
-  DeleteAllContexts(google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request, Options opts = {});
+  Status DeleteAllContexts(
+      google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -482,8 +490,8 @@ class ContextsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -512,8 +520,9 @@ class ContextsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -548,8 +557,8 @@ class ContextsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -588,8 +597,8 @@ class ContextsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -615,8 +624,8 @@ class ContextsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -647,8 +656,9 @@ class ContextsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -682,8 +692,7 @@ class ContextsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -722,8 +731,9 @@ class ContextsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ContextsConnection> connection_;

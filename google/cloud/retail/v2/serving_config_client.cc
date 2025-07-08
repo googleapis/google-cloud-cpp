@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServingConfigServiceClient::ServingConfigServiceClient(
     std::shared_ptr<ServingConfigServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ServingConfigServiceClient::~ServingConfigServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::CreateServingConfig(std::string const& parent, google::cloud::retail::v2::ServingConfig const& serving_config, std::string const& serving_config_id, Options opts) {
+ServingConfigServiceClient::CreateServingConfig(
+    std::string const& parent,
+    google::cloud::retail::v2::ServingConfig const& serving_config,
+    std::string const& serving_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::CreateServingConfigRequest request;
   request.set_parent(parent);
@@ -43,27 +46,32 @@ ServingConfigServiceClient::CreateServingConfig(std::string const& parent, googl
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const& request, Options opts) {
+ServingConfigServiceClient::CreateServingConfig(
+    google::cloud::retail::v2::CreateServingConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateServingConfig(request);
 }
 
-Status
-ServingConfigServiceClient::DeleteServingConfig(std::string const& name, Options opts) {
+Status ServingConfigServiceClient::DeleteServingConfig(std::string const& name,
+                                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::DeleteServingConfigRequest request;
   request.set_name(name);
   return connection_->DeleteServingConfig(request);
 }
 
-Status
-ServingConfigServiceClient::DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const& request, Options opts) {
+Status ServingConfigServiceClient::DeleteServingConfig(
+    google::cloud::retail::v2::DeleteServingConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteServingConfig(request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::UpdateServingConfig(google::cloud::retail::v2::ServingConfig const& serving_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+ServingConfigServiceClient::UpdateServingConfig(
+    google::cloud::retail::v2::ServingConfig const& serving_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateServingConfigRequest request;
   *request.mutable_serving_config() = serving_config;
@@ -72,13 +80,16 @@ ServingConfigServiceClient::UpdateServingConfig(google::cloud::retail::v2::Servi
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const& request, Options opts) {
+ServingConfigServiceClient::UpdateServingConfig(
+    google::cloud::retail::v2::UpdateServingConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateServingConfig(request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::GetServingConfig(std::string const& name, Options opts) {
+ServingConfigServiceClient::GetServingConfig(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetServingConfigRequest request;
   request.set_name(name);
@@ -86,13 +97,16 @@ ServingConfigServiceClient::GetServingConfig(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const& request, Options opts) {
+ServingConfigServiceClient::GetServingConfig(
+    google::cloud::retail::v2::GetServingConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetServingConfig(request);
 }
 
 StreamRange<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::ListServingConfigs(std::string const& parent, Options opts) {
+ServingConfigServiceClient::ListServingConfigs(std::string const& parent,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::ListServingConfigsRequest request;
   request.set_parent(parent);
@@ -100,13 +114,16 @@ ServingConfigServiceClient::ListServingConfigs(std::string const& parent, Option
 }
 
 StreamRange<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest request, Options opts) {
+ServingConfigServiceClient::ListServingConfigs(
+    google::cloud::retail::v2::ListServingConfigsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServingConfigs(std::move(request));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::AddControl(std::string const& serving_config, Options opts) {
+ServingConfigServiceClient::AddControl(std::string const& serving_config,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::AddControlRequest request;
   request.set_serving_config(serving_config);
@@ -114,13 +131,15 @@ ServingConfigServiceClient::AddControl(std::string const& serving_config, Option
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::AddControl(google::cloud::retail::v2::AddControlRequest const& request, Options opts) {
+ServingConfigServiceClient::AddControl(
+    google::cloud::retail::v2::AddControlRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddControl(request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::RemoveControl(std::string const& serving_config, Options opts) {
+ServingConfigServiceClient::RemoveControl(std::string const& serving_config,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::RemoveControlRequest request;
   request.set_serving_config(serving_config);
@@ -128,13 +147,17 @@ ServingConfigServiceClient::RemoveControl(std::string const& serving_config, Opt
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceClient::RemoveControl(google::cloud::retail::v2::RemoveControlRequest const& request, Options opts) {
+ServingConfigServiceClient::RemoveControl(
+    google::cloud::retail::v2::RemoveControlRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveControl(request);
 }
 
 StreamRange<google::longrunning::Operation>
-ServingConfigServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+ServingConfigServiceClient::ListOperations(std::string const& name,
+                                           std::string const& filter,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -143,13 +166,15 @@ ServingConfigServiceClient::ListOperations(std::string const& name, std::string 
 }
 
 StreamRange<google::longrunning::Operation>
-ServingConfigServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+ServingConfigServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-ServingConfigServiceClient::GetOperation(std::string const& name, Options opts) {
+ServingConfigServiceClient::GetOperation(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -157,7 +182,8 @@ ServingConfigServiceClient::GetOperation(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-ServingConfigServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+ServingConfigServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

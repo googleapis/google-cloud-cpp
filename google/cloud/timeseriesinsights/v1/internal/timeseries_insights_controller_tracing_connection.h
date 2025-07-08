@@ -36,33 +36,44 @@ class TimeseriesInsightsControllerTracingConnection
   ~TimeseriesInsightsControllerTracingConnection() override = default;
 
   explicit TimeseriesInsightsControllerTracingConnection(
-    std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection> child);
+      std::shared_ptr<
+          timeseriesinsights_v1::TimeseriesInsightsControllerConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
-  ListDataSets(google::cloud::timeseriesinsights::v1::ListDataSetsRequest request) override;
+  StreamRange<google::cloud::timeseriesinsights::v1::DataSet> ListDataSets(
+      google::cloud::timeseriesinsights::v1::ListDataSetsRequest request)
+      override;
 
-  StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
-  CreateDataSet(google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::DataSet> CreateDataSet(
+      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
+          request) override;
 
-  Status
-  DeleteDataSet(google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request) override;
+  Status DeleteDataSet(
+      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
+          request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-  AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) override;
+  AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-  QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) override;
+  QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
+                   request) override;
+
+  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateSlice(
+      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
+          request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-  EvaluateSlice(google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request) override;
-
-  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-  EvaluateTimeseries(google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request) override;
+  EvaluateTimeseries(
+      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection> child_;
+  std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -75,7 +86,9 @@ class TimeseriesInsightsControllerTracingConnection
  */
 std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection>
 MakeTimeseriesInsightsControllerTracingConnection(
-    std::shared_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerConnection> conn);
+    std::shared_ptr<
+        timeseriesinsights_v1::TimeseriesInsightsControllerConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace timeseriesinsights_v1_internal

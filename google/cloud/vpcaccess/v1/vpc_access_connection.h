@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_CONNECTION_H
 
+#include "google/cloud/vpcaccess/v1/internal/vpc_access_retry_traits.h"
+#include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -28,8 +30,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vpcaccess/v1/internal/vpc_access_retry_traits.h"
-#include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.h"
 #include <google/cloud/vpcaccess/v1/vpc_access.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -57,7 +57,8 @@ class VpcAccessServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class VpcAccessServiceLimitedErrorCountRetryPolicy : public VpcAccessServiceRetryPolicy {
+class VpcAccessServiceLimitedErrorCountRetryPolicy
+    : public VpcAccessServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,14 @@ class VpcAccessServiceLimitedErrorCountRetryPolicy : public VpcAccessServiceRetr
    *     @p maximum_failures == 0.
    */
   explicit VpcAccessServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   VpcAccessServiceLimitedErrorCountRetryPolicy(
       VpcAccessServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : VpcAccessServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : VpcAccessServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   VpcAccessServiceLimitedErrorCountRetryPolicy(
       VpcAccessServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : VpcAccessServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : VpcAccessServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +95,9 @@ class VpcAccessServiceLimitedErrorCountRetryPolicy : public VpcAccessServiceRetr
   using BaseType = VpcAccessServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<vpcaccess_v1_internal::VpcAccessServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      vpcaccess_v1_internal::VpcAccessServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -108,7 +111,8 @@ class VpcAccessServiceLimitedErrorCountRetryPolicy : public VpcAccessServiceRetr
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
-class VpcAccessServiceLimitedTimeRetryPolicy : public VpcAccessServiceRetryPolicy {
+class VpcAccessServiceLimitedTimeRetryPolicy
+    : public VpcAccessServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -133,12 +137,14 @@ class VpcAccessServiceLimitedTimeRetryPolicy : public VpcAccessServiceRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit VpcAccessServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  VpcAccessServiceLimitedTimeRetryPolicy(VpcAccessServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : VpcAccessServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  VpcAccessServiceLimitedTimeRetryPolicy(VpcAccessServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : VpcAccessServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VpcAccessServiceLimitedTimeRetryPolicy(
+      VpcAccessServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : VpcAccessServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VpcAccessServiceLimitedTimeRetryPolicy(
+      VpcAccessServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : VpcAccessServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,7 +166,9 @@ class VpcAccessServiceLimitedTimeRetryPolicy : public VpcAccessServiceRetryPolic
   using BaseType = VpcAccessServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<vpcaccess_v1_internal::VpcAccessServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      vpcaccess_v1_internal::VpcAccessServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -182,48 +190,53 @@ class VpcAccessServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
-  CreateConnector(google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);
+  CreateConnector(
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateConnector(NoAwaitTag, google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateConnector(
+      NoAwaitTag,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);
 
   virtual future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
-  CreateConnector( google::longrunning::Operation const& operation);
+  CreateConnector(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::vpcaccess::v1::Connector>
-  GetConnector(google::cloud::vpcaccess::v1::GetConnectorRequest const& request);
+  virtual StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
+      google::cloud::vpcaccess::v1::GetConnectorRequest const& request);
 
-  virtual StreamRange<google::cloud::vpcaccess::v1::Connector>
-  ListConnectors(google::cloud::vpcaccess::v1::ListConnectorsRequest request);
-
-  virtual future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteConnector(NoAwaitTag, google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
+  virtual StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
+      google::cloud::vpcaccess::v1::ListConnectorsRequest request);
 
   virtual future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector( google::longrunning::Operation const& operation);
+  DeleteConnector(
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeleteConnector(
+      NoAwaitTag,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
+  DeleteConnector(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `VpcAccessServiceConnection`.
+ * A factory function to construct an object of type
+ * `VpcAccessServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of VpcAccessServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `VpcAccessServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `VpcAccessServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -233,8 +246,8 @@ class VpcAccessServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `VpcAccessServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `VpcAccessServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
     Options options = {});

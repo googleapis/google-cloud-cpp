@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_retry_traits.h"
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub.h"
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection.h"
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection_idempotency_policy.h"
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,18 +42,25 @@ class PolicyTroubleshooterConnectionImpl
   ~PolicyTroubleshooterConnectionImpl() override = default;
 
   PolicyTroubleshooterConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<policytroubleshooter_iam_v3_internal::PolicyTroubleshooterStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          policytroubleshooter_iam_v3_internal::PolicyTroubleshooterStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::iam::v3::
+               TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(
+      google::cloud::policytroubleshooter::iam::v3::
+          TroubleshootIamPolicyRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<policytroubleshooter_iam_v3_internal::PolicyTroubleshooterStub> stub_;
+  std::shared_ptr<
+      policytroubleshooter_iam_v3_internal::PolicyTroubleshooterStub>
+      stub_;
   Options options_;
 };
 

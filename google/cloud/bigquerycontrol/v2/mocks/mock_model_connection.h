@@ -42,25 +42,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockModelServiceConnection : public bigquerycontrol_v2::ModelServiceConnection {
+class MockModelServiceConnection
+    : public bigquerycontrol_v2::ModelServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Model>,
-  GetModel,
-  (google::cloud::bigquery::v2::GetModelRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Model>, GetModel,
+              (google::cloud::bigquery::v2::GetModelRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::bigquery::v2::Model>),
-  ListModels,
-  (google::cloud::bigquery::v2::ListModelsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::bigquery::v2::Model>), ListModels,
+              (google::cloud::bigquery::v2::ListModelsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Model>,
-  PatchModel,
-  (google::cloud::bigquery::v2::PatchModelRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Model>, PatchModel,
+              (google::cloud::bigquery::v2::PatchModelRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteModel,
-  (google::cloud::bigquery::v2::DeleteModelRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteModel,
+              (google::cloud::bigquery::v2::DeleteModelRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

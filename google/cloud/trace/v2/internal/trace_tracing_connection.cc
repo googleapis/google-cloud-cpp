@@ -32,16 +32,19 @@ TraceServiceTracingConnection::TraceServiceTracingConnection(
     std::shared_ptr<trace_v2::TraceServiceConnection> child)
     : child_(std::move(child)) {}
 
-Status
-TraceServiceTracingConnection::BatchWriteSpans(google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  auto span = internal::MakeSpan("trace_v2::TraceServiceConnection::BatchWriteSpans");
+Status TraceServiceTracingConnection::BatchWriteSpans(
+    google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
+  auto span =
+      internal::MakeSpan("trace_v2::TraceServiceConnection::BatchWriteSpans");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->BatchWriteSpans(request));
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
-TraceServiceTracingConnection::CreateSpan(google::devtools::cloudtrace::v2::Span const& request) {
-  auto span = internal::MakeSpan("trace_v2::TraceServiceConnection::CreateSpan");
+TraceServiceTracingConnection::CreateSpan(
+    google::devtools::cloudtrace::v2::Span const& request) {
+  auto span =
+      internal::MakeSpan("trace_v2::TraceServiceConnection::CreateSpan");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSpan(request));
 }

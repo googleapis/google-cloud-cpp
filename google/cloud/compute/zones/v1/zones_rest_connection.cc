@@ -17,12 +17,12 @@
 // source: google/cloud/compute/zones/v1/zones.proto
 
 #include "google/cloud/compute/zones/v1/zones_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/zones/v1/internal/zones_option_defaults.h"
 #include "google/cloud/compute/zones/v1/internal/zones_rest_connection_impl.h"
 #include "google/cloud/compute/zones/v1/internal/zones_rest_stub_factory.h"
 #include "google/cloud/compute/zones/v1/internal/zones_tracing_connection.h"
 #include "google/cloud/compute/zones/v1/zones_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,20 +34,17 @@ namespace cloud {
 namespace compute_zones_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ZonesConnection> MakeZonesConnectionRest(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      ZonesPolicyOptionList>(options, __func__);
-  options = compute_zones_v1_internal::ZonesDefaultOptions(
-      std::move(options));
+std::shared_ptr<ZonesConnection> MakeZonesConnectionRest(Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, ZonesPolicyOptionList>(options,
+                                                                    __func__);
+  options = compute_zones_v1_internal::ZonesDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_zones_v1_internal::CreateDefaultZonesRestStub(
-      options);
+  auto stub = compute_zones_v1_internal::CreateDefaultZonesRestStub(options);
   return compute_zones_v1_internal::MakeZonesTracingConnection(
-      std::make_shared<
-          compute_zones_v1_internal::ZonesRestConnectionImpl>(
+      std::make_shared<compute_zones_v1_internal::ZonesRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_INTERNAL_QUOTA_CONTROLLER_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_INTERNAL_QUOTA_CONTROLLER_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,10 +38,10 @@ class QuotaControllerAuth : public QuotaControllerStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<QuotaControllerStub> child);
 
-  StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse> AllocateQuota(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicecontrol::v1::AllocateQuotaRequest const& request) override;
+  StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
+  AllocateQuota(grpc::ClientContext& context, Options const& options,
+                google::api::servicecontrol::v1::AllocateQuotaRequest const&
+                    request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

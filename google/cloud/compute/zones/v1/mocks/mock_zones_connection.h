@@ -46,13 +46,15 @@ class MockZonesConnection : public compute_zones_v1::ZonesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Zone>,
-  GetZone,
-  (google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Zone>, GetZone,
+      (google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Zone>),
-  ListZones,
-  (google::cloud::cpp::compute::zones::v1::ListZonesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::cpp::compute::v1::Zone>), ListZones,
+      (google::cloud::cpp::compute::zones::v1::ListZonesRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

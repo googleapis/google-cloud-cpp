@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instance_settings/v1/instance_settings.proto
 
 #include "google/cloud/compute/instance_settings/v1/internal/instance_settings_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,27 +41,30 @@ InstanceSettingsRestMetadata::InstanceSettingsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
 InstanceSettingsRestMetadata::GetInstanceSettings(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_settings::v1::
+        GetInstanceSettingsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetInstanceSettings(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsRestMetadata::AsyncPatchInstanceSettings(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::instance_settings::v1::
+        PatchInstanceSettingsRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchInstanceSettings(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncPatchInstanceSettings(cq, std::move(rest_context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceSettingsRestMetadata::PatchInstanceSettings(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_settings::v1::
+        PatchInstanceSettingsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchInstanceSettings(rest_context, options, request);
 }
@@ -71,28 +74,29 @@ InstanceSettingsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
-future<Status>
-InstanceSettingsRestMetadata::AsyncCancelOperation(
+future<Status> InstanceSettingsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void InstanceSettingsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

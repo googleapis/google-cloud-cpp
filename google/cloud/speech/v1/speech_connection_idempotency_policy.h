@@ -37,21 +37,21 @@ class SpeechConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<SpeechConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  Recognize(google::cloud::speech::v1::RecognizeRequest const& request);
+  virtual google::cloud::Idempotency Recognize(
+      google::cloud::speech::v1::RecognizeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LongRunningRecognize(google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
+  virtual google::cloud::Idempotency LongRunningRecognize(
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
-    MakeDefaultSpeechConnectionIdempotencyPolicy();
+MakeDefaultSpeechConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v1

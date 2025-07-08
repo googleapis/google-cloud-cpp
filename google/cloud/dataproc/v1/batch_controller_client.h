@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BatchControllerClient {
  public:
-  explicit BatchControllerClient(std::shared_ptr<BatchControllerConnection> connection, Options opts = {});
+  explicit BatchControllerClient(
+      std::shared_ptr<BatchControllerConnection> connection, Options opts = {});
   ~BatchControllerClient();
 
   ///@{
@@ -77,10 +78,12 @@ class BatchControllerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BatchControllerClient const& a, BatchControllerClient const& b) {
+  friend bool operator==(BatchControllerClient const& a,
+                         BatchControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BatchControllerClient const& a, BatchControllerClient const& b) {
+  friend bool operator!=(BatchControllerClient const& a,
+                         BatchControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,8 +122,10 @@ class BatchControllerClient {
   /// [google.cloud.dataproc.v1.CreateBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L79}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Batch>>
-  CreateBatch(std::string const& parent, google::cloud::dataproc::v1::Batch const& batch, std::string const& batch_id, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
+      std::string const& parent,
+      google::cloud::dataproc::v1::Batch const& batch,
+      std::string const& batch_id, Options opts = {});
 
   // clang-format off
   ///
@@ -133,8 +138,10 @@ class BatchControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateBatch(NoAwaitTag, std::string const& parent, google::cloud::dataproc::v1::Batch const& batch, std::string const& batch_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateBatch(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dataproc::v1::Batch const& batch,
+      std::string const& batch_id, Options opts = {});
 
   // clang-format off
   ///
@@ -170,8 +177,9 @@ class BatchControllerClient {
   /// [google.cloud.dataproc.v1.CreateBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L79}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Batch>>
-  CreateBatch(google::cloud::dataproc::v1::CreateBatchRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
+      google::cloud::dataproc::v1::CreateBatchRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -184,8 +192,10 @@ class BatchControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateBatch(NoAwaitTag, google::cloud::dataproc::v1::CreateBatchRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateBatch(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::CreateBatchRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -196,8 +206,8 @@ class BatchControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Batch>>
-  CreateBatch(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -223,8 +233,8 @@ class BatchControllerClient {
   /// [google.cloud.dataproc.v1.GetBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L113}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Batch>
-  GetBatch(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -253,8 +263,9 @@ class BatchControllerClient {
   /// [google.cloud.dataproc.v1.GetBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L113}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Batch>
-  GetBatch(google::cloud::dataproc::v1::GetBatchRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
+      google::cloud::dataproc::v1::GetBatchRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -287,8 +298,8 @@ class BatchControllerClient {
   /// [google.cloud.dataproc.v1.ListBatchesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L124}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Batch>
-  ListBatches(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -326,8 +337,9 @@ class BatchControllerClient {
   /// [google.cloud.dataproc.v1.ListBatchesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L124}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Batch>
-  ListBatches(google::cloud::dataproc::v1::ListBatchesRequest request, Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
+      google::cloud::dataproc::v1::ListBatchesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -351,8 +363,7 @@ class BatchControllerClient {
   /// [google.cloud.dataproc.v1.DeleteBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L181}
   ///
   // clang-format on
-  Status
-  DeleteBatch(std::string const& name, Options opts = {});
+  Status DeleteBatch(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -379,8 +390,9 @@ class BatchControllerClient {
   /// [google.cloud.dataproc.v1.DeleteBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L181}
   ///
   // clang-format on
-  Status
-  DeleteBatch(google::cloud::dataproc::v1::DeleteBatchRequest const& request, Options opts = {});
+  Status DeleteBatch(
+      google::cloud::dataproc::v1::DeleteBatchRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -412,8 +424,8 @@ class BatchControllerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +456,8 @@ class BatchControllerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -480,8 +492,9 @@ class BatchControllerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -516,8 +529,8 @@ class BatchControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -556,8 +569,8 @@ class BatchControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -583,8 +596,8 @@ class BatchControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -615,8 +628,9 @@ class BatchControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -640,8 +654,7 @@ class BatchControllerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -670,8 +683,9 @@ class BatchControllerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -705,8 +719,7 @@ class BatchControllerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -745,8 +758,9 @@ class BatchControllerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<BatchControllerConnection> connection_;

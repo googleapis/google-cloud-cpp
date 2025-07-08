@@ -42,29 +42,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockMetricsScopesConnection : public monitoring_metricsscope_v1::MetricsScopesConnection {
+class MockMetricsScopesConnection
+    : public monitoring_metricsscope_v1::MetricsScopesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::metricsscope::v1::MetricsScope>,
-  GetMetricsScope,
-  (google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::monitoring::metricsscope::v1::MetricsScope>,
+      GetMetricsScope,
+      (google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>,
-  ListMetricsScopesByMonitoredProject,
-  (google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::monitoring::metricsscope::v1::
+                           ListMetricsScopesByMonitoredProjectResponse>,
+              ListMetricsScopesByMonitoredProject,
+              (google::monitoring::metricsscope::v1::
+                   ListMetricsScopesByMonitoredProjectRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateMonitoredProject(Matcher<google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateMonitoredProject(Matcher<google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
-  CreateMonitoredProject,
-  (google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
+      CreateMonitoredProject,
+      (google::monitoring::metricsscope::v1::
+           CreateMonitoredProjectRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -72,33 +83,39 @@ class MockMetricsScopesConnection : public monitoring_metricsscope_v1::MetricsSc
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateMonitoredProject(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateMonitoredProject, (NoAwaitTag,
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateMonitoredProject(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
-  CreateMonitoredProject, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMonitoredProject,
+              (NoAwaitTag, google::monitoring::metricsscope::v1::
+                               CreateMonitoredProjectRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteMonitoredProject(Matcher<google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateMonitoredProject(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
-  DeleteMonitoredProject,
-  (google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
+      CreateMonitoredProject, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMonitoredProject(Matcher<google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
+      DeleteMonitoredProject,
+      (google::monitoring::metricsscope::v1::
+           DeleteMonitoredProjectRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,21 +123,23 @@ class MockMetricsScopesConnection : public monitoring_metricsscope_v1::MetricsSc
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteMonitoredProject(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteMonitoredProject, (NoAwaitTag,
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteMonitoredProject,
+              (NoAwaitTag, google::monitoring::metricsscope::v1::
+                               DeleteMonitoredProjectRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteMonitoredProject(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteMonitoredProject(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
-  DeleteMonitoredProject, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
+      DeleteMonitoredProject, (google::longrunning::Operation const& operation),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

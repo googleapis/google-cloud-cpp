@@ -31,7 +31,8 @@ namespace cloud {
 namespace iap_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IdentityAwareProxyAdminServiceAuth : public IdentityAwareProxyAdminServiceStub {
+class IdentityAwareProxyAdminServiceAuth
+    : public IdentityAwareProxyAdminServiceStub {
  public:
   ~IdentityAwareProxyAdminServiceAuth() override = default;
   IdentityAwareProxyAdminServiceAuth(
@@ -39,59 +40,56 @@ class IdentityAwareProxyAdminServiceAuth : public IdentityAwareProxyAdminService
       std::shared_ptr<IdentityAwareProxyAdminServiceStub> child);
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::GetIapSettingsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse> ValidateIapAttributeExpression(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+  ValidateIapAttributeExpression(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse> ListTunnelDestGroups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) override;
+  StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
+  ListTunnelDestGroups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request)
+      override;
 
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request)
+      override;
 
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request)
+      override;
 
   Status DeleteTunnelDestGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request)
+      override;
 
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request)
+      override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

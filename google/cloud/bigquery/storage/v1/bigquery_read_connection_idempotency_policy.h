@@ -34,20 +34,23 @@ class BigQueryReadConnectionIdempotencyPolicy {
   virtual ~BigQueryReadConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request);
+  virtual google::cloud::Idempotency CreateReadSession(
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request);
+  virtual google::cloud::Idempotency SplitReadStream(
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+          request);
 };
 
 std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
-    MakeDefaultBigQueryReadConnectionIdempotencyPolicy();
+MakeDefaultBigQueryReadConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1
 }  // namespace cloud
 }  // namespace google

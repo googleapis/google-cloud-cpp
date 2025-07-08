@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_ZONES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_ZONES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/zones/v1/internal/zones_retry_traits.h"
 #include "google/cloud/compute/zones/v1/zones_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class ZonesLimitedErrorCountRetryPolicy : public ZonesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ZonesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ZonesLimitedErrorCountRetryPolicy(
       ZonesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ZonesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ZonesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ZonesLimitedErrorCountRetryPolicy(
       ZonesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ZonesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ZonesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +89,9 @@ class ZonesLimitedErrorCountRetryPolicy : public ZonesRetryPolicy {
   using BaseType = ZonesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_zones_v1_internal::ZonesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_zones_v1_internal::ZonesRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +129,12 @@ class ZonesLimitedTimeRetryPolicy : public ZonesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ZonesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   ZonesLimitedTimeRetryPolicy(ZonesLimitedTimeRetryPolicy&& rhs) noexcept
-    : ZonesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ZonesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   ZonesLimitedTimeRetryPolicy(ZonesLimitedTimeRetryPolicy const& rhs) noexcept
-    : ZonesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ZonesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -146,15 +148,16 @@ class ZonesLimitedTimeRetryPolicy : public ZonesRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ZonesRetryPolicy> clone() const override {
-    return std::make_unique<ZonesLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<ZonesLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ZonesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_zones_v1_internal::ZonesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_zones_v1_internal::ZonesRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,11 +178,11 @@ class ZonesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Zone>
-  GetZone(google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Zone> GetZone(
+      google::cloud::cpp::compute::zones::v1::GetZoneRequest const& request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

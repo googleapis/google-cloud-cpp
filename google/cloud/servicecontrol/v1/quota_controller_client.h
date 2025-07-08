@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_QUOTA_CONTROLLER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_QUOTA_CONTROLLER_CLIENT_H
 
+#include "google/cloud/servicecontrol/v1/quota_controller_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/servicecontrol/v1/quota_controller_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class QuotaControllerClient {
  public:
-  explicit QuotaControllerClient(std::shared_ptr<QuotaControllerConnection> connection, Options opts = {});
+  explicit QuotaControllerClient(
+      std::shared_ptr<QuotaControllerConnection> connection, Options opts = {});
   ~QuotaControllerClient();
 
   ///@{
@@ -77,10 +78,12 @@ class QuotaControllerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(QuotaControllerClient const& a, QuotaControllerClient const& b) {
+  friend bool operator==(QuotaControllerClient const& a,
+                         QuotaControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(QuotaControllerClient const& a, QuotaControllerClient const& b) {
+  friend bool operator!=(QuotaControllerClient const& a,
+                         QuotaControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,7 +126,9 @@ class QuotaControllerClient {
   ///
   // clang-format on
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const& request, Options opts = {});
+  AllocateQuota(
+      google::api::servicecontrol::v1::AllocateQuotaRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<QuotaControllerConnection> connection_;

@@ -39,105 +39,114 @@ class HubServiceConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<HubServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListHubs(google::cloud::networkconnectivity::v1::ListHubsRequest request);
+  virtual google::cloud::Idempotency ListHubs(
+      google::cloud::networkconnectivity::v1::ListHubsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetHub(google::cloud::networkconnectivity::v1::GetHubRequest const& request);
+  virtual google::cloud::Idempotency GetHub(
+      google::cloud::networkconnectivity::v1::GetHubRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateHub(google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
+  virtual google::cloud::Idempotency CreateHub(
+      google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateHub(google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
+  virtual google::cloud::Idempotency UpdateHub(
+      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteHub(google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
+  virtual google::cloud::Idempotency DeleteHub(
+      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListHubSpokes(google::cloud::networkconnectivity::v1::ListHubSpokesRequest request);
+  virtual google::cloud::Idempotency ListHubSpokes(
+      google::cloud::networkconnectivity::v1::ListHubSpokesRequest request);
 
-  virtual google::cloud::Idempotency
-  QueryHubStatus(google::cloud::networkconnectivity::v1::QueryHubStatusRequest request);
+  virtual google::cloud::Idempotency QueryHubStatus(
+      google::cloud::networkconnectivity::v1::QueryHubStatusRequest request);
 
-  virtual google::cloud::Idempotency
-  ListSpokes(google::cloud::networkconnectivity::v1::ListSpokesRequest request);
+  virtual google::cloud::Idempotency ListSpokes(
+      google::cloud::networkconnectivity::v1::ListSpokesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetSpoke(google::cloud::networkconnectivity::v1::GetSpokeRequest const& request);
+  virtual google::cloud::Idempotency GetSpoke(
+      google::cloud::networkconnectivity::v1::GetSpokeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateSpoke(google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request);
+  virtual google::cloud::Idempotency CreateSpoke(
+      google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateSpoke(google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request);
+  virtual google::cloud::Idempotency UpdateSpoke(
+      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RejectHubSpoke(google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request);
+  virtual google::cloud::Idempotency RejectHubSpoke(
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  AcceptHubSpoke(google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request);
+  virtual google::cloud::Idempotency AcceptHubSpoke(
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  AcceptSpokeUpdate(google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const& request);
+  virtual google::cloud::Idempotency AcceptSpokeUpdate(
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RejectSpokeUpdate(google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const& request);
+  virtual google::cloud::Idempotency RejectSpokeUpdate(
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request);
+  virtual google::cloud::Idempotency DeleteSpoke(
+      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetRouteTable(google::cloud::networkconnectivity::v1::GetRouteTableRequest const& request);
+  virtual google::cloud::Idempotency GetRouteTable(
+      google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetRoute(google::cloud::networkconnectivity::v1::GetRouteRequest const& request);
+  virtual google::cloud::Idempotency GetRoute(
+      google::cloud::networkconnectivity::v1::GetRouteRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListRoutes(google::cloud::networkconnectivity::v1::ListRoutesRequest request);
+  virtual google::cloud::Idempotency ListRoutes(
+      google::cloud::networkconnectivity::v1::ListRoutesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListRouteTables(google::cloud::networkconnectivity::v1::ListRouteTablesRequest request);
+  virtual google::cloud::Idempotency ListRouteTables(
+      google::cloud::networkconnectivity::v1::ListRouteTablesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetGroup(google::cloud::networkconnectivity::v1::GetGroupRequest const& request);
+  virtual google::cloud::Idempotency GetGroup(
+      google::cloud::networkconnectivity::v1::GetGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListGroups(google::cloud::networkconnectivity::v1::ListGroupsRequest request);
+  virtual google::cloud::Idempotency ListGroups(
+      google::cloud::networkconnectivity::v1::ListGroupsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateGroup(google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request);
+  virtual google::cloud::Idempotency UpdateGroup(
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<HubServiceConnectionIdempotencyPolicy>
-    MakeDefaultHubServiceConnectionIdempotencyPolicy();
+MakeDefaultHubServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_v1

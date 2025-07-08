@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_V1_INTERNAL_CLOUD_MEMCACHE_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_V1_INTERNAL_CLOUD_MEMCACHE_TRACING_STUB_H
 
-#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/memcache/v1/internal/cloud_memcache_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -39,109 +39,108 @@ class CloudMemcacheTracingStub : public CloudMemcacheStub {
   explicit CloudMemcacheTracingStub(std::shared_ptr<CloudMemcacheStub> child);
 
   StatusOr<google::cloud::memcache::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::memcache::v1::ListInstancesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::memcache::v1::ListInstancesRequest const& request)
+      override;
 
   StatusOr<google::cloud::memcache::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::memcache::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::CreateInstanceRequest const& request) override;
+      google::cloud::memcache::v1::CreateInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::CreateInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::CreateInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request) override;
+      google::cloud::memcache::v1::UpdateInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::UpdateInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateParameters(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::UpdateParametersRequest const& request) override;
+      google::cloud::memcache::v1::UpdateParametersRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateParameters(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::UpdateParametersRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::UpdateParametersRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request) override;
+      google::cloud::memcache::v1::DeleteInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncApplyParameters(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::ApplyParametersRequest const& request) override;
+      google::cloud::memcache::v1::ApplyParametersRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ApplyParameters(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::ApplyParametersRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::ApplyParametersRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) override;
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -158,7 +157,8 @@ class CloudMemcacheTracingStub : public CloudMemcacheStub {
 
  private:
   std::shared_ptr<CloudMemcacheStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

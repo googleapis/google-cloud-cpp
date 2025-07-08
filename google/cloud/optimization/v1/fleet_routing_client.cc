@@ -28,44 +28,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FleetRoutingClient::FleetRoutingClient(
     std::shared_ptr<FleetRoutingConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FleetRoutingClient::~FleetRoutingClient() = default;
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-FleetRoutingClient::OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const& request, Options opts) {
+FleetRoutingClient::OptimizeTours(
+    google::cloud::optimization::v1::OptimizeToursRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->OptimizeTours(request);
 }
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-FleetRoutingClient::BatchOptimizeTours(google::cloud::optimization::v1::BatchOptimizeToursRequest const& request, Options opts) {
+FleetRoutingClient::BatchOptimizeTours(
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchOptimizeTours(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FleetRoutingClient::BatchOptimizeTours(NoAwaitTag, google::cloud::optimization::v1::BatchOptimizeToursRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FleetRoutingClient::BatchOptimizeTours(
+    NoAwaitTag,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchOptimizeTours(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-FleetRoutingClient::BatchOptimizeTours(google::longrunning::Operation const& operation, Options opts) {
+FleetRoutingClient::BatchOptimizeTours(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchOptimizeTours(operation);
 }
 
-StatusOr<google::longrunning::Operation>
-FleetRoutingClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FleetRoutingClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FleetRoutingClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FleetRoutingClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

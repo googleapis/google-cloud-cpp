@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_NOTIFICATION_CHANNEL_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_NOTIFICATION_CHANNEL_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/monitoring/v3/notification_channel_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -63,23 +63,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NotificationChannelServiceClient {
  public:
-  explicit NotificationChannelServiceClient(std::shared_ptr<NotificationChannelServiceConnection> connection, Options opts = {});
+  explicit NotificationChannelServiceClient(
+      std::shared_ptr<NotificationChannelServiceConnection> connection,
+      Options opts = {});
   ~NotificationChannelServiceClient();
 
   ///@{
   /// @name Copy and move support
-  NotificationChannelServiceClient(NotificationChannelServiceClient const&) = default;
-  NotificationChannelServiceClient& operator=(NotificationChannelServiceClient const&) = default;
-  NotificationChannelServiceClient(NotificationChannelServiceClient&&) = default;
-  NotificationChannelServiceClient& operator=(NotificationChannelServiceClient&&) = default;
+  NotificationChannelServiceClient(NotificationChannelServiceClient const&) =
+      default;
+  NotificationChannelServiceClient& operator=(
+      NotificationChannelServiceClient const&) = default;
+  NotificationChannelServiceClient(NotificationChannelServiceClient&&) =
+      default;
+  NotificationChannelServiceClient& operator=(
+      NotificationChannelServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(NotificationChannelServiceClient const& a, NotificationChannelServiceClient const& b) {
+  friend bool operator==(NotificationChannelServiceClient const& a,
+                         NotificationChannelServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NotificationChannelServiceClient const& a, NotificationChannelServiceClient const& b) {
+  friend bool operator!=(NotificationChannelServiceClient const& a,
+                         NotificationChannelServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -128,7 +136,8 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
-  ListNotificationChannelDescriptors(std::string const& name, Options opts = {});
+  ListNotificationChannelDescriptors(std::string const& name,
+                                     Options opts = {});
 
   // clang-format off
   ///
@@ -168,7 +177,9 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
-  ListNotificationChannelDescriptors(google::monitoring::v3::ListNotificationChannelDescriptorsRequest request, Options opts = {});
+  ListNotificationChannelDescriptors(
+      google::monitoring::v3::ListNotificationChannelDescriptorsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -227,7 +238,10 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
-  GetNotificationChannelDescriptor(google::monitoring::v3::GetNotificationChannelDescriptorRequest const& request, Options opts = {});
+  GetNotificationChannelDescriptor(
+      google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -316,7 +330,9 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::NotificationChannel>
-  ListNotificationChannels(google::monitoring::v3::ListNotificationChannelsRequest request, Options opts = {});
+  ListNotificationChannels(
+      google::monitoring::v3::ListNotificationChannelsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -346,8 +362,8 @@ class NotificationChannelServiceClient {
   /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::NotificationChannel>
-  GetNotificationChannel(std::string const& name, Options opts = {});
+  StatusOr<google::monitoring::v3::NotificationChannel> GetNotificationChannel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -380,8 +396,9 @@ class NotificationChannelServiceClient {
   /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::NotificationChannel>
-  GetNotificationChannel(google::monitoring::v3::GetNotificationChannelRequest const& request, Options opts = {});
+  StatusOr<google::monitoring::v3::NotificationChannel> GetNotificationChannel(
+      google::monitoring::v3::GetNotificationChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -422,7 +439,10 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
-  CreateNotificationChannel(std::string const& name, google::monitoring::v3::NotificationChannel const& notification_channel, Options opts = {});
+  CreateNotificationChannel(
+      std::string const& name,
+      google::monitoring::v3::NotificationChannel const& notification_channel,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -458,7 +478,9 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
-  CreateNotificationChannel(google::monitoring::v3::CreateNotificationChannelRequest const& request, Options opts = {});
+  CreateNotificationChannel(
+      google::monitoring::v3::CreateNotificationChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -493,7 +515,10 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
-  UpdateNotificationChannel(google::protobuf::FieldMask const& update_mask, google::monitoring::v3::NotificationChannel const& notification_channel, Options opts = {});
+  UpdateNotificationChannel(
+      google::protobuf::FieldMask const& update_mask,
+      google::monitoring::v3::NotificationChannel const& notification_channel,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -529,7 +554,9 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
-  UpdateNotificationChannel(google::monitoring::v3::UpdateNotificationChannelRequest const& request, Options opts = {});
+  UpdateNotificationChannel(
+      google::monitoring::v3::UpdateNotificationChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -561,8 +588,8 @@ class NotificationChannelServiceClient {
   /// [google.monitoring.v3.DeleteNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L364}
   ///
   // clang-format on
-  Status
-  DeleteNotificationChannel(std::string const& name, bool force, Options opts = {});
+  Status DeleteNotificationChannel(std::string const& name, bool force,
+                                   Options opts = {});
 
   // clang-format off
   ///
@@ -593,8 +620,9 @@ class NotificationChannelServiceClient {
   /// [google.monitoring.v3.DeleteNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L364}
   ///
   // clang-format on
-  Status
-  DeleteNotificationChannel(google::monitoring::v3::DeleteNotificationChannelRequest const& request, Options opts = {});
+  Status DeleteNotificationChannel(
+      google::monitoring::v3::DeleteNotificationChannelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -616,8 +644,8 @@ class NotificationChannelServiceClient {
   /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L383}
   ///
   // clang-format on
-  Status
-  SendNotificationChannelVerificationCode(std::string const& name, Options opts = {});
+  Status SendNotificationChannelVerificationCode(std::string const& name,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -644,8 +672,10 @@ class NotificationChannelServiceClient {
   /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L383}
   ///
   // clang-format on
-  Status
-  SendNotificationChannelVerificationCode(google::monitoring::v3::SendNotificationChannelVerificationCodeRequest const& request, Options opts = {});
+  Status SendNotificationChannelVerificationCode(
+      google::monitoring::v3::
+          SendNotificationChannelVerificationCodeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -691,8 +721,10 @@ class NotificationChannelServiceClient {
   /// [google.monitoring.v3.GetNotificationChannelVerificationCodeResponse]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L418}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
-  GetNotificationChannelVerificationCode(std::string const& name, Options opts = {});
+  StatusOr<
+      google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
+  GetNotificationChannelVerificationCode(std::string const& name,
+                                         Options opts = {});
 
   // clang-format off
   ///
@@ -741,8 +773,12 @@ class NotificationChannelServiceClient {
   /// [google.monitoring.v3.GetNotificationChannelVerificationCodeResponse]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L418}
   ///
   // clang-format on
-  StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
-  GetNotificationChannelVerificationCode(google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const& request, Options opts = {});
+  StatusOr<
+      google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
+  GetNotificationChannelVerificationCode(
+      google::monitoring::v3::
+          GetNotificationChannelVerificationCodeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -776,7 +812,8 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
-  VerifyNotificationChannel(std::string const& name, std::string const& code, Options opts = {});
+  VerifyNotificationChannel(std::string const& name, std::string const& code,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -808,7 +845,9 @@ class NotificationChannelServiceClient {
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
-  VerifyNotificationChannel(google::monitoring::v3::VerifyNotificationChannelRequest const& request, Options opts = {});
+  VerifyNotificationChannel(
+      google::monitoring::v3::VerifyNotificationChannelRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<NotificationChannelServiceConnection> connection_;

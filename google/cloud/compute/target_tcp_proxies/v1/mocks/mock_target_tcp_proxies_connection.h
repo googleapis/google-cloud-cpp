@@ -42,25 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTargetTcpProxiesConnection : public compute_target_tcp_proxies_v1::TargetTcpProxiesConnection {
+class MockTargetTcpProxiesConnection
+    : public compute_target_tcp_proxies_v1::TargetTcpProxiesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetTcpProxiesScopedList>>),
-  AggregatedListTargetTcpProxies,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::AggregatedListTargetTcpProxiesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              TargetTcpProxiesScopedList>>),
+      AggregatedListTargetTcpProxies,
+      (google::cloud::cpp::compute::target_tcp_proxies::v1::
+           AggregatedListTargetTcpProxiesRequest request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTargetTcpProxy(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetTcpProxy(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetTcpProxy,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const& request), (override));
-
+              DeleteTargetTcpProxy,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   DeleteTargetTcpProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -69,36 +77,45 @@ class MockTargetTcpProxiesConnection : public compute_target_tcp_proxies_v1::Tar
   /// EXPECT_CALL(*mock, DeleteTargetTcpProxy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteTargetTcpProxy, (NoAwaitTag,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest const& request), (override));
-
+              DeleteTargetTcpProxy,
+              (NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                               DeleteTargetTcpProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTargetTcpProxy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetTcpProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetTcpProxy, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              DeleteTargetTcpProxy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>,
-  GetTargetTcpProxy,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::GetTargetTcpProxyRequest const& request), (override));
+              GetTargetTcpProxy,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   GetTargetTcpProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertTargetTcpProxy(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetTcpProxy(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetTcpProxy,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const& request), (override));
-
+              InsertTargetTcpProxy,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   InsertTargetTcpProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -107,36 +124,45 @@ class MockTargetTcpProxiesConnection : public compute_target_tcp_proxies_v1::Tar
   /// EXPECT_CALL(*mock, InsertTargetTcpProxy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertTargetTcpProxy, (NoAwaitTag,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest const& request), (override));
-
+              InsertTargetTcpProxy,
+              (NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                               InsertTargetTcpProxyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertTargetTcpProxy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetTcpProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetTcpProxy, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              InsertTargetTcpProxy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>),
-  ListTargetTcpProxies,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::ListTargetTcpProxiesRequest request), (override));
+              ListTargetTcpProxies,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   ListTargetTcpProxiesRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetBackendService(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetBackendService(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetBackendService,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request), (override));
-
+              SetBackendService,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   SetBackendServiceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -145,32 +171,39 @@ class MockTargetTcpProxiesConnection : public compute_target_tcp_proxies_v1::Tar
   /// EXPECT_CALL(*mock, SetBackendService(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetBackendService, (NoAwaitTag,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetBackendService(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetBackendService, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              SetBackendService,
+              (NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                               SetBackendServiceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetProxyHeader(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetBackendService(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetProxyHeader,
-  (google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request), (override));
+              SetBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetProxyHeader(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetProxyHeader,
+              (google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   SetProxyHeaderRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -179,20 +212,24 @@ class MockTargetTcpProxiesConnection : public compute_target_tcp_proxies_v1::Tar
   /// EXPECT_CALL(*mock, SetProxyHeader(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetProxyHeader, (NoAwaitTag,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest const& request), (override));
-
+              SetProxyHeader,
+              (NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                               SetProxyHeaderRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetProxyHeader(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetProxyHeader(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetProxyHeader, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              SetProxyHeader,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

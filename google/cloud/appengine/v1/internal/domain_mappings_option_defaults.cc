@@ -35,30 +35,36 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options DomainMappingsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DOMAIN_MAPPINGS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DOMAIN_MAPPINGS_AUTHORITY",
-      "appengine.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_DOMAIN_MAPPINGS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DOMAIN_MAPPINGS_AUTHORITY", "appengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<appengine_v1::DomainMappingsRetryPolicyOption>()) {
     options.set<appengine_v1::DomainMappingsRetryPolicyOption>(
         appengine_v1::DomainMappingsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<appengine_v1::DomainMappingsBackoffPolicyOption>()) {
     options.set<appengine_v1::DomainMappingsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<appengine_v1::DomainMappingsPollingPolicyOption>()) {
     options.set<appengine_v1::DomainMappingsPollingPolicyOption>(
         GenericPollingPolicy<
             appengine_v1::DomainMappingsRetryPolicyOption::Type,
             appengine_v1::DomainMappingsBackoffPolicyOption::Type>(
-            options.get<appengine_v1::DomainMappingsRetryPolicyOption>()->clone(),
+            options.get<appengine_v1::DomainMappingsRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>()) {
     options.set<appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption>(
         appengine_v1::MakeDefaultDomainMappingsConnectionIdempotencyPolicy());
   }

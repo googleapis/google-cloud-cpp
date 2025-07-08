@@ -42,21 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockProfilerServiceConnection : public profiler_v2::ProfilerServiceConnection {
+class MockProfilerServiceConnection
+    : public profiler_v2::ProfilerServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::devtools::cloudprofiler::v2::Profile>,
-  CreateProfile,
-  (google::devtools::cloudprofiler::v2::CreateProfileRequest const& request), (override));
+              CreateProfile,
+              (google::devtools::cloudprofiler::v2::CreateProfileRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::cloudprofiler::v2::Profile>,
+      CreateOfflineProfile,
+      (google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::devtools::cloudprofiler::v2::Profile>,
-  CreateOfflineProfile,
-  (google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::devtools::cloudprofiler::v2::Profile>,
-  UpdateProfile,
-  (google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request), (override));
+              UpdateProfile,
+              (google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

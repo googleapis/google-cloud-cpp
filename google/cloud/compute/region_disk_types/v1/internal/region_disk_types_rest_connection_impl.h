@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_INTERNAL_REGION_DISK_TYPES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_INTERNAL_REGION_DISK_TYPES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_disk_types/v1/internal/region_disk_types_rest_stub.h"
 #include "google/cloud/compute/region_disk_types/v1/internal/region_disk_types_retry_traits.h"
 #include "google/cloud/compute/region_disk_types/v1/region_disk_types_connection.h"
 #include "google/cloud/compute/region_disk_types/v1/region_disk_types_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_disk_types/v1/region_disk_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,35 +43,50 @@ class RegionDiskTypesRestConnectionImpl
   ~RegionDiskTypesRestConnectionImpl() override = default;
 
   RegionDiskTypesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_disk_types_v1_internal::RegionDiskTypesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_region_disk_types_v1_internal::RegionDiskTypesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetDiskType(google::cloud::cpp::compute::region_disk_types::v1::GetDiskTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
+      google::cloud::cpp::compute::region_disk_types::v1::
+          GetDiskTypeRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::DiskType>
-  ListRegionDiskTypes(google::cloud::cpp::compute::region_disk_types::v1::ListRegionDiskTypesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
+      google::cloud::cpp::compute::region_disk_types::v1::
+          ListRegionDiskTypesRequest request) override;
 
  private:
-  static std::unique_ptr<compute_region_disk_types_v1::RegionDiskTypesRetryPolicy>
+  static std::unique_ptr<
+      compute_region_disk_types_v1::RegionDiskTypesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>()->clone();
+    return options
+        .get<compute_region_disk_types_v1::RegionDiskTypesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_region_disk_types_v1::RegionDiskTypesBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_region_disk_types_v1::RegionDiskTypesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_region_disk_types_v1::RegionDiskTypesConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_region_disk_types_v1::RegionDiskTypesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_region_disk_types_v1::RegionDiskTypesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_region_disk_types_v1::
+                 RegionDiskTypesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_region_disk_types_v1_internal::RegionDiskTypesRestStub> stub_;
+  std::shared_ptr<
+      compute_region_disk_types_v1_internal::RegionDiskTypesRestStub>
+      stub_;
   Options options_;
 };
 

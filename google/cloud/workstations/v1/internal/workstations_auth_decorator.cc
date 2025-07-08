@@ -31,19 +31,21 @@ WorkstationsAuth::WorkstationsAuth(
     std::shared_ptr<WorkstationsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::workstations::v1::WorkstationCluster> WorkstationsAuth::GetWorkstationCluster(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workstations::v1::GetWorkstationClusterRequest const& request) {
+StatusOr<google::cloud::workstations::v1::WorkstationCluster>
+WorkstationsAuth::GetWorkstationCluster(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workstations::v1::GetWorkstationClusterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetWorkstationCluster(context, options, request);
 }
 
-StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse> WorkstationsAuth::ListWorkstationClusters(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workstations::v1::ListWorkstationClustersRequest const& request) {
+StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
+WorkstationsAuth::ListWorkstationClusters(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workstations::v1::ListWorkstationClustersRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWorkstationClusters(context, options, request);
@@ -51,14 +53,16 @@ StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse> Works
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncCreateWorkstationCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -70,9 +74,9 @@ WorkstationsAuth::AsyncCreateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsAuth::CreateWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWorkstationCluster(context, options, request);
@@ -80,14 +84,16 @@ WorkstationsAuth::CreateWorkstationCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncUpdateWorkstationCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -99,9 +105,9 @@ WorkstationsAuth::AsyncUpdateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsAuth::UpdateWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateWorkstationCluster(context, options, request);
@@ -109,14 +115,16 @@ WorkstationsAuth::UpdateWorkstationCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncDeleteWorkstationCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -128,36 +136,39 @@ WorkstationsAuth::AsyncDeleteWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsAuth::DeleteWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWorkstationCluster(context, options, request);
 }
 
-StatusOr<google::cloud::workstations::v1::WorkstationConfig> WorkstationsAuth::GetWorkstationConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workstations::v1::GetWorkstationConfigRequest const& request) {
+StatusOr<google::cloud::workstations::v1::WorkstationConfig>
+WorkstationsAuth::GetWorkstationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workstations::v1::GetWorkstationConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetWorkstationConfig(context, options, request);
 }
 
-StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse> WorkstationsAuth::ListWorkstationConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workstations::v1::ListWorkstationConfigsRequest const& request) {
+StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
+WorkstationsAuth::ListWorkstationConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWorkstationConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse> WorkstationsAuth::ListUsableWorkstationConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const& request) {
+StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
+WorkstationsAuth::ListUsableWorkstationConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListUsableWorkstationConfigs(context, options, request);
@@ -165,28 +176,30 @@ StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse> 
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncCreateWorkstationConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateWorkstationConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateWorkstationConfig(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 WorkstationsAuth::CreateWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWorkstationConfig(context, options, request);
@@ -194,28 +207,30 @@ WorkstationsAuth::CreateWorkstationConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncUpdateWorkstationConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateWorkstationConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateWorkstationConfig(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 WorkstationsAuth::UpdateWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateWorkstationConfig(context, options, request);
@@ -223,55 +238,58 @@ WorkstationsAuth::UpdateWorkstationConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncDeleteWorkstationConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteWorkstationConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteWorkstationConfig(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 WorkstationsAuth::DeleteWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWorkstationConfig(context, options, request);
 }
 
-StatusOr<google::cloud::workstations::v1::Workstation> WorkstationsAuth::GetWorkstation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::workstations::v1::Workstation>
+WorkstationsAuth::GetWorkstation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GetWorkstationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetWorkstation(context, options, request);
 }
 
-StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse> WorkstationsAuth::ListWorkstations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
+WorkstationsAuth::ListWorkstations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWorkstations(context, options, request);
 }
 
-StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse> WorkstationsAuth::ListUsableWorkstations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workstations::v1::ListUsableWorkstationsRequest const& request) {
+StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
+WorkstationsAuth::ListUsableWorkstations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListUsableWorkstations(context, options, request);
@@ -279,28 +297,27 @@ StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse> Workst
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncCreateWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateWorkstation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateWorkstation(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-WorkstationsAuth::CreateWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkstationsAuth::CreateWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWorkstation(context, options, request);
@@ -308,28 +325,27 @@ WorkstationsAuth::CreateWorkstation(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncUpdateWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateWorkstation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateWorkstation(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-WorkstationsAuth::UpdateWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkstationsAuth::UpdateWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateWorkstation(context, options, request);
@@ -337,28 +353,27 @@ WorkstationsAuth::UpdateWorkstation(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncDeleteWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteWorkstation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteWorkstation(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-WorkstationsAuth::DeleteWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkstationsAuth::DeleteWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWorkstation(context, options, request);
@@ -366,28 +381,27 @@ WorkstationsAuth::DeleteWorkstation(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncStartWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStartWorkstation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStartWorkstation(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-WorkstationsAuth::StartWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkstationsAuth::StartWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartWorkstation(context, options, request);
@@ -395,45 +409,44 @@ WorkstationsAuth::StartWorkstation(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsAuth::AsyncStopWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStopWorkstation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStopWorkstation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-WorkstationsAuth::StopWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkstationsAuth::StopWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StopWorkstation(context, options, request);
 }
 
-StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse> WorkstationsAuth::GenerateAccessToken(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::workstations::v1::GenerateAccessTokenRequest const& request) {
+StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
+WorkstationsAuth::GenerateAccessToken(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workstations::v1::GenerateAccessTokenRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateAccessToken(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> WorkstationsAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -441,26 +454,25 @@ StatusOr<google::iam::v1::Policy> WorkstationsAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> WorkstationsAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> WorkstationsAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+WorkstationsAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> WorkstationsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+WorkstationsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -468,8 +480,7 @@ StatusOr<google::longrunning::ListOperationsResponse> WorkstationsAuth::ListOper
 }
 
 StatusOr<google::longrunning::Operation> WorkstationsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -477,8 +488,7 @@ StatusOr<google::longrunning::Operation> WorkstationsAuth::GetOperation(
 }
 
 Status WorkstationsAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -486,8 +496,7 @@ Status WorkstationsAuth::DeleteOperation(
 }
 
 Status WorkstationsAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -501,15 +510,16 @@ WorkstationsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -518,13 +528,14 @@ future<Status> WorkstationsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

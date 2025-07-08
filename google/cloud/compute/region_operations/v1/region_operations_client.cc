@@ -28,30 +28,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionOperationsClient::RegionOperationsClient(
     std::shared_ptr<RegionOperationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RegionOperationsClient::~RegionOperationsClient() = default;
 
-Status
-RegionOperationsClient::DeleteOperation(std::string const& project, std::string const& region, std::string const& operation, Options opts) {
+Status RegionOperationsClient::DeleteOperation(std::string const& project,
+                                               std::string const& region,
+                                               std::string const& operation,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest request;
+  google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_operation(operation);
   return connection_->DeleteOperation(request);
 }
 
-Status
-RegionOperationsClient::DeleteOperation(google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request, Options opts) {
+Status RegionOperationsClient::DeleteOperation(
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteOperationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsClient::GetOperation(std::string const& project, std::string const& region, std::string const& operation, Options opts) {
+RegionOperationsClient::GetOperation(std::string const& project,
+                                     std::string const& region,
+                                     std::string const& operation,
+                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_operations::v1::GetOperationRequest request;
+  google::cloud::cpp::compute::region_operations::v1::GetOperationRequest
+      request;
   request.set_project(project);
   request.set_region(region);
   request.set_operation(operation);
@@ -59,28 +68,39 @@ RegionOperationsClient::GetOperation(std::string const& project, std::string con
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsClient::GetOperation(google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request, Options opts) {
+RegionOperationsClient::GetOperation(
+    google::cloud::cpp::compute::region_operations::v1::
+        GetOperationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsClient::ListRegionOperations(std::string const& project, std::string const& region, Options opts) {
+RegionOperationsClient::ListRegionOperations(std::string const& project,
+                                             std::string const& region,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest request;
+  google::cloud::cpp::compute::region_operations::v1::
+      ListRegionOperationsRequest request;
   request.set_project(project);
   request.set_region(region);
   return connection_->ListRegionOperations(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsClient::ListRegionOperations(google::cloud::cpp::compute::region_operations::v1::ListRegionOperationsRequest request, Options opts) {
+RegionOperationsClient::ListRegionOperations(
+    google::cloud::cpp::compute::region_operations::v1::
+        ListRegionOperationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRegionOperations(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsClient::Wait(std::string const& project, std::string const& region, std::string const& operation, Options opts) {
+RegionOperationsClient::Wait(std::string const& project,
+                             std::string const& region,
+                             std::string const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_operations::v1::WaitRequest request;
   request.set_project(project);
@@ -90,7 +110,10 @@ RegionOperationsClient::Wait(std::string const& project, std::string const& regi
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionOperationsClient::Wait(google::cloud::cpp::compute::region_operations::v1::WaitRequest const& request, Options opts) {
+RegionOperationsClient::Wait(
+    google::cloud::cpp::compute::region_operations::v1::WaitRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Wait(request);
 }

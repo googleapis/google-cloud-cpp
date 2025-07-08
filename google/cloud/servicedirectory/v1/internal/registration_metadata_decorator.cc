@@ -46,195 +46,199 @@ RegistrationServiceMetadata::RegistrationServiceMetadata(
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceMetadata::CreateNamespace(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateNamespace(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse>
 RegistrationServiceMetadata::ListNamespaces(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ListNamespacesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListNamespaces(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceMetadata::GetNamespace(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetNamespace(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceMetadata::UpdateNamespace(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("namespace.name=", internal::UrlEncode(request.namespace_().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("namespace.name=",
+                           internal::UrlEncode(request.namespace_().name())));
   return child_->UpdateNamespace(context, options, request);
 }
 
-Status
-RegistrationServiceMetadata::DeleteNamespace(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status RegistrationServiceMetadata::DeleteNamespace(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteNamespace(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceMetadata::CreateService(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::CreateServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateService(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse>
 RegistrationServiceMetadata::ListServices(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ListServicesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceMetadata::GetService(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::GetServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetService(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceMetadata::UpdateService(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("service.name=", internal::UrlEncode(request.service().name())));
+  SetMetadata(context, options,
+              absl::StrCat("service.name=",
+                           internal::UrlEncode(request.service().name())));
   return child_->UpdateService(context, options, request);
 }
 
-Status
-RegistrationServiceMetadata::DeleteService(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RegistrationServiceMetadata::DeleteService(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceMetadata::CreateEndpoint(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEndpoint(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse>
 RegistrationServiceMetadata::ListEndpoints(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ListEndpointsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEndpoints(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceMetadata::GetEndpoint(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::GetEndpointRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEndpoint(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceMetadata::UpdateEndpoint(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("endpoint.name=", internal::UrlEncode(request.endpoint().name())));
+  SetMetadata(context, options,
+              absl::StrCat("endpoint.name=",
+                           internal::UrlEncode(request.endpoint().name())));
   return child_->UpdateEndpoint(context, options, request);
 }
 
-Status
-RegistrationServiceMetadata::DeleteEndpoint(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RegistrationServiceMetadata::DeleteEndpoint(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEndpoint(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-RegistrationServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> RegistrationServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-RegistrationServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> RegistrationServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 RegistrationServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 RegistrationServiceMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 RegistrationServiceMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-void RegistrationServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void RegistrationServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void RegistrationServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                              Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

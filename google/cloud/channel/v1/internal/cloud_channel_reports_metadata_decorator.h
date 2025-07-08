@@ -32,7 +32,8 @@ namespace cloud {
 namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudChannelReportsServiceMetadata : public CloudChannelReportsServiceStub {
+class CloudChannelReportsServiceMetadata
+    : public CloudChannelReportsServiceStub {
  public:
   ~CloudChannelReportsServiceMetadata() override = default;
   CloudChannelReportsServiceMetadata(
@@ -47,38 +48,33 @@ class CloudChannelReportsServiceMetadata : public CloudChannelReportsServiceStub
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunReportJob(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
-  StatusOr<google::cloud::channel::v1::FetchReportResultsResponse> FetchReportResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::channel::v1::FetchReportResultsRequest const& request) override;
+  StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
+  FetchReportResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::channel::v1::FetchReportResultsRequest const& request)
+      override;
 
   StatusOr<google::cloud::channel::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListReportsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -94,8 +90,7 @@ class CloudChannelReportsServiceMetadata : public CloudChannelReportsServiceStub
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -27,20 +27,32 @@ namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use beyondcorp_appconnectors_v1::MakeAppConnectorsServiceConnection directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::MakeAppConnectorsServiceConnection;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::MakeAppConnectorsServiceConnection directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    MakeAppConnectorsServiceConnection;
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceConnection directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceConnection;
+/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceConnection
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServiceConnection;
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::AppConnectorsServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::AppConnectorsServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicy directly.
-using ::google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicy;
+/// @deprecated Use beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

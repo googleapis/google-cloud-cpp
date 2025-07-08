@@ -36,39 +36,48 @@ class ServiceMonitoringServiceTracingConnection
   ~ServiceMonitoringServiceTracingConnection() override = default;
 
   explicit ServiceMonitoringServiceTracingConnection(
-    std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection> child);
+      std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::monitoring::v3::Service>
-  CreateService(google::monitoring::v3::CreateServiceRequest const& request) override;
+  StatusOr<google::monitoring::v3::Service> CreateService(
+      google::monitoring::v3::CreateServiceRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::Service>
-  GetService(google::monitoring::v3::GetServiceRequest const& request) override;
+  StatusOr<google::monitoring::v3::Service> GetService(
+      google::monitoring::v3::GetServiceRequest const& request) override;
 
-  StreamRange<google::monitoring::v3::Service>
-  ListServices(google::monitoring::v3::ListServicesRequest request) override;
+  StreamRange<google::monitoring::v3::Service> ListServices(
+      google::monitoring::v3::ListServicesRequest request) override;
 
-  StatusOr<google::monitoring::v3::Service>
-  UpdateService(google::monitoring::v3::UpdateServiceRequest const& request) override;
+  StatusOr<google::monitoring::v3::Service> UpdateService(
+      google::monitoring::v3::UpdateServiceRequest const& request) override;
 
-  Status
-  DeleteService(google::monitoring::v3::DeleteServiceRequest const& request) override;
-
-  StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  CreateServiceLevelObjective(google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) override;
+  Status DeleteService(
+      google::monitoring::v3::DeleteServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  GetServiceLevelObjective(google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) override;
+  CreateServiceLevelObjective(
+      google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request)
+      override;
+
+  StatusOr<google::monitoring::v3::ServiceLevelObjective>
+  GetServiceLevelObjective(
+      google::monitoring::v3::GetServiceLevelObjectiveRequest const& request)
+      override;
 
   StreamRange<google::monitoring::v3::ServiceLevelObjective>
-  ListServiceLevelObjectives(google::monitoring::v3::ListServiceLevelObjectivesRequest request) override;
+  ListServiceLevelObjectives(
+      google::monitoring::v3::ListServiceLevelObjectivesRequest request)
+      override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
-  UpdateServiceLevelObjective(google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) override;
+  UpdateServiceLevelObjective(
+      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request)
+      override;
 
-  Status
-  DeleteServiceLevelObjective(google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) override;
+  Status DeleteServiceLevelObjective(
+      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request)
+      override;
 
  private:
   std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection> child_;

@@ -35,28 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ConfigDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CONFIG_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CONFIG_AUTHORITY",
-      "config.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CONFIG_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CONFIG_AUTHORITY", "config.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<config_v1::ConfigRetryPolicyOption>()) {
     options.set<config_v1::ConfigRetryPolicyOption>(
-        config_v1::ConfigLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        config_v1::ConfigLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<config_v1::ConfigBackoffPolicyOption>()) {
     options.set<config_v1::ConfigBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<config_v1::ConfigPollingPolicyOption>()) {
     options.set<config_v1::ConfigPollingPolicyOption>(
-        GenericPollingPolicy<
-            config_v1::ConfigRetryPolicyOption::Type,
-            config_v1::ConfigBackoffPolicyOption::Type>(
+        GenericPollingPolicy<config_v1::ConfigRetryPolicyOption::Type,
+                             config_v1::ConfigBackoffPolicyOption::Type>(
             options.get<config_v1::ConfigRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<config_v1::ConfigConnectionIdempotencyPolicyOption>()) {
     options.set<config_v1::ConfigConnectionIdempotencyPolicyOption>(

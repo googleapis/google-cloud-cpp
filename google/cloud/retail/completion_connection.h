@@ -33,7 +33,8 @@ using ::google::cloud::retail_v2::MakeCompletionServiceConnection;
 /// @deprecated Use retail_v2::CompletionServiceConnection directly.
 using ::google::cloud::retail_v2::CompletionServiceConnection;
 
-/// @deprecated Use retail_v2::CompletionServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use retail_v2::CompletionServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::retail_v2::CompletionServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use retail_v2::CompletionServiceLimitedTimeRetryPolicy directly.

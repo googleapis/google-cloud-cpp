@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataPolicyServiceClient::DataPolicyServiceClient(
     std::shared_ptr<DataPolicyServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataPolicyServiceClient::~DataPolicyServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::CreateDataPolicy(std::string const& parent, google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy, Options opts) {
+DataPolicyServiceClient::CreateDataPolicy(
+    std::string const& parent,
+    google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest request;
   request.set_parent(parent);
@@ -42,13 +45,18 @@ DataPolicyServiceClient::CreateDataPolicy(std::string const& parent, google::clo
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::CreateDataPolicy(google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request, Options opts) {
+DataPolicyServiceClient::CreateDataPolicy(
+    google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataPolicy(request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::UpdateDataPolicy(google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy, google::protobuf::FieldMask const& update_mask, Options opts) {
+DataPolicyServiceClient::UpdateDataPolicy(
+    google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest request;
   *request.mutable_data_policy() = data_policy;
@@ -57,13 +65,18 @@ DataPolicyServiceClient::UpdateDataPolicy(google::cloud::bigquery::datapolicies:
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::UpdateDataPolicy(google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request, Options opts) {
+DataPolicyServiceClient::UpdateDataPolicy(
+    google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDataPolicy(request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::RenameDataPolicy(std::string const& name, std::string const& new_data_policy_id, Options opts) {
+DataPolicyServiceClient::RenameDataPolicy(std::string const& name,
+                                          std::string const& new_data_policy_id,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest request;
   request.set_name(name);
@@ -72,21 +85,26 @@ DataPolicyServiceClient::RenameDataPolicy(std::string const& name, std::string c
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::RenameDataPolicy(google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request, Options opts) {
+DataPolicyServiceClient::RenameDataPolicy(
+    google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenameDataPolicy(request);
 }
 
-Status
-DataPolicyServiceClient::DeleteDataPolicy(std::string const& name, Options opts) {
+Status DataPolicyServiceClient::DeleteDataPolicy(std::string const& name,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest request;
   request.set_name(name);
   return connection_->DeleteDataPolicy(request);
 }
 
-Status
-DataPolicyServiceClient::DeleteDataPolicy(google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request, Options opts) {
+Status DataPolicyServiceClient::DeleteDataPolicy(
+    google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataPolicy(request);
 }
@@ -100,13 +118,17 @@ DataPolicyServiceClient::GetDataPolicy(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::GetDataPolicy(google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request, Options opts) {
+DataPolicyServiceClient::GetDataPolicy(
+    google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDataPolicy(request);
 }
 
 StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::ListDataPolicies(std::string const& parent, Options opts) {
+DataPolicyServiceClient::ListDataPolicies(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest request;
   request.set_parent(parent);
@@ -114,25 +136,28 @@ DataPolicyServiceClient::ListDataPolicies(std::string const& parent, Options opt
 }
 
 StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-DataPolicyServiceClient::ListDataPolicies(google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest request, Options opts) {
+DataPolicyServiceClient::ListDataPolicies(
+    google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDataPolicies(std::move(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-DataPolicyServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> DataPolicyServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataPolicyServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> DataPolicyServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataPolicyServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+DataPolicyServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

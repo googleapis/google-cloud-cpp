@@ -39,7 +39,8 @@ MakeSqlRegionsServiceTracingConnection(
     std::shared_ptr<sql_v1::SqlRegionsServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SqlRegionsServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<SqlRegionsServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

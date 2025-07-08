@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_AUTOSCALING_POLICY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_AUTOSCALING_POLICY_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataproc/v1/autoscaling_policy_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -37,14 +37,17 @@ namespace dataproc_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AutoscalingPolicyServiceConnection`.
-class AutoscalingPolicyServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class AutoscalingPolicyServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AutoscalingPolicyServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<AutoscalingPolicyServiceRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `AutoscalingPolicyServiceConnection` based on counting errors.
+ * A retry policy for `AutoscalingPolicyServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -53,7 +56,8 @@ class AutoscalingPolicyServiceRetryPolicy : public ::google::cloud::RetryPolicy 
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AutoscalingPolicyServiceLimitedErrorCountRetryPolicy : public AutoscalingPolicyServiceRetryPolicy {
+class AutoscalingPolicyServiceLimitedErrorCountRetryPolicy
+    : public AutoscalingPolicyServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,15 +66,18 @@ class AutoscalingPolicyServiceLimitedErrorCountRetryPolicy : public AutoscalingP
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit AutoscalingPolicyServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit AutoscalingPolicyServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   AutoscalingPolicyServiceLimitedErrorCountRetryPolicy(
       AutoscalingPolicyServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AutoscalingPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AutoscalingPolicyServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   AutoscalingPolicyServiceLimitedErrorCountRetryPolicy(
       AutoscalingPolicyServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AutoscalingPolicyServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AutoscalingPolicyServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -82,7 +89,8 @@ class AutoscalingPolicyServiceLimitedErrorCountRetryPolicy : public AutoscalingP
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<AutoscalingPolicyServiceRetryPolicy> clone() const override {
-    return std::make_unique<AutoscalingPolicyServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<
+        AutoscalingPolicyServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -90,11 +98,14 @@ class AutoscalingPolicyServiceLimitedErrorCountRetryPolicy : public AutoscalingP
   using BaseType = AutoscalingPolicyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dataproc_v1_internal::AutoscalingPolicyServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dataproc_v1_internal::AutoscalingPolicyServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `AutoscalingPolicyServiceConnection` based on elapsed time.
+ * A retry policy for `AutoscalingPolicyServiceConnection` based on elapsed
+ * time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -103,7 +114,8 @@ class AutoscalingPolicyServiceLimitedErrorCountRetryPolicy : public AutoscalingP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AutoscalingPolicyServiceLimitedTimeRetryPolicy : public AutoscalingPolicyServiceRetryPolicy {
+class AutoscalingPolicyServiceLimitedTimeRetryPolicy
+    : public AutoscalingPolicyServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -128,12 +140,16 @@ class AutoscalingPolicyServiceLimitedTimeRetryPolicy : public AutoscalingPolicyS
   template <typename DurationRep, typename DurationPeriod>
   explicit AutoscalingPolicyServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AutoscalingPolicyServiceLimitedTimeRetryPolicy(AutoscalingPolicyServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : AutoscalingPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AutoscalingPolicyServiceLimitedTimeRetryPolicy(AutoscalingPolicyServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : AutoscalingPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AutoscalingPolicyServiceLimitedTimeRetryPolicy(
+      AutoscalingPolicyServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : AutoscalingPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
+  }
+  AutoscalingPolicyServiceLimitedTimeRetryPolicy(
+      AutoscalingPolicyServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : AutoscalingPolicyServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {
+  }
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,18 +171,22 @@ class AutoscalingPolicyServiceLimitedTimeRetryPolicy : public AutoscalingPolicyS
   using BaseType = AutoscalingPolicyServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dataproc_v1_internal::AutoscalingPolicyServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dataproc_v1_internal::AutoscalingPolicyServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `AutoscalingPolicyServiceConnection` object for `AutoscalingPolicyServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AutoscalingPolicyServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `AutoscalingPolicyServiceConnection` object for
  * `AutoscalingPolicyServiceClient`.
  *
- * To create a concrete instance, see `MakeAutoscalingPolicyServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AutoscalingPolicyServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AutoscalingPolicyServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeAutoscalingPolicyServiceConnection()`.
  *
  * For mocking, see `dataproc_v1_mocks::MockAutoscalingPolicyServiceConnection`.
  */
@@ -177,51 +197,60 @@ class AutoscalingPolicyServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  CreateAutoscalingPolicy(google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request);
+  CreateAutoscalingPolicy(
+      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  UpdateAutoscalingPolicy(google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request);
+  UpdateAutoscalingPolicy(
+      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  GetAutoscalingPolicy(google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request);
+  GetAutoscalingPolicy(
+      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request);
 
   virtual StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
-  ListAutoscalingPolicies(google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request);
+  ListAutoscalingPolicies(
+      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request);
 
-  virtual Status
-  DeleteAutoscalingPolicy(google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request);
+  virtual Status DeleteAutoscalingPolicy(
+      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `AutoscalingPolicyServiceConnection`.
+ * A factory function to construct an object of type
+ * `AutoscalingPolicyServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AutoscalingPolicyServiceClient.
+ * should be passed as an argument to the constructor of
+ * AutoscalingPolicyServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AutoscalingPolicyServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `AutoscalingPolicyServiceConnection`. Expected options are any of
+ * the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -232,11 +261,12 @@ class AutoscalingPolicyServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `AutoscalingPolicyServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `AutoscalingPolicyServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<AutoscalingPolicyServiceConnection> MakeAutoscalingPolicyServiceConnection(
-    std::string const& location, Options options = {});
+std::shared_ptr<AutoscalingPolicyServiceConnection>
+MakeAutoscalingPolicyServiceConnection(std::string const& location,
+                                       Options options = {});
 
 /**
  * A backwards-compatible version of the previous factory function.  Unless
@@ -245,8 +275,8 @@ std::shared_ptr<AutoscalingPolicyServiceConnection> MakeAutoscalingPolicyService
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<AutoscalingPolicyServiceConnection> MakeAutoscalingPolicyServiceConnection(
-    Options options = {});
+std::shared_ptr<AutoscalingPolicyServiceConnection>
+MakeAutoscalingPolicyServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_v1

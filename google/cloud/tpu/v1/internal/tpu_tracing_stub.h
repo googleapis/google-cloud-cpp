@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_INTERNAL_TPU_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_INTERNAL_TPU_TRACING_STUB_H
 
+#include "google/cloud/tpu/v1/internal/tpu_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/tpu/v1/internal/tpu_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,13 +39,11 @@ class TpuTracingStub : public TpuStub {
   explicit TpuTracingStub(std::shared_ptr<TpuStub> child);
 
   StatusOr<google::cloud::tpu::v1::ListNodesResponse> ListNodes(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v1::ListNodesRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v1::Node> GetNode(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v1::GetNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNode(
@@ -55,8 +53,7 @@ class TpuTracingStub : public TpuStub {
       google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateNode(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNode(
@@ -66,8 +63,7 @@ class TpuTracingStub : public TpuStub {
       google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNode(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReimageNode(
@@ -77,8 +73,7 @@ class TpuTracingStub : public TpuStub {
       google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReimageNode(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopNode(
@@ -88,8 +83,7 @@ class TpuTracingStub : public TpuStub {
       google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StopNode(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartNode(
@@ -99,58 +93,53 @@ class TpuTracingStub : public TpuStub {
       google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StartNode(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
-  StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse> ListTensorFlowVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& request) override;
+  StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>
+  ListTensorFlowVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& request)
+      override;
 
   StatusOr<google::cloud::tpu::v1::TensorFlowVersion> GetTensorFlowVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse> ListAcceleratorTypes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>
+  ListAcceleratorTypes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request)
+      override;
 
   StatusOr<google::cloud::tpu::v1::AcceleratorType> GetAcceleratorType(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -167,7 +156,8 @@ class TpuTracingStub : public TpuStub {
 
  private:
   std::shared_ptr<TpuStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -178,8 +168,7 @@ class TpuTracingStub : public TpuStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<TpuStub> MakeTpuTracingStub(
-    std::shared_ptr<TpuStub> stub);
+std::shared_ptr<TpuStub> MakeTpuTracingStub(std::shared_ptr<TpuStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_v1_internal

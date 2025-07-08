@@ -26,59 +26,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ContextsConnectionIdempotencyPolicy::~ContextsConnectionIdempotencyPolicy() = default;
+ContextsConnectionIdempotencyPolicy::~ContextsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<ContextsConnectionIdempotencyPolicy>
 ContextsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ContextsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::ListContexts(google::cloud::dialogflow::v2::ListContextsRequest) {  // NOLINT
+Idempotency ContextsConnectionIdempotencyPolicy::ListContexts(
+    google::cloud::dialogflow::v2::ListContextsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::GetContext(google::cloud::dialogflow::v2::GetContextRequest const&) {
+Idempotency ContextsConnectionIdempotencyPolicy::GetContext(
+    google::cloud::dialogflow::v2::GetContextRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::CreateContext(google::cloud::dialogflow::v2::CreateContextRequest const&) {
+Idempotency ContextsConnectionIdempotencyPolicy::CreateContext(
+    google::cloud::dialogflow::v2::CreateContextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::UpdateContext(google::cloud::dialogflow::v2::UpdateContextRequest const&) {
+Idempotency ContextsConnectionIdempotencyPolicy::UpdateContext(
+    google::cloud::dialogflow::v2::UpdateContextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::DeleteContext(google::cloud::dialogflow::v2::DeleteContextRequest const&) {
+Idempotency ContextsConnectionIdempotencyPolicy::DeleteContext(
+    google::cloud::dialogflow::v2::DeleteContextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::DeleteAllContexts(google::cloud::dialogflow::v2::DeleteAllContextsRequest const&) {
+Idempotency ContextsConnectionIdempotencyPolicy::DeleteAllContexts(
+    google::cloud::dialogflow::v2::DeleteAllContextsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ContextsConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency ContextsConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ContextsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency ContextsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContextsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency ContextsConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ContextsConnectionIdempotencyPolicy>
-    MakeDefaultContextsConnectionIdempotencyPolicy() {
+MakeDefaultContextsConnectionIdempotencyPolicy() {
   return std::make_unique<ContextsConnectionIdempotencyPolicy>();
 }
 

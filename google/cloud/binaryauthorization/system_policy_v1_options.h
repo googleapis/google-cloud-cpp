@@ -28,16 +28,23 @@ namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption directly.
-using ::google::cloud::binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption;
+/// @deprecated Use binaryauthorization_v1::SystemPolicyV1BackoffPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    SystemPolicyV1BackoffPolicyOption;
 
-/// @deprecated Use binaryauthorization_v1::SystemPolicyV1ConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::binaryauthorization_v1::SystemPolicyV1ConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// binaryauthorization_v1::SystemPolicyV1ConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    SystemPolicyV1ConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use binaryauthorization_v1::SystemPolicyV1PolicyOptionList directly.
+/// @deprecated Use binaryauthorization_v1::SystemPolicyV1PolicyOptionList
+/// directly.
 using ::google::cloud::binaryauthorization_v1::SystemPolicyV1PolicyOptionList;
 
-/// @deprecated Use binaryauthorization_v1::SystemPolicyV1RetryPolicyOption directly.
+/// @deprecated Use binaryauthorization_v1::SystemPolicyV1RetryPolicyOption
+/// directly.
 using ::google::cloud::binaryauthorization_v1::SystemPolicyV1RetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

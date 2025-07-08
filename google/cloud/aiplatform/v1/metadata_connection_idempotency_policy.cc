@@ -26,146 +26,187 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-MetadataServiceConnectionIdempotencyPolicy::~MetadataServiceConnectionIdempotencyPolicy() = default;
+MetadataServiceConnectionIdempotencyPolicy::
+    ~MetadataServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy>
 MetadataServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<MetadataServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateMetadataStore(google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateMetadataStore(
+    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetMetadataStore(google::cloud::aiplatform::v1::GetMetadataStoreRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetMetadataStore(
+    google::cloud::aiplatform::v1::GetMetadataStoreRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListMetadataStores(google::cloud::aiplatform::v1::ListMetadataStoresRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListMetadataStores(
+    google::cloud::aiplatform::v1::ListMetadataStoresRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteMetadataStore(google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteMetadataStore(
+    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateArtifact(google::cloud::aiplatform::v1::CreateArtifactRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateArtifact(
+    google::cloud::aiplatform::v1::CreateArtifactRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetArtifact(google::cloud::aiplatform::v1::GetArtifactRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetArtifact(
+    google::cloud::aiplatform::v1::GetArtifactRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListArtifacts(google::cloud::aiplatform::v1::ListArtifactsRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListArtifacts(
+    google::cloud::aiplatform::v1::ListArtifactsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::UpdateArtifact(google::cloud::aiplatform::v1::UpdateArtifactRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::UpdateArtifact(
+    google::cloud::aiplatform::v1::UpdateArtifactRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteArtifact(google::cloud::aiplatform::v1::DeleteArtifactRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteArtifact(
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::PurgeArtifacts(google::cloud::aiplatform::v1::PurgeArtifactsRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::PurgeArtifacts(
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateContext(google::cloud::aiplatform::v1::CreateContextRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateContext(
+    google::cloud::aiplatform::v1::CreateContextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetContext(google::cloud::aiplatform::v1::GetContextRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetContext(
+    google::cloud::aiplatform::v1::GetContextRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListContexts(google::cloud::aiplatform::v1::ListContextsRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListContexts(
+    google::cloud::aiplatform::v1::ListContextsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::UpdateContext(google::cloud::aiplatform::v1::UpdateContextRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::UpdateContext(
+    google::cloud::aiplatform::v1::UpdateContextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteContext(google::cloud::aiplatform::v1::DeleteContextRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteContext(
+    google::cloud::aiplatform::v1::DeleteContextRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::PurgeContexts(google::cloud::aiplatform::v1::PurgeContextsRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::PurgeContexts(
+    google::cloud::aiplatform::v1::PurgeContextsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::AddContextArtifactsAndExecutions(google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest const&) {
+Idempotency
+MetadataServiceConnectionIdempotencyPolicy::AddContextArtifactsAndExecutions(
+    google::cloud::aiplatform::v1::
+        AddContextArtifactsAndExecutionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::AddContextChildren(google::cloud::aiplatform::v1::AddContextChildrenRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::AddContextChildren(
+    google::cloud::aiplatform::v1::AddContextChildrenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::RemoveContextChildren(google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::RemoveContextChildren(
+    google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::QueryContextLineageSubgraph(google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&) {
+Idempotency
+MetadataServiceConnectionIdempotencyPolicy::QueryContextLineageSubgraph(
+    google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateExecution(google::cloud::aiplatform::v1::CreateExecutionRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateExecution(
+    google::cloud::aiplatform::v1::CreateExecutionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetExecution(google::cloud::aiplatform::v1::GetExecutionRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetExecution(
+    google::cloud::aiplatform::v1::GetExecutionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListExecutions(google::cloud::aiplatform::v1::ListExecutionsRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListExecutions(
+    google::cloud::aiplatform::v1::ListExecutionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::UpdateExecution(google::cloud::aiplatform::v1::UpdateExecutionRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::UpdateExecution(
+    google::cloud::aiplatform::v1::UpdateExecutionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteExecution(google::cloud::aiplatform::v1::DeleteExecutionRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteExecution(
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::PurgeExecutions(google::cloud::aiplatform::v1::PurgeExecutionsRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::PurgeExecutions(
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::AddExecutionEvents(google::cloud::aiplatform::v1::AddExecutionEventsRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::AddExecutionEvents(
+    google::cloud::aiplatform::v1::AddExecutionEventsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::QueryExecutionInputsAndOutputs(google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const&) {
+Idempotency
+MetadataServiceConnectionIdempotencyPolicy::QueryExecutionInputsAndOutputs(
+    google::cloud::aiplatform::v1::
+        QueryExecutionInputsAndOutputsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateMetadataSchema(google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateMetadataSchema(
+    google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetMetadataSchema(google::cloud::aiplatform::v1::GetMetadataSchemaRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetMetadataSchema(
+    google::cloud::aiplatform::v1::GetMetadataSchemaRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListMetadataSchemas(google::cloud::aiplatform::v1::ListMetadataSchemasRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListMetadataSchemas(
+    google::cloud::aiplatform::v1::ListMetadataSchemasRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::QueryArtifactLineageSubgraph(google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&) {
+Idempotency
+MetadataServiceConnectionIdempotencyPolicy::QueryArtifactLineageSubgraph(
+    google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -175,36 +216,43 @@ Idempotency MetadataServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency MetadataServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency MetadataServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency MetadataServiceConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy>
-    MakeDefaultMetadataServiceConnectionIdempotencyPolicy() {
+MakeDefaultMetadataServiceConnectionIdempotencyPolicy() {
   return std::make_unique<MetadataServiceConnectionIdempotencyPolicy>();
 }
 

@@ -34,45 +34,66 @@ DocumentSchemaServiceTracingConnection::DocumentSchemaServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceTracingConnection::CreateDocumentSchema(google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentSchemaServiceConnection::CreateDocumentSchema");
+DocumentSchemaServiceTracingConnection::CreateDocumentSchema(
+    google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::DocumentSchemaServiceConnection::"
+      "CreateDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDocumentSchema(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceTracingConnection::UpdateDocumentSchema(google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentSchemaServiceConnection::UpdateDocumentSchema");
+DocumentSchemaServiceTracingConnection::UpdateDocumentSchema(
+    google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::DocumentSchemaServiceConnection::"
+      "UpdateDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDocumentSchema(request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceTracingConnection::GetDocumentSchema(google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentSchemaServiceConnection::GetDocumentSchema");
+DocumentSchemaServiceTracingConnection::GetDocumentSchema(
+    google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::DocumentSchemaServiceConnection::"
+      "GetDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDocumentSchema(request));
 }
 
-Status
-DocumentSchemaServiceTracingConnection::DeleteDocumentSchema(google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentSchemaServiceConnection::DeleteDocumentSchema");
+Status DocumentSchemaServiceTracingConnection::DeleteDocumentSchema(
+    google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::DocumentSchemaServiceConnection::"
+      "DeleteDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDocumentSchema(request));
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
-DocumentSchemaServiceTracingConnection::ListDocumentSchemas(google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentSchemaServiceConnection::ListDocumentSchemas");
+DocumentSchemaServiceTracingConnection::ListDocumentSchemas(
+    google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::DocumentSchemaServiceConnection::"
+      "ListDocumentSchemas");
   internal::OTelScope scope(span);
   auto sr = child_->ListDocumentSchemas(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::contentwarehouse::v1::DocumentSchema>(std::move(span),
+                                                           std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentSchemaServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("contentwarehouse_v1::DocumentSchemaServiceConnection::GetOperation");
+DocumentSchemaServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::DocumentSchemaServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
@@ -81,10 +102,12 @@ DocumentSchemaServiceTracingConnection::GetOperation(google::longrunning::GetOpe
 
 std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection>
 MakeDocumentSchemaServiceTracingConnection(
-    std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection> conn) {
+    std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<DocumentSchemaServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<DocumentSchemaServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

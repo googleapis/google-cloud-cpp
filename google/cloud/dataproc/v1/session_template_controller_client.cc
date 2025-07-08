@@ -26,14 +26,18 @@ namespace dataproc_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SessionTemplateControllerClient::SessionTemplateControllerClient(
-    std::shared_ptr<SessionTemplateControllerConnection> connection, Options opts)
+    std::shared_ptr<SessionTemplateControllerConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SessionTemplateControllerClient::~SessionTemplateControllerClient() = default;
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerClient::CreateSessionTemplate(std::string const& parent, google::cloud::dataproc::v1::SessionTemplate const& session_template, Options opts) {
+SessionTemplateControllerClient::CreateSessionTemplate(
+    std::string const& parent,
+    google::cloud::dataproc::v1::SessionTemplate const& session_template,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateSessionTemplateRequest request;
   request.set_parent(parent);
@@ -42,13 +46,17 @@ SessionTemplateControllerClient::CreateSessionTemplate(std::string const& parent
 }
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerClient::CreateSessionTemplate(google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request, Options opts) {
+SessionTemplateControllerClient::CreateSessionTemplate(
+    google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSessionTemplate(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerClient::UpdateSessionTemplate(google::cloud::dataproc::v1::SessionTemplate const& session_template, Options opts) {
+SessionTemplateControllerClient::UpdateSessionTemplate(
+    google::cloud::dataproc::v1::SessionTemplate const& session_template,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::UpdateSessionTemplateRequest request;
   *request.mutable_session_template() = session_template;
@@ -56,13 +64,16 @@ SessionTemplateControllerClient::UpdateSessionTemplate(google::cloud::dataproc::
 }
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerClient::UpdateSessionTemplate(google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request, Options opts) {
+SessionTemplateControllerClient::UpdateSessionTemplate(
+    google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSessionTemplate(request);
 }
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerClient::GetSessionTemplate(std::string const& name, Options opts) {
+SessionTemplateControllerClient::GetSessionTemplate(std::string const& name,
+                                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::GetSessionTemplateRequest request;
   request.set_name(name);
@@ -70,13 +81,16 @@ SessionTemplateControllerClient::GetSessionTemplate(std::string const& name, Opt
 }
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerClient::GetSessionTemplate(google::cloud::dataproc::v1::GetSessionTemplateRequest const& request, Options opts) {
+SessionTemplateControllerClient::GetSessionTemplate(
+    google::cloud::dataproc::v1::GetSessionTemplateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSessionTemplate(request);
 }
 
 StreamRange<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerClient::ListSessionTemplates(std::string const& parent, Options opts) {
+SessionTemplateControllerClient::ListSessionTemplates(std::string const& parent,
+                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ListSessionTemplatesRequest request;
   request.set_parent(parent);
@@ -84,45 +98,51 @@ SessionTemplateControllerClient::ListSessionTemplates(std::string const& parent,
 }
 
 StreamRange<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerClient::ListSessionTemplates(google::cloud::dataproc::v1::ListSessionTemplatesRequest request, Options opts) {
+SessionTemplateControllerClient::ListSessionTemplates(
+    google::cloud::dataproc::v1::ListSessionTemplatesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSessionTemplates(std::move(request));
 }
 
-Status
-SessionTemplateControllerClient::DeleteSessionTemplate(std::string const& name, Options opts) {
+Status SessionTemplateControllerClient::DeleteSessionTemplate(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DeleteSessionTemplateRequest request;
   request.set_name(name);
   return connection_->DeleteSessionTemplate(request);
 }
 
-Status
-SessionTemplateControllerClient::DeleteSessionTemplate(google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request, Options opts) {
+Status SessionTemplateControllerClient::DeleteSessionTemplate(
+    google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSessionTemplate(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SessionTemplateControllerClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> SessionTemplateControllerClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SessionTemplateControllerClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> SessionTemplateControllerClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SessionTemplateControllerClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+SessionTemplateControllerClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-SessionTemplateControllerClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+SessionTemplateControllerClient::ListOperations(std::string const& name,
+                                                std::string const& filter,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -131,13 +151,15 @@ SessionTemplateControllerClient::ListOperations(std::string const& name, std::st
 }
 
 StreamRange<google::longrunning::Operation>
-SessionTemplateControllerClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+SessionTemplateControllerClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-SessionTemplateControllerClient::GetOperation(std::string const& name, Options opts) {
+SessionTemplateControllerClient::GetOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -145,35 +167,36 @@ SessionTemplateControllerClient::GetOperation(std::string const& name, Options o
 }
 
 StatusOr<google::longrunning::Operation>
-SessionTemplateControllerClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+SessionTemplateControllerClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-SessionTemplateControllerClient::DeleteOperation(std::string const& name, Options opts) {
+Status SessionTemplateControllerClient::DeleteOperation(std::string const& name,
+                                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-SessionTemplateControllerClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status SessionTemplateControllerClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-SessionTemplateControllerClient::CancelOperation(std::string const& name, Options opts) {
+Status SessionTemplateControllerClient::CancelOperation(std::string const& name,
+                                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-SessionTemplateControllerClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status SessionTemplateControllerClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_CONFIDENTIAL_COMPUTING_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_CONFIDENTIAL_COMPUTING_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection.h"
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct ConfidentialComputingBackoffPolicyOption {
  * @ingroup google-cloud-confidentialcomputing-options
  */
 struct ConfidentialComputingConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ConfidentialComputingConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<ConfidentialComputingConnectionIdempotencyPolicy>;
 };
 
 /**

@@ -31,18 +31,18 @@ InstanceServiceAuth::InstanceServiceAuth(
     std::shared_ptr<InstanceServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::chronicle::v1::Instance> InstanceServiceAuth::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::chronicle::v1::Instance>
+InstanceServiceAuth::GetInstance(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetInstance(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> InstanceServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+InstanceServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +50,7 @@ StatusOr<google::longrunning::ListOperationsResponse> InstanceServiceAuth::ListO
 }
 
 StatusOr<google::longrunning::Operation> InstanceServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +58,7 @@ StatusOr<google::longrunning::Operation> InstanceServiceAuth::GetOperation(
 }
 
 Status InstanceServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +66,7 @@ Status InstanceServiceAuth::DeleteOperation(
 }
 
 Status InstanceServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

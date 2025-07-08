@@ -33,12 +33,13 @@ DataScanServiceStub::~DataScanServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataScanServiceStub::AsyncCreateDataScan(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::CreateDataScanRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateDataScanRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::CreateDataScanRequest const& request,
@@ -50,26 +51,25 @@ DefaultDataScanServiceStub::AsyncCreateDataScan(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataScanServiceStub::CreateDataScan(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateDataScan(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDataScan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataScanServiceStub::AsyncUpdateDataScan(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::UpdateDataScanRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::UpdateDataScanRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::UpdateDataScanRequest const& request,
@@ -81,26 +81,25 @@ DefaultDataScanServiceStub::AsyncUpdateDataScan(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataScanServiceStub::UpdateDataScan(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateDataScan(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDataScan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataScanServiceStub::AsyncDeleteDataScan(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::dataplex::v1::DeleteDataScanRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::DeleteDataScanRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::dataplex::v1::DeleteDataScanRequest const& request,
@@ -112,211 +111,193 @@ DefaultDataScanServiceStub::AsyncDeleteDataScan(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataScanServiceStub::DeleteDataScan(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteDataScan(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataScan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScan>
 DefaultDataScanServiceStub::GetDataScan(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetDataScanRequest const& request) {
-    google::cloud::dataplex::v1::DataScan response;
-    auto status =
-        grpc_stub_->GetDataScan(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetDataScanRequest const& request) {
+  google::cloud::dataplex::v1::DataScan response;
+  auto status = grpc_stub_->GetDataScan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataScansResponse>
 DefaultDataScanServiceStub::ListDataScans(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListDataScansRequest const& request) {
-    google::cloud::dataplex::v1::ListDataScansResponse response;
-    auto status =
-        grpc_stub_->ListDataScans(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListDataScansRequest const& request) {
+  google::cloud::dataplex::v1::ListDataScansResponse response;
+  auto status = grpc_stub_->ListDataScans(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::RunDataScanResponse>
 DefaultDataScanServiceStub::RunDataScan(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::RunDataScanRequest const& request) {
-    google::cloud::dataplex::v1::RunDataScanResponse response;
-    auto status =
-        grpc_stub_->RunDataScan(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::RunDataScanRequest const& request) {
+  google::cloud::dataplex::v1::RunDataScanResponse response;
+  auto status = grpc_stub_->RunDataScan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScanJob>
 DefaultDataScanServiceStub::GetDataScanJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GetDataScanJobRequest const& request) {
-    google::cloud::dataplex::v1::DataScanJob response;
-    auto status =
-        grpc_stub_->GetDataScanJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetDataScanJobRequest const& request) {
+  google::cloud::dataplex::v1::DataScanJob response;
+  auto status = grpc_stub_->GetDataScanJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataScanJobsResponse>
 DefaultDataScanServiceStub::ListDataScanJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::ListDataScanJobsRequest const& request) {
-    google::cloud::dataplex::v1::ListDataScanJobsResponse response;
-    auto status =
-        grpc_stub_->ListDataScanJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListDataScanJobsRequest const& request) {
+  google::cloud::dataplex::v1::ListDataScanJobsResponse response;
+  auto status = grpc_stub_->ListDataScanJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
 DefaultDataScanServiceStub::GenerateDataQualityRules(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const& request) {
-    google::cloud::dataplex::v1::GenerateDataQualityRulesResponse response;
-    auto status =
-        grpc_stub_->GenerateDataQualityRules(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
+        request) {
+  google::cloud::dataplex::v1::GenerateDataQualityRulesResponse response;
+  auto status =
+      grpc_stub_->GenerateDataQualityRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultDataScanServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultDataScanServiceStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultDataScanServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultDataScanServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultDataScanServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultDataScanServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDataScanServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDataScanServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataScanServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDataScanServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataScanServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultDataScanServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataScanServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -345,13 +326,14 @@ future<Status> DefaultDataScanServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

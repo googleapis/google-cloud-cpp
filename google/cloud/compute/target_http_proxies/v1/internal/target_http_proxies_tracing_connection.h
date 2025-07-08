@@ -36,65 +36,79 @@ class TargetHttpProxiesTracingConnection
   ~TargetHttpProxiesTracingConnection() override = default;
 
   explicit TargetHttpProxiesTracingConnection(
-    std::shared_ptr<compute_target_http_proxies_v1::TargetHttpProxiesConnection> child);
+      std::shared_ptr<
+          compute_target_http_proxies_v1::TargetHttpProxiesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
-  AggregatedListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest request) override;
+  StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::TargetHttpProxiesScopedList>>
+  AggregatedListTargetHttpProxies(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          AggregatedListTargetHttpProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const& request) override;
+  DeleteTargetHttpProxy(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          DeleteTargetHttpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetHttpProxy(NoAwaitTag,
-      google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxy(
+      NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
+                      DeleteTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  GetTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          GetTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const& request) override;
+  InsertTargetHttpProxy(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          InsertTargetHttpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetHttpProxy(NoAwaitTag,
-      google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxy(
+      NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
+                      InsertTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetHttpProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
-  ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest request) override;
+  ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::
+                            ListTargetHttpProxiesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const& request) override;
+  PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::
+                           PatchTargetHttpProxyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchTargetHttpProxy(NoAwaitTag,
-      google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpProxy(
+      NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
+                      PatchTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetHttpProxy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUrlMap(google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
+      google::cloud::cpp::compute::target_http_proxies::v1::
+          SetUrlMapRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetUrlMap(NoAwaitTag,
-      google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::v1::
+                      SetUrlMapRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_target_http_proxies_v1::TargetHttpProxiesConnection> child_;
+  std::shared_ptr<compute_target_http_proxies_v1::TargetHttpProxiesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -107,7 +121,8 @@ class TargetHttpProxiesTracingConnection
  */
 std::shared_ptr<compute_target_http_proxies_v1::TargetHttpProxiesConnection>
 MakeTargetHttpProxiesTracingConnection(
-    std::shared_ptr<compute_target_http_proxies_v1::TargetHttpProxiesConnection> conn);
+    std::shared_ptr<compute_target_http_proxies_v1::TargetHttpProxiesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_http_proxies_v1_internal

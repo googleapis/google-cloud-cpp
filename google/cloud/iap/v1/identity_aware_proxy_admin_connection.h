@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_ADMIN_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection_idempotency_policy.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -36,14 +36,17 @@ namespace iap_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `IdentityAwareProxyAdminServiceConnection`.
-class IdentityAwareProxyAdminServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class IdentityAwareProxyAdminServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<IdentityAwareProxyAdminServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<IdentityAwareProxyAdminServiceRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `IdentityAwareProxyAdminServiceConnection` based on counting errors.
+ * A retry policy for `IdentityAwareProxyAdminServiceConnection` based on
+ * counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +55,8 @@ class IdentityAwareProxyAdminServiceRetryPolicy : public ::google::cloud::RetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy : public IdentityAwareProxyAdminServiceRetryPolicy {
+class IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy
+    : public IdentityAwareProxyAdminServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +65,19 @@ class IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy : public Identi
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy(
       IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy(
-      IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -80,8 +88,10 @@ class IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy : public Identi
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IdentityAwareProxyAdminServiceRetryPolicy> clone() const override {
-    return std::make_unique<IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<IdentityAwareProxyAdminServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -89,11 +99,14 @@ class IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy : public Identi
   using BaseType = IdentityAwareProxyAdminServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<iap_v1_internal::IdentityAwareProxyAdminServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      iap_v1_internal::IdentityAwareProxyAdminServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `IdentityAwareProxyAdminServiceConnection` based on elapsed time.
+ * A retry policy for `IdentityAwareProxyAdminServiceConnection` based on
+ * elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -102,7 +115,8 @@ class IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy : public Identi
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy : public IdentityAwareProxyAdminServiceRetryPolicy {
+class IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy
+    : public IdentityAwareProxyAdminServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +141,16 @@ class IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy : public IdentityAwar
   template <typename DurationRep, typename DurationPeriod>
   explicit IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(
+      IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(
+      IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,8 +163,10 @@ class IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy : public IdentityAwar
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IdentityAwareProxyAdminServiceRetryPolicy> clone() const override {
-    return std::make_unique<IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy>(
+  std::unique_ptr<IdentityAwareProxyAdminServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
 
@@ -154,20 +174,25 @@ class IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy : public IdentityAwar
   using BaseType = IdentityAwareProxyAdminServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<iap_v1_internal::IdentityAwareProxyAdminServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      iap_v1_internal::IdentityAwareProxyAdminServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `IdentityAwareProxyAdminServiceConnection` object for `IdentityAwareProxyAdminServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `IdentityAwareProxyAdminServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `IdentityAwareProxyAdminServiceConnection` object for
  * `IdentityAwareProxyAdminServiceClient`.
  *
- * To create a concrete instance, see `MakeIdentityAwareProxyAdminServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IdentityAwareProxyAdminServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `IdentityAwareProxyAdminServiceClient`.
  *
- * For mocking, see `iap_v1_mocks::MockIdentityAwareProxyAdminServiceConnection`.
+ * To create a concrete instance, see
+ * `MakeIdentityAwareProxyAdminServiceConnection()`.
+ *
+ * For mocking, see
+ * `iap_v1_mocks::MockIdentityAwareProxyAdminServiceConnection`.
  */
 class IdentityAwareProxyAdminServiceConnection {
  public:
@@ -175,49 +200,57 @@ class IdentityAwareProxyAdminServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StatusOr<google::cloud::iap::v1::IapSettings>
-  GetIapSettings(google::cloud::iap::v1::GetIapSettingsRequest const& request);
+  virtual StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
+      google::cloud::iap::v1::GetIapSettingsRequest const& request);
 
-  virtual StatusOr<google::cloud::iap::v1::IapSettings>
-  UpdateIapSettings(google::cloud::iap::v1::UpdateIapSettingsRequest const& request);
+  virtual StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
+      google::cloud::iap::v1::UpdateIapSettingsRequest const& request);
 
-  virtual StatusOr<google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
-  ValidateIapAttributeExpression(google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const& request);
+  virtual StatusOr<
+      google::cloud::iap::v1::ValidateIapAttributeExpressionResponse>
+  ValidateIapAttributeExpression(
+      google::cloud::iap::v1::ValidateIapAttributeExpressionRequest const&
+          request);
 
   virtual StreamRange<google::cloud::iap::v1::TunnelDestGroup>
-  ListTunnelDestGroups(google::cloud::iap::v1::ListTunnelDestGroupsRequest request);
+  ListTunnelDestGroups(
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest request);
 
   virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup>
-  CreateTunnelDestGroup(google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request);
+  CreateTunnelDestGroup(
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request);
+
+  virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request);
+
+  virtual Status DeleteTunnelDestGroup(
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request);
 
   virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup>
-  GetTunnelDestGroup(google::cloud::iap::v1::GetTunnelDestGroupRequest const& request);
-
-  virtual Status
-  DeleteTunnelDestGroup(google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request);
-
-  virtual StatusOr<google::cloud::iap::v1::TunnelDestGroup>
-  UpdateTunnelDestGroup(google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request);
+  UpdateTunnelDestGroup(
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `IdentityAwareProxyAdminServiceConnection`.
+ * A factory function to construct an object of type
+ * `IdentityAwareProxyAdminServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of IdentityAwareProxyAdminServiceClient.
+ * should be passed as an argument to the constructor of
+ * IdentityAwareProxyAdminServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `IdentityAwareProxyAdminServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `IdentityAwareProxyAdminServiceConnection`. Expected options are any
+ * of the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -227,11 +260,11 @@ class IdentityAwareProxyAdminServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `IdentityAwareProxyAdminServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the
+ * `IdentityAwareProxyAdminServiceConnection` created by this function.
  */
-std::shared_ptr<IdentityAwareProxyAdminServiceConnection> MakeIdentityAwareProxyAdminServiceConnection(
-    Options options = {});
+std::shared_ptr<IdentityAwareProxyAdminServiceConnection>
+MakeIdentityAwareProxyAdminServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_v1

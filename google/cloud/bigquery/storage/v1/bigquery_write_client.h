@@ -67,7 +67,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BigQueryWriteClient {
  public:
-  explicit BigQueryWriteClient(std::shared_ptr<BigQueryWriteConnection> connection, Options opts = {});
+  explicit BigQueryWriteClient(
+      std::shared_ptr<BigQueryWriteConnection> connection, Options opts = {});
   ~BigQueryWriteClient();
 
   ///@{
@@ -80,10 +81,12 @@ class BigQueryWriteClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BigQueryWriteClient const& a, BigQueryWriteClient const& b) {
+  friend bool operator==(BigQueryWriteClient const& a,
+                         BigQueryWriteClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BigQueryWriteClient const& a, BigQueryWriteClient const& b) {
+  friend bool operator!=(BigQueryWriteClient const& a,
+                         BigQueryWriteClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,8 +120,10 @@ class BigQueryWriteClient {
   /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L271}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  CreateWriteStream(std::string const& parent, google::cloud::bigquery::storage::v1::WriteStream const& write_stream, Options opts = {});
+  StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
+      std::string const& parent,
+      google::cloud::bigquery::storage::v1::WriteStream const& write_stream,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -152,8 +157,10 @@ class BigQueryWriteClient {
   /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L271}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  CreateWriteStream(google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
+      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -238,8 +245,8 @@ class BigQueryWriteClient {
   /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L271}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  GetWriteStream(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -268,8 +275,10 @@ class BigQueryWriteClient {
   /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L271}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  GetWriteStream(google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
+      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -327,7 +336,10 @@ class BigQueryWriteClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
-  FinalizeWriteStream(google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request, Options opts = {});
+  FinalizeWriteStream(
+      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -357,7 +369,8 @@ class BigQueryWriteClient {
   /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L648}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
+  StatusOr<
+      google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
   BatchCommitWriteStreams(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -392,8 +405,11 @@ class BigQueryWriteClient {
   /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L648}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
-  BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
+  BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::
+                              BatchCommitWriteStreamsRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +440,8 @@ class BigQueryWriteClient {
   /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L696}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
-  FlushRows(std::string const& write_stream, Options opts = {});
+  StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
+      std::string const& write_stream, Options opts = {});
 
   // clang-format off
   ///
@@ -461,8 +477,9 @@ class BigQueryWriteClient {
   /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L696}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
-  FlushRows(google::cloud::bigquery::storage::v1::FlushRowsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
+      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<BigQueryWriteConnection> connection_;

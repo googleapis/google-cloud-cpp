@@ -40,8 +40,7 @@ class PredictionServiceAuth : public PredictionServiceStub {
       std::shared_ptr<PredictionServiceStub> child);
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::PredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchPredict(
@@ -51,8 +50,7 @@ class PredictionServiceAuth : public PredictionServiceStub {
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchPredict(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -38,24 +38,28 @@ class PublisherTracingStub : public PublisherStub {
 
   explicit PublisherTracingStub(std::shared_ptr<PublisherStub> child);
 
-  StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse> PublishChannelConnectionEvents(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) override;
+  StatusOr<google::cloud::eventarc::publishing::v1::
+               PublishChannelConnectionEventsResponse>
+  PublishChannelConnectionEvents(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::eventarc::publishing::v1::
+          PublishChannelConnectionEventsRequest const& request) override;
 
-  StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse> PublishEvents(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) override;
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+  PublishEvents(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request) override;
 
   StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> Publish(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::eventarc::publishing::v1::PublishRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::eventarc::publishing::v1::PublishRequest const& request)
+      override;
 
  private:
   std::shared_ptr<PublisherStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

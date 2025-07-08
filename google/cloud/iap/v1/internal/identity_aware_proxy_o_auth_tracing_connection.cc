@@ -29,66 +29,96 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-IdentityAwareProxyOAuthServiceTracingConnection::IdentityAwareProxyOAuthServiceTracingConnection(
-    std::shared_ptr<iap_v1::IdentityAwareProxyOAuthServiceConnection> child)
+IdentityAwareProxyOAuthServiceTracingConnection::
+    IdentityAwareProxyOAuthServiceTracingConnection(
+        std::shared_ptr<iap_v1::IdentityAwareProxyOAuthServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
-IdentityAwareProxyOAuthServiceTracingConnection::ListBrands(google::cloud::iap::v1::ListBrandsRequest const& request) {
-  auto span = internal::MakeSpan("iap_v1::IdentityAwareProxyOAuthServiceConnection::ListBrands");
+IdentityAwareProxyOAuthServiceTracingConnection::ListBrands(
+    google::cloud::iap::v1::ListBrandsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyOAuthServiceConnection::ListBrands");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListBrands(request));
 }
 
 StatusOr<google::cloud::iap::v1::Brand>
-IdentityAwareProxyOAuthServiceTracingConnection::CreateBrand(google::cloud::iap::v1::CreateBrandRequest const& request) {
-  auto span = internal::MakeSpan("iap_v1::IdentityAwareProxyOAuthServiceConnection::CreateBrand");
+IdentityAwareProxyOAuthServiceTracingConnection::CreateBrand(
+    google::cloud::iap::v1::CreateBrandRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyOAuthServiceConnection::CreateBrand");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateBrand(request));
 }
 
 StatusOr<google::cloud::iap::v1::Brand>
-IdentityAwareProxyOAuthServiceTracingConnection::GetBrand(google::cloud::iap::v1::GetBrandRequest const& request) {
-  auto span = internal::MakeSpan("iap_v1::IdentityAwareProxyOAuthServiceConnection::GetBrand");
+IdentityAwareProxyOAuthServiceTracingConnection::GetBrand(
+    google::cloud::iap::v1::GetBrandRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyOAuthServiceConnection::GetBrand");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBrand(request));
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceTracingConnection::CreateIdentityAwareProxyClient(google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const& request) {
-  auto span = internal::MakeSpan("iap_v1::IdentityAwareProxyOAuthServiceConnection::CreateIdentityAwareProxyClient");
+IdentityAwareProxyOAuthServiceTracingConnection::CreateIdentityAwareProxyClient(
+    google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyOAuthServiceConnection::"
+      "CreateIdentityAwareProxyClient");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->CreateIdentityAwareProxyClient(request));
+  return internal::EndSpan(*span,
+                           child_->CreateIdentityAwareProxyClient(request));
 }
 
 StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceTracingConnection::ListIdentityAwareProxyClients(google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) {
-  auto span = internal::MakeSpan("iap_v1::IdentityAwareProxyOAuthServiceConnection::ListIdentityAwareProxyClients");
+IdentityAwareProxyOAuthServiceTracingConnection::ListIdentityAwareProxyClients(
+    google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyOAuthServiceConnection::"
+      "ListIdentityAwareProxyClients");
   internal::OTelScope scope(span);
   auto sr = child_->ListIdentityAwareProxyClients(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::iap::v1::IdentityAwareProxyClient>(std::move(span),
+                                                        std::move(sr));
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceTracingConnection::GetIdentityAwareProxyClient(google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
-  auto span = internal::MakeSpan("iap_v1::IdentityAwareProxyOAuthServiceConnection::GetIdentityAwareProxyClient");
+IdentityAwareProxyOAuthServiceTracingConnection::GetIdentityAwareProxyClient(
+    google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyOAuthServiceConnection::"
+      "GetIdentityAwareProxyClient");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIdentityAwareProxyClient(request));
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
-IdentityAwareProxyOAuthServiceTracingConnection::ResetIdentityAwareProxyClientSecret(google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const& request) {
-  auto span = internal::MakeSpan("iap_v1::IdentityAwareProxyOAuthServiceConnection::ResetIdentityAwareProxyClientSecret");
+IdentityAwareProxyOAuthServiceTracingConnection::
+    ResetIdentityAwareProxyClientSecret(
+        google::cloud::iap::v1::
+            ResetIdentityAwareProxyClientSecretRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyOAuthServiceConnection::"
+      "ResetIdentityAwareProxyClientSecret");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->ResetIdentityAwareProxyClientSecret(request));
+  return internal::EndSpan(
+      *span, child_->ResetIdentityAwareProxyClientSecret(request));
 }
 
 Status
-IdentityAwareProxyOAuthServiceTracingConnection::DeleteIdentityAwareProxyClient(google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const& request) {
-  auto span = internal::MakeSpan("iap_v1::IdentityAwareProxyOAuthServiceConnection::DeleteIdentityAwareProxyClient");
+IdentityAwareProxyOAuthServiceTracingConnection::DeleteIdentityAwareProxyClient(
+    google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "iap_v1::IdentityAwareProxyOAuthServiceConnection::"
+      "DeleteIdentityAwareProxyClient");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->DeleteIdentityAwareProxyClient(request));
+  return internal::EndSpan(*span,
+                           child_->DeleteIdentityAwareProxyClient(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -98,7 +128,8 @@ MakeIdentityAwareProxyOAuthServiceTracingConnection(
     std::shared_ptr<iap_v1::IdentityAwareProxyOAuthServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<IdentityAwareProxyOAuthServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<IdentityAwareProxyOAuthServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

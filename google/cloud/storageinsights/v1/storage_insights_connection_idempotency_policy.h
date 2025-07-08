@@ -36,71 +36,81 @@ class StorageInsightsConnectionIdempotencyPolicy {
   virtual ~StorageInsightsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<StorageInsightsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<StorageInsightsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest request);
+  virtual google::cloud::Idempotency ListReportConfigs(
+      google::cloud::storageinsights::v1::ListReportConfigsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetReportConfig(google::cloud::storageinsights::v1::GetReportConfigRequest const& request);
+  virtual google::cloud::Idempotency GetReportConfig(
+      google::cloud::storageinsights::v1::GetReportConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateReportConfig(google::cloud::storageinsights::v1::CreateReportConfigRequest const& request);
+  virtual google::cloud::Idempotency CreateReportConfig(
+      google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateReportConfig(google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request);
+  virtual google::cloud::Idempotency UpdateReportConfig(
+      google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteReportConfig(google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request);
+  virtual google::cloud::Idempotency DeleteReportConfig(
+      google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest request);
+  virtual google::cloud::Idempotency ListReportDetails(
+      google::cloud::storageinsights::v1::ListReportDetailsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetReportDetail(google::cloud::storageinsights::v1::GetReportDetailRequest const& request);
+  virtual google::cloud::Idempotency GetReportDetail(
+      google::cloud::storageinsights::v1::GetReportDetailRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDatasetConfigs(google::cloud::storageinsights::v1::ListDatasetConfigsRequest request);
+  virtual google::cloud::Idempotency ListDatasetConfigs(
+      google::cloud::storageinsights::v1::ListDatasetConfigsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDatasetConfig(google::cloud::storageinsights::v1::GetDatasetConfigRequest const& request);
+  virtual google::cloud::Idempotency GetDatasetConfig(
+      google::cloud::storageinsights::v1::GetDatasetConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateDatasetConfig(google::cloud::storageinsights::v1::CreateDatasetConfigRequest const& request);
+  virtual google::cloud::Idempotency CreateDatasetConfig(
+      google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateDatasetConfig(google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const& request);
+  virtual google::cloud::Idempotency UpdateDatasetConfig(
+      google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteDatasetConfig(google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const& request);
+  virtual google::cloud::Idempotency DeleteDatasetConfig(
+      google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  LinkDataset(google::cloud::storageinsights::v1::LinkDatasetRequest const& request);
+  virtual google::cloud::Idempotency LinkDataset(
+      google::cloud::storageinsights::v1::LinkDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UnlinkDataset(google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request);
+  virtual google::cloud::Idempotency UnlinkDataset(
+      google::cloud::storageinsights::v1::UnlinkDatasetRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<StorageInsightsConnectionIdempotencyPolicy>
-    MakeDefaultStorageInsightsConnectionIdempotencyPolicy();
+MakeDefaultStorageInsightsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storageinsights_v1

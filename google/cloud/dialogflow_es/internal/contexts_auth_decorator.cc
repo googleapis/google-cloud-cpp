@@ -31,9 +31,9 @@ ContextsAuth::ContextsAuth(
     std::shared_ptr<ContextsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::v2::ListContextsResponse> ContextsAuth::ListContexts(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
+ContextsAuth::ListContexts(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListContextsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::dialogflow::v2::ListContextsResponse> ContextsAuth::List
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::GetContext(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +49,7 @@ StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::GetContext(
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::CreateContext(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +57,7 @@ StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::CreateContext(
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::UpdateContext(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +65,7 @@ StatusOr<google::cloud::dialogflow::v2::Context> ContextsAuth::UpdateContext(
 }
 
 Status ContextsAuth::DeleteContext(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,17 +73,16 @@ Status ContextsAuth::DeleteContext(
 }
 
 Status ContextsAuth::DeleteAllContexts(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAllContexts(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ContextsAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ContextsAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,17 +90,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> ContextsAuth::ListLocat
 }
 
 StatusOr<google::cloud::location::Location> ContextsAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ContextsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ContextsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -113,8 +107,7 @@ StatusOr<google::longrunning::ListOperationsResponse> ContextsAuth::ListOperatio
 }
 
 StatusOr<google::longrunning::Operation> ContextsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +115,7 @@ StatusOr<google::longrunning::Operation> ContextsAuth::GetOperation(
 }
 
 Status ContextsAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

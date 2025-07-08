@@ -26,14 +26,17 @@ namespace advisorynotifications_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AdvisoryNotificationsServiceClient::AdvisoryNotificationsServiceClient(
-    std::shared_ptr<AdvisoryNotificationsServiceConnection> connection, Options opts)
+    std::shared_ptr<AdvisoryNotificationsServiceConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
-AdvisoryNotificationsServiceClient::~AdvisoryNotificationsServiceClient() = default;
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
+AdvisoryNotificationsServiceClient::~AdvisoryNotificationsServiceClient() =
+    default;
 
 StreamRange<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceClient::ListNotifications(std::string const& parent, Options opts) {
+AdvisoryNotificationsServiceClient::ListNotifications(std::string const& parent,
+                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::advisorynotifications::v1::ListNotificationsRequest request;
   request.set_parent(parent);
@@ -41,13 +44,16 @@ AdvisoryNotificationsServiceClient::ListNotifications(std::string const& parent,
 }
 
 StreamRange<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceClient::ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest request, Options opts) {
+AdvisoryNotificationsServiceClient::ListNotifications(
+    google::cloud::advisorynotifications::v1::ListNotificationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNotifications(std::move(request));
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceClient::GetNotification(std::string const& name, Options opts) {
+AdvisoryNotificationsServiceClient::GetNotification(std::string const& name,
+                                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::advisorynotifications::v1::GetNotificationRequest request;
   request.set_name(name);
@@ -55,13 +61,17 @@ AdvisoryNotificationsServiceClient::GetNotification(std::string const& name, Opt
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceClient::GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const& request, Options opts) {
+AdvisoryNotificationsServiceClient::GetNotification(
+    google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNotification(request);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
-AdvisoryNotificationsServiceClient::GetSettings(std::string const& name, Options opts) {
+AdvisoryNotificationsServiceClient::GetSettings(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::advisorynotifications::v1::GetSettingsRequest request;
   request.set_name(name);
@@ -69,13 +79,17 @@ AdvisoryNotificationsServiceClient::GetSettings(std::string const& name, Options
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
-AdvisoryNotificationsServiceClient::GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const& request, Options opts) {
+AdvisoryNotificationsServiceClient::GetSettings(
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSettings(request);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
-AdvisoryNotificationsServiceClient::UpdateSettings(google::cloud::advisorynotifications::v1::Settings const& settings, Options opts) {
+AdvisoryNotificationsServiceClient::UpdateSettings(
+    google::cloud::advisorynotifications::v1::Settings const& settings,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::advisorynotifications::v1::UpdateSettingsRequest request;
   *request.mutable_settings() = settings;
@@ -83,7 +97,10 @@ AdvisoryNotificationsServiceClient::UpdateSettings(google::cloud::advisorynotifi
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
-AdvisoryNotificationsServiceClient::UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request, Options opts) {
+AdvisoryNotificationsServiceClient::UpdateSettings(
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSettings(request);
 }

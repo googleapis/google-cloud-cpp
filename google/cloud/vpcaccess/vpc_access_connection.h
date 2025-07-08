@@ -33,10 +33,13 @@ using ::google::cloud::vpcaccess_v1::MakeVpcAccessServiceConnection;
 /// @deprecated Use vpcaccess_v1::VpcAccessServiceConnection directly.
 using ::google::cloud::vpcaccess_v1::VpcAccessServiceConnection;
 
-/// @deprecated Use vpcaccess_v1::VpcAccessServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::vpcaccess_v1::VpcAccessServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use vpcaccess_v1::VpcAccessServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::vpcaccess_v1::
+    VpcAccessServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use vpcaccess_v1::VpcAccessServiceLimitedTimeRetryPolicy directly.
+/// @deprecated Use vpcaccess_v1::VpcAccessServiceLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::vpcaccess_v1::VpcAccessServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use vpcaccess_v1::VpcAccessServiceRetryPolicy directly.

@@ -17,14 +17,14 @@
 // source: google/cloud/devicestreaming/v1/service.proto
 
 #include "google/cloud/devicestreaming/v1/direct_access_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/devicestreaming/v1/direct_access_options.h"
 #include "google/cloud/devicestreaming/v1/internal/direct_access_connection_impl.h"
 #include "google/cloud/devicestreaming/v1/internal/direct_access_option_defaults.h"
 #include "google/cloud/devicestreaming/v1/internal/direct_access_stub_factory.h"
 #include "google/cloud/devicestreaming/v1/internal/direct_access_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,8 +44,10 @@ DirectAccessServiceConnection::CreateDeviceSession(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::devicestreaming::v1::DeviceSession> DirectAccessServiceConnection::ListDeviceSessions(
-    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::devicestreaming::v1::DeviceSession>
+DirectAccessServiceConnection::ListDeviceSessions(
+    google::cloud::devicestreaming::v1::
+        ListDeviceSessionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::devicestreaming::v1::DeviceSession>>();
 }
@@ -56,8 +58,7 @@ DirectAccessServiceConnection::GetDeviceSession(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DirectAccessServiceConnection::CancelDeviceSession(
+Status DirectAccessServiceConnection::CancelDeviceSession(
     google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -79,20 +80,22 @@ DirectAccessServiceConnection::AsyncAdbConnect() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<DirectAccessServiceConnection> MakeDirectAccessServiceConnection(
-    Options options) {
+std::shared_ptr<DirectAccessServiceConnection>
+MakeDirectAccessServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DirectAccessServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 DirectAccessServicePolicyOptionList>(options,
+                                                                      __func__);
   options = devicestreaming_v1_internal::DirectAccessServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = devicestreaming_v1_internal::CreateDefaultDirectAccessServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return devicestreaming_v1_internal::MakeDirectAccessServiceTracingConnection(
-      std::make_shared<devicestreaming_v1_internal::DirectAccessServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          devicestreaming_v1_internal::DirectAccessServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

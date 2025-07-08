@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_INTERNAL_TIMESERIES_INSIGHTS_CONTROLLER_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_INTERNAL_TIMESERIES_INSIGHTS_CONTROLLER_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -31,47 +31,49 @@ namespace cloud {
 namespace timeseriesinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TimeseriesInsightsControllerAuth : public TimeseriesInsightsControllerStub {
+class TimeseriesInsightsControllerAuth
+    : public TimeseriesInsightsControllerStub {
  public:
   ~TimeseriesInsightsControllerAuth() override = default;
   TimeseriesInsightsControllerAuth(
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<TimeseriesInsightsControllerStub> child);
 
-  StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse> ListDataSets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
+  ListDataSets(grpc::ClientContext& context, Options const& options,
+               google::cloud::timeseriesinsights::v1::ListDataSetsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::DataSet> CreateDataSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
+          request) override;
 
   Status DeleteDataSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
+          request) override;
 
-  StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse> AppendEvents(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
+  AppendEvents(grpc::ClientContext& context, Options const& options,
+               google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
+                   request) override;
 
-  StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse> QueryDataSet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
+  QueryDataSet(grpc::ClientContext& context, Options const& options,
+               google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
+                   request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateSlice(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateTimeseries(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request) override;
+  StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
+  EvaluateTimeseries(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
+          request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

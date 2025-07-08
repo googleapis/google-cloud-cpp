@@ -44,44 +44,49 @@ PublisherMetadata::PublisherMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
+StatusOr<google::cloud::eventarc::publishing::v1::
+             PublishChannelConnectionEventsResponse>
 PublisherMetadata::PublishChannelConnectionEvents(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("channel_connection=", internal::UrlEncode(request.channel_connection())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::publishing::v1::
+        PublishChannelConnectionEventsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("channel_connection=",
+                           internal::UrlEncode(request.channel_connection())));
   return child_->PublishChannelConnectionEvents(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 PublisherMetadata::PublishEvents(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("channel=", internal::UrlEncode(request.channel())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("channel=", internal::UrlEncode(request.channel())));
   return child_->PublishEvents(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
 PublisherMetadata::Publish(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("message_bus=", internal::UrlEncode(request.message_bus())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("message_bus=", internal::UrlEncode(request.message_bus())));
   return child_->Publish(context, options, request);
 }
 
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                    Options const& options,
+                                    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                    Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

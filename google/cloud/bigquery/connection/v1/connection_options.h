@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_V1_CONNECTION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_V1_CONNECTION_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/connection/v1/connection_connection.h"
 #include "google/cloud/bigquery/connection/v1/connection_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

@@ -31,81 +31,85 @@ TransitionRouteGroupsAuth::TransitionRouteGroupsAuth(
     std::shared_ptr<TransitionRouteGroupsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse> TransitionRouteGroupsAuth::ListTransitionRouteGroups(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
+TransitionRouteGroupsAuth::ListTransitionRouteGroups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTransitionRouteGroups(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> TransitionRouteGroupsAuth::GetTransitionRouteGroup(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+TransitionRouteGroupsAuth::GetTransitionRouteGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetTransitionRouteGroup(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> TransitionRouteGroupsAuth::CreateTransitionRouteGroup(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+TransitionRouteGroupsAuth::CreateTransitionRouteGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTransitionRouteGroup(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup> TransitionRouteGroupsAuth::UpdateTransitionRouteGroup(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
+TransitionRouteGroupsAuth::UpdateTransitionRouteGroup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateTransitionRouteGroup(context, options, request);
 }
 
 Status TransitionRouteGroupsAuth::DeleteTransitionRouteGroup(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTransitionRouteGroup(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> TransitionRouteGroupsAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+TransitionRouteGroupsAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> TransitionRouteGroupsAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+TransitionRouteGroupsAuth::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> TransitionRouteGroupsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+TransitionRouteGroupsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> TransitionRouteGroupsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+TransitionRouteGroupsAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -113,8 +117,7 @@ StatusOr<google::longrunning::Operation> TransitionRouteGroupsAuth::GetOperation
 }
 
 Status TransitionRouteGroupsAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

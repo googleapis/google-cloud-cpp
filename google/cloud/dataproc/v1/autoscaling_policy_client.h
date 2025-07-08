@@ -63,23 +63,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AutoscalingPolicyServiceClient {
  public:
-  explicit AutoscalingPolicyServiceClient(std::shared_ptr<AutoscalingPolicyServiceConnection> connection, Options opts = {});
+  explicit AutoscalingPolicyServiceClient(
+      std::shared_ptr<AutoscalingPolicyServiceConnection> connection,
+      Options opts = {});
   ~AutoscalingPolicyServiceClient();
 
   ///@{
   /// @name Copy and move support
-  AutoscalingPolicyServiceClient(AutoscalingPolicyServiceClient const&) = default;
-  AutoscalingPolicyServiceClient& operator=(AutoscalingPolicyServiceClient const&) = default;
+  AutoscalingPolicyServiceClient(AutoscalingPolicyServiceClient const&) =
+      default;
+  AutoscalingPolicyServiceClient& operator=(
+      AutoscalingPolicyServiceClient const&) = default;
   AutoscalingPolicyServiceClient(AutoscalingPolicyServiceClient&&) = default;
-  AutoscalingPolicyServiceClient& operator=(AutoscalingPolicyServiceClient&&) = default;
+  AutoscalingPolicyServiceClient& operator=(AutoscalingPolicyServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AutoscalingPolicyServiceClient const& a, AutoscalingPolicyServiceClient const& b) {
+  friend bool operator==(AutoscalingPolicyServiceClient const& a,
+                         AutoscalingPolicyServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AutoscalingPolicyServiceClient const& a, AutoscalingPolicyServiceClient const& b) {
+  friend bool operator!=(AutoscalingPolicyServiceClient const& a,
+                         AutoscalingPolicyServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,7 +124,10 @@ class AutoscalingPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  CreateAutoscalingPolicy(std::string const& parent, google::cloud::dataproc::v1::AutoscalingPolicy const& policy, Options opts = {});
+  CreateAutoscalingPolicy(
+      std::string const& parent,
+      google::cloud::dataproc::v1::AutoscalingPolicy const& policy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -147,7 +157,10 @@ class AutoscalingPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  CreateAutoscalingPolicy(google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request, Options opts = {});
+  CreateAutoscalingPolicy(
+      google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -175,7 +188,9 @@ class AutoscalingPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  UpdateAutoscalingPolicy(google::cloud::dataproc::v1::AutoscalingPolicy const& policy, Options opts = {});
+  UpdateAutoscalingPolicy(
+      google::cloud::dataproc::v1::AutoscalingPolicy const& policy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -208,7 +223,10 @@ class AutoscalingPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  UpdateAutoscalingPolicy(google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request, Options opts = {});
+  UpdateAutoscalingPolicy(
+      google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +259,8 @@ class AutoscalingPolicyServiceClient {
   /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  GetAutoscalingPolicy(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -271,8 +289,9 @@ class AutoscalingPolicyServiceClient {
   /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-  GetAutoscalingPolicy(google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
+      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -354,7 +373,9 @@ class AutoscalingPolicyServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
-  ListAutoscalingPolicies(google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request, Options opts = {});
+  ListAutoscalingPolicies(
+      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -385,8 +406,7 @@ class AutoscalingPolicyServiceClient {
   /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
   ///
   // clang-format on
-  Status
-  DeleteAutoscalingPolicy(std::string const& name, Options opts = {});
+  Status DeleteAutoscalingPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -413,8 +433,10 @@ class AutoscalingPolicyServiceClient {
   /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
   ///
   // clang-format on
-  Status
-  DeleteAutoscalingPolicy(google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request, Options opts = {});
+  Status DeleteAutoscalingPolicy(
+      google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -446,8 +468,8 @@ class AutoscalingPolicyServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -478,8 +500,8 @@ class AutoscalingPolicyServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -514,8 +536,9 @@ class AutoscalingPolicyServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -550,8 +573,8 @@ class AutoscalingPolicyServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -590,8 +613,8 @@ class AutoscalingPolicyServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -617,8 +640,8 @@ class AutoscalingPolicyServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -649,8 +672,9 @@ class AutoscalingPolicyServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -674,8 +698,7 @@ class AutoscalingPolicyServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -704,8 +727,9 @@ class AutoscalingPolicyServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -739,8 +763,7 @@ class AutoscalingPolicyServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -779,8 +802,9 @@ class AutoscalingPolicyServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AutoscalingPolicyServiceConnection> connection_;

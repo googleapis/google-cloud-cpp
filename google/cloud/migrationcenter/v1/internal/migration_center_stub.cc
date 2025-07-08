@@ -33,119 +33,115 @@ MigrationCenterStub::~MigrationCenterStub() = default;
 
 StatusOr<google::cloud::migrationcenter::v1::ListAssetsResponse>
 DefaultMigrationCenterStub::ListAssets(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListAssetsRequest const& request) {
-    google::cloud::migrationcenter::v1::ListAssetsResponse response;
-    auto status =
-        grpc_stub_->ListAssets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListAssetsRequest const& request) {
+  google::cloud::migrationcenter::v1::ListAssetsResponse response;
+  auto status = grpc_stub_->ListAssets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Asset>
 DefaultMigrationCenterStub::GetAsset(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetAssetRequest const& request) {
-    google::cloud::migrationcenter::v1::Asset response;
-    auto status =
-        grpc_stub_->GetAsset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetAssetRequest const& request) {
+  google::cloud::migrationcenter::v1::Asset response;
+  auto status = grpc_stub_->GetAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Asset>
 DefaultMigrationCenterStub::UpdateAsset(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::UpdateAssetRequest const& request) {
-    google::cloud::migrationcenter::v1::Asset response;
-    auto status =
-        grpc_stub_->UpdateAsset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::UpdateAssetRequest const& request) {
+  google::cloud::migrationcenter::v1::Asset response;
+  auto status = grpc_stub_->UpdateAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>
 DefaultMigrationCenterStub::BatchUpdateAssets(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const& request) {
-    google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse response;
-    auto status =
-        grpc_stub_->BatchUpdateAssets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const&
+        request) {
+  google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse response;
+  auto status = grpc_stub_->BatchUpdateAssets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultMigrationCenterStub::DeleteAsset(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::DeleteAssetRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteAsset(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMigrationCenterStub::DeleteAsset(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::DeleteAssetRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteAsset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultMigrationCenterStub::BatchDeleteAssets(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->BatchDeleteAssets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMigrationCenterStub::BatchDeleteAssets(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->BatchDeleteAssets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportAssetFramesResponse>
 DefaultMigrationCenterStub::ReportAssetFrames(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ReportAssetFramesRequest const& request) {
-    google::cloud::migrationcenter::v1::ReportAssetFramesResponse response;
-    auto status =
-        grpc_stub_->ReportAssetFrames(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ReportAssetFramesRequest const&
+        request) {
+  google::cloud::migrationcenter::v1::ReportAssetFramesResponse response;
+  auto status = grpc_stub_->ReportAssetFrames(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>
 DefaultMigrationCenterStub::AggregateAssetsValues(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const& request) {
-    google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse response;
-    auto status =
-        grpc_stub_->AggregateAssetsValues(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const&
+        request) {
+  google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse response;
+  auto status = grpc_stub_->AggregateAssetsValues(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateImportJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::CreateImportJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::CreateImportJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::CreateImportJobRequest const& request,
+             google::cloud::migrationcenter::v1::CreateImportJobRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateImportJob(context, request, cq);
       },
@@ -154,55 +150,53 @@ DefaultMigrationCenterStub::AsyncCreateImportJob(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::CreateImportJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateImportJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateImportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportJobsResponse>
 DefaultMigrationCenterStub::ListImportJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListImportJobsRequest const& request) {
-    google::cloud::migrationcenter::v1::ListImportJobsResponse response;
-    auto status =
-        grpc_stub_->ListImportJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListImportJobsRequest const& request) {
+  google::cloud::migrationcenter::v1::ListImportJobsResponse response;
+  auto status = grpc_stub_->ListImportJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportJob>
 DefaultMigrationCenterStub::GetImportJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetImportJobRequest const& request) {
-    google::cloud::migrationcenter::v1::ImportJob response;
-    auto status =
-        grpc_stub_->GetImportJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetImportJobRequest const& request) {
+  google::cloud::migrationcenter::v1::ImportJob response;
+  auto status = grpc_stub_->GetImportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteImportJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::DeleteImportJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::DeleteImportJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request,
+             google::cloud::migrationcenter::v1::DeleteImportJobRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteImportJob(context, request, cq);
       },
@@ -211,29 +205,29 @@ DefaultMigrationCenterStub::AsyncDeleteImportJob(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::DeleteImportJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteImportJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteImportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdateImportJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::UpdateImportJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::UpdateImportJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request,
+             google::cloud::migrationcenter::v1::UpdateImportJobRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateImportJob(context, request, cq);
       },
@@ -242,29 +236,30 @@ DefaultMigrationCenterStub::AsyncUpdateImportJob(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::UpdateImportJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateImportJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateImportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncValidateImportJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::ValidateImportJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::ValidateImportJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::ValidateImportJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::ValidateImportJobRequest const& request,
+             google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncValidateImportJob(context, request, cq);
       },
@@ -273,29 +268,30 @@ DefaultMigrationCenterStub::AsyncValidateImportJob(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::ValidateImportJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::ValidateImportJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ValidateImportJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ValidateImportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncRunImportJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::RunImportJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::RunImportJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::RunImportJobRequest const& request,
+             google::cloud::migrationcenter::v1::RunImportJobRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRunImportJob(context, request, cq);
       },
@@ -304,56 +300,58 @@ DefaultMigrationCenterStub::AsyncRunImportJob(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::RunImportJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RunImportJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunImportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
 DefaultMigrationCenterStub::GetImportDataFile(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetImportDataFileRequest const& request) {
-    google::cloud::migrationcenter::v1::ImportDataFile response;
-    auto status =
-        grpc_stub_->GetImportDataFile(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetImportDataFileRequest const&
+        request) {
+  google::cloud::migrationcenter::v1::ImportDataFile response;
+  auto status = grpc_stub_->GetImportDataFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportDataFilesResponse>
 DefaultMigrationCenterStub::ListImportDataFiles(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListImportDataFilesRequest const& request) {
-    google::cloud::migrationcenter::v1::ListImportDataFilesResponse response;
-    auto status =
-        grpc_stub_->ListImportDataFiles(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListImportDataFilesRequest const&
+        request) {
+  google::cloud::migrationcenter::v1::ListImportDataFilesResponse response;
+  auto status = grpc_stub_->ListImportDataFiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateImportDataFile(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::CreateImportDataFileRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::CreateImportDataFileRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::CreateImportDataFileRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::CreateImportDataFileRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateImportDataFile(context, request, cq);
       },
       request, std::move(context));
@@ -361,30 +359,33 @@ DefaultMigrationCenterStub::AsyncCreateImportDataFile(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::CreateImportDataFile(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::CreateImportDataFileRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateImportDataFile(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateImportDataFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteImportDataFile(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::DeleteImportDataFileRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::DeleteImportDataFileRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteImportDataFile(context, request, cq);
       },
       request, std::move(context));
@@ -392,56 +393,55 @@ DefaultMigrationCenterStub::AsyncDeleteImportDataFile(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::DeleteImportDataFile(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteImportDataFile(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteImportDataFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListGroupsResponse>
 DefaultMigrationCenterStub::ListGroups(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListGroupsRequest const& request) {
-    google::cloud::migrationcenter::v1::ListGroupsResponse response;
-    auto status =
-        grpc_stub_->ListGroups(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListGroupsRequest const& request) {
+  google::cloud::migrationcenter::v1::ListGroupsResponse response;
+  auto status = grpc_stub_->ListGroups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Group>
 DefaultMigrationCenterStub::GetGroup(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetGroupRequest const& request) {
-    google::cloud::migrationcenter::v1::Group response;
-    auto status =
-        grpc_stub_->GetGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetGroupRequest const& request) {
+  google::cloud::migrationcenter::v1::Group response;
+  auto status = grpc_stub_->GetGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::CreateGroupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::CreateGroupRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::CreateGroupRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::CreateGroupRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateGroup(context, request, cq);
       },
       request, std::move(context));
@@ -449,30 +449,30 @@ DefaultMigrationCenterStub::AsyncCreateGroup(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::CreateGroup(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdateGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::UpdateGroupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::UpdateGroupRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::UpdateGroupRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::UpdateGroupRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateGroup(context, request, cq);
       },
       request, std::move(context));
@@ -480,30 +480,30 @@ DefaultMigrationCenterStub::AsyncUpdateGroup(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::UpdateGroup(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::DeleteGroupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::DeleteGroupRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::DeleteGroupRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::DeleteGroupRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteGroup(context, request, cq);
       },
       request, std::move(context));
@@ -511,29 +511,30 @@ DefaultMigrationCenterStub::AsyncDeleteGroup(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::DeleteGroup(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncAddAssetsToGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::AddAssetsToGroupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::AddAssetsToGroupRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const& request,
+             google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncAddAssetsToGroup(context, request, cq);
       },
@@ -542,29 +543,31 @@ DefaultMigrationCenterStub::AsyncAddAssetsToGroup(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::AddAssetsToGroup(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->AddAssetsToGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddAssetsToGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncRemoveAssetsFromGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const& request,
+             google::cloud::migrationcenter::v1::
+                 RemoveAssetsFromGroupRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRemoveAssetsFromGroup(context, request, cq);
       },
@@ -573,81 +576,78 @@ DefaultMigrationCenterStub::AsyncRemoveAssetsFromGroup(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::RemoveAssetsFromGroup(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->RemoveAssetsFromGroup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RemoveAssetsFromGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListErrorFramesResponse>
 DefaultMigrationCenterStub::ListErrorFrames(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListErrorFramesRequest const& request) {
-    google::cloud::migrationcenter::v1::ListErrorFramesResponse response;
-    auto status =
-        grpc_stub_->ListErrorFrames(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListErrorFramesRequest const& request) {
+  google::cloud::migrationcenter::v1::ListErrorFramesResponse response;
+  auto status = grpc_stub_->ListErrorFrames(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ErrorFrame>
 DefaultMigrationCenterStub::GetErrorFrame(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request) {
-    google::cloud::migrationcenter::v1::ErrorFrame response;
-    auto status =
-        grpc_stub_->GetErrorFrame(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request) {
+  google::cloud::migrationcenter::v1::ErrorFrame response;
+  auto status = grpc_stub_->GetErrorFrame(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListSourcesResponse>
 DefaultMigrationCenterStub::ListSources(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListSourcesRequest const& request) {
-    google::cloud::migrationcenter::v1::ListSourcesResponse response;
-    auto status =
-        grpc_stub_->ListSources(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListSourcesRequest const& request) {
+  google::cloud::migrationcenter::v1::ListSourcesResponse response;
+  auto status = grpc_stub_->ListSources(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Source>
 DefaultMigrationCenterStub::GetSource(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetSourceRequest const& request) {
-    google::cloud::migrationcenter::v1::Source response;
-    auto status =
-        grpc_stub_->GetSource(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetSourceRequest const& request) {
+  google::cloud::migrationcenter::v1::Source response;
+  auto status = grpc_stub_->GetSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateSource(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::CreateSourceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::CreateSourceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::CreateSourceRequest const& request,
+             google::cloud::migrationcenter::v1::CreateSourceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateSource(context, request, cq);
       },
@@ -656,29 +656,29 @@ DefaultMigrationCenterStub::AsyncCreateSource(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::CreateSource(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateSource(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdateSource(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::UpdateSourceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::UpdateSourceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::UpdateSourceRequest const& request,
+             google::cloud::migrationcenter::v1::UpdateSourceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateSource(context, request, cq);
       },
@@ -687,29 +687,29 @@ DefaultMigrationCenterStub::AsyncUpdateSource(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::UpdateSource(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateSource(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteSource(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::DeleteSourceRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::DeleteSourceRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::DeleteSourceRequest const& request,
+             google::cloud::migrationcenter::v1::DeleteSourceRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteSource(context, request, cq);
       },
@@ -718,56 +718,58 @@ DefaultMigrationCenterStub::AsyncDeleteSource(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::DeleteSource(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteSource(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListPreferenceSetsResponse>
 DefaultMigrationCenterStub::ListPreferenceSets(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListPreferenceSetsRequest const& request) {
-    google::cloud::migrationcenter::v1::ListPreferenceSetsResponse response;
-    auto status =
-        grpc_stub_->ListPreferenceSets(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListPreferenceSetsRequest const&
+        request) {
+  google::cloud::migrationcenter::v1::ListPreferenceSetsResponse response;
+  auto status = grpc_stub_->ListPreferenceSets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>
 DefaultMigrationCenterStub::GetPreferenceSet(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetPreferenceSetRequest const& request) {
-    google::cloud::migrationcenter::v1::PreferenceSet response;
-    auto status =
-        grpc_stub_->GetPreferenceSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetPreferenceSetRequest const&
+        request) {
+  google::cloud::migrationcenter::v1::PreferenceSet response;
+  auto status = grpc_stub_->GetPreferenceSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreatePreferenceSet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::CreatePreferenceSetRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::CreatePreferenceSetRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreatePreferenceSet(context, request, cq);
       },
       request, std::move(context));
@@ -775,30 +777,33 @@ DefaultMigrationCenterStub::AsyncCreatePreferenceSet(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::CreatePreferenceSet(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreatePreferenceSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreatePreferenceSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdatePreferenceSet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdatePreferenceSet(context, request, cq);
       },
       request, std::move(context));
@@ -806,30 +811,33 @@ DefaultMigrationCenterStub::AsyncUpdatePreferenceSet(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::UpdatePreferenceSet(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdatePreferenceSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdatePreferenceSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeletePreferenceSet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::DeletePreferenceSetRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::DeletePreferenceSetRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeletePreferenceSet(context, request, cq);
       },
       request, std::move(context));
@@ -837,42 +845,42 @@ DefaultMigrationCenterStub::AsyncDeletePreferenceSet(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::DeletePreferenceSet(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeletePreferenceSet(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePreferenceSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
 DefaultMigrationCenterStub::GetSettings(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetSettingsRequest const& request) {
-    google::cloud::migrationcenter::v1::Settings response;
-    auto status =
-        grpc_stub_->GetSettings(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetSettingsRequest const& request) {
+  google::cloud::migrationcenter::v1::Settings response;
+  auto status = grpc_stub_->GetSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncUpdateSettings(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::UpdateSettingsRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::UpdateSettingsRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request,
+             google::cloud::migrationcenter::v1::UpdateSettingsRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateSettings(context, request, cq);
       },
@@ -881,30 +889,32 @@ DefaultMigrationCenterStub::AsyncUpdateSettings(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::UpdateSettings(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateSettings(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateReportConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::CreateReportConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::CreateReportConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::CreateReportConfigRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::CreateReportConfigRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateReportConfig(context, request, cq);
       },
       request, std::move(context));
@@ -912,56 +922,58 @@ DefaultMigrationCenterStub::AsyncCreateReportConfig(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::CreateReportConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::CreateReportConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateReportConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateReportConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
 DefaultMigrationCenterStub::GetReportConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetReportConfigRequest const& request) {
-    google::cloud::migrationcenter::v1::ReportConfig response;
-    auto status =
-        grpc_stub_->GetReportConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetReportConfigRequest const& request) {
+  google::cloud::migrationcenter::v1::ReportConfig response;
+  auto status = grpc_stub_->GetReportConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListReportConfigsResponse>
 DefaultMigrationCenterStub::ListReportConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListReportConfigsRequest const& request) {
-    google::cloud::migrationcenter::v1::ListReportConfigsResponse response;
-    auto status =
-        grpc_stub_->ListReportConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListReportConfigsRequest const&
+        request) {
+  google::cloud::migrationcenter::v1::ListReportConfigsResponse response;
+  auto status = grpc_stub_->ListReportConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteReportConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::DeleteReportConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::DeleteReportConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::DeleteReportConfigRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::DeleteReportConfigRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteReportConfig(context, request, cq);
       },
       request, std::move(context));
@@ -969,29 +981,30 @@ DefaultMigrationCenterStub::AsyncDeleteReportConfig(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::DeleteReportConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::DeleteReportConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteReportConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteReportConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncCreateReport(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::CreateReportRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::CreateReportRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::CreateReportRequest const& request,
+             google::cloud::migrationcenter::v1::CreateReportRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateReport(context, request, cq);
       },
@@ -1000,55 +1013,53 @@ DefaultMigrationCenterStub::AsyncCreateReport(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::CreateReport(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateReport(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateReport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
 DefaultMigrationCenterStub::GetReport(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::GetReportRequest const& request) {
-    google::cloud::migrationcenter::v1::Report response;
-    auto status =
-        grpc_stub_->GetReport(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::GetReportRequest const& request) {
+  google::cloud::migrationcenter::v1::Report response;
+  auto status = grpc_stub_->GetReport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListReportsResponse>
 DefaultMigrationCenterStub::ListReports(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::migrationcenter::v1::ListReportsRequest const& request) {
-    google::cloud::migrationcenter::v1::ListReportsResponse response;
-    auto status =
-        grpc_stub_->ListReports(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::migrationcenter::v1::ListReportsRequest const& request) {
+  google::cloud::migrationcenter::v1::ListReportsResponse response;
+  auto status = grpc_stub_->ListReports(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationCenterStub::AsyncDeleteReport(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::migrationcenter::v1::DeleteReportRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::migrationcenter::v1::DeleteReportRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::migrationcenter::v1::DeleteReportRequest const& request,
+             google::cloud::migrationcenter::v1::DeleteReportRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteReport(context, request, cq);
       },
@@ -1057,94 +1068,84 @@ DefaultMigrationCenterStub::AsyncDeleteReport(
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::DeleteReport(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteReport(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteReport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultMigrationCenterStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultMigrationCenterStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultMigrationCenterStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultMigrationCenterStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultMigrationCenterStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMigrationCenterStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultMigrationCenterStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMigrationCenterStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -1173,13 +1174,14 @@ future<Status> DefaultMigrationCenterStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

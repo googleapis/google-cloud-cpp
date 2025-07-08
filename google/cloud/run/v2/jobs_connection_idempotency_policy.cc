@@ -33,31 +33,38 @@ JobsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<JobsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::CreateJob(google::cloud::run::v2::CreateJobRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::CreateJob(
+    google::cloud::run::v2::CreateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::GetJob(google::cloud::run::v2::GetJobRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::GetJob(
+    google::cloud::run::v2::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::ListJobs(google::cloud::run::v2::ListJobsRequest) {  // NOLINT
+Idempotency JobsConnectionIdempotencyPolicy::ListJobs(
+    google::cloud::run::v2::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::UpdateJob(google::cloud::run::v2::UpdateJobRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::UpdateJob(
+    google::cloud::run::v2::UpdateJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::DeleteJob(google::cloud::run::v2::DeleteJobRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::DeleteJob(
+    google::cloud::run::v2::DeleteJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::RunJob(google::cloud::run::v2::RunJobRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::RunJob(
+    google::cloud::run::v2::RunJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -67,28 +74,33 @@ Idempotency JobsConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency JobsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobsConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency JobsConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<JobsConnectionIdempotencyPolicy>
-    MakeDefaultJobsConnectionIdempotencyPolicy() {
+MakeDefaultJobsConnectionIdempotencyPolicy() {
   return std::make_unique<JobsConnectionIdempotencyPolicy>();
 }
 

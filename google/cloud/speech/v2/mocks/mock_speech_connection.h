@@ -51,12 +51,14 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateRecognizer(Matcher<google::cloud::speech::v2::CreateRecognizerRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateRecognizer(Matcher<google::cloud::speech::v2::CreateRecognizerRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-  CreateRecognizer,
-  (google::cloud::speech::v2::CreateRecognizerRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::Recognizer>>, CreateRecognizer,
+      (google::cloud::speech::v2::CreateRecognizerRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,41 +66,46 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateRecognizer(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateRecognizer, (NoAwaitTag,
-    google::cloud::speech::v2::CreateRecognizerRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateRecognizer,
+      (NoAwaitTag,
+       google::cloud::speech::v2::CreateRecognizerRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateRecognizer(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateRecognizer(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-  CreateRecognizer, (
-    google::longrunning::Operation const& operation), (override));
+              CreateRecognizer,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::speech::v2::Recognizer>),
-  ListRecognizers,
-  (google::cloud::speech::v2::ListRecognizersRequest request), (override));
+              ListRecognizers,
+              (google::cloud::speech::v2::ListRecognizersRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Recognizer>,
-  GetRecognizer,
-  (google::cloud::speech::v2::GetRecognizerRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Recognizer>, GetRecognizer,
+              (google::cloud::speech::v2::GetRecognizerRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateRecognizer(Matcher<google::cloud::speech::v2::UpdateRecognizerRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateRecognizer(Matcher<google::cloud::speech::v2::UpdateRecognizerRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-  UpdateRecognizer,
-  (google::cloud::speech::v2::UpdateRecognizerRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::Recognizer>>, UpdateRecognizer,
+      (google::cloud::speech::v2::UpdateRecognizerRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +113,37 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateRecognizer(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateRecognizer, (NoAwaitTag,
-    google::cloud::speech::v2::UpdateRecognizerRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateRecognizer(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-  UpdateRecognizer, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateRecognizer,
+      (NoAwaitTag,
+       google::cloud::speech::v2::UpdateRecognizerRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteRecognizer(Matcher<google::cloud::speech::v2::DeleteRecognizerRequest const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateRecognizer(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-  DeleteRecognizer,
-  (google::cloud::speech::v2::DeleteRecognizerRequest const& request), (override));
+              UpdateRecognizer,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteRecognizer(Matcher<google::cloud::speech::v2::DeleteRecognizerRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::Recognizer>>, DeleteRecognizer,
+      (google::cloud::speech::v2::DeleteRecognizerRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,33 +151,38 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteRecognizer(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteRecognizer, (NoAwaitTag,
-    google::cloud::speech::v2::DeleteRecognizerRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteRecognizer(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-  DeleteRecognizer, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteRecognizer,
+      (NoAwaitTag,
+       google::cloud::speech::v2::DeleteRecognizerRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeleteRecognizer(Matcher<google::cloud::speech::v2::UndeleteRecognizerRequest const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteRecognizer(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-  UndeleteRecognizer,
-  (google::cloud::speech::v2::UndeleteRecognizerRequest const& request), (override));
+              DeleteRecognizer,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeleteRecognizer(Matcher<google::cloud::speech::v2::UndeleteRecognizerRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::Recognizer>>,
+      UndeleteRecognizer,
+      (google::cloud::speech::v2::UndeleteRecognizerRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -174,42 +190,47 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UndeleteRecognizer(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UndeleteRecognizer, (NoAwaitTag,
-    google::cloud::speech::v2::UndeleteRecognizerRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UndeleteRecognizer,
+      (NoAwaitTag,
+       google::cloud::speech::v2::UndeleteRecognizerRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeleteRecognizer(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UndeleteRecognizer(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-  UndeleteRecognizer, (
-    google::longrunning::Operation const& operation), (override));
+              UndeleteRecognizer,
+              (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::RecognizeResponse>,
-  Recognize,
-  (google::cloud::speech::v2::RecognizeRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v2::RecognizeResponse>, Recognize,
+              (google::cloud::speech::v2::RecognizeRequest const& request),
+              (override));
 
-  MOCK_METHOD((std::unique_ptr<
-      ::google::cloud::AsyncStreamingReadWriteRpc<
-          google::cloud::speech::v2::StreamingRecognizeRequest, google::cloud::speech::v2::StreamingRecognizeResponse>>),
-      AsyncStreamingRecognize, (), (override));
+  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+                   google::cloud::speech::v2::StreamingRecognizeRequest,
+                   google::cloud::speech::v2::StreamingRecognizeResponse>>),
+              AsyncStreamingRecognize, (), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchRecognize(Matcher<google::cloud::speech::v2::BatchRecognizeRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchRecognize(Matcher<google::cloud::speech::v2::BatchRecognizeRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>,
-  BatchRecognize,
-  (google::cloud::speech::v2::BatchRecognizeRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>,
+      BatchRecognize,
+      (google::cloud::speech::v2::BatchRecognizeRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -217,41 +238,46 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchRecognize(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  BatchRecognize, (NoAwaitTag,
-    google::cloud::speech::v2::BatchRecognizeRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchRecognize(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>,
-  BatchRecognize, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Config>,
-  GetConfig,
-  (google::cloud::speech::v2::GetConfigRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Config>,
-  UpdateConfig,
-  (google::cloud::speech::v2::UpdateConfigRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchRecognize,
+              (NoAwaitTag,
+               google::cloud::speech::v2::BatchRecognizeRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCustomClass(Matcher<google::cloud::speech::v2::CreateCustomClassRequest const&>(_)))
+  /// EXPECT_CALL(*mock, BatchRecognize(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-  CreateCustomClass,
-  (google::cloud::speech::v2::CreateCustomClassRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>,
+      BatchRecognize, (google::longrunning::Operation const& operation),
+      (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Config>, GetConfig,
+              (google::cloud::speech::v2::GetConfigRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::speech::v2::Config>, UpdateConfig,
+              (google::cloud::speech::v2::UpdateConfigRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCustomClass(Matcher<google::cloud::speech::v2::CreateCustomClassRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+      CreateCustomClass,
+      (google::cloud::speech::v2::CreateCustomClassRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -259,41 +285,47 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateCustomClass(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateCustomClass, (NoAwaitTag,
-    google::cloud::speech::v2::CreateCustomClassRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCustomClass,
+      (NoAwaitTag,
+       google::cloud::speech::v2::CreateCustomClassRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCustomClass(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateCustomClass(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-  CreateCustomClass, (
-    google::longrunning::Operation const& operation), (override));
+              CreateCustomClass,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::speech::v2::CustomClass>),
-  ListCustomClasses,
-  (google::cloud::speech::v2::ListCustomClassesRequest request), (override));
+              ListCustomClasses,
+              (google::cloud::speech::v2::ListCustomClassesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::CustomClass>,
-  GetCustomClass,
-  (google::cloud::speech::v2::GetCustomClassRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v2::CustomClass>, GetCustomClass,
+              (google::cloud::speech::v2::GetCustomClassRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCustomClass(Matcher<google::cloud::speech::v2::UpdateCustomClassRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateCustomClass(Matcher<google::cloud::speech::v2::UpdateCustomClassRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-  UpdateCustomClass,
-  (google::cloud::speech::v2::UpdateCustomClassRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+      UpdateCustomClass,
+      (google::cloud::speech::v2::UpdateCustomClassRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -301,33 +333,38 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCustomClass(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateCustomClass, (NoAwaitTag,
-    google::cloud::speech::v2::UpdateCustomClassRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCustomClass(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-  UpdateCustomClass, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCustomClass,
+      (NoAwaitTag,
+       google::cloud::speech::v2::UpdateCustomClassRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCustomClass(Matcher<google::cloud::speech::v2::DeleteCustomClassRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateCustomClass(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-  DeleteCustomClass,
-  (google::cloud::speech::v2::DeleteCustomClassRequest const& request), (override));
+              UpdateCustomClass,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCustomClass(Matcher<google::cloud::speech::v2::DeleteCustomClassRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+      DeleteCustomClass,
+      (google::cloud::speech::v2::DeleteCustomClassRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -335,33 +372,38 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteCustomClass(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteCustomClass, (NoAwaitTag,
-    google::cloud::speech::v2::DeleteCustomClassRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCustomClass(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-  DeleteCustomClass, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCustomClass,
+      (NoAwaitTag,
+       google::cloud::speech::v2::DeleteCustomClassRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeleteCustomClass(Matcher<google::cloud::speech::v2::UndeleteCustomClassRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteCustomClass(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-  UndeleteCustomClass,
-  (google::cloud::speech::v2::UndeleteCustomClassRequest const& request), (override));
+              DeleteCustomClass,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeleteCustomClass(Matcher<google::cloud::speech::v2::UndeleteCustomClassRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+      UndeleteCustomClass,
+      (google::cloud::speech::v2::UndeleteCustomClassRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -369,33 +411,37 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UndeleteCustomClass(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UndeleteCustomClass, (NoAwaitTag,
-    google::cloud::speech::v2::UndeleteCustomClassRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UndeleteCustomClass,
+      (NoAwaitTag,
+       google::cloud::speech::v2::UndeleteCustomClassRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeleteCustomClass(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UndeleteCustomClass(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-  UndeleteCustomClass, (
-    google::longrunning::Operation const& operation), (override));
+              UndeleteCustomClass,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreatePhraseSet(Matcher<google::cloud::speech::v2::CreatePhraseSetRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreatePhraseSet(Matcher<google::cloud::speech::v2::CreatePhraseSetRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-  CreatePhraseSet,
-  (google::cloud::speech::v2::CreatePhraseSetRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::PhraseSet>>, CreatePhraseSet,
+      (google::cloud::speech::v2::CreatePhraseSetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -403,41 +449,46 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreatePhraseSet(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreatePhraseSet, (NoAwaitTag,
-    google::cloud::speech::v2::CreatePhraseSetRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreatePhraseSet,
+      (NoAwaitTag,
+       google::cloud::speech::v2::CreatePhraseSetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreatePhraseSet(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreatePhraseSet(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-  CreatePhraseSet, (
-    google::longrunning::Operation const& operation), (override));
+              CreatePhraseSet,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::speech::v2::PhraseSet>),
-  ListPhraseSets,
-  (google::cloud::speech::v2::ListPhraseSetsRequest request), (override));
+              ListPhraseSets,
+              (google::cloud::speech::v2::ListPhraseSetsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::speech::v2::PhraseSet>,
-  GetPhraseSet,
-  (google::cloud::speech::v2::GetPhraseSetRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::speech::v2::PhraseSet>, GetPhraseSet,
+              (google::cloud::speech::v2::GetPhraseSetRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdatePhraseSet(Matcher<google::cloud::speech::v2::UpdatePhraseSetRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdatePhraseSet(Matcher<google::cloud::speech::v2::UpdatePhraseSetRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-  UpdatePhraseSet,
-  (google::cloud::speech::v2::UpdatePhraseSetRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::PhraseSet>>, UpdatePhraseSet,
+      (google::cloud::speech::v2::UpdatePhraseSetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -445,33 +496,37 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdatePhraseSet(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdatePhraseSet, (NoAwaitTag,
-    google::cloud::speech::v2::UpdatePhraseSetRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdatePhraseSet(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-  UpdatePhraseSet, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdatePhraseSet,
+      (NoAwaitTag,
+       google::cloud::speech::v2::UpdatePhraseSetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePhraseSet(Matcher<google::cloud::speech::v2::DeletePhraseSetRequest const&>(_)))
+  /// EXPECT_CALL(*mock, UpdatePhraseSet(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-  DeletePhraseSet,
-  (google::cloud::speech::v2::DeletePhraseSetRequest const& request), (override));
+              UpdatePhraseSet,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePhraseSet(Matcher<google::cloud::speech::v2::DeletePhraseSetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::PhraseSet>>, DeletePhraseSet,
+      (google::cloud::speech::v2::DeletePhraseSetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -479,33 +534,37 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeletePhraseSet(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeletePhraseSet, (NoAwaitTag,
-    google::cloud::speech::v2::DeletePhraseSetRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePhraseSet(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-  DeletePhraseSet, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeletePhraseSet,
+      (NoAwaitTag,
+       google::cloud::speech::v2::DeletePhraseSetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeletePhraseSet(Matcher<google::cloud::speech::v2::UndeletePhraseSetRequest const&>(_)))
+  /// EXPECT_CALL(*mock, DeletePhraseSet(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-  UndeletePhraseSet,
-  (google::cloud::speech::v2::UndeletePhraseSetRequest const& request), (override));
+              DeletePhraseSet,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeletePhraseSet(Matcher<google::cloud::speech::v2::UndeletePhraseSetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::PhraseSet>>, UndeletePhraseSet,
+      (google::cloud::speech::v2::UndeletePhraseSetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -513,45 +572,46 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UndeletePhraseSet(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UndeletePhraseSet, (NoAwaitTag,
-    google::cloud::speech::v2::UndeletePhraseSetRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UndeletePhraseSet,
+      (NoAwaitTag,
+       google::cloud::speech::v2::UndeletePhraseSetRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeletePhraseSet(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UndeletePhraseSet(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-  UndeletePhraseSet, (
-    google::longrunning::Operation const& operation), (override));
+              UndeletePhraseSet,
+              (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

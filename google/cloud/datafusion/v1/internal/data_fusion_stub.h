@@ -38,19 +38,19 @@ class DataFusionStub {
  public:
   virtual ~DataFusionStub() = 0;
 
-  virtual StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse> ListAvailableVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datafusion::v1::ListAvailableVersionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
+  ListAvailableVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::datafusion::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
+  ListInstances(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datafusion::v1::ListInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datafusion::v1::GetInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -60,8 +60,7 @@ class DataFusionStub {
       google::cloud::datafusion::v1::CreateInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::datafusion::v1::CreateInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
@@ -71,8 +70,7 @@ class DataFusionStub {
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
@@ -82,8 +80,7 @@ class DataFusionStub {
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRestartInstance(
@@ -93,14 +90,13 @@ class DataFusionStub {
       google::cloud::datafusion::v1::RestartInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RestartInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::datafusion::v1::RestartInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -113,69 +109,76 @@ class DataFusionStub {
 class DefaultDataFusionStub : public DataFusionStub {
  public:
   DefaultDataFusionStub(
-      std::unique_ptr<google::cloud::datafusion::v1::DataFusion::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::datafusion::v1::DataFusion::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse> ListAvailableVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datafusion::v1::ListAvailableVersionsRequest const& request) override;
+  StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
+  ListAvailableVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::datafusion::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datafusion::v1::ListInstancesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datafusion::v1::ListInstancesRequest const& request)
+      override;
 
   StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datafusion::v1::GetInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datafusion::v1::GetInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request) override;
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request) override;
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request) override;
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestartInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request) override;
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RestartInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -190,8 +193,10 @@ class DefaultDataFusionStub : public DataFusionStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::datafusion::v1::DataFusion::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::datafusion::v1::DataFusion::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

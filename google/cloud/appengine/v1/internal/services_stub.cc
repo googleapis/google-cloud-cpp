@@ -33,36 +33,33 @@ ServicesStub::~ServicesStub() = default;
 
 StatusOr<google::appengine::v1::ListServicesResponse>
 DefaultServicesStub::ListServices(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::ListServicesRequest const& request) {
-    google::appengine::v1::ListServicesResponse response;
-    auto status =
-        grpc_stub_->ListServices(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::ListServicesRequest const& request) {
+  google::appengine::v1::ListServicesResponse response;
+  auto status = grpc_stub_->ListServices(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::appengine::v1::Service>
-DefaultServicesStub::GetService(
-  grpc::ClientContext& context, Options const&,
-  google::appengine::v1::GetServiceRequest const& request) {
-    google::appengine::v1::Service response;
-    auto status =
-        grpc_stub_->GetService(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::appengine::v1::Service> DefaultServicesStub::GetService(
+    grpc::ClientContext& context, Options const&,
+    google::appengine::v1::GetServiceRequest const& request) {
+  google::appengine::v1::Service response;
+  auto status = grpc_stub_->GetService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncUpdateService(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::appengine::v1::UpdateServiceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::appengine::v1::UpdateServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::appengine::v1::UpdateServiceRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -74,26 +71,23 @@ DefaultServicesStub::AsyncUpdateService(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultServicesStub::UpdateService(
-      grpc::ClientContext& context,
-      Options,
-      google::appengine::v1::UpdateServiceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateService(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultServicesStub::UpdateService(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::UpdateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncDeleteService(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::appengine::v1::DeleteServiceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::appengine::v1::DeleteServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::appengine::v1::DeleteServiceRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -105,18 +99,15 @@ DefaultServicesStub::AsyncDeleteService(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultServicesStub::DeleteService(
-      grpc::ClientContext& context,
-      Options,
-      google::appengine::v1::DeleteServiceRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteService(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultServicesStub::DeleteService(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::DeleteServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -145,13 +136,14 @@ future<Status> DefaultServicesStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

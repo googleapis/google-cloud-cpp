@@ -30,35 +30,28 @@ namespace cloud {
 namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AdaptationLogging::AdaptationLogging(
-    std::shared_ptr<AdaptationStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+AdaptationLogging::AdaptationLogging(std::shared_ptr<AdaptationStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationLogging::CreatePhraseSet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
         return child_->CreatePhraseSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationLogging::GetPhraseSet(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationLogging::GetPhraseSet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::GetPhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::GetPhraseSetRequest const& request) {
         return child_->GetPhraseSet(context, options, request);
       },
@@ -67,12 +60,10 @@ AdaptationLogging::GetPhraseSet(
 
 StatusOr<google::cloud::speech::v1::ListPhraseSetResponse>
 AdaptationLogging::ListPhraseSet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::ListPhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::ListPhraseSetRequest const& request) {
         return child_->ListPhraseSet(context, options, request);
       },
@@ -81,26 +72,21 @@ AdaptationLogging::ListPhraseSet(
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationLogging::UpdatePhraseSet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
         return child_->UpdatePhraseSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AdaptationLogging::DeletePhraseSet(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AdaptationLogging::DeletePhraseSet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
         return child_->DeletePhraseSet(context, options, request);
       },
@@ -109,13 +95,12 @@ AdaptationLogging::DeletePhraseSet(
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationLogging::CreateCustomClass(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::CreateCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::speech::v1::CreateCustomClassRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v1::CreateCustomClassRequest const& request) {
         return child_->CreateCustomClass(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,12 +108,10 @@ AdaptationLogging::CreateCustomClass(
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationLogging::GetCustomClass(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::GetCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::GetCustomClassRequest const& request) {
         return child_->GetCustomClass(context, options, request);
       },
@@ -137,13 +120,12 @@ AdaptationLogging::GetCustomClass(
 
 StatusOr<google::cloud::speech::v1::ListCustomClassesResponse>
 AdaptationLogging::ListCustomClasses(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::ListCustomClassesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::speech::v1::ListCustomClassesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v1::ListCustomClassesRequest const& request) {
         return child_->ListCustomClasses(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,27 +133,24 @@ AdaptationLogging::ListCustomClasses(
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationLogging::UpdateCustomClass(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
         return child_->UpdateCustomClass(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AdaptationLogging::DeleteCustomClass(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AdaptationLogging::DeleteCustomClass(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
         return child_->DeleteCustomClass(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -179,26 +158,21 @@ AdaptationLogging::DeleteCustomClass(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AdaptationLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AdaptationLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> AdaptationLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },

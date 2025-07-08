@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_CLOUD_SCHEDULER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_CLOUD_SCHEDULER_CLIENT_H
 
+#include "google/cloud/scheduler/v1/cloud_scheduler_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/scheduler/v1/cloud_scheduler_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudSchedulerClient {
  public:
-  explicit CloudSchedulerClient(std::shared_ptr<CloudSchedulerConnection> connection, Options opts = {});
+  explicit CloudSchedulerClient(
+      std::shared_ptr<CloudSchedulerConnection> connection, Options opts = {});
   ~CloudSchedulerClient();
 
   ///@{
@@ -76,10 +77,12 @@ class CloudSchedulerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudSchedulerClient const& a, CloudSchedulerClient const& b) {
+  friend bool operator==(CloudSchedulerClient const& a,
+                         CloudSchedulerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudSchedulerClient const& a, CloudSchedulerClient const& b) {
+  friend bool operator!=(CloudSchedulerClient const& a,
+                         CloudSchedulerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +119,8 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L141}
   ///
   // clang-format on
-  StreamRange<google::cloud::scheduler::v1::Job>
-  ListJobs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -155,8 +158,8 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L141}
   ///
   // clang-format on
-  StreamRange<google::cloud::scheduler::v1::Job>
-  ListJobs(google::cloud::scheduler::v1::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
+      google::cloud::scheduler::v1::ListJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -181,8 +184,8 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.Job]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  GetJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> GetJob(std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -211,8 +214,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.Job]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  GetJob(google::cloud::scheduler::v1::GetJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> GetJob(
+      google::cloud::scheduler::v1::GetJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -244,8 +248,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.Job.name]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L84}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  CreateJob(std::string const& parent, google::cloud::scheduler::v1::Job const& job, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
+      std::string const& parent, google::cloud::scheduler::v1::Job const& job,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -274,8 +279,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.Job]: @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  CreateJob(google::cloud::scheduler::v1::CreateJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
+      google::cloud::scheduler::v1::CreateJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -315,8 +321,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.UpdateJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L221}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  UpdateJob(google::cloud::scheduler::v1::Job const& job, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
+      google::cloud::scheduler::v1::Job const& job,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -355,8 +362,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.UpdateJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L221}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
+      google::cloud::scheduler::v1::UpdateJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -378,8 +386,7 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L235}
   ///
   // clang-format on
-  Status
-  DeleteJob(std::string const& name, Options opts = {});
+  Status DeleteJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -405,8 +412,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L235}
   ///
   // clang-format on
-  Status
-  DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const& request, Options opts = {});
+  Status DeleteJob(
+      google::cloud::scheduler::v1::DeleteJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +452,8 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.PauseJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L248}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  PauseJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> PauseJob(std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -487,8 +495,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.PauseJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L248}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  PauseJob(google::cloud::scheduler::v1::PauseJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
+      google::cloud::scheduler::v1::PauseJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -524,8 +533,8 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.ResumeJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L261}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  ResumeJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -565,8 +574,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.ResumeJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L261}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
+      google::cloud::scheduler::v1::ResumeJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +604,8 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.RunJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L274}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  RunJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> RunJob(std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -627,8 +637,9 @@ class CloudSchedulerClient {
   /// [google.cloud.scheduler.v1.RunJobRequest]: @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L274}
   ///
   // clang-format on
-  StatusOr<google::cloud::scheduler::v1::Job>
-  RunJob(google::cloud::scheduler::v1::RunJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::scheduler::v1::Job> RunJob(
+      google::cloud::scheduler::v1::RunJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -666,8 +677,8 @@ class CloudSchedulerClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -696,8 +707,9 @@ class CloudSchedulerClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudSchedulerConnection> connection_;

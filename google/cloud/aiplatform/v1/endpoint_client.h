@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EndpointServiceClient {
  public:
-  explicit EndpointServiceClient(std::shared_ptr<EndpointServiceConnection> connection, Options opts = {});
+  explicit EndpointServiceClient(
+      std::shared_ptr<EndpointServiceConnection> connection, Options opts = {});
   ~EndpointServiceClient();
 
   ///@{
@@ -77,10 +78,12 @@ class EndpointServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EndpointServiceClient const& a, EndpointServiceClient const& b) {
+  friend bool operator==(EndpointServiceClient const& a,
+                         EndpointServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EndpointServiceClient const& a, EndpointServiceClient const& b) {
+  friend bool operator!=(EndpointServiceClient const& a,
+                         EndpointServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +119,10 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L39}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-  CreateEndpoint(std::string const& parent, google::cloud::aiplatform::v1::Endpoint const& endpoint, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -130,8 +135,10 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEndpoint(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::Endpoint const& endpoint, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -178,8 +185,10 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L39}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-  CreateEndpoint(std::string const& parent, google::cloud::aiplatform::v1::Endpoint const& endpoint, std::string const& endpoint_id, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      std::string const& endpoint_id, Options opts = {});
 
   // clang-format off
   ///
@@ -192,8 +201,10 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEndpoint(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::Endpoint const& endpoint, std::string const& endpoint_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      std::string const& endpoint_id, Options opts = {});
 
   // clang-format off
   ///
@@ -229,8 +240,9 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.Endpoint]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint.proto#L39}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-  CreateEndpoint(google::cloud::aiplatform::v1::CreateEndpointRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -243,8 +255,10 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEndpoint(NoAwaitTag, google::cloud::aiplatform::v1::CreateEndpointRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -255,8 +269,8 @@ class EndpointServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-  CreateEndpoint(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -282,8 +296,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L200}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Endpoint>
-  GetEndpoint(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -312,8 +326,9 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L200}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Endpoint>
-  GetEndpoint(google::cloud::aiplatform::v1::GetEndpointRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
+      google::cloud::aiplatform::v1::GetEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -347,8 +362,8 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L214}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Endpoint>
-  ListEndpoints(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Endpoint> ListEndpoints(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -386,8 +401,9 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L214}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Endpoint>
-  ListEndpoints(google::cloud::aiplatform::v1::ListEndpointsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Endpoint> ListEndpoints(
+      google::cloud::aiplatform::v1::ListEndpointsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -414,8 +430,9 @@ class EndpointServiceClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Endpoint>
-  UpdateEndpoint(google::cloud::aiplatform::v1::Endpoint const& endpoint, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
+      google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +461,9 @@ class EndpointServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L287}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Endpoint>
-  UpdateEndpoint(google::cloud::aiplatform::v1::UpdateEndpointRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
+      google::cloud::aiplatform::v1::UpdateEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -479,7 +497,9 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-  UpdateEndpointLongRunning(google::cloud::aiplatform::v1::Endpoint const& endpoint, Options opts = {});
+  UpdateEndpointLongRunning(
+      google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -492,8 +512,9 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEndpointLongRunning(NoAwaitTag, google::cloud::aiplatform::v1::Endpoint const& endpoint, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEndpointLongRunning(
+      NoAwaitTag, google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -530,7 +551,10 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-  UpdateEndpointLongRunning(google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const& request, Options opts = {});
+  UpdateEndpointLongRunning(
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -543,8 +567,11 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEndpointLongRunning(NoAwaitTag, google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEndpointLongRunning(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -556,7 +583,8 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
-  UpdateEndpointLongRunning(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateEndpointLongRunning(google::longrunning::Operation const& operation,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -603,8 +631,8 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEndpoint(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -641,7 +669,9 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const& request, Options opts = {});
+  DeleteEndpoint(
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -654,8 +684,10 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEndpoint(NoAwaitTag, google::cloud::aiplatform::v1::DeleteEndpointRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -667,7 +699,8 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEndpoint(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteEndpoint(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -721,7 +754,11 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-  DeployModel(std::string const& endpoint, google::cloud::aiplatform::v1::DeployedModel const& deployed_model, std::map<std::string, std::int32_t> const& traffic_split, Options opts = {});
+  DeployModel(
+      std::string const& endpoint,
+      google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
+      std::map<std::string, std::int32_t> const& traffic_split,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -734,8 +771,11 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeployModel(NoAwaitTag, std::string const& endpoint, google::cloud::aiplatform::v1::DeployedModel const& deployed_model, std::map<std::string, std::int32_t> const& traffic_split, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeployModel(
+      NoAwaitTag, std::string const& endpoint,
+      google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
+      std::map<std::string, std::int32_t> const& traffic_split,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -772,7 +812,8 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-  DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request, Options opts = {});
+  DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -785,8 +826,10 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeployModel(NoAwaitTag, google::cloud::aiplatform::v1::DeployModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeployModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeployModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -798,7 +841,8 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-  DeployModel(google::longrunning::Operation const& operation, Options opts = {});
+  DeployModel(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -842,7 +886,10 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-  UndeployModel(std::string const& endpoint, std::string const& deployed_model_id, std::map<std::string, std::int32_t> const& traffic_split, Options opts = {});
+  UndeployModel(std::string const& endpoint,
+                std::string const& deployed_model_id,
+                std::map<std::string, std::int32_t> const& traffic_split,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -855,8 +902,11 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeployModel(NoAwaitTag, std::string const& endpoint, std::string const& deployed_model_id, std::map<std::string, std::int32_t> const& traffic_split, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      NoAwaitTag, std::string const& endpoint,
+      std::string const& deployed_model_id,
+      std::map<std::string, std::int32_t> const& traffic_split,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -894,7 +944,9 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-  UndeployModel(google::cloud::aiplatform::v1::UndeployModelRequest const& request, Options opts = {});
+  UndeployModel(
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -907,8 +959,10 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeployModel(NoAwaitTag, google::cloud::aiplatform::v1::UndeployModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -920,7 +974,8 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-  UndeployModel(google::longrunning::Operation const& operation, Options opts = {});
+  UndeployModel(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -975,7 +1030,10 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-  MutateDeployedModel(std::string const& endpoint, google::cloud::aiplatform::v1::DeployedModel const& deployed_model, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  MutateDeployedModel(
+      std::string const& endpoint,
+      google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -988,8 +1046,10 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  MutateDeployedModel(NoAwaitTag, std::string const& endpoint, google::cloud::aiplatform::v1::DeployedModel const& deployed_model, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> MutateDeployedModel(
+      NoAwaitTag, std::string const& endpoint,
+      google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1029,7 +1089,9 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-  MutateDeployedModel(google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request, Options opts = {});
+  MutateDeployedModel(
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1042,8 +1104,10 @@ class EndpointServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  MutateDeployedModel(NoAwaitTag, google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> MutateDeployedModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1055,7 +1119,8 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-  MutateDeployedModel(google::longrunning::Operation const& operation, Options opts = {});
+  MutateDeployedModel(google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1093,8 +1158,8 @@ class EndpointServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1123,8 +1188,9 @@ class EndpointServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1156,8 +1222,8 @@ class EndpointServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1188,8 +1254,8 @@ class EndpointServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1224,8 +1290,9 @@ class EndpointServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1260,8 +1327,8 @@ class EndpointServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1300,8 +1367,8 @@ class EndpointServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1327,8 +1394,8 @@ class EndpointServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1359,8 +1426,9 @@ class EndpointServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1384,8 +1452,7 @@ class EndpointServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1414,8 +1481,9 @@ class EndpointServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1449,8 +1517,7 @@ class EndpointServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1489,8 +1556,9 @@ class EndpointServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1527,8 +1595,9 @@ class EndpointServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<EndpointServiceConnection> connection_;

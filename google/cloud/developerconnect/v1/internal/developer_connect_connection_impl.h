@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_INTERNAL_DEVELOPER_CONNECT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_INTERNAL_DEVELOPER_CONNECT_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/developerconnect/v1/developer_connect_connection.h"
 #include "google/cloud/developerconnect/v1/developer_connect_connection_idempotency_policy.h"
 #include "google/cloud/developerconnect/v1/developer_connect_options.h"
 #include "google/cloud/developerconnect/v1/internal/developer_connect_retry_traits.h"
 #include "google/cloud/developerconnect/v1/internal/developer_connect_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,181 +46,227 @@ class DeveloperConnectConnectionImpl
   ~DeveloperConnectConnectionImpl() override = default;
 
   DeveloperConnectConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<developerconnect_v1_internal::DeveloperConnectStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<developerconnect_v1_internal::DeveloperConnectStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::developerconnect::v1::Connection>
-  ListConnections(google::cloud::developerconnect::v1::ListConnectionsRequest request) override;
+  StreamRange<google::cloud::developerconnect::v1::Connection> ListConnections(
+      google::cloud::developerconnect::v1::ListConnectionsRequest request)
+      override;
 
-  StatusOr<google::cloud::developerconnect::v1::Connection>
-  GetConnection(google::cloud::developerconnect::v1::GetConnectionRequest const& request) override;
-
-  future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  CreateConnection(google::cloud::developerconnect::v1::CreateConnectionRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateConnection(NoAwaitTag,
-      google::cloud::developerconnect::v1::CreateConnectionRequest const& request) override;
+  StatusOr<google::cloud::developerconnect::v1::Connection> GetConnection(
+      google::cloud::developerconnect::v1::GetConnectionRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
   CreateConnection(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  UpdateConnection(google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateConnection(NoAwaitTag,
-      google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) override;
+  CreateConnection(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
   UpdateConnection(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteConnection(google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteConnection(NoAwaitTag,
-      google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) override;
+  future<StatusOr<google::cloud::developerconnect::v1::Connection>>
+  UpdateConnection(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteConnection(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteConnection(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-  CreateGitRepositoryLink(google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) override;
+  CreateGitRepositoryLink(
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateGitRepositoryLink(NoAwaitTag,
-      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
   CreateGitRepositoryLink(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteGitRepositoryLink(google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) override;
+  DeleteGitRepositoryLink(
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteGitRepositoryLink(NoAwaitTag,
-      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteGitRepositoryLink(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
-  ListGitRepositoryLinks(google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest request) override;
+  ListGitRepositoryLinks(
+      google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest
+          request) override;
 
   StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
-  GetGitRepositoryLink(google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request) override;
+  GetGitRepositoryLink(
+      google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
+          request) override;
 
   StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-  FetchReadWriteToken(google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request) override;
+  FetchReadWriteToken(
+      google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
+          request) override;
 
   StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
-  FetchReadToken(google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) override;
+  FetchReadToken(
+      google::cloud::developerconnect::v1::FetchReadTokenRequest const& request)
+      override;
 
   StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
-  FetchLinkableGitRepositories(google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest request) override;
+  FetchLinkableGitRepositories(
+      google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
+          request) override;
 
-  StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
-  FetchGitHubInstallations(google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request) override;
+  StatusOr<
+      google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
+  FetchGitHubInstallations(
+      google::cloud::developerconnect::v1::
+          FetchGitHubInstallationsRequest const& request) override;
 
-  StreamRange<std::string>
-  FetchGitRefs(google::cloud::developerconnect::v1::FetchGitRefsRequest request) override;
+  StreamRange<std::string> FetchGitRefs(
+      google::cloud::developerconnect::v1::FetchGitRefsRequest request)
+      override;
 
   StreamRange<google::cloud::developerconnect::v1::AccountConnector>
-  ListAccountConnectors(google::cloud::developerconnect::v1::ListAccountConnectorsRequest request) override;
+  ListAccountConnectors(
+      google::cloud::developerconnect::v1::ListAccountConnectorsRequest request)
+      override;
 
   StatusOr<google::cloud::developerconnect::v1::AccountConnector>
-  GetAccountConnector(google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request) override;
+  GetAccountConnector(
+      google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  CreateAccountConnector(google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) override;
+  CreateAccountConnector(
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateAccountConnector(NoAwaitTag,
-      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
   CreateAccountConnector(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  UpdateAccountConnector(google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) override;
+  UpdateAccountConnector(
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateAccountConnector(NoAwaitTag,
-      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
   UpdateAccountConnector(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteAccountConnector(google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) override;
+  DeleteAccountConnector(
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteAccountConnector(NoAwaitTag,
-      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
   DeleteAccountConnector(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
-  FetchAccessToken(google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request) override;
+  FetchAccessToken(
+      google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+          request) override;
 
-  StreamRange<google::cloud::developerconnect::v1::User>
-  ListUsers(google::cloud::developerconnect::v1::ListUsersRequest request) override;
-
-  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteUser(google::cloud::developerconnect::v1::DeleteUserRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteUser(NoAwaitTag,
-      google::cloud::developerconnect::v1::DeleteUserRequest const& request) override;
+  StreamRange<google::cloud::developerconnect::v1::User> ListUsers(
+      google::cloud::developerconnect::v1::ListUsersRequest request) override;
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteUser(
-      google::longrunning::Operation const& operation) override;
+  DeleteUser(google::cloud::developerconnect::v1::DeleteUserRequest const&
+                 request) override;
 
-  StatusOr<google::cloud::developerconnect::v1::User>
-  FetchSelf(google::cloud::developerconnect::v1::FetchSelfRequest const& request) override;
-
-  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteSelf(google::cloud::developerconnect::v1::DeleteSelfRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteSelf(NoAwaitTag,
-      google::cloud::developerconnect::v1::DeleteSelfRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteUser(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteSelf(
-      google::longrunning::Operation const& operation) override;
+  DeleteUser(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::cloud::developerconnect::v1::User> FetchSelf(
+      google::cloud::developerconnect::v1::FetchSelfRequest const& request)
+      override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(google::cloud::developerconnect::v1::DeleteSelfRequest const&
+                 request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StatusOr<google::longrunning::Operation> DeleteSelf(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
+  DeleteSelf(google::longrunning::Operation const& operation) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

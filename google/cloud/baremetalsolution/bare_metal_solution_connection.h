@@ -27,17 +27,23 @@ namespace cloud {
 namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use baremetalsolution_v2::MakeBareMetalSolutionConnection directly.
+/// @deprecated Use baremetalsolution_v2::MakeBareMetalSolutionConnection
+/// directly.
 using ::google::cloud::baremetalsolution_v2::MakeBareMetalSolutionConnection;
 
 /// @deprecated Use baremetalsolution_v2::BareMetalSolutionConnection directly.
 using ::google::cloud::baremetalsolution_v2::BareMetalSolutionConnection;
 
-/// @deprecated Use baremetalsolution_v2::BareMetalSolutionLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::baremetalsolution_v2::BareMetalSolutionLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// baremetalsolution_v2::BareMetalSolutionLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::baremetalsolution_v2::
+    BareMetalSolutionLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use baremetalsolution_v2::BareMetalSolutionLimitedTimeRetryPolicy directly.
-using ::google::cloud::baremetalsolution_v2::BareMetalSolutionLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// baremetalsolution_v2::BareMetalSolutionLimitedTimeRetryPolicy directly.
+using ::google::cloud::baremetalsolution_v2::
+    BareMetalSolutionLimitedTimeRetryPolicy;
 
 /// @deprecated Use baremetalsolution_v2::BareMetalSolutionRetryPolicy directly.
 using ::google::cloud::baremetalsolution_v2::BareMetalSolutionRetryPolicy;

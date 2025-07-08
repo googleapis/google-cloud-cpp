@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_INTERNAL_MEMORYSTORE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMORYSTORE_V1_INTERNAL_MEMORYSTORE_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/memorystore/v1/internal/memorystore_retry_traits.h"
 #include "google/cloud/memorystore/v1/internal/memorystore_stub.h"
 #include "google/cloud/memorystore/v1/memorystore_connection.h"
 #include "google/cloud/memorystore/v1/memorystore_connection_idempotency_policy.h"
 #include "google/cloud/memorystore/v1/memorystore_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -40,133 +40,148 @@ namespace cloud {
 namespace memorystore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MemorystoreConnectionImpl
-    : public memorystore_v1::MemorystoreConnection {
+class MemorystoreConnectionImpl : public memorystore_v1::MemorystoreConnection {
  public:
   ~MemorystoreConnectionImpl() override = default;
 
   MemorystoreConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<memorystore_v1_internal::MemorystoreStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<memorystore_v1_internal::MemorystoreStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::memorystore::v1::Instance>
-  ListInstances(google::cloud::memorystore::v1::ListInstancesRequest request) override;
+  StreamRange<google::cloud::memorystore::v1::Instance> ListInstances(
+      google::cloud::memorystore::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::memorystore::v1::Instance>
-  GetInstance(google::cloud::memorystore::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::memorystore::v1::Instance> GetInstance(
+      google::cloud::memorystore::v1::GetInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  CreateInstance(google::cloud::memorystore::v1::CreateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
+      google::cloud::memorystore::v1::CreateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::CreateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  CreateInstance(
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> CreateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  UpdateInstance(google::cloud::memorystore::v1::UpdateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
+      google::cloud::memorystore::v1::UpdateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::UpdateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  UpdateInstance(
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> UpdateInstance(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::memorystore::v1::DeleteInstanceRequest const& request) override;
+  DeleteInstance(google::cloud::memorystore::v1::DeleteInstanceRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteInstance(
-      google::longrunning::Operation const& operation) override;
+  DeleteInstance(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
-  GetCertificateAuthority(google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request) override;
+  GetCertificateAuthority(
+      google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  RescheduleMaintenance(google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) override;
+  RescheduleMaintenance(
+      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RescheduleMaintenance(NoAwaitTag,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::memorystore::v1::Instance>>
   RescheduleMaintenance(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::memorystore::v1::BackupCollection>
-  ListBackupCollections(google::cloud::memorystore::v1::ListBackupCollectionsRequest request) override;
+  ListBackupCollections(
+      google::cloud::memorystore::v1::ListBackupCollectionsRequest request)
+      override;
 
   StatusOr<google::cloud::memorystore::v1::BackupCollection>
-  GetBackupCollection(google::cloud::memorystore::v1::GetBackupCollectionRequest const& request) override;
+  GetBackupCollection(
+      google::cloud::memorystore::v1::GetBackupCollectionRequest const& request)
+      override;
 
-  StreamRange<google::cloud::memorystore::v1::Backup>
-  ListBackups(google::cloud::memorystore::v1::ListBackupsRequest request) override;
+  StreamRange<google::cloud::memorystore::v1::Backup> ListBackups(
+      google::cloud::memorystore::v1::ListBackupsRequest request) override;
 
-  StatusOr<google::cloud::memorystore::v1::Backup>
-  GetBackup(google::cloud::memorystore::v1::GetBackupRequest const& request) override;
-
-  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteBackup(google::cloud::memorystore::v1::DeleteBackupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteBackup(NoAwaitTag,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request) override;
+  StatusOr<google::cloud::memorystore::v1::Backup> GetBackup(
+      google::cloud::memorystore::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
-  DeleteBackup(
+  DeleteBackup(google::cloud::memorystore::v1::DeleteBackupRequest const&
+                   request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::DeleteBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::OperationMetadata>>
+  DeleteBackup(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::memorystore::v1::Backup>> ExportBackup(
+      google::cloud::memorystore::v1::ExportBackupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportBackup(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::ExportBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::memorystore::v1::Backup>> ExportBackup(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::memorystore::v1::Backup>>
-  ExportBackup(google::cloud::memorystore::v1::ExportBackupRequest const& request) override;
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
+      google::cloud::memorystore::v1::BackupInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportBackup(NoAwaitTag,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request) override;
+  StatusOr<google::longrunning::Operation> BackupInstance(
+      NoAwaitTag,
+      google::cloud::memorystore::v1::BackupInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::memorystore::v1::Backup>>
-  ExportBackup(
+  future<StatusOr<google::cloud::memorystore::v1::Instance>> BackupInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  BackupInstance(google::cloud::memorystore::v1::BackupInstanceRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  BackupInstance(NoAwaitTag,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  future<StatusOr<google::cloud::memorystore::v1::Instance>>
-  BackupInstance(
-      google::longrunning::Operation const& operation) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
-
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

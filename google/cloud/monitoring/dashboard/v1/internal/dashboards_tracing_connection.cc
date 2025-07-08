@@ -34,38 +34,48 @@ DashboardsServiceTracingConnection::DashboardsServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
-DashboardsServiceTracingConnection::CreateDashboard(google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_dashboard_v1::DashboardsServiceConnection::CreateDashboard");
+DashboardsServiceTracingConnection::CreateDashboard(
+    google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_dashboard_v1::DashboardsServiceConnection::CreateDashboard");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDashboard(request));
 }
 
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
-DashboardsServiceTracingConnection::ListDashboards(google::monitoring::dashboard::v1::ListDashboardsRequest request) {
-  auto span = internal::MakeSpan("monitoring_dashboard_v1::DashboardsServiceConnection::ListDashboards");
+DashboardsServiceTracingConnection::ListDashboards(
+    google::monitoring::dashboard::v1::ListDashboardsRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_dashboard_v1::DashboardsServiceConnection::ListDashboards");
   internal::OTelScope scope(span);
   auto sr = child_->ListDashboards(std::move(request));
-  return internal::MakeTracedStreamRange<google::monitoring::dashboard::v1::Dashboard>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::dashboard::v1::Dashboard>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
-DashboardsServiceTracingConnection::GetDashboard(google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_dashboard_v1::DashboardsServiceConnection::GetDashboard");
+DashboardsServiceTracingConnection::GetDashboard(
+    google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_dashboard_v1::DashboardsServiceConnection::GetDashboard");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDashboard(request));
 }
 
-Status
-DashboardsServiceTracingConnection::DeleteDashboard(google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_dashboard_v1::DashboardsServiceConnection::DeleteDashboard");
+Status DashboardsServiceTracingConnection::DeleteDashboard(
+    google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_dashboard_v1::DashboardsServiceConnection::DeleteDashboard");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDashboard(request));
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
-DashboardsServiceTracingConnection::UpdateDashboard(google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_dashboard_v1::DashboardsServiceConnection::UpdateDashboard");
+DashboardsServiceTracingConnection::UpdateDashboard(
+    google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_dashboard_v1::DashboardsServiceConnection::UpdateDashboard");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDashboard(request));
 }
@@ -74,10 +84,12 @@ DashboardsServiceTracingConnection::UpdateDashboard(google::monitoring::dashboar
 
 std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection>
 MakeDashboardsServiceTracingConnection(
-    std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection> conn) {
+    std::shared_ptr<monitoring_dashboard_v1::DashboardsServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<DashboardsServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<DashboardsServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

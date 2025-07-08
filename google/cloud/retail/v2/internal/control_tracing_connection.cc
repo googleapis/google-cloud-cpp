@@ -34,54 +34,67 @@ ControlServiceTracingConnection::ControlServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::retail::v2::Control>
-ControlServiceTracingConnection::CreateControl(google::cloud::retail::v2::CreateControlRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ControlServiceConnection::CreateControl");
+ControlServiceTracingConnection::CreateControl(
+    google::cloud::retail::v2::CreateControlRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ControlServiceConnection::CreateControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateControl(request));
 }
 
-Status
-ControlServiceTracingConnection::DeleteControl(google::cloud::retail::v2::DeleteControlRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ControlServiceConnection::DeleteControl");
+Status ControlServiceTracingConnection::DeleteControl(
+    google::cloud::retail::v2::DeleteControlRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ControlServiceConnection::DeleteControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteControl(request));
 }
 
 StatusOr<google::cloud::retail::v2::Control>
-ControlServiceTracingConnection::UpdateControl(google::cloud::retail::v2::UpdateControlRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ControlServiceConnection::UpdateControl");
+ControlServiceTracingConnection::UpdateControl(
+    google::cloud::retail::v2::UpdateControlRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ControlServiceConnection::UpdateControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateControl(request));
 }
 
 StatusOr<google::cloud::retail::v2::Control>
-ControlServiceTracingConnection::GetControl(google::cloud::retail::v2::GetControlRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ControlServiceConnection::GetControl");
+ControlServiceTracingConnection::GetControl(
+    google::cloud::retail::v2::GetControlRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ControlServiceConnection::GetControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetControl(request));
 }
 
 StreamRange<google::cloud::retail::v2::Control>
-ControlServiceTracingConnection::ListControls(google::cloud::retail::v2::ListControlsRequest request) {
-  auto span = internal::MakeSpan("retail_v2::ControlServiceConnection::ListControls");
+ControlServiceTracingConnection::ListControls(
+    google::cloud::retail::v2::ListControlsRequest request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ControlServiceConnection::ListControls");
   internal::OTelScope scope(span);
   auto sr = child_->ListControls(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::retail::v2::Control>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-ControlServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("retail_v2::ControlServiceConnection::ListOperations");
+ControlServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ControlServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ControlServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ControlServiceConnection::GetOperation");
+ControlServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ControlServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

@@ -36,12 +36,12 @@ class SqlTiersServiceTracingConnection
   ~SqlTiersServiceTracingConnection() override = default;
 
   explicit SqlTiersServiceTracingConnection(
-    std::shared_ptr<sql_v1::SqlTiersServiceConnection> child);
+      std::shared_ptr<sql_v1::SqlTiersServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::sql::v1::TiersListResponse>
-  List(google::cloud::sql::v1::SqlTiersListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::TiersListResponse> List(
+      google::cloud::sql::v1::SqlTiersListRequest const& request) override;
 
  private:
   std::shared_ptr<sql_v1::SqlTiersServiceConnection> child_;

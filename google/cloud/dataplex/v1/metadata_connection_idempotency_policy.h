@@ -37,65 +37,66 @@ class MetadataServiceConnectionIdempotencyPolicy {
   virtual ~MetadataServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateEntity(google::cloud::dataplex::v1::CreateEntityRequest const& request);
+  virtual google::cloud::Idempotency CreateEntity(
+      google::cloud::dataplex::v1::CreateEntityRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateEntity(google::cloud::dataplex::v1::UpdateEntityRequest const& request);
+  virtual google::cloud::Idempotency UpdateEntity(
+      google::cloud::dataplex::v1::UpdateEntityRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteEntity(google::cloud::dataplex::v1::DeleteEntityRequest const& request);
+  virtual google::cloud::Idempotency DeleteEntity(
+      google::cloud::dataplex::v1::DeleteEntityRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetEntity(google::cloud::dataplex::v1::GetEntityRequest const& request);
+  virtual google::cloud::Idempotency GetEntity(
+      google::cloud::dataplex::v1::GetEntityRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListEntities(google::cloud::dataplex::v1::ListEntitiesRequest request);
+  virtual google::cloud::Idempotency ListEntities(
+      google::cloud::dataplex::v1::ListEntitiesRequest request);
 
-  virtual google::cloud::Idempotency
-  CreatePartition(google::cloud::dataplex::v1::CreatePartitionRequest const& request);
+  virtual google::cloud::Idempotency CreatePartition(
+      google::cloud::dataplex::v1::CreatePartitionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeletePartition(google::cloud::dataplex::v1::DeletePartitionRequest const& request);
+  virtual google::cloud::Idempotency DeletePartition(
+      google::cloud::dataplex::v1::DeletePartitionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetPartition(google::cloud::dataplex::v1::GetPartitionRequest const& request);
+  virtual google::cloud::Idempotency GetPartition(
+      google::cloud::dataplex::v1::GetPartitionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListPartitions(google::cloud::dataplex::v1::ListPartitionsRequest request);
+  virtual google::cloud::Idempotency ListPartitions(
+      google::cloud::dataplex::v1::ListPartitionsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy>
-    MakeDefaultMetadataServiceConnectionIdempotencyPolicy();
+MakeDefaultMetadataServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_v1

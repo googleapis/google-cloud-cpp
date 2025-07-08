@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_KEY_DASHBOARD_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_KEY_DASHBOARD_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/kms/inventory/v1/key_dashboard_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -61,23 +61,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class KeyDashboardServiceClient {
  public:
-  explicit KeyDashboardServiceClient(std::shared_ptr<KeyDashboardServiceConnection> connection, Options opts = {});
+  explicit KeyDashboardServiceClient(
+      std::shared_ptr<KeyDashboardServiceConnection> connection,
+      Options opts = {});
   ~KeyDashboardServiceClient();
 
   ///@{
   /// @name Copy and move support
   KeyDashboardServiceClient(KeyDashboardServiceClient const&) = default;
-  KeyDashboardServiceClient& operator=(KeyDashboardServiceClient const&) = default;
+  KeyDashboardServiceClient& operator=(KeyDashboardServiceClient const&) =
+      default;
   KeyDashboardServiceClient(KeyDashboardServiceClient&&) = default;
   KeyDashboardServiceClient& operator=(KeyDashboardServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(KeyDashboardServiceClient const& a, KeyDashboardServiceClient const& b) {
+  friend bool operator==(KeyDashboardServiceClient const& a,
+                         KeyDashboardServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(KeyDashboardServiceClient const& a, KeyDashboardServiceClient const& b) {
+  friend bool operator!=(KeyDashboardServiceClient const& a,
+                         KeyDashboardServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +121,8 @@ class KeyDashboardServiceClient {
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::CryptoKey>
-  ListCryptoKeys(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -157,8 +162,9 @@ class KeyDashboardServiceClient {
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::CryptoKey>
-  ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest request, Options opts = {});
+  StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
+      google::cloud::kms::inventory::v1::ListCryptoKeysRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<KeyDashboardServiceConnection> connection_;

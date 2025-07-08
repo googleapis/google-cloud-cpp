@@ -36,7 +36,7 @@ class SqlEventsServiceTracingConnection
   ~SqlEventsServiceTracingConnection() override = default;
 
   explicit SqlEventsServiceTracingConnection(
-    std::shared_ptr<sql_v1::SqlEventsServiceConnection> child);
+      std::shared_ptr<sql_v1::SqlEventsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 

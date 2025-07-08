@@ -34,44 +34,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FirewallMetadata : public FirewallStub {
  public:
   ~FirewallMetadata() override = default;
-  FirewallMetadata(
-      std::shared_ptr<FirewallStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  FirewallMetadata(std::shared_ptr<FirewallStub> child,
+                   std::multimap<std::string, std::string> fixed_metadata,
+                   std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListIngressRulesRequest const& request) override;
 
-  StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse> BatchUpdateIngressRules(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::BatchUpdateIngressRulesRequest const& request) override;
+  StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
+  BatchUpdateIngressRules(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::BatchUpdateIngressRulesRequest const& request)
+      override;
 
   StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::CreateIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::UpdateIngressRuleRequest const& request) override;
 
   Status DeleteIngressRule(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

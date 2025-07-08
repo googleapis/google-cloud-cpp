@@ -42,29 +42,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseConnection {
+class MockOracleDatabaseConnection
+    : public oracledatabase_v1::OracleDatabaseConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>),
-  ListCloudExadataInfrastructures,
-  (google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::oracledatabase::v1::CloudExadataInfrastructure>),
+      ListCloudExadataInfrastructures,
+      (google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>,
-  GetCloudExadataInfrastructure,
-  (google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>,
+      GetCloudExadataInfrastructure,
+      (google::cloud::oracledatabase::v1::
+           GetCloudExadataInfrastructureRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCloudExadataInfrastructure(Matcher<google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateCloudExadataInfrastructure(Matcher<google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>,
-  CreateCloudExadataInfrastructure,
-  (google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>,
+      CreateCloudExadataInfrastructure,
+      (google::cloud::oracledatabase::v1::
+           CreateCloudExadataInfrastructureRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -73,32 +86,42 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// EXPECT_CALL(*mock, CreateCloudExadataInfrastructure(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateCloudExadataInfrastructure, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCloudExadataInfrastructure(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>,
-  CreateCloudExadataInfrastructure, (
-    google::longrunning::Operation const& operation), (override));
+              CreateCloudExadataInfrastructure,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::
+                   CreateCloudExadataInfrastructureRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCloudExadataInfrastructure(Matcher<google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateCloudExadataInfrastructure(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
-  DeleteCloudExadataInfrastructure,
-  (google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>,
+      CreateCloudExadataInfrastructure,
+      (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCloudExadataInfrastructure(Matcher<google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteCloudExadataInfrastructure,
+      (google::cloud::oracledatabase::v1::
+           DeleteCloudExadataInfrastructureRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -107,40 +130,54 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// EXPECT_CALL(*mock, DeleteCloudExadataInfrastructure(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteCloudExadataInfrastructure, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCloudExadataInfrastructure(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
-  DeleteCloudExadataInfrastructure, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>),
-  ListCloudVmClusters,
-  (google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>,
-  GetCloudVmCluster,
-  (google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request), (override));
+              DeleteCloudExadataInfrastructure,
+              (NoAwaitTag,
+               google::cloud::oracledatabase::v1::
+                   DeleteCloudExadataInfrastructureRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCloudVmCluster(Matcher<google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteCloudExadataInfrastructure(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>,
-  CreateCloudVmCluster,
-  (google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteCloudExadataInfrastructure,
+      (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>),
+      ListCloudVmClusters,
+      (google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>,
+      GetCloudVmCluster,
+      (google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCloudVmCluster(Matcher<google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>,
+      CreateCloudVmCluster,
+      (google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -148,33 +185,41 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateCloudVmCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateCloudVmCluster, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCloudVmCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>,
-  CreateCloudVmCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCloudVmCluster,
+      (NoAwaitTag,
+       google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCloudVmCluster(Matcher<google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateCloudVmCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
-  DeleteCloudVmCluster,
-  (google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>,
+      CreateCloudVmCluster, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCloudVmCluster(Matcher<google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteCloudVmCluster,
+      (google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -182,61 +227,83 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteCloudVmCluster(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteCloudVmCluster, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCloudVmCluster,
+      (NoAwaitTag,
+       google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCloudVmCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteCloudVmCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
-  DeleteCloudVmCluster, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteCloudVmCluster, (google::longrunning::Operation const& operation),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::Entitlement>),
-  ListEntitlements,
-  (google::cloud::oracledatabase::v1::ListEntitlementsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::Entitlement>),
+      ListEntitlements,
+      (google::cloud::oracledatabase::v1::ListEntitlementsRequest request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::DbServer>),
-  ListDbServers,
-  (google::cloud::oracledatabase::v1::ListDbServersRequest request), (override));
+              ListDbServers,
+              (google::cloud::oracledatabase::v1::ListDbServersRequest request),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::DbNode>),
-  ListDbNodes,
-  (google::cloud::oracledatabase::v1::ListDbNodesRequest request), (override));
+              ListDbNodes,
+              (google::cloud::oracledatabase::v1::ListDbNodesRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::GiVersion>),
-  ListGiVersions,
-  (google::cloud::oracledatabase::v1::ListGiVersionsRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::GiVersion>),
+      ListGiVersions,
+      (google::cloud::oracledatabase::v1::ListGiVersionsRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>),
-  ListDbSystemShapes,
-  (google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>),
+      ListDbSystemShapes,
+      (google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>),
-  ListAutonomousDatabases,
-  (google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>),
+      ListAutonomousDatabases,
+      (google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>,
-  GetAutonomousDatabase,
-  (google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>,
+      GetAutonomousDatabase,
+      (google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  CreateAutonomousDatabase,
-  (google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      CreateAutonomousDatabase,
+      (google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -244,33 +311,42 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateAutonomousDatabase(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateAutonomousDatabase, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAutonomousDatabase(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  CreateAutonomousDatabase, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAutonomousDatabase,
+      (NoAwaitTag,
+       google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateAutonomousDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
-  DeleteAutonomousDatabase,
-  (google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      CreateAutonomousDatabase,
+      (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteAutonomousDatabase,
+      (google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -278,33 +354,42 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteAutonomousDatabase(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteAutonomousDatabase, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteAutonomousDatabase(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
-  DeleteAutonomousDatabase, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAutonomousDatabase,
+      (NoAwaitTag,
+       google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteAutonomousDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  RestoreAutonomousDatabase,
-  (google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>,
+      DeleteAutonomousDatabase,
+      (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      RestoreAutonomousDatabase,
+      (google::cloud::oracledatabase::v1::
+           RestoreAutonomousDatabaseRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -313,48 +398,70 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// EXPECT_CALL(*mock, RestoreAutonomousDatabase(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RestoreAutonomousDatabase, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreAutonomousDatabase(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  RestoreAutonomousDatabase, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>,
-  GenerateAutonomousDatabaseWallet,
-  (google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>),
-  ListAutonomousDbVersions,
-  (google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>),
-  ListAutonomousDatabaseCharacterSets,
-  (google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>),
-  ListAutonomousDatabaseBackups,
-  (google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest request), (override));
+              RestoreAutonomousDatabase,
+              (NoAwaitTag, google::cloud::oracledatabase::v1::
+                               RestoreAutonomousDatabaseRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StopAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// RestoreAutonomousDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  StopAutonomousDatabase,
-  (google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      RestoreAutonomousDatabase,
+      (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::oracledatabase::v1::
+                           GenerateAutonomousDatabaseWalletResponse>,
+              GenerateAutonomousDatabaseWallet,
+              (google::cloud::oracledatabase::v1::
+                   GenerateAutonomousDatabaseWalletRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>),
+      ListAutonomousDbVersions,
+      (google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>),
+      ListAutonomousDatabaseCharacterSets,
+      (google::cloud::oracledatabase::v1::
+           ListAutonomousDatabaseCharacterSetsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>),
+      ListAutonomousDatabaseBackups,
+      (google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      StopAutonomousDatabase,
+      (google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -362,33 +469,41 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, StopAutonomousDatabase(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  StopAutonomousDatabase, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StopAutonomousDatabase(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  StopAutonomousDatabase, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StopAutonomousDatabase,
+      (NoAwaitTag,
+       google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// StopAutonomousDatabase(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  StartAutonomousDatabase,
-  (google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      StopAutonomousDatabase, (google::longrunning::Operation const& operation),
+      (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      StartAutonomousDatabase,
+      (google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -396,33 +511,42 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, StartAutonomousDatabase(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  StartAutonomousDatabase, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartAutonomousDatabase(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  StartAutonomousDatabase, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartAutonomousDatabase,
+      (NoAwaitTag,
+       google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestartAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// StartAutonomousDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  RestartAutonomousDatabase,
-  (google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      StartAutonomousDatabase,
+      (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestartAutonomousDatabase(Matcher<google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      RestartAutonomousDatabase,
+      (google::cloud::oracledatabase::v1::
+           RestartAutonomousDatabaseRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -431,44 +555,47 @@ class MockOracleDatabaseConnection : public oracledatabase_v1::OracleDatabaseCon
   /// EXPECT_CALL(*mock, RestartAutonomousDatabase(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RestartAutonomousDatabase, (NoAwaitTag,
-    google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request), (override));
-
+              RestartAutonomousDatabase,
+              (NoAwaitTag, google::cloud::oracledatabase::v1::
+                               RestartAutonomousDatabaseRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestartAutonomousDatabase(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// RestartAutonomousDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
-  RestartAutonomousDatabase, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>,
+      RestartAutonomousDatabase,
+      (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

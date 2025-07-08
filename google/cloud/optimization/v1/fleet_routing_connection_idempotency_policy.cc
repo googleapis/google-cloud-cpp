@@ -26,27 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-FleetRoutingConnectionIdempotencyPolicy::~FleetRoutingConnectionIdempotencyPolicy() = default;
+FleetRoutingConnectionIdempotencyPolicy::
+    ~FleetRoutingConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
 FleetRoutingConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<FleetRoutingConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency FleetRoutingConnectionIdempotencyPolicy::OptimizeTours(google::cloud::optimization::v1::OptimizeToursRequest const&) {
+Idempotency FleetRoutingConnectionIdempotencyPolicy::OptimizeTours(
+    google::cloud::optimization::v1::OptimizeToursRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FleetRoutingConnectionIdempotencyPolicy::BatchOptimizeTours(google::cloud::optimization::v1::BatchOptimizeToursRequest const&) {
+Idempotency FleetRoutingConnectionIdempotencyPolicy::BatchOptimizeTours(
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FleetRoutingConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency FleetRoutingConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
-    MakeDefaultFleetRoutingConnectionIdempotencyPolicy() {
+MakeDefaultFleetRoutingConnectionIdempotencyPolicy() {
   return std::make_unique<FleetRoutingConnectionIdempotencyPolicy>();
 }
 

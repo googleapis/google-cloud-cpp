@@ -41,8 +41,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// The Datastore Admin API provides several admin services for Cloud Datastore.
 ///
-/// Concepts: Project, namespace, kind, and entity as defined in the Google Cloud
-/// Datastore API.
+/// Concepts: Project, namespace, kind, and entity as defined in the Google
+/// Cloud Datastore API.
 ///
 /// Operation: An Operation represents work being performed in the background.
 ///
@@ -76,8 +76,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// specified project (including any operations in progress). Operations are not
 /// created directly but through calls on other collections or resources.
 /// - An operation that is not yet done may be cancelled. The request to cancel
-/// is asynchronous and the operation may continue to run for some time after the
-/// request to cancel is made.
+/// is asynchronous and the operation may continue to run for some time after
+/// the request to cancel is made.
 /// - An operation that is done may be deleted so that it is no longer listed as
 /// part of the Operation collection.
 /// - ListOperations returns all pending operations, but not completed
@@ -110,7 +110,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DatastoreAdminClient {
  public:
-  explicit DatastoreAdminClient(std::shared_ptr<DatastoreAdminConnection> connection, Options opts = {});
+  explicit DatastoreAdminClient(
+      std::shared_ptr<DatastoreAdminConnection> connection, Options opts = {});
   ~DatastoreAdminClient();
 
   ///@{
@@ -123,10 +124,12 @@ class DatastoreAdminClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DatastoreAdminClient const& a, DatastoreAdminClient const& b) {
+  friend bool operator==(DatastoreAdminClient const& a,
+                         DatastoreAdminClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DatastoreAdminClient const& a, DatastoreAdminClient const& b) {
+  friend bool operator!=(DatastoreAdminClient const& a,
+                         DatastoreAdminClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -189,7 +192,11 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(std::string const& project_id, std::map<std::string, std::string> const& labels, google::datastore::admin::v1::EntityFilter const& entity_filter, std::string const& output_url_prefix, Options opts = {});
+  ExportEntities(
+      std::string const& project_id,
+      std::map<std::string, std::string> const& labels,
+      google::datastore::admin::v1::EntityFilter const& entity_filter,
+      std::string const& output_url_prefix, Options opts = {});
 
   // clang-format off
   ///
@@ -202,8 +209,11 @@ class DatastoreAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportEntities(NoAwaitTag, std::string const& project_id, std::map<std::string, std::string> const& labels, google::datastore::admin::v1::EntityFilter const& entity_filter, std::string const& output_url_prefix, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportEntities(
+      NoAwaitTag, std::string const& project_id,
+      std::map<std::string, std::string> const& labels,
+      google::datastore::admin::v1::EntityFilter const& entity_filter,
+      std::string const& output_url_prefix, Options opts = {});
 
   // clang-format off
   ///
@@ -247,7 +257,9 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const& request, Options opts = {});
+  ExportEntities(
+      google::datastore::admin::v1::ExportEntitiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +272,10 @@ class DatastoreAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportEntities(NoAwaitTag, google::datastore::admin::v1::ExportEntitiesRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportEntities(
+      NoAwaitTag,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -273,7 +287,8 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(google::longrunning::Operation const& operation, Options opts = {});
+  ExportEntities(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -329,7 +344,12 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(std::string const& project_id, std::map<std::string, std::string> const& labels, std::string const& input_url, google::datastore::admin::v1::EntityFilter const& entity_filter, Options opts = {});
+  ImportEntities(
+      std::string const& project_id,
+      std::map<std::string, std::string> const& labels,
+      std::string const& input_url,
+      google::datastore::admin::v1::EntityFilter const& entity_filter,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -342,8 +362,12 @@ class DatastoreAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportEntities(NoAwaitTag, std::string const& project_id, std::map<std::string, std::string> const& labels, std::string const& input_url, google::datastore::admin::v1::EntityFilter const& entity_filter, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportEntities(
+      NoAwaitTag, std::string const& project_id,
+      std::map<std::string, std::string> const& labels,
+      std::string const& input_url,
+      google::datastore::admin::v1::EntityFilter const& entity_filter,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -384,7 +408,9 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const& request, Options opts = {});
+  ImportEntities(
+      google::datastore::admin::v1::ImportEntitiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -397,8 +423,10 @@ class DatastoreAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportEntities(NoAwaitTag, google::datastore::admin::v1::ImportEntitiesRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportEntities(
+      NoAwaitTag,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -410,7 +438,8 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(google::longrunning::Operation const& operation, Options opts = {});
+  ImportEntities(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -461,8 +490,9 @@ class DatastoreAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  future<StatusOr<google::datastore::admin::v1::Index>>
-  CreateIndex(google::datastore::admin::v1::CreateIndexRequest const& request, Options opts = {});
+  future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
+      google::datastore::admin::v1::CreateIndexRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -475,8 +505,10 @@ class DatastoreAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateIndex(NoAwaitTag, google::datastore::admin::v1::CreateIndexRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateIndex(
+      NoAwaitTag,
+      google::datastore::admin::v1::CreateIndexRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -487,8 +519,8 @@ class DatastoreAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::datastore::admin::v1::Index>>
-  CreateIndex(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -537,8 +569,9 @@ class DatastoreAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  future<StatusOr<google::datastore::admin::v1::Index>>
-  DeleteIndex(google::datastore::admin::v1::DeleteIndexRequest const& request, Options opts = {});
+  future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
+      google::datastore::admin::v1::DeleteIndexRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -551,8 +584,10 @@ class DatastoreAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteIndex(NoAwaitTag, google::datastore::admin::v1::DeleteIndexRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteIndex(
+      NoAwaitTag,
+      google::datastore::admin::v1::DeleteIndexRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -563,8 +598,8 @@ class DatastoreAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::datastore::admin::v1::Index>>
-  DeleteIndex(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -593,8 +628,9 @@ class DatastoreAdminClient {
   /// [google.datastore.admin.v1.Index]: @googleapis_reference_link{google/datastore/admin/v1/index.proto#L30}
   ///
   // clang-format on
-  StatusOr<google::datastore::admin::v1::Index>
-  GetIndex(google::datastore::admin::v1::GetIndexRequest const& request, Options opts = {});
+  StatusOr<google::datastore::admin::v1::Index> GetIndex(
+      google::datastore::admin::v1::GetIndexRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -634,8 +670,9 @@ class DatastoreAdminClient {
   /// [google.datastore.admin.v1.ListIndexesRequest]: @googleapis_reference_link{google/datastore/admin/v1/datastore_admin.proto#L436}
   ///
   // clang-format on
-  StreamRange<google::datastore::admin::v1::Index>
-  ListIndexes(google::datastore::admin::v1::ListIndexesRequest request, Options opts = {});
+  StreamRange<google::datastore::admin::v1::Index> ListIndexes(
+      google::datastore::admin::v1::ListIndexesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -670,8 +707,8 @@ class DatastoreAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -710,8 +747,8 @@ class DatastoreAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -737,8 +774,8 @@ class DatastoreAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -769,8 +806,9 @@ class DatastoreAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -794,8 +832,7 @@ class DatastoreAdminClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -824,8 +861,9 @@ class DatastoreAdminClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -859,8 +897,7 @@ class DatastoreAdminClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -899,8 +936,9 @@ class DatastoreAdminClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DatastoreAdminConnection> connection_;

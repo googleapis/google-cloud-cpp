@@ -36,13 +36,17 @@ class NetworkProfilesRestStub {
  public:
   virtual ~NetworkProfilesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
+  GetNetworkProfile(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::compute::network_profiles::v1::
+                        GetNetworkProfileRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse> ListNetworkProfiles(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse>
+  ListNetworkProfiles(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
+                      google::cloud::cpp::compute::network_profiles::v1::
+                          ListNetworkProfilesRequest const& request) = 0;
 };
 
 class DefaultNetworkProfilesRestStub : public NetworkProfilesRestStub {
@@ -51,16 +55,19 @@ class DefaultNetworkProfilesRestStub : public NetworkProfilesRestStub {
 
   explicit DefaultNetworkProfilesRestStub(Options options);
   DefaultNetworkProfilesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::network_profiles::v1::
+          GetNetworkProfileRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse> ListNetworkProfiles(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse>
+  ListNetworkProfiles(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
+                      google::cloud::cpp::compute::network_profiles::v1::
+                          ListNetworkProfilesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

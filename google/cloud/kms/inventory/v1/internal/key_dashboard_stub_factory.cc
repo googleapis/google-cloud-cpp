@@ -17,15 +17,15 @@
 // source: google/cloud/kms/inventory/v1/key_dashboard_service.proto
 
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub_factory.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_auth_decorator.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_logging_decorator.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_metadata_decorator.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_tracing_stub.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h>
@@ -37,28 +37,27 @@ namespace cloud {
 namespace kms_inventory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<KeyDashboardServiceStub>
-CreateDefaultKeyDashboardServiceStub(
+std::shared_ptr<KeyDashboardServiceStub> CreateDefaultKeyDashboardServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::kms::inventory::v1::KeyDashboardService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::kms::inventory::v1::KeyDashboardService::NewStub(channel);
   std::shared_ptr<KeyDashboardServiceStub> stub =
-    std::make_shared<DefaultKeyDashboardServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultKeyDashboardServiceStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<KeyDashboardServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<KeyDashboardServiceAuth>(std::move(auth),
+                                                     std::move(stub));
   }
   stub = std::make_shared<KeyDashboardServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<KeyDashboardServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

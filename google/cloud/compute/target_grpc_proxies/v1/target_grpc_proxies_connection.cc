@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto
 
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_option_defaults.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_tracing_connection.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,86 +38,92 @@ TargetGrpcProxiesConnection::~TargetGrpcProxiesConnection() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::DeleteTargetGrpcProxy(
-    google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const&) {
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        DeleteTargetGrpcProxyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::DeleteTargetGrpcProxy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::DeleteTargetGrpcProxyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
+                    DeleteTargetGrpcProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::DeleteTargetGrpcProxy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
 TargetGrpcProxiesConnection::GetTargetGrpcProxy(
-    google::cloud::cpp::compute::target_grpc_proxies::v1::GetTargetGrpcProxyRequest const&) {
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        GetTargetGrpcProxyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::InsertTargetGrpcProxy(
-    google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const&) {
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        InsertTargetGrpcProxyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::InsertTargetGrpcProxy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::InsertTargetGrpcProxyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
+                    InsertTargetGrpcProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::InsertTargetGrpcProxy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy> TargetGrpcProxiesConnection::ListTargetGrpcProxies(
-    google::cloud::cpp::compute::target_grpc_proxies::v1::ListTargetGrpcProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
+TargetGrpcProxiesConnection::ListTargetGrpcProxies(
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        ListTargetGrpcProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::PatchTargetGrpcProxy(
-    google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const&) {
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        PatchTargetGrpcProxyRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::PatchTargetGrpcProxy(
-    NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::PatchTargetGrpcProxyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
+                    PatchTargetGrpcProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::PatchTargetGrpcProxy(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

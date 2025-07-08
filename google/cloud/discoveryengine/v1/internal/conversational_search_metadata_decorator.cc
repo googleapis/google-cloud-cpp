@@ -46,168 +46,175 @@ ConversationalSearchServiceMetadata::ConversationalSearchServiceMetadata(
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 ConversationalSearchServiceMetadata::ConverseConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ConverseConversation(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceMetadata::CreateConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::CreateConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::CreateConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConversation(context, options, request);
 }
 
-Status
-ConversationalSearchServiceMetadata::DeleteConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status ConversationalSearchServiceMetadata::DeleteConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConversation(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceMetadata::UpdateConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("conversation.name=", internal::UrlEncode(request.conversation().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("conversation.name=",
+                           internal::UrlEncode(request.conversation().name())));
   return child_->UpdateConversation(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceMetadata::GetConversation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConversation(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
 ConversationalSearchServiceMetadata::ListConversations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::ListConversationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::ListConversationsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConversations(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
 ConversationalSearchServiceMetadata::AnswerQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("serving_config=", internal::UrlEncode(request.serving_config())));
+  SetMetadata(context, options,
+              absl::StrCat("serving_config=",
+                           internal::UrlEncode(request.serving_config())));
   return child_->AnswerQuery(context, options, request);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::discoveryengine::v1::AnswerQueryResponse>>
 ConversationalSearchServiceMetadata::StreamAnswerQuery(
-    std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
-  SetMetadata(*context, options, absl::StrCat("serving_config=", internal::UrlEncode(request.serving_config())));
+  SetMetadata(*context, options,
+              absl::StrCat("serving_config=",
+                           internal::UrlEncode(request.serving_config())));
   return child_->StreamAnswerQuery(std::move(context), options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>
 ConversationalSearchServiceMetadata::GetAnswer(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAnswer(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
 ConversationalSearchServiceMetadata::CreateSession(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSession(context, options, request);
 }
 
-Status
-ConversationalSearchServiceMetadata::DeleteSession(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ConversationalSearchServiceMetadata::DeleteSession(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSession(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
 ConversationalSearchServiceMetadata::UpdateSession(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("session.name=", internal::UrlEncode(request.session().name())));
+  SetMetadata(context, options,
+              absl::StrCat("session.name=",
+                           internal::UrlEncode(request.session().name())));
   return child_->UpdateSession(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
 ConversationalSearchServiceMetadata::GetSession(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSession(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
 ConversationalSearchServiceMetadata::ListSessions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListSessionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSessions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ConversationalSearchServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 ConversationalSearchServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-ConversationalSearchServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ConversationalSearchServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
-void ConversationalSearchServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void ConversationalSearchServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void ConversationalSearchServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+void ConversationalSearchServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

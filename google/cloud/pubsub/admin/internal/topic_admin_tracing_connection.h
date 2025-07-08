@@ -30,48 +30,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class TopicAdminTracingConnection
-    : public pubsub_admin::TopicAdminConnection {
+class TopicAdminTracingConnection : public pubsub_admin::TopicAdminConnection {
  public:
   ~TopicAdminTracingConnection() override = default;
 
   explicit TopicAdminTracingConnection(
-    std::shared_ptr<pubsub_admin::TopicAdminConnection> child);
+      std::shared_ptr<pubsub_admin::TopicAdminConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::pubsub::v1::Topic>
-  CreateTopic(google::pubsub::v1::Topic const& request) override;
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(
+      google::pubsub::v1::Topic const& request) override;
 
-  StatusOr<google::pubsub::v1::Topic>
-  UpdateTopic(google::pubsub::v1::UpdateTopicRequest const& request) override;
+  StatusOr<google::pubsub::v1::Topic> UpdateTopic(
+      google::pubsub::v1::UpdateTopicRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::Topic>
-  GetTopic(google::pubsub::v1::GetTopicRequest const& request) override;
+  StatusOr<google::pubsub::v1::Topic> GetTopic(
+      google::pubsub::v1::GetTopicRequest const& request) override;
 
-  StreamRange<google::pubsub::v1::Topic>
-  ListTopics(google::pubsub::v1::ListTopicsRequest request) override;
+  StreamRange<google::pubsub::v1::Topic> ListTopics(
+      google::pubsub::v1::ListTopicsRequest request) override;
 
-  StreamRange<std::string>
-  ListTopicSubscriptions(google::pubsub::v1::ListTopicSubscriptionsRequest request) override;
+  StreamRange<std::string> ListTopicSubscriptions(
+      google::pubsub::v1::ListTopicSubscriptionsRequest request) override;
 
-  StreamRange<std::string>
-  ListTopicSnapshots(google::pubsub::v1::ListTopicSnapshotsRequest request) override;
+  StreamRange<std::string> ListTopicSnapshots(
+      google::pubsub::v1::ListTopicSnapshotsRequest request) override;
 
-  Status
-  DeleteTopic(google::pubsub::v1::DeleteTopicRequest const& request) override;
+  Status DeleteTopic(
+      google::pubsub::v1::DeleteTopicRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
-  DetachSubscription(google::pubsub::v1::DetachSubscriptionRequest const& request) override;
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<pubsub_admin::TopicAdminConnection> child_;

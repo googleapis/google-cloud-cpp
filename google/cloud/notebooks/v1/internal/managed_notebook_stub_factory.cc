@@ -17,16 +17,16 @@
 // source: google/cloud/notebooks/v1/managed_service.proto
 
 #include "google/cloud/notebooks/v1/internal/managed_notebook_stub_factory.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/log.h"
 #include "google/cloud/notebooks/v1/internal/managed_notebook_auth_decorator.h"
 #include "google/cloud/notebooks/v1/internal/managed_notebook_logging_decorator.h"
 #include "google/cloud/notebooks/v1/internal/managed_notebook_metadata_decorator.h"
 #include "google/cloud/notebooks/v1/internal/managed_notebook_stub.h"
 #include "google/cloud/notebooks/v1/internal/managed_notebook_tracing_stub.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/notebooks/v1/managed_service.grpc.pb.h>
@@ -44,28 +44,29 @@ std::shared_ptr<ManagedNotebookServiceStub>
 CreateDefaultManagedNotebookServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::notebooks::v1::ManagedNotebookService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::notebooks::v1::ManagedNotebookService::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ManagedNotebookServiceStub> stub =
-    std::make_shared<DefaultManagedNotebookServiceStub>(
-      std::move(service_grpc_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultManagedNotebookServiceStub>(
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+          std::move(service_locations_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ManagedNotebookServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ManagedNotebookServiceAuth>(std::move(auth),
+                                                        std::move(stub));
   }
   stub = std::make_shared<ManagedNotebookServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ManagedNotebookServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

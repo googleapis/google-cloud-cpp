@@ -46,19 +46,19 @@ DataprocMetastoreMetadata::DataprocMetastoreMetadata(
 
 StatusOr<google::cloud::metastore::v1::ListServicesResponse>
 DataprocMetastoreMetadata::ListServices(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListServicesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::Service>
 DataprocMetastoreMetadata::GetService(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetService(context, options, request);
 }
 
@@ -68,17 +68,18 @@ DataprocMetastoreMetadata::AsyncCreateService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::CreateServiceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateService(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::CreateService(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::CreateServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateService(context, options, request);
 }
 
@@ -88,17 +89,20 @@ DataprocMetastoreMetadata::AsyncUpdateService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("service.name=", internal::UrlEncode(request.service().name())));
-  return child_->AsyncUpdateService(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("service.name=",
+                           internal::UrlEncode(request.service().name())));
+  return child_->AsyncUpdateService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::UpdateService(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("service.name=", internal::UrlEncode(request.service().name())));
+  SetMetadata(context, options,
+              absl::StrCat("service.name=",
+                           internal::UrlEncode(request.service().name())));
   return child_->UpdateService(context, options, request);
 }
 
@@ -108,35 +112,36 @@ DataprocMetastoreMetadata::AsyncDeleteService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteService(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::DeleteService(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
 DataprocMetastoreMetadata::ListMetadataImports(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListMetadataImportsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListMetadataImports(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::MetadataImport>
 DataprocMetastoreMetadata::GetMetadataImport(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetMetadataImportRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMetadataImport(context, options, request);
 }
 
@@ -146,17 +151,18 @@ DataprocMetastoreMetadata::AsyncCreateMetadataImport(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateMetadataImport(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMetadataImport(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::CreateMetadataImport(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMetadataImport(context, options, request);
 }
 
@@ -166,17 +172,22 @@ DataprocMetastoreMetadata::AsyncUpdateMetadataImport(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("metadata_import.name=", internal::UrlEncode(request.metadata_import().name())));
-  return child_->AsyncUpdateMetadataImport(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("metadata_import.name=",
+                   internal::UrlEncode(request.metadata_import().name())));
+  return child_->AsyncUpdateMetadataImport(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::UpdateMetadataImport(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("metadata_import.name=", internal::UrlEncode(request.metadata_import().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("metadata_import.name=",
+                   internal::UrlEncode(request.metadata_import().name())));
   return child_->UpdateMetadataImport(context, options, request);
 }
 
@@ -186,17 +197,18 @@ DataprocMetastoreMetadata::AsyncExportMetadata(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::ExportMetadataRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("service=", internal::UrlEncode(request.service())));
-  return child_->AsyncExportMetadata(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->AsyncExportMetadata(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::ExportMetadata(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::ExportMetadataRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("service=", internal::UrlEncode(request.service())));
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->ExportMetadata(context, options, request);
 }
 
@@ -206,35 +218,36 @@ DataprocMetastoreMetadata::AsyncRestoreService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("service=", internal::UrlEncode(request.service())));
-  return child_->AsyncRestoreService(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->AsyncRestoreService(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::RestoreService(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("service=", internal::UrlEncode(request.service())));
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->RestoreService(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
 DataprocMetastoreMetadata::ListBackups(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListBackups(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::Backup>
 DataprocMetastoreMetadata::GetBackup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetBackupRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetBackup(context, options, request);
 }
 
@@ -244,17 +257,18 @@ DataprocMetastoreMetadata::AsyncCreateBackup(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::CreateBackupRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateBackup(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBackup(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::CreateBackup(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::CreateBackupRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateBackup(context, options, request);
 }
 
@@ -264,17 +278,18 @@ DataprocMetastoreMetadata::AsyncDeleteBackup(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteBackup(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackup(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::DeleteBackup(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBackup(context, options, request);
 }
 
@@ -284,17 +299,18 @@ DataprocMetastoreMetadata::AsyncQueryMetadata(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("service=", internal::UrlEncode(request.service())));
-  return child_->AsyncQueryMetadata(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->AsyncQueryMetadata(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::QueryMetadata(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("service=", internal::UrlEncode(request.service())));
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->QueryMetadata(context, options, request);
 }
 
@@ -304,17 +320,18 @@ DataprocMetastoreMetadata::AsyncMoveTableToDatabase(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("service=", internal::UrlEncode(request.service())));
-  return child_->AsyncMoveTableToDatabase(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->AsyncMoveTableToDatabase(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::MoveTableToDatabase(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("service=", internal::UrlEncode(request.service())));
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->MoveTableToDatabase(context, options, request);
 }
 
@@ -323,99 +340,101 @@ DataprocMetastoreMetadata::AsyncAlterMetadataResourceLocation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("service=", internal::UrlEncode(request.service())));
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->AsyncAlterMetadataResourceLocation(
       cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::AlterMetadataResourceLocation(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("service=", internal::UrlEncode(request.service())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->AlterMetadataResourceLocation(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataprocMetastoreMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 DataprocMetastoreMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataprocMetastoreMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DataprocMetastoreMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataprocMetastoreMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DataprocMetastoreMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataprocMetastoreMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DataprocMetastoreMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-DataprocMetastoreMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataprocMetastoreMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-DataprocMetastoreMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataprocMetastoreMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -427,8 +446,8 @@ DataprocMetastoreMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> DataprocMetastoreMetadata::AsyncCancelOperation(
@@ -438,21 +457,21 @@ future<Status> DataprocMetastoreMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void DataprocMetastoreMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                            Options const& options,
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DataprocMetastoreMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                            Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

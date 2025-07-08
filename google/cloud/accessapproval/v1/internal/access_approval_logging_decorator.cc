@@ -31,21 +31,20 @@ namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalLogging::AccessApprovalLogging(
-    std::shared_ptr<AccessApprovalStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<AccessApprovalStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::accessapproval::v1::ListApprovalRequestsResponse>
 AccessApprovalLogging::ListApprovalRequests(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::ListApprovalRequestsMessage const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::ListApprovalRequestsMessage const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::accessapproval::v1::ListApprovalRequestsMessage const&
+              request) {
         return child_->ListApprovalRequests(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +52,13 @@ AccessApprovalLogging::ListApprovalRequests(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalLogging::GetApprovalRequest(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
+                 request) {
         return child_->GetApprovalRequest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +66,13 @@ AccessApprovalLogging::GetApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalLogging::ApproveApprovalRequest(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::accessapproval::v1::
+                 ApproveApprovalRequestMessage const& request) {
         return child_->ApproveApprovalRequest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +80,13 @@ AccessApprovalLogging::ApproveApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalLogging::DismissApprovalRequest(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::accessapproval::v1::
+                 DismissApprovalRequestMessage const& request) {
         return child_->DismissApprovalRequest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +94,13 @@ AccessApprovalLogging::DismissApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalLogging::InvalidateApprovalRequest(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::accessapproval::v1::
+                 InvalidateApprovalRequestMessage const& request) {
         return child_->InvalidateApprovalRequest(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +108,13 @@ AccessApprovalLogging::InvalidateApprovalRequest(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalLogging::GetAccessApprovalSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::accessapproval::v1::
+                 GetAccessApprovalSettingsMessage const& request) {
         return child_->GetAccessApprovalSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,27 +122,26 @@ AccessApprovalLogging::GetAccessApprovalSettings(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
 AccessApprovalLogging::UpdateAccessApprovalSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::
+        UpdateAccessApprovalSettingsMessage const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::accessapproval::v1::
+                 UpdateAccessApprovalSettingsMessage const& request) {
         return child_->UpdateAccessApprovalSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AccessApprovalLogging::DeleteAccessApprovalSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request) {
+Status AccessApprovalLogging::DeleteAccessApprovalSettings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::
+        DeleteAccessApprovalSettingsMessage const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::accessapproval::v1::
+                 DeleteAccessApprovalSettingsMessage const& request) {
         return child_->DeleteAccessApprovalSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,14 +149,15 @@ AccessApprovalLogging::DeleteAccessApprovalSettings(
 
 StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
 AccessApprovalLogging::GetAccessApprovalServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request) {
-        return child_->GetAccessApprovalServiceAccount(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::accessapproval::v1::
+                 GetAccessApprovalServiceAccountMessage const& request) {
+        return child_->GetAccessApprovalServiceAccount(context, options,
+                                                       request);
       },
       context, options, request, __func__, tracing_options_);
 }

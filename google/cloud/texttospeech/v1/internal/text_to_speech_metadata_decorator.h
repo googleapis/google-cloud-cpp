@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,20 +34,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TextToSpeechMetadata : public TextToSpeechStub {
  public:
   ~TextToSpeechMetadata() override = default;
-  TextToSpeechMetadata(
-      std::shared_ptr<TextToSpeechStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  TextToSpeechMetadata(std::shared_ptr<TextToSpeechStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::texttospeech::v1::ListVoicesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::texttospeech::v1::ListVoicesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse> SynthesizeSpeech(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) override;
+  StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
+  SynthesizeSpeech(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
@@ -58,18 +58,15 @@ class TextToSpeechMetadata : public TextToSpeechStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

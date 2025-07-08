@@ -28,16 +28,23 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use video_transcoder_v1::TranscoderServiceBackoffPolicyOption directly.
-using ::google::cloud::video_transcoder_v1::TranscoderServiceBackoffPolicyOption;
+/// @deprecated Use video_transcoder_v1::TranscoderServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::video_transcoder_v1::
+    TranscoderServiceBackoffPolicyOption;
 
-/// @deprecated Use video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::video_transcoder_v1::
+    TranscoderServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use video_transcoder_v1::TranscoderServicePolicyOptionList directly.
+/// @deprecated Use video_transcoder_v1::TranscoderServicePolicyOptionList
+/// directly.
 using ::google::cloud::video_transcoder_v1::TranscoderServicePolicyOptionList;
 
-/// @deprecated Use video_transcoder_v1::TranscoderServiceRetryPolicyOption directly.
+/// @deprecated Use video_transcoder_v1::TranscoderServiceRetryPolicyOption
+/// directly.
 using ::google::cloud::video_transcoder_v1::TranscoderServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

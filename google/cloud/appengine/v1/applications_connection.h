@@ -29,8 +29,8 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/operation.pb.h>
 #include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -56,7 +56,8 @@ class ApplicationsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ApplicationsLimitedErrorCountRetryPolicy : public ApplicationsRetryPolicy {
+class ApplicationsLimitedErrorCountRetryPolicy
+    : public ApplicationsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ApplicationsLimitedErrorCountRetryPolicy : public ApplicationsRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit ApplicationsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ApplicationsLimitedErrorCountRetryPolicy(
       ApplicationsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ApplicationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ApplicationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ApplicationsLimitedErrorCountRetryPolicy(
       ApplicationsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ApplicationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ApplicationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ApplicationsLimitedErrorCountRetryPolicy : public ApplicationsRetryPolicy 
   using BaseType = ApplicationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<appengine_v1_internal::ApplicationsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      appengine_v1_internal::ApplicationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class ApplicationsLimitedTimeRetryPolicy : public ApplicationsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ApplicationsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ApplicationsLimitedTimeRetryPolicy(ApplicationsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ApplicationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ApplicationsLimitedTimeRetryPolicy(ApplicationsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ApplicationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ApplicationsLimitedTimeRetryPolicy(
+      ApplicationsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ApplicationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ApplicationsLimitedTimeRetryPolicy(
+      ApplicationsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ApplicationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class ApplicationsLimitedTimeRetryPolicy : public ApplicationsRetryPolicy {
   using BaseType = ApplicationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<appengine_v1_internal::ApplicationsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      appengine_v1_internal::ApplicationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,35 +186,41 @@ class ApplicationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::appengine::v1::Application>
-  GetApplication(google::appengine::v1::GetApplicationRequest const& request);
+  virtual StatusOr<google::appengine::v1::Application> GetApplication(
+      google::appengine::v1::GetApplicationRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::Application>>
-  CreateApplication(google::appengine::v1::CreateApplicationRequest const& request);
+  CreateApplication(
+      google::appengine::v1::CreateApplicationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateApplication(NoAwaitTag, google::appengine::v1::CreateApplicationRequest const& request);
-
-  virtual future<StatusOr<google::appengine::v1::Application>>
-  CreateApplication( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::appengine::v1::Application>>
-  UpdateApplication(google::appengine::v1::UpdateApplicationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateApplication(NoAwaitTag, google::appengine::v1::UpdateApplicationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateApplication(
+      NoAwaitTag,
+      google::appengine::v1::CreateApplicationRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::Application>>
-  UpdateApplication( google::longrunning::Operation const& operation);
+  CreateApplication(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::Application>>
-  RepairApplication(google::appengine::v1::RepairApplicationRequest const& request);
+  UpdateApplication(
+      google::appengine::v1::UpdateApplicationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RepairApplication(NoAwaitTag, google::appengine::v1::RepairApplicationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateApplication(
+      NoAwaitTag,
+      google::appengine::v1::UpdateApplicationRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::Application>>
-  RepairApplication( google::longrunning::Operation const& operation);
+  UpdateApplication(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::appengine::v1::Application>>
+  RepairApplication(
+      google::appengine::v1::RepairApplicationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RepairApplication(
+      NoAwaitTag,
+      google::appengine::v1::RepairApplicationRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::Application>>
+  RepairApplication(google::longrunning::Operation const& operation);
 };
 
 /**

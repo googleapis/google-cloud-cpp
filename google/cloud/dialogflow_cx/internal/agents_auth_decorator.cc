@@ -31,9 +31,9 @@ AgentsAuth::AgentsAuth(
     std::shared_ptr<AgentsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse> AgentsAuth::ListAgents(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse>
+AgentsAuth::ListAgents(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse> AgentsAuth::List
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::GetAgent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +49,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::GetAgent(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::CreateAgent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +57,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::CreateAgent(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::UpdateAgent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,111 +65,109 @@ StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::UpdateAgent(
 }
 
 Status AgentsAuth::DeleteAgent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAgent(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AgentsAuth::AsyncExportAgent(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncExportAgent(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportAgent(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncExportAgent(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsAuth::ExportAgent(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
+StatusOr<google::longrunning::Operation> AgentsAuth::ExportAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportAgent(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AgentsAuth::AsyncRestoreAgent(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
+future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncRestoreAgent(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestoreAgent(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRestoreAgent(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AgentsAuth::RestoreAgent(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
+StatusOr<google::longrunning::Operation> AgentsAuth::RestoreAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestoreAgent(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult> AgentsAuth::ValidateAgent(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
+AgentsAuth::ValidateAgent(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ValidateAgent(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult> AgentsAuth::GetAgentValidationResult(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
+AgentsAuth::GetAgentValidationResult(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAgentValidationResult(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings> AgentsAuth::GetGenerativeSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsAuth::GetGenerativeSettings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetGenerativeSettings(context, options, request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings> AgentsAuth::UpdateGenerativeSettings(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const& request) {
+StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
+AgentsAuth::UpdateGenerativeSettings(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateGenerativeSettings(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> AgentsAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+AgentsAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -180,17 +175,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> AgentsAuth::ListLocatio
 }
 
 StatusOr<google::cloud::location::Location> AgentsAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> AgentsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+AgentsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -198,8 +192,7 @@ StatusOr<google::longrunning::ListOperationsResponse> AgentsAuth::ListOperations
 }
 
 StatusOr<google::longrunning::Operation> AgentsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -207,30 +200,29 @@ StatusOr<google::longrunning::Operation> AgentsAuth::GetOperation(
 }
 
 Status AgentsAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelOperation(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-AgentsAuth::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -239,13 +231,14 @@ future<Status> AgentsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

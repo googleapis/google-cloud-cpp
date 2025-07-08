@@ -31,18 +31,18 @@ ApiGatewayServiceAuth::ApiGatewayServiceAuth(
     std::shared_ptr<ApiGatewayServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse> ApiGatewayServiceAuth::ListGateways(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
+ApiGatewayServiceAuth::ListGateways(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListGateways(context, options, request);
 }
 
-StatusOr<google::cloud::apigateway::v1::Gateway> ApiGatewayServiceAuth::GetGateway(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::Gateway>
+ApiGatewayServiceAuth::GetGateway(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +51,27 @@ StatusOr<google::cloud::apigateway::v1::Gateway> ApiGatewayServiceAuth::GetGatew
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncCreateGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateGateway(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateGateway(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::CreateGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::CreateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateGateway(context, options, request);
@@ -80,28 +79,27 @@ ApiGatewayServiceAuth::CreateGateway(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncUpdateGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateGateway(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateGateway(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::UpdateGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::UpdateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateGateway(context, options, request);
@@ -109,36 +107,35 @@ ApiGatewayServiceAuth::UpdateGateway(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncDeleteGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteGateway(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteGateway(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::DeleteGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::DeleteGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteGateway(context, options, request);
 }
 
-StatusOr<google::cloud::apigateway::v1::ListApisResponse> ApiGatewayServiceAuth::ListApis(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::ListApisResponse>
+ApiGatewayServiceAuth::ListApis(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -146,8 +143,7 @@ StatusOr<google::cloud::apigateway::v1::ListApisResponse> ApiGatewayServiceAuth:
 }
 
 StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceAuth::GetApi(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -156,28 +152,27 @@ StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceAuth::GetApi(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncCreateApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::CreateApiRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateApi(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateApi(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::CreateApi(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::CreateApiRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::CreateApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateApi(context, options, request);
@@ -185,28 +180,27 @@ ApiGatewayServiceAuth::CreateApi(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncUpdateApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateApi(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateApi(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::UpdateApi(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::UpdateApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateApi(context, options, request);
@@ -214,45 +208,44 @@ ApiGatewayServiceAuth::UpdateApi(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncDeleteApi(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteApi(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteApi(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::DeleteApi(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::DeleteApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteApi(context, options, request);
 }
 
-StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse> ApiGatewayServiceAuth::ListApiConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
+ApiGatewayServiceAuth::ListApiConfigs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListApiConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::apigateway::v1::ApiConfig> ApiGatewayServiceAuth::GetApiConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apigateway::v1::ApiConfig>
+ApiGatewayServiceAuth::GetApiConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -261,28 +254,27 @@ StatusOr<google::cloud::apigateway::v1::ApiConfig> ApiGatewayServiceAuth::GetApi
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncCreateApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateApiConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateApiConfig(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::CreateApiConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::CreateApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateApiConfig(context, options, request);
@@ -290,28 +282,27 @@ ApiGatewayServiceAuth::CreateApiConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncUpdateApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateApiConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateApiConfig(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::UpdateApiConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::UpdateApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateApiConfig(context, options, request);
@@ -319,28 +310,27 @@ ApiGatewayServiceAuth::UpdateApiConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceAuth::AsyncDeleteApiConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteApiConfig(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteApiConfig(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ApiGatewayServiceAuth::DeleteApiConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+StatusOr<google::longrunning::Operation> ApiGatewayServiceAuth::DeleteApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteApiConfig(context, options, request);
@@ -353,15 +343,16 @@ ApiGatewayServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -370,13 +361,14 @@ future<Status> ApiGatewayServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

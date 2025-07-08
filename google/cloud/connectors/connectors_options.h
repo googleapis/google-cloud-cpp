@@ -34,8 +34,10 @@ using ::google::cloud::connectors_v1::ConnectorsPollingPolicyOption;
 /// @deprecated Use connectors_v1::ConnectorsBackoffPolicyOption directly.
 using ::google::cloud::connectors_v1::ConnectorsBackoffPolicyOption;
 
-/// @deprecated Use connectors_v1::ConnectorsConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::connectors_v1::ConnectorsConnectionIdempotencyPolicyOption;
+/// @deprecated Use connectors_v1::ConnectorsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::connectors_v1::
+    ConnectorsConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use connectors_v1::ConnectorsPolicyOptionList directly.
 using ::google::cloud::connectors_v1::ConnectorsPolicyOptionList;

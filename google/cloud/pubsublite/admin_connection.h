@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_ADMIN_CONNECTION_H
 
+#include "google/cloud/pubsublite/admin_connection_idempotency_policy.h"
+#include "google/cloud/pubsublite/internal/admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/pubsublite/admin_connection_idempotency_policy.h"
-#include "google/cloud/pubsublite/internal/admin_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -57,7 +57,8 @@ class AdminServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kInternal`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AdminServiceLimitedErrorCountRetryPolicy : public AdminServiceRetryPolicy {
+class AdminServiceLimitedErrorCountRetryPolicy
+    : public AdminServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,14 @@ class AdminServiceLimitedErrorCountRetryPolicy : public AdminServiceRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit AdminServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   AdminServiceLimitedErrorCountRetryPolicy(
       AdminServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AdminServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AdminServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AdminServiceLimitedErrorCountRetryPolicy(
       AdminServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AdminServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AdminServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +95,9 @@ class AdminServiceLimitedErrorCountRetryPolicy : public AdminServiceRetryPolicy 
   using BaseType = AdminServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<pubsublite_internal::AdminServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      pubsublite_internal::AdminServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -133,12 +136,14 @@ class AdminServiceLimitedTimeRetryPolicy : public AdminServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AdminServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AdminServiceLimitedTimeRetryPolicy(AdminServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : AdminServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AdminServiceLimitedTimeRetryPolicy(AdminServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : AdminServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AdminServiceLimitedTimeRetryPolicy(
+      AdminServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : AdminServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AdminServiceLimitedTimeRetryPolicy(
+      AdminServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : AdminServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,7 +165,9 @@ class AdminServiceLimitedTimeRetryPolicy : public AdminServiceRetryPolicy {
   using BaseType = AdminServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<pubsublite_internal::AdminServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      pubsublite_internal::AdminServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -181,83 +188,95 @@ class AdminServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::pubsublite::v1::Topic>
-  CreateTopic(google::cloud::pubsublite::v1::CreateTopicRequest const& request);
+  virtual StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
+      google::cloud::pubsublite::v1::CreateTopicRequest const& request);
 
-  virtual StatusOr<google::cloud::pubsublite::v1::Topic>
-  GetTopic(google::cloud::pubsublite::v1::GetTopicRequest const& request);
+  virtual StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
+      google::cloud::pubsublite::v1::GetTopicRequest const& request);
 
   virtual StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
-  GetTopicPartitions(google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
+  GetTopicPartitions(
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
 
-  virtual StreamRange<google::cloud::pubsublite::v1::Topic>
-  ListTopics(google::cloud::pubsublite::v1::ListTopicsRequest request);
+  virtual StreamRange<google::cloud::pubsublite::v1::Topic> ListTopics(
+      google::cloud::pubsublite::v1::ListTopicsRequest request);
 
-  virtual StatusOr<google::cloud::pubsublite::v1::Topic>
-  UpdateTopic(google::cloud::pubsublite::v1::UpdateTopicRequest const& request);
+  virtual StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
+      google::cloud::pubsublite::v1::UpdateTopicRequest const& request);
 
-  virtual Status
-  DeleteTopic(google::cloud::pubsublite::v1::DeleteTopicRequest const& request);
+  virtual Status DeleteTopic(
+      google::cloud::pubsublite::v1::DeleteTopicRequest const& request);
 
-  virtual StreamRange<std::string>
-  ListTopicSubscriptions(google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request);
-
-  virtual StatusOr<google::cloud::pubsublite::v1::Subscription>
-  CreateSubscription(google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request);
+  virtual StreamRange<std::string> ListTopicSubscriptions(
+      google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request);
 
   virtual StatusOr<google::cloud::pubsublite::v1::Subscription>
-  GetSubscription(google::cloud::pubsublite::v1::GetSubscriptionRequest const& request);
+  CreateSubscription(
+      google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request);
+
+  virtual StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
+      google::cloud::pubsublite::v1::GetSubscriptionRequest const& request);
 
   virtual StreamRange<google::cloud::pubsublite::v1::Subscription>
-  ListSubscriptions(google::cloud::pubsublite::v1::ListSubscriptionsRequest request);
+  ListSubscriptions(
+      google::cloud::pubsublite::v1::ListSubscriptionsRequest request);
 
   virtual StatusOr<google::cloud::pubsublite::v1::Subscription>
-  UpdateSubscription(google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request);
+  UpdateSubscription(
+      google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request);
 
-  virtual Status
-  DeleteSubscription(google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request);
+  virtual Status DeleteSubscription(
+      google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
+  SeekSubscription(
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  SeekSubscription(NoAwaitTag, google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> SeekSubscription(
+      NoAwaitTag,
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
+  SeekSubscription(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::pubsublite::v1::Reservation>
-  CreateReservation(google::cloud::pubsublite::v1::CreateReservationRequest const& request);
+  CreateReservation(
+      google::cloud::pubsublite::v1::CreateReservationRequest const& request);
 
-  virtual StatusOr<google::cloud::pubsublite::v1::Reservation>
-  GetReservation(google::cloud::pubsublite::v1::GetReservationRequest const& request);
+  virtual StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
+      google::cloud::pubsublite::v1::GetReservationRequest const& request);
 
   virtual StreamRange<google::cloud::pubsublite::v1::Reservation>
-  ListReservations(google::cloud::pubsublite::v1::ListReservationsRequest request);
+  ListReservations(
+      google::cloud::pubsublite::v1::ListReservationsRequest request);
 
   virtual StatusOr<google::cloud::pubsublite::v1::Reservation>
-  UpdateReservation(google::cloud::pubsublite::v1::UpdateReservationRequest const& request);
+  UpdateReservation(
+      google::cloud::pubsublite::v1::UpdateReservationRequest const& request);
 
-  virtual Status
-  DeleteReservation(google::cloud::pubsublite::v1::DeleteReservationRequest const& request);
+  virtual Status DeleteReservation(
+      google::cloud::pubsublite::v1::DeleteReservationRequest const& request);
 
-  virtual StreamRange<std::string>
-  ListReservationTopics(google::cloud::pubsublite::v1::ListReservationTopicsRequest request);
+  virtual StreamRange<std::string> ListReservationTopics(
+      google::cloud::pubsublite::v1::ListReservationTopicsRequest request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
   virtual future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
-  AsyncGetTopicPartitions(google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
+  AsyncGetTopicPartitions(
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
 };
 
 /**

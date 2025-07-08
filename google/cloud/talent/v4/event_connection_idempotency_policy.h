@@ -35,17 +35,18 @@ class EventServiceConnectionIdempotencyPolicy {
   virtual ~EventServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<EventServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<EventServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const& request);
+  virtual google::cloud::Idempotency CreateClientEvent(
+      google::cloud::talent::v4::CreateClientEventRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<EventServiceConnectionIdempotencyPolicy>
-    MakeDefaultEventServiceConnectionIdempotencyPolicy();
+MakeDefaultEventServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_v4

@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options BudgetServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_BUDGET_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_BUDGET_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_BUDGET_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BUDGET_SERVICE_AUTHORITY",
       "billingbudgets.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<billing_budgets_v1::BudgetServiceRetryPolicyOption>()) {
     options.set<billing_budgets_v1::BudgetServiceRetryPolicyOption>(
         billing_budgets_v1::BudgetServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<billing_budgets_v1::BudgetServiceBackoffPolicyOption>()) {
     options.set<billing_budgets_v1::BudgetServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicyOption>(
-        billing_budgets_v1::MakeDefaultBudgetServiceConnectionIdempotencyPolicy());
+  if (!options.has<billing_budgets_v1::
+                       BudgetServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicyOption>(
+        billing_budgets_v1::
+            MakeDefaultBudgetServiceConnectionIdempotencyPolicy());
   }
 
   return options;

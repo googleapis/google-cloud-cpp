@@ -34,41 +34,51 @@ class StoragePoolsConnectionIdempotencyPolicy {
   virtual ~StoragePoolsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<StoragePoolsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<StoragePoolsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListStoragePools(google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest request);
+  virtual google::cloud::Idempotency AggregatedListStoragePools(
+      google::cloud::cpp::compute::storage_pools::v1::
+          AggregatedListStoragePoolsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request);
+  virtual google::cloud::Idempotency DeleteStoragePool(
+      google::cloud::cpp::compute::storage_pools::v1::
+          DeleteStoragePoolRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetStoragePool(google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const& request);
+  virtual google::cloud::Idempotency GetStoragePool(
+      google::cloud::cpp::compute::storage_pools::v1::
+          GetStoragePoolRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request);
+  virtual google::cloud::Idempotency InsertStoragePool(
+      google::cloud::cpp::compute::storage_pools::v1::
+          InsertStoragePoolRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListStoragePools(google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest request);
+  virtual google::cloud::Idempotency ListStoragePools(
+      google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDisks(google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request);
+  virtual google::cloud::Idempotency ListDisks(
+      google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::storage_pools::v1::
+          TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request);
+  virtual google::cloud::Idempotency UpdateStoragePool(
+      google::cloud::cpp::compute::storage_pools::v1::
+          UpdateStoragePoolRequest const& request);
 };
 
 std::unique_ptr<StoragePoolsConnectionIdempotencyPolicy>
-    MakeDefaultStoragePoolsConnectionIdempotencyPolicy();
+MakeDefaultStoragePoolsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_storage_pools_v1

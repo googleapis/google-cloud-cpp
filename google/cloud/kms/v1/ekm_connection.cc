@@ -17,17 +17,17 @@
 // source: google/cloud/kms/v1/ekm_service.proto
 
 #include "google/cloud/kms/v1/ekm_connection.h"
+#include "google/cloud/kms/v1/ekm_options.h"
+#include "google/cloud/kms/v1/internal/ekm_connection_impl.h"
+#include "google/cloud/kms/v1/internal/ekm_option_defaults.h"
+#include "google/cloud/kms/v1/internal/ekm_stub_factory.h"
+#include "google/cloud/kms/v1/internal/ekm_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/kms/v1/ekm_options.h"
-#include "google/cloud/kms/v1/internal/ekm_connection_impl.h"
-#include "google/cloud/kms/v1/internal/ekm_option_defaults.h"
-#include "google/cloud/kms/v1/internal/ekm_stub_factory.h"
-#include "google/cloud/kms/v1/internal/ekm_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EkmServiceConnection::~EkmServiceConnection() = default;
 
-StreamRange<google::cloud::kms::v1::EkmConnection> EkmServiceConnection::ListEkmConnections(
-    google::cloud::kms::v1::ListEkmConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::kms::v1::EkmConnection>
+EkmServiceConnection::ListEkmConnections(
+    google::cloud::kms::v1::
+        ListEkmConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::EkmConnection>>();
 }
@@ -62,8 +64,7 @@ EkmServiceConnection::UpdateEkmConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::kms::v1::EkmConfig>
-EkmServiceConnection::GetEkmConfig(
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceConnection::GetEkmConfig(
     google::cloud::kms::v1::GetEkmConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -80,26 +81,25 @@ EkmServiceConnection::VerifyConnectivity(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> EkmServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+EkmServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-EkmServiceConnection::GetLocation(
+StatusOr<google::cloud::location::Location> EkmServiceConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-EkmServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> EkmServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-EkmServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> EkmServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -110,8 +110,7 @@ EkmServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation>
-EkmServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> EkmServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -119,17 +118,16 @@ EkmServiceConnection::GetOperation(
 std::shared_ptr<EkmServiceConnection> MakeEkmServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      EkmServicePolicyOptionList>(options, __func__);
-  options = kms_v1_internal::EkmServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 EkmServicePolicyOptionList>(options, __func__);
+  options = kms_v1_internal::EkmServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = kms_v1_internal::CreateDefaultEkmServiceStub(
-    std::move(auth), options);
+  auto stub =
+      kms_v1_internal::CreateDefaultEkmServiceStub(std::move(auth), options);
   return kms_v1_internal::MakeEkmServiceTracingConnection(
       std::make_shared<kms_v1_internal::EkmServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

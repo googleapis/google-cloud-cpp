@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FulfillmentsClient::FulfillmentsClient(
     std::shared_ptr<FulfillmentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FulfillmentsClient::~FulfillmentsClient() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
@@ -41,13 +41,17 @@ FulfillmentsClient::GetFulfillment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-FulfillmentsClient::GetFulfillment(google::cloud::dialogflow::v2::GetFulfillmentRequest const& request, Options opts) {
+FulfillmentsClient::GetFulfillment(
+    google::cloud::dialogflow::v2::GetFulfillmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFulfillment(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-FulfillmentsClient::UpdateFulfillment(google::cloud::dialogflow::v2::Fulfillment const& fulfillment, google::protobuf::FieldMask const& update_mask, Options opts) {
+FulfillmentsClient::UpdateFulfillment(
+    google::cloud::dialogflow::v2::Fulfillment const& fulfillment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::UpdateFulfillmentRequest request;
   *request.mutable_fulfillment() = fulfillment;
@@ -56,25 +60,28 @@ FulfillmentsClient::UpdateFulfillment(google::cloud::dialogflow::v2::Fulfillment
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
-FulfillmentsClient::UpdateFulfillment(google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request, Options opts) {
+FulfillmentsClient::UpdateFulfillment(
+    google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFulfillment(request);
 }
 
 StreamRange<google::cloud::location::Location>
-FulfillmentsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+FulfillmentsClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-FulfillmentsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> FulfillmentsClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-FulfillmentsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> FulfillmentsClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -82,36 +89,36 @@ FulfillmentsClient::ListOperations(std::string const& name, std::string const& f
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-FulfillmentsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> FulfillmentsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-FulfillmentsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FulfillmentsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FulfillmentsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FulfillmentsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-FulfillmentsClient::CancelOperation(std::string const& name, Options opts) {
+Status FulfillmentsClient::CancelOperation(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-FulfillmentsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status FulfillmentsClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

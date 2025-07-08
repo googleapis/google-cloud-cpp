@@ -17,17 +17,17 @@
 // source: google/cloud/support/v2/attachment_service.proto
 
 #include "google/cloud/support/v2/internal/case_attachment_stub_factory.h"
+#include "google/cloud/support/v2/internal/case_attachment_auth_decorator.h"
+#include "google/cloud/support/v2/internal/case_attachment_logging_decorator.h"
+#include "google/cloud/support/v2/internal/case_attachment_metadata_decorator.h"
+#include "google/cloud/support/v2/internal/case_attachment_stub.h"
+#include "google/cloud/support/v2/internal/case_attachment_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/support/v2/internal/case_attachment_auth_decorator.h"
-#include "google/cloud/support/v2/internal/case_attachment_logging_decorator.h"
-#include "google/cloud/support/v2/internal/case_attachment_metadata_decorator.h"
-#include "google/cloud/support/v2/internal/case_attachment_stub.h"
-#include "google/cloud/support/v2/internal/case_attachment_tracing_stub.h"
 #include <google/cloud/support/v2/attachment_service.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -41,24 +41,24 @@ std::shared_ptr<CaseAttachmentServiceStub>
 CreateDefaultCaseAttachmentServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::support::v2::CaseAttachmentService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::support::v2::CaseAttachmentService::NewStub(channel);
   std::shared_ptr<CaseAttachmentServiceStub> stub =
-    std::make_shared<DefaultCaseAttachmentServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultCaseAttachmentServiceStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<CaseAttachmentServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<CaseAttachmentServiceAuth>(std::move(auth),
+                                                       std::move(stub));
   }
   stub = std::make_shared<CaseAttachmentServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CaseAttachmentServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

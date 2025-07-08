@@ -26,43 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-JobServiceConnectionIdempotencyPolicy::~JobServiceConnectionIdempotencyPolicy() = default;
+JobServiceConnectionIdempotencyPolicy::
+    ~JobServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
 JobServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<JobServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::CancelJob(google::cloud::bigquery::v2::CancelJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::CancelJob(
+    google::cloud::bigquery::v2::CancelJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetJob(google::cloud::bigquery::v2::GetJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetJob(
+    google::cloud::bigquery::v2::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::InsertJob(google::cloud::bigquery::v2::InsertJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::InsertJob(
+    google::cloud::bigquery::v2::InsertJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::DeleteJob(
+    google::cloud::bigquery::v2::DeleteJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::ListJobs(google::cloud::bigquery::v2::ListJobsRequest) {  // NOLINT
+Idempotency JobServiceConnectionIdempotencyPolicy::ListJobs(
+    google::cloud::bigquery::v2::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::GetQueryResults(google::cloud::bigquery::v2::GetQueryResultsRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::GetQueryResults(
+    google::cloud::bigquery::v2::GetQueryResultsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency JobServiceConnectionIdempotencyPolicy::Query(google::cloud::bigquery::v2::PostQueryRequest const&) {
+Idempotency JobServiceConnectionIdempotencyPolicy::Query(
+    google::cloud::bigquery::v2::PostQueryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
-    MakeDefaultJobServiceConnectionIdempotencyPolicy() {
+MakeDefaultJobServiceConnectionIdempotencyPolicy() {
   return std::make_unique<JobServiceConnectionIdempotencyPolicy>();
 }
 

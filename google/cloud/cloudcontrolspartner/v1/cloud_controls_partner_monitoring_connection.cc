@@ -17,12 +17,12 @@
 // source: google/cloud/cloudcontrolspartner/v1/monitoring.proto
 
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_options.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_connection_impl.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_option_defaults.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_stub_factory.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -36,10 +36,13 @@ namespace cloud {
 namespace cloudcontrolspartner_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-CloudControlsPartnerMonitoringConnection::~CloudControlsPartnerMonitoringConnection() = default;
+CloudControlsPartnerMonitoringConnection::
+    ~CloudControlsPartnerMonitoringConnection() = default;
 
-StreamRange<google::cloud::cloudcontrolspartner::v1::Violation> CloudControlsPartnerMonitoringConnection::ListViolations(
-    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>
+CloudControlsPartnerMonitoringConnection::ListViolations(
+    google::cloud::cloudcontrolspartner::v1::
+        ListViolationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>>();
 }
@@ -50,20 +53,22 @@ CloudControlsPartnerMonitoringConnection::GetViolation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<CloudControlsPartnerMonitoringConnection> MakeCloudControlsPartnerMonitoringConnection(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
+std::shared_ptr<CloudControlsPartnerMonitoringConnection>
+MakeCloudControlsPartnerMonitoringConnection(Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       CloudControlsPartnerMonitoringPolicyOptionList>(options, __func__);
-  options = cloudcontrolspartner_v1_internal::CloudControlsPartnerMonitoringDefaultOptions(
-      std::move(options));
+  options = cloudcontrolspartner_v1_internal::
+      CloudControlsPartnerMonitoringDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = cloudcontrolspartner_v1_internal::CreateDefaultCloudControlsPartnerMonitoringStub(
-    std::move(auth), options);
-  return cloudcontrolspartner_v1_internal::MakeCloudControlsPartnerMonitoringTracingConnection(
-      std::make_shared<cloudcontrolspartner_v1_internal::CloudControlsPartnerMonitoringConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub = cloudcontrolspartner_v1_internal::
+      CreateDefaultCloudControlsPartnerMonitoringStub(std::move(auth), options);
+  return cloudcontrolspartner_v1_internal::
+      MakeCloudControlsPartnerMonitoringTracingConnection(
+          std::make_shared<cloudcontrolspartner_v1_internal::
+                               CloudControlsPartnerMonitoringConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

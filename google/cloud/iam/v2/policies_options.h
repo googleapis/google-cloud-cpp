@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iam/v2/policies_connection.h"
 #include "google/cloud/iam/v2/policies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct PoliciesPollingPolicyOption {
  * @ingroup google-cloud-iam-options
  */
 using PoliciesPolicyOptionList =
-    OptionList<PoliciesRetryPolicyOption,
-               PoliciesBackoffPolicyOption,
+    OptionList<PoliciesRetryPolicyOption, PoliciesBackoffPolicyOption,
                PoliciesPollingPolicyOption,
                PoliciesConnectionIdempotencyPolicyOption>;
 

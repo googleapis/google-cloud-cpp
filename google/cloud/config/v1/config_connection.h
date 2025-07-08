@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/config/v1/config_connection_idempotency_policy.h"
 #include "google/cloud/config/v1/internal/config_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class ConfigLimitedErrorCountRetryPolicy : public ConfigRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ConfigLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ConfigLimitedErrorCountRetryPolicy(
       ConfigLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ConfigLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConfigLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConfigLimitedErrorCountRetryPolicy(
       ConfigLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ConfigLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConfigLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class ConfigLimitedErrorCountRetryPolicy : public ConfigRetryPolicy {
   using BaseType = ConfigRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<config_v1_internal::ConfigRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      config_v1_internal::ConfigRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,12 @@ class ConfigLimitedTimeRetryPolicy : public ConfigRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ConfigLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   ConfigLimitedTimeRetryPolicy(ConfigLimitedTimeRetryPolicy&& rhs) noexcept
-    : ConfigLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ConfigLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   ConfigLimitedTimeRetryPolicy(ConfigLimitedTimeRetryPolicy const& rhs) noexcept
-    : ConfigLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ConfigLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -150,15 +152,16 @@ class ConfigLimitedTimeRetryPolicy : public ConfigRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ConfigRetryPolicy> clone() const override {
-    return std::make_unique<ConfigLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<ConfigLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ConfigRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<config_v1_internal::ConfigRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      config_v1_internal::ConfigRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,143 +182,161 @@ class ConfigConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::config::v1::Deployment>
-  ListDeployments(google::cloud::config::v1::ListDeploymentsRequest request);
+  virtual StreamRange<google::cloud::config::v1::Deployment> ListDeployments(
+      google::cloud::config::v1::ListDeploymentsRequest request);
 
-  virtual StatusOr<google::cloud::config::v1::Deployment>
-  GetDeployment(google::cloud::config::v1::GetDeploymentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  CreateDeployment(google::cloud::config::v1::CreateDeploymentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateDeployment(NoAwaitTag, google::cloud::config::v1::CreateDeploymentRequest const& request);
+  virtual StatusOr<google::cloud::config::v1::Deployment> GetDeployment(
+      google::cloud::config::v1::GetDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  CreateDeployment( google::longrunning::Operation const& operation);
+  CreateDeployment(
+      google::cloud::config::v1::CreateDeploymentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateDeployment(
+      NoAwaitTag,
+      google::cloud::config::v1::CreateDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  UpdateDeployment(google::cloud::config::v1::UpdateDeploymentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateDeployment(NoAwaitTag, google::cloud::config::v1::UpdateDeploymentRequest const& request);
+  CreateDeployment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  UpdateDeployment( google::longrunning::Operation const& operation);
+  UpdateDeployment(
+      google::cloud::config::v1::UpdateDeploymentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDeployment(
+      NoAwaitTag,
+      google::cloud::config::v1::UpdateDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  DeleteDeployment(google::cloud::config::v1::DeleteDeploymentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteDeployment(NoAwaitTag, google::cloud::config::v1::DeleteDeploymentRequest const& request);
+  UpdateDeployment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  DeleteDeployment( google::longrunning::Operation const& operation);
+  DeleteDeployment(
+      google::cloud::config::v1::DeleteDeploymentRequest const& request);
 
-  virtual StreamRange<google::cloud::config::v1::Revision>
-  ListRevisions(google::cloud::config::v1::ListRevisionsRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeleteDeployment(
+      NoAwaitTag,
+      google::cloud::config::v1::DeleteDeploymentRequest const& request);
 
-  virtual StatusOr<google::cloud::config::v1::Revision>
-  GetRevision(google::cloud::config::v1::GetRevisionRequest const& request);
+  virtual future<StatusOr<google::cloud::config::v1::Deployment>>
+  DeleteDeployment(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::config::v1::Resource>
-  GetResource(google::cloud::config::v1::GetResourceRequest const& request);
+  virtual StreamRange<google::cloud::config::v1::Revision> ListRevisions(
+      google::cloud::config::v1::ListRevisionsRequest request);
 
-  virtual StreamRange<google::cloud::config::v1::Resource>
-  ListResources(google::cloud::config::v1::ListResourcesRequest request);
+  virtual StatusOr<google::cloud::config::v1::Revision> GetRevision(
+      google::cloud::config::v1::GetRevisionRequest const& request);
+
+  virtual StatusOr<google::cloud::config::v1::Resource> GetResource(
+      google::cloud::config::v1::GetResourceRequest const& request);
+
+  virtual StreamRange<google::cloud::config::v1::Resource> ListResources(
+      google::cloud::config::v1::ListResourcesRequest request);
 
   virtual StatusOr<google::cloud::config::v1::Statefile>
-  ExportDeploymentStatefile(google::cloud::config::v1::ExportDeploymentStatefileRequest const& request);
+  ExportDeploymentStatefile(
+      google::cloud::config::v1::ExportDeploymentStatefileRequest const&
+          request);
 
   virtual StatusOr<google::cloud::config::v1::Statefile>
-  ExportRevisionStatefile(google::cloud::config::v1::ExportRevisionStatefileRequest const& request);
+  ExportRevisionStatefile(
+      google::cloud::config::v1::ExportRevisionStatefileRequest const& request);
 
-  virtual StatusOr<google::cloud::config::v1::Statefile>
-  ImportStatefile(google::cloud::config::v1::ImportStatefileRequest const& request);
+  virtual StatusOr<google::cloud::config::v1::Statefile> ImportStatefile(
+      google::cloud::config::v1::ImportStatefileRequest const& request);
 
-  virtual Status
-  DeleteStatefile(google::cloud::config::v1::DeleteStatefileRequest const& request);
-
-  virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  LockDeployment(google::cloud::config::v1::LockDeploymentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  LockDeployment(NoAwaitTag, google::cloud::config::v1::LockDeploymentRequest const& request);
+  virtual Status DeleteStatefile(
+      google::cloud::config::v1::DeleteStatefileRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  LockDeployment( google::longrunning::Operation const& operation);
+  LockDeployment(
+      google::cloud::config::v1::LockDeploymentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> LockDeployment(
+      NoAwaitTag,
+      google::cloud::config::v1::LockDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  UnlockDeployment(google::cloud::config::v1::UnlockDeploymentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UnlockDeployment(NoAwaitTag, google::cloud::config::v1::UnlockDeploymentRequest const& request);
+  LockDeployment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  UnlockDeployment( google::longrunning::Operation const& operation);
+  UnlockDeployment(
+      google::cloud::config::v1::UnlockDeploymentRequest const& request);
 
-  virtual StatusOr<google::cloud::config::v1::LockInfo>
-  ExportLockInfo(google::cloud::config::v1::ExportLockInfoRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UnlockDeployment(
+      NoAwaitTag,
+      google::cloud::config::v1::UnlockDeploymentRequest const& request);
 
-  virtual future<StatusOr<google::cloud::config::v1::Preview>>
-  CreatePreview(google::cloud::config::v1::CreatePreviewRequest const& request);
+  virtual future<StatusOr<google::cloud::config::v1::Deployment>>
+  UnlockDeployment(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreatePreview(NoAwaitTag, google::cloud::config::v1::CreatePreviewRequest const& request);
+  virtual StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
+      google::cloud::config::v1::ExportLockInfoRequest const& request);
 
-  virtual future<StatusOr<google::cloud::config::v1::Preview>>
-  CreatePreview( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+      google::cloud::config::v1::CreatePreviewRequest const& request);
 
-  virtual StatusOr<google::cloud::config::v1::Preview>
-  GetPreview(google::cloud::config::v1::GetPreviewRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreatePreview(
+      NoAwaitTag,
+      google::cloud::config::v1::CreatePreviewRequest const& request);
 
-  virtual StreamRange<google::cloud::config::v1::Preview>
-  ListPreviews(google::cloud::config::v1::ListPreviewsRequest request);
+  virtual future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::config::v1::Preview>>
-  DeletePreview(google::cloud::config::v1::DeletePreviewRequest const& request);
+  virtual StatusOr<google::cloud::config::v1::Preview> GetPreview(
+      google::cloud::config::v1::GetPreviewRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeletePreview(NoAwaitTag, google::cloud::config::v1::DeletePreviewRequest const& request);
+  virtual StreamRange<google::cloud::config::v1::Preview> ListPreviews(
+      google::cloud::config::v1::ListPreviewsRequest request);
 
-  virtual future<StatusOr<google::cloud::config::v1::Preview>>
-  DeletePreview( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+      google::cloud::config::v1::DeletePreviewRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeletePreview(
+      NoAwaitTag,
+      google::cloud::config::v1::DeletePreviewRequest const& request);
+
+  virtual future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
-  ExportPreviewResult(google::cloud::config::v1::ExportPreviewResultRequest const& request);
+  ExportPreviewResult(
+      google::cloud::config::v1::ExportPreviewResultRequest const& request);
 
   virtual StreamRange<google::cloud::config::v1::TerraformVersion>
-  ListTerraformVersions(google::cloud::config::v1::ListTerraformVersionsRequest request);
+  ListTerraformVersions(
+      google::cloud::config::v1::ListTerraformVersionsRequest request);
 
   virtual StatusOr<google::cloud::config::v1::TerraformVersion>
-  GetTerraformVersion(google::cloud::config::v1::GetTerraformVersionRequest const& request);
+  GetTerraformVersion(
+      google::cloud::config::v1::GetTerraformVersionRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -339,8 +360,7 @@ class ConfigConnection {
  * @param options (optional) Configure the `ConfigConnection` created by
  * this function.
  */
-std::shared_ptr<ConfigConnection> MakeConfigConnection(
-    Options options = {});
+std::shared_ptr<ConfigConnection> MakeConfigConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace config_v1

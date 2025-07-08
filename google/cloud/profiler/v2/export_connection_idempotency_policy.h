@@ -34,14 +34,15 @@ class ExportServiceConnectionIdempotencyPolicy {
   virtual ~ExportServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ExportServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ExportServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest request);
+  virtual google::cloud::Idempotency ListProfiles(
+      google::devtools::cloudprofiler::v2::ListProfilesRequest request);
 };
 
 std::unique_ptr<ExportServiceConnectionIdempotencyPolicy>
-    MakeDefaultExportServiceConnectionIdempotencyPolicy();
+MakeDefaultExportServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler_v2

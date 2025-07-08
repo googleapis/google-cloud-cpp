@@ -36,68 +36,81 @@ class StorageTransferServiceTracingConnection
   ~StorageTransferServiceTracingConnection() override = default;
 
   explicit StorageTransferServiceTracingConnection(
-    std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection> child);
+      std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
-  GetGoogleServiceAccount(google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request) override;
+  GetGoogleServiceAccount(
+      google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
+          request) override;
 
-  StatusOr<google::storagetransfer::v1::TransferJob>
-  CreateTransferJob(google::storagetransfer::v1::CreateTransferJobRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
+      google::storagetransfer::v1::CreateTransferJobRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::TransferJob>
-  UpdateTransferJob(google::storagetransfer::v1::UpdateTransferJobRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
+      google::storagetransfer::v1::UpdateTransferJobRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::TransferJob>
-  GetTransferJob(google::storagetransfer::v1::GetTransferJobRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
+      google::storagetransfer::v1::GetTransferJobRequest const& request)
+      override;
 
-  StreamRange<google::storagetransfer::v1::TransferJob>
-  ListTransferJobs(google::storagetransfer::v1::ListTransferJobsRequest request) override;
+  StreamRange<google::storagetransfer::v1::TransferJob> ListTransferJobs(
+      google::storagetransfer::v1::ListTransferJobsRequest request) override;
 
-  Status
-  PauseTransferOperation(google::storagetransfer::v1::PauseTransferOperationRequest const& request) override;
+  Status PauseTransferOperation(
+      google::storagetransfer::v1::PauseTransferOperationRequest const& request)
+      override;
 
-  Status
-  ResumeTransferOperation(google::storagetransfer::v1::ResumeTransferOperationRequest const& request) override;
+  Status ResumeTransferOperation(
+      google::storagetransfer::v1::ResumeTransferOperationRequest const&
+          request) override;
 
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-  RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const& request) override;
+  RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RunTransferJob(NoAwaitTag,
-      google::storagetransfer::v1::RunTransferJobRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RunTransferJob(
+      NoAwaitTag,
+      google::storagetransfer::v1::RunTransferJobRequest const& request)
+      override;
 
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-  RunTransferJob(
-      google::longrunning::Operation const& operation) override;
+  RunTransferJob(google::longrunning::Operation const& operation) override;
 
-  Status
-  DeleteTransferJob(google::storagetransfer::v1::DeleteTransferJobRequest const& request) override;
+  Status DeleteTransferJob(
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::AgentPool>
-  CreateAgentPool(google::storagetransfer::v1::CreateAgentPoolRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::AgentPool>
-  UpdateAgentPool(google::storagetransfer::v1::UpdateAgentPoolRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request)
+      override;
 
-  StatusOr<google::storagetransfer::v1::AgentPool>
-  GetAgentPool(google::storagetransfer::v1::GetAgentPoolRequest const& request) override;
+  StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
+      google::storagetransfer::v1::GetAgentPoolRequest const& request) override;
 
-  StreamRange<google::storagetransfer::v1::AgentPool>
-  ListAgentPools(google::storagetransfer::v1::ListAgentPoolsRequest request) override;
+  StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
+      google::storagetransfer::v1::ListAgentPoolsRequest request) override;
 
-  Status
-  DeleteAgentPool(google::storagetransfer::v1::DeleteAgentPoolRequest const& request) override;
+  Status DeleteAgentPool(
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<storagetransfer_v1::StorageTransferServiceConnection> child_;

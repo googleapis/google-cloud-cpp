@@ -36,18 +36,22 @@ class NodeTypesTracingConnection
   ~NodeTypesTracingConnection() override = default;
 
   explicit NodeTypesTracingConnection(
-    std::shared_ptr<compute_node_types_v1::NodeTypesConnection> child);
+      std::shared_ptr<compute_node_types_v1::NodeTypesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
-  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest request) override;
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::
+                              AggregatedListNodeTypesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeType>
-  GetNodeType(google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::NodeType>
-  ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
+      google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request)
+      override;
 
  private:
   std::shared_ptr<compute_node_types_v1::NodeTypesConnection> child_;

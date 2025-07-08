@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConnectionServiceClient::ConnectionServiceClient(
     std::shared_ptr<ConnectionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ConnectionServiceClient::~ConnectionServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceClient::CreateConnection(std::string const& parent, google::cloud::bigquery::connection::v1::Connection const& connection, std::string const& connection_id, Options opts) {
+ConnectionServiceClient::CreateConnection(
+    std::string const& parent,
+    google::cloud::bigquery::connection::v1::Connection const& connection,
+    std::string const& connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::connection::v1::CreateConnectionRequest request;
   request.set_parent(parent);
@@ -43,7 +46,10 @@ ConnectionServiceClient::CreateConnection(std::string const& parent, google::clo
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceClient::CreateConnection(google::cloud::bigquery::connection::v1::CreateConnectionRequest const& request, Options opts) {
+ConnectionServiceClient::CreateConnection(
+    google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnection(request);
 }
@@ -57,13 +63,17 @@ ConnectionServiceClient::GetConnection(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceClient::GetConnection(google::cloud::bigquery::connection::v1::GetConnectionRequest const& request, Options opts) {
+ConnectionServiceClient::GetConnection(
+    google::cloud::bigquery::connection::v1::GetConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnection(request);
 }
 
 StreamRange<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceClient::ListConnections(std::string const& parent, Options opts) {
+ConnectionServiceClient::ListConnections(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::connection::v1::ListConnectionsRequest request;
   request.set_parent(parent);
@@ -71,13 +81,18 @@ ConnectionServiceClient::ListConnections(std::string const& parent, Options opts
 }
 
 StreamRange<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceClient::ListConnections(google::cloud::bigquery::connection::v1::ListConnectionsRequest request, Options opts) {
+ConnectionServiceClient::ListConnections(
+    google::cloud::bigquery::connection::v1::ListConnectionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnections(std::move(request));
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceClient::UpdateConnection(std::string const& name, google::cloud::bigquery::connection::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts) {
+ConnectionServiceClient::UpdateConnection(
+    std::string const& name,
+    google::cloud::bigquery::connection::v1::Connection const& connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::connection::v1::UpdateConnectionRequest request;
   request.set_name(name);
@@ -87,27 +102,33 @@ ConnectionServiceClient::UpdateConnection(std::string const& name, google::cloud
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
-ConnectionServiceClient::UpdateConnection(google::cloud::bigquery::connection::v1::UpdateConnectionRequest const& request, Options opts) {
+ConnectionServiceClient::UpdateConnection(
+    google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnection(request);
 }
 
-Status
-ConnectionServiceClient::DeleteConnection(std::string const& name, Options opts) {
+Status ConnectionServiceClient::DeleteConnection(std::string const& name,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::bigquery::connection::v1::DeleteConnectionRequest request;
   request.set_name(name);
   return connection_->DeleteConnection(request);
 }
 
-Status
-ConnectionServiceClient::DeleteConnection(google::cloud::bigquery::connection::v1::DeleteConnectionRequest const& request, Options opts) {
+Status ConnectionServiceClient::DeleteConnection(
+    google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnection(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectionServiceClient::GetIamPolicy(std::string const& resource, google::iam::v1::GetPolicyOptions const& options, Options opts) {
+StatusOr<google::iam::v1::Policy> ConnectionServiceClient::GetIamPolicy(
+    std::string const& resource,
+    google::iam::v1::GetPolicyOptions const& options, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
@@ -115,14 +136,15 @@ ConnectionServiceClient::GetIamPolicy(std::string const& resource, google::iam::
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectionServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> ConnectionServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectionServiceClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts) {
+StatusOr<google::iam::v1::Policy> ConnectionServiceClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
@@ -130,14 +152,16 @@ ConnectionServiceClient::SetIamPolicy(std::string const& resource, google::iam::
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectionServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> ConnectionServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ConnectionServiceClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts) {
+ConnectionServiceClient::TestIamPermissions(
+    std::string const& resource, std::vector<std::string> const& permissions,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
@@ -146,7 +170,8 @@ ConnectionServiceClient::TestIamPermissions(std::string const& resource, std::ve
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ConnectionServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+ConnectionServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

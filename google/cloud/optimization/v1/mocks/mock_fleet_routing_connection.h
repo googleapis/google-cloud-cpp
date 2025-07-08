@@ -42,25 +42,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockFleetRoutingConnection : public optimization_v1::FleetRoutingConnection {
+class MockFleetRoutingConnection
+    : public optimization_v1::FleetRoutingConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>,
-  OptimizeTours,
-  (google::cloud::optimization::v1::OptimizeToursRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>,
+      OptimizeTours,
+      (google::cloud::optimization::v1::OptimizeToursRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchOptimizeTours(Matcher<google::cloud::optimization::v1::BatchOptimizeToursRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchOptimizeTours(Matcher<google::cloud::optimization::v1::BatchOptimizeToursRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
-  BatchOptimizeTours,
-  (google::cloud::optimization::v1::BatchOptimizeToursRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
+              BatchOptimizeTours,
+              (google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -68,25 +75,28 @@ class MockFleetRoutingConnection : public optimization_v1::FleetRoutingConnectio
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchOptimizeTours(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  BatchOptimizeTours, (NoAwaitTag,
-    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchOptimizeTours,
+              (NoAwaitTag,
+               google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, BatchOptimizeTours(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// BatchOptimizeTours(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
-  BatchOptimizeTours, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
+              BatchOptimizeTours,
+              (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -35,30 +35,36 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CatalogServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CATALOG_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CATALOG_SERVICE_AUTHORITY",
-      "dataplex.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CATALOG_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CATALOG_SERVICE_AUTHORITY", "dataplex.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataplex_v1::CatalogServiceRetryPolicyOption>()) {
     options.set<dataplex_v1::CatalogServiceRetryPolicyOption>(
         dataplex_v1::CatalogServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dataplex_v1::CatalogServiceBackoffPolicyOption>()) {
     options.set<dataplex_v1::CatalogServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<dataplex_v1::CatalogServicePollingPolicyOption>()) {
     options.set<dataplex_v1::CatalogServicePollingPolicyOption>(
         GenericPollingPolicy<
             dataplex_v1::CatalogServiceRetryPolicyOption::Type,
             dataplex_v1::CatalogServiceBackoffPolicyOption::Type>(
-            options.get<dataplex_v1::CatalogServiceRetryPolicyOption>()->clone(),
+            options.get<dataplex_v1::CatalogServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<dataplex_v1::CatalogServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          dataplex_v1::CatalogServiceConnectionIdempotencyPolicyOption>()) {
     options.set<dataplex_v1::CatalogServiceConnectionIdempotencyPolicyOption>(
         dataplex_v1::MakeDefaultCatalogServiceConnectionIdempotencyPolicy());
   }

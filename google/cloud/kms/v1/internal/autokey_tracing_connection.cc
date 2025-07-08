@@ -34,9 +34,9 @@ AutokeyTracingConnection::AutokeyTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-AutokeyTracingConnection::CreateKeyHandle(google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
-  auto span = internal::MakeSpan(
-      "kms_v1::AutokeyConnection::CreateKeyHandle");
+AutokeyTracingConnection::CreateKeyHandle(
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::AutokeyConnection::CreateKeyHandle");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateKeyHandle(request));
 }
@@ -44,78 +44,81 @@ AutokeyTracingConnection::CreateKeyHandle(google::cloud::kms::v1::CreateKeyHandl
 StatusOr<google::longrunning::Operation>
 AutokeyTracingConnection::CreateKeyHandle(
     NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
-  auto span = internal::MakeSpan(
-      "kms_v1::AutokeyConnection::CreateKeyHandle");
+  auto span = internal::MakeSpan("kms_v1::AutokeyConnection::CreateKeyHandle");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateKeyHandle(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateKeyHandle(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
 AutokeyTracingConnection::CreateKeyHandle(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "kms_v1::AutokeyConnection::CreateKeyHandle");
+  auto span = internal::MakeSpan("kms_v1::AutokeyConnection::CreateKeyHandle");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateKeyHandle(operation));
+  return internal::EndSpan(std::move(span), child_->CreateKeyHandle(operation));
 }
 
 StatusOr<google::cloud::kms::v1::KeyHandle>
-AutokeyTracingConnection::GetKeyHandle(google::cloud::kms::v1::GetKeyHandleRequest const& request) {
+AutokeyTracingConnection::GetKeyHandle(
+    google::cloud::kms::v1::GetKeyHandleRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::GetKeyHandle");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetKeyHandle(request));
 }
 
 StreamRange<google::cloud::kms::v1::KeyHandle>
-AutokeyTracingConnection::ListKeyHandles(google::cloud::kms::v1::ListKeyHandlesRequest request) {
+AutokeyTracingConnection::ListKeyHandles(
+    google::cloud::kms::v1::ListKeyHandlesRequest request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::ListKeyHandles");
   internal::OTelScope scope(span);
   auto sr = child_->ListKeyHandles(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::KeyHandle>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::location::Location>
-AutokeyTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
+AutokeyTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-AutokeyTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+AutokeyTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-AutokeyTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> AutokeyTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-AutokeyTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> AutokeyTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutokeyTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("kms_v1::AutokeyConnection::TestIamPermissions");
+AutokeyTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::AutokeyConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AutokeyTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation> AutokeyTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
@@ -123,8 +126,7 @@ AutokeyTracingConnection::GetOperation(google::longrunning::GetOperationRequest 
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<kms_v1::AutokeyConnection>
-MakeAutokeyTracingConnection(
+std::shared_ptr<kms_v1::AutokeyConnection> MakeAutokeyTracingConnection(
     std::shared_ptr<kms_v1::AutokeyConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

@@ -17,12 +17,12 @@
 // source: google/cloud/compute/global_operations/v1/global_operations.proto
 
 #include "google/cloud/compute/global_operations/v1/global_operations_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/global_operations/v1/global_operations_options.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_option_defaults.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_rest_connection_impl.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_rest_stub_factory.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_tracing_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,19 +36,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GlobalOperationsConnection> MakeGlobalOperationsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      GlobalOperationsPolicyOptionList>(options, __func__);
-  options = compute_global_operations_v1_internal::GlobalOperationsDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, GlobalOperationsPolicyOptionList>(
+      options, __func__);
+  options =
+      compute_global_operations_v1_internal::GlobalOperationsDefaultOptions(
+          std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_global_operations_v1_internal::CreateDefaultGlobalOperationsRestStub(
-      options);
-  return compute_global_operations_v1_internal::MakeGlobalOperationsTracingConnection(
-      std::make_shared<
-          compute_global_operations_v1_internal::GlobalOperationsRestConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_global_operations_v1_internal::
+      CreateDefaultGlobalOperationsRestStub(options);
+  return compute_global_operations_v1_internal::
+      MakeGlobalOperationsTracingConnection(
+          std::make_shared<compute_global_operations_v1_internal::
+                               GlobalOperationsRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

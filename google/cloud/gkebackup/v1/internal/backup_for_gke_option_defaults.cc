@@ -35,19 +35,21 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options BackupForGKEDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_BACKUP_FOR_GKE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_BACKUP_FOR_GKE_AUTHORITY",
-      "gkebackup.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_BACKUP_FOR_GKE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BACKUP_FOR_GKE_AUTHORITY", "gkebackup.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<gkebackup_v1::BackupForGKERetryPolicyOption>()) {
     options.set<gkebackup_v1::BackupForGKERetryPolicyOption>(
         gkebackup_v1::BackupForGKELimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<gkebackup_v1::BackupForGKEBackoffPolicyOption>()) {
     options.set<gkebackup_v1::BackupForGKEBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<gkebackup_v1::BackupForGKEPollingPolicyOption>()) {
     options.set<gkebackup_v1::BackupForGKEPollingPolicyOption>(
@@ -56,9 +58,12 @@ Options BackupForGKEDefaultOptions(Options options) {
             gkebackup_v1::BackupForGKEBackoffPolicyOption::Type>(
             options.get<gkebackup_v1::BackupForGKERetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>()) {
     options.set<gkebackup_v1::BackupForGKEConnectionIdempotencyPolicyOption>(
         gkebackup_v1::MakeDefaultBackupForGKEConnectionIdempotencyPolicy());
   }

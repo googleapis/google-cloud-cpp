@@ -46,69 +46,67 @@ RuleSetServiceMetadata::RuleSetServiceMetadata(
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::CreateRuleSet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::GetRuleSet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::UpdateRuleSet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateRuleSet(context, options, request);
 }
 
-Status
-RuleSetServiceMetadata::DeleteRuleSet(
-    grpc::ClientContext& context,
-    Options const& options,
+Status RuleSetServiceMetadata::DeleteRuleSet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 RuleSetServiceMetadata::ListRuleSets(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListRuleSets(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-RuleSetServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> RuleSetServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
 void RuleSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void RuleSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

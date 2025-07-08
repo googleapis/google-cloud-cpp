@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_REPORTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_REPORTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/channel/v1/cloud_channel_reports_connection_idempotency_policy.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -41,14 +41,17 @@ namespace channel_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudChannelReportsServiceConnection`.
-class CloudChannelReportsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class CloudChannelReportsServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `CloudChannelReportsServiceConnection` based on counting errors.
+ * A retry policy for `CloudChannelReportsServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -57,7 +60,8 @@ class CloudChannelReportsServiceRetryPolicy : public ::google::cloud::RetryPolic
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudChannelReportsServiceLimitedErrorCountRetryPolicy : public CloudChannelReportsServiceRetryPolicy {
+class CloudChannelReportsServiceLimitedErrorCountRetryPolicy
+    : public CloudChannelReportsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,15 +70,19 @@ class CloudChannelReportsServiceLimitedErrorCountRetryPolicy : public CloudChann
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit CloudChannelReportsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit CloudChannelReportsServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   CloudChannelReportsServiceLimitedErrorCountRetryPolicy(
       CloudChannelReportsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : CloudChannelReportsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CloudChannelReportsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   CloudChannelReportsServiceLimitedErrorCountRetryPolicy(
-      CloudChannelReportsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : CloudChannelReportsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      CloudChannelReportsServiceLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : CloudChannelReportsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -85,8 +93,10 @@ class CloudChannelReportsServiceLimitedErrorCountRetryPolicy : public CloudChann
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone() const override {
-    return std::make_unique<CloudChannelReportsServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        CloudChannelReportsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -94,11 +104,14 @@ class CloudChannelReportsServiceLimitedErrorCountRetryPolicy : public CloudChann
   using BaseType = CloudChannelReportsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<channel_v1_internal::CloudChannelReportsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      channel_v1_internal::CloudChannelReportsServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `CloudChannelReportsServiceConnection` based on elapsed time.
+ * A retry policy for `CloudChannelReportsServiceConnection` based on elapsed
+ * time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -107,7 +120,8 @@ class CloudChannelReportsServiceLimitedErrorCountRetryPolicy : public CloudChann
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudChannelReportsServiceLimitedTimeRetryPolicy : public CloudChannelReportsServiceRetryPolicy {
+class CloudChannelReportsServiceLimitedTimeRetryPolicy
+    : public CloudChannelReportsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +146,16 @@ class CloudChannelReportsServiceLimitedTimeRetryPolicy : public CloudChannelRepo
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudChannelReportsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  CloudChannelReportsServiceLimitedTimeRetryPolicy(CloudChannelReportsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : CloudChannelReportsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudChannelReportsServiceLimitedTimeRetryPolicy(CloudChannelReportsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : CloudChannelReportsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudChannelReportsServiceLimitedTimeRetryPolicy(
+      CloudChannelReportsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : CloudChannelReportsServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  CloudChannelReportsServiceLimitedTimeRetryPolicy(
+      CloudChannelReportsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : CloudChannelReportsServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -150,7 +168,8 @@ class CloudChannelReportsServiceLimitedTimeRetryPolicy : public CloudChannelRepo
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone()
+      const override {
     return std::make_unique<CloudChannelReportsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
@@ -159,20 +178,25 @@ class CloudChannelReportsServiceLimitedTimeRetryPolicy : public CloudChannelRepo
   using BaseType = CloudChannelReportsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<channel_v1_internal::CloudChannelReportsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      channel_v1_internal::CloudChannelReportsServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `CloudChannelReportsServiceConnection` object for `CloudChannelReportsServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudChannelReportsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `CloudChannelReportsServiceConnection` object for
  * `CloudChannelReportsServiceClient`.
  *
- * To create a concrete instance, see `MakeCloudChannelReportsServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CloudChannelReportsServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CloudChannelReportsServiceClient`.
  *
- * For mocking, see `channel_v1_mocks::MockCloudChannelReportsServiceConnection`.
+ * To create a concrete instance, see
+ * `MakeCloudChannelReportsServiceConnection()`.
+ *
+ * For mocking, see
+ * `channel_v1_mocks::MockCloudChannelReportsServiceConnection`.
  */
 class CloudChannelReportsServiceConnection {
  public:
@@ -183,40 +207,43 @@ class CloudChannelReportsServiceConnection {
   virtual future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
   RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RunReportJob(NoAwaitTag, google::cloud::channel::v1::RunReportJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> RunReportJob(
+      NoAwaitTag,
+      google::cloud::channel::v1::RunReportJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob( google::longrunning::Operation const& operation);
+  RunReportJob(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::channel::v1::Row>
-  FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest request);
+  virtual StreamRange<google::cloud::channel::v1::Row> FetchReportResults(
+      google::cloud::channel::v1::FetchReportResultsRequest request);
 
-  virtual StreamRange<google::cloud::channel::v1::Report>
-  ListReports(google::cloud::channel::v1::ListReportsRequest request);
+  virtual StreamRange<google::cloud::channel::v1::Report> ListReports(
+      google::cloud::channel::v1::ListReportsRequest request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `CloudChannelReportsServiceConnection`.
+ * A factory function to construct an object of type
+ * `CloudChannelReportsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CloudChannelReportsServiceClient.
+ * should be passed as an argument to the constructor of
+ * CloudChannelReportsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `CloudChannelReportsServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `CloudChannelReportsServiceConnection`. Expected options are any of
+ * the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -226,11 +253,11 @@ class CloudChannelReportsServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `CloudChannelReportsServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the
+ * `CloudChannelReportsServiceConnection` created by this function.
  */
-std::shared_ptr<CloudChannelReportsServiceConnection> MakeCloudChannelReportsServiceConnection(
-    Options options = {});
+std::shared_ptr<CloudChannelReportsServiceConnection>
+MakeCloudChannelReportsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_v1

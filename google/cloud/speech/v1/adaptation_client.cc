@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AdaptationClient::AdaptationClient(
     std::shared_ptr<AdaptationConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AdaptationClient::~AdaptationClient() = default;
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationClient::CreatePhraseSet(std::string const& parent, google::cloud::speech::v1::PhraseSet const& phrase_set, std::string const& phrase_set_id, Options opts) {
+AdaptationClient::CreatePhraseSet(
+    std::string const& parent,
+    google::cloud::speech::v1::PhraseSet const& phrase_set,
+    std::string const& phrase_set_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::CreatePhraseSetRequest request;
   request.set_parent(parent);
@@ -43,21 +46,24 @@ AdaptationClient::CreatePhraseSet(std::string const& parent, google::cloud::spee
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationClient::CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const& request, Options opts) {
+AdaptationClient::CreatePhraseSet(
+    google::cloud::speech::v1::CreatePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePhraseSet(request);
 }
 
-StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationClient::GetPhraseSet(std::string const& name, Options opts) {
+StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationClient::GetPhraseSet(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::GetPhraseSetRequest request;
   request.set_name(name);
   return connection_->GetPhraseSet(request);
 }
 
-StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationClient::GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const& request, Options opts) {
+StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationClient::GetPhraseSet(
+    google::cloud::speech::v1::GetPhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPhraseSet(request);
 }
@@ -71,13 +77,16 @@ AdaptationClient::ListPhraseSet(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::speech::v1::PhraseSet>
-AdaptationClient::ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest request, Options opts) {
+AdaptationClient::ListPhraseSet(
+    google::cloud::speech::v1::ListPhraseSetRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPhraseSet(std::move(request));
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationClient::UpdatePhraseSet(google::cloud::speech::v1::PhraseSet const& phrase_set, google::protobuf::FieldMask const& update_mask, Options opts) {
+AdaptationClient::UpdatePhraseSet(
+    google::cloud::speech::v1::PhraseSet const& phrase_set,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::UpdatePhraseSetRequest request;
   *request.mutable_phrase_set() = phrase_set;
@@ -86,27 +95,33 @@ AdaptationClient::UpdatePhraseSet(google::cloud::speech::v1::PhraseSet const& ph
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationClient::UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const& request, Options opts) {
+AdaptationClient::UpdatePhraseSet(
+    google::cloud::speech::v1::UpdatePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePhraseSet(request);
 }
 
-Status
-AdaptationClient::DeletePhraseSet(std::string const& name, Options opts) {
+Status AdaptationClient::DeletePhraseSet(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::DeletePhraseSetRequest request;
   request.set_name(name);
   return connection_->DeletePhraseSet(request);
 }
 
-Status
-AdaptationClient::DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const& request, Options opts) {
+Status AdaptationClient::DeletePhraseSet(
+    google::cloud::speech::v1::DeletePhraseSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePhraseSet(request);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationClient::CreateCustomClass(std::string const& parent, google::cloud::speech::v1::CustomClass const& custom_class, std::string const& custom_class_id, Options opts) {
+AdaptationClient::CreateCustomClass(
+    std::string const& parent,
+    google::cloud::speech::v1::CustomClass const& custom_class,
+    std::string const& custom_class_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::CreateCustomClassRequest request;
   request.set_parent(parent);
@@ -116,7 +131,9 @@ AdaptationClient::CreateCustomClass(std::string const& parent, google::cloud::sp
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationClient::CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const& request, Options opts) {
+AdaptationClient::CreateCustomClass(
+    google::cloud::speech::v1::CreateCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCustomClass(request);
 }
@@ -130,7 +147,9 @@ AdaptationClient::GetCustomClass(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationClient::GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const& request, Options opts) {
+AdaptationClient::GetCustomClass(
+    google::cloud::speech::v1::GetCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCustomClass(request);
 }
@@ -144,13 +163,16 @@ AdaptationClient::ListCustomClasses(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::speech::v1::CustomClass>
-AdaptationClient::ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest request, Options opts) {
+AdaptationClient::ListCustomClasses(
+    google::cloud::speech::v1::ListCustomClassesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCustomClasses(std::move(request));
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationClient::UpdateCustomClass(google::cloud::speech::v1::CustomClass const& custom_class, google::protobuf::FieldMask const& update_mask, Options opts) {
+AdaptationClient::UpdateCustomClass(
+    google::cloud::speech::v1::CustomClass const& custom_class,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::UpdateCustomClassRequest request;
   *request.mutable_custom_class() = custom_class;
@@ -159,27 +181,30 @@ AdaptationClient::UpdateCustomClass(google::cloud::speech::v1::CustomClass const
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationClient::UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const& request, Options opts) {
+AdaptationClient::UpdateCustomClass(
+    google::cloud::speech::v1::UpdateCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCustomClass(request);
 }
 
-Status
-AdaptationClient::DeleteCustomClass(std::string const& name, Options opts) {
+Status AdaptationClient::DeleteCustomClass(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::speech::v1::DeleteCustomClassRequest request;
   request.set_name(name);
   return connection_->DeleteCustomClass(request);
 }
 
-Status
-AdaptationClient::DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const& request, Options opts) {
+Status AdaptationClient::DeleteCustomClass(
+    google::cloud::speech::v1::DeleteCustomClassRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCustomClass(request);
 }
 
-StreamRange<google::longrunning::Operation>
-AdaptationClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> AdaptationClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -187,22 +212,22 @@ AdaptationClient::ListOperations(std::string const& name, std::string const& fil
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-AdaptationClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> AdaptationClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AdaptationClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> AdaptationClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-AdaptationClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> AdaptationClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

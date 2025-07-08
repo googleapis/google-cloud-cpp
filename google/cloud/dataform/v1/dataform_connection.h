@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFORM_V1_DATAFORM_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFORM_V1_DATAFORM_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataform/v1/dataform_connection_idempotency_policy.h"
 #include "google/cloud/dataform/v1/internal/dataform_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -62,14 +62,14 @@ class DataformLimitedErrorCountRetryPolicy : public DataformRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DataformLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DataformLimitedErrorCountRetryPolicy(
       DataformLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DataformLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataformLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataformLimitedErrorCountRetryPolicy(
       DataformLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DataformLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataformLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +89,9 @@ class DataformLimitedErrorCountRetryPolicy : public DataformRetryPolicy {
   using BaseType = DataformRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dataform_v1_internal::DataformRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dataform_v1_internal::DataformRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +129,13 @@ class DataformLimitedTimeRetryPolicy : public DataformRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DataformLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   DataformLimitedTimeRetryPolicy(DataformLimitedTimeRetryPolicy&& rhs) noexcept
-    : DataformLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataformLimitedTimeRetryPolicy(DataformLimitedTimeRetryPolicy const& rhs) noexcept
-    : DataformLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : DataformLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataformLimitedTimeRetryPolicy(
+      DataformLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataformLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -146,15 +149,16 @@ class DataformLimitedTimeRetryPolicy : public DataformRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<DataformRetryPolicy> clone() const override {
-    return std::make_unique<DataformLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<DataformLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = DataformRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dataform_v1_internal::DataformRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dataform_v1_internal::DataformRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,179 +179,225 @@ class DataformConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dataform::v1::Repository>
-  ListRepositories(google::cloud::dataform::v1::ListRepositoriesRequest request);
+  virtual StreamRange<google::cloud::dataform::v1::Repository> ListRepositories(
+      google::cloud::dataform::v1::ListRepositoriesRequest request);
 
-  virtual StatusOr<google::cloud::dataform::v1::Repository>
-  GetRepository(google::cloud::dataform::v1::GetRepositoryRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::Repository> GetRepository(
+      google::cloud::dataform::v1::GetRepositoryRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::Repository>
-  CreateRepository(google::cloud::dataform::v1::CreateRepositoryRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::Repository> CreateRepository(
+      google::cloud::dataform::v1::CreateRepositoryRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::Repository>
-  UpdateRepository(google::cloud::dataform::v1::UpdateRepositoryRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::Repository> UpdateRepository(
+      google::cloud::dataform::v1::UpdateRepositoryRequest const& request);
 
-  virtual Status
-  DeleteRepository(google::cloud::dataform::v1::DeleteRepositoryRequest const& request);
+  virtual Status DeleteRepository(
+      google::cloud::dataform::v1::DeleteRepositoryRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::CommitRepositoryChangesResponse>
-  CommitRepositoryChanges(google::cloud::dataform::v1::CommitRepositoryChangesRequest const& request);
+  CommitRepositoryChanges(
+      google::cloud::dataform::v1::CommitRepositoryChangesRequest const&
+          request);
 
   virtual StatusOr<google::cloud::dataform::v1::ReadRepositoryFileResponse>
-  ReadRepositoryFile(google::cloud::dataform::v1::ReadRepositoryFileRequest const& request);
+  ReadRepositoryFile(
+      google::cloud::dataform::v1::ReadRepositoryFileRequest const& request);
 
   virtual StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-  QueryRepositoryDirectoryContents(google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest request);
+  QueryRepositoryDirectoryContents(
+      google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest
+          request);
 
   virtual StreamRange<google::cloud::dataform::v1::CommitLogEntry>
-  FetchRepositoryHistory(google::cloud::dataform::v1::FetchRepositoryHistoryRequest request);
+  FetchRepositoryHistory(
+      google::cloud::dataform::v1::FetchRepositoryHistoryRequest request);
 
-  virtual StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
-  ComputeRepositoryAccessTokenStatus(google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const& request);
+  virtual StatusOr<
+      google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
+  ComputeRepositoryAccessTokenStatus(
+      google::cloud::dataform::v1::
+          ComputeRepositoryAccessTokenStatusRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::FetchRemoteBranchesResponse>
-  FetchRemoteBranches(google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request);
+  FetchRemoteBranches(
+      google::cloud::dataform::v1::FetchRemoteBranchesRequest const& request);
 
-  virtual StreamRange<google::cloud::dataform::v1::Workspace>
-  ListWorkspaces(google::cloud::dataform::v1::ListWorkspacesRequest request);
+  virtual StreamRange<google::cloud::dataform::v1::Workspace> ListWorkspaces(
+      google::cloud::dataform::v1::ListWorkspacesRequest request);
 
-  virtual StatusOr<google::cloud::dataform::v1::Workspace>
-  GetWorkspace(google::cloud::dataform::v1::GetWorkspaceRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::Workspace> GetWorkspace(
+      google::cloud::dataform::v1::GetWorkspaceRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::Workspace>
-  CreateWorkspace(google::cloud::dataform::v1::CreateWorkspaceRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::Workspace> CreateWorkspace(
+      google::cloud::dataform::v1::CreateWorkspaceRequest const& request);
 
-  virtual Status
-  DeleteWorkspace(google::cloud::dataform::v1::DeleteWorkspaceRequest const& request);
+  virtual Status DeleteWorkspace(
+      google::cloud::dataform::v1::DeleteWorkspaceRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::InstallNpmPackagesResponse>
-  InstallNpmPackages(google::cloud::dataform::v1::InstallNpmPackagesRequest const& request);
+  InstallNpmPackages(
+      google::cloud::dataform::v1::InstallNpmPackagesRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::PullGitCommitsResponse>
-  PullGitCommits(google::cloud::dataform::v1::PullGitCommitsRequest const& request);
+  PullGitCommits(
+      google::cloud::dataform::v1::PullGitCommitsRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::PushGitCommitsResponse>
-  PushGitCommits(google::cloud::dataform::v1::PushGitCommitsRequest const& request);
+  PushGitCommits(
+      google::cloud::dataform::v1::PushGitCommitsRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::FetchFileGitStatusesResponse>
-  FetchFileGitStatuses(google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request);
+  FetchFileGitStatuses(
+      google::cloud::dataform::v1::FetchFileGitStatusesRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::FetchGitAheadBehindResponse>
-  FetchGitAheadBehind(google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request);
+  FetchGitAheadBehind(
+      google::cloud::dataform::v1::FetchGitAheadBehindRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::CommitWorkspaceChangesResponse>
-  CommitWorkspaceChanges(google::cloud::dataform::v1::CommitWorkspaceChangesRequest const& request);
+  CommitWorkspaceChanges(
+      google::cloud::dataform::v1::CommitWorkspaceChangesRequest const&
+          request);
 
   virtual StatusOr<google::cloud::dataform::v1::ResetWorkspaceChangesResponse>
-  ResetWorkspaceChanges(google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request);
+  ResetWorkspaceChanges(
+      google::cloud::dataform::v1::ResetWorkspaceChangesRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::FetchFileDiffResponse>
-  FetchFileDiff(google::cloud::dataform::v1::FetchFileDiffRequest const& request);
+  FetchFileDiff(
+      google::cloud::dataform::v1::FetchFileDiffRequest const& request);
 
   virtual StreamRange<google::cloud::dataform::v1::DirectoryEntry>
-  QueryDirectoryContents(google::cloud::dataform::v1::QueryDirectoryContentsRequest request);
+  QueryDirectoryContents(
+      google::cloud::dataform::v1::QueryDirectoryContentsRequest request);
 
-  virtual StreamRange<google::cloud::dataform::v1::SearchResult>
-  SearchFiles(google::cloud::dataform::v1::SearchFilesRequest request);
+  virtual StreamRange<google::cloud::dataform::v1::SearchResult> SearchFiles(
+      google::cloud::dataform::v1::SearchFilesRequest request);
 
   virtual StatusOr<google::cloud::dataform::v1::MakeDirectoryResponse>
-  MakeDirectory(google::cloud::dataform::v1::MakeDirectoryRequest const& request);
+  MakeDirectory(
+      google::cloud::dataform::v1::MakeDirectoryRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::RemoveDirectoryResponse>
-  RemoveDirectory(google::cloud::dataform::v1::RemoveDirectoryRequest const& request);
+  RemoveDirectory(
+      google::cloud::dataform::v1::RemoveDirectoryRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::MoveDirectoryResponse>
-  MoveDirectory(google::cloud::dataform::v1::MoveDirectoryRequest const& request);
+  MoveDirectory(
+      google::cloud::dataform::v1::MoveDirectoryRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::ReadFileResponse>
-  ReadFile(google::cloud::dataform::v1::ReadFileRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::ReadFileResponse> ReadFile(
+      google::cloud::dataform::v1::ReadFileRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::RemoveFileResponse>
-  RemoveFile(google::cloud::dataform::v1::RemoveFileRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::RemoveFileResponse> RemoveFile(
+      google::cloud::dataform::v1::RemoveFileRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::MoveFileResponse>
-  MoveFile(google::cloud::dataform::v1::MoveFileRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::MoveFileResponse> MoveFile(
+      google::cloud::dataform::v1::MoveFileRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::WriteFileResponse>
-  WriteFile(google::cloud::dataform::v1::WriteFileRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::WriteFileResponse> WriteFile(
+      google::cloud::dataform::v1::WriteFileRequest const& request);
 
   virtual StreamRange<google::cloud::dataform::v1::ReleaseConfig>
-  ListReleaseConfigs(google::cloud::dataform::v1::ListReleaseConfigsRequest request);
+  ListReleaseConfigs(
+      google::cloud::dataform::v1::ListReleaseConfigsRequest request);
+
+  virtual StatusOr<google::cloud::dataform::v1::ReleaseConfig> GetReleaseConfig(
+      google::cloud::dataform::v1::GetReleaseConfigRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-  GetReleaseConfig(google::cloud::dataform::v1::GetReleaseConfigRequest const& request);
+  CreateReleaseConfig(
+      google::cloud::dataform::v1::CreateReleaseConfigRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-  CreateReleaseConfig(google::cloud::dataform::v1::CreateReleaseConfigRequest const& request);
+  UpdateReleaseConfig(
+      google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::ReleaseConfig>
-  UpdateReleaseConfig(google::cloud::dataform::v1::UpdateReleaseConfigRequest const& request);
-
-  virtual Status
-  DeleteReleaseConfig(google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request);
+  virtual Status DeleteReleaseConfig(
+      google::cloud::dataform::v1::DeleteReleaseConfigRequest const& request);
 
   virtual StreamRange<google::cloud::dataform::v1::CompilationResult>
-  ListCompilationResults(google::cloud::dataform::v1::ListCompilationResultsRequest request);
+  ListCompilationResults(
+      google::cloud::dataform::v1::ListCompilationResultsRequest request);
 
   virtual StatusOr<google::cloud::dataform::v1::CompilationResult>
-  GetCompilationResult(google::cloud::dataform::v1::GetCompilationResultRequest const& request);
+  GetCompilationResult(
+      google::cloud::dataform::v1::GetCompilationResultRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::CompilationResult>
-  CreateCompilationResult(google::cloud::dataform::v1::CreateCompilationResultRequest const& request);
+  CreateCompilationResult(
+      google::cloud::dataform::v1::CreateCompilationResultRequest const&
+          request);
 
   virtual StreamRange<google::cloud::dataform::v1::CompilationResultAction>
-  QueryCompilationResultActions(google::cloud::dataform::v1::QueryCompilationResultActionsRequest request);
+  QueryCompilationResultActions(
+      google::cloud::dataform::v1::QueryCompilationResultActionsRequest
+          request);
 
   virtual StreamRange<google::cloud::dataform::v1::WorkflowConfig>
-  ListWorkflowConfigs(google::cloud::dataform::v1::ListWorkflowConfigsRequest request);
+  ListWorkflowConfigs(
+      google::cloud::dataform::v1::ListWorkflowConfigsRequest request);
 
   virtual StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-  GetWorkflowConfig(google::cloud::dataform::v1::GetWorkflowConfigRequest const& request);
+  GetWorkflowConfig(
+      google::cloud::dataform::v1::GetWorkflowConfigRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-  CreateWorkflowConfig(google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request);
+  CreateWorkflowConfig(
+      google::cloud::dataform::v1::CreateWorkflowConfigRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::WorkflowConfig>
-  UpdateWorkflowConfig(google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request);
+  UpdateWorkflowConfig(
+      google::cloud::dataform::v1::UpdateWorkflowConfigRequest const& request);
 
-  virtual Status
-  DeleteWorkflowConfig(google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request);
+  virtual Status DeleteWorkflowConfig(
+      google::cloud::dataform::v1::DeleteWorkflowConfigRequest const& request);
 
   virtual StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
-  ListWorkflowInvocations(google::cloud::dataform::v1::ListWorkflowInvocationsRequest request);
+  ListWorkflowInvocations(
+      google::cloud::dataform::v1::ListWorkflowInvocationsRequest request);
 
   virtual StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-  GetWorkflowInvocation(google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request);
+  GetWorkflowInvocation(
+      google::cloud::dataform::v1::GetWorkflowInvocationRequest const& request);
 
   virtual StatusOr<google::cloud::dataform::v1::WorkflowInvocation>
-  CreateWorkflowInvocation(google::cloud::dataform::v1::CreateWorkflowInvocationRequest const& request);
+  CreateWorkflowInvocation(
+      google::cloud::dataform::v1::CreateWorkflowInvocationRequest const&
+          request);
 
-  virtual Status
-  DeleteWorkflowInvocation(google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const& request);
+  virtual Status DeleteWorkflowInvocation(
+      google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
-  CancelWorkflowInvocation(google::cloud::dataform::v1::CancelWorkflowInvocationRequest const& request);
+  virtual StatusOr<
+      google::cloud::dataform::v1::CancelWorkflowInvocationResponse>
+  CancelWorkflowInvocation(
+      google::cloud::dataform::v1::CancelWorkflowInvocationRequest const&
+          request);
 
   virtual StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>
-  QueryWorkflowInvocationActions(google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest request);
+  QueryWorkflowInvocationActions(
+      google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest
+          request);
 
-  virtual StatusOr<google::cloud::dataform::v1::Config>
-  GetConfig(google::cloud::dataform::v1::GetConfigRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::Config> GetConfig(
+      google::cloud::dataform::v1::GetConfigRequest const& request);
 
-  virtual StatusOr<google::cloud::dataform::v1::Config>
-  UpdateConfig(google::cloud::dataform::v1::UpdateConfigRequest const& request);
+  virtual StatusOr<google::cloud::dataform::v1::Config> UpdateConfig(
+      google::cloud::dataform::v1::UpdateConfigRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);

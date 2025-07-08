@@ -34,44 +34,56 @@ class ReservationsConnectionIdempotencyPolicy {
   virtual ~ReservationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ReservationsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ReservationsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListReservations(google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest request);
+  virtual google::cloud::Idempotency AggregatedListReservations(
+      google::cloud::cpp::compute::reservations::v1::
+          AggregatedListReservationsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteReservation(google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request);
+  virtual google::cloud::Idempotency DeleteReservation(
+      google::cloud::cpp::compute::reservations::v1::
+          DeleteReservationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetReservation(google::cloud::cpp::compute::reservations::v1::GetReservationRequest const& request);
+  virtual google::cloud::Idempotency GetReservation(
+      google::cloud::cpp::compute::reservations::v1::
+          GetReservationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertReservation(google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request);
+  virtual google::cloud::Idempotency InsertReservation(
+      google::cloud::cpp::compute::reservations::v1::
+          InsertReservationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListReservations(google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request);
+  virtual google::cloud::Idempotency ListReservations(
+      google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  PerformMaintenance(google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request);
+  virtual google::cloud::Idempotency PerformMaintenance(
+      google::cloud::cpp::compute::reservations::v1::
+          PerformMaintenanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Resize(google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request);
+  virtual google::cloud::Idempotency Resize(
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::reservations::v1::
+          TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateReservation(google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request);
+  virtual google::cloud::Idempotency UpdateReservation(
+      google::cloud::cpp::compute::reservations::v1::
+          UpdateReservationRequest const& request);
 };
 
 std::unique_ptr<ReservationsConnectionIdempotencyPolicy>
-    MakeDefaultReservationsConnectionIdempotencyPolicy();
+MakeDefaultReservationsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_reservations_v1

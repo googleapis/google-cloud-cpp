@@ -36,36 +36,53 @@ class AccessApprovalTracingConnection
   ~AccessApprovalTracingConnection() override = default;
 
   explicit AccessApprovalTracingConnection(
-    std::shared_ptr<accessapproval_v1::AccessApprovalConnection> child);
+      std::shared_ptr<accessapproval_v1::AccessApprovalConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-  ListApprovalRequests(google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) override;
+  ListApprovalRequests(
+      google::cloud::accessapproval::v1::ListApprovalRequestsMessage request)
+      override;
 
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  GetApprovalRequest(google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request) override;
+  GetApprovalRequest(
+      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
+          request) override;
 
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  ApproveApprovalRequest(google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request) override;
+  ApproveApprovalRequest(
+      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
+          request) override;
 
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  DismissApprovalRequest(google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request) override;
+  DismissApprovalRequest(
+      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
+          request) override;
 
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  InvalidateApprovalRequest(google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request) override;
+  InvalidateApprovalRequest(
+      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+          request) override;
 
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  GetAccessApprovalSettings(google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request) override;
+  GetAccessApprovalSettings(
+      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
+          request) override;
 
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request) override;
+  UpdateAccessApprovalSettings(
+      google::cloud::accessapproval::v1::
+          UpdateAccessApprovalSettingsMessage const& request) override;
 
-  Status
-  DeleteAccessApprovalSettings(google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request) override;
+  Status DeleteAccessApprovalSettings(
+      google::cloud::accessapproval::v1::
+          DeleteAccessApprovalSettingsMessage const& request) override;
 
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
-  GetAccessApprovalServiceAccount(google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request) override;
+  GetAccessApprovalServiceAccount(
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const& request) override;
 
  private:
   std::shared_ptr<accessapproval_v1::AccessApprovalConnection> child_;

@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/analytics_service.proto
 
 #include "google/cloud/retail/v2/analytics_connection.h"
+#include "google/cloud/retail/v2/analytics_options.h"
+#include "google/cloud/retail/v2/internal/analytics_connection_impl.h"
+#include "google/cloud/retail/v2/internal/analytics_option_defaults.h"
+#include "google/cloud/retail/v2/internal/analytics_stub_factory.h"
+#include "google/cloud/retail/v2/internal/analytics_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/retail/v2/analytics_options.h"
-#include "google/cloud/retail/v2/internal/analytics_connection_impl.h"
-#include "google/cloud/retail/v2/internal/analytics_option_defaults.h"
-#include "google/cloud/retail/v2/internal/analytics_stub_factory.h"
-#include "google/cloud/retail/v2/internal/analytics_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
 AnalyticsServiceConnection::ExportAnalyticsMetrics(
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,19 +51,21 @@ AnalyticsServiceConnection::ExportAnalyticsMetrics(
     NoAwaitTag,
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
 AnalyticsServiceConnection::ExportAnalyticsMetrics(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::longrunning::Operation> AnalyticsServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+AnalyticsServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -77,17 +79,18 @@ AnalyticsServiceConnection::GetOperation(
 std::shared_ptr<AnalyticsServiceConnection> MakeAnalyticsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AnalyticsServicePolicyOptionList>(options, __func__);
-  options = retail_v2_internal::AnalyticsServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AnalyticsServicePolicyOptionList>(options,
+                                                                   __func__);
+  options =
+      retail_v2_internal::AnalyticsServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = retail_v2_internal::CreateDefaultAnalyticsServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return retail_v2_internal::MakeAnalyticsServiceTracingConnection(
       std::make_shared<retail_v2_internal::AnalyticsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

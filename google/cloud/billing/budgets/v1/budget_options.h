@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_BUDGET_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_BUDGET_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/budgets/v1/budget_connection.h"
 #include "google/cloud/billing/budgets/v1/budget_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct BudgetServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-billing-options
  */
 using BudgetServicePolicyOptionList =
-    OptionList<BudgetServiceRetryPolicyOption,
-               BudgetServiceBackoffPolicyOption,
+    OptionList<BudgetServiceRetryPolicyOption, BudgetServiceBackoffPolicyOption,
                BudgetServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_EDGE_CONTAINER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_EDGE_CONTAINER_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/edgecontainer/v1/edge_container_connection_idempotency_policy.h"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class EdgeContainerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EdgeContainerLimitedErrorCountRetryPolicy : public EdgeContainerRetryPolicy {
+class EdgeContainerLimitedErrorCountRetryPolicy
+    : public EdgeContainerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class EdgeContainerLimitedErrorCountRetryPolicy : public EdgeContainerRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit EdgeContainerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   EdgeContainerLimitedErrorCountRetryPolicy(
       EdgeContainerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EdgeContainerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EdgeContainerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EdgeContainerLimitedErrorCountRetryPolicy(
       EdgeContainerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EdgeContainerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EdgeContainerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class EdgeContainerLimitedErrorCountRetryPolicy : public EdgeContainerRetryPolic
   using BaseType = EdgeContainerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<edgecontainer_v1_internal::EdgeContainerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      edgecontainer_v1_internal::EdgeContainerRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class EdgeContainerLimitedTimeRetryPolicy : public EdgeContainerRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EdgeContainerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EdgeContainerLimitedTimeRetryPolicy(EdgeContainerLimitedTimeRetryPolicy&& rhs) noexcept
-    : EdgeContainerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EdgeContainerLimitedTimeRetryPolicy(EdgeContainerLimitedTimeRetryPolicy const& rhs) noexcept
-    : EdgeContainerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EdgeContainerLimitedTimeRetryPolicy(
+      EdgeContainerLimitedTimeRetryPolicy&& rhs) noexcept
+      : EdgeContainerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EdgeContainerLimitedTimeRetryPolicy(
+      EdgeContainerLimitedTimeRetryPolicy const& rhs) noexcept
+      : EdgeContainerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class EdgeContainerLimitedTimeRetryPolicy : public EdgeContainerRetryPolicy {
   using BaseType = EdgeContainerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<edgecontainer_v1_internal::EdgeContainerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      edgecontainer_v1_internal::EdgeContainerRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,137 +186,168 @@ class EdgeContainerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::edgecontainer::v1::Cluster>
-  ListClusters(google::cloud::edgecontainer::v1::ListClustersRequest request);
+  virtual StreamRange<google::cloud::edgecontainer::v1::Cluster> ListClusters(
+      google::cloud::edgecontainer::v1::ListClustersRequest request);
 
-  virtual StatusOr<google::cloud::edgecontainer::v1::Cluster>
-  GetCluster(google::cloud::edgecontainer::v1::GetClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  CreateCluster(google::cloud::edgecontainer::v1::CreateClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag, google::cloud::edgecontainer::v1::CreateClusterRequest const& request);
+  virtual StatusOr<google::cloud::edgecontainer::v1::Cluster> GetCluster(
+      google::cloud::edgecontainer::v1::GetClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  CreateCluster( google::longrunning::Operation const& operation);
+  CreateCluster(
+      google::cloud::edgecontainer::v1::CreateClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  UpdateCluster(google::cloud::edgecontainer::v1::UpdateClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag, google::cloud::edgecontainer::v1::UpdateClusterRequest const& request);
+  CreateCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  UpdateCluster( google::longrunning::Operation const& operation);
+  UpdateCluster(
+      google::cloud::edgecontainer::v1::UpdateClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpdateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  UpgradeCluster(google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpgradeCluster(NoAwaitTag, google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request);
+  UpdateCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  UpgradeCluster( google::longrunning::Operation const& operation);
+  UpgradeCluster(
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpgradeCluster(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+  UpgradeCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteCluster(google::cloud::edgecontainer::v1::DeleteClusterRequest const& request);
+  DeleteCluster(
+      google::cloud::edgecontainer::v1::DeleteClusterRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteCluster(NoAwaitTag, google::cloud::edgecontainer::v1::DeleteClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteCluster( google::longrunning::Operation const& operation);
-
-  virtual StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const& request);
-
-  virtual StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
-  GenerateOfflineCredential(google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const& request);
-
-  virtual StreamRange<google::cloud::edgecontainer::v1::NodePool>
-  ListNodePools(google::cloud::edgecontainer::v1::ListNodePoolsRequest request);
-
-  virtual StatusOr<google::cloud::edgecontainer::v1::NodePool>
-  GetNodePool(google::cloud::edgecontainer::v1::GetNodePoolRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-  CreateNodePool(google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateNodePool(NoAwaitTag, google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-  CreateNodePool( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-  UpdateNodePool(google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateNodePool(NoAwaitTag, google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request);
-
-  virtual future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-  UpdateNodePool( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> DeleteCluster(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteNodePool(google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request);
+  DeleteCluster(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteNodePool(NoAwaitTag, google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request);
+  virtual StatusOr<
+      google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(
+      google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
+          request);
+
+  virtual StatusOr<
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
+  GenerateOfflineCredential(
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::edgecontainer::v1::NodePool> ListNodePools(
+      google::cloud::edgecontainer::v1::ListNodePoolsRequest request);
+
+  virtual StatusOr<google::cloud::edgecontainer::v1::NodePool> GetNodePool(
+      google::cloud::edgecontainer::v1::GetNodePoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
+  CreateNodePool(
+      google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateNodePool(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
+  CreateNodePool(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
+  UpdateNodePool(
+      google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateNodePool(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
+  UpdateNodePool(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteNodePool( google::longrunning::Operation const& operation);
+  DeleteNodePool(
+      google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request);
 
-  virtual StreamRange<google::cloud::edgecontainer::v1::Machine>
-  ListMachines(google::cloud::edgecontainer::v1::ListMachinesRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeleteNodePool(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request);
 
-  virtual StatusOr<google::cloud::edgecontainer::v1::Machine>
-  GetMachine(google::cloud::edgecontainer::v1::GetMachineRequest const& request);
+  virtual future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+  DeleteNodePool(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::edgecontainer::v1::Machine> ListMachines(
+      google::cloud::edgecontainer::v1::ListMachinesRequest request);
+
+  virtual StatusOr<google::cloud::edgecontainer::v1::Machine> GetMachine(
+      google::cloud::edgecontainer::v1::GetMachineRequest const& request);
 
   virtual StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
-  ListVpnConnections(google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request);
+  ListVpnConnections(
+      google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request);
 
   virtual StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
-  GetVpnConnection(google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request);
+  GetVpnConnection(
+      google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
-  CreateVpnConnection(google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request);
+  CreateVpnConnection(
+      google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateVpnConnection(NoAwaitTag, google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateVpnConnection(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
-  CreateVpnConnection( google::longrunning::Operation const& operation);
+  CreateVpnConnection(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteVpnConnection(google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request);
+  DeleteVpnConnection(
+      google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteVpnConnection(NoAwaitTag, google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteVpnConnection(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteVpnConnection( google::longrunning::Operation const& operation);
+  DeleteVpnConnection(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
-  GetServerConfig(google::cloud::edgecontainer::v1::GetServerConfigRequest const& request);
+  GetServerConfig(
+      google::cloud::edgecontainer::v1::GetServerConfigRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

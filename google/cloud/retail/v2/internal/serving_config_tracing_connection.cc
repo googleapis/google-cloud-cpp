@@ -34,68 +34,85 @@ ServingConfigServiceTracingConnection::ServingConfigServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceTracingConnection::CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::CreateServingConfig");
+ServingConfigServiceTracingConnection::CreateServingConfig(
+    google::cloud::retail::v2::CreateServingConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::CreateServingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateServingConfig(request));
 }
 
-Status
-ServingConfigServiceTracingConnection::DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::DeleteServingConfig");
+Status ServingConfigServiceTracingConnection::DeleteServingConfig(
+    google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::DeleteServingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteServingConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceTracingConnection::UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::UpdateServingConfig");
+ServingConfigServiceTracingConnection::UpdateServingConfig(
+    google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::UpdateServingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateServingConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceTracingConnection::GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::GetServingConfig");
+ServingConfigServiceTracingConnection::GetServingConfig(
+    google::cloud::retail::v2::GetServingConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::GetServingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetServingConfig(request));
 }
 
 StreamRange<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceTracingConnection::ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::ListServingConfigs");
+ServingConfigServiceTracingConnection::ListServingConfigs(
+    google::cloud::retail::v2::ListServingConfigsRequest request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::ListServingConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListServingConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::retail::v2::ServingConfig>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::retail::v2::ServingConfig>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceTracingConnection::AddControl(google::cloud::retail::v2::AddControlRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::AddControl");
+ServingConfigServiceTracingConnection::AddControl(
+    google::cloud::retail::v2::AddControlRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::AddControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddControl(request));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
-ServingConfigServiceTracingConnection::RemoveControl(google::cloud::retail::v2::RemoveControlRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::RemoveControl");
+ServingConfigServiceTracingConnection::RemoveControl(
+    google::cloud::retail::v2::RemoveControlRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::RemoveControl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RemoveControl(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ServingConfigServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::ListOperations");
+ServingConfigServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ServingConfigServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::ServingConfigServiceConnection::GetOperation");
+ServingConfigServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::ServingConfigServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
@@ -107,7 +124,8 @@ MakeServingConfigServiceTracingConnection(
     std::shared_ptr<retail_v2::ServingConfigServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ServingConfigServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<ServingConfigServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -30,22 +30,20 @@ namespace cloud {
 namespace policytroubleshooter_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-IamCheckerLogging::IamCheckerLogging(
-    std::shared_ptr<IamCheckerStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+IamCheckerLogging::IamCheckerLogging(std::shared_ptr<IamCheckerStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerLogging::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::policytroubleshooter::v1::
+                 TroubleshootIamPolicyRequest const& request) {
         return child_->TroubleshootIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

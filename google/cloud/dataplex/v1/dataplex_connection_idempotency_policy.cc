@@ -26,150 +26,186 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataplexServiceConnectionIdempotencyPolicy::~DataplexServiceConnectionIdempotencyPolicy() = default;
+DataplexServiceConnectionIdempotencyPolicy::
+    ~DataplexServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataplexServiceConnectionIdempotencyPolicy>
 DataplexServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DataplexServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateLake(google::cloud::dataplex::v1::CreateLakeRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateLake(
+    google::cloud::dataplex::v1::CreateLakeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateLake(google::cloud::dataplex::v1::UpdateLakeRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateLake(
+    google::cloud::dataplex::v1::UpdateLakeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteLake(google::cloud::dataplex::v1::DeleteLakeRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteLake(
+    google::cloud::dataplex::v1::DeleteLakeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListLakes(google::cloud::dataplex::v1::ListLakesRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListLakes(
+    google::cloud::dataplex::v1::ListLakesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetLake(google::cloud::dataplex::v1::GetLakeRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetLake(
+    google::cloud::dataplex::v1::GetLakeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListLakeActions(google::cloud::dataplex::v1::ListLakeActionsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListLakeActions(
+    google::cloud::dataplex::v1::ListLakeActionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateZone(google::cloud::dataplex::v1::CreateZoneRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateZone(
+    google::cloud::dataplex::v1::CreateZoneRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateZone(google::cloud::dataplex::v1::UpdateZoneRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateZone(
+    google::cloud::dataplex::v1::UpdateZoneRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteZone(google::cloud::dataplex::v1::DeleteZoneRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteZone(
+    google::cloud::dataplex::v1::DeleteZoneRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListZones(google::cloud::dataplex::v1::ListZonesRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListZones(
+    google::cloud::dataplex::v1::ListZonesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetZone(google::cloud::dataplex::v1::GetZoneRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetZone(
+    google::cloud::dataplex::v1::GetZoneRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListZoneActions(google::cloud::dataplex::v1::ListZoneActionsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListZoneActions(
+    google::cloud::dataplex::v1::ListZoneActionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateAsset(google::cloud::dataplex::v1::CreateAssetRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateAsset(
+    google::cloud::dataplex::v1::CreateAssetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateAsset(google::cloud::dataplex::v1::UpdateAssetRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateAsset(
+    google::cloud::dataplex::v1::UpdateAssetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteAsset(google::cloud::dataplex::v1::DeleteAssetRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteAsset(
+    google::cloud::dataplex::v1::DeleteAssetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListAssets(google::cloud::dataplex::v1::ListAssetsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListAssets(
+    google::cloud::dataplex::v1::ListAssetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetAsset(google::cloud::dataplex::v1::GetAssetRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetAsset(
+    google::cloud::dataplex::v1::GetAssetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListAssetActions(google::cloud::dataplex::v1::ListAssetActionsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListAssetActions(
+    google::cloud::dataplex::v1::ListAssetActionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateTask(google::cloud::dataplex::v1::CreateTaskRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateTask(
+    google::cloud::dataplex::v1::CreateTaskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateTask(google::cloud::dataplex::v1::UpdateTaskRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateTask(
+    google::cloud::dataplex::v1::UpdateTaskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteTask(google::cloud::dataplex::v1::DeleteTaskRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteTask(
+    google::cloud::dataplex::v1::DeleteTaskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListTasks(google::cloud::dataplex::v1::ListTasksRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListTasks(
+    google::cloud::dataplex::v1::ListTasksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetTask(google::cloud::dataplex::v1::GetTaskRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetTask(
+    google::cloud::dataplex::v1::GetTaskRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListJobs(google::cloud::dataplex::v1::ListJobsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListJobs(
+    google::cloud::dataplex::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::RunTask(google::cloud::dataplex::v1::RunTaskRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::RunTask(
+    google::cloud::dataplex::v1::RunTaskRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetJob(google::cloud::dataplex::v1::GetJobRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetJob(
+    google::cloud::dataplex::v1::GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::CancelJob(google::cloud::dataplex::v1::CancelJobRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::CancelJob(
+    google::cloud::dataplex::v1::CancelJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateEnvironment(google::cloud::dataplex::v1::CreateEnvironmentRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::CreateEnvironment(
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateEnvironment(google::cloud::dataplex::v1::UpdateEnvironmentRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::UpdateEnvironment(
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteEnvironment(google::cloud::dataplex::v1::DeleteEnvironmentRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteEnvironment(
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListEnvironments(google::cloud::dataplex::v1::ListEnvironmentsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListEnvironments(
+    google::cloud::dataplex::v1::ListEnvironmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetEnvironment(google::cloud::dataplex::v1::GetEnvironmentRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetEnvironment(
+    google::cloud::dataplex::v1::GetEnvironmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListSessions(google::cloud::dataplex::v1::ListSessionsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListSessions(
+    google::cloud::dataplex::v1::ListSessionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -179,32 +215,38 @@ Idempotency DataplexServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DataplexServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataplexServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DataplexServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataplexServiceConnectionIdempotencyPolicy>
-    MakeDefaultDataplexServiceConnectionIdempotencyPolicy() {
+MakeDefaultDataplexServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataplexServiceConnectionIdempotencyPolicy>();
 }
 

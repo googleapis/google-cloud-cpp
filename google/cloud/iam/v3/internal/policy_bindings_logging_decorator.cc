@@ -31,25 +31,23 @@ namespace iam_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PolicyBindingsLogging::PolicyBindingsLogging(
-    std::shared_ptr<PolicyBindingsStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<PolicyBindingsStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsLogging::AsyncCreatePolicyBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::CreatePolicyBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::CreatePolicyBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::iam::v3::CreatePolicyBindingRequest const& request) {
-        return child_->AsyncCreatePolicyBinding(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCreatePolicyBinding(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -57,12 +55,10 @@ PolicyBindingsLogging::AsyncCreatePolicyBinding(
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsLogging::CreatePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::CreatePolicyBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::CreatePolicyBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v3::CreatePolicyBindingRequest const& request) {
         return child_->CreatePolicyBinding(context, options, request);
       },
@@ -71,12 +67,10 @@ PolicyBindingsLogging::CreatePolicyBinding(
 
 StatusOr<google::iam::v3::PolicyBinding>
 PolicyBindingsLogging::GetPolicyBinding(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::GetPolicyBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v3::GetPolicyBindingRequest const& request) {
         return child_->GetPolicyBinding(context, options, request);
       },
@@ -85,17 +79,17 @@ PolicyBindingsLogging::GetPolicyBinding(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsLogging::AsyncUpdatePolicyBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::UpdatePolicyBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::UpdatePolicyBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::iam::v3::UpdatePolicyBindingRequest const& request) {
-        return child_->AsyncUpdatePolicyBinding(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUpdatePolicyBinding(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -103,12 +97,10 @@ PolicyBindingsLogging::AsyncUpdatePolicyBinding(
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsLogging::UpdatePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::UpdatePolicyBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::UpdatePolicyBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v3::UpdatePolicyBindingRequest const& request) {
         return child_->UpdatePolicyBinding(context, options, request);
       },
@@ -117,17 +109,17 @@ PolicyBindingsLogging::UpdatePolicyBinding(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBindingsLogging::AsyncDeletePolicyBinding(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::iam::v3::DeletePolicyBindingRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::iam::v3::DeletePolicyBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::iam::v3::DeletePolicyBindingRequest const& request) {
-        return child_->AsyncDeletePolicyBinding(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeletePolicyBinding(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -135,12 +127,10 @@ PolicyBindingsLogging::AsyncDeletePolicyBinding(
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsLogging::DeletePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::iam::v3::DeletePolicyBindingRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::iam::v3::DeletePolicyBindingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v3::DeletePolicyBindingRequest const& request) {
         return child_->DeletePolicyBinding(context, options, request);
       },
@@ -149,12 +139,10 @@ PolicyBindingsLogging::DeletePolicyBinding(
 
 StatusOr<google::iam::v3::ListPolicyBindingsResponse>
 PolicyBindingsLogging::ListPolicyBindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::ListPolicyBindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v3::ListPolicyBindingsRequest const& request) {
         return child_->ListPolicyBindings(context, options, request);
       },
@@ -163,26 +151,22 @@ PolicyBindingsLogging::ListPolicyBindings(
 
 StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse>
 PolicyBindingsLogging::SearchTargetPolicyBindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::SearchTargetPolicyBindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::iam::v3::SearchTargetPolicyBindingsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::iam::v3::SearchTargetPolicyBindingsRequest const& request) {
         return child_->SearchTargetPolicyBindings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-PolicyBindingsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> PolicyBindingsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -200,8 +184,8 @@ PolicyBindingsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -217,8 +201,8 @@ future<Status> PolicyBindingsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

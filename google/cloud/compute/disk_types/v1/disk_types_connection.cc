@@ -17,11 +17,11 @@
 // source: google/cloud/compute/disk_types/v1/disk_types.proto
 
 #include "google/cloud/compute/disk_types/v1/disk_types_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/disk_types/v1/disk_types_options.h"
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_option_defaults.h"
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,10 +36,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DiskTypesConnection::~DiskTypesConnection() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>> DiskTypesConnection::AggregatedListDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::DiskTypesScopedList>>>();
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::DiskTypesScopedList>>
+DiskTypesConnection::AggregatedListDiskTypes(
+    google::cloud::cpp::compute::disk_types::v1::
+        AggregatedListDiskTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::DiskTypesScopedList>>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
@@ -48,8 +52,10 @@ DiskTypesConnection::GetDiskType(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::DiskType> DiskTypesConnection::ListDiskTypes(
-    google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::DiskType>
+DiskTypesConnection::ListDiskTypes(
+    google::cloud::cpp::compute::disk_types::v1::
+        ListDiskTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::DiskType>>();
 }

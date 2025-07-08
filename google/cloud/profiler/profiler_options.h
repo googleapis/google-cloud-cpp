@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use profiler_v2::ProfilerServiceBackoffPolicyOption directly.
 using ::google::cloud::profiler_v2::ProfilerServiceBackoffPolicyOption;
 
-/// @deprecated Use profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::profiler_v2::
+    ProfilerServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use profiler_v2::ProfilerServicePolicyOptionList directly.
 using ::google::cloud::profiler_v2::ProfilerServicePolicyOptionList;

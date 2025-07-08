@@ -34,33 +34,42 @@ ImageVersionsTracingConnection::ImageVersionsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-ImageVersionsTracingConnection::ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request) {
-  auto span = internal::MakeSpan("composer_v1::ImageVersionsConnection::ListImageVersions");
+ImageVersionsTracingConnection::ListImageVersions(
+    google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::ImageVersionsConnection::ListImageVersions");
   internal::OTelScope scope(span);
   auto sr = child_->ListImageVersions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::orchestration::airflow::service::v1::ImageVersion>(
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-ImageVersionsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("composer_v1::ImageVersionsConnection::ListOperations");
+ImageVersionsTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::ImageVersionsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ImageVersionsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("composer_v1::ImageVersionsConnection::GetOperation");
+ImageVersionsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("composer_v1::ImageVersionsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ImageVersionsTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("composer_v1::ImageVersionsConnection::DeleteOperation");
+Status ImageVersionsTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::ImageVersionsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }

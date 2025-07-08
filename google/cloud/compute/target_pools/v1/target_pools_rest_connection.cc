@@ -17,12 +17,12 @@
 // source: google/cloud/compute/target_pools/v1/target_pools.proto
 
 #include "google/cloud/compute/target_pools/v1/target_pools_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_option_defaults.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_rest_connection_impl.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_rest_stub_factory.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_tracing_connection.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,15 +36,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<TargetPoolsConnection> MakeTargetPoolsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      TargetPoolsPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, TargetPoolsPolicyOptionList>(
+      options, __func__);
   options = compute_target_pools_v1_internal::TargetPoolsDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_target_pools_v1_internal::CreateDefaultTargetPoolsRestStub(
-      options);
+  auto stub =
+      compute_target_pools_v1_internal::CreateDefaultTargetPoolsRestStub(
+          options);
   return compute_target_pools_v1_internal::MakeTargetPoolsTracingConnection(
       std::make_shared<
           compute_target_pools_v1_internal::TargetPoolsRestConnectionImpl>(

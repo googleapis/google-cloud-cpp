@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_INTERNAL_TARGET_INSTANCES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_INTERNAL_TARGET_INSTANCES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_rest_stub.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_retry_traits.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_connection.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_connection_idempotency_policy.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,75 +44,97 @@ class TargetInstancesRestConnectionImpl
   ~TargetInstancesRestConnectionImpl() override = default;
 
   TargetInstancesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_target_instances_v1_internal::TargetInstancesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_target_instances_v1_internal::TargetInstancesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
-  AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
+  AggregatedListTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          AggregatedListTargetInstancesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request) override;
+  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           DeleteTargetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetInstance(NoAwaitTag,
-      google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
+      NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                      DeleteTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetInstance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstance(google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
+      google::cloud::cpp::compute::target_instances::v1::
+          GetTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request) override;
+  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           InsertTargetInstanceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetInstance(NoAwaitTag,
-      google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
+      NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                      InsertTargetInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetInstance(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request) override;
+  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                          ListTargetInstancesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request) override;
+  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::
+                        SetSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag,
-      google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                      SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<compute_target_instances_v1::TargetInstancesRetryPolicy>
+  static std::unique_ptr<
+      compute_target_instances_v1::TargetInstancesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_target_instances_v1::TargetInstancesRetryPolicyOption>()->clone();
+    return options
+        .get<compute_target_instances_v1::TargetInstancesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_target_instances_v1::
+                 TargetInstancesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_target_instances_v1::TargetInstancesPollingPolicyOption>()->clone();
+    return options
+        .get<compute_target_instances_v1::TargetInstancesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_target_instances_v1_internal::TargetInstancesRestStub> stub_;
+  std::shared_ptr<compute_target_instances_v1_internal::TargetInstancesRestStub>
+      stub_;
   Options options_;
 };
 

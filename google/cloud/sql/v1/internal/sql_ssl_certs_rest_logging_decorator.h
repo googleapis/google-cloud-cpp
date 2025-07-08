@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_SSL_CERTS_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_SSL_CERTS_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_ssl_certs_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
-#include "google/cloud/sql/v1/internal/sql_ssl_certs_rest_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_ssl_certs.pb.h>
@@ -37,25 +37,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SqlSslCertsServiceRestLogging : public SqlSslCertsServiceRestStub {
  public:
   ~SqlSslCertsServiceRestLogging() override = default;
-  SqlSslCertsServiceRestLogging(std::shared_ptr<SqlSslCertsServiceRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+  SqlSslCertsServiceRestLogging(
+      std::shared_ptr<SqlSslCertsServiceRestStub> child,
+      TracingOptions tracing_options, std::set<std::string> components);
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::SslCert> Get(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlSslCertsGetRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlSslCertsGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::SslCertsInsertResponse> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::SslCertsListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlSslCertsListRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlSslCertsListRequest const& request) override;
 
  private:
   std::shared_ptr<SqlSslCertsServiceRestStub> child_;

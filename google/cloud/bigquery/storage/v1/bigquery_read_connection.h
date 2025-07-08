@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_BIGQUERY_READ_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_BIGQUERY_READ_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class BigQueryReadRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class BigQueryReadLimitedErrorCountRetryPolicy : public BigQueryReadRetryPolicy {
+class BigQueryReadLimitedErrorCountRetryPolicy
+    : public BigQueryReadRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class BigQueryReadLimitedErrorCountRetryPolicy : public BigQueryReadRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit BigQueryReadLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   BigQueryReadLimitedErrorCountRetryPolicy(
       BigQueryReadLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : BigQueryReadLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : BigQueryReadLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   BigQueryReadLimitedErrorCountRetryPolicy(
       BigQueryReadLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : BigQueryReadLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : BigQueryReadLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class BigQueryReadLimitedErrorCountRetryPolicy : public BigQueryReadRetryPolicy 
   using BaseType = BigQueryReadRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_storage_v1_internal::BigQueryReadRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_storage_v1_internal::BigQueryReadRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class BigQueryReadLimitedTimeRetryPolicy : public BigQueryReadRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit BigQueryReadLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  BigQueryReadLimitedTimeRetryPolicy(BigQueryReadLimitedTimeRetryPolicy&& rhs) noexcept
-    : BigQueryReadLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  BigQueryReadLimitedTimeRetryPolicy(BigQueryReadLimitedTimeRetryPolicy const& rhs) noexcept
-    : BigQueryReadLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BigQueryReadLimitedTimeRetryPolicy(
+      BigQueryReadLimitedTimeRetryPolicy&& rhs) noexcept
+      : BigQueryReadLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  BigQueryReadLimitedTimeRetryPolicy(
+      BigQueryReadLimitedTimeRetryPolicy const& rhs) noexcept
+      : BigQueryReadLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class BigQueryReadLimitedTimeRetryPolicy : public BigQueryReadRetryPolicy {
   using BaseType = BigQueryReadRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_storage_v1_internal::BigQueryReadRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_storage_v1_internal::BigQueryReadRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,13 +183,19 @@ class BigQueryReadConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const& request);
+  CreateReadSession(
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+          request);
 
   virtual StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
+  ReadRows(
+      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
-  SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const& request);
+  virtual StatusOr<
+      google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+  SplitReadStream(
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+          request);
 };
 
 /**
@@ -210,7 +223,7 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_storage_v1
 }  // namespace cloud
 }  // namespace google

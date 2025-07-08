@@ -17,12 +17,12 @@
 // source: google/cloud/compute/routes/v1/routes.proto
 
 #include "google/cloud/compute/routes/v1/routes_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/routes/v1/internal/routes_option_defaults.h"
 #include "google/cloud/compute/routes/v1/internal/routes_rest_connection_impl.h"
 #include "google/cloud/compute/routes/v1/internal/routes_rest_stub_factory.h"
 #include "google/cloud/compute/routes/v1/internal/routes_tracing_connection.h"
 #include "google/cloud/compute/routes/v1/routes_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -34,20 +34,18 @@ namespace cloud {
 namespace compute_routes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RoutesConnection> MakeRoutesConnectionRest(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      RoutesPolicyOptionList>(options, __func__);
-  options = compute_routes_v1_internal::RoutesDefaultOptions(
-      std::move(options));
+std::shared_ptr<RoutesConnection> MakeRoutesConnectionRest(Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, RoutesPolicyOptionList>(options,
+                                                                     __func__);
+  options =
+      compute_routes_v1_internal::RoutesDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_routes_v1_internal::CreateDefaultRoutesRestStub(
-      options);
+  auto stub = compute_routes_v1_internal::CreateDefaultRoutesRestStub(options);
   return compute_routes_v1_internal::MakeRoutesTracingConnection(
-      std::make_shared<
-          compute_routes_v1_internal::RoutesRestConnectionImpl>(
+      std::make_shared<compute_routes_v1_internal::RoutesRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

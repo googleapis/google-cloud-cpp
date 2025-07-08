@@ -33,36 +33,34 @@ ModelServiceAuth::ModelServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceAuth::AsyncCreateModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::CreateModelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateModel(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateModel(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceAuth::CreateModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::CreateModelRequest const& request) {
+StatusOr<google::longrunning::Operation> ModelServiceAuth::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateModel(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::GetModel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -70,8 +68,7 @@ StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::GetModel(
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::PauseModel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::PauseModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -79,8 +76,7 @@ StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::PauseModel(
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::ResumeModel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ResumeModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -88,17 +84,16 @@ StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::ResumeModel(
 }
 
 Status ModelServiceAuth::DeleteModel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteModel(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::ListModelsResponse> ModelServiceAuth::ListModels(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::ListModelsResponse>
+ModelServiceAuth::ListModels(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListModelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -106,8 +101,7 @@ StatusOr<google::cloud::retail::v2::ListModelsResponse> ModelServiceAuth::ListMo
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::UpdateModel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -116,36 +110,35 @@ StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::UpdateModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceAuth::AsyncTuneModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::retail::v2::TuneModelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncTuneModel(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncTuneModel(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceAuth::TuneModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::retail::v2::TuneModelRequest const& request) {
+StatusOr<google::longrunning::Operation> ModelServiceAuth::TuneModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TuneModel(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ModelServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ModelServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -153,8 +146,7 @@ StatusOr<google::longrunning::ListOperationsResponse> ModelServiceAuth::ListOper
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -168,15 +160,16 @@ ModelServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -185,13 +178,14 @@ future<Status> ModelServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

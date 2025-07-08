@@ -35,23 +35,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options IdentityAwareProxyOAuthServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_AUTHORITY",
       "iap.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicyOption>()) {
     options.set<iap_v1::IdentityAwareProxyOAuthServiceRetryPolicyOption>(
         iap_v1::IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<iap_v1::IdentityAwareProxyOAuthServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<iap_v1::IdentityAwareProxyOAuthServiceBackoffPolicyOption>()) {
     options.set<iap_v1::IdentityAwareProxyOAuthServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>(
-        iap_v1::MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          iap_v1::
+              IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        iap_v1::
+            IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>(
+        iap_v1::
+            MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RecommenderClient::RecommenderClient(
     std::shared_ptr<RecommenderConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RecommenderClient::~RecommenderClient() = default;
 
 StreamRange<google::cloud::recommender::v1::Insight>
@@ -41,43 +41,52 @@ RecommenderClient::ListInsights(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::recommender::v1::Insight>
-RecommenderClient::ListInsights(google::cloud::recommender::v1::ListInsightsRequest request, Options opts) {
+RecommenderClient::ListInsights(
+    google::cloud::recommender::v1::ListInsightsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInsights(std::move(request));
 }
 
-StatusOr<google::cloud::recommender::v1::Insight>
-RecommenderClient::GetInsight(std::string const& name, Options opts) {
+StatusOr<google::cloud::recommender::v1::Insight> RecommenderClient::GetInsight(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::GetInsightRequest request;
   request.set_name(name);
   return connection_->GetInsight(request);
 }
 
-StatusOr<google::cloud::recommender::v1::Insight>
-RecommenderClient::GetInsight(google::cloud::recommender::v1::GetInsightRequest const& request, Options opts) {
+StatusOr<google::cloud::recommender::v1::Insight> RecommenderClient::GetInsight(
+    google::cloud::recommender::v1::GetInsightRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInsight(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
-RecommenderClient::MarkInsightAccepted(std::string const& name, std::map<std::string, std::string> const& state_metadata, std::string const& etag, Options opts) {
+RecommenderClient::MarkInsightAccepted(
+    std::string const& name,
+    std::map<std::string, std::string> const& state_metadata,
+    std::string const& etag, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::MarkInsightAcceptedRequest request;
   request.set_name(name);
-  *request.mutable_state_metadata() = {state_metadata.begin(), state_metadata.end()};
+  *request.mutable_state_metadata() = {state_metadata.begin(),
+                                       state_metadata.end()};
   request.set_etag(etag);
   return connection_->MarkInsightAccepted(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
-RecommenderClient::MarkInsightAccepted(google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request, Options opts) {
+RecommenderClient::MarkInsightAccepted(
+    google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MarkInsightAccepted(request);
 }
 
 StreamRange<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::ListRecommendations(std::string const& parent, Options opts) {
+RecommenderClient::ListRecommendations(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::ListRecommendationsRequest request;
   request.set_parent(parent);
@@ -85,7 +94,9 @@ RecommenderClient::ListRecommendations(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::ListRecommendations(std::string const& parent, std::string const& filter, Options opts) {
+RecommenderClient::ListRecommendations(std::string const& parent,
+                                       std::string const& filter,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::ListRecommendationsRequest request;
   request.set_parent(parent);
@@ -94,7 +105,9 @@ RecommenderClient::ListRecommendations(std::string const& parent, std::string co
 }
 
 StreamRange<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::ListRecommendations(google::cloud::recommender::v1::ListRecommendationsRequest request, Options opts) {
+RecommenderClient::ListRecommendations(
+    google::cloud::recommender::v1::ListRecommendationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRecommendations(std::move(request));
 }
@@ -108,61 +121,87 @@ RecommenderClient::GetRecommendation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::GetRecommendation(google::cloud::recommender::v1::GetRecommendationRequest const& request, Options opts) {
+RecommenderClient::GetRecommendation(
+    google::cloud::recommender::v1::GetRecommendationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRecommendation(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::MarkRecommendationDismissed(google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request, Options opts) {
+RecommenderClient::MarkRecommendationDismissed(
+    google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MarkRecommendationDismissed(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::MarkRecommendationClaimed(std::string const& name, std::map<std::string, std::string> const& state_metadata, std::string const& etag, Options opts) {
+RecommenderClient::MarkRecommendationClaimed(
+    std::string const& name,
+    std::map<std::string, std::string> const& state_metadata,
+    std::string const& etag, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::MarkRecommendationClaimedRequest request;
   request.set_name(name);
-  *request.mutable_state_metadata() = {state_metadata.begin(), state_metadata.end()};
+  *request.mutable_state_metadata() = {state_metadata.begin(),
+                                       state_metadata.end()};
   request.set_etag(etag);
   return connection_->MarkRecommendationClaimed(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::MarkRecommendationClaimed(google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request, Options opts) {
+RecommenderClient::MarkRecommendationClaimed(
+    google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MarkRecommendationClaimed(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::MarkRecommendationSucceeded(std::string const& name, std::map<std::string, std::string> const& state_metadata, std::string const& etag, Options opts) {
+RecommenderClient::MarkRecommendationSucceeded(
+    std::string const& name,
+    std::map<std::string, std::string> const& state_metadata,
+    std::string const& etag, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::MarkRecommendationSucceededRequest request;
   request.set_name(name);
-  *request.mutable_state_metadata() = {state_metadata.begin(), state_metadata.end()};
+  *request.mutable_state_metadata() = {state_metadata.begin(),
+                                       state_metadata.end()};
   request.set_etag(etag);
   return connection_->MarkRecommendationSucceeded(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::MarkRecommendationSucceeded(google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request, Options opts) {
+RecommenderClient::MarkRecommendationSucceeded(
+    google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MarkRecommendationSucceeded(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::MarkRecommendationFailed(std::string const& name, std::map<std::string, std::string> const& state_metadata, std::string const& etag, Options opts) {
+RecommenderClient::MarkRecommendationFailed(
+    std::string const& name,
+    std::map<std::string, std::string> const& state_metadata,
+    std::string const& etag, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::MarkRecommendationFailedRequest request;
   request.set_name(name);
-  *request.mutable_state_metadata() = {state_metadata.begin(), state_metadata.end()};
+  *request.mutable_state_metadata() = {state_metadata.begin(),
+                                       state_metadata.end()};
   request.set_etag(etag);
   return connection_->MarkRecommendationFailed(request);
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
-RecommenderClient::MarkRecommendationFailed(google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request, Options opts) {
+RecommenderClient::MarkRecommendationFailed(
+    google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MarkRecommendationFailed(request);
 }
@@ -176,13 +215,17 @@ RecommenderClient::GetRecommenderConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-RecommenderClient::GetRecommenderConfig(google::cloud::recommender::v1::GetRecommenderConfigRequest const& request, Options opts) {
+RecommenderClient::GetRecommenderConfig(
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRecommenderConfig(request);
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-RecommenderClient::UpdateRecommenderConfig(google::cloud::recommender::v1::RecommenderConfig const& recommender_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+RecommenderClient::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::RecommenderConfig const& recommender_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::UpdateRecommenderConfigRequest request;
   *request.mutable_recommender_config() = recommender_config;
@@ -191,7 +234,10 @@ RecommenderClient::UpdateRecommenderConfig(google::cloud::recommender::v1::Recom
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-RecommenderClient::UpdateRecommenderConfig(google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request, Options opts) {
+RecommenderClient::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRecommenderConfig(request);
 }
@@ -205,13 +251,18 @@ RecommenderClient::GetInsightTypeConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-RecommenderClient::GetInsightTypeConfig(google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request, Options opts) {
+RecommenderClient::GetInsightTypeConfig(
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInsightTypeConfig(request);
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-RecommenderClient::UpdateInsightTypeConfig(google::cloud::recommender::v1::InsightTypeConfig const& insight_type_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+RecommenderClient::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::InsightTypeConfig const&
+        insight_type_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::recommender::v1::UpdateInsightTypeConfigRequest request;
   *request.mutable_insight_type_config() = insight_type_config;
@@ -220,7 +271,10 @@ RecommenderClient::UpdateInsightTypeConfig(google::cloud::recommender::v1::Insig
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-RecommenderClient::UpdateInsightTypeConfig(google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request, Options opts) {
+RecommenderClient::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInsightTypeConfig(request);
 }

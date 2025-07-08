@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_CONNECTION_IMPL_H
 
-#include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/logging/v2/internal/logging_service_v2_retry_traits.h"
 #include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
 #include "google/cloud/logging/v2/logging_service_v2_connection.h"
 #include "google/cloud/logging/v2/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/logging/v2/logging_service_v2_options.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,43 +44,46 @@ class LoggingServiceV2ConnectionImpl
   ~LoggingServiceV2ConnectionImpl() override = default;
 
   LoggingServiceV2ConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<logging_v2_internal::LoggingServiceV2Stub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<logging_v2_internal::LoggingServiceV2Stub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  Status
-  DeleteLog(google::logging::v2::DeleteLogRequest const& request) override;
+  Status DeleteLog(
+      google::logging::v2::DeleteLogRequest const& request) override;
 
-  StatusOr<google::logging::v2::WriteLogEntriesResponse>
-  WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request) override;
+  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
+      google::logging::v2::WriteLogEntriesRequest const& request) override;
 
-  StreamRange<google::logging::v2::LogEntry>
-  ListLogEntries(google::logging::v2::ListLogEntriesRequest request) override;
+  StreamRange<google::logging::v2::LogEntry> ListLogEntries(
+      google::logging::v2::ListLogEntriesRequest request) override;
 
   StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(google::logging::v2::ListMonitoredResourceDescriptorsRequest request) override;
+  ListMonitoredResourceDescriptors(
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest request)
+      override;
 
-  StreamRange<std::string>
-  ListLogs(google::logging::v2::ListLogsRequest request) override;
+  StreamRange<std::string> ListLogs(
+      google::logging::v2::ListLogsRequest request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries() override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-  AsyncWriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request) override;
+  AsyncWriteLogEntries(
+      google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

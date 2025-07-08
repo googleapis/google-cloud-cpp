@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_KEYS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_KEYS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/resourcemanager/v3/tag_keys_connection.h"
 #include "google/cloud/resourcemanager/v3/tag_keys_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,8 +74,7 @@ struct TagKeysPollingPolicyOption {
  * @ingroup google-cloud-resourcemanager-options
  */
 using TagKeysPolicyOptionList =
-    OptionList<TagKeysRetryPolicyOption,
-               TagKeysBackoffPolicyOption,
+    OptionList<TagKeysRetryPolicyOption, TagKeysBackoffPolicyOption,
                TagKeysPollingPolicyOption,
                TagKeysConnectionIdempotencyPolicyOption>;
 

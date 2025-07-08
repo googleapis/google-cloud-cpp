@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_IMAGES_V1_MACHINE_IMAGES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_IMAGES_V1_MACHINE_IMAGES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_retry_traits.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class MachineImagesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MachineImagesLimitedErrorCountRetryPolicy : public MachineImagesRetryPolicy {
+class MachineImagesLimitedErrorCountRetryPolicy
+    : public MachineImagesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class MachineImagesLimitedErrorCountRetryPolicy : public MachineImagesRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit MachineImagesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   MachineImagesLimitedErrorCountRetryPolicy(
       MachineImagesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : MachineImagesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MachineImagesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MachineImagesLimitedErrorCountRetryPolicy(
       MachineImagesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : MachineImagesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MachineImagesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class MachineImagesLimitedErrorCountRetryPolicy : public MachineImagesRetryPolic
   using BaseType = MachineImagesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_machine_images_v1_internal::MachineImagesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_machine_images_v1_internal::MachineImagesRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +133,14 @@ class MachineImagesLimitedTimeRetryPolicy : public MachineImagesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit MachineImagesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  MachineImagesLimitedTimeRetryPolicy(MachineImagesLimitedTimeRetryPolicy&& rhs) noexcept
-    : MachineImagesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MachineImagesLimitedTimeRetryPolicy(MachineImagesLimitedTimeRetryPolicy const& rhs) noexcept
-    : MachineImagesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MachineImagesLimitedTimeRetryPolicy(
+      MachineImagesLimitedTimeRetryPolicy&& rhs) noexcept
+      : MachineImagesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MachineImagesLimitedTimeRetryPolicy(
+      MachineImagesLimitedTimeRetryPolicy const& rhs) noexcept
+      : MachineImagesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +162,9 @@ class MachineImagesLimitedTimeRetryPolicy : public MachineImagesRetryPolicy {
   using BaseType = MachineImagesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_machine_images_v1_internal::MachineImagesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_machine_images_v1_internal::MachineImagesRetryTraits>
+      impl_;
 };
 
 /**
@@ -170,7 +177,8 @@ class MachineImagesLimitedTimeRetryPolicy : public MachineImagesRetryPolicy {
  *
  * To create a concrete instance, see `MakeMachineImagesConnection()`.
  *
- * For mocking, see `compute_machine_images_v1_mocks::MockMachineImagesConnection`.
+ * For mocking, see
+ * `compute_machine_images_v1_mocks::MockMachineImagesConnection`.
  */
 class MachineImagesConnection {
  public:
@@ -179,46 +187,64 @@ class MachineImagesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request);
+  DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                         DeleteMachineImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteMachineImage(NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest const& request);
+  DeleteMachineImage(NoAwaitTag,
+                     google::cloud::cpp::compute::machine_images::v1::
+                         DeleteMachineImageRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteMachineImage( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteMachineImage(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-  GetMachineImage(google::cloud::cpp::compute::machine_images::v1::GetMachineImageRequest const& request);
+  GetMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                      GetMachineImageRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::machine_images::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::machine_images::v1::
+          GetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request);
+  InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::
+                         InsertMachineImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertMachineImage(NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest const& request);
+  InsertMachineImage(NoAwaitTag,
+                     google::cloud::cpp::compute::machine_images::v1::
+                         InsertMachineImageRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertMachineImage( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertMachineImage(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineImage>
-  ListMachineImages(google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest request);
+  ListMachineImages(
+      google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::machine_images::v1::SetIamPolicyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::machine_images::v1::
+          SetIamPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels( google::cloud::cpp::compute::v1::Operation const& operation);
+  SetLabels(
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::machine_images::v1::SetLabelsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::machine_images::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,7 +28,8 @@ namespace cloud {
 namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options MigrationServiceDefaultOptions(std::string const& location, Options options);
+Options MigrationServiceDefaultOptions(std::string const& location,
+                                       Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal

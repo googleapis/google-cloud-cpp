@@ -32,93 +32,90 @@ BinauthzManagementServiceV1Stub::~BinauthzManagementServiceV1Stub() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 DefaultBinauthzManagementServiceV1Stub::GetPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
-    google::cloud::binaryauthorization::v1::Policy response;
-    auto status =
-        grpc_stub_->GetPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
+  google::cloud::binaryauthorization::v1::Policy response;
+  auto status = grpc_stub_->GetPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 DefaultBinauthzManagementServiceV1Stub::UpdatePolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request) {
-    google::cloud::binaryauthorization::v1::Policy response;
-    auto status =
-        grpc_stub_->UpdatePolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
+        request) {
+  google::cloud::binaryauthorization::v1::Policy response;
+  auto status = grpc_stub_->UpdatePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 DefaultBinauthzManagementServiceV1Stub::CreateAttestor(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request) {
-    google::cloud::binaryauthorization::v1::Attestor response;
-    auto status =
-        grpc_stub_->CreateAttestor(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
+        request) {
+  google::cloud::binaryauthorization::v1::Attestor response;
+  auto status = grpc_stub_->CreateAttestor(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 DefaultBinauthzManagementServiceV1Stub::GetAttestor(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
-    google::cloud::binaryauthorization::v1::Attestor response;
-    auto status =
-        grpc_stub_->GetAttestor(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
+  google::cloud::binaryauthorization::v1::Attestor response;
+  auto status = grpc_stub_->GetAttestor(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 DefaultBinauthzManagementServiceV1Stub::UpdateAttestor(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request) {
-    google::cloud::binaryauthorization::v1::Attestor response;
-    auto status =
-        grpc_stub_->UpdateAttestor(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
+        request) {
+  google::cloud::binaryauthorization::v1::Attestor response;
+  auto status = grpc_stub_->UpdateAttestor(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse>
 DefaultBinauthzManagementServiceV1Stub::ListAttestors(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::ListAttestorsRequest const& request) {
-    google::cloud::binaryauthorization::v1::ListAttestorsResponse response;
-    auto status =
-        grpc_stub_->ListAttestors(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
+        request) {
+  google::cloud::binaryauthorization::v1::ListAttestorsResponse response;
+  auto status = grpc_stub_->ListAttestors(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultBinauthzManagementServiceV1Stub::DeleteAttestor(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteAttestor(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultBinauthzManagementServiceV1Stub::DeleteAttestor(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteAttestor(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

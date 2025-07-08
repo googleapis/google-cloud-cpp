@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_PRODUCT_SEARCH_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_PRODUCT_SEARCH_CLIENT_H
 
+#include "google/cloud/vision/v1/product_search_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vision/v1/product_search_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -39,9 +39,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Manages Products and ProductSets of reference images for use in product
 /// search. It uses the following resource model:
 ///
-/// - The API has a collection of [ProductSet][google.cloud.vision.v1.ProductSet]
-/// resources, named `projects/*/locations/*/productSets/*`, which acts as a way
-/// to put different products into groups to limit identification.
+/// - The API has a collection of
+/// [ProductSet][google.cloud.vision.v1.ProductSet] resources, named
+/// `projects/*/locations/*/productSets/*`, which acts as a way to put different
+/// products into groups to limit identification.
 ///
 /// In parallel,
 ///
@@ -76,13 +77,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
-/// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
-/// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L473}
+/// [google.cloud.vision.v1.Product]:
+/// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
+/// [google.cloud.vision.v1.ProductSet]:
+/// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
+/// [google.cloud.vision.v1.ReferenceImage]:
+/// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L473}
 ///
 class ProductSearchClient {
  public:
-  explicit ProductSearchClient(std::shared_ptr<ProductSearchConnection> connection, Options opts = {});
+  explicit ProductSearchClient(
+      std::shared_ptr<ProductSearchConnection> connection, Options opts = {});
   ~ProductSearchClient();
 
   ///@{
@@ -95,10 +100,12 @@ class ProductSearchClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ProductSearchClient const& a, ProductSearchClient const& b) {
+  friend bool operator==(ProductSearchClient const& a,
+                         ProductSearchClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ProductSearchClient const& a, ProductSearchClient const& b) {
+  friend bool operator!=(ProductSearchClient const& a,
+                         ProductSearchClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -137,8 +144,10 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  CreateProductSet(std::string const& parent, google::cloud::vision::v1::ProductSet const& product_set, std::string const& product_set_id, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
+      std::string const& parent,
+      google::cloud::vision::v1::ProductSet const& product_set,
+      std::string const& product_set_id, Options opts = {});
 
   // clang-format off
   ///
@@ -172,8 +181,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  CreateProductSet(google::cloud::vision::v1::CreateProductSetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
+      google::cloud::vision::v1::CreateProductSetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +223,8 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
   ///
   // clang-format on
-  StreamRange<google::cloud::vision::v1::ProductSet>
-  ListProductSets(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -257,8 +267,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
   ///
   // clang-format on
-  StreamRange<google::cloud::vision::v1::ProductSet>
-  ListProductSets(google::cloud::vision::v1::ListProductSetsRequest request, Options opts = {});
+  StreamRange<google::cloud::vision::v1::ProductSet> ListProductSets(
+      google::cloud::vision::v1::ListProductSetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -289,8 +300,8 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  GetProductSet(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -323,8 +334,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ProductSet]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L437}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  GetProductSet(google::cloud::vision::v1::GetProductSetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
+      google::cloud::vision::v1::GetProductSetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -360,8 +372,9 @@ class ProductSearchClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  UpdateProductSet(google::cloud::vision::v1::ProductSet const& product_set, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
+      google::cloud::vision::v1::ProductSet const& product_set,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -397,8 +410,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.UpdateProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L661}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ProductSet>
-  UpdateProductSet(google::cloud::vision::v1::UpdateProductSetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
+      google::cloud::vision::v1::UpdateProductSetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +439,7 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.DeleteProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L673}
   ///
   // clang-format on
-  Status
-  DeleteProductSet(std::string const& name, Options opts = {});
+  Status DeleteProductSet(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -455,8 +468,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.DeleteProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L673}
   ///
   // clang-format on
-  Status
-  DeleteProductSet(google::cloud::vision::v1::DeleteProductSetRequest const& request, Options opts = {});
+  Status DeleteProductSet(
+      google::cloud::vision::v1::DeleteProductSetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -495,8 +509,10 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::Product>
-  CreateProduct(std::string const& parent, google::cloud::vision::v1::Product const& product, std::string const& product_id, Options opts = {});
+  StatusOr<google::cloud::vision::v1::Product> CreateProduct(
+      std::string const& parent,
+      google::cloud::vision::v1::Product const& product,
+      std::string const& product_id, Options opts = {});
 
   // clang-format off
   ///
@@ -532,8 +548,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::Product>
-  CreateProduct(google::cloud::vision::v1::CreateProductRequest const& request, Options opts = {});
+  StatusOr<google::cloud::vision::v1::Product> CreateProduct(
+      google::cloud::vision::v1::CreateProductRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -573,8 +590,8 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   ///
   // clang-format on
-  StreamRange<google::cloud::vision::v1::Product>
-  ListProducts(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vision::v1::Product> ListProducts(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -616,8 +633,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   ///
   // clang-format on
-  StreamRange<google::cloud::vision::v1::Product>
-  ListProducts(google::cloud::vision::v1::ListProductsRequest request, Options opts = {});
+  StreamRange<google::cloud::vision::v1::Product> ListProducts(
+      google::cloud::vision::v1::ListProductsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -648,8 +666,8 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::Product>
-  GetProduct(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vision::v1::Product> GetProduct(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -682,8 +700,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::Product>
-  GetProduct(google::cloud::vision::v1::GetProductRequest const& request, Options opts = {});
+  StatusOr<google::cloud::vision::v1::Product> GetProduct(
+      google::cloud::vision::v1::GetProductRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -728,8 +747,9 @@ class ProductSearchClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::Product>
-  UpdateProduct(google::cloud::vision::v1::Product const& product, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
+      google::cloud::vision::v1::Product const& product,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -772,8 +792,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.UpdateProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L570}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::Product>
-  UpdateProduct(google::cloud::vision::v1::UpdateProductRequest const& request, Options opts = {});
+  StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
+      google::cloud::vision::v1::UpdateProductRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -801,8 +822,7 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.DeleteProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L584}
   ///
   // clang-format on
-  Status
-  DeleteProduct(std::string const& name, Options opts = {});
+  Status DeleteProduct(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -832,8 +852,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.DeleteProductRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L584}
   ///
   // clang-format on
-  Status
-  DeleteProduct(google::cloud::vision::v1::DeleteProductRequest const& request, Options opts = {});
+  Status DeleteProduct(
+      google::cloud::vision::v1::DeleteProductRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -885,8 +906,10 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L473}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ReferenceImage>
-  CreateReferenceImage(std::string const& parent, google::cloud::vision::v1::ReferenceImage const& reference_image, std::string const& reference_image_id, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
+      std::string const& parent,
+      google::cloud::vision::v1::ReferenceImage const& reference_image,
+      std::string const& reference_image_id, Options opts = {});
 
   // clang-format off
   ///
@@ -933,8 +956,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L473}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ReferenceImage>
-  CreateReferenceImage(google::cloud::vision::v1::CreateReferenceImageRequest const& request, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
+      google::cloud::vision::v1::CreateReferenceImageRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -964,8 +988,7 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.DeleteReferenceImageRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L757}
   ///
   // clang-format on
-  Status
-  DeleteReferenceImage(std::string const& name, Options opts = {});
+  Status DeleteReferenceImage(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -997,8 +1020,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.DeleteReferenceImageRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L757}
   ///
   // clang-format on
-  Status
-  DeleteReferenceImage(google::cloud::vision::v1::DeleteReferenceImageRequest const& request, Options opts = {});
+  Status DeleteReferenceImage(
+      google::cloud::vision::v1::DeleteReferenceImageRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1040,8 +1064,8 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L473}
   ///
   // clang-format on
-  StreamRange<google::cloud::vision::v1::ReferenceImage>
-  ListReferenceImages(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::vision::v1::ReferenceImage> ListReferenceImages(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1085,8 +1109,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L473}
   ///
   // clang-format on
-  StreamRange<google::cloud::vision::v1::ReferenceImage>
-  ListReferenceImages(google::cloud::vision::v1::ListReferenceImagesRequest request, Options opts = {});
+  StreamRange<google::cloud::vision::v1::ReferenceImage> ListReferenceImages(
+      google::cloud::vision::v1::ListReferenceImagesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1117,8 +1142,8 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L473}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ReferenceImage>
-  GetReferenceImage(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1151,8 +1176,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ReferenceImage]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L473}
   ///
   // clang-format on
-  StatusOr<google::cloud::vision::v1::ReferenceImage>
-  GetReferenceImage(google::cloud::vision::v1::GetReferenceImageRequest const& request, Options opts = {});
+  StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
+      google::cloud::vision::v1::GetReferenceImageRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1187,8 +1213,8 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.AddProductToProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L771}
   ///
   // clang-format on
-  Status
-  AddProductToProductSet(std::string const& name, std::string const& product, Options opts = {});
+  Status AddProductToProductSet(std::string const& name,
+                                std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1221,8 +1247,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.AddProductToProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L771}
   ///
   // clang-format on
-  Status
-  AddProductToProductSet(google::cloud::vision::v1::AddProductToProductSetRequest const& request, Options opts = {});
+  Status AddProductToProductSet(
+      google::cloud::vision::v1::AddProductToProductSetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1251,8 +1278,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.RemoveProductFromProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L794}
   ///
   // clang-format on
-  Status
-  RemoveProductFromProductSet(std::string const& name, std::string const& product, Options opts = {});
+  Status RemoveProductFromProductSet(std::string const& name,
+                                     std::string const& product,
+                                     Options opts = {});
 
   // clang-format off
   ///
@@ -1278,8 +1306,10 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.RemoveProductFromProductSetRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L794}
   ///
   // clang-format on
-  Status
-  RemoveProductFromProductSet(google::cloud::vision::v1::RemoveProductFromProductSetRequest const& request, Options opts = {});
+  Status RemoveProductFromProductSet(
+      google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1321,8 +1351,8 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   ///
   // clang-format on
-  StreamRange<google::cloud::vision::v1::Product>
-  ListProductsInProductSet(std::string const& name, Options opts = {});
+  StreamRange<google::cloud::vision::v1::Product> ListProductsInProductSet(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1366,8 +1396,9 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.Product]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L378}
   ///
   // clang-format on
-  StreamRange<google::cloud::vision::v1::Product>
-  ListProductsInProductSet(google::cloud::vision::v1::ListProductsInProductSetRequest request, Options opts = {});
+  StreamRange<google::cloud::vision::v1::Product> ListProductsInProductSet(
+      google::cloud::vision::v1::ListProductsInProductSetRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1414,7 +1445,11 @@ class ProductSearchClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(std::string const& parent, google::cloud::vision::v1::ImportProductSetsInputConfig const& input_config, Options opts = {});
+  ImportProductSets(
+      std::string const& parent,
+      google::cloud::vision::v1::ImportProductSetsInputConfig const&
+          input_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1427,8 +1462,11 @@ class ProductSearchClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportProductSets(NoAwaitTag, std::string const& parent, google::cloud::vision::v1::ImportProductSetsInputConfig const& input_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportProductSets(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::vision::v1::ImportProductSetsInputConfig const&
+          input_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1477,7 +1515,9 @@ class ProductSearchClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const& request, Options opts = {});
+  ImportProductSets(
+      google::cloud::vision::v1::ImportProductSetsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1490,8 +1530,10 @@ class ProductSearchClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportProductSets(NoAwaitTag, google::cloud::vision::v1::ImportProductSetsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportProductSets(
+      NoAwaitTag,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1503,7 +1545,8 @@ class ProductSearchClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(google::longrunning::Operation const& operation, Options opts = {});
+  ImportProductSets(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -1574,8 +1617,8 @@ class ProductSearchClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeProducts(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeProducts(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1636,7 +1679,8 @@ class ProductSearchClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-  PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request, Options opts = {});
+  PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1649,8 +1693,10 @@ class ProductSearchClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeProducts(NoAwaitTag, google::cloud::vision::v1::PurgeProductsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeProducts(
+      NoAwaitTag,
+      google::cloud::vision::v1::PurgeProductsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1662,7 +1708,8 @@ class ProductSearchClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-  PurgeProducts(google::longrunning::Operation const& operation, Options opts = {});
+  PurgeProducts(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1688,8 +1735,8 @@ class ProductSearchClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1720,8 +1767,9 @@ class ProductSearchClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ProductSearchConnection> connection_;

@@ -28,15 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-LustreTracingStub::LustreTracingStub(
-    std::shared_ptr<LustreStub> child)
+LustreTracingStub::LustreTracingStub(std::shared_ptr<LustreStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::lustre::v1::ListInstancesResponse> LustreTracingStub::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::lustre::v1::ListInstancesResponse>
+LustreTracingStub::ListInstances(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::lustre::v1::ListInstancesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ListInstances");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,10 +44,10 @@ StatusOr<google::cloud::lustre::v1::ListInstancesResponse> LustreTracingStub::Li
 }
 
 StatusOr<google::cloud::lustre::v1::Instance> LustreTracingStub::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::lustre::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "GetInstance");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +56,24 @@ StatusOr<google::cloud::lustre::v1::Instance> LustreTracingStub::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 LustreTracingStub::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::lustre::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "CreateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::CreateInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "CreateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-LustreTracingStub::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::lustre::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "CreateInstance");
+StatusOr<google::longrunning::Operation> LustreTracingStub::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::CreateInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "CreateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +82,24 @@ LustreTracingStub::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 LustreTracingStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::lustre::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "UpdateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::UpdateInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "UpdateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-LustreTracingStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::lustre::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "UpdateInstance");
+StatusOr<google::longrunning::Operation> LustreTracingStub::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::UpdateInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "UpdateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,23 +108,24 @@ LustreTracingStub::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 LustreTracingStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::lustre::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "DeleteInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::DeleteInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "DeleteInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-LustreTracingStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::lustre::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "DeleteInstance");
+StatusOr<google::longrunning::Operation> LustreTracingStub::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::DeleteInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "DeleteInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -131,23 +134,23 @@ LustreTracingStub::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 LustreTracingStub::AsyncImportData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::lustre::v1::ImportDataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ImportData");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::ImportDataRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ImportData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncImportData(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-LustreTracingStub::ImportData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::lustre::v1::ImportDataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ImportData");
+StatusOr<google::longrunning::Operation> LustreTracingStub::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::ImportDataRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ImportData");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -156,34 +159,35 @@ LustreTracingStub::ImportData(
 
 future<StatusOr<google::longrunning::Operation>>
 LustreTracingStub::AsyncExportData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::lustre::v1::ExportDataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ExportData");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::lustre::v1::ExportDataRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ExportData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncExportData(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-LustreTracingStub::ExportData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::lustre::v1::ExportDataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ExportData");
+StatusOr<google::longrunning::Operation> LustreTracingStub::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::lustre::v1::ExportDataRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ExportData");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ExportData(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> LustreTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+LustreTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ListLocations");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -191,21 +195,22 @@ StatusOr<google::cloud::location::ListLocationsResponse> LustreTracingStub::List
 }
 
 StatusOr<google::cloud::location::Location> LustreTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "GetLocation");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> LustreTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+LustreTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ListOperations");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -213,10 +218,10 @@ StatusOr<google::longrunning::ListOperationsResponse> LustreTracingStub::ListOpe
 }
 
 StatusOr<google::longrunning::Operation> LustreTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "GetOperation");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -224,10 +229,10 @@ StatusOr<google::longrunning::Operation> LustreTracingStub::GetOperation(
 }
 
 Status LustreTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -235,10 +240,10 @@ Status LustreTracingStub::DeleteOperation(
 }
 
 Status LustreTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.lustre.v1.Lustre",
+                                     "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -255,8 +260,7 @@ LustreTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -269,8 +273,8 @@ future<Status> LustreTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

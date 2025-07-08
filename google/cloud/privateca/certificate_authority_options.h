@@ -28,20 +28,31 @@ namespace cloud {
 namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServicePollingPolicyOption directly.
-using ::google::cloud::privateca_v1::CertificateAuthorityServicePollingPolicyOption;
+/// @deprecated Use privateca_v1::CertificateAuthorityServicePollingPolicyOption
+/// directly.
+using ::google::cloud::privateca_v1::
+    CertificateAuthorityServicePollingPolicyOption;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServiceBackoffPolicyOption directly.
-using ::google::cloud::privateca_v1::CertificateAuthorityServiceBackoffPolicyOption;
+/// @deprecated Use privateca_v1::CertificateAuthorityServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::privateca_v1::
+    CertificateAuthorityServiceBackoffPolicyOption;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// privateca_v1::CertificateAuthorityServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::privateca_v1::
+    CertificateAuthorityServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServicePolicyOptionList directly.
-using ::google::cloud::privateca_v1::CertificateAuthorityServicePolicyOptionList;
+/// @deprecated Use privateca_v1::CertificateAuthorityServicePolicyOptionList
+/// directly.
+using ::google::cloud::privateca_v1::
+    CertificateAuthorityServicePolicyOptionList;
 
-/// @deprecated Use privateca_v1::CertificateAuthorityServiceRetryPolicyOption directly.
-using ::google::cloud::privateca_v1::CertificateAuthorityServiceRetryPolicyOption;
+/// @deprecated Use privateca_v1::CertificateAuthorityServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::privateca_v1::
+    CertificateAuthorityServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca

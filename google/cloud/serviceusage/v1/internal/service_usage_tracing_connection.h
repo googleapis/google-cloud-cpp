@@ -36,57 +36,62 @@ class ServiceUsageTracingConnection
   ~ServiceUsageTracingConnection() override = default;
 
   explicit ServiceUsageTracingConnection(
-    std::shared_ptr<serviceusage_v1::ServiceUsageConnection> child);
+      std::shared_ptr<serviceusage_v1::ServiceUsageConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService(google::api::serviceusage::v1::EnableServiceRequest const& request) override;
+  EnableService(google::api::serviceusage::v1::EnableServiceRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  EnableService(NoAwaitTag,
-      google::api::serviceusage::v1::EnableServiceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> EnableService(
+      NoAwaitTag,
+      google::api::serviceusage::v1::EnableServiceRequest const& request)
+      override;
 
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService(
-      google::longrunning::Operation const& operation) override;
+  EnableService(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService(google::api::serviceusage::v1::DisableServiceRequest const& request) override;
+  DisableService(google::api::serviceusage::v1::DisableServiceRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DisableService(NoAwaitTag,
-      google::api::serviceusage::v1::DisableServiceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DisableService(
+      NoAwaitTag,
+      google::api::serviceusage::v1::DisableServiceRequest const& request)
+      override;
 
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService(
-      google::longrunning::Operation const& operation) override;
+  DisableService(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::api::serviceusage::v1::Service>
-  GetService(google::api::serviceusage::v1::GetServiceRequest const& request) override;
+  StatusOr<google::api::serviceusage::v1::Service> GetService(
+      google::api::serviceusage::v1::GetServiceRequest const& request) override;
 
-  StreamRange<google::api::serviceusage::v1::Service>
-  ListServices(google::api::serviceusage::v1::ListServicesRequest request) override;
-
-  future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-  BatchEnableServices(google::api::serviceusage::v1::BatchEnableServicesRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  BatchEnableServices(NoAwaitTag,
-      google::api::serviceusage::v1::BatchEnableServicesRequest const& request) override;
+  StreamRange<google::api::serviceusage::v1::Service> ListServices(
+      google::api::serviceusage::v1::ListServicesRequest request) override;
 
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
   BatchEnableServices(
-      google::longrunning::Operation const& operation) override;
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchEnableServices(
+      NoAwaitTag,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
+      override;
+
+  future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
+  BatchEnableServices(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const& request) override;
+  BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const&
+                       request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<serviceusage_v1::ServiceUsageConnection> child_;

@@ -28,18 +28,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PredictionServiceClient::PredictionServiceClient(
     std::shared_ptr<PredictionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 PredictionServiceClient::~PredictionServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
-PredictionServiceClient::Predict(google::cloud::retail::v2::PredictRequest const& request, Options opts) {
+PredictionServiceClient::Predict(
+    google::cloud::retail::v2::PredictRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Predict(request);
 }
 
 StreamRange<google::longrunning::Operation>
-PredictionServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+PredictionServiceClient::ListOperations(std::string const& name,
+                                        std::string const& filter,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -48,21 +51,22 @@ PredictionServiceClient::ListOperations(std::string const& name, std::string con
 }
 
 StreamRange<google::longrunning::Operation>
-PredictionServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+PredictionServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-PredictionServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> PredictionServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-PredictionServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> PredictionServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

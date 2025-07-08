@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_INSTANCES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_INSTANCES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_instances_rest_stub.h"
 #include "google/cloud/sql/v1/internal/sql_instances_retry_traits.h"
 #include "google/cloud/sql/v1/sql_instances_connection.h"
 #include "google/cloud/sql/v1/sql_instances_connection_idempotency_policy.h"
 #include "google/cloud/sql/v1/sql_instances_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,127 +43,167 @@ class SqlInstancesServiceRestConnectionImpl
   ~SqlInstancesServiceRestConnectionImpl() override = default;
 
   SqlInstancesServiceRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<sql_v1_internal::SqlInstancesServiceRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<sql_v1_internal::SqlInstancesServiceRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  AddServerCa(google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> AddServerCa(
+      google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Clone(google::cloud::sql::v1::SqlInstancesCloneRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Clone(
+      google::cloud::sql::v1::SqlInstancesCloneRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Delete(google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Delete(
+      google::cloud::sql::v1::SqlInstancesDeleteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  DemoteMaster(google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> DemoteMaster(
+      google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Demote(google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Demote(
+      google::cloud::sql::v1::SqlInstancesDemoteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Export(google::cloud::sql::v1::SqlInstancesExportRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Export(
+      google::cloud::sql::v1::SqlInstancesExportRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Failover(google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Failover(
+      google::cloud::sql::v1::SqlInstancesFailoverRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Reencrypt(google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Reencrypt(
+      google::cloud::sql::v1::SqlInstancesReencryptRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::DatabaseInstance>
-  Get(google::cloud::sql::v1::SqlInstancesGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::DatabaseInstance> Get(
+      google::cloud::sql::v1::SqlInstancesGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Import(google::cloud::sql::v1::SqlInstancesImportRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Import(
+      google::cloud::sql::v1::SqlInstancesImportRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Insert(google::cloud::sql::v1::SqlInstancesInsertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Insert(
+      google::cloud::sql::v1::SqlInstancesInsertRequest const& request)
+      override;
 
-  StreamRange<google::cloud::sql::v1::DatabaseInstance>
-  List(google::cloud::sql::v1::SqlInstancesListRequest request) override;
+  StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
+      google::cloud::sql::v1::SqlInstancesListRequest request) override;
 
   StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
-  ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) override;
+  ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const&
+                    request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Patch(google::cloud::sql::v1::SqlInstancesPatchRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Patch(
+      google::cloud::sql::v1::SqlInstancesPatchRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  PromoteReplica(google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> PromoteReplica(
+      google::cloud::sql::v1::SqlInstancesPromoteReplicaRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Switchover(google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Switchover(
+      google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  ResetSslConfig(google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> ResetSslConfig(
+      google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Restart(google::cloud::sql::v1::SqlInstancesRestartRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Restart(
+      google::cloud::sql::v1::SqlInstancesRestartRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  RestoreBackup(google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> RestoreBackup(
+      google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  RotateServerCa(google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> RotateServerCa(
+      google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  StartReplica(google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> StartReplica(
+      google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  StopReplica(google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> StopReplica(
+      google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  TruncateLog(google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> TruncateLog(
+      google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Update(google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Update(
+      google::cloud::sql::v1::SqlInstancesUpdateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::SslCert>
-  CreateEphemeral(google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::SslCert> CreateEphemeral(
+      google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
+          request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  RescheduleMaintenance(google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> RescheduleMaintenance(
+      google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
-  VerifyExternalSyncSettings(google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const& request) override;
+  StatusOr<
+      google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>
+  VerifyExternalSyncSettings(
+      google::cloud::sql::v1::
+          SqlInstancesVerifyExternalSyncSettingsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  StartExternalSync(google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> StartExternalSync(
+      google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
+          request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  PerformDiskShrink(google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> PerformDiskShrink(
+      google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
+          request) override;
 
   StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
-  GetDiskShrinkConfig(google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const& request) override;
+  GetDiskShrinkConfig(
+      google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  ResetReplicaSize(google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
+      google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
+          request) override;
 
   StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
-  GetLatestRecoveryTime(google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const& request) override;
+  GetLatestRecoveryTime(
+      google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
+          request) override;
 
   StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
-  AcquireSsrsLease(google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const& request) override;
+  AcquireSsrsLease(
+      google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
+          request) override;
 
   StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>
-  ReleaseSsrsLease(google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const& request) override;
+  ReleaseSsrsLease(
+      google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
+          request) override;
 
  private:
-  static std::unique_ptr<sql_v1::SqlInstancesServiceRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<sql_v1::SqlInstancesServiceRetryPolicy> retry_policy(
+      Options const& options) {
     return options.get<sql_v1::SqlInstancesServiceRetryPolicyOption>()->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<sql_v1::SqlInstancesServiceBackoffPolicyOption>()->clone();
+    return options.get<sql_v1::SqlInstancesServiceBackoffPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<sql_v1::SqlInstancesServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<sql_v1::SqlInstancesServiceConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<sql_v1::SqlInstancesServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

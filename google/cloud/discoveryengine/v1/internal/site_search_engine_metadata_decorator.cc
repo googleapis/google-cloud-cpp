@@ -46,10 +46,11 @@ SiteSearchEngineServiceMetadata::SiteSearchEngineServiceMetadata(
 
 StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
 SiteSearchEngineServiceMetadata::GetSiteSearchEngine(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSiteSearchEngine(context, options, request);
 }
 
@@ -58,18 +59,21 @@ SiteSearchEngineServiceMetadata::AsyncCreateTargetSite(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateTargetSite(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateTargetSite(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::CreateTargetSite(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTargetSite(context, options, request);
 }
 
@@ -78,27 +82,30 @@ SiteSearchEngineServiceMetadata::AsyncBatchCreateTargetSites(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchCreateTargetSites(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchCreateTargetSites(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::BatchCreateTargetSites(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchCreateTargetSites(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
 SiteSearchEngineServiceMetadata::GetTargetSite(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTargetSite(context, options, request);
 }
 
@@ -107,18 +114,23 @@ SiteSearchEngineServiceMetadata::AsyncUpdateTargetSite(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("target_site.name=", internal::UrlEncode(request.target_site().name())));
-  return child_->AsyncUpdateTargetSite(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("target_site.name=",
+                           internal::UrlEncode(request.target_site().name())));
+  return child_->AsyncUpdateTargetSite(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::UpdateTargetSite(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("target_site.name=", internal::UrlEncode(request.target_site().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("target_site.name=",
+                           internal::UrlEncode(request.target_site().name())));
   return child_->UpdateTargetSite(context, options, request);
 }
 
@@ -127,27 +139,30 @@ SiteSearchEngineServiceMetadata::AsyncDeleteTargetSite(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteTargetSite(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteTargetSite(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::DeleteTargetSite(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTargetSite(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
 SiteSearchEngineServiceMetadata::ListTargetSites(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListTargetSitesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTargetSites(context, options, request);
 }
 
@@ -157,17 +172,18 @@ SiteSearchEngineServiceMetadata::AsyncCreateSitemap(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateSitemap(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateSitemap(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::CreateSitemap(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateSitemap(context, options, request);
 }
 
@@ -177,26 +193,27 @@ SiteSearchEngineServiceMetadata::AsyncDeleteSitemap(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSitemap(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteSitemap(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::DeleteSitemap(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSitemap(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
 SiteSearchEngineServiceMetadata::FetchSitemaps(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->FetchSitemaps(context, options, request);
 }
 
@@ -205,18 +222,23 @@ SiteSearchEngineServiceMetadata::AsyncEnableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("site_search_engine=", internal::UrlEncode(request.site_search_engine())));
-  return child_->AsyncEnableAdvancedSiteSearch(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
+  return child_->AsyncEnableAdvancedSiteSearch(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::EnableAdvancedSiteSearch(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("site_search_engine=", internal::UrlEncode(request.site_search_engine())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
   return child_->EnableAdvancedSiteSearch(context, options, request);
 }
 
@@ -225,18 +247,23 @@ SiteSearchEngineServiceMetadata::AsyncDisableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("site_search_engine=", internal::UrlEncode(request.site_search_engine())));
-  return child_->AsyncDisableAdvancedSiteSearch(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
+  return child_->AsyncDisableAdvancedSiteSearch(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::DisableAdvancedSiteSearch(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("site_search_engine=", internal::UrlEncode(request.site_search_engine())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
   return child_->DisableAdvancedSiteSearch(context, options, request);
 }
 
@@ -246,17 +273,20 @@ SiteSearchEngineServiceMetadata::AsyncRecrawlUris(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("site_search_engine=", internal::UrlEncode(request.site_search_engine())));
-  return child_->AsyncRecrawlUris(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
+  return child_->AsyncRecrawlUris(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::RecrawlUris(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("site_search_engine=", internal::UrlEncode(request.site_search_engine())));
+  SetMetadata(context, options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
   return child_->RecrawlUris(context, options, request);
 }
 
@@ -265,54 +295,59 @@ SiteSearchEngineServiceMetadata::AsyncBatchVerifyTargetSites(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchVerifyTargetSites(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchVerifyTargetSites(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::BatchVerifyTargetSites(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->BatchVerifyTargetSites(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse>
+StatusOr<
+    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusResponse>
 SiteSearchEngineServiceMetadata::FetchDomainVerificationStatus(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("site_search_engine=", internal::UrlEncode(request.site_search_engine())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::
+        FetchDomainVerificationStatusRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("site_search_engine=",
+                           internal::UrlEncode(request.site_search_engine())));
   return child_->FetchDomainVerificationStatus(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 SiteSearchEngineServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-SiteSearchEngineServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status SiteSearchEngineServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -324,8 +359,8 @@ SiteSearchEngineServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> SiteSearchEngineServiceMetadata::AsyncCancelOperation(
@@ -335,21 +370,21 @@ future<Status> SiteSearchEngineServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void SiteSearchEngineServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void SiteSearchEngineServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void SiteSearchEngineServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                                  Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

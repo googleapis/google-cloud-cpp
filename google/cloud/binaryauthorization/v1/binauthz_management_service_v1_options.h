@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_BINAUTHZ_MANAGEMENT_SERVICE_V1_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_BINAUTHZ_MANAGEMENT_SERVICE_V1_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection.h"
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct BinauthzManagementServiceV1BackoffPolicyOption {
  * @ingroup google-cloud-binaryauthorization-options
  */
 struct BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>;
 };
 
 /**

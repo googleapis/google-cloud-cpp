@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_ENVIRONMENTS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_ENVIRONMENTS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/composer/v1/environments_connection.h"
 #include "google/cloud/composer/v1/environments_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct EnvironmentsPollingPolicyOption {
  * @ingroup google-cloud-composer-options
  */
 using EnvironmentsPolicyOptionList =
-    OptionList<EnvironmentsRetryPolicyOption,
-               EnvironmentsBackoffPolicyOption,
+    OptionList<EnvironmentsRetryPolicyOption, EnvironmentsBackoffPolicyOption,
                EnvironmentsPollingPolicyOption,
                EnvironmentsConnectionIdempotencyPolicyOption>;
 

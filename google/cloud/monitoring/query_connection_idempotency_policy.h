@@ -26,10 +26,13 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_v3::MakeDefaultQueryServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::monitoring_v3::MakeDefaultQueryServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// monitoring_v3::MakeDefaultQueryServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::monitoring_v3::
+    MakeDefaultQueryServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use monitoring_v3::QueryServiceConnectionIdempotencyPolicy directly.
+/// @deprecated Use monitoring_v3::QueryServiceConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::monitoring_v3::QueryServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

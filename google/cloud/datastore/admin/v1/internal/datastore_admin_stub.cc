@@ -33,12 +33,13 @@ DatastoreAdminStub::~DatastoreAdminStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncExportEntities(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::datastore::admin::v1::ExportEntitiesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::datastore::admin::v1::ExportEntitiesRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::datastore::admin::v1::ExportEntitiesRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::datastore::admin::v1::ExportEntitiesRequest const& request,
@@ -50,26 +51,25 @@ DefaultDatastoreAdminStub::AsyncExportEntities(
 
 StatusOr<google::longrunning::Operation>
 DefaultDatastoreAdminStub::ExportEntities(
-      grpc::ClientContext& context,
-      Options,
-      google::datastore::admin::v1::ExportEntitiesRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ExportEntities(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportEntities(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncImportEntities(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::datastore::admin::v1::ImportEntitiesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::datastore::admin::v1::ImportEntitiesRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::datastore::admin::v1::ImportEntitiesRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::datastore::admin::v1::ImportEntitiesRequest const& request,
@@ -81,26 +81,25 @@ DefaultDatastoreAdminStub::AsyncImportEntities(
 
 StatusOr<google::longrunning::Operation>
 DefaultDatastoreAdminStub::ImportEntities(
-      grpc::ClientContext& context,
-      Options,
-      google::datastore::admin::v1::ImportEntitiesRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ImportEntities(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportEntities(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncCreateIndex(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::datastore::admin::v1::CreateIndexRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::datastore::admin::v1::CreateIndexRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::datastore::admin::v1::CreateIndexRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::datastore::admin::v1::CreateIndexRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::datastore::admin::v1::CreateIndexRequest const& request,
@@ -110,28 +109,26 @@ DefaultDatastoreAdminStub::AsyncCreateIndex(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDatastoreAdminStub::CreateIndex(
-      grpc::ClientContext& context,
-      Options,
-      google::datastore::admin::v1::CreateIndexRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateIndex(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDatastoreAdminStub::CreateIndex(
+    grpc::ClientContext& context, Options,
+    google::datastore::admin::v1::CreateIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastoreAdminStub::AsyncDeleteIndex(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::datastore::admin::v1::DeleteIndexRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::datastore::admin::v1::DeleteIndexRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::datastore::admin::v1::DeleteIndexRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::datastore::admin::v1::DeleteIndexRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::datastore::admin::v1::DeleteIndexRequest const& request,
@@ -141,96 +138,85 @@ DefaultDatastoreAdminStub::AsyncDeleteIndex(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDatastoreAdminStub::DeleteIndex(
-      grpc::ClientContext& context,
-      Options,
-      google::datastore::admin::v1::DeleteIndexRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteIndex(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDatastoreAdminStub::DeleteIndex(
+    grpc::ClientContext& context, Options,
+    google::datastore::admin::v1::DeleteIndexRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::datastore::admin::v1::Index>
 DefaultDatastoreAdminStub::GetIndex(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::admin::v1::GetIndexRequest const& request) {
-    google::datastore::admin::v1::Index response;
-    auto status =
-        grpc_stub_->GetIndex(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::datastore::admin::v1::GetIndexRequest const& request) {
+  google::datastore::admin::v1::Index response;
+  auto status = grpc_stub_->GetIndex(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::datastore::admin::v1::ListIndexesResponse>
 DefaultDatastoreAdminStub::ListIndexes(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::admin::v1::ListIndexesRequest const& request) {
-    google::datastore::admin::v1::ListIndexesResponse response;
-    auto status =
-        grpc_stub_->ListIndexes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::datastore::admin::v1::ListIndexesRequest const& request) {
+  google::datastore::admin::v1::ListIndexesResponse response;
+  auto status = grpc_stub_->ListIndexes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDatastoreAdminStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDatastoreAdminStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDatastoreAdminStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDatastoreAdminStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultDatastoreAdminStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDatastoreAdminStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -259,13 +245,14 @@ future<Status> DefaultDatastoreAdminStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

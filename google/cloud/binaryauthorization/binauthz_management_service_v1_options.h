@@ -28,17 +28,29 @@ namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1BackoffPolicyOption directly.
-using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1BackoffPolicyOption;
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1BackoffPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1BackoffPolicyOption;
 
-/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1PolicyOptionList directly.
-using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1PolicyOptionList;
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1PolicyOptionList
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1PolicyOptionList;
 
-/// @deprecated Use binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicyOption directly.
-using ::google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicyOption;
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1RetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

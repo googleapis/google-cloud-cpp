@@ -50,71 +50,67 @@ ModelServiceMetadata::AsyncCreateModel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::retail::v2::CreateModelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateModel(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateModel(cq, std::move(context), std::move(options),
+                                  request);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceMetadata::CreateModel(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::CreateModel(
+    grpc::ClientContext& context, Options options,
     google::cloud::retail::v2::CreateModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateModel(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceMetadata::GetModel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::GetModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetModel(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceMetadata::PauseModel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::PauseModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::PauseModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->PauseModel(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceMetadata::ResumeModel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::ResumeModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ResumeModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResumeModel(context, options, request);
 }
 
-Status
-ModelServiceMetadata::DeleteModel(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ModelServiceMetadata::DeleteModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteModel(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListModelsResponse>
 ModelServiceMetadata::ListModels(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListModelsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListModels(context, options, request);
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-ModelServiceMetadata::UpdateModel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::Model> ModelServiceMetadata::UpdateModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
   return child_->UpdateModel(context, options, request);
 }
 
@@ -124,35 +120,34 @@ ModelServiceMetadata::AsyncTuneModel(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::retail::v2::TuneModelRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncTuneModel(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncTuneModel(cq, std::move(context), std::move(options),
+                                request);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceMetadata::TuneModel(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::TuneModel(
+    grpc::ClientContext& context, Options options,
     google::cloud::retail::v2::TuneModelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->TuneModel(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ModelServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -164,8 +159,8 @@ ModelServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ModelServiceMetadata::AsyncCancelOperation(
@@ -175,21 +170,21 @@ future<Status> ModelServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ModelServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                       Options const& options,
+                                       std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ModelServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                       Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

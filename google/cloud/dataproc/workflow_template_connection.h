@@ -33,11 +33,15 @@ using ::google::cloud::dataproc_v1::MakeWorkflowTemplateServiceConnection;
 /// @deprecated Use dataproc_v1::WorkflowTemplateServiceConnection directly.
 using ::google::cloud::dataproc_v1::WorkflowTemplateServiceConnection;
 
-/// @deprecated Use dataproc_v1::WorkflowTemplateServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::dataproc_v1::WorkflowTemplateServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// dataproc_v1::WorkflowTemplateServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::dataproc_v1::
+    WorkflowTemplateServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use dataproc_v1::WorkflowTemplateServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::dataproc_v1::WorkflowTemplateServiceLimitedTimeRetryPolicy;
+/// @deprecated Use dataproc_v1::WorkflowTemplateServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::dataproc_v1::
+    WorkflowTemplateServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use dataproc_v1::WorkflowTemplateServiceRetryPolicy directly.
 using ::google::cloud::dataproc_v1::WorkflowTemplateServiceRetryPolicy;

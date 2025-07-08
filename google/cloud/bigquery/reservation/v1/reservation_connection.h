@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_retry_traits.h"
 #include "google/cloud/bigquery/reservation/v1/reservation_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class ReservationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ReservationServiceLimitedErrorCountRetryPolicy : public ReservationServiceRetryPolicy {
+class ReservationServiceLimitedErrorCountRetryPolicy
+    : public ReservationServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,16 @@ class ReservationServiceLimitedErrorCountRetryPolicy : public ReservationService
    *     @p maximum_failures == 0.
    */
   explicit ReservationServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ReservationServiceLimitedErrorCountRetryPolicy(
       ReservationServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ReservationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ReservationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
   ReservationServiceLimitedErrorCountRetryPolicy(
       ReservationServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ReservationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ReservationServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +92,9 @@ class ReservationServiceLimitedErrorCountRetryPolicy : public ReservationService
   using BaseType = ReservationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_reservation_v1_internal::ReservationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_reservation_v1_internal::ReservationServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +107,8 @@ class ReservationServiceLimitedErrorCountRetryPolicy : public ReservationService
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ReservationServiceLimitedTimeRetryPolicy : public ReservationServiceRetryPolicy {
+class ReservationServiceLimitedTimeRetryPolicy
+    : public ReservationServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +133,14 @@ class ReservationServiceLimitedTimeRetryPolicy : public ReservationServiceRetryP
   template <typename DurationRep, typename DurationPeriod>
   explicit ReservationServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ReservationServiceLimitedTimeRetryPolicy(ReservationServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ReservationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ReservationServiceLimitedTimeRetryPolicy(ReservationServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ReservationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReservationServiceLimitedTimeRetryPolicy(
+      ReservationServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ReservationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReservationServiceLimitedTimeRetryPolicy(
+      ReservationServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ReservationServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +162,23 @@ class ReservationServiceLimitedTimeRetryPolicy : public ReservationServiceRetryP
   using BaseType = ReservationServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_reservation_v1_internal::ReservationServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_reservation_v1_internal::ReservationServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `ReservationServiceConnection` object for `ReservationServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ReservationServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ReservationServiceClient`.
+ * sets in `ReservationServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ReservationServiceClient`.
  *
  * To create a concrete instance, see `MakeReservationServiceConnection()`.
  *
- * For mocking, see `bigquery_reservation_v1_mocks::MockReservationServiceConnection`.
+ * For mocking, see
+ * `bigquery_reservation_v1_mocks::MockReservationServiceConnection`.
  */
 class ReservationServiceConnection {
  public:
@@ -176,92 +187,130 @@ class ReservationServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  CreateReservation(google::cloud::bigquery::reservation::v1::CreateReservationRequest const& request);
+  CreateReservation(
+      google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
+          request);
 
   virtual StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
-  ListReservations(google::cloud::bigquery::reservation::v1::ListReservationsRequest request);
+  ListReservations(
+      google::cloud::bigquery::reservation::v1::ListReservationsRequest
+          request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  GetReservation(google::cloud::bigquery::reservation::v1::GetReservationRequest const& request);
+  GetReservation(
+      google::cloud::bigquery::reservation::v1::GetReservationRequest const&
+          request);
 
-  virtual Status
-  DeleteReservation(google::cloud::bigquery::reservation::v1::DeleteReservationRequest const& request);
+  virtual Status DeleteReservation(
+      google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  UpdateReservation(google::cloud::bigquery::reservation::v1::UpdateReservationRequest const& request);
+  UpdateReservation(
+      google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  FailoverReservation(google::cloud::bigquery::reservation::v1::FailoverReservationRequest const& request);
+  FailoverReservation(google::cloud::bigquery::reservation::v1::
+                          FailoverReservationRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  CreateCapacityCommitment(google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest const& request);
+  CreateCapacityCommitment(google::cloud::bigquery::reservation::v1::
+                               CreateCapacityCommitmentRequest const& request);
 
-  virtual StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  ListCapacityCommitments(google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  GetCapacityCommitment(google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest const& request);
-
-  virtual Status
-  DeleteCapacityCommitment(google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest const& request);
+  virtual StreamRange<
+      google::cloud::bigquery::reservation::v1::CapacityCommitment>
+  ListCapacityCommitments(
+      google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
+          request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  UpdateCapacityCommitment(google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest const& request);
+  GetCapacityCommitment(google::cloud::bigquery::reservation::v1::
+                            GetCapacityCommitmentRequest const& request);
 
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
-  SplitCapacityCommitment(google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest const& request);
+  virtual Status DeleteCapacityCommitment(
+      google::cloud::bigquery::reservation::v1::
+          DeleteCapacityCommitmentRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  MergeCapacityCommitments(google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest const& request);
+  UpdateCapacityCommitment(google::cloud::bigquery::reservation::v1::
+                               UpdateCapacityCommitmentRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
+  SplitCapacityCommitment(google::cloud::bigquery::reservation::v1::
+                              SplitCapacityCommitmentRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
+  MergeCapacityCommitments(google::cloud::bigquery::reservation::v1::
+                               MergeCapacityCommitmentsRequest const& request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  CreateAssignment(google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const& request);
+  CreateAssignment(
+      google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
+          request);
 
   virtual StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  ListAssignments(google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request);
+  ListAssignments(
+      google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request);
 
-  virtual Status
-  DeleteAssignment(google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const& request);
+  virtual Status DeleteAssignment(
+      google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
+          request);
 
   virtual StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  SearchAssignments(google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest request);
+  SearchAssignments(
+      google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
+          request);
 
   virtual StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  SearchAllAssignments(google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest request);
+  SearchAllAssignments(
+      google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
+          request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  MoveAssignment(google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const& request);
+  MoveAssignment(
+      google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  UpdateAssignment(google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const& request);
+  UpdateAssignment(
+      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  GetBiReservation(google::cloud::bigquery::reservation::v1::GetBiReservationRequest const& request);
+  GetBiReservation(
+      google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  UpdateBiReservation(google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const& request);
+  UpdateBiReservation(google::cloud::bigquery::reservation::v1::
+                          UpdateBiReservationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ReservationServiceConnection`.
+ * A factory function to construct an object of type
+ * `ReservationServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ReservationServiceClient.
+ * should be passed as an argument to the constructor of
+ * ReservationServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ReservationServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ReservationServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery_reservation_v1::ReservationServicePolicyOptionList`
+ * -
+ * `google::cloud::bigquery_reservation_v1::ReservationServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ReservationServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `ReservationServiceConnection`
+ * created by this function.
  */
 std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
     Options options = {});

@@ -28,19 +28,28 @@ namespace cloud {
 namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use documentai_v1::DocumentProcessorServicePollingPolicyOption directly.
-using ::google::cloud::documentai_v1::DocumentProcessorServicePollingPolicyOption;
+/// @deprecated Use documentai_v1::DocumentProcessorServicePollingPolicyOption
+/// directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServicePollingPolicyOption;
 
-/// @deprecated Use documentai_v1::DocumentProcessorServiceBackoffPolicyOption directly.
-using ::google::cloud::documentai_v1::DocumentProcessorServiceBackoffPolicyOption;
+/// @deprecated Use documentai_v1::DocumentProcessorServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServiceBackoffPolicyOption;
 
-/// @deprecated Use documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use documentai_v1::DocumentProcessorServicePolicyOptionList directly.
+/// @deprecated Use documentai_v1::DocumentProcessorServicePolicyOptionList
+/// directly.
 using ::google::cloud::documentai_v1::DocumentProcessorServicePolicyOptionList;
 
-/// @deprecated Use documentai_v1::DocumentProcessorServiceRetryPolicyOption directly.
+/// @deprecated Use documentai_v1::DocumentProcessorServiceRetryPolicyOption
+/// directly.
 using ::google::cloud::documentai_v1::DocumentProcessorServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

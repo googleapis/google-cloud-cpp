@@ -17,8 +17,8 @@
 // source: google/api/cloudquotas/v1/cloudquotas.proto
 
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_connection_impl.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_option_defaults.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -32,54 +32,61 @@ namespace cloudquotas_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<cloudquotas_v1::CloudQuotasRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<cloudquotas_v1::CloudQuotasRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<cloudquotas_v1::CloudQuotasBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<cloudquotas_v1::CloudQuotasConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<cloudquotas_v1::CloudQuotasConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<cloudquotas_v1::CloudQuotasConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 CloudQuotasConnectionImpl::CloudQuotasConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<cloudquotas_v1_internal::CloudQuotasStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        CloudQuotasConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudQuotasConnection::options())) {}
 
 StreamRange<google::api::cloudquotas::v1::QuotaInfo>
-CloudQuotasConnectionImpl::ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest request) {
+CloudQuotasConnectionImpl::ListQuotaInfos(
+    google::api::cloudquotas::v1::ListQuotaInfosRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListQuotaInfos(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::api::cloudquotas::v1::QuotaInfo>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::api::cloudquotas::v1::QuotaInfo>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::api::cloudquotas::v1::ListQuotaInfosRequest const& r) {
+          Options const& options,
+          google::api::cloudquotas::v1::ListQuotaInfosRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
+                   google::api::cloudquotas::v1::ListQuotaInfosRequest const&
+                       request) {
               return stub->ListQuotaInfos(context, options, request);
             },
             options, r, function_name);
       },
       [](google::api::cloudquotas::v1::ListQuotaInfosResponse r) {
-        std::vector<google::api::cloudquotas::v1::QuotaInfo> result(r.quota_infos().size());
+        std::vector<google::api::cloudquotas::v1::QuotaInfo> result(
+            r.quota_infos().size());
         auto& messages = *r.mutable_quota_infos();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -87,7 +94,8 @@ CloudQuotasConnectionImpl::ListQuotaInfos(google::api::cloudquotas::v1::ListQuot
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaInfo>
-CloudQuotasConnectionImpl::GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
+CloudQuotasConnectionImpl::GetQuotaInfo(
+    google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -100,27 +108,35 @@ CloudQuotasConnectionImpl::GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaIn
 }
 
 StreamRange<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasConnectionImpl::ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest request) {
+CloudQuotasConnectionImpl::ListQuotaPreferences(
+    google::api::cloudquotas::v1::ListQuotaPreferencesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListQuotaPreferences(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListQuotaPreferences(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::api::cloudquotas::v1::QuotaPreference>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::api::cloudquotas::v1::QuotaPreference>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& r) {
+          Options const& options,
+          google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::api::cloudquotas::v1::ListQuotaPreferencesRequest const&
+                    request) {
               return stub->ListQuotaPreferences(context, options, request);
             },
             options, r, function_name);
       },
       [](google::api::cloudquotas::v1::ListQuotaPreferencesResponse r) {
-        std::vector<google::api::cloudquotas::v1::QuotaPreference> result(r.quota_preferences().size());
+        std::vector<google::api::cloudquotas::v1::QuotaPreference> result(
+            r.quota_preferences().size());
         auto& messages = *r.mutable_quota_preferences();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -128,39 +144,45 @@ CloudQuotasConnectionImpl::ListQuotaPreferences(google::api::cloudquotas::v1::Li
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasConnectionImpl::GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
+CloudQuotasConnectionImpl::GetQuotaPreference(
+    google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetQuotaPreference(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
+             google::api::cloudquotas::v1::GetQuotaPreferenceRequest const&
+                 request) {
         return stub_->GetQuotaPreference(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasConnectionImpl::CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
+CloudQuotasConnectionImpl::CreateQuotaPreference(
+    google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateQuotaPreference(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
+             google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&
+                 request) {
         return stub_->CreateQuotaPreference(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-CloudQuotasConnectionImpl::UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
+CloudQuotasConnectionImpl::UpdateQuotaPreference(
+    google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateQuotaPreference(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
+             google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&
+                 request) {
         return stub_->UpdateQuotaPreference(context, options, request);
       },
       *current, request, __func__);

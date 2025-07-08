@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_AVAILABLE_DATABASE_VERSIONS_REST_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_AVAILABLE_DATABASE_VERSIONS_REST_CONNECTION_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/sql_available_database_versions_connection.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -30,31 +30,34 @@ namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A factory function to construct an object of type `SqlAvailableDatabaseVersionsServiceConnection`
- * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
- * only be used for services that do not support gRPC or if the existing network
- * configuration precludes using gRPC.
+ * A factory function to construct an object of type
+ * `SqlAvailableDatabaseVersionsServiceConnection` that uses REST over HTTP as
+ * transport in lieu of gRPC. REST transport should only be used for services
+ * that do not support gRPC or if the existing network configuration precludes
+ * using gRPC.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of SqlAvailableDatabaseVersionsServiceClient.
+ * should be passed as an argument to the constructor of
+ * SqlAvailableDatabaseVersionsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SqlAvailableDatabaseVersionsServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `SqlAvailableDatabaseVersionsServiceConnection`. Expected options
+ * are any of the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::sql_v1::SqlAvailableDatabaseVersionsServicePolicyOptionList`
+ * -
+ * `google::cloud::sql_v1::SqlAvailableDatabaseVersionsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `SqlAvailableDatabaseVersionsServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the
+ * `SqlAvailableDatabaseVersionsServiceConnection` created by this function.
  */
-std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnection> MakeSqlAvailableDatabaseVersionsServiceConnectionRest(
-    Options options = {});
+std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnection>
+MakeSqlAvailableDatabaseVersionsServiceConnectionRest(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

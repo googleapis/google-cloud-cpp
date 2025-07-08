@@ -35,99 +35,111 @@ TableServiceRestConnectionImpl::TableServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquerycontrol_v2_internal::TableServiceRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        TableServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      TableServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceRestConnectionImpl::GetTable(google::cloud::bigquery::v2::GetTableRequest const& request) {
+TableServiceRestConnectionImpl::GetTable(
+    google::cloud::bigquery::v2::GetTableRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTable(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::bigquery::v2::GetTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::GetTableRequest const& request) {
         return stub_->GetTable(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceRestConnectionImpl::InsertTable(google::cloud::bigquery::v2::InsertTableRequest const& request) {
+TableServiceRestConnectionImpl::InsertTable(
+    google::cloud::bigquery::v2::InsertTableRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InsertTable(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::bigquery::v2::InsertTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::InsertTableRequest const& request) {
         return stub_->InsertTable(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceRestConnectionImpl::PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+TableServiceRestConnectionImpl::PatchTable(
+    google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PatchTable(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&
+                 request) {
         return stub_->PatchTable(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceRestConnectionImpl::UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+TableServiceRestConnectionImpl::UpdateTable(
+    google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTable(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&
+                 request) {
         return stub_->UpdateTable(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-TableServiceRestConnectionImpl::DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const& request) {
+Status TableServiceRestConnectionImpl::DeleteTable(
+    google::cloud::bigquery::v2::DeleteTableRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTable(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::bigquery::v2::DeleteTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::DeleteTableRequest const& request) {
         return stub_->DeleteTable(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::v2::ListFormatTable>
-TableServiceRestConnectionImpl::ListTables(google::cloud::bigquery::v2::ListTablesRequest request) {
+TableServiceRestConnectionImpl::ListTables(
+    google::cloud::bigquery::v2::ListTablesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTables(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::bigquery::v2::ListFormatTable>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::bigquery::v2::ListFormatTable>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<bigquerycontrol_v2::TableServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<bigquerycontrol_v2::TableServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::bigquery::v2::ListTablesRequest const& r) {
+          Options const& options,
+          google::cloud::bigquery::v2::ListTablesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context,
-                   Options const& options,
-                   google::cloud::bigquery::v2::ListTablesRequest const& request) {
+            [stub](
+                rest_internal::RestContext& rest_context,
+                Options const& options,
+                google::cloud::bigquery::v2::ListTablesRequest const& request) {
               return stub->ListTables(rest_context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::bigquery::v2::TableList r) {
-        std::vector<google::cloud::bigquery::v2::ListFormatTable> result(r.tables().size());
+        std::vector<google::cloud::bigquery::v2::ListFormatTable> result(
+            r.tables().size());
         auto& messages = *r.mutable_tables();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

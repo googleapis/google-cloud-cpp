@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_ATTACHMENT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_CASE_ATTACHMENT_CLIENT_H
 
+#include "google/cloud/support/v2/case_attachment_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/support/v2/case_attachment_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,23 +61,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CaseAttachmentServiceClient {
  public:
-  explicit CaseAttachmentServiceClient(std::shared_ptr<CaseAttachmentServiceConnection> connection, Options opts = {});
+  explicit CaseAttachmentServiceClient(
+      std::shared_ptr<CaseAttachmentServiceConnection> connection,
+      Options opts = {});
   ~CaseAttachmentServiceClient();
 
   ///@{
   /// @name Copy and move support
   CaseAttachmentServiceClient(CaseAttachmentServiceClient const&) = default;
-  CaseAttachmentServiceClient& operator=(CaseAttachmentServiceClient const&) = default;
+  CaseAttachmentServiceClient& operator=(CaseAttachmentServiceClient const&) =
+      default;
   CaseAttachmentServiceClient(CaseAttachmentServiceClient&&) = default;
-  CaseAttachmentServiceClient& operator=(CaseAttachmentServiceClient&&) = default;
+  CaseAttachmentServiceClient& operator=(CaseAttachmentServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(CaseAttachmentServiceClient const& a, CaseAttachmentServiceClient const& b) {
+  friend bool operator==(CaseAttachmentServiceClient const& a,
+                         CaseAttachmentServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CaseAttachmentServiceClient const& a, CaseAttachmentServiceClient const& b) {
+  friend bool operator!=(CaseAttachmentServiceClient const& a,
+                         CaseAttachmentServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,8 +119,8 @@ class CaseAttachmentServiceClient {
   /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L53}
   ///
   // clang-format on
-  StreamRange<google::cloud::support::v2::Attachment>
-  ListAttachments(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -152,8 +158,9 @@ class CaseAttachmentServiceClient {
   /// [google.cloud.support.v2.ListAttachmentsRequest]: @googleapis_reference_link{google/cloud/support/v2/attachment_service.proto#L53}
   ///
   // clang-format on
-  StreamRange<google::cloud::support::v2::Attachment>
-  ListAttachments(google::cloud::support::v2::ListAttachmentsRequest request, Options opts = {});
+  StreamRange<google::cloud::support::v2::Attachment> ListAttachments(
+      google::cloud::support::v2::ListAttachmentsRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CaseAttachmentServiceConnection> connection_;

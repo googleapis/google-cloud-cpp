@@ -34,8 +34,10 @@ using ::google::cloud::dataproc_v1::JobControllerPollingPolicyOption;
 /// @deprecated Use dataproc_v1::JobControllerBackoffPolicyOption directly.
 using ::google::cloud::dataproc_v1::JobControllerBackoffPolicyOption;
 
-/// @deprecated Use dataproc_v1::JobControllerConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::dataproc_v1::JobControllerConnectionIdempotencyPolicyOption;
+/// @deprecated Use dataproc_v1::JobControllerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dataproc_v1::
+    JobControllerConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use dataproc_v1::JobControllerPolicyOptionList directly.
 using ::google::cloud::dataproc_v1::JobControllerPolicyOptionList;

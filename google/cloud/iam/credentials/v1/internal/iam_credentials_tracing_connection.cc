@@ -33,29 +33,37 @@ IAMCredentialsTracingConnection::IAMCredentialsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
-IAMCredentialsTracingConnection::GenerateAccessToken(google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
-  auto span = internal::MakeSpan("iam_credentials_v1::IAMCredentialsConnection::GenerateAccessToken");
+IAMCredentialsTracingConnection::GenerateAccessToken(
+    google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iam_credentials_v1::IAMCredentialsConnection::GenerateAccessToken");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GenerateAccessToken(request));
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-IAMCredentialsTracingConnection::GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-  auto span = internal::MakeSpan("iam_credentials_v1::IAMCredentialsConnection::GenerateIdToken");
+IAMCredentialsTracingConnection::GenerateIdToken(
+    google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iam_credentials_v1::IAMCredentialsConnection::GenerateIdToken");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GenerateIdToken(request));
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
-IAMCredentialsTracingConnection::SignBlob(google::iam::credentials::v1::SignBlobRequest const& request) {
-  auto span = internal::MakeSpan("iam_credentials_v1::IAMCredentialsConnection::SignBlob");
+IAMCredentialsTracingConnection::SignBlob(
+    google::iam::credentials::v1::SignBlobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iam_credentials_v1::IAMCredentialsConnection::SignBlob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SignBlob(request));
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
-IAMCredentialsTracingConnection::SignJwt(google::iam::credentials::v1::SignJwtRequest const& request) {
-  auto span = internal::MakeSpan("iam_credentials_v1::IAMCredentialsConnection::SignJwt");
+IAMCredentialsTracingConnection::SignJwt(
+    google::iam::credentials::v1::SignJwtRequest const& request) {
+  auto span = internal::MakeSpan(
+      "iam_credentials_v1::IAMCredentialsConnection::SignJwt");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SignJwt(request));
 }

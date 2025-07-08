@@ -46,33 +46,32 @@ CompletionMetadata::CompletionMetadata(
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionMetadata::CompleteQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("tenant=", internal::UrlEncode(request.tenant())));
+  SetMetadata(context, options,
+              absl::StrCat("tenant=", internal::UrlEncode(request.tenant())));
   return child_->CompleteQuery(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-CompletionMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> CompletionMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
 void CompletionMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                     Options const& options,
+                                     std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CompletionMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                     Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

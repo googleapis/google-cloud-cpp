@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RuleSetServiceClient::RuleSetServiceClient(
     std::shared_ptr<RuleSetServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RuleSetServiceClient::~RuleSetServiceClient() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceClient::CreateRuleSet(std::string const& parent, google::cloud::contentwarehouse::v1::RuleSet const& rule_set, Options opts) {
+RuleSetServiceClient::CreateRuleSet(
+    std::string const& parent,
+    google::cloud::contentwarehouse::v1::RuleSet const& rule_set,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::CreateRuleSetRequest request;
   request.set_parent(parent);
@@ -42,7 +45,9 @@ RuleSetServiceClient::CreateRuleSet(std::string const& parent, google::cloud::co
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceClient::CreateRuleSet(google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request, Options opts) {
+RuleSetServiceClient::CreateRuleSet(
+    google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRuleSet(request);
 }
@@ -56,13 +61,18 @@ RuleSetServiceClient::GetRuleSet(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceClient::GetRuleSet(google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request, Options opts) {
+RuleSetServiceClient::GetRuleSet(
+    google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRuleSet(request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceClient::UpdateRuleSet(std::string const& name, google::cloud::contentwarehouse::v1::RuleSet const& rule_set, Options opts) {
+RuleSetServiceClient::UpdateRuleSet(
+    std::string const& name,
+    google::cloud::contentwarehouse::v1::RuleSet const& rule_set,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::UpdateRuleSetRequest request;
   request.set_name(name);
@@ -71,21 +81,24 @@ RuleSetServiceClient::UpdateRuleSet(std::string const& name, google::cloud::cont
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceClient::UpdateRuleSet(google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request, Options opts) {
+RuleSetServiceClient::UpdateRuleSet(
+    google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRuleSet(request);
 }
 
-Status
-RuleSetServiceClient::DeleteRuleSet(std::string const& name, Options opts) {
+Status RuleSetServiceClient::DeleteRuleSet(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contentwarehouse::v1::DeleteRuleSetRequest request;
   request.set_name(name);
   return connection_->DeleteRuleSet(request);
 }
 
-Status
-RuleSetServiceClient::DeleteRuleSet(google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request, Options opts) {
+Status RuleSetServiceClient::DeleteRuleSet(
+    google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRuleSet(request);
 }
@@ -99,21 +112,23 @@ RuleSetServiceClient::ListRuleSets(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
-RuleSetServiceClient::ListRuleSets(google::cloud::contentwarehouse::v1::ListRuleSetsRequest request, Options opts) {
+RuleSetServiceClient::ListRuleSets(
+    google::cloud::contentwarehouse::v1::ListRuleSetsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRuleSets(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-RuleSetServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> RuleSetServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-RuleSetServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> RuleSetServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

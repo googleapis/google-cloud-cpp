@@ -17,9 +17,9 @@
 // source: google/cloud/datacatalog/v1/datacatalog.proto
 
 #include "google/cloud/datacatalog/v1/internal/data_catalog_connection_impl.h"
+#include "google/cloud/datacatalog/v1/internal/data_catalog_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/datacatalog/v1/internal/data_catalog_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -33,58 +33,65 @@ namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datacatalog_v1::DataCatalogRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<datacatalog_v1::DataCatalogRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<datacatalog_v1::DataCatalogBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<datacatalog_v1::DataCatalogConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
   return options.get<datacatalog_v1::DataCatalogPollingPolicyOption>()->clone();
 }
 
-} // namespace
+}  // namespace
 
 DataCatalogConnectionImpl::DataCatalogConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<datacatalog_v1_internal::DataCatalogStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        DataCatalogConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      DataCatalogConnection::options())) {}
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
-DataCatalogConnectionImpl::SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest request) {
+DataCatalogConnectionImpl::SearchCatalog(
+    google::cloud::datacatalog::v1::SearchCatalogRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->SearchCatalog(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::datacatalog::v1::SearchCatalogRequest const& r) {
+          Options const& options,
+          google::cloud::datacatalog::v1::SearchCatalogRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
+                   google::cloud::datacatalog::v1::SearchCatalogRequest const&
+                       request) {
               return stub->SearchCatalog(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::datacatalog::v1::SearchCatalogResponse r) {
-        std::vector<google::cloud::datacatalog::v1::SearchCatalogResult> result(r.results().size());
+        std::vector<google::cloud::datacatalog::v1::SearchCatalogResult> result(
+            r.results().size());
         auto& messages = *r.mutable_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -92,79 +99,92 @@ DataCatalogConnectionImpl::SearchCatalog(google::cloud::datacatalog::v1::SearchC
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-DataCatalogConnectionImpl::CreateEntryGroup(google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
+DataCatalogConnectionImpl::CreateEntryGroup(
+    google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEntryGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
+             google::cloud::datacatalog::v1::CreateEntryGroupRequest const&
+                 request) {
         return stub_->CreateEntryGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-DataCatalogConnectionImpl::GetEntryGroup(google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
+DataCatalogConnectionImpl::GetEntryGroup(
+    google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEntryGroup(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
         return stub_->GetEntryGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-DataCatalogConnectionImpl::UpdateEntryGroup(google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
+DataCatalogConnectionImpl::UpdateEntryGroup(
+    google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEntryGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
+             google::cloud::datacatalog::v1::UpdateEntryGroupRequest const&
+                 request) {
         return stub_->UpdateEntryGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataCatalogConnectionImpl::DeleteEntryGroup(google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
+Status DataCatalogConnectionImpl::DeleteEntryGroup(
+    google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEntryGroup(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
+             google::cloud::datacatalog::v1::DeleteEntryGroupRequest const&
+                 request) {
         return stub_->DeleteEntryGroup(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-DataCatalogConnectionImpl::ListEntryGroups(google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
+DataCatalogConnectionImpl::ListEntryGroups(
+    google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEntryGroups(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::datacatalog::v1::EntryGroup>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::EntryGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::datacatalog::v1::ListEntryGroupsRequest const& r) {
+          Options const& options,
+          google::cloud::datacatalog::v1::ListEntryGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::datacatalog::v1::ListEntryGroupsRequest const& request) {
+                   google::cloud::datacatalog::v1::ListEntryGroupsRequest const&
+                       request) {
               return stub->ListEntryGroups(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::datacatalog::v1::ListEntryGroupsResponse r) {
-        std::vector<google::cloud::datacatalog::v1::EntryGroup> result(r.entry_groups().size());
+        std::vector<google::cloud::datacatalog::v1::EntryGroup> result(
+            r.entry_groups().size());
         auto& messages = *r.mutable_entry_groups();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -172,46 +192,52 @@ DataCatalogConnectionImpl::ListEntryGroups(google::cloud::datacatalog::v1::ListE
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
-DataCatalogConnectionImpl::CreateEntry(google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
+DataCatalogConnectionImpl::CreateEntry(
+    google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEntry(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
         return stub_->CreateEntry(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
-DataCatalogConnectionImpl::UpdateEntry(google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
+DataCatalogConnectionImpl::UpdateEntry(
+    google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEntry(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
         return stub_->UpdateEntry(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataCatalogConnectionImpl::DeleteEntry(google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
+Status DataCatalogConnectionImpl::DeleteEntry(
+    google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEntry(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
         return stub_->DeleteEntry(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
-DataCatalogConnectionImpl::GetEntry(google::cloud::datacatalog::v1::GetEntryRequest const& request) {
+DataCatalogConnectionImpl::GetEntry(
+    google::cloud::datacatalog::v1::GetEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -224,40 +250,48 @@ DataCatalogConnectionImpl::GetEntry(google::cloud::datacatalog::v1::GetEntryRequ
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
-DataCatalogConnectionImpl::LookupEntry(google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
+DataCatalogConnectionImpl::LookupEntry(
+    google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LookupEntry(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
         return stub_->LookupEntry(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::datacatalog::v1::Entry>
-DataCatalogConnectionImpl::ListEntries(google::cloud::datacatalog::v1::ListEntriesRequest request) {
+DataCatalogConnectionImpl::ListEntries(
+    google::cloud::datacatalog::v1::ListEntriesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEntries(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::datacatalog::v1::Entry>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::Entry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::datacatalog::v1::ListEntriesRequest const& r) {
+          Options const& options,
+          google::cloud::datacatalog::v1::ListEntriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::datacatalog::v1::ListEntriesRequest const& request) {
+                   google::cloud::datacatalog::v1::ListEntriesRequest const&
+                       request) {
               return stub->ListEntries(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::datacatalog::v1::ListEntriesResponse r) {
-        std::vector<google::cloud::datacatalog::v1::Entry> result(r.entries().size());
+        std::vector<google::cloud::datacatalog::v1::Entry> result(
+            r.entries().size());
         auto& messages = *r.mutable_entries();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -265,150 +299,181 @@ DataCatalogConnectionImpl::ListEntries(google::cloud::datacatalog::v1::ListEntri
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryOverview>
-DataCatalogConnectionImpl::ModifyEntryOverview(google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+DataCatalogConnectionImpl::ModifyEntryOverview(
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ModifyEntryOverview(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+             google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+                 request) {
         return stub_->ModifyEntryOverview(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Contacts>
-DataCatalogConnectionImpl::ModifyEntryContacts(google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+DataCatalogConnectionImpl::ModifyEntryContacts(
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ModifyEntryContacts(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+             google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+                 request) {
         return stub_->ModifyEntryContacts(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-DataCatalogConnectionImpl::CreateTagTemplate(google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
+DataCatalogConnectionImpl::CreateTagTemplate(
+    google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTagTemplate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
+             google::cloud::datacatalog::v1::CreateTagTemplateRequest const&
+                 request) {
         return stub_->CreateTagTemplate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-DataCatalogConnectionImpl::GetTagTemplate(google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
+DataCatalogConnectionImpl::GetTagTemplate(
+    google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTagTemplate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
+             google::cloud::datacatalog::v1::GetTagTemplateRequest const&
+                 request) {
         return stub_->GetTagTemplate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-DataCatalogConnectionImpl::UpdateTagTemplate(google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
+DataCatalogConnectionImpl::UpdateTagTemplate(
+    google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTagTemplate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
+             google::cloud::datacatalog::v1::UpdateTagTemplateRequest const&
+                 request) {
         return stub_->UpdateTagTemplate(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-DataCatalogConnectionImpl::DeleteTagTemplate(google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
+Status DataCatalogConnectionImpl::DeleteTagTemplate(
+    google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTagTemplate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
+             google::cloud::datacatalog::v1::DeleteTagTemplateRequest const&
+                 request) {
         return stub_->DeleteTagTemplate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-DataCatalogConnectionImpl::CreateTagTemplateField(google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request) {
+DataCatalogConnectionImpl::CreateTagTemplateField(
+    google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTagTemplateField(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
+              request) {
         return stub_->CreateTagTemplateField(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-DataCatalogConnectionImpl::UpdateTagTemplateField(google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request) {
+DataCatalogConnectionImpl::UpdateTagTemplateField(
+    google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTagTemplateField(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
+              request) {
         return stub_->UpdateTagTemplateField(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-DataCatalogConnectionImpl::RenameTagTemplateField(google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request) {
+DataCatalogConnectionImpl::RenameTagTemplateField(
+    google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RenameTagTemplateField(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
+              request) {
         return stub_->RenameTagTemplateField(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-DataCatalogConnectionImpl::RenameTagTemplateFieldEnumValue(google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request) {
+DataCatalogConnectionImpl::RenameTagTemplateFieldEnumValue(
+    google::cloud::datacatalog::v1::
+        RenameTagTemplateFieldEnumValueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RenameTagTemplateFieldEnumValue(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request) {
-        return stub_->RenameTagTemplateFieldEnumValue(context, options, request);
+             google::cloud::datacatalog::v1::
+                 RenameTagTemplateFieldEnumValueRequest const& request) {
+        return stub_->RenameTagTemplateFieldEnumValue(context, options,
+                                                      request);
       },
       *current, request, __func__);
 }
 
-Status
-DataCatalogConnectionImpl::DeleteTagTemplateField(google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request) {
+Status DataCatalogConnectionImpl::DeleteTagTemplateField(
+    google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTagTemplateField(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
+              request) {
         return stub_->DeleteTagTemplateField(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag>
-DataCatalogConnectionImpl::CreateTag(google::cloud::datacatalog::v1::CreateTagRequest const& request) {
+DataCatalogConnectionImpl::CreateTag(
+    google::cloud::datacatalog::v1::CreateTagRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -421,7 +486,8 @@ DataCatalogConnectionImpl::CreateTag(google::cloud::datacatalog::v1::CreateTagRe
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag>
-DataCatalogConnectionImpl::UpdateTag(google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
+DataCatalogConnectionImpl::UpdateTag(
+    google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -433,8 +499,8 @@ DataCatalogConnectionImpl::UpdateTag(google::cloud::datacatalog::v1::UpdateTagRe
       *current, request, __func__);
 }
 
-Status
-DataCatalogConnectionImpl::DeleteTag(google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
+Status DataCatalogConnectionImpl::DeleteTag(
+    google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -447,27 +513,33 @@ DataCatalogConnectionImpl::DeleteTag(google::cloud::datacatalog::v1::DeleteTagRe
 }
 
 StreamRange<google::cloud::datacatalog::v1::Tag>
-DataCatalogConnectionImpl::ListTags(google::cloud::datacatalog::v1::ListTagsRequest request) {
+DataCatalogConnectionImpl::ListTags(
+    google::cloud::datacatalog::v1::ListTagsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTags(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::datacatalog::v1::Tag>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::Tag>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::datacatalog::v1::ListTagsRequest const& r) {
+          Options const& options,
+          google::cloud::datacatalog::v1::ListTagsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::datacatalog::v1::ListTagsRequest const& request) {
+                   google::cloud::datacatalog::v1::ListTagsRequest const&
+                       request) {
               return stub->ListTags(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::datacatalog::v1::ListTagsResponse r) {
-        std::vector<google::cloud::datacatalog::v1::Tag> result(r.tags().size());
+        std::vector<google::cloud::datacatalog::v1::Tag> result(
+            r.tags().size());
         auto& messages = *r.mutable_tags();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -475,42 +547,48 @@ DataCatalogConnectionImpl::ListTags(google::cloud::datacatalog::v1::ListTagsRequ
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-DataCatalogConnectionImpl::ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+DataCatalogConnectionImpl::ReconcileTags(
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ReconcileTags(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::datacatalog::v1::ReconcileTagsResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
-     return stub->AsyncReconcileTags(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datacatalog::v1::ReconcileTagsResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::datacatalog::v1::ReconcileTagsResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+        return stub->AsyncReconcileTags(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datacatalog::v1::ReconcileTagsResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataCatalogConnectionImpl::ReconcileTags(
-      NoAwaitTag, google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+    NoAwaitTag,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -525,36 +603,45 @@ DataCatalogConnectionImpl::ReconcileTags(
 
 future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
 DataCatalogConnectionImpl::ReconcileTags(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::datacatalog::v1::ReconcileTagsMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to ReconcileTags",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::datacatalog::v1::
+                   ReconcileTagsMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ReconcileTags",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::datacatalog::v1::ReconcileTagsResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datacatalog::v1::ReconcileTagsResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datacatalog::v1::ReconcileTagsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datacatalog::v1::ReconcileTagsResponse>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
-DataCatalogConnectionImpl::StarEntry(google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+DataCatalogConnectionImpl::StarEntry(
+    google::cloud::datacatalog::v1::StarEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -567,20 +654,22 @@ DataCatalogConnectionImpl::StarEntry(google::cloud::datacatalog::v1::StarEntryRe
 }
 
 StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
-DataCatalogConnectionImpl::UnstarEntry(google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+DataCatalogConnectionImpl::UnstarEntry(
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UnstarEntry(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
         return stub_->UnstarEntry(context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataCatalogConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> DataCatalogConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -592,8 +681,8 @@ DataCatalogConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest con
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-DataCatalogConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> DataCatalogConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -606,7 +695,8 @@ DataCatalogConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest con
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-DataCatalogConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+DataCatalogConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -619,42 +709,48 @@ DataCatalogConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermission
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-DataCatalogConnectionImpl::ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+DataCatalogConnectionImpl::ImportEntries(
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->ImportEntries(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::datacatalog::v1::ImportEntriesResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
-     return stub->AsyncImportEntries(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datacatalog::v1::ImportEntriesResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::datacatalog::v1::ImportEntriesResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+        return stub->AsyncImportEntries(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datacatalog::v1::ImportEntriesResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 DataCatalogConnectionImpl::ImportEntries(
-      NoAwaitTag, google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -669,36 +765,45 @@ DataCatalogConnectionImpl::ImportEntries(
 
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
 DataCatalogConnectionImpl::ImportEntries(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::datacatalog::v1::ImportEntriesMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to ImportEntries",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::datacatalog::v1::
+                   ImportEntriesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportEntries",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::datacatalog::v1::ImportEntriesResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::datacatalog::v1::ImportEntriesResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datacatalog::v1::ImportEntriesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datacatalog::v1::ImportEntriesResponse>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
-DataCatalogConnectionImpl::SetConfig(google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+DataCatalogConnectionImpl::SetConfig(
+    google::cloud::datacatalog::v1::SetConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -711,43 +816,53 @@ DataCatalogConnectionImpl::SetConfig(google::cloud::datacatalog::v1::SetConfigRe
 }
 
 StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
-DataCatalogConnectionImpl::RetrieveConfig(google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+DataCatalogConnectionImpl::RetrieveConfig(
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RetrieveConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+             google::cloud::datacatalog::v1::RetrieveConfigRequest const&
+                 request) {
         return stub_->RetrieveConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
-DataCatalogConnectionImpl::RetrieveEffectiveConfig(google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request) {
+DataCatalogConnectionImpl::RetrieveEffectiveConfig(
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RetrieveEffectiveConfig(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+              request) {
         return stub_->RetrieveEffectiveConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-DataCatalogConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+DataCatalogConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -757,7 +872,8 @@ DataCatalogConnectionImpl::ListOperations(google::longrunning::ListOperationsReq
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -765,7 +881,8 @@ DataCatalogConnectionImpl::ListOperations(google::longrunning::ListOperationsReq
 }
 
 StatusOr<google::longrunning::Operation>
-DataCatalogConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+DataCatalogConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -777,8 +894,8 @@ DataCatalogConnectionImpl::GetOperation(google::longrunning::GetOperationRequest
       *current, request, __func__);
 }
 
-Status
-DataCatalogConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status DataCatalogConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -790,8 +907,8 @@ DataCatalogConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationR
       *current, request, __func__);
 }
 
-Status
-DataCatalogConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status DataCatalogConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

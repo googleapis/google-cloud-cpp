@@ -17,11 +17,11 @@
 // source: google/cloud/compute/machine_types/v1/machine_types.proto
 
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,8 +31,7 @@ namespace compute_machine_types_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineTypesRestMetadata::MachineTypesRestMetadata(
-    std::shared_ptr<MachineTypesRestStub> child,
-    std::string api_client_header)
+    std::shared_ptr<MachineTypesRestStub> child, std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -41,33 +40,36 @@ MachineTypesRestMetadata::MachineTypesRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
 MachineTypesRestMetadata::AggregatedListMachineTypes(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_types::v1::
+        AggregatedListMachineTypesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->AggregatedListMachineTypes(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
 MachineTypesRestMetadata::GetMachineType(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetMachineType(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeList>
 MachineTypesRestMetadata::ListMachineTypes(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_types::v1::
+        ListMachineTypesRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListMachineTypes(rest_context, options, request);
 }
 
 void MachineTypesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

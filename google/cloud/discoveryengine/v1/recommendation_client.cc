@@ -28,18 +28,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RecommendationServiceClient::RecommendationServiceClient(
     std::shared_ptr<RecommendationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RecommendationServiceClient::~RecommendationServiceClient() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::RecommendResponse>
-RecommendationServiceClient::Recommend(google::cloud::discoveryengine::v1::RecommendRequest const& request, Options opts) {
+RecommendationServiceClient::Recommend(
+    google::cloud::discoveryengine::v1::RecommendRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Recommend(request);
 }
 
 StreamRange<google::longrunning::Operation>
-RecommendationServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+RecommendationServiceClient::ListOperations(std::string const& name,
+                                            std::string const& filter,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -48,13 +52,15 @@ RecommendationServiceClient::ListOperations(std::string const& name, std::string
 }
 
 StreamRange<google::longrunning::Operation>
-RecommendationServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+RecommendationServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-RecommendationServiceClient::GetOperation(std::string const& name, Options opts) {
+RecommendationServiceClient::GetOperation(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -62,21 +68,22 @@ RecommendationServiceClient::GetOperation(std::string const& name, Options opts)
 }
 
 StatusOr<google::longrunning::Operation>
-RecommendationServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+RecommendationServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-RecommendationServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status RecommendationServiceClient::CancelOperation(std::string const& name,
+                                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-RecommendationServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status RecommendationServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

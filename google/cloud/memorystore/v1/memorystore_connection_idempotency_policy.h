@@ -38,69 +38,72 @@ class MemorystoreConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<MemorystoreConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListInstances(google::cloud::memorystore::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency ListInstances(
+      google::cloud::memorystore::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetInstance(google::cloud::memorystore::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency GetInstance(
+      google::cloud::memorystore::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateInstance(google::cloud::memorystore::v1::CreateInstanceRequest const& request);
+  virtual google::cloud::Idempotency CreateInstance(
+      google::cloud::memorystore::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateInstance(google::cloud::memorystore::v1::UpdateInstanceRequest const& request);
+  virtual google::cloud::Idempotency UpdateInstance(
+      google::cloud::memorystore::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteInstance(google::cloud::memorystore::v1::DeleteInstanceRequest const& request);
+  virtual google::cloud::Idempotency DeleteInstance(
+      google::cloud::memorystore::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetCertificateAuthority(google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request);
+  virtual google::cloud::Idempotency GetCertificateAuthority(
+      google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RescheduleMaintenance(google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request);
+  virtual google::cloud::Idempotency RescheduleMaintenance(
+      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListBackupCollections(google::cloud::memorystore::v1::ListBackupCollectionsRequest request);
+  virtual google::cloud::Idempotency ListBackupCollections(
+      google::cloud::memorystore::v1::ListBackupCollectionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetBackupCollection(google::cloud::memorystore::v1::GetBackupCollectionRequest const& request);
+  virtual google::cloud::Idempotency GetBackupCollection(
+      google::cloud::memorystore::v1::GetBackupCollectionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListBackups(google::cloud::memorystore::v1::ListBackupsRequest request);
+  virtual google::cloud::Idempotency ListBackups(
+      google::cloud::memorystore::v1::ListBackupsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetBackup(google::cloud::memorystore::v1::GetBackupRequest const& request);
+  virtual google::cloud::Idempotency GetBackup(
+      google::cloud::memorystore::v1::GetBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteBackup(google::cloud::memorystore::v1::DeleteBackupRequest const& request);
+  virtual google::cloud::Idempotency DeleteBackup(
+      google::cloud::memorystore::v1::DeleteBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportBackup(google::cloud::memorystore::v1::ExportBackupRequest const& request);
+  virtual google::cloud::Idempotency ExportBackup(
+      google::cloud::memorystore::v1::ExportBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BackupInstance(google::cloud::memorystore::v1::BackupInstanceRequest const& request);
+  virtual google::cloud::Idempotency BackupInstance(
+      google::cloud::memorystore::v1::BackupInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<MemorystoreConnectionIdempotencyPolicy>
-    MakeDefaultMemorystoreConnectionIdempotencyPolicy();
+MakeDefaultMemorystoreConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memorystore_v1

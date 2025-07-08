@@ -39,58 +39,54 @@ class GeneratorsTracingStub : public GeneratorsStub {
   explicit GeneratorsTracingStub(std::shared_ptr<GeneratorsStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::Generator> CreateGenerator(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::CreateGeneratorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::CreateGeneratorRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::Generator> GetGenerator(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetGeneratorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GetGeneratorRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::ListGeneratorsResponse> ListGenerators(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::ListGeneratorsRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::ListGeneratorsResponse>
+  ListGenerators(grpc::ClientContext& context, Options const& options,
+                 google::cloud::dialogflow::v2::ListGeneratorsRequest const&
+                     request) override;
 
   Status DeleteGenerator(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::v2::Generator> UpdateGenerator(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<GeneratorsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

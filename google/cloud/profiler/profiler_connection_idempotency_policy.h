@@ -26,10 +26,13 @@ namespace cloud {
 namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use profiler_v2::MakeDefaultProfilerServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::profiler_v2::MakeDefaultProfilerServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// profiler_v2::MakeDefaultProfilerServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::profiler_v2::
+    MakeDefaultProfilerServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use profiler_v2::ProfilerServiceConnectionIdempotencyPolicy directly.
+/// @deprecated Use profiler_v2::ProfilerServiceConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::profiler_v2::ProfilerServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

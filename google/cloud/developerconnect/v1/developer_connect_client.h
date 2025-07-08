@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DeveloperConnectClient {
  public:
-  explicit DeveloperConnectClient(std::shared_ptr<DeveloperConnectConnection> connection, Options opts = {});
+  explicit DeveloperConnectClient(
+      std::shared_ptr<DeveloperConnectConnection> connection,
+      Options opts = {});
   ~DeveloperConnectClient();
 
   ///@{
@@ -77,10 +79,12 @@ class DeveloperConnectClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DeveloperConnectClient const& a, DeveloperConnectClient const& b) {
+  friend bool operator==(DeveloperConnectClient const& a,
+                         DeveloperConnectClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DeveloperConnectClient const& a, DeveloperConnectClient const& b) {
+  friend bool operator!=(DeveloperConnectClient const& a,
+                         DeveloperConnectClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -116,8 +120,8 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L832}
   ///
   // clang-format on
-  StreamRange<google::cloud::developerconnect::v1::Connection>
-  ListConnections(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::developerconnect::v1::Connection> ListConnections(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -155,8 +159,9 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L832}
   ///
   // clang-format on
-  StreamRange<google::cloud::developerconnect::v1::Connection>
-  ListConnections(google::cloud::developerconnect::v1::ListConnectionsRequest request, Options opts = {});
+  StreamRange<google::cloud::developerconnect::v1::Connection> ListConnections(
+      google::cloud::developerconnect::v1::ListConnectionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -180,8 +185,8 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L868}
   ///
   // clang-format on
-  StatusOr<google::cloud::developerconnect::v1::Connection>
-  GetConnection(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::developerconnect::v1::Connection> GetConnection(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -210,8 +215,9 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L868}
   ///
   // clang-format on
-  StatusOr<google::cloud::developerconnect::v1::Connection>
-  GetConnection(google::cloud::developerconnect::v1::GetConnectionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::developerconnect::v1::Connection> GetConnection(
+      google::cloud::developerconnect::v1::GetConnectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -247,7 +253,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  CreateConnection(std::string const& parent, google::cloud::developerconnect::v1::Connection const& connection, std::string const& connection_id, Options opts = {});
+  CreateConnection(
+      std::string const& parent,
+      google::cloud::developerconnect::v1::Connection const& connection,
+      std::string const& connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +269,10 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateConnection(NoAwaitTag, std::string const& parent, google::cloud::developerconnect::v1::Connection const& connection, std::string const& connection_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::developerconnect::v1::Connection const& connection,
+      std::string const& connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -298,7 +309,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  CreateConnection(google::cloud::developerconnect::v1::CreateConnectionRequest const& request, Options opts = {});
+  CreateConnection(
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -311,8 +325,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateConnection(NoAwaitTag, google::cloud::developerconnect::v1::CreateConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -324,7 +341,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  CreateConnection(google::longrunning::Operation const& operation, Options opts = {});
+  CreateConnection(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -361,7 +379,9 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  UpdateConnection(google::cloud::developerconnect::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateConnection(
+      google::cloud::developerconnect::v1::Connection const& connection,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -374,8 +394,10 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateConnection(NoAwaitTag, google::cloud::developerconnect::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::Connection const& connection,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -412,7 +434,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  UpdateConnection(google::cloud::developerconnect::v1::UpdateConnectionRequest const& request, Options opts = {});
+  UpdateConnection(
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +450,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateConnection(NoAwaitTag, google::cloud::developerconnect::v1::UpdateConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -438,7 +466,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  UpdateConnection(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateConnection(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -483,8 +512,8 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteConnection(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -521,7 +550,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteConnection(google::cloud::developerconnect::v1::DeleteConnectionRequest const& request, Options opts = {});
+  DeleteConnection(
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -534,8 +566,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteConnection(NoAwaitTag, google::cloud::developerconnect::v1::DeleteConnectionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -547,7 +582,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteConnection(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteConnection(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -588,7 +624,11 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-  CreateGitRepositoryLink(std::string const& parent, google::cloud::developerconnect::v1::GitRepositoryLink const& git_repository_link, std::string const& git_repository_link_id, Options opts = {});
+  CreateGitRepositoryLink(
+      std::string const& parent,
+      google::cloud::developerconnect::v1::GitRepositoryLink const&
+          git_repository_link,
+      std::string const& git_repository_link_id, Options opts = {});
 
   // clang-format off
   ///
@@ -601,8 +641,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGitRepositoryLink(NoAwaitTag, std::string const& parent, google::cloud::developerconnect::v1::GitRepositoryLink const& git_repository_link, std::string const& git_repository_link_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::developerconnect::v1::GitRepositoryLink const&
+          git_repository_link,
+      std::string const& git_repository_link_id, Options opts = {});
 
   // clang-format off
   ///
@@ -643,7 +686,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-  CreateGitRepositoryLink(google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request, Options opts = {});
+  CreateGitRepositoryLink(
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -656,8 +702,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGitRepositoryLink(NoAwaitTag, google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -669,7 +718,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-  CreateGitRepositoryLink(google::longrunning::Operation const& operation, Options opts = {});
+  CreateGitRepositoryLink(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -714,8 +764,8 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGitRepositoryLink(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -752,7 +802,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteGitRepositoryLink(google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request, Options opts = {});
+  DeleteGitRepositoryLink(
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -765,8 +818,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGitRepositoryLink(NoAwaitTag, google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -778,7 +834,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteGitRepositoryLink(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteGitRepositoryLink(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -851,7 +908,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
-  ListGitRepositoryLinks(google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest request, Options opts = {});
+  ListGitRepositoryLinks(
+      google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -906,7 +966,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
-  GetGitRepositoryLink(google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request, Options opts = {});
+  GetGitRepositoryLink(
+      google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -932,7 +995,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-  FetchReadWriteToken(std::string const& git_repository_link, Options opts = {});
+  FetchReadWriteToken(std::string const& git_repository_link,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -962,7 +1026,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-  FetchReadWriteToken(google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request, Options opts = {});
+  FetchReadWriteToken(
+      google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1018,7 +1085,9 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
-  FetchReadToken(google::cloud::developerconnect::v1::FetchReadTokenRequest const& request, Options opts = {});
+  FetchReadToken(
+      google::cloud::developerconnect::v1::FetchReadTokenRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1054,7 +1123,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
-  FetchLinkableGitRepositories(std::string const& connection, Options opts = {});
+  FetchLinkableGitRepositories(std::string const& connection,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -1094,7 +1164,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
-  FetchLinkableGitRepositories(google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest request, Options opts = {});
+  FetchLinkableGitRepositories(
+      google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1122,7 +1195,8 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1577}
   ///
   // clang-format on
-  StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
+  StatusOr<
+      google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
   FetchGitHubInstallations(std::string const& connection, Options opts = {});
 
   // clang-format off
@@ -1155,8 +1229,11 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1577}
   ///
   // clang-format on
-  StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
-  FetchGitHubInstallations(google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
+  FetchGitHubInstallations(google::cloud::developerconnect::v1::
+                               FetchGitHubInstallationsRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -1188,8 +1265,11 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1596}
   ///
   // clang-format on
-  StreamRange<std::string>
-  FetchGitRefs(std::string const& git_repository_link, google::cloud::developerconnect::v1::FetchGitRefsRequest::RefType ref_type, Options opts = {});
+  StreamRange<std::string> FetchGitRefs(
+      std::string const& git_repository_link,
+      google::cloud::developerconnect::v1::FetchGitRefsRequest::RefType
+          ref_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1224,8 +1304,9 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1596}
   ///
   // clang-format on
-  StreamRange<std::string>
-  FetchGitRefs(google::cloud::developerconnect::v1::FetchGitRefsRequest request, Options opts = {});
+  StreamRange<std::string> FetchGitRefs(
+      google::cloud::developerconnect::v1::FetchGitRefsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1298,7 +1379,9 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::AccountConnector>
-  ListAccountConnectors(google::cloud::developerconnect::v1::ListAccountConnectorsRequest request, Options opts = {});
+  ListAccountConnectors(
+      google::cloud::developerconnect::v1::ListAccountConnectorsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1353,7 +1436,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::AccountConnector>
-  GetAccountConnector(google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request, Options opts = {});
+  GetAccountConnector(
+      google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1390,7 +1476,11 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  CreateAccountConnector(std::string const& parent, google::cloud::developerconnect::v1::AccountConnector const& account_connector, std::string const& account_connector_id, Options opts = {});
+  CreateAccountConnector(
+      std::string const& parent,
+      google::cloud::developerconnect::v1::AccountConnector const&
+          account_connector,
+      std::string const& account_connector_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1403,8 +1493,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateAccountConnector(NoAwaitTag, std::string const& parent, google::cloud::developerconnect::v1::AccountConnector const& account_connector, std::string const& account_connector_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateAccountConnector(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::developerconnect::v1::AccountConnector const&
+          account_connector,
+      std::string const& account_connector_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1441,7 +1534,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  CreateAccountConnector(google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request, Options opts = {});
+  CreateAccountConnector(
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1454,8 +1550,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateAccountConnector(NoAwaitTag, google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1467,7 +1566,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  CreateAccountConnector(google::longrunning::Operation const& operation, Options opts = {});
+  CreateAccountConnector(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1500,7 +1600,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  UpdateAccountConnector(google::cloud::developerconnect::v1::AccountConnector const& account_connector, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAccountConnector(
+      google::cloud::developerconnect::v1::AccountConnector const&
+          account_connector,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1513,8 +1616,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateAccountConnector(NoAwaitTag, google::cloud::developerconnect::v1::AccountConnector const& account_connector, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::AccountConnector const&
+          account_connector,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1551,7 +1657,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  UpdateAccountConnector(google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request, Options opts = {});
+  UpdateAccountConnector(
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1564,8 +1673,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateAccountConnector(NoAwaitTag, google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1577,7 +1689,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::AccountConnector>>
-  UpdateAccountConnector(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateAccountConnector(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1622,8 +1735,8 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteAccountConnector(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteAccountConnector(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1660,7 +1773,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteAccountConnector(google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request, Options opts = {});
+  DeleteAccountConnector(
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1673,8 +1789,11 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteAccountConnector(NoAwaitTag, google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteAccountConnector(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1686,7 +1805,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteAccountConnector(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteAccountConnector(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1742,7 +1862,10 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
-  FetchAccessToken(google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request, Options opts = {});
+  FetchAccessToken(
+      google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1775,8 +1898,8 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.User]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1685}
   ///
   // clang-format on
-  StreamRange<google::cloud::developerconnect::v1::User>
-  ListUsers(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::developerconnect::v1::User> ListUsers(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1814,8 +1937,9 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.User]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1685}
   ///
   // clang-format on
-  StreamRange<google::cloud::developerconnect::v1::User>
-  ListUsers(google::cloud::developerconnect::v1::ListUsersRequest request, Options opts = {});
+  StreamRange<google::cloud::developerconnect::v1::User> ListUsers(
+      google::cloud::developerconnect::v1::ListUsersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1860,8 +1984,9 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteUser(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteUser(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -1898,7 +2023,9 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteUser(google::cloud::developerconnect::v1::DeleteUserRequest const& request, Options opts = {});
+  DeleteUser(
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1911,8 +2038,10 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteUser(NoAwaitTag, google::cloud::developerconnect::v1::DeleteUserRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteUser(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteUserRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1924,7 +2053,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteUser(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteUser(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -1948,8 +2078,8 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.User]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1685}
   ///
   // clang-format on
-  StatusOr<google::cloud::developerconnect::v1::User>
-  FetchSelf(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::developerconnect::v1::User> FetchSelf(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1978,8 +2108,9 @@ class DeveloperConnectClient {
   /// [google.cloud.developerconnect.v1.User]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1685}
   ///
   // clang-format on
-  StatusOr<google::cloud::developerconnect::v1::User>
-  FetchSelf(google::cloud::developerconnect::v1::FetchSelfRequest const& request, Options opts = {});
+  StatusOr<google::cloud::developerconnect::v1::User> FetchSelf(
+      google::cloud::developerconnect::v1::FetchSelfRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2024,8 +2155,9 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSelf(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSelf(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -2062,7 +2194,9 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteSelf(google::cloud::developerconnect::v1::DeleteSelfRequest const& request, Options opts = {});
+  DeleteSelf(
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2075,8 +2209,10 @@ class DeveloperConnectClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSelf(NoAwaitTag, google::cloud::developerconnect::v1::DeleteSelfRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSelf(
+      NoAwaitTag,
+      google::cloud::developerconnect::v1::DeleteSelfRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2088,7 +2224,8 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteSelf(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteSelf(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -2126,8 +2263,8 @@ class DeveloperConnectClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2156,8 +2293,9 @@ class DeveloperConnectClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2192,8 +2330,8 @@ class DeveloperConnectClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2232,8 +2370,8 @@ class DeveloperConnectClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2259,8 +2397,8 @@ class DeveloperConnectClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2291,8 +2429,9 @@ class DeveloperConnectClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2316,8 +2455,7 @@ class DeveloperConnectClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2346,8 +2484,9 @@ class DeveloperConnectClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2381,8 +2520,7 @@ class DeveloperConnectClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2421,8 +2559,9 @@ class DeveloperConnectClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DeveloperConnectConnection> connection_;

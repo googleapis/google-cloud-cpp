@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_INTERNAL_VPC_ACCESS_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_INTERNAL_VPC_ACCESS_TRACING_CONNECTION_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
@@ -36,46 +36,49 @@ class VpcAccessServiceTracingConnection
   ~VpcAccessServiceTracingConnection() override = default;
 
   explicit VpcAccessServiceTracingConnection(
-    std::shared_ptr<vpcaccess_v1::VpcAccessServiceConnection> child);
+      std::shared_ptr<vpcaccess_v1::VpcAccessServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
-  CreateConnector(google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) override;
+  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateConnector(NoAwaitTag,
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateConnector(
+      NoAwaitTag,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
-  CreateConnector(
+  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::vpcaccess::v1::Connector>
-  GetConnector(google::cloud::vpcaccess::v1::GetConnectorRequest const& request) override;
+  StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
+      google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
+      override;
 
-  StreamRange<google::cloud::vpcaccess::v1::Connector>
-  ListConnectors(google::cloud::vpcaccess::v1::ListConnectorsRequest request) override;
-
-  future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteConnector(NoAwaitTag,
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) override;
+  StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
+      google::cloud::vpcaccess::v1::ListConnectorsRequest request) override;
 
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(
-      google::longrunning::Operation const& operation) override;
+  DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const&
+                      request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StatusOr<google::longrunning::Operation> DeleteConnector(
+      NoAwaitTag,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
+  DeleteConnector(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
+
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<vpcaccess_v1::VpcAccessServiceConnection> child_;

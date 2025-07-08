@@ -47,48 +47,52 @@ class MockContextsConnection : public dialogflow_es::ContextsConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Context>),
-  ListContexts,
-  (google::cloud::dialogflow::v2::ListContextsRequest request), (override));
+              ListContexts,
+              (google::cloud::dialogflow::v2::ListContextsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Context>,
-  GetContext,
-  (google::cloud::dialogflow::v2::GetContextRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Context>, GetContext,
+              (google::cloud::dialogflow::v2::GetContextRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Context>,
-  CreateContext,
-  (google::cloud::dialogflow::v2::CreateContextRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::v2::Context>, CreateContext,
+      (google::cloud::dialogflow::v2::CreateContextRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::Context>,
-  UpdateContext,
-  (google::cloud::dialogflow::v2::UpdateContextRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::v2::Context>, UpdateContext,
+      (google::cloud::dialogflow::v2::UpdateContextRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteContext,
-  (google::cloud::dialogflow::v2::DeleteContextRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteContext,
+      (google::cloud::dialogflow::v2::DeleteContextRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteAllContexts,
-  (google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteAllContexts,
+      (google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

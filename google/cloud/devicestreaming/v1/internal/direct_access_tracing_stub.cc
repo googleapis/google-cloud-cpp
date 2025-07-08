@@ -33,33 +33,42 @@ DirectAccessServiceTracingStub::DirectAccessServiceTracingStub(
     std::shared_ptr<DirectAccessServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::devicestreaming::v1::DeviceSession> DirectAccessServiceTracingStub::CreateDeviceSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.devicestreaming.v1.DirectAccessService", "CreateDeviceSession");
+StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
+DirectAccessServiceTracingStub::CreateDeviceSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.devicestreaming.v1.DirectAccessService",
+      "CreateDeviceSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateDeviceSession(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateDeviceSession(context, options, request));
 }
 
-StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse> DirectAccessServiceTracingStub::ListDeviceSessions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.devicestreaming.v1.DirectAccessService", "ListDeviceSessions");
+StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse>
+DirectAccessServiceTracingStub::ListDeviceSessions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.devicestreaming.v1.DirectAccessService",
+      "ListDeviceSessions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListDeviceSessions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListDeviceSessions(context, options, request));
 }
 
-StatusOr<google::cloud::devicestreaming::v1::DeviceSession> DirectAccessServiceTracingStub::GetDeviceSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.devicestreaming.v1.DirectAccessService", "GetDeviceSession");
+StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
+DirectAccessServiceTracingStub::GetDeviceSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.devicestreaming.v1.DirectAccessService",
+      "GetDeviceSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -67,25 +76,30 @@ StatusOr<google::cloud::devicestreaming::v1::DeviceSession> DirectAccessServiceT
 }
 
 Status DirectAccessServiceTracingStub::CancelDeviceSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.devicestreaming.v1.DirectAccessService", "CancelDeviceSession");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.devicestreaming.v1.DirectAccessService",
+      "CancelDeviceSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CancelDeviceSession(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CancelDeviceSession(context, options, request));
 }
 
-StatusOr<google::cloud::devicestreaming::v1::DeviceSession> DirectAccessServiceTracingStub::UpdateDeviceSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.devicestreaming.v1.DirectAccessService", "UpdateDeviceSession");
+StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
+DirectAccessServiceTracingStub::UpdateDeviceSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.devicestreaming.v1.DirectAccessService",
+      "UpdateDeviceSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateDeviceSession(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateDeviceSession(context, options, request));
 }
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<
@@ -94,7 +108,8 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
 DirectAccessServiceTracingStub::AsyncAdbConnect(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
-  auto span = internal::MakeSpanGrpc("google.cloud.devicestreaming.v1.DirectAccessService", "AdbConnect");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.devicestreaming.v1.DirectAccessService", "AdbConnect");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto stream = child_->AsyncAdbConnect(cq, context, std::move(options));

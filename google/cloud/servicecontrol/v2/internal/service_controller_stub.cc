@@ -32,28 +32,26 @@ ServiceControllerStub::~ServiceControllerStub() = default;
 
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
 DefaultServiceControllerStub::Check(
-  grpc::ClientContext& context, Options const&,
-  google::api::servicecontrol::v2::CheckRequest const& request) {
-    google::api::servicecontrol::v2::CheckResponse response;
-    auto status =
-        grpc_stub_->Check(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::api::servicecontrol::v2::CheckRequest const& request) {
+  google::api::servicecontrol::v2::CheckResponse response;
+  auto status = grpc_stub_->Check(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
 DefaultServiceControllerStub::Report(
-  grpc::ClientContext& context, Options const&,
-  google::api::servicecontrol::v2::ReportRequest const& request) {
-    google::api::servicecontrol::v2::ReportResponse response;
-    auto status =
-        grpc_stub_->Report(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::api::servicecontrol::v2::ReportRequest const& request) {
+  google::api::servicecontrol::v2::ReportResponse response;
+  auto status = grpc_stub_->Report(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,42 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TopicAdminConnectionIdempotencyPolicy::~TopicAdminConnectionIdempotencyPolicy() = default;
+TopicAdminConnectionIdempotencyPolicy::
+    ~TopicAdminConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TopicAdminConnectionIdempotencyPolicy>
 TopicAdminConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TopicAdminConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::CreateTopic(google::pubsub::v1::Topic const&) {
+Idempotency TopicAdminConnectionIdempotencyPolicy::CreateTopic(
+    google::pubsub::v1::Topic const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::UpdateTopic(google::pubsub::v1::UpdateTopicRequest const&) {
+Idempotency TopicAdminConnectionIdempotencyPolicy::UpdateTopic(
+    google::pubsub::v1::UpdateTopicRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::GetTopic(google::pubsub::v1::GetTopicRequest const&) {
+Idempotency TopicAdminConnectionIdempotencyPolicy::GetTopic(
+    google::pubsub::v1::GetTopicRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::ListTopics(google::pubsub::v1::ListTopicsRequest) {  // NOLINT
+Idempotency TopicAdminConnectionIdempotencyPolicy::ListTopics(
+    google::pubsub::v1::ListTopicsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::ListTopicSubscriptions(google::pubsub::v1::ListTopicSubscriptionsRequest) {  // NOLINT
+Idempotency TopicAdminConnectionIdempotencyPolicy::ListTopicSubscriptions(
+    google::pubsub::v1::ListTopicSubscriptionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::ListTopicSnapshots(google::pubsub::v1::ListTopicSnapshotsRequest) {  // NOLINT
+Idempotency TopicAdminConnectionIdempotencyPolicy::ListTopicSnapshots(
+    google::pubsub::v1::ListTopicSnapshotsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::DeleteTopic(google::pubsub::v1::DeleteTopicRequest const&) {
+Idempotency TopicAdminConnectionIdempotencyPolicy::DeleteTopic(
+    google::pubsub::v1::DeleteTopicRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::DetachSubscription(google::pubsub::v1::DetachSubscriptionRequest const&) {
+Idempotency TopicAdminConnectionIdempotencyPolicy::DetachSubscription(
+    google::pubsub::v1::DetachSubscriptionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -71,16 +80,18 @@ Idempotency TopicAdminConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency TopicAdminConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TopicAdminConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency TopicAdminConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TopicAdminConnectionIdempotencyPolicy>
-    MakeDefaultTopicAdminConnectionIdempotencyPolicy() {
+MakeDefaultTopicAdminConnectionIdempotencyPolicy() {
   return std::make_unique<TopicAdminConnectionIdempotencyPolicy>();
 }
 

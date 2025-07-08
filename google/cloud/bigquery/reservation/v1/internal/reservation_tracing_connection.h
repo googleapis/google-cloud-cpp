@@ -36,75 +36,115 @@ class ReservationServiceTracingConnection
   ~ReservationServiceTracingConnection() override = default;
 
   explicit ReservationServiceTracingConnection(
-    std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection> child);
+      std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  CreateReservation(google::cloud::bigquery::reservation::v1::CreateReservationRequest const& request) override;
+  CreateReservation(
+      google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
+          request) override;
 
   StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
-  ListReservations(google::cloud::bigquery::reservation::v1::ListReservationsRequest request) override;
+  ListReservations(
+      google::cloud::bigquery::reservation::v1::ListReservationsRequest request)
+      override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  GetReservation(google::cloud::bigquery::reservation::v1::GetReservationRequest const& request) override;
+  GetReservation(
+      google::cloud::bigquery::reservation::v1::GetReservationRequest const&
+          request) override;
 
-  Status
-  DeleteReservation(google::cloud::bigquery::reservation::v1::DeleteReservationRequest const& request) override;
+  Status DeleteReservation(
+      google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
+          request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  UpdateReservation(google::cloud::bigquery::reservation::v1::UpdateReservationRequest const& request) override;
+  UpdateReservation(
+      google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
+          request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  FailoverReservation(google::cloud::bigquery::reservation::v1::FailoverReservationRequest const& request) override;
+  FailoverReservation(google::cloud::bigquery::reservation::v1::
+                          FailoverReservationRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  CreateCapacityCommitment(google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest const& request) override;
+  CreateCapacityCommitment(
+      google::cloud::bigquery::reservation::v1::
+          CreateCapacityCommitmentRequest const& request) override;
 
   StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  ListCapacityCommitments(google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest request) override;
+  ListCapacityCommitments(
+      google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
+          request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  GetCapacityCommitment(google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest const& request) override;
+  GetCapacityCommitment(
+      google::cloud::bigquery::reservation::v1::
+          GetCapacityCommitmentRequest const& request) override;
 
-  Status
-  DeleteCapacityCommitment(google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest const& request) override;
-
-  StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  UpdateCapacityCommitment(google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest const& request) override;
-
-  StatusOr<google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
-  SplitCapacityCommitment(google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest const& request) override;
+  Status DeleteCapacityCommitment(
+      google::cloud::bigquery::reservation::v1::
+          DeleteCapacityCommitmentRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  MergeCapacityCommitments(google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest const& request) override;
+  UpdateCapacityCommitment(
+      google::cloud::bigquery::reservation::v1::
+          UpdateCapacityCommitmentRequest const& request) override;
+
+  StatusOr<
+      google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
+  SplitCapacityCommitment(
+      google::cloud::bigquery::reservation::v1::
+          SplitCapacityCommitmentRequest const& request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
+  MergeCapacityCommitments(
+      google::cloud::bigquery::reservation::v1::
+          MergeCapacityCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  CreateAssignment(google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const& request) override;
+  CreateAssignment(
+      google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
+          request) override;
 
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  ListAssignments(google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request) override;
+  ListAssignments(
+      google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request)
+      override;
 
-  Status
-  DeleteAssignment(google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const& request) override;
+  Status DeleteAssignment(
+      google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
+          request) override;
 
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  SearchAssignments(google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest request) override;
+  SearchAssignments(
+      google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
+          request) override;
 
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  SearchAllAssignments(google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest request) override;
+  SearchAllAssignments(
+      google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
+          request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
+      google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
+          request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  MoveAssignment(google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const& request) override;
-
-  StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  UpdateAssignment(google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const& request) override;
+  UpdateAssignment(
+      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+          request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  GetBiReservation(google::cloud::bigquery::reservation::v1::GetBiReservationRequest const& request) override;
+  GetBiReservation(
+      google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
+          request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  UpdateBiReservation(google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const& request) override;
+  UpdateBiReservation(google::cloud::bigquery::reservation::v1::
+                          UpdateBiReservationRequest const& request) override;
 
  private:
   std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection> child_;
@@ -120,7 +160,8 @@ class ReservationServiceTracingConnection
  */
 std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>
 MakeReservationServiceTracingConnection(
-    std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection> conn);
+    std::shared_ptr<bigquery_reservation_v1::ReservationServiceConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal

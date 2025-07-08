@@ -17,17 +17,17 @@
 // source: google/cloud/secretmanager/v1/service.proto
 
 #include "google/cloud/secretmanager/v1/secret_manager_connection.h"
+#include "google/cloud/secretmanager/v1/internal/secret_manager_connection_impl.h"
+#include "google/cloud/secretmanager/v1/internal/secret_manager_option_defaults.h"
+#include "google/cloud/secretmanager/v1/internal/secret_manager_stub_factory.h"
+#include "google/cloud/secretmanager/v1/internal/secret_manager_tracing_connection.h"
+#include "google/cloud/secretmanager/v1/secret_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/secretmanager/v1/internal/secret_manager_connection_impl.h"
-#include "google/cloud/secretmanager/v1/internal/secret_manager_option_defaults.h"
-#include "google/cloud/secretmanager/v1/internal/secret_manager_stub_factory.h"
-#include "google/cloud/secretmanager/v1/internal/secret_manager_tracing_connection.h"
-#include "google/cloud/secretmanager/v1/secret_manager_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecretManagerServiceConnection::~SecretManagerServiceConnection() = default;
 
-StreamRange<google::cloud::secretmanager::v1::Secret> SecretManagerServiceConnection::ListSecrets(
-    google::cloud::secretmanager::v1::ListSecretsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::secretmanager::v1::Secret>
+SecretManagerServiceConnection::ListSecrets(
+    google::cloud::secretmanager::v1::
+        ListSecretsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::secretmanager::v1::Secret>>();
 }
@@ -68,14 +70,15 @@ SecretManagerServiceConnection::UpdateSecret(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-SecretManagerServiceConnection::DeleteSecret(
+Status SecretManagerServiceConnection::DeleteSecret(
     google::cloud::secretmanager::v1::DeleteSecretRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::secretmanager::v1::SecretVersion> SecretManagerServiceConnection::ListSecretVersions(
-    google::cloud::secretmanager::v1::ListSecretVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::secretmanager::v1::SecretVersion>
+SecretManagerServiceConnection::ListSecretVersions(
+    google::cloud::secretmanager::v1::
+        ListSecretVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::secretmanager::v1::SecretVersion>>();
 }
@@ -110,14 +113,12 @@ SecretManagerServiceConnection::DestroySecretVersion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-SecretManagerServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> SecretManagerServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-SecretManagerServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> SecretManagerServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -128,8 +129,10 @@ SecretManagerServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> SecretManagerServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+SecretManagerServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -140,20 +143,22 @@ SecretManagerServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<SecretManagerServiceConnection> MakeSecretManagerServiceConnection(
-    Options options) {
+std::shared_ptr<SecretManagerServiceConnection>
+MakeSecretManagerServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      SecretManagerServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 SecretManagerServicePolicyOptionList>(
+      options, __func__);
   options = secretmanager_v1_internal::SecretManagerServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = secretmanager_v1_internal::CreateDefaultSecretManagerServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return secretmanager_v1_internal::MakeSecretManagerServiceTracingConnection(
-      std::make_shared<secretmanager_v1_internal::SecretManagerServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          secretmanager_v1_internal::SecretManagerServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

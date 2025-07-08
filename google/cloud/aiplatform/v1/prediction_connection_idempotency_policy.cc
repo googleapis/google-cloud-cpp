@@ -26,42 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PredictionServiceConnectionIdempotencyPolicy::~PredictionServiceConnectionIdempotencyPolicy() = default;
+PredictionServiceConnectionIdempotencyPolicy::
+    ~PredictionServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 PredictionServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(google::cloud::aiplatform::v1::PredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(
+    google::cloud::aiplatform::v1::PredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::RawPredict(google::cloud::aiplatform::v1::RawPredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::RawPredict(
+    google::cloud::aiplatform::v1::RawPredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectPredict(google::cloud::aiplatform::v1::DirectPredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectPredict(
+    google::cloud::aiplatform::v1::DirectPredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::DirectRawPredict(
+    google::cloud::aiplatform::v1::DirectRawPredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::Explain(google::cloud::aiplatform::v1::ExplainRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::Explain(
+    google::cloud::aiplatform::v1::ExplainRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::GenerateContent(
+    google::cloud::aiplatform::v1::GenerateContentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency PredictionServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -71,36 +80,43 @@ Idempotency PredictionServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency PredictionServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-    MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
+MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>();
 }
 

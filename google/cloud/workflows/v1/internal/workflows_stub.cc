@@ -33,38 +33,37 @@ WorkflowsStub::~WorkflowsStub() = default;
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 DefaultWorkflowsStub::ListWorkflows(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
-    google::cloud::workflows::v1::ListWorkflowsResponse response;
-    auto status =
-        grpc_stub_->ListWorkflows(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
+  google::cloud::workflows::v1::ListWorkflowsResponse response;
+  auto status = grpc_stub_->ListWorkflows(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow>
 DefaultWorkflowsStub::GetWorkflow(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workflows::v1::GetWorkflowRequest const& request) {
-    google::cloud::workflows::v1::Workflow response;
-    auto status =
-        grpc_stub_->GetWorkflow(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workflows::v1::GetWorkflowRequest const& request) {
+  google::cloud::workflows::v1::Workflow response;
+  auto status = grpc_stub_->GetWorkflow(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncCreateWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workflows::v1::CreateWorkflowRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workflows::v1::CreateWorkflowRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::workflows::v1::CreateWorkflowRequest const& request,
@@ -74,28 +73,26 @@ DefaultWorkflowsStub::AsyncCreateWorkflow(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultWorkflowsStub::CreateWorkflow(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateWorkflow(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultWorkflowsStub::CreateWorkflow(
+    grpc::ClientContext& context, Options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWorkflow(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncDeleteWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workflows::v1::DeleteWorkflowRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workflows::v1::DeleteWorkflowRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
@@ -105,28 +102,26 @@ DefaultWorkflowsStub::AsyncDeleteWorkflow(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultWorkflowsStub::DeleteWorkflow(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteWorkflow(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultWorkflowsStub::DeleteWorkflow(
+    grpc::ClientContext& context, Options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteWorkflow(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncUpdateWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workflows::v1::UpdateWorkflowRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workflows::v1::UpdateWorkflowRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
@@ -136,96 +131,84 @@ DefaultWorkflowsStub::AsyncUpdateWorkflow(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultWorkflowsStub::UpdateWorkflow(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateWorkflow(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultWorkflowsStub::UpdateWorkflow(
+    grpc::ClientContext& context, Options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateWorkflow(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
 DefaultWorkflowsStub::ListWorkflowRevisions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
-    google::cloud::workflows::v1::ListWorkflowRevisionsResponse response;
-    auto status =
-        grpc_stub_->ListWorkflowRevisions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
+  google::cloud::workflows::v1::ListWorkflowRevisionsResponse response;
+  auto status = grpc_stub_->ListWorkflowRevisions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultWorkflowsStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::location::Location>
-DefaultWorkflowsStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::location::Location> DefaultWorkflowsStub::GetLocation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultWorkflowsStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultWorkflowsStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultWorkflowsStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultWorkflowsStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultWorkflowsStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -254,13 +237,14 @@ future<Status> DefaultWorkflowsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

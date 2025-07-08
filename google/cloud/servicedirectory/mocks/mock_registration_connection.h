@@ -30,8 +30,10 @@ namespace cloud {
 namespace servicedirectory_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use servicedirectory_v1_mocks::MockRegistrationServiceConnection directly.
-using ::google::cloud::servicedirectory_v1_mocks::MockRegistrationServiceConnection;
+/// @deprecated Use servicedirectory_v1_mocks::MockRegistrationServiceConnection
+/// directly.
+using ::google::cloud::servicedirectory_v1_mocks::
+    MockRegistrationServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_mocks

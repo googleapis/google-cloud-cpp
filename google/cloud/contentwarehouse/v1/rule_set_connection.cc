@@ -17,13 +17,13 @@
 // source: google/cloud/contentwarehouse/v1/ruleset_service.proto
 
 #include "google/cloud/contentwarehouse/v1/rule_set_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_connection_impl.h"
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_option_defaults.h"
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_stub_factory.h"
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_tracing_connection.h"
 #include "google/cloud/contentwarehouse/v1/rule_set_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -56,20 +56,20 @@ RuleSetServiceConnection::UpdateRuleSet(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-RuleSetServiceConnection::DeleteRuleSet(
+Status RuleSetServiceConnection::DeleteRuleSet(
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contentwarehouse::v1::RuleSet> RuleSetServiceConnection::ListRuleSets(
-    google::cloud::contentwarehouse::v1::ListRuleSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
+RuleSetServiceConnection::ListRuleSets(
+    google::cloud::contentwarehouse::v1::
+        ListRuleSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::RuleSet>>();
 }
 
-StatusOr<google::longrunning::Operation>
-RuleSetServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> RuleSetServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -77,17 +77,19 @@ RuleSetServiceConnection::GetOperation(
 std::shared_ptr<RuleSetServiceConnection> MakeRuleSetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      RuleSetServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 RuleSetServicePolicyOptionList>(options,
+                                                                 __func__);
   options = contentwarehouse_v1_internal::RuleSetServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = contentwarehouse_v1_internal::CreateDefaultRuleSetServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return contentwarehouse_v1_internal::MakeRuleSetServiceTracingConnection(
-      std::make_shared<contentwarehouse_v1_internal::RuleSetServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          contentwarehouse_v1_internal::RuleSetServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

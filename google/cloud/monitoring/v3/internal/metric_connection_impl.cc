@@ -17,13 +17,13 @@
 // source: google/monitoring/v3/metric_service.proto
 
 #include "google/cloud/monitoring/v3/internal/metric_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/metric_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/monitoring/v3/internal/metric_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -33,54 +33,65 @@ namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<monitoring_v3::MetricServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<monitoring_v3::MetricServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<monitoring_v3::MetricServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<monitoring_v3::MetricServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<monitoring_v3::MetricServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<monitoring_v3::MetricServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 MetricServiceConnectionImpl::MetricServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<monitoring_v3_internal::MetricServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        MetricServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      MetricServiceConnection::options())) {}
 
 StreamRange<google::api::MonitoredResourceDescriptor>
-MetricServiceConnectionImpl::ListMonitoredResourceDescriptors(google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
+MetricServiceConnectionImpl::ListMonitoredResourceDescriptors(
+    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListMonitoredResourceDescriptors(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListMonitoredResourceDescriptors(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::api::MonitoredResourceDescriptor>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::api::MonitoredResourceDescriptor>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const& r) {
+          Options const& options,
+          google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const& request) {
-              return stub->ListMonitoredResourceDescriptors(context, options, request);
+                   google::monitoring::v3::
+                       ListMonitoredResourceDescriptorsRequest const& request) {
+              return stub->ListMonitoredResourceDescriptors(context, options,
+                                                            request);
             },
             options, r, function_name);
       },
       [](google::monitoring::v3::ListMonitoredResourceDescriptorsResponse r) {
-        std::vector<google::api::MonitoredResourceDescriptor> result(r.resource_descriptors().size());
+        std::vector<google::api::MonitoredResourceDescriptor> result(
+            r.resource_descriptors().size());
         auto& messages = *r.mutable_resource_descriptors();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -88,40 +99,51 @@ MetricServiceConnectionImpl::ListMonitoredResourceDescriptors(google::monitoring
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
-MetricServiceConnectionImpl::GetMonitoredResourceDescriptor(google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) {
+MetricServiceConnectionImpl::GetMonitoredResourceDescriptor(
+    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMonitoredResourceDescriptor(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
+              request) {
         return stub_->GetMonitoredResourceDescriptor(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::api::MetricDescriptor>
-MetricServiceConnectionImpl::ListMetricDescriptors(google::monitoring::v3::ListMetricDescriptorsRequest request) {
+MetricServiceConnectionImpl::ListMetricDescriptors(
+    google::monitoring::v3::ListMetricDescriptorsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListMetricDescriptors(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListMetricDescriptors(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::api::MetricDescriptor>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::api::MetricDescriptor>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::monitoring::v3::ListMetricDescriptorsRequest const& r) {
+          Options const& options,
+          google::monitoring::v3::ListMetricDescriptorsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
+                   google::monitoring::v3::ListMetricDescriptorsRequest const&
+                       request) {
               return stub->ListMetricDescriptors(context, options, request);
             },
             options, r, function_name);
       },
       [](google::monitoring::v3::ListMetricDescriptorsResponse r) {
-        std::vector<google::api::MetricDescriptor> result(r.metric_descriptors().size());
+        std::vector<google::api::MetricDescriptor> result(
+            r.metric_descriptors().size());
         auto& messages = *r.mutable_metric_descriptors();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -129,74 +151,85 @@ MetricServiceConnectionImpl::ListMetricDescriptors(google::monitoring::v3::ListM
 }
 
 StatusOr<google::api::MetricDescriptor>
-MetricServiceConnectionImpl::GetMetricDescriptor(google::monitoring::v3::GetMetricDescriptorRequest const& request) {
+MetricServiceConnectionImpl::GetMetricDescriptor(
+    google::monitoring::v3::GetMetricDescriptorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMetricDescriptor(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::v3::GetMetricDescriptorRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::monitoring::v3::GetMetricDescriptorRequest const& request) {
         return stub_->GetMetricDescriptor(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::api::MetricDescriptor>
-MetricServiceConnectionImpl::CreateMetricDescriptor(google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
+MetricServiceConnectionImpl::CreateMetricDescriptor(
+    google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateMetricDescriptor(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
+             google::monitoring::v3::CreateMetricDescriptorRequest const&
+                 request) {
         return stub_->CreateMetricDescriptor(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-MetricServiceConnectionImpl::DeleteMetricDescriptor(google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
+Status MetricServiceConnectionImpl::DeleteMetricDescriptor(
+    google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteMetricDescriptor(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
+             google::monitoring::v3::DeleteMetricDescriptorRequest const&
+                 request) {
         return stub_->DeleteMetricDescriptor(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::monitoring::v3::TimeSeries>
-MetricServiceConnectionImpl::ListTimeSeries(google::monitoring::v3::ListTimeSeriesRequest request) {
+MetricServiceConnectionImpl::ListTimeSeries(
+    google::monitoring::v3::ListTimeSeriesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTimeSeries(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::monitoring::v3::TimeSeries>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::monitoring::v3::TimeSeries>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::monitoring::v3::ListTimeSeriesRequest const& r) {
+          Options const& options,
+          google::monitoring::v3::ListTimeSeriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::monitoring::v3::ListTimeSeriesRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::monitoring::v3::ListTimeSeriesRequest const& request) {
               return stub->ListTimeSeries(context, options, request);
             },
             options, r, function_name);
       },
       [](google::monitoring::v3::ListTimeSeriesResponse r) {
-        std::vector<google::monitoring::v3::TimeSeries> result(r.time_series().size());
+        std::vector<google::monitoring::v3::TimeSeries> result(
+            r.time_series().size());
         auto& messages = *r.mutable_time_series();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-Status
-MetricServiceConnectionImpl::CreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+Status MetricServiceConnectionImpl::CreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -208,8 +241,8 @@ MetricServiceConnectionImpl::CreateTimeSeries(google::monitoring::v3::CreateTime
       *current, request, __func__);
 }
 
-Status
-MetricServiceConnectionImpl::CreateServiceTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+Status MetricServiceConnectionImpl::CreateServiceTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -221,8 +254,8 @@ MetricServiceConnectionImpl::CreateServiceTimeSeries(google::monitoring::v3::Cre
       *current, request, __func__);
 }
 
-future<Status>
-MetricServiceConnectionImpl::AsyncCreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+future<Status> MetricServiceConnectionImpl::AsyncCreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
@@ -231,12 +264,12 @@ MetricServiceConnectionImpl::AsyncCreateTimeSeries(google::monitoring::v3::Creat
   auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
       std::move(retry), std::move(backoff), idempotent, background_->cq(),
-      [stub = stub_](CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     google::cloud::internal::ImmutableOptions options,
-                     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-        return stub->AsyncCreateTimeSeries(
-            cq, std::move(context), std::move(options), request);
+      [stub = stub_](
+          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+        return stub->AsyncCreateTimeSeries(cq, std::move(context),
+                                           std::move(options), request);
       },
       std::move(current), std::move(request_copy), __func__);
 }

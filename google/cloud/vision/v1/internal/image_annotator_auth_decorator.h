@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_IMAGE_ANNOTATOR_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_INTERNAL_IMAGE_ANNOTATOR_AUTH_DECORATOR_H
 
+#include "google/cloud/vision/v1/internal/image_annotator_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vision/v1/internal/image_annotator_stub.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <set>
@@ -39,41 +39,44 @@ class ImageAnnotatorAuth : public ImageAnnotatorStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<ImageAnnotatorStub> child);
 
-  StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse> BatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
+  BatchAnnotateImages(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse> BatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) override;
+  StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
+  BatchAnnotateFiles(grpc::ClientContext& context, Options const& options,
+                     google::cloud::vision::v1::BatchAnnotateFilesRequest const&
+                         request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncAsyncBatchAnnotateImages(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncAsyncBatchAnnotateImages(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) override;
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAsyncBatchAnnotateFiles(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) override;
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

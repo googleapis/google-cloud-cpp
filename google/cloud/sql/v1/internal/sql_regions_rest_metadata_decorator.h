@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_REGIONS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_REGIONS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_regions_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_regions_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_regions.pb.h>
 #include <memory>

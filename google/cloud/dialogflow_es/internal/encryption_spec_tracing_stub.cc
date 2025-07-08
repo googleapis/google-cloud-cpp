@@ -32,80 +32,92 @@ EncryptionSpecServiceTracingStub::EncryptionSpecServiceTracingStub(
     std::shared_ptr<EncryptionSpecServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::v2::EncryptionSpec> EncryptionSpecServiceTracingStub::GetEncryptionSpec(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
+EncryptionSpecServiceTracingStub::GetEncryptionSpec(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService", "GetEncryptionSpec");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.EncryptionSpecService", "GetEncryptionSpec");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetEncryptionSpec(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetEncryptionSpec(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EncryptionSpecServiceTracingStub::AsyncInitializeEncryptionSpec(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService", "InitializeEncryptionSpec");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService",
+                             "InitializeEncryptionSpec");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncInitializeEncryptionSpec(cq, context, std::move(options), request);
+  auto f = child_->AsyncInitializeEncryptionSpec(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 EncryptionSpecServiceTracingStub::InitializeEncryptionSpec(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService", "InitializeEncryptionSpec");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService",
+                             "InitializeEncryptionSpec");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->InitializeEncryptionSpec(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->InitializeEncryptionSpec(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> EncryptionSpecServiceTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+EncryptionSpecServiceTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.EncryptionSpecService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> EncryptionSpecServiceTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+EncryptionSpecServiceTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.EncryptionSpecService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> EncryptionSpecServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+EncryptionSpecServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.EncryptionSpecService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> EncryptionSpecServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+EncryptionSpecServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.EncryptionSpecService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -113,10 +125,10 @@ StatusOr<google::longrunning::Operation> EncryptionSpecServiceTracingStub::GetOp
 }
 
 Status EncryptionSpecServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.EncryptionSpecService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.EncryptionSpecService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -133,8 +145,7 @@ EncryptionSpecServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -147,8 +158,8 @@ future<Status> EncryptionSpecServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -36,15 +36,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ProjectServiceConnection> MakeProjectServiceConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      ProjectServicePolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, ProjectServicePolicyOptionList>(
+      options, __func__);
   options = bigquerycontrol_v2_internal::ProjectServiceDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = bigquerycontrol_v2_internal::CreateDefaultProjectServiceRestStub(
-      options);
+  auto stub =
+      bigquerycontrol_v2_internal::CreateDefaultProjectServiceRestStub(options);
   return bigquerycontrol_v2_internal::MakeProjectServiceTracingConnection(
       std::make_shared<
           bigquerycontrol_v2_internal::ProjectServiceRestConnectionImpl>(

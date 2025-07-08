@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SnapshotsClient {
  public:
-  explicit SnapshotsClient(std::shared_ptr<SnapshotsConnection> connection, Options opts = {});
+  explicit SnapshotsClient(std::shared_ptr<SnapshotsConnection> connection,
+                           Options opts = {});
   ~SnapshotsClient();
 
   ///@{
@@ -119,8 +120,9 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshot(std::string const& project, std::string const& snapshot, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
+      std::string const& project, std::string const& snapshot,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -133,8 +135,9 @@ class SnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSnapshot(NoAwaitTag, std::string const& project, std::string const& snapshot, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
+      NoAwaitTag, std::string const& project, std::string const& snapshot,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -174,8 +177,10 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L148}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshot(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -188,8 +193,11 @@ class SnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSnapshot(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
+      NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +208,9 @@ class SnapshotsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshot(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -227,8 +236,9 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-  GetSnapshot(std::string const& project, std::string const& snapshot, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
+      std::string const& project, std::string const& snapshot,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -258,8 +268,10 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-  GetSnapshot(google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -286,8 +298,9 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -318,8 +331,10 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -354,8 +369,10 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L200}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshot(std::string const& project, google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -368,8 +385,10 @@ class SnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSnapshot(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
+      NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -408,8 +427,10 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L200}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshot(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -422,8 +443,11 @@ class SnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSnapshot(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
+      NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -434,8 +458,9 @@ class SnapshotsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshot(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -470,8 +495,8 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L29}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-  ListSnapshots(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -511,8 +536,9 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Snapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L29}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-  ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -540,8 +566,11 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -572,8 +601,10 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -607,8 +638,11 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L310}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -621,8 +655,11 @@ class SnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag, std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag, std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -659,8 +696,10 @@ class SnapshotsClient {
   /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L310}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -673,8 +712,11 @@ class SnapshotsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag, google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -685,8 +727,9 @@ class SnapshotsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -714,7 +757,11 @@ class SnapshotsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -745,7 +792,9 @@ class SnapshotsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<SnapshotsConnection> connection_;

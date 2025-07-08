@@ -30,22 +30,19 @@ namespace cloud {
 namespace edgenetwork_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-EdgeNetworkLogging::EdgeNetworkLogging(
-    std::shared_ptr<EdgeNetworkStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+EdgeNetworkLogging::EdgeNetworkLogging(std::shared_ptr<EdgeNetworkStub> child,
+                                       TracingOptions tracing_options,
+                                       std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
 EdgeNetworkLogging::InitializeZone(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::InitializeZoneRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::InitializeZoneRequest const&
+                 request) {
         return child_->InitializeZone(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,26 +50,21 @@ EdgeNetworkLogging::InitializeZone(
 
 StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse>
 EdgeNetworkLogging::ListZones(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListZonesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::ListZonesRequest const& request) {
         return child_->ListZones(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Zone>
-EdgeNetworkLogging::GetZone(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::Zone> EdgeNetworkLogging::GetZone(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
         return child_->GetZone(context, options, request);
       },
@@ -81,13 +73,12 @@ EdgeNetworkLogging::GetZone(
 
 StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse>
 EdgeNetworkLogging::ListNetworks(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListNetworksRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::ListNetworksRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::ListNetworksRequest const& request) {
         return child_->ListNetworks(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,12 +86,10 @@ EdgeNetworkLogging::ListNetworks(
 
 StatusOr<google::cloud::edgenetwork::v1::Network>
 EdgeNetworkLogging::GetNetwork(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
         return child_->GetNetwork(context, options, request);
       },
@@ -109,13 +98,12 @@ EdgeNetworkLogging::GetNetwork(
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
 EdgeNetworkLogging::DiagnoseNetwork(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&
+                 request) {
         return child_->DiagnoseNetwork(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,31 +111,30 @@ EdgeNetworkLogging::DiagnoseNetwork(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncCreateNetwork(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
-        return child_->AsyncCreateNetwork(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+        return child_->AsyncCreateNetwork(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::CreateNetwork(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::CreateNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
         return child_->CreateNetwork(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -155,31 +142,30 @@ EdgeNetworkLogging::CreateNetwork(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncDeleteNetwork(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
-        return child_->AsyncDeleteNetwork(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+        return child_->AsyncDeleteNetwork(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::DeleteNetwork(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::DeleteNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
         return child_->DeleteNetwork(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -187,26 +173,22 @@ EdgeNetworkLogging::DeleteNetwork(
 
 StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse>
 EdgeNetworkLogging::ListSubnets(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::ListSubnetsRequest const& request) {
         return child_->ListSubnets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Subnet>
-EdgeNetworkLogging::GetSubnet(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::Subnet> EdgeNetworkLogging::GetSubnet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
         return child_->GetSubnet(context, options, request);
       },
@@ -215,31 +197,30 @@ EdgeNetworkLogging::GetSubnet(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncCreateSubnet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
-        return child_->AsyncCreateSubnet(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+        return child_->AsyncCreateSubnet(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::CreateSubnet(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::CreateSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
         return child_->CreateSubnet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -247,31 +228,30 @@ EdgeNetworkLogging::CreateSubnet(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncUpdateSubnet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
-        return child_->AsyncUpdateSubnet(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+        return child_->AsyncUpdateSubnet(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::UpdateSubnet(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::UpdateSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
         return child_->UpdateSubnet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -279,31 +259,30 @@ EdgeNetworkLogging::UpdateSubnet(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncDeleteSubnet(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
-        return child_->AsyncDeleteSubnet(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+        return child_->AsyncDeleteSubnet(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::DeleteSubnet(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::DeleteSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
         return child_->DeleteSubnet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -311,13 +290,12 @@ EdgeNetworkLogging::DeleteSubnet(
 
 StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
 EdgeNetworkLogging::ListInterconnects(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::ListInterconnectsRequest const&
+                 request) {
         return child_->ListInterconnects(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -325,13 +303,12 @@ EdgeNetworkLogging::ListInterconnects(
 
 StatusOr<google::cloud::edgenetwork::v1::Interconnect>
 EdgeNetworkLogging::GetInterconnect(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::GetInterconnectRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::GetInterconnectRequest const&
+                 request) {
         return child_->GetInterconnect(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -339,13 +316,13 @@ EdgeNetworkLogging::GetInterconnect(
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
 EdgeNetworkLogging::DiagnoseInterconnect(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
+                 request) {
         return child_->DiagnoseInterconnect(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -353,13 +330,13 @@ EdgeNetworkLogging::DiagnoseInterconnect(
 
 StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse>
 EdgeNetworkLogging::ListInterconnectAttachments(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::
+                 ListInterconnectAttachmentsRequest const& request) {
         return child_->ListInterconnectAttachments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -367,13 +344,13 @@ EdgeNetworkLogging::ListInterconnectAttachments(
 
 StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
 EdgeNetworkLogging::GetInterconnectAttachment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::
+                 GetInterconnectAttachmentRequest const& request) {
         return child_->GetInterconnectAttachment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -381,15 +358,17 @@ EdgeNetworkLogging::GetInterconnectAttachment(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncCreateInterconnectAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
+             google::cloud::edgenetwork::v1::
+                 CreateInterconnectAttachmentRequest const& request) {
         return child_->AsyncCreateInterconnectAttachment(
             cq, std::move(context), std::move(options), request);
       },
@@ -399,13 +378,13 @@ EdgeNetworkLogging::AsyncCreateInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkLogging::CreateInterconnectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::
+                 CreateInterconnectAttachmentRequest const& request) {
         return child_->CreateInterconnectAttachment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -413,15 +392,17 @@ EdgeNetworkLogging::CreateInterconnectAttachment(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncDeleteInterconnectAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
+             google::cloud::edgenetwork::v1::
+                 DeleteInterconnectAttachmentRequest const& request) {
         return child_->AsyncDeleteInterconnectAttachment(
             cq, std::move(context), std::move(options), request);
       },
@@ -431,13 +412,13 @@ EdgeNetworkLogging::AsyncDeleteInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkLogging::DeleteInterconnectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::
+                 DeleteInterconnectAttachmentRequest const& request) {
         return child_->DeleteInterconnectAttachment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -445,26 +426,22 @@ EdgeNetworkLogging::DeleteInterconnectAttachment(
 
 StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse>
 EdgeNetworkLogging::ListRouters(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::ListRoutersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::ListRoutersRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::ListRoutersRequest const& request) {
         return child_->ListRouters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Router>
-EdgeNetworkLogging::GetRouter(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::edgenetwork::v1::Router> EdgeNetworkLogging::GetRouter(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
         return child_->GetRouter(context, options, request);
       },
@@ -473,13 +450,12 @@ EdgeNetworkLogging::GetRouter(
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
 EdgeNetworkLogging::DiagnoseRouter(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgenetwork::v1::DiagnoseRouterRequest const&
+                 request) {
         return child_->DiagnoseRouter(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -487,31 +463,30 @@ EdgeNetworkLogging::DiagnoseRouter(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncCreateRouter(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
-        return child_->AsyncCreateRouter(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+        return child_->AsyncCreateRouter(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::CreateRouter(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::CreateRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
         return child_->CreateRouter(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -519,31 +494,30 @@ EdgeNetworkLogging::CreateRouter(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncUpdateRouter(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
-        return child_->AsyncUpdateRouter(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+        return child_->AsyncUpdateRouter(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::UpdateRouter(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::UpdateRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
         return child_->UpdateRouter(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -551,31 +525,30 @@ EdgeNetworkLogging::UpdateRouter(
 
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkLogging::AsyncDeleteRouter(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
-        return child_->AsyncDeleteRouter(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+        return child_->AsyncDeleteRouter(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::DeleteRouter(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::DeleteRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
         return child_->DeleteRouter(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -583,26 +556,21 @@ EdgeNetworkLogging::DeleteRouter(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 EdgeNetworkLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-EdgeNetworkLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> EdgeNetworkLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -611,54 +579,43 @@ EdgeNetworkLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EdgeNetworkLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> EdgeNetworkLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EdgeNetworkLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EdgeNetworkLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EdgeNetworkLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EdgeNetworkLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -676,8 +633,8 @@ EdgeNetworkLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -693,8 +650,8 @@ future<Status> EdgeNetworkLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

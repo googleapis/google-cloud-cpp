@@ -36,54 +36,68 @@ class MetastoreServiceTracingConnection
   ~MetastoreServiceTracingConnection() override = default;
 
   explicit MetastoreServiceTracingConnection(
-    std::shared_ptr<bigquery_biglake_v1::MetastoreServiceConnection> child);
+      std::shared_ptr<bigquery_biglake_v1::MetastoreServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  CreateCatalog(google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> CreateCatalog(
+      google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  DeleteCatalog(google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> DeleteCatalog(
+      google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
-  GetCatalog(google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Catalog> GetCatalog(
+      google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request)
+      override;
 
-  StreamRange<google::cloud::bigquery::biglake::v1::Catalog>
-  ListCatalogs(google::cloud::bigquery::biglake::v1::ListCatalogsRequest request) override;
+  StreamRange<google::cloud::bigquery::biglake::v1::Catalog> ListCatalogs(
+      google::cloud::bigquery::biglake::v1::ListCatalogsRequest request)
+      override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  CreateDatabase(google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> CreateDatabase(
+      google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
+          request) override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  DeleteDatabase(google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> DeleteDatabase(
+      google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
+          request) override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  UpdateDatabase(google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> UpdateDatabase(
+      google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
+          request) override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Database>
-  GetDatabase(google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Database> GetDatabase(
+      google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request)
+      override;
 
-  StreamRange<google::cloud::bigquery::biglake::v1::Database>
-  ListDatabases(google::cloud::bigquery::biglake::v1::ListDatabasesRequest request) override;
+  StreamRange<google::cloud::bigquery::biglake::v1::Database> ListDatabases(
+      google::cloud::bigquery::biglake::v1::ListDatabasesRequest request)
+      override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  CreateTable(google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> CreateTable(
+      google::cloud::bigquery::biglake::v1::CreateTableRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  DeleteTable(google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> DeleteTable(
+      google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  UpdateTable(google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> UpdateTable(
+      google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  RenameTable(google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> RenameTable(
+      google::cloud::bigquery::biglake::v1::RenameTableRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::biglake::v1::Table>
-  GetTable(google::cloud::bigquery::biglake::v1::GetTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::biglake::v1::Table> GetTable(
+      google::cloud::bigquery::biglake::v1::GetTableRequest const& request)
+      override;
 
-  StreamRange<google::cloud::bigquery::biglake::v1::Table>
-  ListTables(google::cloud::bigquery::biglake::v1::ListTablesRequest request) override;
+  StreamRange<google::cloud::bigquery::biglake::v1::Table> ListTables(
+      google::cloud::bigquery::biglake::v1::ListTablesRequest request) override;
 
  private:
   std::shared_ptr<bigquery_biglake_v1::MetastoreServiceConnection> child_;

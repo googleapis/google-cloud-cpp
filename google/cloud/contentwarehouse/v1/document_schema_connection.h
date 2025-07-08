@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_DOCUMENT_SCHEMA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_DOCUMENT_SCHEMA_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/document_schema_connection_idempotency_policy.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_schema_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -43,7 +43,8 @@ class DocumentSchemaServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `DocumentSchemaServiceConnection` based on counting errors.
+ * A retry policy for `DocumentSchemaServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +53,8 @@ class DocumentSchemaServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentSchemaServiceLimitedErrorCountRetryPolicy : public DocumentSchemaServiceRetryPolicy {
+class DocumentSchemaServiceLimitedErrorCountRetryPolicy
+    : public DocumentSchemaServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +63,18 @@ class DocumentSchemaServiceLimitedErrorCountRetryPolicy : public DocumentSchemaS
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit DocumentSchemaServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit DocumentSchemaServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   DocumentSchemaServiceLimitedErrorCountRetryPolicy(
       DocumentSchemaServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DocumentSchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DocumentSchemaServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   DocumentSchemaServiceLimitedErrorCountRetryPolicy(
       DocumentSchemaServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DocumentSchemaServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DocumentSchemaServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +94,9 @@ class DocumentSchemaServiceLimitedErrorCountRetryPolicy : public DocumentSchemaS
   using BaseType = DocumentSchemaServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<contentwarehouse_v1_internal::DocumentSchemaServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      contentwarehouse_v1_internal::DocumentSchemaServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +109,8 @@ class DocumentSchemaServiceLimitedErrorCountRetryPolicy : public DocumentSchemaS
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DocumentSchemaServiceLimitedTimeRetryPolicy : public DocumentSchemaServiceRetryPolicy {
+class DocumentSchemaServiceLimitedTimeRetryPolicy
+    : public DocumentSchemaServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +135,14 @@ class DocumentSchemaServiceLimitedTimeRetryPolicy : public DocumentSchemaService
   template <typename DurationRep, typename DurationPeriod>
   explicit DocumentSchemaServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DocumentSchemaServiceLimitedTimeRetryPolicy(DocumentSchemaServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DocumentSchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DocumentSchemaServiceLimitedTimeRetryPolicy(DocumentSchemaServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DocumentSchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentSchemaServiceLimitedTimeRetryPolicy(
+      DocumentSchemaServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DocumentSchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DocumentSchemaServiceLimitedTimeRetryPolicy(
+      DocumentSchemaServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DocumentSchemaServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +164,24 @@ class DocumentSchemaServiceLimitedTimeRetryPolicy : public DocumentSchemaService
   using BaseType = DocumentSchemaServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<contentwarehouse_v1_internal::DocumentSchemaServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      contentwarehouse_v1_internal::DocumentSchemaServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `DocumentSchemaServiceConnection` object for `DocumentSchemaServiceClient`.
+ * The `DocumentSchemaServiceConnection` object for
+ * `DocumentSchemaServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DocumentSchemaServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `DocumentSchemaServiceClient`.
+ * sets in `DocumentSchemaServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `DocumentSchemaServiceClient`.
  *
  * To create a concrete instance, see `MakeDocumentSchemaServiceConnection()`.
  *
- * For mocking, see `contentwarehouse_v1_mocks::MockDocumentSchemaServiceConnection`.
+ * For mocking, see
+ * `contentwarehouse_v1_mocks::MockDocumentSchemaServiceConnection`.
  */
 class DocumentSchemaServiceConnection {
  public:
@@ -176,33 +190,43 @@ class DocumentSchemaServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  CreateDocumentSchema(google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const& request);
+  CreateDocumentSchema(
+      google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
+          request);
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  UpdateDocumentSchema(google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const& request);
+  UpdateDocumentSchema(
+      google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
+          request);
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
-  GetDocumentSchema(google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const& request);
+  GetDocumentSchema(
+      google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
+          request);
 
-  virtual Status
-  DeleteDocumentSchema(google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const& request);
+  virtual Status DeleteDocumentSchema(
+      google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
+          request);
 
   virtual StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
-  ListDocumentSchemas(google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request);
+  ListDocumentSchemas(
+      google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `DocumentSchemaServiceConnection`.
+ * A factory function to construct an object of type
+ * `DocumentSchemaServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of DocumentSchemaServiceClient.
+ * should be passed as an argument to the constructor of
+ * DocumentSchemaServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DocumentSchemaServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `DocumentSchemaServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -212,11 +236,11 @@ class DocumentSchemaServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DocumentSchemaServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `DocumentSchemaServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<DocumentSchemaServiceConnection> MakeDocumentSchemaServiceConnection(
-    Options options = {});
+std::shared_ptr<DocumentSchemaServiceConnection>
+MakeDocumentSchemaServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1

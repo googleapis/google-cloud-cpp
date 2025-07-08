@@ -30,8 +30,10 @@ namespace cloud {
 namespace managedidentities_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use managedidentities_v1_mocks::MockManagedIdentitiesServiceConnection directly.
-using ::google::cloud::managedidentities_v1_mocks::MockManagedIdentitiesServiceConnection;
+/// @deprecated Use
+/// managedidentities_v1_mocks::MockManagedIdentitiesServiceConnection directly.
+using ::google::cloud::managedidentities_v1_mocks::
+    MockManagedIdentitiesServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_mocks

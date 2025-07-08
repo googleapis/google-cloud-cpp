@@ -30,17 +30,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ValidationHelperV1Stub::~ValidationHelperV1Stub() = default;
 
-StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
+StatusOr<google::cloud::binaryauthorization::v1::
+             ValidateAttestationOccurrenceResponse>
 DefaultValidationHelperV1Stub::ValidateAttestationOccurrence(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const& request) {
-    google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse response;
-    auto status =
-        grpc_stub_->ValidateAttestationOccurrence(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::
+        ValidateAttestationOccurrenceRequest const& request) {
+  google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse
+      response;
+  auto status =
+      grpc_stub_->ValidateAttestationOccurrence(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

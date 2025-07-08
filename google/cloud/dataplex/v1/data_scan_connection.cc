@@ -17,14 +17,14 @@
 // source: google/cloud/dataplex/v1/datascans.proto
 
 #include "google/cloud/dataplex/v1/data_scan_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dataplex/v1/data_scan_options.h"
 #include "google/cloud/dataplex/v1/internal/data_scan_connection_impl.h"
 #include "google/cloud/dataplex/v1/internal/data_scan_option_defaults.h"
 #include "google/cloud/dataplex/v1/internal/data_scan_stub_factory.h"
 #include "google/cloud/dataplex/v1/internal/data_scan_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,72 +42,69 @@ future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceConnection::CreateDataScan(
     google::cloud::dataplex::v1::CreateDataScanRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::DataScan>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::DataScan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnection::CreateDataScan(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::CreateDataScanRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateDataScanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceConnection::CreateDataScan(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::DataScan>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::DataScan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceConnection::UpdateDataScan(
     google::cloud::dataplex::v1::UpdateDataScanRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::DataScan>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::DataScan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnection::UpdateDataScan(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateDataScanRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateDataScanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceConnection::UpdateDataScan(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::DataScan>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::DataScan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataScanServiceConnection::DeleteDataScan(
     google::cloud::dataplex::v1::DeleteDataScanRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnection::DeleteDataScan(
-    NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteDataScanRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteDataScanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataScanServiceConnection::DeleteDataScan(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScan>
@@ -116,8 +113,10 @@ DataScanServiceConnection::GetDataScan(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataplex::v1::DataScan> DataScanServiceConnection::ListDataScans(
-    google::cloud::dataplex::v1::ListDataScansRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::DataScan>
+DataScanServiceConnection::ListDataScans(
+    google::cloud::dataplex::v1::
+        ListDataScansRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::DataScan>>();
 }
@@ -134,8 +133,10 @@ DataScanServiceConnection::GetDataScanJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataplex::v1::DataScanJob> DataScanServiceConnection::ListDataScanJobs(
-    google::cloud::dataplex::v1::ListDataScanJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataplex::v1::DataScanJob>
+DataScanServiceConnection::ListDataScanJobs(
+    google::cloud::dataplex::v1::
+        ListDataScanJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataplex::v1::DataScanJob>>();
 }
@@ -146,8 +147,10 @@ DataScanServiceConnection::GenerateDataQualityRules(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> DataScanServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+DataScanServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -158,14 +161,12 @@ DataScanServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-DataScanServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> DataScanServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-DataScanServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> DataScanServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -176,8 +177,10 @@ DataScanServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> DataScanServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+DataScanServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -188,14 +191,12 @@ DataScanServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataScanServiceConnection::DeleteOperation(
+Status DataScanServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataScanServiceConnection::CancelOperation(
+Status DataScanServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -203,17 +204,18 @@ DataScanServiceConnection::CancelOperation(
 std::shared_ptr<DataScanServiceConnection> MakeDataScanServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DataScanServicePolicyOptionList>(options, __func__);
-  options = dataplex_v1_internal::DataScanServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 DataScanServicePolicyOptionList>(options,
+                                                                  __func__);
+  options =
+      dataplex_v1_internal::DataScanServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataplex_v1_internal::CreateDefaultDataScanServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dataplex_v1_internal::MakeDataScanServiceTracingConnection(
       std::make_shared<dataplex_v1_internal::DataScanServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

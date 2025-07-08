@@ -34,24 +34,30 @@ PredictionServiceTracingConnection::PredictionServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
-PredictionServiceTracingConnection::Predict(google::cloud::retail::v2::PredictRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::PredictionServiceConnection::Predict");
+PredictionServiceTracingConnection::Predict(
+    google::cloud::retail::v2::PredictRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::PredictionServiceConnection::Predict");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Predict(request));
 }
 
 StreamRange<google::longrunning::Operation>
-PredictionServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("retail_v2::PredictionServiceConnection::ListOperations");
+PredictionServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::PredictionServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-PredictionServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("retail_v2::PredictionServiceConnection::GetOperation");
+PredictionServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::PredictionServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
@@ -63,7 +69,8 @@ MakePredictionServiceTracingConnection(
     std::shared_ptr<retail_v2::PredictionServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<PredictionServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<PredictionServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

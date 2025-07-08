@@ -26,10 +26,13 @@ namespace cloud {
 namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use billing_v1::MakeDefaultCloudBillingConnectionIdempotencyPolicy directly.
-using ::google::cloud::billing_v1::MakeDefaultCloudBillingConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// billing_v1::MakeDefaultCloudBillingConnectionIdempotencyPolicy directly.
+using ::google::cloud::billing_v1::
+    MakeDefaultCloudBillingConnectionIdempotencyPolicy;
 
-/// @deprecated Use billing_v1::CloudBillingConnectionIdempotencyPolicy directly.
+/// @deprecated Use billing_v1::CloudBillingConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::billing_v1::CloudBillingConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

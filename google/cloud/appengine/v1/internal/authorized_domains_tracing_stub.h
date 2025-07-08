@@ -36,16 +36,19 @@ class AuthorizedDomainsTracingStub : public AuthorizedDomainsStub {
  public:
   ~AuthorizedDomainsTracingStub() override = default;
 
-  explicit AuthorizedDomainsTracingStub(std::shared_ptr<AuthorizedDomainsStub> child);
+  explicit AuthorizedDomainsTracingStub(
+      std::shared_ptr<AuthorizedDomainsStub> child);
 
-  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse> ListAuthorizedDomains(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::ListAuthorizedDomainsRequest const& request) override;
+  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
+  ListAuthorizedDomains(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::ListAuthorizedDomainsRequest const& request)
+      override;
 
  private:
   std::shared_ptr<AuthorizedDomainsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

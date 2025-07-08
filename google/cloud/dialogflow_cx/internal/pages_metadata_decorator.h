@@ -34,64 +34,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PagesMetadata : public PagesStub {
  public:
   ~PagesMetadata() override = default;
-  PagesMetadata(
-      std::shared_ptr<PagesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  PagesMetadata(std::shared_ptr<PagesStub> child,
+                std::multimap<std::string, std::string> fixed_metadata,
+                std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> ListPages(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::ListPagesRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> GetPage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::GetPageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::GetPageRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> CreatePage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::CreatePageRequest const& request)
+      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request)
+      override;
 
-  Status DeletePage(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) override;
+  Status DeletePage(grpc::ClientContext& context, Options const& options,
+                    google::cloud::dialogflow::cx::v3::DeletePageRequest const&
+                        request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

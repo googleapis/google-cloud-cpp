@@ -38,7 +38,9 @@ class RegionZonesRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListRegionZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::region_zones::v1::
+          ListRegionZonesRequest const& request) = 0;
 };
 
 class DefaultRegionZonesRestStub : public RegionZonesRestStub {
@@ -46,13 +48,14 @@ class DefaultRegionZonesRestStub : public RegionZonesRestStub {
   ~DefaultRegionZonesRestStub() override = default;
 
   explicit DefaultRegionZonesRestStub(Options options);
-  DefaultRegionZonesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultRegionZonesRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                             Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListRegionZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::region_zones::v1::
+          ListRegionZonesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

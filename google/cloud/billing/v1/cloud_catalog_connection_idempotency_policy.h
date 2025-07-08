@@ -34,17 +34,18 @@ class CloudCatalogConnectionIdempotencyPolicy {
   virtual ~CloudCatalogConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListServices(google::cloud::billing::v1::ListServicesRequest request);
+  virtual google::cloud::Idempotency ListServices(
+      google::cloud::billing::v1::ListServicesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListSkus(google::cloud::billing::v1::ListSkusRequest request);
+  virtual google::cloud::Idempotency ListSkus(
+      google::cloud::billing::v1::ListSkusRequest request);
 };
 
 std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
-    MakeDefaultCloudCatalogConnectionIdempotencyPolicy();
+MakeDefaultCloudCatalogConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_v1

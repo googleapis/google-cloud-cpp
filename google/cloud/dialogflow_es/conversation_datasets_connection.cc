@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/conversation_dataset.proto
 
 #include "google/cloud/dialogflow_es/conversation_datasets_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/conversation_datasets_options.h"
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,8 +42,8 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
 ConversationDatasetsConnection::CreateConversationDataset(
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,15 +51,15 @@ ConversationDatasetsConnection::CreateConversationDataset(
     NoAwaitTag,
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
 ConversationDatasetsConnection::CreateConversationDataset(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
@@ -68,18 +68,22 @@ ConversationDatasetsConnection::GetConversationDataset(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dialogflow::v2::ConversationDataset> ConversationDatasetsConnection::ListConversationDatasets(
-    google::cloud::dialogflow::v2::ListConversationDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
+ConversationDatasetsConnection::ListConversationDatasets(
+    google::cloud::dialogflow::v2::
+        ListConversationDatasetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::ConversationDataset>>();
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
 ConversationDatasetsConnection::DeleteConversationDataset(
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::v2::
+                   DeleteConversationDatasetOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -87,23 +91,26 @@ ConversationDatasetsConnection::DeleteConversationDataset(
     NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
 ConversationDatasetsConnection::DeleteConversationDataset(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::v2::
+                   DeleteConversationDatasetOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+future<StatusOr<
+    google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
 ConversationDatasetsConnection::ImportConversationData(
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -111,19 +118,22 @@ ConversationDatasetsConnection::ImportConversationData(
     NoAwaitTag,
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+future<StatusOr<
+    google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
 ConversationDatasetsConnection::ImportConversationData(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> ConversationDatasetsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ConversationDatasetsConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -134,8 +144,10 @@ ConversationDatasetsConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> ConversationDatasetsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ConversationDatasetsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -146,30 +158,32 @@ ConversationDatasetsConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConversationDatasetsConnection::CancelOperation(
+Status ConversationDatasetsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ConversationDatasetsConnection> MakeConversationDatasetsConnection(
-    std::string const& location, Options options) {
+std::shared_ptr<ConversationDatasetsConnection>
+MakeConversationDatasetsConnection(std::string const& location,
+                                   Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ConversationDatasetsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ConversationDatasetsPolicyOptionList>(
+      options, __func__);
   options = dialogflow_es_internal::ConversationDatasetsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultConversationDatasetsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dialogflow_es_internal::MakeConversationDatasetsTracingConnection(
-      std::make_shared<dialogflow_es_internal::ConversationDatasetsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          dialogflow_es_internal::ConversationDatasetsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<ConversationDatasetsConnection> MakeConversationDatasetsConnection(
-    Options options) {
+std::shared_ptr<ConversationDatasetsConnection>
+MakeConversationDatasetsConnection(Options options) {
   return MakeConversationDatasetsConnection(std::string{}, std::move(options));
 }
 

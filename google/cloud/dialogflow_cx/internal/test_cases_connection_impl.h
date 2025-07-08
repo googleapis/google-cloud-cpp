@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_TEST_CASES_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_TEST_CASES_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_retry_traits.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_stub.h"
 #include "google/cloud/dialogflow_cx/test_cases_connection.h"
 #include "google/cloud/dialogflow_cx/test_cases_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/test_cases_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,100 +40,115 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TestCasesConnectionImpl
-    : public dialogflow_cx::TestCasesConnection {
+class TestCasesConnectionImpl : public dialogflow_cx::TestCasesConnection {
  public:
   ~TestCasesConnectionImpl() override = default;
 
   TestCasesConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_cx_internal::TestCasesStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dialogflow_cx_internal::TestCasesStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
-  ListTestCases(google::cloud::dialogflow::cx::v3::ListTestCasesRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::TestCase> ListTestCases(
+      google::cloud::dialogflow::cx::v3::ListTestCasesRequest request) override;
 
-  Status
-  BatchDeleteTestCases(google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const& request) override;
+  Status BatchDeleteTestCases(
+      google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
-  GetTestCase(google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
+      google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
-  CreateTestCase(google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
+      google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
-  UpdateTestCase(google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) override;
-
-  future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  RunTestCase(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
+      google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(
-      google::longrunning::Operation const& operation) override;
+  RunTestCase(google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&
+                  request) override;
 
-  future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-  BatchRunTestCases(google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RunTestCase(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  BatchRunTestCases(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request) override;
+  future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
+  RunTestCase(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
   BatchRunTestCases(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchRunTestCases(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
+  BatchRunTestCases(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
-  CalculateCoverage(google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const& request) override;
-
-  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-  ImportTestCases(google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ImportTestCases(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) override;
+  CalculateCoverage(
+      google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
   ImportTestCases(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-  ExportTestCases(google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportTestCases(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportTestCases(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) override;
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
+  ImportTestCases(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
   ExportTestCases(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportTestCases(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
+  ExportTestCases(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
-  ListTestCaseResults(google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request) override;
+  ListTestCaseResults(
+      google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
-  GetTestCaseResult(google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> GetTestCaseResult(
+      google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
+          request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

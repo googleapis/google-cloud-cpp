@@ -32,119 +32,109 @@ ServingConfigServiceStub::~ServingConfigServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::CreateServingConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::CreateServingConfigRequest const& request) {
-    google::cloud::retail::v2::ServingConfig response;
-    auto status =
-        grpc_stub_->CreateServingConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::CreateServingConfigRequest const& request) {
+  google::cloud::retail::v2::ServingConfig response;
+  auto status = grpc_stub_->CreateServingConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultServingConfigServiceStub::DeleteServingConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteServingConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultServingConfigServiceStub::DeleteServingConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteServingConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::UpdateServingConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
-    google::cloud::retail::v2::ServingConfig response;
-    auto status =
-        grpc_stub_->UpdateServingConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
+  google::cloud::retail::v2::ServingConfig response;
+  auto status = grpc_stub_->UpdateServingConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::GetServingConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::GetServingConfigRequest const& request) {
-    google::cloud::retail::v2::ServingConfig response;
-    auto status =
-        grpc_stub_->GetServingConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::GetServingConfigRequest const& request) {
+  google::cloud::retail::v2::ServingConfig response;
+  auto status = grpc_stub_->GetServingConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 DefaultServingConfigServiceStub::ListServingConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::ListServingConfigsRequest const& request) {
-    google::cloud::retail::v2::ListServingConfigsResponse response;
-    auto status =
-        grpc_stub_->ListServingConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::ListServingConfigsRequest const& request) {
+  google::cloud::retail::v2::ListServingConfigsResponse response;
+  auto status = grpc_stub_->ListServingConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::AddControl(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::AddControlRequest const& request) {
-    google::cloud::retail::v2::ServingConfig response;
-    auto status =
-        grpc_stub_->AddControl(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::AddControlRequest const& request) {
+  google::cloud::retail::v2::ServingConfig response;
+  auto status = grpc_stub_->AddControl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::RemoveControl(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::RemoveControlRequest const& request) {
-    google::cloud::retail::v2::ServingConfig response;
-    auto status =
-        grpc_stub_->RemoveControl(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::RemoveControlRequest const& request) {
+  google::cloud::retail::v2::ServingConfig response;
+  auto status = grpc_stub_->RemoveControl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultServingConfigServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultServingConfigServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

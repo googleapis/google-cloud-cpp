@@ -28,97 +28,89 @@ namespace cloud {
 namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PolicyTagManagerSerializationStub::~PolicyTagManagerSerializationStub() = default;
+PolicyTagManagerSerializationStub::~PolicyTagManagerSerializationStub() =
+    default;
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 DefaultPolicyTagManagerSerializationStub::ReplaceTaxonomy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
-    google::cloud::datacatalog::v1::Taxonomy response;
-    auto status =
-        grpc_stub_->ReplaceTaxonomy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
+  google::cloud::datacatalog::v1::Taxonomy response;
+  auto status = grpc_stub_->ReplaceTaxonomy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 DefaultPolicyTagManagerSerializationStub::ImportTaxonomies(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
-    google::cloud::datacatalog::v1::ImportTaxonomiesResponse response;
-    auto status =
-        grpc_stub_->ImportTaxonomies(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
+  google::cloud::datacatalog::v1::ImportTaxonomiesResponse response;
+  auto status = grpc_stub_->ImportTaxonomies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 DefaultPolicyTagManagerSerializationStub::ExportTaxonomies(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
-    google::cloud::datacatalog::v1::ExportTaxonomiesResponse response;
-    auto status =
-        grpc_stub_->ExportTaxonomies(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
+  google::cloud::datacatalog::v1::ExportTaxonomiesResponse response;
+  auto status = grpc_stub_->ExportTaxonomies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultPolicyTagManagerSerializationStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultPolicyTagManagerSerializationStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultPolicyTagManagerSerializationStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultPolicyTagManagerSerializationStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultPolicyTagManagerSerializationStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultPolicyTagManagerSerializationStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

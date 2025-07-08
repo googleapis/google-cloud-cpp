@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BATCH_V1_BATCH_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BATCH_V1_BATCH_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/batch/v1/batch_connection.h"
 #include "google/cloud/batch/v1/batch_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct BatchServicePollingPolicyOption {
  * @ingroup google-cloud-batch-options
  */
 using BatchServicePolicyOptionList =
-    OptionList<BatchServiceRetryPolicyOption,
-               BatchServiceBackoffPolicyOption,
+    OptionList<BatchServiceRetryPolicyOption, BatchServiceBackoffPolicyOption,
                BatchServicePollingPolicyOption,
                BatchServiceConnectionIdempotencyPolicyOption>;
 

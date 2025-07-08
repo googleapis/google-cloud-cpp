@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_OPERATIONS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_OPERATIONS_CLIENT_H
 
+#include "google/cloud/sql/v1/sql_operations_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/sql/v1/sql_operations_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,23 +61,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlOperationsServiceClient {
  public:
-  explicit SqlOperationsServiceClient(std::shared_ptr<SqlOperationsServiceConnection> connection, Options opts = {});
+  explicit SqlOperationsServiceClient(
+      std::shared_ptr<SqlOperationsServiceConnection> connection,
+      Options opts = {});
   ~SqlOperationsServiceClient();
 
   ///@{
   /// @name Copy and move support
   SqlOperationsServiceClient(SqlOperationsServiceClient const&) = default;
-  SqlOperationsServiceClient& operator=(SqlOperationsServiceClient const&) = default;
+  SqlOperationsServiceClient& operator=(SqlOperationsServiceClient const&) =
+      default;
   SqlOperationsServiceClient(SqlOperationsServiceClient&&) = default;
   SqlOperationsServiceClient& operator=(SqlOperationsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlOperationsServiceClient const& a, SqlOperationsServiceClient const& b) {
+  friend bool operator==(SqlOperationsServiceClient const& a,
+                         SqlOperationsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlOperationsServiceClient const& a, SqlOperationsServiceClient const& b) {
+  friend bool operator!=(SqlOperationsServiceClient const& a,
+                         SqlOperationsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +114,9 @@ class SqlOperationsServiceClient {
   /// [google.cloud.sql.v1.SqlOperationsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L63}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::Operation>
-  Get(google::cloud::sql::v1::SqlOperationsGetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::sql::v1::Operation> Get(
+      google::cloud::sql::v1::SqlOperationsGetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -149,8 +155,9 @@ class SqlOperationsServiceClient {
   /// [google.cloud.sql.v1.SqlOperationsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L72}
   ///
   // clang-format on
-  StreamRange<google::cloud::sql::v1::Operation>
-  List(google::cloud::sql::v1::SqlOperationsListRequest request, Options opts = {});
+  StreamRange<google::cloud::sql::v1::Operation> List(
+      google::cloud::sql::v1::SqlOperationsListRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +183,9 @@ class SqlOperationsServiceClient {
   /// [google.cloud.sql.v1.SqlOperationsCancelRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L101}
   ///
   // clang-format on
-  Status
-  Cancel(google::cloud::sql::v1::SqlOperationsCancelRequest const& request, Options opts = {});
+  Status Cancel(
+      google::cloud::sql::v1::SqlOperationsCancelRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SqlOperationsServiceConnection> connection_;

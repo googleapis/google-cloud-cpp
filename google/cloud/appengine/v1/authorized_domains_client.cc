@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AuthorizedDomainsClient::AuthorizedDomainsClient(
     std::shared_ptr<AuthorizedDomainsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AuthorizedDomainsClient::~AuthorizedDomainsClient() = default;
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
-AuthorizedDomainsClient::ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request, Options opts) {
+AuthorizedDomainsClient::ListAuthorizedDomains(
+    google::appengine::v1::ListAuthorizedDomainsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAuthorizedDomains(std::move(request));
 }

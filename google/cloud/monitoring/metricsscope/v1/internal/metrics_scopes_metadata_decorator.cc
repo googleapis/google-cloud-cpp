@@ -46,18 +46,20 @@ MetricsScopesMetadata::MetricsScopesMetadata(
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesMetadata::GetMetricsScope(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetMetricsScope(context, options, request);
 }
 
-StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse>
+StatusOr<google::monitoring::metricsscope::v1::
+             ListMetricsScopesByMonitoredProjectResponse>
 MetricsScopesMetadata::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::metricsscope::v1::
+        ListMetricsScopesByMonitoredProjectRequest const& request) {
   SetMetadata(context, options);
   return child_->ListMetricsScopesByMonitoredProject(context, options, request);
 }
@@ -67,18 +69,21 @@ MetricsScopesMetadata::AsyncCreateMonitoredProject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateMonitoredProject(
-      cq, std::move(context), std::move(options), request);
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMonitoredProject(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesMetadata::CreateMonitoredProject(
-    grpc::ClientContext& context,
-    Options options,
-    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateMonitoredProject(context, options, request);
 }
 
@@ -87,18 +92,21 @@ MetricsScopesMetadata::AsyncDeleteMonitoredProject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteMonitoredProject(
-      cq, std::move(context), std::move(options), request);
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteMonitoredProject(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesMetadata::DeleteMonitoredProject(
-    grpc::ClientContext& context,
-    Options options,
-    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteMonitoredProject(context, options, request);
 }
 
@@ -110,8 +118,8 @@ MetricsScopesMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> MetricsScopesMetadata::AsyncCancelOperation(
@@ -121,8 +129,8 @@ future<Status> MetricsScopesMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context,
@@ -134,8 +142,8 @@ void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context,
 
 void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

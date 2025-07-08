@@ -36,57 +36,61 @@ class SchemaServiceTracingConnection
   ~SchemaServiceTracingConnection() override = default;
 
   explicit SchemaServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::SchemaServiceConnection> child);
+      std::shared_ptr<discoveryengine_v1::SchemaServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::discoveryengine::v1::Schema>
-  GetSchema(google::cloud::discoveryengine::v1::GetSchemaRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Schema> GetSchema(
+      google::cloud::discoveryengine::v1::GetSchemaRequest const& request)
+      override;
 
-  StreamRange<google::cloud::discoveryengine::v1::Schema>
-  ListSchemas(google::cloud::discoveryengine::v1::ListSchemasRequest request) override;
+  StreamRange<google::cloud::discoveryengine::v1::Schema> ListSchemas(
+      google::cloud::discoveryengine::v1::ListSchemasRequest request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  CreateSchema(google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateSchema(NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  CreateSchema(
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  UpdateSchema(google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateSchema(NoAwaitTag,
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  UpdateSchema(
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) override;
+  DeleteSchema(google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
+                   request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteSchema(NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(
-      google::longrunning::Operation const& operation) override;
+  DeleteSchema(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::SchemaServiceConnection> child_;

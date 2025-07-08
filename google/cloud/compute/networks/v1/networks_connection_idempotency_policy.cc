@@ -26,59 +26,74 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NetworksConnectionIdempotencyPolicy::~NetworksConnectionIdempotencyPolicy() = default;
+NetworksConnectionIdempotencyPolicy::~NetworksConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<NetworksConnectionIdempotencyPolicy>
 NetworksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<NetworksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::AddPeering(google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::AddPeering(
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::DeleteNetwork(google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::DeleteNetwork(
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::GetNetwork(google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::GetNetwork(
+    google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::GetEffectiveFirewalls(google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::GetEffectiveFirewalls(
+    google::cloud::cpp::compute::networks::v1::
+        GetEffectiveFirewallsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::InsertNetwork(google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::InsertNetwork(
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::ListNetworks(google::cloud::cpp::compute::networks::v1::ListNetworksRequest) {  // NOLINT
+Idempotency NetworksConnectionIdempotencyPolicy::ListNetworks(
+    google::cloud::cpp::compute::networks::v1::ListNetworksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::ListPeeringRoutes(google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest) {  // NOLINT
+Idempotency NetworksConnectionIdempotencyPolicy::ListPeeringRoutes(
+    google::cloud::cpp::compute::networks::v1::
+        ListPeeringRoutesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::PatchNetwork(google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::PatchNetwork(
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::RemovePeering(google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::RemovePeering(
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::SwitchToCustomMode(
+    google::cloud::cpp::compute::networks::v1::
+        SwitchToCustomModeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NetworksConnectionIdempotencyPolicy::UpdatePeering(google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&) {
+Idempotency NetworksConnectionIdempotencyPolicy::UpdatePeering(
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<NetworksConnectionIdempotencyPolicy>
-    MakeDefaultNetworksConnectionIdempotencyPolicy() {
+MakeDefaultNetworksConnectionIdempotencyPolicy() {
   return std::make_unique<NetworksConnectionIdempotencyPolicy>();
 }
 

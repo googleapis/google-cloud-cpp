@@ -17,10 +17,10 @@
 // source: google/cloud/pubsublite/v1/admin.proto
 
 #include "google/cloud/pubsublite/internal/admin_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/pubsublite/admin_connection.h"
 #include "google/cloud/pubsublite/admin_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AdminServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ADMIN_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ADMIN_SERVICE_AUTHORITY",
-      "pubsublite.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_ADMIN_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ADMIN_SERVICE_AUTHORITY", "pubsublite.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<pubsublite::AdminServiceRetryPolicyOption>()) {
     options.set<pubsublite::AdminServiceRetryPolicyOption>(
-        pubsublite::AdminServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        pubsublite::AdminServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<pubsublite::AdminServiceBackoffPolicyOption>()) {
     options.set<pubsublite::AdminServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<pubsublite::AdminServicePollingPolicyOption>()) {
     options.set<pubsublite::AdminServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            pubsublite::AdminServiceRetryPolicyOption::Type,
-            pubsublite::AdminServiceBackoffPolicyOption::Type>(
+        GenericPollingPolicy<pubsublite::AdminServiceRetryPolicyOption::Type,
+                             pubsublite::AdminServiceBackoffPolicyOption::Type>(
             options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()) {
     options.set<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>(
         pubsublite::MakeDefaultAdminServiceConnectionIdempotencyPolicy());
   }

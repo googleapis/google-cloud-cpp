@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TextToSpeechClient::TextToSpeechClient(
     std::shared_ptr<TextToSpeechConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TextToSpeechClient::~TextToSpeechClient() = default;
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
@@ -41,13 +41,19 @@ TextToSpeechClient::ListVoices(std::string const& language_code, Options opts) {
 }
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
-TextToSpeechClient::ListVoices(google::cloud::texttospeech::v1::ListVoicesRequest const& request, Options opts) {
+TextToSpeechClient::ListVoices(
+    google::cloud::texttospeech::v1::ListVoicesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVoices(request);
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
-TextToSpeechClient::SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesisInput const& input, google::cloud::texttospeech::v1::VoiceSelectionParams const& voice, google::cloud::texttospeech::v1::AudioConfig const& audio_config, Options opts) {
+TextToSpeechClient::SynthesizeSpeech(
+    google::cloud::texttospeech::v1::SynthesisInput const& input,
+    google::cloud::texttospeech::v1::VoiceSelectionParams const& voice,
+    google::cloud::texttospeech::v1::AudioConfig const& audio_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::texttospeech::v1::SynthesizeSpeechRequest request;
   *request.mutable_input() = input;
@@ -57,7 +63,9 @@ TextToSpeechClient::SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesisI
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
-TextToSpeechClient::SynthesizeSpeech(google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request, Options opts) {
+TextToSpeechClient::SynthesizeSpeech(
+    google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SynthesizeSpeech(request);
 }
@@ -66,13 +74,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
     google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
 TextToSpeechClient::AsyncStreamingSynthesize(Options opts) {
-  internal::OptionsSpan span(
-      internal::MergeOptions(std::move(opts), options_));
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncStreamingSynthesize();
 }
 
-StreamRange<google::longrunning::Operation>
-TextToSpeechClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> TextToSpeechClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -80,22 +87,22 @@ TextToSpeechClient::ListOperations(std::string const& name, std::string const& f
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-TextToSpeechClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> TextToSpeechClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-TextToSpeechClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> TextToSpeechClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TextToSpeechClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TextToSpeechClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

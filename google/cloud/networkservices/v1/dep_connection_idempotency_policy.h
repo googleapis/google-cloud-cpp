@@ -39,81 +39,94 @@ class DepServiceConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DepServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListLbTrafficExtensions(google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest request);
+  virtual google::cloud::Idempotency ListLbTrafficExtensions(
+      google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  GetLbTrafficExtension(google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const& request);
+  virtual google::cloud::Idempotency GetLbTrafficExtension(
+      google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateLbTrafficExtension(google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request);
+  virtual google::cloud::Idempotency CreateLbTrafficExtension(
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateLbTrafficExtension(google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request);
+  virtual google::cloud::Idempotency UpdateLbTrafficExtension(
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteLbTrafficExtension(google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request);
+  virtual google::cloud::Idempotency DeleteLbTrafficExtension(
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLbRouteExtensions(google::cloud::networkservices::v1::ListLbRouteExtensionsRequest request);
+  virtual google::cloud::Idempotency ListLbRouteExtensions(
+      google::cloud::networkservices::v1::ListLbRouteExtensionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLbRouteExtension(google::cloud::networkservices::v1::GetLbRouteExtensionRequest const& request);
+  virtual google::cloud::Idempotency GetLbRouteExtension(
+      google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateLbRouteExtension(google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request);
+  virtual google::cloud::Idempotency CreateLbRouteExtension(
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateLbRouteExtension(google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request);
+  virtual google::cloud::Idempotency UpdateLbRouteExtension(
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteLbRouteExtension(google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request);
+  virtual google::cloud::Idempotency DeleteLbRouteExtension(
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListAuthzExtensions(google::cloud::networkservices::v1::ListAuthzExtensionsRequest request);
+  virtual google::cloud::Idempotency ListAuthzExtensions(
+      google::cloud::networkservices::v1::ListAuthzExtensionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetAuthzExtension(google::cloud::networkservices::v1::GetAuthzExtensionRequest const& request);
+  virtual google::cloud::Idempotency GetAuthzExtension(
+      google::cloud::networkservices::v1::GetAuthzExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateAuthzExtension(google::cloud::networkservices::v1::CreateAuthzExtensionRequest const& request);
+  virtual google::cloud::Idempotency CreateAuthzExtension(
+      google::cloud::networkservices::v1::CreateAuthzExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateAuthzExtension(google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const& request);
+  virtual google::cloud::Idempotency UpdateAuthzExtension(
+      google::cloud::networkservices::v1::UpdateAuthzExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteAuthzExtension(google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const& request);
+  virtual google::cloud::Idempotency DeleteAuthzExtension(
+      google::cloud::networkservices::v1::DeleteAuthzExtensionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DepServiceConnectionIdempotencyPolicy>
-    MakeDefaultDepServiceConnectionIdempotencyPolicy();
+MakeDefaultDepServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkservices_v1

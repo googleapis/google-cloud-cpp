@@ -29,132 +29,187 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-ConversationalSearchServiceTracingConnection::ConversationalSearchServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection> child)
+ConversationalSearchServiceTracingConnection::
+    ConversationalSearchServiceTracingConnection(
+        std::shared_ptr<
+            discoveryengine_v1::ConversationalSearchServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
-ConversationalSearchServiceTracingConnection::ConverseConversation(google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::ConverseConversation");
+ConversationalSearchServiceTracingConnection::ConverseConversation(
+    google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "ConverseConversation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ConverseConversation(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceTracingConnection::CreateConversation(google::cloud::discoveryengine::v1::CreateConversationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::CreateConversation");
+ConversationalSearchServiceTracingConnection::CreateConversation(
+    google::cloud::discoveryengine::v1::CreateConversationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "CreateConversation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateConversation(request));
 }
 
-Status
-ConversationalSearchServiceTracingConnection::DeleteConversation(google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::DeleteConversation");
+Status ConversationalSearchServiceTracingConnection::DeleteConversation(
+    google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "DeleteConversation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteConversation(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceTracingConnection::UpdateConversation(google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::UpdateConversation");
+ConversationalSearchServiceTracingConnection::UpdateConversation(
+    google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "UpdateConversation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateConversation(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceTracingConnection::GetConversation(google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::GetConversation");
+ConversationalSearchServiceTracingConnection::GetConversation(
+    google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "GetConversation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConversation(request));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Conversation>
-ConversationalSearchServiceTracingConnection::ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::ListConversations");
+ConversationalSearchServiceTracingConnection::ListConversations(
+    google::cloud::discoveryengine::v1::ListConversationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "ListConversations");
   internal::OTelScope scope(span);
   auto sr = child_->ListConversations(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::Conversation>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::Conversation>(std::move(span),
+                                                        std::move(sr));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-ConversationalSearchServiceTracingConnection::AnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::AnswerQuery");
+ConversationalSearchServiceTracingConnection::AnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::AnswerQuery");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnswerQuery(request));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
-ConversationalSearchServiceTracingConnection::StreamAnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::StreamAnswerQuery");
+ConversationalSearchServiceTracingConnection::StreamAnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "StreamAnswerQuery");
   internal::OTelScope scope(span);
   auto sr = child_->StreamAnswerQuery(request);
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>(std::move(span),
+                                                               std::move(sr));
 }
 StatusOr<google::cloud::discoveryengine::v1::Answer>
-ConversationalSearchServiceTracingConnection::GetAnswer(google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::GetAnswer");
+ConversationalSearchServiceTracingConnection::GetAnswer(
+    google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::GetAnswer");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAnswer(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceTracingConnection::CreateSession(google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::CreateSession");
+ConversationalSearchServiceTracingConnection::CreateSession(
+    google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "CreateSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSession(request));
 }
 
-Status
-ConversationalSearchServiceTracingConnection::DeleteSession(google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::DeleteSession");
+Status ConversationalSearchServiceTracingConnection::DeleteSession(
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "DeleteSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSession(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceTracingConnection::UpdateSession(google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::UpdateSession");
+ConversationalSearchServiceTracingConnection::UpdateSession(
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "UpdateSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSession(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceTracingConnection::GetSession(google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::GetSession");
+ConversationalSearchServiceTracingConnection::GetSession(
+    google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::GetSession");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSession(request));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Session>
-ConversationalSearchServiceTracingConnection::ListSessions(google::cloud::discoveryengine::v1::ListSessionsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::ListSessions");
+ConversationalSearchServiceTracingConnection::ListSessions(
+    google::cloud::discoveryengine::v1::ListSessionsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "ListSessions");
   internal::OTelScope scope(span);
   auto sr = child_->ListSessions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::Session>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::Session>(std::move(span),
+                                                   std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-ConversationalSearchServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::ListOperations");
+ConversationalSearchServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ConversationalSearchServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::GetOperation");
+ConversationalSearchServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ConversationalSearchServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::ConversationalSearchServiceConnection::CancelOperation");
+Status ConversationalSearchServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -163,10 +218,12 @@ ConversationalSearchServiceTracingConnection::CancelOperation(google::longrunnin
 
 std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection>
 MakeConversationalSearchServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection> conn) {
+    std::shared_ptr<discoveryengine_v1::ConversationalSearchServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ConversationalSearchServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<ConversationalSearchServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

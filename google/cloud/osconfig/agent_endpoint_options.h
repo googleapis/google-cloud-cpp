@@ -28,17 +28,26 @@ namespace cloud {
 namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption directly.
-using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption;
+/// @deprecated Use
+/// osconfig_agentendpoint_v1::AgentEndpointServiceBackoffPolicyOption directly.
+using ::google::cloud::osconfig_agentendpoint_v1::
+    AgentEndpointServiceBackoffPolicyOption;
 
-/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::osconfig_agentendpoint_v1::
+    AgentEndpointServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServicePolicyOptionList directly.
-using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServicePolicyOptionList;
+/// @deprecated Use
+/// osconfig_agentendpoint_v1::AgentEndpointServicePolicyOptionList directly.
+using ::google::cloud::osconfig_agentendpoint_v1::
+    AgentEndpointServicePolicyOptionList;
 
-/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption directly.
-using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption;
+/// @deprecated Use
+/// osconfig_agentendpoint_v1::AgentEndpointServiceRetryPolicyOption directly.
+using ::google::cloud::osconfig_agentendpoint_v1::
+    AgentEndpointServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig

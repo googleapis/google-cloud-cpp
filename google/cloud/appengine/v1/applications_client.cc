@@ -28,74 +28,86 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApplicationsClient::ApplicationsClient(
     std::shared_ptr<ApplicationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ApplicationsClient::~ApplicationsClient() = default;
 
-StatusOr<google::appengine::v1::Application>
-ApplicationsClient::GetApplication(std::string const& name, Options opts) {
+StatusOr<google::appengine::v1::Application> ApplicationsClient::GetApplication(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::appengine::v1::GetApplicationRequest request;
   request.set_name(name);
   return connection_->GetApplication(request);
 }
 
-StatusOr<google::appengine::v1::Application>
-ApplicationsClient::GetApplication(google::appengine::v1::GetApplicationRequest const& request, Options opts) {
+StatusOr<google::appengine::v1::Application> ApplicationsClient::GetApplication(
+    google::appengine::v1::GetApplicationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetApplication(request);
 }
 
 future<StatusOr<google::appengine::v1::Application>>
-ApplicationsClient::CreateApplication(google::appengine::v1::CreateApplicationRequest const& request, Options opts) {
+ApplicationsClient::CreateApplication(
+    google::appengine::v1::CreateApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateApplication(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApplicationsClient::CreateApplication(NoAwaitTag, google::appengine::v1::CreateApplicationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ApplicationsClient::CreateApplication(
+    NoAwaitTag, google::appengine::v1::CreateApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::Application>>
-ApplicationsClient::CreateApplication(google::longrunning::Operation const& operation, Options opts) {
+ApplicationsClient::CreateApplication(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateApplication(operation);
 }
 
 future<StatusOr<google::appengine::v1::Application>>
-ApplicationsClient::UpdateApplication(google::appengine::v1::UpdateApplicationRequest const& request, Options opts) {
+ApplicationsClient::UpdateApplication(
+    google::appengine::v1::UpdateApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateApplication(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApplicationsClient::UpdateApplication(NoAwaitTag, google::appengine::v1::UpdateApplicationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ApplicationsClient::UpdateApplication(
+    NoAwaitTag, google::appengine::v1::UpdateApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::Application>>
-ApplicationsClient::UpdateApplication(google::longrunning::Operation const& operation, Options opts) {
+ApplicationsClient::UpdateApplication(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateApplication(operation);
 }
 
 future<StatusOr<google::appengine::v1::Application>>
-ApplicationsClient::RepairApplication(google::appengine::v1::RepairApplicationRequest const& request, Options opts) {
+ApplicationsClient::RepairApplication(
+    google::appengine::v1::RepairApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RepairApplication(request);
 }
 
-StatusOr<google::longrunning::Operation>
-ApplicationsClient::RepairApplication(NoAwaitTag, google::appengine::v1::RepairApplicationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> ApplicationsClient::RepairApplication(
+    NoAwaitTag, google::appengine::v1::RepairApplicationRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RepairApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::Application>>
-ApplicationsClient::RepairApplication(google::longrunning::Operation const& operation, Options opts) {
+ApplicationsClient::RepairApplication(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RepairApplication(operation);
 }

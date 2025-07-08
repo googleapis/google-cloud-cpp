@@ -34,421 +34,468 @@ AMLTracingConnection::AMLTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::financialservices::v1::Instance>
-AMLTracingConnection::ListInstances(google::cloud::financialservices::v1::ListInstancesRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListInstances");
+AMLTracingConnection::ListInstances(
+    google::cloud::financialservices::v1::ListInstancesRequest request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::ListInstances");
   internal::OTelScope scope(span);
   auto sr = child_->ListInstances(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::financialservices::v1::Instance>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::financialservices::v1::Instance>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::financialservices::v1::Instance>
-AMLTracingConnection::GetInstance(google::cloud::financialservices::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetInstance");
+AMLTracingConnection::GetInstance(
+    google::cloud::financialservices::v1::GetInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLTracingConnection::CreateInstance(google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateInstance");
+AMLTracingConnection::CreateInstance(
+    google::cloud::financialservices::v1::CreateInstanceRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::CreateInstance(
-    NoAwaitTag, google::cloud::financialservices::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateInstance");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::CreateInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateInstanceRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
 AMLTracingConnection::CreateInstance(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateInstance");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateInstance(operation));
+  return internal::EndSpan(std::move(span), child_->CreateInstance(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
-AMLTracingConnection::UpdateInstance(google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateInstance");
+AMLTracingConnection::UpdateInstance(
+    google::cloud::financialservices::v1::UpdateInstanceRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::UpdateInstance(
-    NoAwaitTag, google::cloud::financialservices::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateInstance");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::UpdateInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateInstanceRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Instance>>
 AMLTracingConnection::UpdateInstance(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateInstance");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->UpdateInstance(operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLTracingConnection::DeleteInstance(google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteInstance");
+AMLTracingConnection::DeleteInstance(
+    google::cloud::financialservices::v1::DeleteInstanceRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::DeleteInstance(
-    NoAwaitTag, google::cloud::financialservices::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteInstance");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::DeleteInstance(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteInstanceRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteInstance(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLTracingConnection::DeleteInstance(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteInstance");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteInstance(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(operation));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
-AMLTracingConnection::ImportRegisteredParties(google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+AMLTracingConnection::ImportRegisteredParties(
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ImportRegisteredParties");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ImportRegisteredParties(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ImportRegisteredParties(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::ImportRegisteredParties(
-    NoAwaitTag, google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ImportRegisteredPartiesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ImportRegisteredParties");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ImportRegisteredParties(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ImportRegisteredParties(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
+future<StatusOr<
+    google::cloud::financialservices::v1::ImportRegisteredPartiesResponse>>
 AMLTracingConnection::ImportRegisteredParties(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ImportRegisteredParties");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ImportRegisteredParties(operation));
+                           child_->ImportRegisteredParties(operation));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
-AMLTracingConnection::ExportRegisteredParties(google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+AMLTracingConnection::ExportRegisteredParties(
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportRegisteredParties");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportRegisteredParties(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportRegisteredParties(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::ExportRegisteredParties(
-    NoAwaitTag, google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportRegisteredPartiesRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportRegisteredParties");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportRegisteredParties(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ExportRegisteredParties(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportRegisteredPartiesResponse>>
 AMLTracingConnection::ExportRegisteredParties(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportRegisteredParties");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ExportRegisteredParties(operation));
+                           child_->ExportRegisteredParties(operation));
 }
 
 StreamRange<google::cloud::financialservices::v1::Dataset>
-AMLTracingConnection::ListDatasets(google::cloud::financialservices::v1::ListDatasetsRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListDatasets");
+AMLTracingConnection::ListDatasets(
+    google::cloud::financialservices::v1::ListDatasetsRequest request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::ListDatasets");
   internal::OTelScope scope(span);
   auto sr = child_->ListDatasets(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::financialservices::v1::Dataset>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::financialservices::v1::Dataset>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::financialservices::v1::Dataset>
-AMLTracingConnection::GetDataset(google::cloud::financialservices::v1::GetDatasetRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetDataset");
+AMLTracingConnection::GetDataset(
+    google::cloud::financialservices::v1::GetDatasetRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::GetDataset");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataset(request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLTracingConnection::CreateDataset(google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateDataset");
+AMLTracingConnection::CreateDataset(
+    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateDataset");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateDataset(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::CreateDataset(
-    NoAwaitTag, google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateDataset");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::CreateDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateDatasetRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateDataset");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateDataset(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateDataset(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
 AMLTracingConnection::CreateDataset(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateDataset");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateDataset");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateDataset(operation));
+  return internal::EndSpan(std::move(span), child_->CreateDataset(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
-AMLTracingConnection::UpdateDataset(google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateDataset");
+AMLTracingConnection::UpdateDataset(
+    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateDataset");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateDataset(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::UpdateDataset(
-    NoAwaitTag, google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateDataset");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::UpdateDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateDatasetRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateDataset");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateDataset(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateDataset(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Dataset>>
 AMLTracingConnection::UpdateDataset(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateDataset");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateDataset");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->UpdateDataset(operation));
+  return internal::EndSpan(std::move(span), child_->UpdateDataset(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLTracingConnection::DeleteDataset(google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteDataset");
+AMLTracingConnection::DeleteDataset(
+    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteDataset");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteDataset(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::DeleteDataset(
-    NoAwaitTag, google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteDataset");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::DeleteDataset(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteDatasetRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteDataset");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteDataset(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDataset(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLTracingConnection::DeleteDataset(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteDataset");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteDataset");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteDataset(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteDataset(operation));
 }
 
 StreamRange<google::cloud::financialservices::v1::Model>
-AMLTracingConnection::ListModels(google::cloud::financialservices::v1::ListModelsRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListModels");
+AMLTracingConnection::ListModels(
+    google::cloud::financialservices::v1::ListModelsRequest request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::ListModels");
   internal::OTelScope scope(span);
   auto sr = child_->ListModels(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::financialservices::v1::Model>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::financialservices::v1::Model>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::financialservices::v1::Model>
-AMLTracingConnection::GetModel(google::cloud::financialservices::v1::GetModelRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetModel");
+AMLTracingConnection::GetModel(
+    google::cloud::financialservices::v1::GetModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::GetModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetModel(request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLTracingConnection::CreateModel(google::cloud::financialservices::v1::CreateModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateModel");
+AMLTracingConnection::CreateModel(
+    google::cloud::financialservices::v1::CreateModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateModel(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::CreateModel(
-    NoAwaitTag, google::cloud::financialservices::v1::CreateModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateModel");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::CreateModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateModel(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateModel(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
 AMLTracingConnection::CreateModel(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::CreateModel");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::CreateModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateModel(operation));
+  return internal::EndSpan(std::move(span), child_->CreateModel(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
-AMLTracingConnection::UpdateModel(google::cloud::financialservices::v1::UpdateModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateModel");
+AMLTracingConnection::UpdateModel(
+    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateModel(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::UpdateModel(
-    NoAwaitTag, google::cloud::financialservices::v1::UpdateModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateModel");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::UpdateModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateModel(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateModel(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::Model>>
 AMLTracingConnection::UpdateModel(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateModel");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::UpdateModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->UpdateModel(operation));
+  return internal::EndSpan(std::move(span), child_->UpdateModel(operation));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
-AMLTracingConnection::ExportModelMetadata(google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+AMLTracingConnection::ExportModelMetadata(
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportModelMetadata");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportModelMetadata(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportModelMetadata(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::ExportModelMetadata(
-    NoAwaitTag, google::cloud::financialservices::v1::ExportModelMetadataRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::ExportModelMetadataRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportModelMetadata");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportModelMetadata(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ExportModelMetadata(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
+future<
+    StatusOr<google::cloud::financialservices::v1::ExportModelMetadataResponse>>
 AMLTracingConnection::ExportModelMetadata(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportModelMetadata");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ExportModelMetadata(operation));
+                           child_->ExportModelMetadata(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLTracingConnection::DeleteModel(google::cloud::financialservices::v1::DeleteModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteModel");
+AMLTracingConnection::DeleteModel(
+    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteModel(request));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::DeleteModel(
-    NoAwaitTag, google::cloud::financialservices::v1::DeleteModelRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteModel");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::DeleteModel(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteModel(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteModel(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
 AMLTracingConnection::DeleteModel(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::DeleteModel");
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::DeleteModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteModel(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteModel(operation));
 }
 
 StreamRange<google::cloud::financialservices::v1::EngineConfig>
-AMLTracingConnection::ListEngineConfigs(google::cloud::financialservices::v1::ListEngineConfigsRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListEngineConfigs");
+AMLTracingConnection::ListEngineConfigs(
+    google::cloud::financialservices::v1::ListEngineConfigsRequest request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::ListEngineConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListEngineConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::financialservices::v1::EngineConfig>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::financialservices::v1::EngineConfig>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineConfig>
-AMLTracingConnection::GetEngineConfig(google::cloud::financialservices::v1::GetEngineConfigRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetEngineConfig");
+AMLTracingConnection::GetEngineConfig(
+    google::cloud::financialservices::v1::GetEngineConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::GetEngineConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEngineConfig(request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLTracingConnection::CreateEngineConfig(google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+AMLTracingConnection::CreateEngineConfig(
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::CreateEngineConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateEngineConfig(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateEngineConfig(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::CreateEngineConfig(
-    NoAwaitTag, google::cloud::financialservices::v1::CreateEngineConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateEngineConfigRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::CreateEngineConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateEngineConfig(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateEngineConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
@@ -458,81 +505,97 @@ AMLTracingConnection::CreateEngineConfig(
       "financialservices_v1::AMLConnection::CreateEngineConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateEngineConfig(operation));
-}
-
-future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
-AMLTracingConnection::UpdateEngineConfig(google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateEngineConfig");
-  internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateEngineConfig(request));
-}
-
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::UpdateEngineConfig(
-    NoAwaitTag, google::cloud::financialservices::v1::UpdateEngineConfigRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateEngineConfig");
-  opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateEngineConfig(
-      NoAwaitTag{}, request));
+                           child_->CreateEngineConfig(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
 AMLTracingConnection::UpdateEngineConfig(
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::UpdateEngineConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateEngineConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AMLTracingConnection::UpdateEngineConfig(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateEngineConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::UpdateEngineConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateEngineConfig(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::financialservices::v1::EngineConfig>>
+AMLTracingConnection::UpdateEngineConfig(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::UpdateEngineConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateEngineConfig(operation));
+                           child_->UpdateEngineConfig(operation));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
-AMLTracingConnection::ExportEngineConfigMetadata(google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+AMLTracingConnection::ExportEngineConfigMetadata(
+    google::cloud::financialservices::v1::
+        ExportEngineConfigMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportEngineConfigMetadata");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportEngineConfigMetadata(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportEngineConfigMetadata(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::ExportEngineConfigMetadata(
-    NoAwaitTag, google::cloud::financialservices::v1::ExportEngineConfigMetadataRequest const& request) {
+    NoAwaitTag, google::cloud::financialservices::v1::
+                    ExportEngineConfigMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportEngineConfigMetadata");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportEngineConfigMetadata(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ExportEngineConfigMetadata(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportEngineConfigMetadataResponse>>
 AMLTracingConnection::ExportEngineConfigMetadata(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportEngineConfigMetadata");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ExportEngineConfigMetadata(operation));
+                           child_->ExportEngineConfigMetadata(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLTracingConnection::DeleteEngineConfig(google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+AMLTracingConnection::DeleteEngineConfig(
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::DeleteEngineConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteEngineConfig(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteEngineConfig(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::DeleteEngineConfig(
-    NoAwaitTag, google::cloud::financialservices::v1::DeleteEngineConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteEngineConfigRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::DeleteEngineConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteEngineConfig(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteEngineConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -542,57 +605,75 @@ AMLTracingConnection::DeleteEngineConfig(
       "financialservices_v1::AMLConnection::DeleteEngineConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteEngineConfig(operation));
+                           child_->DeleteEngineConfig(operation));
 }
 
 StatusOr<google::cloud::financialservices::v1::EngineVersion>
-AMLTracingConnection::GetEngineVersion(google::cloud::financialservices::v1::GetEngineVersionRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetEngineVersion");
+AMLTracingConnection::GetEngineVersion(
+    google::cloud::financialservices::v1::GetEngineVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::GetEngineVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEngineVersion(request));
 }
 
 StreamRange<google::cloud::financialservices::v1::EngineVersion>
-AMLTracingConnection::ListEngineVersions(google::cloud::financialservices::v1::ListEngineVersionsRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListEngineVersions");
+AMLTracingConnection::ListEngineVersions(
+    google::cloud::financialservices::v1::ListEngineVersionsRequest request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::ListEngineVersions");
   internal::OTelScope scope(span);
   auto sr = child_->ListEngineVersions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::financialservices::v1::EngineVersion>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::financialservices::v1::EngineVersion>(std::move(span),
+                                                           std::move(sr));
 }
 
 StreamRange<google::cloud::financialservices::v1::PredictionResult>
-AMLTracingConnection::ListPredictionResults(google::cloud::financialservices::v1::ListPredictionResultsRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListPredictionResults");
+AMLTracingConnection::ListPredictionResults(
+    google::cloud::financialservices::v1::ListPredictionResultsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::ListPredictionResults");
   internal::OTelScope scope(span);
   auto sr = child_->ListPredictionResults(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::financialservices::v1::PredictionResult>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::financialservices::v1::PredictionResult>(std::move(span),
+                                                              std::move(sr));
 }
 
 StatusOr<google::cloud::financialservices::v1::PredictionResult>
-AMLTracingConnection::GetPredictionResult(google::cloud::financialservices::v1::GetPredictionResultRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetPredictionResult");
+AMLTracingConnection::GetPredictionResult(
+    google::cloud::financialservices::v1::GetPredictionResultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::GetPredictionResult");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPredictionResult(request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLTracingConnection::CreatePredictionResult(google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+AMLTracingConnection::CreatePredictionResult(
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::CreatePredictionResult");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreatePredictionResult(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePredictionResult(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::CreatePredictionResult(
-    NoAwaitTag, google::cloud::financialservices::v1::CreatePredictionResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreatePredictionResultRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::CreatePredictionResult");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreatePredictionResult(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreatePredictionResult(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
@@ -602,81 +683,97 @@ AMLTracingConnection::CreatePredictionResult(
       "financialservices_v1::AMLConnection::CreatePredictionResult");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreatePredictionResult(operation));
-}
-
-future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
-AMLTracingConnection::UpdatePredictionResult(google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdatePredictionResult");
-  internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdatePredictionResult(request));
-}
-
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::UpdatePredictionResult(
-    NoAwaitTag, google::cloud::financialservices::v1::UpdatePredictionResultRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdatePredictionResult");
-  opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdatePredictionResult(
-      NoAwaitTag{}, request));
+                           child_->CreatePredictionResult(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
 AMLTracingConnection::UpdatePredictionResult(
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::UpdatePredictionResult");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePredictionResult(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AMLTracingConnection::UpdatePredictionResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdatePredictionResultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::UpdatePredictionResult");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdatePredictionResult(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::financialservices::v1::PredictionResult>>
+AMLTracingConnection::UpdatePredictionResult(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::UpdatePredictionResult");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdatePredictionResult(operation));
+                           child_->UpdatePredictionResult(operation));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
-AMLTracingConnection::ExportPredictionResultMetadata(google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+future<StatusOr<google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataResponse>>
+AMLTracingConnection::ExportPredictionResultMetadata(
+    google::cloud::financialservices::v1::
+        ExportPredictionResultMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportPredictionResultMetadata");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportPredictionResultMetadata(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportPredictionResultMetadata(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::ExportPredictionResultMetadata(
-    NoAwaitTag, google::cloud::financialservices::v1::ExportPredictionResultMetadataRequest const& request) {
+    NoAwaitTag, google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportPredictionResultMetadata");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportPredictionResultMetadata(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ExportPredictionResultMetadata(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportPredictionResultMetadataResponse>>
+future<StatusOr<google::cloud::financialservices::v1::
+                    ExportPredictionResultMetadataResponse>>
 AMLTracingConnection::ExportPredictionResultMetadata(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportPredictionResultMetadata");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ExportPredictionResultMetadata(operation));
+                           child_->ExportPredictionResultMetadata(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLTracingConnection::DeletePredictionResult(google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+AMLTracingConnection::DeletePredictionResult(
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::DeletePredictionResult");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeletePredictionResult(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePredictionResult(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::DeletePredictionResult(
-    NoAwaitTag, google::cloud::financialservices::v1::DeletePredictionResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeletePredictionResultRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::DeletePredictionResult");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeletePredictionResult(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeletePredictionResult(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -686,41 +783,52 @@ AMLTracingConnection::DeletePredictionResult(
       "financialservices_v1::AMLConnection::DeletePredictionResult");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeletePredictionResult(operation));
+                           child_->DeletePredictionResult(operation));
 }
 
 StreamRange<google::cloud::financialservices::v1::BacktestResult>
-AMLTracingConnection::ListBacktestResults(google::cloud::financialservices::v1::ListBacktestResultsRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListBacktestResults");
+AMLTracingConnection::ListBacktestResults(
+    google::cloud::financialservices::v1::ListBacktestResultsRequest request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::ListBacktestResults");
   internal::OTelScope scope(span);
   auto sr = child_->ListBacktestResults(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::financialservices::v1::BacktestResult>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::financialservices::v1::BacktestResult>(std::move(span),
+                                                            std::move(sr));
 }
 
 StatusOr<google::cloud::financialservices::v1::BacktestResult>
-AMLTracingConnection::GetBacktestResult(google::cloud::financialservices::v1::GetBacktestResultRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetBacktestResult");
+AMLTracingConnection::GetBacktestResult(
+    google::cloud::financialservices::v1::GetBacktestResultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::GetBacktestResult");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBacktestResult(request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLTracingConnection::CreateBacktestResult(google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+AMLTracingConnection::CreateBacktestResult(
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::CreateBacktestResult");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateBacktestResult(request));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBacktestResult(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::CreateBacktestResult(
-    NoAwaitTag, google::cloud::financialservices::v1::CreateBacktestResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::CreateBacktestResultRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::CreateBacktestResult");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateBacktestResult(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateBacktestResult(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
@@ -730,81 +838,97 @@ AMLTracingConnection::CreateBacktestResult(
       "financialservices_v1::AMLConnection::CreateBacktestResult");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateBacktestResult(operation));
-}
-
-future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
-AMLTracingConnection::UpdateBacktestResult(google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateBacktestResult");
-  internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateBacktestResult(request));
-}
-
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::UpdateBacktestResult(
-    NoAwaitTag, google::cloud::financialservices::v1::UpdateBacktestResultRequest const& request) {
-  auto span = internal::MakeSpan(
-      "financialservices_v1::AMLConnection::UpdateBacktestResult");
-  opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateBacktestResult(
-      NoAwaitTag{}, request));
+                           child_->CreateBacktestResult(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
 AMLTracingConnection::UpdateBacktestResult(
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::UpdateBacktestResult");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBacktestResult(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AMLTracingConnection::UpdateBacktestResult(
+    NoAwaitTag,
+    google::cloud::financialservices::v1::UpdateBacktestResultRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::UpdateBacktestResult");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateBacktestResult(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::financialservices::v1::BacktestResult>>
+AMLTracingConnection::UpdateBacktestResult(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::UpdateBacktestResult");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateBacktestResult(operation));
+                           child_->UpdateBacktestResult(operation));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
-AMLTracingConnection::ExportBacktestResultMetadata(google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+AMLTracingConnection::ExportBacktestResultMetadata(
+    google::cloud::financialservices::v1::
+        ExportBacktestResultMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportBacktestResultMetadata");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportBacktestResultMetadata(request));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportBacktestResultMetadata(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::ExportBacktestResultMetadata(
-    NoAwaitTag, google::cloud::financialservices::v1::ExportBacktestResultMetadataRequest const& request) {
+    NoAwaitTag, google::cloud::financialservices::v1::
+                    ExportBacktestResultMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportBacktestResultMetadata");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ExportBacktestResultMetadata(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ExportBacktestResultMetadata(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
+future<StatusOr<
+    google::cloud::financialservices::v1::ExportBacktestResultMetadataResponse>>
 AMLTracingConnection::ExportBacktestResultMetadata(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::ExportBacktestResultMetadata");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->ExportBacktestResultMetadata(operation));
+                           child_->ExportBacktestResultMetadata(operation));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
-AMLTracingConnection::DeleteBacktestResult(google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+AMLTracingConnection::DeleteBacktestResult(
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::DeleteBacktestResult");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteBacktestResult(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBacktestResult(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AMLTracingConnection::DeleteBacktestResult(
-    NoAwaitTag, google::cloud::financialservices::v1::DeleteBacktestResultRequest const& request) {
+    NoAwaitTag,
+    google::cloud::financialservices::v1::DeleteBacktestResultRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "financialservices_v1::AMLConnection::DeleteBacktestResult");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteBacktestResult(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteBacktestResult(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::financialservices::v1::OperationMetadata>>
@@ -814,59 +938,66 @@ AMLTracingConnection::DeleteBacktestResult(
       "financialservices_v1::AMLConnection::DeleteBacktestResult");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteBacktestResult(operation));
+                           child_->DeleteBacktestResult(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-AMLTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListLocations");
+AMLTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-StatusOr<google::cloud::location::Location>
-AMLTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetLocation");
+StatusOr<google::cloud::location::Location> AMLTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-AMLTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::ListOperations");
+AMLTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-StatusOr<google::longrunning::Operation>
-AMLTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::GetOperation");
+StatusOr<google::longrunning::Operation> AMLTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("financialservices_v1::AMLConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-AMLTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::DeleteOperation");
+Status AMLTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-AMLTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("financialservices_v1::AMLConnection::CancelOperation");
+Status AMLTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "financialservices_v1::AMLConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<financialservices_v1::AMLConnection>
-MakeAMLTracingConnection(
+std::shared_ptr<financialservices_v1::AMLConnection> MakeAMLTracingConnection(
     std::shared_ptr<financialservices_v1::AMLConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

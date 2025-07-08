@@ -26,10 +26,13 @@ namespace cloud {
 namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use composer_v1::MakeDefaultEnvironmentsConnectionIdempotencyPolicy directly.
-using ::google::cloud::composer_v1::MakeDefaultEnvironmentsConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// composer_v1::MakeDefaultEnvironmentsConnectionIdempotencyPolicy directly.
+using ::google::cloud::composer_v1::
+    MakeDefaultEnvironmentsConnectionIdempotencyPolicy;
 
-/// @deprecated Use composer_v1::EnvironmentsConnectionIdempotencyPolicy directly.
+/// @deprecated Use composer_v1::EnvironmentsConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::composer_v1::EnvironmentsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

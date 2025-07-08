@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_INTERNAL_BIGQUERY_WRITE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_STORAGE_V1_INTERNAL_BIGQUERY_WRITE_CONNECTION_IMPL_H
 
-#include "google/cloud/async_streaming_read_write_rpc.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_write_connection.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_write_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/storage/v1/bigquery_write_options.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_retry_traits.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_stub.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -43,31 +43,39 @@ class BigQueryWriteConnectionImpl
   ~BigQueryWriteConnectionImpl() override = default;
 
   BigQueryWriteConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_storage_v1_internal::BigQueryWriteStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquery_storage_v1_internal::BigQueryWriteStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  CreateWriteStream(google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
+      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
+          request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
   AsyncAppendRows() override;
 
-  StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  GetWriteStream(google::cloud::bigquery::storage::v1::GetWriteStreamRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
+      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
+          request) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
-  FinalizeWriteStream(google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const& request) override;
+  FinalizeWriteStream(
+      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
+          request) override;
 
-  StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
-  BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const& request) override;
+  StatusOr<
+      google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
+  BatchCommitWriteStreams(
+      google::cloud::bigquery::storage::v1::
+          BatchCommitWriteStreamsRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
-  FlushRows(google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) override;
+  StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
+      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

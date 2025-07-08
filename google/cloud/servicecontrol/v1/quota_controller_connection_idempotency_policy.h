@@ -34,14 +34,15 @@ class QuotaControllerConnectionIdempotencyPolicy {
   virtual ~QuotaControllerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const& request);
+  virtual google::cloud::Idempotency AllocateQuota(
+      google::api::servicecontrol::v1::AllocateQuotaRequest const& request);
 };
 
 std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
-    MakeDefaultQuotaControllerConnectionIdempotencyPolicy();
+MakeDefaultQuotaControllerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_v1

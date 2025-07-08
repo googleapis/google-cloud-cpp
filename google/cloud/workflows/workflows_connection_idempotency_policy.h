@@ -26,8 +26,10 @@ namespace cloud {
 namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use workflows_v1::MakeDefaultWorkflowsConnectionIdempotencyPolicy directly.
-using ::google::cloud::workflows_v1::MakeDefaultWorkflowsConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// workflows_v1::MakeDefaultWorkflowsConnectionIdempotencyPolicy directly.
+using ::google::cloud::workflows_v1::
+    MakeDefaultWorkflowsConnectionIdempotencyPolicy;
 
 /// @deprecated Use workflows_v1::WorkflowsConnectionIdempotencyPolicy directly.
 using ::google::cloud::workflows_v1::WorkflowsConnectionIdempotencyPolicy;

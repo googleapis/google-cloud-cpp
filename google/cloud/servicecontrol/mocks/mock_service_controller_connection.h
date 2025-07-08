@@ -30,7 +30,8 @@ namespace cloud {
 namespace servicecontrol_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use servicecontrol_v1_mocks::MockServiceControllerConnection directly.
+/// @deprecated Use servicecontrol_v1_mocks::MockServiceControllerConnection
+/// directly.
 using ::google::cloud::servicecontrol_v1_mocks::MockServiceControllerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_STATS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_STATS_CLIENT_H
 
+#include "google/cloud/pubsublite/topic_stats_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/pubsublite/topic_stats_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,7 +61,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TopicStatsServiceClient {
  public:
-  explicit TopicStatsServiceClient(std::shared_ptr<TopicStatsServiceConnection> connection, Options opts = {});
+  explicit TopicStatsServiceClient(
+      std::shared_ptr<TopicStatsServiceConnection> connection,
+      Options opts = {});
   ~TopicStatsServiceClient();
 
   ///@{
@@ -74,10 +76,12 @@ class TopicStatsServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TopicStatsServiceClient const& a, TopicStatsServiceClient const& b) {
+  friend bool operator==(TopicStatsServiceClient const& a,
+                         TopicStatsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TopicStatsServiceClient const& a, TopicStatsServiceClient const& b) {
+  friend bool operator!=(TopicStatsServiceClient const& a,
+                         TopicStatsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -111,7 +115,9 @@ class TopicStatsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-  ComputeMessageStats(google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request, Options opts = {});
+  ComputeMessageStats(
+      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -146,7 +152,9 @@ class TopicStatsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-  ComputeHeadCursor(google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request, Options opts = {});
+  ComputeHeadCursor(
+      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -177,7 +185,9 @@ class TopicStatsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-  ComputeTimeCursor(google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request, Options opts = {});
+  ComputeTimeCursor(
+      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -212,8 +222,8 @@ class TopicStatsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -252,8 +262,8 @@ class TopicStatsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -279,8 +289,8 @@ class TopicStatsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -311,8 +321,9 @@ class TopicStatsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -336,8 +347,7 @@ class TopicStatsServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -366,8 +376,9 @@ class TopicStatsServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -401,8 +412,7 @@ class TopicStatsServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +451,9 @@ class TopicStatsServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TopicStatsServiceConnection> connection_;

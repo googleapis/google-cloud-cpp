@@ -35,18 +35,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class IDSLogging : public IDSStub {
  public:
   ~IDSLogging() override = default;
-  IDSLogging(std::shared_ptr<IDSStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  IDSLogging(std::shared_ptr<IDSStub> child, TracingOptions tracing_options,
+             std::set<std::string> const& components);
 
   StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::ids::v1::ListEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::ids::v1::GetEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpoint(
@@ -56,8 +53,7 @@ class IDSLogging : public IDSStub {
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
@@ -67,8 +63,7 @@ class IDSLogging : public IDSStub {
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

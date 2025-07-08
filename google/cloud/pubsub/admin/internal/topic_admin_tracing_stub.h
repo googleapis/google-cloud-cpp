@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_INTERNAL_TOPIC_ADMIN_TRACING_STUB_H
 
+#include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsub/admin/internal/topic_admin_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,63 +39,55 @@ class TopicAdminTracingStub : public TopicAdminStub {
   explicit TopicAdminTracingStub(std::shared_ptr<TopicAdminStub> child);
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::Topic const& request) override;
 
   StatusOr<google::pubsub::v1::Topic> UpdateTopic(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::UpdateTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Topic> GetTopic(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListTopicsRequest const& request) override;
 
-  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> ListTopicSubscriptions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::pubsub::v1::ListTopicSubscriptionsRequest const& request) override;
+  StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+  ListTopicSubscriptions(
+      grpc::ClientContext& context, Options const& options,
+      google::pubsub::v1::ListTopicSubscriptionsRequest const& request)
+      override;
 
   StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> ListTopicSnapshots(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListTopicSnapshotsRequest const& request) override;
 
   Status DeleteTopic(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteTopicRequest const& request) override;
 
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<TopicAdminStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

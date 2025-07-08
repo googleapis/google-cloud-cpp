@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SessionControllerClient {
  public:
-  explicit SessionControllerClient(std::shared_ptr<SessionControllerConnection> connection, Options opts = {});
+  explicit SessionControllerClient(
+      std::shared_ptr<SessionControllerConnection> connection,
+      Options opts = {});
   ~SessionControllerClient();
 
   ///@{
@@ -77,10 +79,12 @@ class SessionControllerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SessionControllerClient const& a, SessionControllerClient const& b) {
+  friend bool operator==(SessionControllerClient const& a,
+                         SessionControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SessionControllerClient const& a, SessionControllerClient const& b) {
+  friend bool operator!=(SessionControllerClient const& a,
+                         SessionControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,8 +124,10 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  CreateSession(std::string const& parent, google::cloud::dataproc::v1::Session const& session, std::string const& session_id, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
+      std::string const& parent,
+      google::cloud::dataproc::v1::Session const& session,
+      std::string const& session_id, Options opts = {});
 
   // clang-format off
   ///
@@ -134,8 +140,10 @@ class SessionControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateSession(NoAwaitTag, std::string const& parent, google::cloud::dataproc::v1::Session const& session, std::string const& session_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateSession(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dataproc::v1::Session const& session,
+      std::string const& session_id, Options opts = {});
 
   // clang-format off
   ///
@@ -171,8 +179,9 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  CreateSession(google::cloud::dataproc::v1::CreateSessionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
+      google::cloud::dataproc::v1::CreateSessionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -185,8 +194,10 @@ class SessionControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateSession(NoAwaitTag, google::cloud::dataproc::v1::CreateSessionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateSession(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -197,8 +208,8 @@ class SessionControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  CreateSession(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -222,8 +233,8 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Session>
-  GetSession(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Session> GetSession(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -252,8 +263,9 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Session>
-  GetSession(google::cloud::dataproc::v1::GetSessionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Session> GetSession(
+      google::cloud::dataproc::v1::GetSessionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -286,8 +298,8 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Session>
-  ListSessions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Session> ListSessions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -325,8 +337,9 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Session>
-  ListSessions(google::cloud::dataproc::v1::ListSessionsRequest request, Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Session> ListSessions(
+      google::cloud::dataproc::v1::ListSessionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -357,8 +370,8 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.TerminateSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L190}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  TerminateSession(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -371,8 +384,8 @@ class SessionControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  TerminateSession(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> TerminateSession(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -408,8 +421,9 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.TerminateSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L190}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  TerminateSession(google::cloud::dataproc::v1::TerminateSessionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -422,8 +436,10 @@ class SessionControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  TerminateSession(NoAwaitTag, google::cloud::dataproc::v1::TerminateSessionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> TerminateSession(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -434,8 +450,8 @@ class SessionControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  TerminateSession(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -467,8 +483,8 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  DeleteSession(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -481,8 +497,8 @@ class SessionControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSession(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSession(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -519,8 +535,9 @@ class SessionControllerClient {
   /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  DeleteSession(google::cloud::dataproc::v1::DeleteSessionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -533,8 +550,10 @@ class SessionControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSession(NoAwaitTag, google::cloud::dataproc::v1::DeleteSessionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSession(
+      NoAwaitTag,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -545,8 +564,8 @@ class SessionControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Session>>
-  DeleteSession(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -578,8 +597,8 @@ class SessionControllerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -610,8 +629,8 @@ class SessionControllerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -646,8 +665,9 @@ class SessionControllerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -682,8 +702,8 @@ class SessionControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -722,8 +742,8 @@ class SessionControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -749,8 +769,8 @@ class SessionControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -781,8 +801,9 @@ class SessionControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -806,8 +827,7 @@ class SessionControllerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -836,8 +856,9 @@ class SessionControllerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -871,8 +892,7 @@ class SessionControllerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -911,8 +931,9 @@ class SessionControllerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SessionControllerConnection> connection_;

@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DeploymentsClient::DeploymentsClient(
     std::shared_ptr<DeploymentsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DeploymentsClient::~DeploymentsClient() = default;
 
 StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
@@ -41,7 +41,9 @@ DeploymentsClient::ListDeployments(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
-DeploymentsClient::ListDeployments(google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request, Options opts) {
+DeploymentsClient::ListDeployments(
+    google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDeployments(std::move(request));
 }
@@ -55,25 +57,27 @@ DeploymentsClient::GetDeployment(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
-DeploymentsClient::GetDeployment(google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request, Options opts) {
+DeploymentsClient::GetDeployment(
+    google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDeployment(request);
 }
 
-StreamRange<google::cloud::location::Location>
-DeploymentsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> DeploymentsClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-DeploymentsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> DeploymentsClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-DeploymentsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> DeploymentsClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -81,36 +85,36 @@ DeploymentsClient::ListOperations(std::string const& name, std::string const& fi
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-DeploymentsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> DeploymentsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-DeploymentsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DeploymentsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DeploymentsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DeploymentsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-DeploymentsClient::CancelOperation(std::string const& name, Options opts) {
+Status DeploymentsClient::CancelOperation(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-DeploymentsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status DeploymentsClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -17,17 +17,17 @@
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
 #include "google/cloud/orgpolicy/v2/org_policy_connection.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_connection_impl.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_option_defaults.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_stub_factory.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_tracing_connection.h"
+#include "google/cloud/orgpolicy/v2/org_policy_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_connection_impl.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_option_defaults.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_stub_factory.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_tracing_connection.h"
-#include "google/cloud/orgpolicy/v2/org_policy_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,20 +38,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OrgPolicyConnection::~OrgPolicyConnection() = default;
 
-StreamRange<google::cloud::orgpolicy::v2::Constraint> OrgPolicyConnection::ListConstraints(
-    google::cloud::orgpolicy::v2::ListConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::orgpolicy::v2::Constraint>
+OrgPolicyConnection::ListConstraints(
+    google::cloud::orgpolicy::v2::
+        ListConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::Constraint>>();
 }
 
-StreamRange<google::cloud::orgpolicy::v2::Policy> OrgPolicyConnection::ListPolicies(
-    google::cloud::orgpolicy::v2::ListPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::orgpolicy::v2::Policy>
+OrgPolicyConnection::ListPolicies(
+    google::cloud::orgpolicy::v2::
+        ListPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::Policy>>();
 }
 
-StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyConnection::GetPolicy(
+StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyConnection::GetPolicy(
     google::cloud::orgpolicy::v2::GetPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -74,8 +77,7 @@ OrgPolicyConnection::UpdatePolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-OrgPolicyConnection::DeletePolicy(
+Status OrgPolicyConnection::DeletePolicy(
     google::cloud::orgpolicy::v2::DeletePolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -98,32 +100,31 @@ OrgPolicyConnection::GetCustomConstraint(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::orgpolicy::v2::CustomConstraint> OrgPolicyConnection::ListCustomConstraints(
-    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
+OrgPolicyConnection::ListCustomConstraints(
+    google::cloud::orgpolicy::v2::
+        ListCustomConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>>();
 }
 
-Status
-OrgPolicyConnection::DeleteCustomConstraint(
+Status OrgPolicyConnection::DeleteCustomConstraint(
     google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(
-    Options options) {
+std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      OrgPolicyPolicyOptionList>(options, __func__);
-  options = orgpolicy_v2_internal::OrgPolicyDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 OrgPolicyPolicyOptionList>(options, __func__);
+  options = orgpolicy_v2_internal::OrgPolicyDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = orgpolicy_v2_internal::CreateDefaultOrgPolicyStub(
-    std::move(auth), options);
+  auto stub = orgpolicy_v2_internal::CreateDefaultOrgPolicyStub(std::move(auth),
+                                                                options);
   return orgpolicy_v2_internal::MakeOrgPolicyTracingConnection(
       std::make_shared<orgpolicy_v2_internal::OrgPolicyConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

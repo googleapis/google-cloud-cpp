@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPLETION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_COMPLETION_CONNECTION_H
 
+#include "google/cloud/talent/v4/completion_connection_idempotency_policy.h"
+#include "google/cloud/talent/v4/internal/completion_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/talent/v4/completion_connection_idempotency_policy.h"
-#include "google/cloud/talent/v4/internal/completion_retry_traits.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/completion_service.pb.h>
 #include <memory>
@@ -61,14 +61,14 @@ class CompletionLimitedErrorCountRetryPolicy : public CompletionRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit CompletionLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   CompletionLimitedErrorCountRetryPolicy(
       CompletionLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : CompletionLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CompletionLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CompletionLimitedErrorCountRetryPolicy(
       CompletionLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : CompletionLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CompletionLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +88,9 @@ class CompletionLimitedErrorCountRetryPolicy : public CompletionRetryPolicy {
   using BaseType = CompletionRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<talent_v4_internal::CompletionRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      talent_v4_internal::CompletionRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +128,14 @@ class CompletionLimitedTimeRetryPolicy : public CompletionRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CompletionLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  CompletionLimitedTimeRetryPolicy(CompletionLimitedTimeRetryPolicy&& rhs) noexcept
-    : CompletionLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CompletionLimitedTimeRetryPolicy(CompletionLimitedTimeRetryPolicy const& rhs) noexcept
-    : CompletionLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CompletionLimitedTimeRetryPolicy(
+      CompletionLimitedTimeRetryPolicy&& rhs) noexcept
+      : CompletionLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CompletionLimitedTimeRetryPolicy(
+      CompletionLimitedTimeRetryPolicy const& rhs) noexcept
+      : CompletionLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +157,9 @@ class CompletionLimitedTimeRetryPolicy : public CompletionRetryPolicy {
   using BaseType = CompletionRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<talent_v4_internal::CompletionRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      talent_v4_internal::CompletionRetryTraits>
+      impl_;
 };
 
 /**
@@ -177,8 +183,8 @@ class CompletionConnection {
   virtual StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
   CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

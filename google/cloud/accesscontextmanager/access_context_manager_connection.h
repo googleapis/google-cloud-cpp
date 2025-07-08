@@ -27,19 +27,29 @@ namespace cloud {
 namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use accesscontextmanager_v1::MakeAccessContextManagerConnection directly.
-using ::google::cloud::accesscontextmanager_v1::MakeAccessContextManagerConnection;
+/// @deprecated Use accesscontextmanager_v1::MakeAccessContextManagerConnection
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    MakeAccessContextManagerConnection;
 
-/// @deprecated Use accesscontextmanager_v1::AccessContextManagerConnection directly.
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerConnection
+/// directly.
 using ::google::cloud::accesscontextmanager_v1::AccessContextManagerConnection;
 
-/// @deprecated Use accesscontextmanager_v1::AccessContextManagerLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::accesscontextmanager_v1::AccessContextManagerLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use accesscontextmanager_v1::AccessContextManagerLimitedTimeRetryPolicy directly.
-using ::google::cloud::accesscontextmanager_v1::AccessContextManagerLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerLimitedTimeRetryPolicy;
 
-/// @deprecated Use accesscontextmanager_v1::AccessContextManagerRetryPolicy directly.
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerRetryPolicy
+/// directly.
 using ::google::cloud::accesscontextmanager_v1::AccessContextManagerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

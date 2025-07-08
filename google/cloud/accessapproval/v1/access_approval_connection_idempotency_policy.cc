@@ -26,51 +26,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AccessApprovalConnectionIdempotencyPolicy::~AccessApprovalConnectionIdempotencyPolicy() = default;
+AccessApprovalConnectionIdempotencyPolicy::
+    ~AccessApprovalConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
 AccessApprovalConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AccessApprovalConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::ListApprovalRequests(google::cloud::accessapproval::v1::ListApprovalRequestsMessage) {  // NOLINT
+Idempotency AccessApprovalConnectionIdempotencyPolicy::ListApprovalRequests(
+    google::cloud::accessapproval::v1::ListApprovalRequestsMessage) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::GetApprovalRequest(google::cloud::accessapproval::v1::GetApprovalRequestMessage const&) {
+Idempotency AccessApprovalConnectionIdempotencyPolicy::GetApprovalRequest(
+    google::cloud::accessapproval::v1::GetApprovalRequestMessage const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::ApproveApprovalRequest(google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&) {
+Idempotency AccessApprovalConnectionIdempotencyPolicy::ApproveApprovalRequest(
+    google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::DismissApprovalRequest(google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&) {
+Idempotency AccessApprovalConnectionIdempotencyPolicy::DismissApprovalRequest(
+    google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::InvalidateApprovalRequest(google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&) {
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::InvalidateApprovalRequest(
+    google::cloud::accessapproval::v1::
+        InvalidateApprovalRequestMessage const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::GetAccessApprovalSettings(google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&) {
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::GetAccessApprovalSettings(
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalSettingsMessage const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const&) {
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::UpdateAccessApprovalSettings(
+    google::cloud::accessapproval::v1::
+        UpdateAccessApprovalSettingsMessage const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::DeleteAccessApprovalSettings(google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const&) {
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::DeleteAccessApprovalSettings(
+    google::cloud::accessapproval::v1::
+        DeleteAccessApprovalSettingsMessage const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AccessApprovalConnectionIdempotencyPolicy::GetAccessApprovalServiceAccount(google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const&) {
+Idempotency
+AccessApprovalConnectionIdempotencyPolicy::GetAccessApprovalServiceAccount(
+    google::cloud::accessapproval::v1::
+        GetAccessApprovalServiceAccountMessage const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
-    MakeDefaultAccessApprovalConnectionIdempotencyPolicy() {
+MakeDefaultAccessApprovalConnectionIdempotencyPolicy() {
   return std::make_unique<AccessApprovalConnectionIdempotencyPolicy>();
 }
 

@@ -35,35 +35,30 @@ class PublisherServiceLogging : public PublisherServiceStub {
  public:
   ~PublisherServiceLogging() override = default;
   PublisherServiceLogging(std::shared_ptr<PublisherServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                          TracingOptions tracing_options,
+                          std::set<std::string> const& components);
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
-  AsyncPublish(
-      google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options) override;
+  AsyncPublish(google::cloud::CompletionQueue const& cq,
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

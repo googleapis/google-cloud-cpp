@@ -26,27 +26,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AcceleratorTypesConnectionIdempotencyPolicy::~AcceleratorTypesConnectionIdempotencyPolicy() = default;
+AcceleratorTypesConnectionIdempotencyPolicy::
+    ~AcceleratorTypesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AcceleratorTypesConnectionIdempotencyPolicy>
 AcceleratorTypesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AcceleratorTypesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AcceleratorTypesConnectionIdempotencyPolicy::AggregatedListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest) {  // NOLINT
+Idempotency
+AcceleratorTypesConnectionIdempotencyPolicy::AggregatedListAcceleratorTypes(
+    google::cloud::cpp::compute::accelerator_types::v1::
+        AggregatedListAcceleratorTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AcceleratorTypesConnectionIdempotencyPolicy::GetAcceleratorType(google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const&) {
+Idempotency AcceleratorTypesConnectionIdempotencyPolicy::GetAcceleratorType(
+    google::cloud::cpp::compute::accelerator_types::v1::
+        GetAcceleratorTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AcceleratorTypesConnectionIdempotencyPolicy::ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest) {  // NOLINT
+Idempotency AcceleratorTypesConnectionIdempotencyPolicy::ListAcceleratorTypes(
+    google::cloud::cpp::compute::accelerator_types::v1::
+        ListAcceleratorTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AcceleratorTypesConnectionIdempotencyPolicy>
-    MakeDefaultAcceleratorTypesConnectionIdempotencyPolicy() {
+MakeDefaultAcceleratorTypesConnectionIdempotencyPolicy() {
   return std::make_unique<AcceleratorTypesConnectionIdempotencyPolicy>();
 }
 

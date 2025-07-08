@@ -17,12 +17,12 @@
 // source: google/cloud/clouddms/v1/clouddms.proto
 
 #include "google/cloud/datamigration/v1/internal/data_migration_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_auth_decorator.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_logging_decorator.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_metadata_decorator.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_stub.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -40,32 +40,32 @@ namespace cloud {
 namespace datamigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<DataMigrationServiceStub>
-CreateDefaultDataMigrationServiceStub(
+std::shared_ptr<DataMigrationServiceStub> CreateDefaultDataMigrationServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::clouddms::v1::DataMigrationService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::clouddms::v1::DataMigrationService::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<DataMigrationServiceStub> stub =
-    std::make_shared<DefaultDataMigrationServiceStub>(
-      std::move(service_grpc_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultDataMigrationServiceStub>(
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+          std::move(service_locations_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DataMigrationServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<DataMigrationServiceAuth>(std::move(auth),
+                                                      std::move(stub));
   }
   stub = std::make_shared<DataMigrationServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DataMigrationServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

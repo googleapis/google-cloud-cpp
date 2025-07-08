@@ -26,90 +26,114 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-WorkstationsConnectionIdempotencyPolicy::~WorkstationsConnectionIdempotencyPolicy() = default;
+WorkstationsConnectionIdempotencyPolicy::
+    ~WorkstationsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<WorkstationsConnectionIdempotencyPolicy>
 WorkstationsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<WorkstationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::GetWorkstationCluster(google::cloud::workstations::v1::GetWorkstationClusterRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::GetWorkstationCluster(
+    google::cloud::workstations::v1::GetWorkstationClusterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::ListWorkstationClusters(google::cloud::workstations::v1::ListWorkstationClustersRequest) {  // NOLINT
+Idempotency WorkstationsConnectionIdempotencyPolicy::ListWorkstationClusters(
+    google::cloud::workstations::v1::
+        ListWorkstationClustersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::CreateWorkstationCluster(google::cloud::workstations::v1::CreateWorkstationClusterRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::CreateWorkstationCluster(
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::UpdateWorkstationCluster(google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::UpdateWorkstationCluster(
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::DeleteWorkstationCluster(google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::DeleteWorkstationCluster(
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::GetWorkstationConfig(google::cloud::workstations::v1::GetWorkstationConfigRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::GetWorkstationConfig(
+    google::cloud::workstations::v1::GetWorkstationConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::ListWorkstationConfigs(google::cloud::workstations::v1::ListWorkstationConfigsRequest) {  // NOLINT
+Idempotency WorkstationsConnectionIdempotencyPolicy::ListWorkstationConfigs(
+    google::cloud::workstations::v1::ListWorkstationConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::ListUsableWorkstationConfigs(google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest) {  // NOLINT
+Idempotency
+WorkstationsConnectionIdempotencyPolicy::ListUsableWorkstationConfigs(
+    google::cloud::workstations::v1::
+        ListUsableWorkstationConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::CreateWorkstationConfig(google::cloud::workstations::v1::CreateWorkstationConfigRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::CreateWorkstationConfig(
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::UpdateWorkstationConfig(google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::UpdateWorkstationConfig(
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::DeleteWorkstationConfig(google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::DeleteWorkstationConfig(
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::GetWorkstation(google::cloud::workstations::v1::GetWorkstationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::GetWorkstation(
+    google::cloud::workstations::v1::GetWorkstationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::ListWorkstations(google::cloud::workstations::v1::ListWorkstationsRequest) {  // NOLINT
+Idempotency WorkstationsConnectionIdempotencyPolicy::ListWorkstations(
+    google::cloud::workstations::v1::ListWorkstationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::ListUsableWorkstations(google::cloud::workstations::v1::ListUsableWorkstationsRequest) {  // NOLINT
+Idempotency WorkstationsConnectionIdempotencyPolicy::ListUsableWorkstations(
+    google::cloud::workstations::v1::ListUsableWorkstationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::CreateWorkstation(google::cloud::workstations::v1::CreateWorkstationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::CreateWorkstation(
+    google::cloud::workstations::v1::CreateWorkstationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::UpdateWorkstation(google::cloud::workstations::v1::UpdateWorkstationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::UpdateWorkstation(
+    google::cloud::workstations::v1::UpdateWorkstationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::DeleteWorkstation(google::cloud::workstations::v1::DeleteWorkstationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::DeleteWorkstation(
+    google::cloud::workstations::v1::DeleteWorkstationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::StartWorkstation(google::cloud::workstations::v1::StartWorkstationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::StartWorkstation(
+    google::cloud::workstations::v1::StartWorkstationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::StopWorkstation(google::cloud::workstations::v1::StopWorkstationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::StopWorkstation(
+    google::cloud::workstations::v1::StopWorkstationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::GenerateAccessToken(google::cloud::workstations::v1::GenerateAccessTokenRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::GenerateAccessToken(
+    google::cloud::workstations::v1::GenerateAccessTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -119,32 +143,38 @@ Idempotency WorkstationsConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency WorkstationsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WorkstationsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency WorkstationsConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<WorkstationsConnectionIdempotencyPolicy>
-    MakeDefaultWorkstationsConnectionIdempotencyPolicy() {
+MakeDefaultWorkstationsConnectionIdempotencyPolicy() {
   return std::make_unique<WorkstationsConnectionIdempotencyPolicy>();
 }
 

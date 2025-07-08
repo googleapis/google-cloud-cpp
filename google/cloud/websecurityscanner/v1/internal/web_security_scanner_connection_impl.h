@@ -19,17 +19,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_INTERNAL_WEB_SECURITY_SCANNER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_INTERNAL_WEB_SECURITY_SCANNER_CONNECTION_IMPL_H
 
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_retry_traits.h"
+#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_retry_traits.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_options.h"
 #include <memory>
 
 namespace google {
@@ -43,50 +43,65 @@ class WebSecurityScannerConnectionImpl
   ~WebSecurityScannerConnectionImpl() override = default;
 
   WebSecurityScannerConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<websecurityscanner_v1_internal::WebSecurityScannerStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<websecurityscanner_v1_internal::WebSecurityScannerStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  CreateScanConfig(google::cloud::websecurityscanner::v1::CreateScanConfigRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> CreateScanConfig(
+      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
+          request) override;
 
-  Status
-  DeleteScanConfig(google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const& request) override;
+  Status DeleteScanConfig(
+      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  GetScanConfig(google::cloud::websecurityscanner::v1::GetScanConfigRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> GetScanConfig(
+      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
+          request) override;
 
   StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-  ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) override;
+  ListScanConfigs(google::cloud::websecurityscanner::v1::ListScanConfigsRequest
+                      request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  UpdateScanConfig(google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
+      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-  StartScanRun(google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
+      google::cloud::websecurityscanner::v1::StartScanRunRequest const& request)
+      override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-  GetScanRun(google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
+      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request)
+      override;
 
-  StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
-  ListScanRuns(google::cloud::websecurityscanner::v1::ListScanRunsRequest request) override;
+  StreamRange<google::cloud::websecurityscanner::v1::ScanRun> ListScanRuns(
+      google::cloud::websecurityscanner::v1::ListScanRunsRequest request)
+      override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
-  StopScanRun(google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
+      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request)
+      override;
 
   StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-  ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) override;
+  ListCrawledUrls(google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest
+                      request) override;
 
-  StatusOr<google::cloud::websecurityscanner::v1::Finding>
-  GetFinding(google::cloud::websecurityscanner::v1::GetFindingRequest const& request) override;
+  StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
+      google::cloud::websecurityscanner::v1::GetFindingRequest const& request)
+      override;
 
-  StreamRange<google::cloud::websecurityscanner::v1::Finding>
-  ListFindings(google::cloud::websecurityscanner::v1::ListFindingsRequest request) override;
+  StreamRange<google::cloud::websecurityscanner::v1::Finding> ListFindings(
+      google::cloud::websecurityscanner::v1::ListFindingsRequest request)
+      override;
 
   StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-  ListFindingTypeStats(google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const& request) override;
+  ListFindingTypeStats(
+      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

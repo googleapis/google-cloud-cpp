@@ -28,15 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-IntentsTracingStub::IntentsTracingStub(
-    std::shared_ptr<IntentsStub> child)
+IntentsTracingStub::IntentsTracingStub(std::shared_ptr<IntentsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse> IntentsTracingStub::ListIntents(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse>
+IntentsTracingStub::ListIntents(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListIntentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "ListIntents");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "ListIntents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,32 +44,34 @@ StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse> IntentsTracingStub:
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent> IntentsTracingStub::GetIntent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetIntentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "GetIntent");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "GetIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIntent(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsTracingStub::CreateIntent(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsTracingStub::CreateIntent(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateIntentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "CreateIntent");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "CreateIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateIntent(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Intent> IntentsTracingStub::UpdateIntent(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Intent>
+IntentsTracingStub::UpdateIntent(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateIntentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "UpdateIntent");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "UpdateIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -77,10 +79,10 @@ StatusOr<google::cloud::dialogflow::v2::Intent> IntentsTracingStub::UpdateIntent
 }
 
 Status IntentsTracingStub::DeleteIntent(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteIntentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "DeleteIntent");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "DeleteIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -89,59 +91,62 @@ Status IntentsTracingStub::DeleteIntent(
 
 future<StatusOr<google::longrunning::Operation>>
 IntentsTracingStub::AsyncBatchUpdateIntents(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "BatchUpdateIntents");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "BatchUpdateIntents");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchUpdateIntents(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncBatchUpdateIntents(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-IntentsTracingStub::BatchUpdateIntents(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "BatchUpdateIntents");
+StatusOr<google::longrunning::Operation> IntentsTracingStub::BatchUpdateIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "BatchUpdateIntents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchUpdateIntents(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchUpdateIntents(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 IntentsTracingStub::AsyncBatchDeleteIntents(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "BatchDeleteIntents");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "BatchDeleteIntents");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchDeleteIntents(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncBatchDeleteIntents(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-IntentsTracingStub::BatchDeleteIntents(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "BatchDeleteIntents");
+StatusOr<google::longrunning::Operation> IntentsTracingStub::BatchDeleteIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "BatchDeleteIntents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchDeleteIntents(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchDeleteIntents(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> IntentsTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+IntentsTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -149,21 +154,22 @@ StatusOr<google::cloud::location::ListLocationsResponse> IntentsTracingStub::Lis
 }
 
 StatusOr<google::cloud::location::Location> IntentsTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> IntentsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+IntentsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -171,10 +177,10 @@ StatusOr<google::longrunning::ListOperationsResponse> IntentsTracingStub::ListOp
 }
 
 StatusOr<google::longrunning::Operation> IntentsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -182,10 +188,10 @@ StatusOr<google::longrunning::Operation> IntentsTracingStub::GetOperation(
 }
 
 Status IntentsTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Intents",
+                                     "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -202,8 +208,7 @@ IntentsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -216,8 +221,8 @@ future<Status> IntentsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

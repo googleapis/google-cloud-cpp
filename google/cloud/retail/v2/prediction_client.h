@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_PREDICTION_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_PREDICTION_CLIENT_H
 
+#include "google/cloud/retail/v2/prediction_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/retail/v2/prediction_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PredictionServiceClient {
  public:
-  explicit PredictionServiceClient(std::shared_ptr<PredictionServiceConnection> connection, Options opts = {});
+  explicit PredictionServiceClient(
+      std::shared_ptr<PredictionServiceConnection> connection,
+      Options opts = {});
   ~PredictionServiceClient();
 
   ///@{
@@ -75,10 +77,12 @@ class PredictionServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(PredictionServiceClient const& a, PredictionServiceClient const& b) {
+  friend bool operator==(PredictionServiceClient const& a,
+                         PredictionServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PredictionServiceClient const& a, PredictionServiceClient const& b) {
+  friend bool operator!=(PredictionServiceClient const& a,
+                         PredictionServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,8 +114,9 @@ class PredictionServiceClient {
   /// [google.cloud.retail.v2.PredictResponse]: @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L194}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::PredictResponse>
-  Predict(google::cloud::retail::v2::PredictRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
+      google::cloud::retail::v2::PredictRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -146,8 +151,8 @@ class PredictionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +191,8 @@ class PredictionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +218,8 @@ class PredictionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -245,8 +250,9 @@ class PredictionServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<PredictionServiceConnection> connection_;

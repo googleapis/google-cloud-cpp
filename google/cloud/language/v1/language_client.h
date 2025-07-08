@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_LANGUAGE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_LANGUAGE_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/language/v1/language_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LanguageServiceClient {
  public:
-  explicit LanguageServiceClient(std::shared_ptr<LanguageServiceConnection> connection, Options opts = {});
+  explicit LanguageServiceClient(
+      std::shared_ptr<LanguageServiceConnection> connection, Options opts = {});
   ~LanguageServiceClient();
 
   ///@{
@@ -75,10 +76,12 @@ class LanguageServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LanguageServiceClient const& a, LanguageServiceClient const& b) {
+  friend bool operator==(LanguageServiceClient const& a,
+                         LanguageServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LanguageServiceClient const& a, LanguageServiceClient const& b) {
+  friend bool operator!=(LanguageServiceClient const& a,
+                         LanguageServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -107,7 +110,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v1::Document const& document, google::cloud::language::v1::EncodingType encoding_type, Options opts = {});
+  AnalyzeSentiment(google::cloud::language::v1::Document const& document,
+                   google::cloud::language::v1::EncodingType encoding_type,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -132,7 +137,8 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v1::Document const& document, Options opts = {});
+  AnalyzeSentiment(google::cloud::language::v1::Document const& document,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -162,7 +168,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
-  AnalyzeSentiment(google::cloud::language::v1::AnalyzeSentimentRequest const& request, Options opts = {});
+  AnalyzeSentiment(
+      google::cloud::language::v1::AnalyzeSentimentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -190,7 +198,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v1::Document const& document, google::cloud::language::v1::EncodingType encoding_type, Options opts = {});
+  AnalyzeEntities(google::cloud::language::v1::Document const& document,
+                  google::cloud::language::v1::EncodingType encoding_type,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -217,7 +227,8 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v1::Document const& document, Options opts = {});
+  AnalyzeEntities(google::cloud::language::v1::Document const& document,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -249,7 +260,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
-  AnalyzeEntities(google::cloud::language::v1::AnalyzeEntitiesRequest const& request, Options opts = {});
+  AnalyzeEntities(
+      google::cloud::language::v1::AnalyzeEntitiesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -279,7 +292,10 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
-  AnalyzeEntitySentiment(google::cloud::language::v1::Document const& document, google::cloud::language::v1::EncodingType encoding_type, Options opts = {});
+  AnalyzeEntitySentiment(
+      google::cloud::language::v1::Document const& document,
+      google::cloud::language::v1::EncodingType encoding_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -308,7 +324,8 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
-  AnalyzeEntitySentiment(google::cloud::language::v1::Document const& document, Options opts = {});
+  AnalyzeEntitySentiment(google::cloud::language::v1::Document const& document,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -342,7 +359,9 @@ class LanguageServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
-  AnalyzeEntitySentiment(google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request, Options opts = {});
+  AnalyzeEntitySentiment(
+      google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -369,8 +388,10 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.AnalyzeSyntaxResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1099}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
-  AnalyzeSyntax(google::cloud::language::v1::Document const& document, google::cloud::language::v1::EncodingType encoding_type, Options opts = {});
+  StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
+      google::cloud::language::v1::Document const& document,
+      google::cloud::language::v1::EncodingType encoding_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -396,8 +417,8 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.AnalyzeSyntaxResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1099}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
-  AnalyzeSyntax(google::cloud::language::v1::Document const& document, Options opts = {});
+  StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
+      google::cloud::language::v1::Document const& document, Options opts = {});
 
   // clang-format off
   ///
@@ -428,8 +449,9 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.AnalyzeSyntaxResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1099}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
-  AnalyzeSyntax(google::cloud::language::v1::AnalyzeSyntaxRequest const& request, Options opts = {});
+  StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
+      google::cloud::language::v1::AnalyzeSyntaxRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -453,8 +475,8 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1124}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::ClassifyTextResponse>
-  ClassifyText(google::cloud::language::v1::Document const& document, Options opts = {});
+  StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
+      google::cloud::language::v1::Document const& document, Options opts = {});
 
   // clang-format off
   ///
@@ -483,8 +505,9 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1124}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::ClassifyTextResponse>
-  ClassifyText(google::cloud::language::v1::ClassifyTextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
+      google::cloud::language::v1::ClassifyTextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -508,8 +531,8 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1136}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::ModerateTextResponse>
-  ModerateText(google::cloud::language::v1::Document const& document, Options opts = {});
+  StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
+      google::cloud::language::v1::Document const& document, Options opts = {});
 
   // clang-format off
   ///
@@ -538,8 +561,9 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1136}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::ModerateTextResponse>
-  ModerateText(google::cloud::language::v1::ModerateTextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
+      google::cloud::language::v1::ModerateTextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -566,8 +590,12 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1181}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::AnnotateTextResponse>
-  AnnotateText(google::cloud::language::v1::Document const& document, google::cloud::language::v1::AnnotateTextRequest::Features const& features, google::cloud::language::v1::EncodingType encoding_type, Options opts = {});
+  StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
+      google::cloud::language::v1::Document const& document,
+      google::cloud::language::v1::AnnotateTextRequest::Features const&
+          features,
+      google::cloud::language::v1::EncodingType encoding_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -593,8 +621,11 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1181}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::AnnotateTextResponse>
-  AnnotateText(google::cloud::language::v1::Document const& document, google::cloud::language::v1::AnnotateTextRequest::Features const& features, Options opts = {});
+  StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
+      google::cloud::language::v1::Document const& document,
+      google::cloud::language::v1::AnnotateTextRequest::Features const&
+          features,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -624,8 +655,9 @@ class LanguageServiceClient {
   /// [google.cloud.language.v1.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1181}
   ///
   // clang-format on
-  StatusOr<google::cloud::language::v1::AnnotateTextResponse>
-  AnnotateText(google::cloud::language::v1::AnnotateTextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
+      google::cloud::language::v1::AnnotateTextRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<LanguageServiceConnection> connection_;

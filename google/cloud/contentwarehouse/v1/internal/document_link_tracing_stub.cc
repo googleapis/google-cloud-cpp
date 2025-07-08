@@ -32,55 +32,67 @@ DocumentLinkServiceTracingStub::DocumentLinkServiceTracingStub(
     std::shared_ptr<DocumentLinkServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse> DocumentLinkServiceTracingStub::ListLinkedTargets(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentLinkService", "ListLinkedTargets");
+StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
+DocumentLinkServiceTracingStub::ListLinkedTargets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.DocumentLinkService",
+      "ListLinkedTargets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListLinkedTargets(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListLinkedTargets(context, options, request));
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse> DocumentLinkServiceTracingStub::ListLinkedSources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentLinkService", "ListLinkedSources");
+StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
+DocumentLinkServiceTracingStub::ListLinkedSources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.DocumentLinkService",
+      "ListLinkedSources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListLinkedSources(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListLinkedSources(context, options, request));
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::DocumentLink> DocumentLinkServiceTracingStub::CreateDocumentLink(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentLinkService", "CreateDocumentLink");
+StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
+DocumentLinkServiceTracingStub::CreateDocumentLink(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.DocumentLinkService",
+      "CreateDocumentLink");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateDocumentLink(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateDocumentLink(context, options, request));
 }
 
 Status DocumentLinkServiceTracingStub::DeleteDocumentLink(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentLinkService", "DeleteDocumentLink");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.DocumentLinkService",
+      "DeleteDocumentLink");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteDocumentLink(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteDocumentLink(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> DocumentLinkServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+DocumentLinkServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.contentwarehouse.v1.DocumentLinkService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.DocumentLinkService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

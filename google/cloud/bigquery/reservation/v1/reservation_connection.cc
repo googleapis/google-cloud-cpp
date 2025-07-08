@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/reservation/v1/reservation_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_connection_impl.h"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_option_defaults.h"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_stub_factory.h"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_tracing_connection.h"
 #include "google/cloud/bigquery/reservation/v1/reservation_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -44,8 +44,10 @@ ReservationServiceConnection::CreateReservation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::reservation::v1::Reservation> ReservationServiceConnection::ListReservations(
-    google::cloud::bigquery::reservation::v1::ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceConnection::ListReservations(
+    google::cloud::bigquery::reservation::v1::
+        ListReservationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Reservation>>();
 }
@@ -56,8 +58,7 @@ ReservationServiceConnection::GetReservation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ReservationServiceConnection::DeleteReservation(
+Status ReservationServiceConnection::DeleteReservation(
     google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -70,49 +71,58 @@ ReservationServiceConnection::UpdateReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnection::FailoverReservation(
-    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&) {
+    google::cloud::bigquery::reservation::v1::
+        FailoverReservationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnection::CreateCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest const&) {
+    google::cloud::bigquery::reservation::v1::
+        CreateCapacityCommitmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment> ReservationServiceConnection::ListCapacityCommitments(
-    google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>>();
+StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
+ReservationServiceConnection::ListCapacityCommitments(
+    google::cloud::bigquery::reservation::v1::
+        ListCapacityCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::bigquery::reservation::v1::CapacityCommitment>>();
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnection::GetCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest const&) {
+    google::cloud::bigquery::reservation::v1::
+        GetCapacityCommitmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ReservationServiceConnection::DeleteCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest const&) {
+Status ReservationServiceConnection::DeleteCapacityCommitment(
+    google::cloud::bigquery::reservation::v1::
+        DeleteCapacityCommitmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnection::UpdateCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest const&) {
+    google::cloud::bigquery::reservation::v1::
+        UpdateCapacityCommitmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
+StatusOr<
+    google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
 ReservationServiceConnection::SplitCapacityCommitment(
-    google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest const&) {
+    google::cloud::bigquery::reservation::v1::
+        SplitCapacityCommitmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnection::MergeCapacityCommitments(
-    google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest const&) {
+    google::cloud::bigquery::reservation::v1::
+        MergeCapacityCommitmentsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -122,26 +132,31 @@ ReservationServiceConnection::CreateAssignment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::reservation::v1::Assignment> ReservationServiceConnection::ListAssignments(
-    google::cloud::bigquery::reservation::v1::ListAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceConnection::ListAssignments(
+    google::cloud::bigquery::reservation::v1::
+        ListAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>();
 }
 
-Status
-ReservationServiceConnection::DeleteAssignment(
+Status ReservationServiceConnection::DeleteAssignment(
     google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::reservation::v1::Assignment> ReservationServiceConnection::SearchAssignments(
-    google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceConnection::SearchAssignments(
+    google::cloud::bigquery::reservation::v1::
+        SearchAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>();
 }
 
-StreamRange<google::cloud::bigquery::reservation::v1::Assignment> ReservationServiceConnection::SearchAllAssignments(
-    google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceConnection::SearchAllAssignments(
+    google::cloud::bigquery::reservation::v1::
+        SearchAllAssignmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::reservation::v1::Assignment>>();
 }
@@ -166,24 +181,29 @@ ReservationServiceConnection::GetBiReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceConnection::UpdateBiReservation(
-    google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&) {
+    google::cloud::bigquery::reservation::v1::
+        UpdateBiReservationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ReservationServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ReservationServicePolicyOptionList>(options,
+                                                                     __func__);
   options = bigquery_reservation_v1_internal::ReservationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = bigquery_reservation_v1_internal::CreateDefaultReservationServiceStub(
-    std::move(auth), options);
-  return bigquery_reservation_v1_internal::MakeReservationServiceTracingConnection(
-      std::make_shared<bigquery_reservation_v1_internal::ReservationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      bigquery_reservation_v1_internal::CreateDefaultReservationServiceStub(
+          std::move(auth), options);
+  return bigquery_reservation_v1_internal::
+      MakeReservationServiceTracingConnection(
+          std::make_shared<bigquery_reservation_v1_internal::
+                               ReservationServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

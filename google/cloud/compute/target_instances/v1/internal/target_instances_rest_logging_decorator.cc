@@ -29,38 +29,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetInstancesRestLogging::TargetInstancesRestLogging(
     std::shared_ptr<TargetInstancesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
 TargetInstancesRestLogging::AggregatedListTargetInstances(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        AggregatedListTargetInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest const& request) {
-        return child_->AggregatedListTargetInstances(rest_context, options, request);
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_instances::v1::
+                 AggregatedListTargetInstancesRequest const& request) {
+        return child_->AggregatedListTargetInstances(rest_context, options,
+                                                     request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestLogging::AsyncDeleteTargetInstance(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_instances::v1::
+        DeleteTargetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request) {
-        return child_->AsyncDeleteTargetInstance(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_instances::v1::
+                 DeleteTargetInstanceRequest const& request) {
+        return child_->AsyncDeleteTargetInstance(cq, std::move(rest_context),
+                                                 std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -68,13 +71,13 @@ TargetInstancesRestLogging::AsyncDeleteTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesRestLogging::DeleteTargetInstance(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        DeleteTargetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_instances::v1::
+                 DeleteTargetInstanceRequest const& request) {
         return child_->DeleteTargetInstance(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -82,13 +85,13 @@ TargetInstancesRestLogging::DeleteTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
 TargetInstancesRestLogging::GetTargetInstance(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        GetTargetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_instances::v1::
+                 GetTargetInstanceRequest const& request) {
         return child_->GetTargetInstance(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -96,17 +99,19 @@ TargetInstancesRestLogging::GetTargetInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestLogging::AsyncInsertTargetInstance(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_instances::v1::
+        InsertTargetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request) {
-        return child_->AsyncInsertTargetInstance(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_instances::v1::
+                 InsertTargetInstanceRequest const& request) {
+        return child_->AsyncInsertTargetInstance(cq, std::move(rest_context),
+                                                 std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,13 +119,13 @@ TargetInstancesRestLogging::AsyncInsertTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesRestLogging::InsertTargetInstance(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        InsertTargetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_instances::v1::
+                 InsertTargetInstanceRequest const& request) {
         return child_->InsertTargetInstance(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -128,13 +133,13 @@ TargetInstancesRestLogging::InsertTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
 TargetInstancesRestLogging::ListTargetInstances(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        ListTargetInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_instances::v1::
+                 ListTargetInstancesRequest const& request) {
         return child_->ListTargetInstances(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -142,17 +147,19 @@ TargetInstancesRestLogging::ListTargetInstances(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestLogging::AsyncSetSecurityPolicy(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request) {
-        return child_->AsyncSetSecurityPolicy(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::target_instances::v1::
+                 SetSecurityPolicyRequest const& request) {
+        return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context),
+                                              std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -160,13 +167,13 @@ TargetInstancesRestLogging::AsyncSetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesRestLogging::SetSecurityPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::target_instances::v1::
+                 SetSecurityPolicyRequest const& request) {
         return child_->SetSecurityPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -177,32 +184,35 @@ TargetInstancesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-TargetInstancesRestLogging::AsyncCancelOperation(
+future<Status> TargetInstancesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

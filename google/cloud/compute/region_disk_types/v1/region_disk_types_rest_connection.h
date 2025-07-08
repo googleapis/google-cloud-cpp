@@ -39,19 +39,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * should be passed as an argument to the constructor of RegionDiskTypesClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `RegionDiskTypesConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `RegionDiskTypesConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::RestOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::compute_region_disk_types_v1::RegionDiskTypesPolicyOptionList`
+ * -
+ * `google::cloud::compute_region_disk_types_v1::RegionDiskTypesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `RegionDiskTypesConnection` created by
- * this function.
+ * @param options (optional) Configure the `RegionDiskTypesConnection` created
+ * by this function.
  */
 std::shared_ptr<RegionDiskTypesConnection> MakeRegionDiskTypesConnectionRest(
     Options options = {});

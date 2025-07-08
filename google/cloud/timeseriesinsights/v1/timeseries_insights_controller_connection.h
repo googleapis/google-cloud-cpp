@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_TIMESERIES_INSIGHTS_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_TIMESERIES_INSIGHTS_CONTROLLER_CONNECTION_H
 
+#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_retry_traits.h"
+#include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_retry_traits.h"
-#include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/timeseriesinsights/v1/timeseries_insights.pb.h>
 #include <memory>
@@ -36,14 +36,17 @@ namespace timeseriesinsights_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TimeseriesInsightsControllerConnection`.
-class TimeseriesInsightsControllerRetryPolicy : public ::google::cloud::RetryPolicy {
+class TimeseriesInsightsControllerRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TimeseriesInsightsControllerRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<TimeseriesInsightsControllerRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `TimeseriesInsightsControllerConnection` based on counting errors.
+ * A retry policy for `TimeseriesInsightsControllerConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +55,8 @@ class TimeseriesInsightsControllerRetryPolicy : public ::google::cloud::RetryPol
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TimeseriesInsightsControllerLimitedErrorCountRetryPolicy : public TimeseriesInsightsControllerRetryPolicy {
+class TimeseriesInsightsControllerLimitedErrorCountRetryPolicy
+    : public TimeseriesInsightsControllerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +65,19 @@ class TimeseriesInsightsControllerLimitedErrorCountRetryPolicy : public Timeseri
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit TimeseriesInsightsControllerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit TimeseriesInsightsControllerLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   TimeseriesInsightsControllerLimitedErrorCountRetryPolicy(
       TimeseriesInsightsControllerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TimeseriesInsightsControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TimeseriesInsightsControllerLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   TimeseriesInsightsControllerLimitedErrorCountRetryPolicy(
-      TimeseriesInsightsControllerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TimeseriesInsightsControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      TimeseriesInsightsControllerLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : TimeseriesInsightsControllerLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -80,8 +88,10 @@ class TimeseriesInsightsControllerLimitedErrorCountRetryPolicy : public Timeseri
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TimeseriesInsightsControllerRetryPolicy> clone() const override {
-    return std::make_unique<TimeseriesInsightsControllerLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<TimeseriesInsightsControllerRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        TimeseriesInsightsControllerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -89,11 +99,14 @@ class TimeseriesInsightsControllerLimitedErrorCountRetryPolicy : public Timeseri
   using BaseType = TimeseriesInsightsControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<timeseriesinsights_v1_internal::TimeseriesInsightsControllerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      timeseriesinsights_v1_internal::TimeseriesInsightsControllerRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `TimeseriesInsightsControllerConnection` based on elapsed time.
+ * A retry policy for `TimeseriesInsightsControllerConnection` based on elapsed
+ * time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -102,7 +115,8 @@ class TimeseriesInsightsControllerLimitedErrorCountRetryPolicy : public Timeseri
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TimeseriesInsightsControllerLimitedTimeRetryPolicy : public TimeseriesInsightsControllerRetryPolicy {
+class TimeseriesInsightsControllerLimitedTimeRetryPolicy
+    : public TimeseriesInsightsControllerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +141,16 @@ class TimeseriesInsightsControllerLimitedTimeRetryPolicy : public TimeseriesInsi
   template <typename DurationRep, typename DurationPeriod>
   explicit TimeseriesInsightsControllerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TimeseriesInsightsControllerLimitedTimeRetryPolicy(TimeseriesInsightsControllerLimitedTimeRetryPolicy&& rhs) noexcept
-    : TimeseriesInsightsControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TimeseriesInsightsControllerLimitedTimeRetryPolicy(TimeseriesInsightsControllerLimitedTimeRetryPolicy const& rhs) noexcept
-    : TimeseriesInsightsControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TimeseriesInsightsControllerLimitedTimeRetryPolicy(
+      TimeseriesInsightsControllerLimitedTimeRetryPolicy&& rhs) noexcept
+      : TimeseriesInsightsControllerLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  TimeseriesInsightsControllerLimitedTimeRetryPolicy(
+      TimeseriesInsightsControllerLimitedTimeRetryPolicy const& rhs) noexcept
+      : TimeseriesInsightsControllerLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,7 +163,8 @@ class TimeseriesInsightsControllerLimitedTimeRetryPolicy : public TimeseriesInsi
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TimeseriesInsightsControllerRetryPolicy> clone() const override {
+  std::unique_ptr<TimeseriesInsightsControllerRetryPolicy> clone()
+      const override {
     return std::make_unique<TimeseriesInsightsControllerLimitedTimeRetryPolicy>(
         maximum_duration());
   }
@@ -154,20 +173,25 @@ class TimeseriesInsightsControllerLimitedTimeRetryPolicy : public TimeseriesInsi
   using BaseType = TimeseriesInsightsControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<timeseriesinsights_v1_internal::TimeseriesInsightsControllerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      timeseriesinsights_v1_internal::TimeseriesInsightsControllerRetryTraits>
+      impl_;
 };
 
 /**
- * The `TimeseriesInsightsControllerConnection` object for `TimeseriesInsightsControllerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `TimeseriesInsightsControllerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `TimeseriesInsightsControllerConnection` object for
  * `TimeseriesInsightsControllerClient`.
  *
- * To create a concrete instance, see `MakeTimeseriesInsightsControllerConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `TimeseriesInsightsControllerClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TimeseriesInsightsControllerClient`.
  *
- * For mocking, see `timeseriesinsights_v1_mocks::MockTimeseriesInsightsControllerConnection`.
+ * To create a concrete instance, see
+ * `MakeTimeseriesInsightsControllerConnection()`.
+ *
+ * For mocking, see
+ * `timeseriesinsights_v1_mocks::MockTimeseriesInsightsControllerConnection`.
  */
 class TimeseriesInsightsControllerConnection {
  public:
@@ -176,50 +200,63 @@ class TimeseriesInsightsControllerConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::timeseriesinsights::v1::DataSet>
-  ListDataSets(google::cloud::timeseriesinsights::v1::ListDataSetsRequest request);
+  ListDataSets(
+      google::cloud::timeseriesinsights::v1::ListDataSetsRequest request);
 
   virtual StatusOr<google::cloud::timeseriesinsights::v1::DataSet>
-  CreateDataSet(google::cloud::timeseriesinsights::v1::CreateDataSetRequest const& request);
+  CreateDataSet(
+      google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
+          request);
 
-  virtual Status
-  DeleteDataSet(google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const& request);
+  virtual Status DeleteDataSet(
+      google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
+          request);
 
   virtual StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-  AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const& request);
+  AppendEvents(google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
+                   request);
 
   virtual StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-  QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const& request);
+  QueryDataSet(google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
+                   request);
 
   virtual StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-  EvaluateSlice(google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const& request);
+  EvaluateSlice(
+      google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
+          request);
 
   virtual StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
-  EvaluateTimeseries(google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const& request);
+  EvaluateTimeseries(
+      google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
+          request);
 };
 
 /**
- * A factory function to construct an object of type `TimeseriesInsightsControllerConnection`.
+ * A factory function to construct an object of type
+ * `TimeseriesInsightsControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of TimeseriesInsightsControllerClient.
+ * should be passed as an argument to the constructor of
+ * TimeseriesInsightsControllerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `TimeseriesInsightsControllerConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `TimeseriesInsightsControllerConnection`. Expected options are any
+ * of the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::timeseriesinsights_v1::TimeseriesInsightsControllerPolicyOptionList`
+ * -
+ * `google::cloud::timeseriesinsights_v1::TimeseriesInsightsControllerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `TimeseriesInsightsControllerConnection` created by
- * this function.
+ * @param options (optional) Configure the
+ * `TimeseriesInsightsControllerConnection` created by this function.
  */
-std::shared_ptr<TimeseriesInsightsControllerConnection> MakeTimeseriesInsightsControllerConnection(
-    Options options = {});
+std::shared_ptr<TimeseriesInsightsControllerConnection>
+MakeTimeseriesInsightsControllerConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace timeseriesinsights_v1

@@ -34,8 +34,10 @@ using ::google::cloud::datastream_v1::DatastreamPollingPolicyOption;
 /// @deprecated Use datastream_v1::DatastreamBackoffPolicyOption directly.
 using ::google::cloud::datastream_v1::DatastreamBackoffPolicyOption;
 
-/// @deprecated Use datastream_v1::DatastreamConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::datastream_v1::DatastreamConnectionIdempotencyPolicyOption;
+/// @deprecated Use datastream_v1::DatastreamConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::datastream_v1::
+    DatastreamConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use datastream_v1::DatastreamPolicyOptionList directly.
 using ::google::cloud::datastream_v1::DatastreamPolicyOptionList;

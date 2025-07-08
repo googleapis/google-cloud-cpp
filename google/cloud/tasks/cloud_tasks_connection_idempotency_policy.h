@@ -26,8 +26,10 @@ namespace cloud {
 namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use tasks_v2::MakeDefaultCloudTasksConnectionIdempotencyPolicy directly.
-using ::google::cloud::tasks_v2::MakeDefaultCloudTasksConnectionIdempotencyPolicy;
+/// @deprecated Use tasks_v2::MakeDefaultCloudTasksConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::tasks_v2::
+    MakeDefaultCloudTasksConnectionIdempotencyPolicy;
 
 /// @deprecated Use tasks_v2::CloudTasksConnectionIdempotencyPolicy directly.
 using ::google::cloud::tasks_v2::CloudTasksConnectionIdempotencyPolicy;

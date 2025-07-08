@@ -36,23 +36,24 @@ class PipelineServiceTracingConnection
   ~PipelineServiceTracingConnection() override = default;
 
   explicit PipelineServiceTracingConnection(
-    std::shared_ptr<contentwarehouse_v1::PipelineServiceConnection> child);
+      std::shared_ptr<contentwarehouse_v1::PipelineServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
+  RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const&
+                  request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RunPipeline(NoAwaitTag,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RunPipeline(
+      NoAwaitTag,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(
-      google::longrunning::Operation const& operation) override;
+  RunPipeline(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<contentwarehouse_v1::PipelineServiceConnection> child_;

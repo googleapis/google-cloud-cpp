@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EntityServiceClient {
  public:
-  explicit EntityServiceClient(std::shared_ptr<EntityServiceConnection> connection, Options opts = {});
+  explicit EntityServiceClient(
+      std::shared_ptr<EntityServiceConnection> connection, Options opts = {});
   ~EntityServiceClient();
 
   ///@{
@@ -74,10 +75,12 @@ class EntityServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EntityServiceClient const& a, EntityServiceClient const& b) {
+  friend bool operator==(EntityServiceClient const& a,
+                         EntityServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EntityServiceClient const& a, EntityServiceClient const& b) {
+  friend bool operator!=(EntityServiceClient const& a,
+                         EntityServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -107,8 +110,8 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.Watchlist]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L87}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  GetWatchlist(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Watchlist> GetWatchlist(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -137,8 +140,9 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.Watchlist]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L87}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  GetWatchlist(google::cloud::chronicle::v1::GetWatchlistRequest const& request, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Watchlist> GetWatchlist(
+      google::cloud::chronicle::v1::GetWatchlistRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -172,8 +176,8 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.Watchlist]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L87}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::Watchlist>
-  ListWatchlists(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::Watchlist> ListWatchlists(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -211,8 +215,9 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.Watchlist]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L87}
   ///
   // clang-format on
-  StreamRange<google::cloud::chronicle::v1::Watchlist>
-  ListWatchlists(google::cloud::chronicle::v1::ListWatchlistsRequest request, Options opts = {});
+  StreamRange<google::cloud::chronicle::v1::Watchlist> ListWatchlists(
+      google::cloud::chronicle::v1::ListWatchlistsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -244,8 +249,10 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.Watchlist]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L87}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  CreateWatchlist(std::string const& parent, google::cloud::chronicle::v1::Watchlist const& watchlist, std::string const& watchlist_id, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Watchlist> CreateWatchlist(
+      std::string const& parent,
+      google::cloud::chronicle::v1::Watchlist const& watchlist,
+      std::string const& watchlist_id, Options opts = {});
 
   // clang-format off
   ///
@@ -275,8 +282,9 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.Watchlist]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L87}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  CreateWatchlist(google::cloud::chronicle::v1::CreateWatchlistRequest const& request, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Watchlist> CreateWatchlist(
+      google::cloud::chronicle::v1::CreateWatchlistRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -305,8 +313,9 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.Watchlist]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L87}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  UpdateWatchlist(google::cloud::chronicle::v1::Watchlist const& watchlist, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Watchlist> UpdateWatchlist(
+      google::cloud::chronicle::v1::Watchlist const& watchlist,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -335,8 +344,9 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.Watchlist]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L87}
   ///
   // clang-format on
-  StatusOr<google::cloud::chronicle::v1::Watchlist>
-  UpdateWatchlist(google::cloud::chronicle::v1::UpdateWatchlistRequest const& request, Options opts = {});
+  StatusOr<google::cloud::chronicle::v1::Watchlist> UpdateWatchlist(
+      google::cloud::chronicle::v1::UpdateWatchlistRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -362,8 +372,8 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.DeleteWatchlistRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L255}
   ///
   // clang-format on
-  Status
-  DeleteWatchlist(std::string const& name, bool force, Options opts = {});
+  Status DeleteWatchlist(std::string const& name, bool force,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -389,8 +399,9 @@ class EntityServiceClient {
   /// [google.cloud.chronicle.v1.DeleteWatchlistRequest]: @googleapis_reference_link{google/cloud/chronicle/v1/entity.proto#L255}
   ///
   // clang-format on
-  Status
-  DeleteWatchlist(google::cloud::chronicle::v1::DeleteWatchlistRequest const& request, Options opts = {});
+  Status DeleteWatchlist(
+      google::cloud::chronicle::v1::DeleteWatchlistRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +436,8 @@ class EntityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -465,8 +476,8 @@ class EntityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -492,8 +503,8 @@ class EntityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -524,8 +535,9 @@ class EntityServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -549,8 +561,7 @@ class EntityServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -579,8 +590,9 @@ class EntityServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -614,8 +626,7 @@ class EntityServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -654,8 +665,9 @@ class EntityServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<EntityServiceConnection> connection_;

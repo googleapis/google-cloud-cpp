@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_URL_MAPS_V1_INTERNAL_REGION_URL_MAPS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_URL_MAPS_V1_INTERNAL_REGION_URL_MAPS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_stub.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_retry_traits.h"
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_connection.h"
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,86 +44,102 @@ class RegionUrlMapsRestConnectionImpl
   ~RegionUrlMapsRestConnectionImpl() override = default;
 
   RegionUrlMapsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_url_maps_v1_internal::RegionUrlMapsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_region_url_maps_v1_internal::RegionUrlMapsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteUrlMap(google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          DeleteUrlMapRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteUrlMap(NoAwaitTag,
-      google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
+                      DeleteUrlMapRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-  GetUrlMap(google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertUrlMap(google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          InsertUrlMapRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertUrlMap(NoAwaitTag,
-      google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
+                      InsertUrlMapRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-  ListRegionUrlMaps(google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
+      google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchUrlMap(google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          PatchUrlMapRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchUrlMap(NoAwaitTag,
-      google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
+                      PatchUrlMapRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMap(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateUrlMap(google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
+      google::cloud::cpp::compute::region_url_maps::v1::
+          UpdateUrlMapRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateUrlMap(NoAwaitTag,
-      google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
+      NoAwaitTag, google::cloud::cpp::compute::region_url_maps::v1::
+                      UpdateUrlMapRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateUrlMap(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-  Validate(google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
+      google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&
+          request) override;
 
  private:
   static std::unique_ptr<compute_region_url_maps_v1::RegionUrlMapsRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()->clone();
+    return options
+        .get<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_region_url_maps_v1::RegionUrlMapsBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_region_url_maps_v1::RegionUrlMapsConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_region_url_maps_v1::RegionUrlMapsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_region_url_maps_v1::RegionUrlMapsConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_region_url_maps_v1::
+                 RegionUrlMapsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_region_url_maps_v1::RegionUrlMapsPollingPolicyOption>()->clone();
+    return options
+        .get<compute_region_url_maps_v1::RegionUrlMapsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_region_url_maps_v1_internal::RegionUrlMapsRestStub> stub_;
+  std::shared_ptr<compute_region_url_maps_v1_internal::RegionUrlMapsRestStub>
+      stub_;
   Options options_;
 };
 

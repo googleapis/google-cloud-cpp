@@ -26,43 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TargetHttpProxiesConnectionIdempotencyPolicy::~TargetHttpProxiesConnectionIdempotencyPolicy() = default;
+TargetHttpProxiesConnectionIdempotencyPolicy::
+    ~TargetHttpProxiesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TargetHttpProxiesConnectionIdempotencyPolicy>
 TargetHttpProxiesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TargetHttpProxiesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::AggregatedListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::AggregatedListTargetHttpProxiesRequest) {  // NOLINT
+Idempotency
+TargetHttpProxiesConnectionIdempotencyPolicy::AggregatedListTargetHttpProxies(
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        AggregatedListTargetHttpProxiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::DeleteTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest const&) {
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::DeleteTargetHttpProxy(
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        DeleteTargetHttpProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::GetTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::GetTargetHttpProxyRequest const&) {
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::GetTargetHttpProxy(
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        GetTargetHttpProxyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::InsertTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest const&) {
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::InsertTargetHttpProxy(
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        InsertTargetHttpProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::ListTargetHttpProxies(google::cloud::cpp::compute::target_http_proxies::v1::ListTargetHttpProxiesRequest) {  // NOLINT
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::ListTargetHttpProxies(
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        ListTargetHttpProxiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::PatchTargetHttpProxy(google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest const&) {
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::PatchTargetHttpProxy(
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        PatchTargetHttpProxyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::SetUrlMap(google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest const&) {
+Idempotency TargetHttpProxiesConnectionIdempotencyPolicy::SetUrlMap(
+    google::cloud::cpp::compute::target_http_proxies::v1::
+        SetUrlMapRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TargetHttpProxiesConnectionIdempotencyPolicy>
-    MakeDefaultTargetHttpProxiesConnectionIdempotencyPolicy() {
+MakeDefaultTargetHttpProxiesConnectionIdempotencyPolicy() {
   return std::make_unique<TargetHttpProxiesConnectionIdempotencyPolicy>();
 }
 

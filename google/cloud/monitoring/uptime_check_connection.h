@@ -33,10 +33,13 @@ using ::google::cloud::monitoring_v3::MakeUptimeCheckServiceConnection;
 /// @deprecated Use monitoring_v3::UptimeCheckServiceConnection directly.
 using ::google::cloud::monitoring_v3::UptimeCheckServiceConnection;
 
-/// @deprecated Use monitoring_v3::UptimeCheckServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::monitoring_v3::UptimeCheckServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// monitoring_v3::UptimeCheckServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::monitoring_v3::
+    UptimeCheckServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use monitoring_v3::UptimeCheckServiceLimitedTimeRetryPolicy directly.
+/// @deprecated Use monitoring_v3::UptimeCheckServiceLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::monitoring_v3::UptimeCheckServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use monitoring_v3::UptimeCheckServiceRetryPolicy directly.

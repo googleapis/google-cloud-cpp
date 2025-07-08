@@ -70,7 +70,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FirewallClient {
  public:
-  explicit FirewallClient(std::shared_ptr<FirewallConnection> connection, Options opts = {});
+  explicit FirewallClient(std::shared_ptr<FirewallConnection> connection,
+                          Options opts = {});
   ~FirewallClient();
 
   ///@{
@@ -127,8 +128,9 @@ class FirewallClient {
   /// [google.appengine.v1.ListIngressRulesRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L611}
   ///
   // clang-format on
-  StreamRange<google::appengine::v1::FirewallRule>
-  ListIngressRules(google::appengine::v1::ListIngressRulesRequest request, Options opts = {});
+  StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
+      google::appengine::v1::ListIngressRulesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -162,7 +164,9 @@ class FirewallClient {
   ///
   // clang-format on
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
-  BatchUpdateIngressRules(google::appengine::v1::BatchUpdateIngressRulesRequest const& request, Options opts = {});
+  BatchUpdateIngressRules(
+      google::appengine::v1::BatchUpdateIngressRulesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -191,8 +195,9 @@ class FirewallClient {
   /// [google.appengine.v1.FirewallRule]: @googleapis_reference_link{google/appengine/v1/firewall.proto#L29}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::FirewallRule>
-  CreateIngressRule(google::appengine::v1::CreateIngressRuleRequest const& request, Options opts = {});
+  StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
+      google::appengine::v1::CreateIngressRuleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -221,8 +226,9 @@ class FirewallClient {
   /// [google.appengine.v1.GetIngressRuleRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L673}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::FirewallRule>
-  GetIngressRule(google::appengine::v1::GetIngressRuleRequest const& request, Options opts = {});
+  StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
+      google::appengine::v1::GetIngressRuleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -251,8 +257,9 @@ class FirewallClient {
   /// [google.appengine.v1.UpdateIngressRuleRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L680}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::FirewallRule>
-  UpdateIngressRule(google::appengine::v1::UpdateIngressRuleRequest const& request, Options opts = {});
+  StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
+      google::appengine::v1::UpdateIngressRuleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -278,8 +285,9 @@ class FirewallClient {
   /// [google.appengine.v1.DeleteIngressRuleRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L693}
   ///
   // clang-format on
-  Status
-  DeleteIngressRule(google::appengine::v1::DeleteIngressRuleRequest const& request, Options opts = {});
+  Status DeleteIngressRule(
+      google::appengine::v1::DeleteIngressRuleRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<FirewallConnection> connection_;

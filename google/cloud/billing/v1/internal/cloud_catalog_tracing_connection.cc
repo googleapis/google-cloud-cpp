@@ -34,21 +34,25 @@ CloudCatalogTracingConnection::CloudCatalogTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::billing::v1::Service>
-CloudCatalogTracingConnection::ListServices(google::cloud::billing::v1::ListServicesRequest request) {
-  auto span = internal::MakeSpan("billing_v1::CloudCatalogConnection::ListServices");
+CloudCatalogTracingConnection::ListServices(
+    google::cloud::billing::v1::ListServicesRequest request) {
+  auto span =
+      internal::MakeSpan("billing_v1::CloudCatalogConnection::ListServices");
   internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::billing::v1::Service>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::billing::v1::Sku>
-CloudCatalogTracingConnection::ListSkus(google::cloud::billing::v1::ListSkusRequest request) {
-  auto span = internal::MakeSpan("billing_v1::CloudCatalogConnection::ListSkus");
+CloudCatalogTracingConnection::ListSkus(
+    google::cloud::billing::v1::ListSkusRequest request) {
+  auto span =
+      internal::MakeSpan("billing_v1::CloudCatalogConnection::ListSkus");
   internal::OTelScope scope(span);
   auto sr = child_->ListSkus(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::billing::v1::Sku>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

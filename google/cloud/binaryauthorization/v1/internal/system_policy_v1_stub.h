@@ -35,25 +35,30 @@ class SystemPolicyV1Stub {
  public:
   virtual ~SystemPolicyV1Stub() = 0;
 
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::binaryauthorization::v1::Policy>
+  GetSystemPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+          request) = 0;
 };
 
 class DefaultSystemPolicyV1Stub : public SystemPolicyV1Stub {
  public:
   explicit DefaultSystemPolicyV1Stub(
-      std::unique_ptr<google::cloud::binaryauthorization::v1::SystemPolicyV1::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::binaryauthorization::v1::SystemPolicyV1::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<google::cloud::binaryauthorization::v1::SystemPolicyV1::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::binaryauthorization::v1::SystemPolicyV1::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

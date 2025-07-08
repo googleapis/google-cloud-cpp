@@ -32,99 +32,119 @@ SessionEntityTypesTracingStub::SessionEntityTypesTracingStub(
     std::shared_ptr<SessionEntityTypesStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::v2::ListSessionEntityTypesResponse> SessionEntityTypesTracingStub::ListSessionEntityTypes(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "ListSessionEntityTypes");
+StatusOr<google::cloud::dialogflow::v2::ListSessionEntityTypesResponse>
+SessionEntityTypesTracingStub::ListSessionEntityTypes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes",
+                             "ListSessionEntityTypes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListSessionEntityTypes(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListSessionEntityTypes(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::SessionEntityType> SessionEntityTypesTracingStub::GetSessionEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
+SessionEntityTypesTracingStub::GetSessionEntityType(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "GetSessionEntityType");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.SessionEntityTypes", "GetSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetSessionEntityType(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetSessionEntityType(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::SessionEntityType> SessionEntityTypesTracingStub::CreateSessionEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "CreateSessionEntityType");
+StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
+SessionEntityTypesTracingStub::CreateSessionEntityType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes",
+                             "CreateSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateSessionEntityType(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateSessionEntityType(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::SessionEntityType> SessionEntityTypesTracingStub::UpdateSessionEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "UpdateSessionEntityType");
+StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
+SessionEntityTypesTracingStub::UpdateSessionEntityType(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes",
+                             "UpdateSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateSessionEntityType(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateSessionEntityType(context, options, request));
 }
 
 Status SessionEntityTypesTracingStub::DeleteSessionEntityType(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "DeleteSessionEntityType");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes",
+                             "DeleteSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteSessionEntityType(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteSessionEntityType(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> SessionEntityTypesTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+SessionEntityTypesTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.SessionEntityTypes", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> SessionEntityTypesTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+SessionEntityTypesTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.SessionEntityTypes", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> SessionEntityTypesTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+SessionEntityTypesTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.SessionEntityTypes", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> SessionEntityTypesTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+SessionEntityTypesTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.SessionEntityTypes", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -132,10 +152,10 @@ StatusOr<google::longrunning::Operation> SessionEntityTypesTracingStub::GetOpera
 }
 
 Status SessionEntityTypesTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.SessionEntityTypes", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

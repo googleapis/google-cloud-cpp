@@ -36,29 +36,31 @@ class ProjectServiceTracingConnection
   ~ProjectServiceTracingConnection() override = default;
 
   explicit ProjectServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::ProjectServiceConnection> child);
+      std::shared_ptr<discoveryengine_v1::ProjectServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
+  ProvisionProject(
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ProvisionProject(NoAwaitTag,
-      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ProvisionProject(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(
-      google::longrunning::Operation const& operation) override;
+  ProvisionProject(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::ProjectServiceConnection> child_;

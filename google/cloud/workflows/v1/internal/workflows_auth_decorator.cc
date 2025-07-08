@@ -31,9 +31,9 @@ WorkflowsAuth::WorkflowsAuth(
     std::shared_ptr<WorkflowsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> WorkflowsAuth::ListWorkflows(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
+WorkflowsAuth::ListWorkflows(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> WorkflowsAuth::Lis
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsAuth::GetWorkflow(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +50,27 @@ StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsAuth::GetWorkflow(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsAuth::AsyncCreateWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateWorkflow(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateWorkflow(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsAuth::CreateWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkflowsAuth::CreateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateWorkflow(context, options, request);
@@ -80,28 +78,27 @@ WorkflowsAuth::CreateWorkflow(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsAuth::AsyncDeleteWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteWorkflow(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteWorkflow(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsAuth::DeleteWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkflowsAuth::DeleteWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteWorkflow(context, options, request);
@@ -109,45 +106,44 @@ WorkflowsAuth::DeleteWorkflow(
 
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsAuth::AsyncUpdateWorkflow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateWorkflow(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateWorkflow(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-WorkflowsAuth::UpdateWorkflow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+StatusOr<google::longrunning::Operation> WorkflowsAuth::UpdateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateWorkflow(context, options, request);
 }
 
-StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse> WorkflowsAuth::ListWorkflowRevisions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+WorkflowsAuth::ListWorkflowRevisions(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListWorkflowRevisions(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> WorkflowsAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+WorkflowsAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -155,17 +151,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> WorkflowsAuth::ListLoca
 }
 
 StatusOr<google::cloud::location::Location> WorkflowsAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> WorkflowsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+WorkflowsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -173,8 +168,7 @@ StatusOr<google::longrunning::ListOperationsResponse> WorkflowsAuth::ListOperati
 }
 
 StatusOr<google::longrunning::Operation> WorkflowsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -182,8 +176,7 @@ StatusOr<google::longrunning::Operation> WorkflowsAuth::GetOperation(
 }
 
 Status WorkflowsAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -197,15 +190,16 @@ WorkflowsAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -214,13 +208,14 @@ future<Status> WorkflowsAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

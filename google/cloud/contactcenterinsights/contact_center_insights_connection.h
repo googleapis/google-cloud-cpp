@@ -27,20 +27,32 @@ namespace cloud {
 namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use contactcenterinsights_v1::MakeContactCenterInsightsConnection directly.
-using ::google::cloud::contactcenterinsights_v1::MakeContactCenterInsightsConnection;
+/// @deprecated Use
+/// contactcenterinsights_v1::MakeContactCenterInsightsConnection directly.
+using ::google::cloud::contactcenterinsights_v1::
+    MakeContactCenterInsightsConnection;
 
-/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsConnection directly.
-using ::google::cloud::contactcenterinsights_v1::ContactCenterInsightsConnection;
+/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsConnection
+/// directly.
+using ::google::cloud::contactcenterinsights_v1::
+    ContactCenterInsightsConnection;
 
-/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::contactcenterinsights_v1::ContactCenterInsightsLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// contactcenterinsights_v1::ContactCenterInsightsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::contactcenterinsights_v1::
+    ContactCenterInsightsLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsLimitedTimeRetryPolicy directly.
-using ::google::cloud::contactcenterinsights_v1::ContactCenterInsightsLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// contactcenterinsights_v1::ContactCenterInsightsLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::contactcenterinsights_v1::
+    ContactCenterInsightsLimitedTimeRetryPolicy;
 
-/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsRetryPolicy directly.
-using ::google::cloud::contactcenterinsights_v1::ContactCenterInsightsRetryPolicy;
+/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsRetryPolicy
+/// directly.
+using ::google::cloud::contactcenterinsights_v1::
+    ContactCenterInsightsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights

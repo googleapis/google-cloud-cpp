@@ -25,15 +25,16 @@ namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FlowsClient::FlowsClient(
-    std::shared_ptr<FlowsConnection> connection, Options opts)
+FlowsClient::FlowsClient(std::shared_ptr<FlowsConnection> connection,
+                         Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FlowsClient::~FlowsClient() = default;
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-FlowsClient::CreateFlow(std::string const& parent, google::cloud::dialogflow::cx::v3::Flow const& flow, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsClient::CreateFlow(
+    std::string const& parent,
+    google::cloud::dialogflow::cx::v3::Flow const& flow, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreateFlowRequest request;
   request.set_parent(parent);
@@ -41,56 +42,59 @@ FlowsClient::CreateFlow(std::string const& parent, google::cloud::dialogflow::cx
   return connection_->CreateFlow(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-FlowsClient::CreateFlow(google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsClient::CreateFlow(
+    google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFlow(request);
 }
 
-Status
-FlowsClient::DeleteFlow(std::string const& name, Options opts) {
+Status FlowsClient::DeleteFlow(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::DeleteFlowRequest request;
   request.set_name(name);
   return connection_->DeleteFlow(request);
 }
 
-Status
-FlowsClient::DeleteFlow(google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request, Options opts) {
+Status FlowsClient::DeleteFlow(
+    google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFlow(request);
 }
 
-StreamRange<google::cloud::dialogflow::cx::v3::Flow>
-FlowsClient::ListFlows(std::string const& parent, Options opts) {
+StreamRange<google::cloud::dialogflow::cx::v3::Flow> FlowsClient::ListFlows(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::ListFlowsRequest request;
   request.set_parent(parent);
   return connection_->ListFlows(request);
 }
 
-StreamRange<google::cloud::dialogflow::cx::v3::Flow>
-FlowsClient::ListFlows(google::cloud::dialogflow::cx::v3::ListFlowsRequest request, Options opts) {
+StreamRange<google::cloud::dialogflow::cx::v3::Flow> FlowsClient::ListFlows(
+    google::cloud::dialogflow::cx::v3::ListFlowsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFlows(std::move(request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-FlowsClient::GetFlow(std::string const& name, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsClient::GetFlow(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::GetFlowRequest request;
   request.set_name(name);
   return connection_->GetFlow(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-FlowsClient::GetFlow(google::cloud::dialogflow::cx::v3::GetFlowRequest const& request, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsClient::GetFlow(
+    google::cloud::dialogflow::cx::v3::GetFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFlow(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-FlowsClient::UpdateFlow(google::cloud::dialogflow::cx::v3::Flow const& flow, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsClient::UpdateFlow(
+    google::cloud::dialogflow::cx::v3::Flow const& flow,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdateFlowRequest request;
   *request.mutable_flow() = flow;
@@ -98,48 +102,54 @@ FlowsClient::UpdateFlow(google::cloud::dialogflow::cx::v3::Flow const& flow, goo
   return connection_->UpdateFlow(request);
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Flow>
-FlowsClient::UpdateFlow(google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request, Options opts) {
+StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsClient::UpdateFlow(
+    google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFlow(request);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-FlowsClient::TrainFlow(std::string const& name, Options opts) {
+future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::TrainFlowRequest request;
   request.set_name(name);
   return connection_->TrainFlow(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FlowsClient::TrainFlow(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FlowsClient::TrainFlow(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::TrainFlowRequest request;
   request.set_name(name);
   return connection_->TrainFlow(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-FlowsClient::TrainFlow(google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request, Options opts) {
+future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TrainFlow(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FlowsClient::TrainFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FlowsClient::TrainFlow(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TrainFlow(NoAwaitTag{}, request);
 }
 
-future<StatusOr<google::protobuf::Struct>>
-FlowsClient::TrainFlow(google::longrunning::Operation const& operation, Options opts) {
+future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TrainFlow(operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-FlowsClient::ValidateFlow(google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request, Options opts) {
+FlowsClient::ValidateFlow(
+    google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateFlow(request);
 }
@@ -153,61 +163,74 @@ FlowsClient::GetFlowValidationResult(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-FlowsClient::GetFlowValidationResult(google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const& request, Options opts) {
+FlowsClient::GetFlowValidationResult(
+    google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFlowValidationResult(request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-FlowsClient::ImportFlow(google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request, Options opts) {
+FlowsClient::ImportFlow(
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportFlow(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FlowsClient::ImportFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FlowsClient::ImportFlow(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportFlow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-FlowsClient::ImportFlow(google::longrunning::Operation const& operation, Options opts) {
+FlowsClient::ImportFlow(google::longrunning::Operation const& operation,
+                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportFlow(operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-FlowsClient::ExportFlow(google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request, Options opts) {
+FlowsClient::ExportFlow(
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportFlow(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FlowsClient::ExportFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FlowsClient::ExportFlow(
+    NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportFlow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-FlowsClient::ExportFlow(google::longrunning::Operation const& operation, Options opts) {
+FlowsClient::ExportFlow(google::longrunning::Operation const& operation,
+                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportFlow(operation);
 }
 
-StreamRange<google::cloud::location::Location>
-FlowsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> FlowsClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-FlowsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> FlowsClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-FlowsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> FlowsClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -215,36 +238,35 @@ FlowsClient::ListOperations(std::string const& name, std::string const& filter, 
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-FlowsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> FlowsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-FlowsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> FlowsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-FlowsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> FlowsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-FlowsClient::CancelOperation(std::string const& name, Options opts) {
+Status FlowsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-FlowsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status FlowsClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

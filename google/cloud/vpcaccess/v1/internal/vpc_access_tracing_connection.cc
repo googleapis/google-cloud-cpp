@@ -34,7 +34,8 @@ VpcAccessServiceTracingConnection::VpcAccessServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
-VpcAccessServiceTracingConnection::CreateConnector(google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+VpcAccessServiceTracingConnection::CreateConnector(
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::CreateConnector");
   internal::OTelScope scope(span);
@@ -43,12 +44,13 @@ VpcAccessServiceTracingConnection::CreateConnector(google::cloud::vpcaccess::v1:
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceTracingConnection::CreateConnector(
-    NoAwaitTag, google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+    NoAwaitTag,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::CreateConnector");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateConnector(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateConnector(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
@@ -57,28 +59,32 @@ VpcAccessServiceTracingConnection::CreateConnector(
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::CreateConnector");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateConnector(operation));
+  return internal::EndSpan(std::move(span), child_->CreateConnector(operation));
 }
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
-VpcAccessServiceTracingConnection::GetConnector(google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
-  auto span = internal::MakeSpan("vpcaccess_v1::VpcAccessServiceConnection::GetConnector");
+VpcAccessServiceTracingConnection::GetConnector(
+    google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::GetConnector");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnector(request));
 }
 
 StreamRange<google::cloud::vpcaccess::v1::Connector>
-VpcAccessServiceTracingConnection::ListConnectors(google::cloud::vpcaccess::v1::ListConnectorsRequest request) {
-  auto span = internal::MakeSpan("vpcaccess_v1::VpcAccessServiceConnection::ListConnectors");
+VpcAccessServiceTracingConnection::ListConnectors(
+    google::cloud::vpcaccess::v1::ListConnectorsRequest request) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::ListConnectors");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnectors(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::vpcaccess::v1::Connector>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vpcaccess::v1::Connector>(std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-VpcAccessServiceTracingConnection::DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+VpcAccessServiceTracingConnection::DeleteConnector(
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
   internal::OTelScope scope(span);
@@ -87,12 +93,13 @@ VpcAccessServiceTracingConnection::DeleteConnector(google::cloud::vpcaccess::v1:
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceTracingConnection::DeleteConnector(
-    NoAwaitTag, google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+    NoAwaitTag,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteConnector(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteConnector(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
@@ -101,31 +108,36 @@ VpcAccessServiceTracingConnection::DeleteConnector(
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteConnector(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteConnector(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-VpcAccessServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("vpcaccess_v1::VpcAccessServiceConnection::ListLocations");
+VpcAccessServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-VpcAccessServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("vpcaccess_v1::VpcAccessServiceConnection::ListOperations");
+VpcAccessServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-VpcAccessServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("vpcaccess_v1::VpcAccessServiceConnection::GetOperation");
+VpcAccessServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

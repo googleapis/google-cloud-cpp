@@ -42,25 +42,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockIAMCredentialsConnection : public iam_credentials_v1::IAMCredentialsConnection {
+class MockIAMCredentialsConnection
+    : public iam_credentials_v1::IAMCredentialsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>,
-  GenerateAccessToken,
-  (google::iam::credentials::v1::GenerateAccessTokenRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>,
+      GenerateAccessToken,
+      (google::iam::credentials::v1::GenerateAccessTokenRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>,
-  GenerateIdToken,
-  (google::iam::credentials::v1::GenerateIdTokenRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>,
+      GenerateIdToken,
+      (google::iam::credentials::v1::GenerateIdTokenRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignBlobResponse>,
-  SignBlob,
-  (google::iam::credentials::v1::SignBlobRequest const& request), (override));
+              SignBlob,
+              (google::iam::credentials::v1::SignBlobRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignJwtResponse>,
-  SignJwt,
-  (google::iam::credentials::v1::SignJwtRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignJwtResponse>, SignJwt,
+              (google::iam::credentials::v1::SignJwtRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

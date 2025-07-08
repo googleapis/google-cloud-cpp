@@ -28,19 +28,28 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use video_livestream_v1::LivestreamServicePollingPolicyOption directly.
-using ::google::cloud::video_livestream_v1::LivestreamServicePollingPolicyOption;
+/// @deprecated Use video_livestream_v1::LivestreamServicePollingPolicyOption
+/// directly.
+using ::google::cloud::video_livestream_v1::
+    LivestreamServicePollingPolicyOption;
 
-/// @deprecated Use video_livestream_v1::LivestreamServiceBackoffPolicyOption directly.
-using ::google::cloud::video_livestream_v1::LivestreamServiceBackoffPolicyOption;
+/// @deprecated Use video_livestream_v1::LivestreamServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::video_livestream_v1::
+    LivestreamServiceBackoffPolicyOption;
 
-/// @deprecated Use video_livestream_v1::LivestreamServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::video_livestream_v1::LivestreamServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// video_livestream_v1::LivestreamServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::video_livestream_v1::
+    LivestreamServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use video_livestream_v1::LivestreamServicePolicyOptionList directly.
+/// @deprecated Use video_livestream_v1::LivestreamServicePolicyOptionList
+/// directly.
 using ::google::cloud::video_livestream_v1::LivestreamServicePolicyOptionList;
 
-/// @deprecated Use video_livestream_v1::LivestreamServiceRetryPolicyOption directly.
+/// @deprecated Use video_livestream_v1::LivestreamServiceRetryPolicyOption
+/// directly.
 using ::google::cloud::video_livestream_v1::LivestreamServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

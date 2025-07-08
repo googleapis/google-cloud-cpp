@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_CONNECT_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_CONNECT_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_connect_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_connect_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_connect.pb.h>
 #include <memory>
@@ -41,11 +41,16 @@ class SqlConnectServiceRestMetadata : public SqlConnectServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::GetConnectSettingsRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::GetConnectSettingsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse> GenerateEphemeralCert(
+  StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
+  GenerateEphemeralCert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::GenerateEphemeralCertRequest const& request)
+      override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

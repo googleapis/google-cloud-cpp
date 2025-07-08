@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DocumentServiceClient::DocumentServiceClient(
     std::shared_ptr<DocumentServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DocumentServiceClient::~DocumentServiceClient() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
@@ -41,7 +41,9 @@ DocumentServiceClient::GetDocument(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
-DocumentServiceClient::GetDocument(google::cloud::discoveryengine::v1::GetDocumentRequest const& request, Options opts) {
+DocumentServiceClient::GetDocument(
+    google::cloud::discoveryengine::v1::GetDocumentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDocument(request);
 }
@@ -55,13 +57,18 @@ DocumentServiceClient::ListDocuments(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Document>
-DocumentServiceClient::ListDocuments(google::cloud::discoveryengine::v1::ListDocumentsRequest request, Options opts) {
+DocumentServiceClient::ListDocuments(
+    google::cloud::discoveryengine::v1::ListDocumentsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListDocuments(std::move(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
-DocumentServiceClient::CreateDocument(std::string const& parent, google::cloud::discoveryengine::v1::Document const& document, std::string const& document_id, Options opts) {
+DocumentServiceClient::CreateDocument(
+    std::string const& parent,
+    google::cloud::discoveryengine::v1::Document const& document,
+    std::string const& document_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::CreateDocumentRequest request;
   request.set_parent(parent);
@@ -71,13 +78,17 @@ DocumentServiceClient::CreateDocument(std::string const& parent, google::cloud::
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
-DocumentServiceClient::CreateDocument(google::cloud::discoveryengine::v1::CreateDocumentRequest const& request, Options opts) {
+DocumentServiceClient::CreateDocument(
+    google::cloud::discoveryengine::v1::CreateDocumentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDocument(request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
-DocumentServiceClient::UpdateDocument(google::cloud::discoveryengine::v1::Document const& document, google::protobuf::FieldMask const& update_mask, Options opts) {
+DocumentServiceClient::UpdateDocument(
+    google::cloud::discoveryengine::v1::Document const& document,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::UpdateDocumentRequest request;
   *request.mutable_document() = document;
@@ -86,63 +97,77 @@ DocumentServiceClient::UpdateDocument(google::cloud::discoveryengine::v1::Docume
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
-DocumentServiceClient::UpdateDocument(google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request, Options opts) {
+DocumentServiceClient::UpdateDocument(
+    google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDocument(request);
 }
 
-Status
-DocumentServiceClient::DeleteDocument(std::string const& name, Options opts) {
+Status DocumentServiceClient::DeleteDocument(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::DeleteDocumentRequest request;
   request.set_name(name);
   return connection_->DeleteDocument(request);
 }
 
-Status
-DocumentServiceClient::DeleteDocument(google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request, Options opts) {
+Status DocumentServiceClient::DeleteDocument(
+    google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDocument(request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-DocumentServiceClient::ImportDocuments(google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request, Options opts) {
+DocumentServiceClient::ImportDocuments(
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportDocuments(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentServiceClient::ImportDocuments(NoAwaitTag, google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DocumentServiceClient::ImportDocuments(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportDocuments(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-DocumentServiceClient::ImportDocuments(google::longrunning::Operation const& operation, Options opts) {
+DocumentServiceClient::ImportDocuments(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportDocuments(operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-DocumentServiceClient::PurgeDocuments(google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request, Options opts) {
+DocumentServiceClient::PurgeDocuments(
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeDocuments(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentServiceClient::PurgeDocuments(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DocumentServiceClient::PurgeDocuments(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeDocuments(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-DocumentServiceClient::PurgeDocuments(google::longrunning::Operation const& operation, Options opts) {
+DocumentServiceClient::PurgeDocuments(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeDocuments(operation);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
-DocumentServiceClient::BatchGetDocumentsMetadata(std::string const& parent, Options opts) {
+DocumentServiceClient::BatchGetDocumentsMetadata(std::string const& parent,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest request;
   request.set_parent(parent);
@@ -150,13 +175,17 @@ DocumentServiceClient::BatchGetDocumentsMetadata(std::string const& parent, Opti
 }
 
 StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
-DocumentServiceClient::BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request, Options opts) {
+DocumentServiceClient::BatchGetDocumentsMetadata(
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchGetDocumentsMetadata(request);
 }
 
 StreamRange<google::longrunning::Operation>
-DocumentServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+DocumentServiceClient::ListOperations(std::string const& name,
+                                      std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -165,35 +194,36 @@ DocumentServiceClient::ListOperations(std::string const& name, std::string const
 }
 
 StreamRange<google::longrunning::Operation>
-DocumentServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+DocumentServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DocumentServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DocumentServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-DocumentServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status DocumentServiceClient::CancelOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-DocumentServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status DocumentServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

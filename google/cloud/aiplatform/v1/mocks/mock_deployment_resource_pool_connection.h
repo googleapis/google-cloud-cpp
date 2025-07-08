@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `DeploymentResourcePoolServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DeploymentResourcePoolServiceClient`. To do so,
- * construct an object of type `DeploymentResourcePoolServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type
+ * `DeploymentResourcePoolServiceClient`. To do so, construct an object of type
+ * `DeploymentResourcePoolServiceClient` with an instance of this class. Then
+ * use the Google Test framework functions to program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockDeploymentResourcePoolServiceConnection : public aiplatform_v1::DeploymentResourcePoolServiceConnection {
+class MockDeploymentResourcePoolServiceConnection
+    : public aiplatform_v1::DeploymentResourcePoolServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,16 @@ class MockDeploymentResourcePoolServiceConnection : public aiplatform_v1::Deploy
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
-  CreateDeploymentResourcePool,
-  (google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
+      CreateDeploymentResourcePool,
+      (google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,41 +69,56 @@ class MockDeploymentResourcePoolServiceConnection : public aiplatform_v1::Deploy
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateDeploymentResourcePool(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateDeploymentResourcePool, (NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDeploymentResourcePool(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
-  CreateDeploymentResourcePool, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>,
-  GetDeploymentResourcePool,
-  (google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>),
-  ListDeploymentResourcePools,
-  (google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDeploymentResourcePool,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateDeploymentResourcePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
-  UpdateDeploymentResourcePool,
-  (google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
+      CreateDeploymentResourcePool,
+      (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>,
+      GetDeploymentResourcePool,
+      (google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>),
+      ListDeploymentResourcePools,
+      (google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
+      UpdateDeploymentResourcePool,
+      (google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +126,42 @@ class MockDeploymentResourcePoolServiceConnection : public aiplatform_v1::Deploy
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateDeploymentResourcePool(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateDeploymentResourcePool, (NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDeploymentResourcePool(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
-  UpdateDeploymentResourcePool, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDeploymentResourcePool,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeploymentResourcePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteDeploymentResourcePool,
-  (google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
+      UpdateDeploymentResourcePool,
+      (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteDeploymentResourcePool,
+      (google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,61 +169,66 @@ class MockDeploymentResourcePoolServiceConnection : public aiplatform_v1::Deploy
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteDeploymentResourcePool(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteDeploymentResourcePool, (NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDeploymentResourcePool,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteDeploymentResourcePool(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeploymentResourcePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteDeploymentResourcePool, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteDeploymentResourcePool,
+      (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  WaitOperation,
-  (google::longrunning::WaitOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
+              (google::longrunning::WaitOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

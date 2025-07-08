@@ -34,418 +34,514 @@ DlpServiceTracingConnection::DlpServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
-DlpServiceTracingConnection::InspectContent(google::privacy::dlp::v2::InspectContentRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::InspectContent");
+DlpServiceTracingConnection::InspectContent(
+    google::privacy::dlp::v2::InspectContentRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::InspectContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InspectContent(request));
 }
 
 StatusOr<google::privacy::dlp::v2::RedactImageResponse>
-DlpServiceTracingConnection::RedactImage(google::privacy::dlp::v2::RedactImageRequest const& request) {
+DlpServiceTracingConnection::RedactImage(
+    google::privacy::dlp::v2::RedactImageRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::RedactImage");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RedactImage(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
-DlpServiceTracingConnection::DeidentifyContent(google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeidentifyContent");
+DlpServiceTracingConnection::DeidentifyContent(
+    google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeidentifyContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeidentifyContent(request));
 }
 
 StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
-DlpServiceTracingConnection::ReidentifyContent(google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ReidentifyContent");
+DlpServiceTracingConnection::ReidentifyContent(
+    google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ReidentifyContent");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ReidentifyContent(request));
 }
 
 StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
-DlpServiceTracingConnection::ListInfoTypes(google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
+DlpServiceTracingConnection::ListInfoTypes(
+    google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListInfoTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListInfoTypes(request));
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceTracingConnection::CreateInspectTemplate(google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateInspectTemplate");
+DlpServiceTracingConnection::CreateInspectTemplate(
+    google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateInspectTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateInspectTemplate(request));
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceTracingConnection::UpdateInspectTemplate(google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateInspectTemplate");
+DlpServiceTracingConnection::UpdateInspectTemplate(
+    google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateInspectTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateInspectTemplate(request));
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceTracingConnection::GetInspectTemplate(google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetInspectTemplate");
+DlpServiceTracingConnection::GetInspectTemplate(
+    google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetInspectTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInspectTemplate(request));
 }
 
 StreamRange<google::privacy::dlp::v2::InspectTemplate>
-DlpServiceTracingConnection::ListInspectTemplates(google::privacy::dlp::v2::ListInspectTemplatesRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListInspectTemplates");
+DlpServiceTracingConnection::ListInspectTemplates(
+    google::privacy::dlp::v2::ListInspectTemplatesRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListInspectTemplates");
   internal::OTelScope scope(span);
   auto sr = child_->ListInspectTemplates(std::move(request));
-  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::InspectTemplate>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::InspectTemplate>(std::move(span),
+                                                 std::move(sr));
 }
 
-Status
-DlpServiceTracingConnection::DeleteInspectTemplate(google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteInspectTemplate");
+Status DlpServiceTracingConnection::DeleteInspectTemplate(
+    google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteInspectTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteInspectTemplate(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceTracingConnection::CreateDeidentifyTemplate(google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateDeidentifyTemplate");
+DlpServiceTracingConnection::CreateDeidentifyTemplate(
+    google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::CreateDeidentifyTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDeidentifyTemplate(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceTracingConnection::UpdateDeidentifyTemplate(google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateDeidentifyTemplate");
+DlpServiceTracingConnection::UpdateDeidentifyTemplate(
+    google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::UpdateDeidentifyTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDeidentifyTemplate(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceTracingConnection::GetDeidentifyTemplate(google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetDeidentifyTemplate");
+DlpServiceTracingConnection::GetDeidentifyTemplate(
+    google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetDeidentifyTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDeidentifyTemplate(request));
 }
 
 StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
-DlpServiceTracingConnection::ListDeidentifyTemplates(google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListDeidentifyTemplates");
+DlpServiceTracingConnection::ListDeidentifyTemplates(
+    google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::ListDeidentifyTemplates");
   internal::OTelScope scope(span);
   auto sr = child_->ListDeidentifyTemplates(std::move(request));
-  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::DeidentifyTemplate>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::DeidentifyTemplate>(std::move(span),
+                                                    std::move(sr));
 }
 
-Status
-DlpServiceTracingConnection::DeleteDeidentifyTemplate(google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteDeidentifyTemplate");
+Status DlpServiceTracingConnection::DeleteDeidentifyTemplate(
+    google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::DeleteDeidentifyTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDeidentifyTemplate(request));
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
-DlpServiceTracingConnection::CreateJobTrigger(google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateJobTrigger");
+DlpServiceTracingConnection::CreateJobTrigger(
+    google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateJobTrigger(request));
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
-DlpServiceTracingConnection::UpdateJobTrigger(google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateJobTrigger");
+DlpServiceTracingConnection::UpdateJobTrigger(
+    google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateJobTrigger(request));
 }
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-DlpServiceTracingConnection::HybridInspectJobTrigger(google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::HybridInspectJobTrigger");
+DlpServiceTracingConnection::HybridInspectJobTrigger(
+    google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::HybridInspectJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->HybridInspectJobTrigger(request));
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
-DlpServiceTracingConnection::GetJobTrigger(google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
+DlpServiceTracingConnection::GetJobTrigger(
+    google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJobTrigger(request));
 }
 
 StreamRange<google::privacy::dlp::v2::JobTrigger>
-DlpServiceTracingConnection::ListJobTriggers(google::privacy::dlp::v2::ListJobTriggersRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListJobTriggers");
+DlpServiceTracingConnection::ListJobTriggers(
+    google::privacy::dlp::v2::ListJobTriggersRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListJobTriggers");
   internal::OTelScope scope(span);
   auto sr = child_->ListJobTriggers(std::move(request));
   return internal::MakeTracedStreamRange<google::privacy::dlp::v2::JobTrigger>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-Status
-DlpServiceTracingConnection::DeleteJobTrigger(google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteJobTrigger");
+Status DlpServiceTracingConnection::DeleteJobTrigger(
+    google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteJobTrigger(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob>
-DlpServiceTracingConnection::ActivateJobTrigger(google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ActivateJobTrigger");
+DlpServiceTracingConnection::ActivateJobTrigger(
+    google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ActivateJobTrigger");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ActivateJobTrigger(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceTracingConnection::CreateDiscoveryConfig(google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateDiscoveryConfig");
+DlpServiceTracingConnection::CreateDiscoveryConfig(
+    google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateDiscoveryConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDiscoveryConfig(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceTracingConnection::UpdateDiscoveryConfig(google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateDiscoveryConfig");
+DlpServiceTracingConnection::UpdateDiscoveryConfig(
+    google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateDiscoveryConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDiscoveryConfig(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceTracingConnection::GetDiscoveryConfig(google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetDiscoveryConfig");
+DlpServiceTracingConnection::GetDiscoveryConfig(
+    google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetDiscoveryConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDiscoveryConfig(request));
 }
 
 StreamRange<google::privacy::dlp::v2::DiscoveryConfig>
-DlpServiceTracingConnection::ListDiscoveryConfigs(google::privacy::dlp::v2::ListDiscoveryConfigsRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListDiscoveryConfigs");
+DlpServiceTracingConnection::ListDiscoveryConfigs(
+    google::privacy::dlp::v2::ListDiscoveryConfigsRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListDiscoveryConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListDiscoveryConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::DiscoveryConfig>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::DiscoveryConfig>(std::move(span),
+                                                 std::move(sr));
 }
 
-Status
-DlpServiceTracingConnection::DeleteDiscoveryConfig(google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteDiscoveryConfig");
+Status DlpServiceTracingConnection::DeleteDiscoveryConfig(
+    google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteDiscoveryConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDiscoveryConfig(request));
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob>
-DlpServiceTracingConnection::CreateDlpJob(google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
+DlpServiceTracingConnection::CreateDlpJob(
+    google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDlpJob(request));
 }
 
 StreamRange<google::privacy::dlp::v2::DlpJob>
-DlpServiceTracingConnection::ListDlpJobs(google::privacy::dlp::v2::ListDlpJobsRequest request) {
+DlpServiceTracingConnection::ListDlpJobs(
+    google::privacy::dlp::v2::ListDlpJobsRequest request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListDlpJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListDlpJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::privacy::dlp::v2::DlpJob>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob>
-DlpServiceTracingConnection::GetDlpJob(google::privacy::dlp::v2::GetDlpJobRequest const& request) {
+DlpServiceTracingConnection::GetDlpJob(
+    google::privacy::dlp::v2::GetDlpJobRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDlpJob(request));
 }
 
-Status
-DlpServiceTracingConnection::DeleteDlpJob(google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
+Status DlpServiceTracingConnection::DeleteDlpJob(
+    google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDlpJob(request));
 }
 
-Status
-DlpServiceTracingConnection::CancelDlpJob(google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
+Status DlpServiceTracingConnection::CancelDlpJob(
+    google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::CancelDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelDlpJob(request));
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceTracingConnection::CreateStoredInfoType(google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateStoredInfoType");
+DlpServiceTracingConnection::CreateStoredInfoType(
+    google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateStoredInfoType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateStoredInfoType(request));
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceTracingConnection::UpdateStoredInfoType(google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateStoredInfoType");
+DlpServiceTracingConnection::UpdateStoredInfoType(
+    google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateStoredInfoType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateStoredInfoType(request));
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceTracingConnection::GetStoredInfoType(google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetStoredInfoType");
+DlpServiceTracingConnection::GetStoredInfoType(
+    google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetStoredInfoType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetStoredInfoType(request));
 }
 
 StreamRange<google::privacy::dlp::v2::StoredInfoType>
-DlpServiceTracingConnection::ListStoredInfoTypes(google::privacy::dlp::v2::ListStoredInfoTypesRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListStoredInfoTypes");
+DlpServiceTracingConnection::ListStoredInfoTypes(
+    google::privacy::dlp::v2::ListStoredInfoTypesRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListStoredInfoTypes");
   internal::OTelScope scope(span);
   auto sr = child_->ListStoredInfoTypes(std::move(request));
-  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::StoredInfoType>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::StoredInfoType>(std::move(span), std::move(sr));
 }
 
-Status
-DlpServiceTracingConnection::DeleteStoredInfoType(google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteStoredInfoType");
+Status DlpServiceTracingConnection::DeleteStoredInfoType(
+    google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteStoredInfoType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteStoredInfoType(request));
 }
 
 StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
-DlpServiceTracingConnection::ListProjectDataProfiles(google::privacy::dlp::v2::ListProjectDataProfilesRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListProjectDataProfiles");
+DlpServiceTracingConnection::ListProjectDataProfiles(
+    google::privacy::dlp::v2::ListProjectDataProfilesRequest request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::ListProjectDataProfiles");
   internal::OTelScope scope(span);
   auto sr = child_->ListProjectDataProfiles(std::move(request));
-  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::ProjectDataProfile>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::ProjectDataProfile>(std::move(span),
+                                                    std::move(sr));
 }
 
 StreamRange<google::privacy::dlp::v2::TableDataProfile>
-DlpServiceTracingConnection::ListTableDataProfiles(google::privacy::dlp::v2::ListTableDataProfilesRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListTableDataProfiles");
+DlpServiceTracingConnection::ListTableDataProfiles(
+    google::privacy::dlp::v2::ListTableDataProfilesRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListTableDataProfiles");
   internal::OTelScope scope(span);
   auto sr = child_->ListTableDataProfiles(std::move(request));
-  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::TableDataProfile>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::TableDataProfile>(std::move(span),
+                                                  std::move(sr));
 }
 
 StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
-DlpServiceTracingConnection::ListColumnDataProfiles(google::privacy::dlp::v2::ListColumnDataProfilesRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListColumnDataProfiles");
+DlpServiceTracingConnection::ListColumnDataProfiles(
+    google::privacy::dlp::v2::ListColumnDataProfilesRequest request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::ListColumnDataProfiles");
   internal::OTelScope scope(span);
   auto sr = child_->ListColumnDataProfiles(std::move(request));
-  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::ColumnDataProfile>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::ColumnDataProfile>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
-DlpServiceTracingConnection::GetProjectDataProfile(google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetProjectDataProfile");
+DlpServiceTracingConnection::GetProjectDataProfile(
+    google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetProjectDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProjectDataProfile(request));
 }
 
 StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
-DlpServiceTracingConnection::ListFileStoreDataProfiles(google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListFileStoreDataProfiles");
+DlpServiceTracingConnection::ListFileStoreDataProfiles(
+    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::ListFileStoreDataProfiles");
   internal::OTelScope scope(span);
   auto sr = child_->ListFileStoreDataProfiles(std::move(request));
-  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::FileStoreDataProfile>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::FileStoreDataProfile>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
-DlpServiceTracingConnection::GetFileStoreDataProfile(google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetFileStoreDataProfile");
+DlpServiceTracingConnection::GetFileStoreDataProfile(
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::GetFileStoreDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFileStoreDataProfile(request));
 }
 
-Status
-DlpServiceTracingConnection::DeleteFileStoreDataProfile(google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteFileStoreDataProfile");
+Status DlpServiceTracingConnection::DeleteFileStoreDataProfile(
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::DeleteFileStoreDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteFileStoreDataProfile(request));
 }
 
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
-DlpServiceTracingConnection::GetTableDataProfile(google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetTableDataProfile");
+DlpServiceTracingConnection::GetTableDataProfile(
+    google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetTableDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTableDataProfile(request));
 }
 
 StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
-DlpServiceTracingConnection::GetColumnDataProfile(google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetColumnDataProfile");
+DlpServiceTracingConnection::GetColumnDataProfile(
+    google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::GetColumnDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetColumnDataProfile(request));
 }
 
-Status
-DlpServiceTracingConnection::DeleteTableDataProfile(google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteTableDataProfile");
+Status DlpServiceTracingConnection::DeleteTableDataProfile(
+    google::privacy::dlp::v2::DeleteTableDataProfileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::DeleteTableDataProfile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTableDataProfile(request));
 }
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
-DlpServiceTracingConnection::HybridInspectDlpJob(google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::HybridInspectDlpJob");
+DlpServiceTracingConnection::HybridInspectDlpJob(
+    google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::HybridInspectDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->HybridInspectDlpJob(request));
 }
 
-Status
-DlpServiceTracingConnection::FinishDlpJob(google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
+Status DlpServiceTracingConnection::FinishDlpJob(
+    google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::FinishDlpJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FinishDlpJob(request));
 }
 
 StatusOr<google::privacy::dlp::v2::Connection>
-DlpServiceTracingConnection::CreateConnection(google::privacy::dlp::v2::CreateConnectionRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateConnection");
+DlpServiceTracingConnection::CreateConnection(
+    google::privacy::dlp::v2::CreateConnectionRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::CreateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateConnection(request));
 }
 
 StatusOr<google::privacy::dlp::v2::Connection>
-DlpServiceTracingConnection::GetConnection(google::privacy::dlp::v2::GetConnectionRequest const& request) {
+DlpServiceTracingConnection::GetConnection(
+    google::privacy::dlp::v2::GetConnectionRequest const& request) {
   auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnection(request));
 }
 
 StreamRange<google::privacy::dlp::v2::Connection>
-DlpServiceTracingConnection::ListConnections(google::privacy::dlp::v2::ListConnectionsRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::ListConnections");
+DlpServiceTracingConnection::ListConnections(
+    google::privacy::dlp::v2::ListConnectionsRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::ListConnections");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnections(std::move(request));
   return internal::MakeTracedStreamRange<google::privacy::dlp::v2::Connection>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::privacy::dlp::v2::Connection>
-DlpServiceTracingConnection::SearchConnections(google::privacy::dlp::v2::SearchConnectionsRequest request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::SearchConnections");
+DlpServiceTracingConnection::SearchConnections(
+    google::privacy::dlp::v2::SearchConnectionsRequest request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::SearchConnections");
   internal::OTelScope scope(span);
   auto sr = child_->SearchConnections(std::move(request));
   return internal::MakeTracedStreamRange<google::privacy::dlp::v2::Connection>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-Status
-DlpServiceTracingConnection::DeleteConnection(google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteConnection");
+Status DlpServiceTracingConnection::DeleteConnection(
+    google::privacy::dlp::v2::DeleteConnectionRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::DeleteConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteConnection(request));
 }
 
 StatusOr<google::privacy::dlp::v2::Connection>
-DlpServiceTracingConnection::UpdateConnection(google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
-  auto span = internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateConnection");
+DlpServiceTracingConnection::UpdateConnection(
+    google::privacy::dlp::v2::UpdateConnectionRequest const& request) {
+  auto span =
+      internal::MakeSpan("dlp_v2::DlpServiceConnection::UpdateConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateConnection(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<dlp_v2::DlpServiceConnection>
-MakeDlpServiceTracingConnection(
+std::shared_ptr<dlp_v2::DlpServiceConnection> MakeDlpServiceTracingConnection(
     std::shared_ptr<dlp_v2::DlpServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

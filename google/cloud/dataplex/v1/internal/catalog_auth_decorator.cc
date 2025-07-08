@@ -33,28 +33,27 @@ CatalogServiceAuth::CatalogServiceAuth(
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncCreateEntryType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateEntryType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateEntryType(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::CreateEntryType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateEntryType(context, options, request);
@@ -62,28 +61,27 @@ CatalogServiceAuth::CreateEntryType(
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncUpdateEntryType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateEntryType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateEntryType(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::UpdateEntryType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::UpdateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateEntryType(context, options, request);
@@ -91,45 +89,44 @@ CatalogServiceAuth::UpdateEntryType(
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncDeleteEntryType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteEntryType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteEntryType(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::DeleteEntryType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::DeleteEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteEntryType(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse> CatalogServiceAuth::ListEntryTypes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse>
+CatalogServiceAuth::ListEntryTypes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListEntryTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEntryTypes(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::EntryType> CatalogServiceAuth::GetEntryType(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::EntryType>
+CatalogServiceAuth::GetEntryType(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetEntryTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -138,28 +135,27 @@ StatusOr<google::cloud::dataplex::v1::EntryType> CatalogServiceAuth::GetEntryTyp
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncCreateAspectType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAspectType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateAspectType(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::CreateAspectType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAspectType(context, options, request);
@@ -167,28 +163,27 @@ CatalogServiceAuth::CreateAspectType(
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncUpdateAspectType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAspectType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateAspectType(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::UpdateAspectType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::UpdateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAspectType(context, options, request);
@@ -196,45 +191,44 @@ CatalogServiceAuth::UpdateAspectType(
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncDeleteAspectType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAspectType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteAspectType(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::DeleteAspectType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::DeleteAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAspectType(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse> CatalogServiceAuth::ListAspectTypes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse>
+CatalogServiceAuth::ListAspectTypes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListAspectTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAspectTypes(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::AspectType> CatalogServiceAuth::GetAspectType(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::AspectType>
+CatalogServiceAuth::GetAspectType(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetAspectTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -243,28 +237,27 @@ StatusOr<google::cloud::dataplex::v1::AspectType> CatalogServiceAuth::GetAspectT
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncCreateEntryGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateEntryGroup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateEntryGroup(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::CreateEntryGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateEntryGroup(context, options, request);
@@ -272,28 +265,27 @@ CatalogServiceAuth::CreateEntryGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncUpdateEntryGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateEntryGroup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateEntryGroup(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::UpdateEntryGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::UpdateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateEntryGroup(context, options, request);
@@ -301,45 +293,44 @@ CatalogServiceAuth::UpdateEntryGroup(
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncDeleteEntryGroup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteEntryGroup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteEntryGroup(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::DeleteEntryGroup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::DeleteEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteEntryGroup(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse> CatalogServiceAuth::ListEntryGroups(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse>
+CatalogServiceAuth::ListEntryGroups(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListEntryGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListEntryGroups(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::EntryGroup> CatalogServiceAuth::GetEntryGroup(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::EntryGroup>
+CatalogServiceAuth::GetEntryGroup(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetEntryGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -347,8 +338,7 @@ StatusOr<google::cloud::dataplex::v1::EntryGroup> CatalogServiceAuth::GetEntryGr
 }
 
 StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::CreateEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CreateEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -356,8 +346,7 @@ StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::CreateEntry(
 }
 
 StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::UpdateEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::UpdateEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -365,17 +354,16 @@ StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::UpdateEntry(
 }
 
 StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::DeleteEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeleteEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteEntry(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListEntriesResponse> CatalogServiceAuth::ListEntries(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListEntriesResponse>
+CatalogServiceAuth::ListEntries(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -383,8 +371,7 @@ StatusOr<google::cloud::dataplex::v1::ListEntriesResponse> CatalogServiceAuth::L
 }
 
 StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::GetEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -392,17 +379,16 @@ StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::GetEntry(
 }
 
 StatusOr<google::cloud::dataplex::v1::Entry> CatalogServiceAuth::LookupEntry(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::LookupEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->LookupEntry(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse> CatalogServiceAuth::SearchEntries(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse>
+CatalogServiceAuth::SearchEntries(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::SearchEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -411,45 +397,44 @@ StatusOr<google::cloud::dataplex::v1::SearchEntriesResponse> CatalogServiceAuth:
 
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncCreateMetadataJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateMetadataJob(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateMetadataJob(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceAuth::CreateMetadataJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateMetadataJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateMetadataJob(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::MetadataJob> CatalogServiceAuth::GetMetadataJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceAuth::GetMetadataJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetMetadataJob(context, options, request);
 }
 
-StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse> CatalogServiceAuth::ListMetadataJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+CatalogServiceAuth::ListMetadataJobs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -457,17 +442,16 @@ StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse> CatalogServiceAu
 }
 
 Status CatalogServiceAuth::CancelMetadataJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelMetadataJob(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> CatalogServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+CatalogServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -475,8 +459,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> CatalogServiceAuth::Lis
 }
 
 StatusOr<google::cloud::location::Location> CatalogServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -484,8 +467,7 @@ StatusOr<google::cloud::location::Location> CatalogServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> CatalogServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -493,26 +475,25 @@ StatusOr<google::iam::v1::Policy> CatalogServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> CatalogServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> CatalogServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+CatalogServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> CatalogServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+CatalogServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -520,8 +501,7 @@ StatusOr<google::longrunning::ListOperationsResponse> CatalogServiceAuth::ListOp
 }
 
 StatusOr<google::longrunning::Operation> CatalogServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -529,8 +509,7 @@ StatusOr<google::longrunning::Operation> CatalogServiceAuth::GetOperation(
 }
 
 Status CatalogServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -538,8 +517,7 @@ Status CatalogServiceAuth::DeleteOperation(
 }
 
 Status CatalogServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -553,15 +531,16 @@ CatalogServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -570,13 +549,14 @@ future<Status> CatalogServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

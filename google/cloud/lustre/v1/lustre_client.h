@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_LUSTRE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_LUSTRE_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/lustre/v1/lustre_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LustreClient {
  public:
-  explicit LustreClient(std::shared_ptr<LustreConnection> connection, Options opts = {});
+  explicit LustreClient(std::shared_ptr<LustreConnection> connection,
+                        Options opts = {});
   ~LustreClient();
 
   ///@{
@@ -120,8 +121,8 @@ class LustreClient {
   /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L119}
   ///
   // clang-format on
-  StreamRange<google::cloud::lustre::v1::Instance>
-  ListInstances(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::lustre::v1::Instance> ListInstances(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -159,8 +160,9 @@ class LustreClient {
   /// [google.cloud.lustre.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L119}
   ///
   // clang-format on
-  StreamRange<google::cloud::lustre::v1::Instance>
-  ListInstances(google::cloud::lustre::v1::ListInstancesRequest request, Options opts = {});
+  StreamRange<google::cloud::lustre::v1::Instance> ListInstances(
+      google::cloud::lustre::v1::ListInstancesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -185,8 +187,8 @@ class LustreClient {
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::lustre::v1::Instance>
-  GetInstance(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::lustre::v1::Instance> GetInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -215,8 +217,9 @@ class LustreClient {
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::lustre::v1::Instance>
-  GetInstance(google::cloud::lustre::v1::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::lustre::v1::Instance> GetInstance(
+      google::cloud::lustre::v1::GetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -256,8 +259,10 @@ class LustreClient {
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::Instance>>
-  CreateInstance(std::string const& parent, google::cloud::lustre::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
+      std::string const& parent,
+      google::cloud::lustre::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -270,8 +275,10 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, std::string const& parent, google::cloud::lustre::v1::Instance const& instance, std::string const& instance_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::lustre::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -307,8 +314,9 @@ class LustreClient {
   /// [google.cloud.lustre.v1.Instance]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L31}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::Instance>>
-  CreateInstance(google::cloud::lustre::v1::CreateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
+      google::cloud::lustre::v1::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -321,8 +329,10 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, google::cloud::lustre::v1::CreateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::lustre::v1::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -333,8 +343,8 @@ class LustreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::Instance>> CreateInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +383,9 @@ class LustreClient {
   /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L212}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::Instance>>
-  UpdateInstance(google::cloud::lustre::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
+      google::cloud::lustre::v1::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -387,8 +398,9 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::lustre::v1::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag, google::cloud::lustre::v1::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +436,9 @@ class LustreClient {
   /// [google.cloud.lustre.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L212}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::Instance>>
-  UpdateInstance(google::cloud::lustre::v1::UpdateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
+      google::cloud::lustre::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -438,8 +451,10 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::lustre::v1::UpdateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::lustre::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -450,8 +465,8 @@ class LustreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::Instance>> UpdateInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -483,8 +498,8 @@ class LustreClient {
   /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L275}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
-  DeleteInstance(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -497,8 +512,8 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -534,8 +549,9 @@ class LustreClient {
   /// [google.cloud.lustre.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/lustre/v1/instance.proto#L275}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::lustre::v1::DeleteInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
+      google::cloud::lustre::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -548,8 +564,10 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, google::cloud::lustre::v1::DeleteInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::lustre::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -560,8 +578,8 @@ class LustreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>>
-  DeleteInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::OperationMetadata>> DeleteInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -593,8 +611,8 @@ class LustreClient {
   /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L127}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
-  ImportData(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -607,8 +625,9 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportData(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -644,8 +663,9 @@ class LustreClient {
   /// [google.cloud.lustre.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L127}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
-  ImportData(google::cloud::lustre::v1::ImportDataRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
+      google::cloud::lustre::v1::ImportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -658,8 +678,9 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag, google::cloud::lustre::v1::ImportDataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag, google::cloud::lustre::v1::ImportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -670,8 +691,8 @@ class LustreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>>
-  ImportData(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::ImportDataResponse>> ImportData(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -707,8 +728,9 @@ class LustreClient {
   /// [google.cloud.lustre.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/lustre/v1/transfer.proto#L124}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>
-  ExportData(google::cloud::lustre::v1::ExportDataRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>> ExportData(
+      google::cloud::lustre::v1::ExportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -721,8 +743,9 @@ class LustreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag, google::cloud::lustre::v1::ExportDataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag, google::cloud::lustre::v1::ExportDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -733,8 +756,8 @@ class LustreClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>>
-  ExportData(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::lustre::v1::ExportDataResponse>> ExportData(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -772,8 +795,8 @@ class LustreClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -802,8 +825,9 @@ class LustreClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -838,8 +862,8 @@ class LustreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -878,8 +902,8 @@ class LustreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -905,8 +929,8 @@ class LustreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -937,8 +961,9 @@ class LustreClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -962,8 +987,7 @@ class LustreClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -992,8 +1016,9 @@ class LustreClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1027,8 +1052,7 @@ class LustreClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1067,8 +1091,9 @@ class LustreClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<LustreConnection> connection_;

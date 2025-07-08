@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_CATALOG_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_CATALOG_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/retail/v2/internal/catalog_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,79 +34,73 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CatalogServiceMetadata : public CatalogServiceStub {
  public:
   ~CatalogServiceMetadata() override = default;
-  CatalogServiceMetadata(
-      std::shared_ptr<CatalogServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  CatalogServiceMetadata(std::shared_ptr<CatalogServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::retail::v2::ListCatalogsResponse> ListCatalogs(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListCatalogsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateCatalogRequest const& request) override;
 
   Status SetDefaultBranch(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::SetDefaultBranchRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::retail::v2::SetDefaultBranchRequest const& request)
+      override;
 
-  StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse> GetDefaultBranch(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::GetDefaultBranchRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
+  GetDefaultBranch(grpc::ClientContext& context, Options const& options,
+                   google::cloud::retail::v2::GetDefaultBranchRequest const&
+                       request) override;
 
   StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::GetCompletionConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::retail::v2::GetCompletionConfigRequest const& request)
+      override;
 
   StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request)
+      override;
 
   StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::GetAttributesConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::retail::v2::GetAttributesConfigRequest const& request)
+      override;
 
   StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request)
+      override;
 
   StatusOr<google::cloud::retail::v2::AttributesConfig> AddCatalogAttribute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::AddCatalogAttributeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::retail::v2::AddCatalogAttributeRequest const& request)
+      override;
 
   StatusOr<google::cloud::retail::v2::AttributesConfig> RemoveCatalogAttribute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request)
+      override;
 
   StatusOr<google::cloud::retail::v2::AttributesConfig> ReplaceCatalogAttribute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

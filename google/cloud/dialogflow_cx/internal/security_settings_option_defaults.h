@@ -28,7 +28,8 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options SecuritySettingsServiceDefaultOptions(std::string const& location, Options options);
+Options SecuritySettingsServiceDefaultOptions(std::string const& location,
+                                              Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

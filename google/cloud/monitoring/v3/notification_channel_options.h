@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_NOTIFICATION_CHANNEL_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_NOTIFICATION_CHANNEL_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/notification_channel_connection.h"
 #include "google/cloud/monitoring/v3/notification_channel_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct NotificationChannelServiceBackoffPolicyOption {
  * @ingroup google-cloud-monitoring-options
  */
 struct NotificationChannelServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<NotificationChannelServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<NotificationChannelServiceConnectionIdempotencyPolicy>;
 };
 
 /**

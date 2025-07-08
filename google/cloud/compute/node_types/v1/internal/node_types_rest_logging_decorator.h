@@ -41,17 +41,24 @@ class NodeTypesRestLogging : public NodeTypesRestStub {
                        TracingOptions tracing_options,
                        std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList> AggregatedListNodeTypes(
+  StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
+  AggregatedListNodeTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_types::v1::
+          AggregatedListNodeTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeList> ListNodeTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest const&
+          request) override;
 
  private:
   std::shared_ptr<NodeTypesRestStub> child_;

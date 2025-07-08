@@ -34,7 +34,8 @@ TagHoldsTracingConnection::TagHoldsTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
-TagHoldsTracingConnection::CreateTagHold(google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+TagHoldsTracingConnection::CreateTagHold(
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::CreateTagHold");
   internal::OTelScope scope(span);
@@ -43,12 +44,12 @@ TagHoldsTracingConnection::CreateTagHold(google::cloud::resourcemanager::v3::Cre
 
 StatusOr<google::longrunning::Operation>
 TagHoldsTracingConnection::CreateTagHold(
-    NoAwaitTag, google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::CreateTagHold");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateTagHold(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateTagHold(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
@@ -57,12 +58,12 @@ TagHoldsTracingConnection::CreateTagHold(
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::CreateTagHold");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateTagHold(operation));
+  return internal::EndSpan(std::move(span), child_->CreateTagHold(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-TagHoldsTracingConnection::DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+TagHoldsTracingConnection::DeleteTagHold(
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::DeleteTagHold");
   internal::OTelScope scope(span);
@@ -71,12 +72,12 @@ TagHoldsTracingConnection::DeleteTagHold(google::cloud::resourcemanager::v3::Del
 
 StatusOr<google::longrunning::Operation>
 TagHoldsTracingConnection::DeleteTagHold(
-    NoAwaitTag, google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::DeleteTagHold");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteTagHold(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteTagHold(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
@@ -85,22 +86,26 @@ TagHoldsTracingConnection::DeleteTagHold(
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::DeleteTagHold");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteTagHold(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteTagHold(operation));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::TagHold>
-TagHoldsTracingConnection::ListTagHolds(google::cloud::resourcemanager::v3::ListTagHoldsRequest request) {
-  auto span = internal::MakeSpan("resourcemanager_v3::TagHoldsConnection::ListTagHolds");
+TagHoldsTracingConnection::ListTagHolds(
+    google::cloud::resourcemanager::v3::ListTagHoldsRequest request) {
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::TagHoldsConnection::ListTagHolds");
   internal::OTelScope scope(span);
   auto sr = child_->ListTagHolds(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::resourcemanager::v3::TagHold>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::resourcemanager::v3::TagHold>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-TagHoldsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("resourcemanager_v3::TagHoldsConnection::GetOperation");
+TagHoldsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::TagHoldsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }

@@ -61,7 +61,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataPolicyServiceClient {
  public:
-  explicit DataPolicyServiceClient(std::shared_ptr<DataPolicyServiceConnection> connection, Options opts = {});
+  explicit DataPolicyServiceClient(
+      std::shared_ptr<DataPolicyServiceConnection> connection,
+      Options opts = {});
   ~DataPolicyServiceClient();
 
   ///@{
@@ -74,10 +76,12 @@ class DataPolicyServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataPolicyServiceClient const& a, DataPolicyServiceClient const& b) {
+  friend bool operator==(DataPolicyServiceClient const& a,
+                         DataPolicyServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataPolicyServiceClient const& a, DataPolicyServiceClient const& b) {
+  friend bool operator!=(DataPolicyServiceClient const& a,
+                         DataPolicyServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,7 +113,10 @@ class DataPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  CreateDataPolicy(std::string const& parent, google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy, Options opts = {});
+  CreateDataPolicy(
+      std::string const& parent,
+      google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -140,7 +147,10 @@ class DataPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  CreateDataPolicy(google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const& request, Options opts = {});
+  CreateDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -175,7 +185,9 @@ class DataPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  UpdateDataPolicy(google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::DataPolicy const& data_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -206,7 +218,10 @@ class DataPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  UpdateDataPolicy(google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const& request, Options opts = {});
+  UpdateDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -233,7 +248,8 @@ class DataPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  RenameDataPolicy(std::string const& name, std::string const& new_data_policy_id, Options opts = {});
+  RenameDataPolicy(std::string const& name,
+                   std::string const& new_data_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -263,7 +279,10 @@ class DataPolicyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  RenameDataPolicy(google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const& request, Options opts = {});
+  RenameDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -285,8 +304,7 @@ class DataPolicyServiceClient {
   /// [google.cloud.bigquery.datapolicies.v1.DeleteDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L170}
   ///
   // clang-format on
-  Status
-  DeleteDataPolicy(std::string const& name, Options opts = {});
+  Status DeleteDataPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -312,8 +330,10 @@ class DataPolicyServiceClient {
   /// [google.cloud.bigquery.datapolicies.v1.DeleteDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L170}
   ///
   // clang-format on
-  Status
-  DeleteDataPolicy(google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const& request, Options opts = {});
+  Status DeleteDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -338,8 +358,8 @@ class DataPolicyServiceClient {
   /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  GetDataPolicy(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -368,8 +388,10 @@ class DataPolicyServiceClient {
   /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  GetDataPolicy(google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
+      google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -443,7 +465,10 @@ class DataPolicyServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  ListDataPolicies(google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest request, Options opts = {});
+  ListDataPolicies(
+      google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -472,8 +497,8 @@ class DataPolicyServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -502,8 +527,8 @@ class DataPolicyServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -532,8 +557,9 @@ class DataPolicyServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DataPolicyServiceConnection> connection_;

@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_REVISIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_REVISIONS_CONNECTION_H
 
+#include "google/cloud/run/v2/internal/revisions_retry_traits.h"
+#include "google/cloud/run/v2/revisions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/run/v2/internal/revisions_retry_traits.h"
-#include "google/cloud/run/v2/revisions_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -66,14 +66,14 @@ class RevisionsLimitedErrorCountRetryPolicy : public RevisionsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RevisionsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RevisionsLimitedErrorCountRetryPolicy(
       RevisionsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RevisionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RevisionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RevisionsLimitedErrorCountRetryPolicy(
       RevisionsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RevisionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RevisionsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class RevisionsLimitedErrorCountRetryPolicy : public RevisionsRetryPolicy {
   using BaseType = RevisionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<run_v2_internal::RevisionsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      run_v2_internal::RevisionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,14 @@ class RevisionsLimitedTimeRetryPolicy : public RevisionsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RevisionsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RevisionsLimitedTimeRetryPolicy(RevisionsLimitedTimeRetryPolicy&& rhs) noexcept
-    : RevisionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RevisionsLimitedTimeRetryPolicy(RevisionsLimitedTimeRetryPolicy const& rhs) noexcept
-    : RevisionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RevisionsLimitedTimeRetryPolicy(
+      RevisionsLimitedTimeRetryPolicy&& rhs) noexcept
+      : RevisionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RevisionsLimitedTimeRetryPolicy(
+      RevisionsLimitedTimeRetryPolicy const& rhs) noexcept
+      : RevisionsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +162,9 @@ class RevisionsLimitedTimeRetryPolicy : public RevisionsRetryPolicy {
   using BaseType = RevisionsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<run_v2_internal::RevisionsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      run_v2_internal::RevisionsRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,32 +185,32 @@ class RevisionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::run::v2::Revision>
-  GetRevision(google::cloud::run::v2::GetRevisionRequest const& request);
+  virtual StatusOr<google::cloud::run::v2::Revision> GetRevision(
+      google::cloud::run::v2::GetRevisionRequest const& request);
 
-  virtual StreamRange<google::cloud::run::v2::Revision>
-  ListRevisions(google::cloud::run::v2::ListRevisionsRequest request);
+  virtual StreamRange<google::cloud::run::v2::Revision> ListRevisions(
+      google::cloud::run::v2::ListRevisionsRequest request);
 
-  virtual future<StatusOr<google::cloud::run::v2::Revision>>
-  DeleteRevision(google::cloud::run::v2::DeleteRevisionRequest const& request);
+  virtual future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
+      google::cloud::run::v2::DeleteRevisionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteRevision(NoAwaitTag, google::cloud::run::v2::DeleteRevisionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteRevision(
+      NoAwaitTag, google::cloud::run::v2::DeleteRevisionRequest const& request);
 
-  virtual future<StatusOr<google::cloud::run::v2::Revision>>
-  DeleteRevision( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
+      google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 /**

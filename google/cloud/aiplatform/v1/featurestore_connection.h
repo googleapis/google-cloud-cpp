@@ -57,7 +57,8 @@ class FeaturestoreServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FeaturestoreServiceLimitedErrorCountRetryPolicy : public FeaturestoreServiceRetryPolicy {
+class FeaturestoreServiceLimitedErrorCountRetryPolicy
+    : public FeaturestoreServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,16 @@ class FeaturestoreServiceLimitedErrorCountRetryPolicy : public FeaturestoreServi
    *     @p maximum_failures == 0.
    */
   explicit FeaturestoreServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   FeaturestoreServiceLimitedErrorCountRetryPolicy(
       FeaturestoreServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : FeaturestoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FeaturestoreServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   FeaturestoreServiceLimitedErrorCountRetryPolicy(
       FeaturestoreServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : FeaturestoreServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FeaturestoreServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +97,9 @@ class FeaturestoreServiceLimitedErrorCountRetryPolicy : public FeaturestoreServi
   using BaseType = FeaturestoreServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::FeaturestoreServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::FeaturestoreServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -107,7 +112,8 @@ class FeaturestoreServiceLimitedErrorCountRetryPolicy : public FeaturestoreServi
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FeaturestoreServiceLimitedTimeRetryPolicy : public FeaturestoreServiceRetryPolicy {
+class FeaturestoreServiceLimitedTimeRetryPolicy
+    : public FeaturestoreServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +138,14 @@ class FeaturestoreServiceLimitedTimeRetryPolicy : public FeaturestoreServiceRetr
   template <typename DurationRep, typename DurationPeriod>
   explicit FeaturestoreServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  FeaturestoreServiceLimitedTimeRetryPolicy(FeaturestoreServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : FeaturestoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  FeaturestoreServiceLimitedTimeRetryPolicy(FeaturestoreServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : FeaturestoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FeaturestoreServiceLimitedTimeRetryPolicy(
+      FeaturestoreServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : FeaturestoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FeaturestoreServiceLimitedTimeRetryPolicy(
+      FeaturestoreServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : FeaturestoreServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,16 +167,18 @@ class FeaturestoreServiceLimitedTimeRetryPolicy : public FeaturestoreServiceRetr
   using BaseType = FeaturestoreServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::FeaturestoreServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::FeaturestoreServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `FeaturestoreServiceConnection` object for `FeaturestoreServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `FeaturestoreServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `FeaturestoreServiceClient`.
+ * sets in `FeaturestoreServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `FeaturestoreServiceClient`.
  *
  * To create a concrete instance, see `MakeFeaturestoreServiceConnection()`.
  *
@@ -181,180 +191,226 @@ class FeaturestoreServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  CreateFeaturestore(google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request);
+  CreateFeaturestore(
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateFeaturestore(NoAwaitTag, google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateFeaturestore(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  CreateFeaturestore( google::longrunning::Operation const& operation);
+  CreateFeaturestore(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Featurestore>
-  GetFeaturestore(google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
+      google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::Featurestore>
-  ListFeaturestores(google::cloud::aiplatform::v1::ListFeaturestoresRequest request);
+  ListFeaturestores(
+      google::cloud::aiplatform::v1::ListFeaturestoresRequest request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  UpdateFeaturestore(google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request);
+  UpdateFeaturestore(
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateFeaturestore(NoAwaitTag, google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateFeaturestore(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  UpdateFeaturestore( google::longrunning::Operation const& operation);
+  UpdateFeaturestore(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeaturestore(google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeaturestore(
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteFeaturestore(NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteFeaturestore(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeaturestore( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
-  CreateEntityType(google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateEntityType(NoAwaitTag, google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeaturestore(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
-  CreateEntityType( google::longrunning::Operation const& operation);
+  CreateEntityType(
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::EntityType>
-  GetEntityType(google::cloud::aiplatform::v1::GetEntityTypeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateEntityType(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
+  CreateEntityType(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
+      google::cloud::aiplatform::v1::GetEntityTypeRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::EntityType>
-  ListEntityTypes(google::cloud::aiplatform::v1::ListEntityTypesRequest request);
+  ListEntityTypes(
+      google::cloud::aiplatform::v1::ListEntityTypesRequest request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::EntityType>
-  UpdateEntityType(google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
+      google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEntityType(google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteEntityType(
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteEntityType(NoAwaitTag, google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteEntityType(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEntityType( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteEntityType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
+  CreateFeature(
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateFeature(NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateFeature(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  CreateFeature( google::longrunning::Operation const& operation);
+  CreateFeature(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-  BatchCreateFeatures(google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchCreateFeatures(NoAwaitTag, google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-  BatchCreateFeatures( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Feature>
-  GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
+      google::cloud::aiplatform::v1::GetFeatureRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Feature>
-  ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
+      google::cloud::aiplatform::v1::ListFeaturesRequest request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Feature>
-  UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeature(
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteFeature(NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteFeature(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeature(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
-  ImportFeatureValues(google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
+  ImportFeatureValues(
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportFeatureValues(NoAwaitTag, google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ImportFeatureValues(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
-  ImportFeatureValues( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
+  ImportFeatureValues(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
-  BatchReadFeatureValues(google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
+  BatchReadFeatureValues(
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchReadFeatureValues(NoAwaitTag, google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchReadFeatureValues(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
-  BatchReadFeatureValues( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
+  BatchReadFeatureValues(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
-  ExportFeatureValues(google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
+  ExportFeatureValues(
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ExportFeatureValues(NoAwaitTag, google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ExportFeatureValues(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
-  ExportFeatureValues( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
+  ExportFeatureValues(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
-  DeleteFeatureValues(google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
+  DeleteFeatureValues(
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteFeatureValues(NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteFeatureValues(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
-  DeleteFeatureValues( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
+  DeleteFeatureValues(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Feature>
-  SearchFeatures(google::cloud::aiplatform::v1::SearchFeaturesRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
+      google::cloud::aiplatform::v1::SearchFeaturesRequest request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `FeaturestoreServiceConnection`.
+ * A factory function to construct an object of type
+ * `FeaturestoreServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of FeaturestoreServiceClient.
+ * should be passed as an argument to the constructor of
+ * FeaturestoreServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `FeaturestoreServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `FeaturestoreServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -365,11 +421,12 @@ class FeaturestoreServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `FeaturestoreServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `FeaturestoreServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<FeaturestoreServiceConnection> MakeFeaturestoreServiceConnection(
-    std::string const& location, Options options = {});
+std::shared_ptr<FeaturestoreServiceConnection>
+MakeFeaturestoreServiceConnection(std::string const& location,
+                                  Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

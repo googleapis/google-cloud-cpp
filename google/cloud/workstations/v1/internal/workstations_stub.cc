@@ -33,41 +33,45 @@ WorkstationsStub::~WorkstationsStub() = default;
 
 StatusOr<google::cloud::workstations::v1::WorkstationCluster>
 DefaultWorkstationsStub::GetWorkstationCluster(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::GetWorkstationClusterRequest const& request) {
-    google::cloud::workstations::v1::WorkstationCluster response;
-    auto status =
-        grpc_stub_->GetWorkstationCluster(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::GetWorkstationClusterRequest const&
+        request) {
+  google::cloud::workstations::v1::WorkstationCluster response;
+  auto status = grpc_stub_->GetWorkstationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
 DefaultWorkstationsStub::ListWorkstationClusters(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::ListWorkstationClustersRequest const& request) {
-    google::cloud::workstations::v1::ListWorkstationClustersResponse response;
-    auto status =
-        grpc_stub_->ListWorkstationClusters(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::ListWorkstationClustersRequest const&
+        request) {
+  google::cloud::workstations::v1::ListWorkstationClustersResponse response;
+  auto status =
+      grpc_stub_->ListWorkstationClusters(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncCreateWorkstationCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::CreateWorkstationClusterRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request,
+             google::cloud::workstations::v1::
+                 CreateWorkstationClusterRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateWorkstationCluster(context, request, cq);
       },
@@ -76,29 +80,32 @@ DefaultWorkstationsStub::AsyncCreateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::CreateWorkstationCluster(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateWorkstationCluster(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateWorkstationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstationCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::UpdateWorkstationClusterRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request,
+             google::cloud::workstations::v1::
+                 UpdateWorkstationClusterRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateWorkstationCluster(context, request, cq);
       },
@@ -107,29 +114,32 @@ DefaultWorkstationsStub::AsyncUpdateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::UpdateWorkstationCluster(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateWorkstationCluster(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateWorkstationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncDeleteWorkstationCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::DeleteWorkstationClusterRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request,
+             google::cloud::workstations::v1::
+                 DeleteWorkstationClusterRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteWorkstationCluster(context, request, cq);
       },
@@ -138,69 +148,76 @@ DefaultWorkstationsStub::AsyncDeleteWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::DeleteWorkstationCluster(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteWorkstationCluster(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteWorkstationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
 DefaultWorkstationsStub::GetWorkstationConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::GetWorkstationConfigRequest const& request) {
-    google::cloud::workstations::v1::WorkstationConfig response;
-    auto status =
-        grpc_stub_->GetWorkstationConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::GetWorkstationConfigRequest const&
+        request) {
+  google::cloud::workstations::v1::WorkstationConfig response;
+  auto status = grpc_stub_->GetWorkstationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
 DefaultWorkstationsStub::ListWorkstationConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::ListWorkstationConfigsRequest const& request) {
-    google::cloud::workstations::v1::ListWorkstationConfigsResponse response;
-    auto status =
-        grpc_stub_->ListWorkstationConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
+        request) {
+  google::cloud::workstations::v1::ListWorkstationConfigsResponse response;
+  auto status =
+      grpc_stub_->ListWorkstationConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
 DefaultWorkstationsStub::ListUsableWorkstationConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const& request) {
-    google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse response;
-    auto status =
-        grpc_stub_->ListUsableWorkstationConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const&
+        request) {
+  google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse
+      response;
+  auto status =
+      grpc_stub_->ListUsableWorkstationConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncCreateWorkstationConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::CreateWorkstationConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateWorkstationConfig(context, request, cq);
       },
       request, std::move(context));
@@ -208,30 +225,34 @@ DefaultWorkstationsStub::AsyncCreateWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::CreateWorkstationConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateWorkstationConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateWorkstationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstationConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::UpdateWorkstationConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateWorkstationConfig(context, request, cq);
       },
       request, std::move(context));
@@ -239,30 +260,34 @@ DefaultWorkstationsStub::AsyncUpdateWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::UpdateWorkstationConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateWorkstationConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateWorkstationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncDeleteWorkstationConfig(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::DeleteWorkstationConfigRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteWorkstationConfig(context, request, cq);
       },
       request, std::move(context));
@@ -270,68 +295,69 @@ DefaultWorkstationsStub::AsyncDeleteWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::DeleteWorkstationConfig(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteWorkstationConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteWorkstationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::Workstation>
 DefaultWorkstationsStub::GetWorkstation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::GetWorkstationRequest const& request) {
-    google::cloud::workstations::v1::Workstation response;
-    auto status =
-        grpc_stub_->GetWorkstation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::GetWorkstationRequest const& request) {
+  google::cloud::workstations::v1::Workstation response;
+  auto status = grpc_stub_->GetWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
 DefaultWorkstationsStub::ListWorkstations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
-    google::cloud::workstations::v1::ListWorkstationsResponse response;
-    auto status =
-        grpc_stub_->ListWorkstations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
+  google::cloud::workstations::v1::ListWorkstationsResponse response;
+  auto status = grpc_stub_->ListWorkstations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
 DefaultWorkstationsStub::ListUsableWorkstations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::ListUsableWorkstationsRequest const& request) {
-    google::cloud::workstations::v1::ListUsableWorkstationsResponse response;
-    auto status =
-        grpc_stub_->ListUsableWorkstations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
+        request) {
+  google::cloud::workstations::v1::ListUsableWorkstationsResponse response;
+  auto status =
+      grpc_stub_->ListUsableWorkstations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncCreateWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::CreateWorkstationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::CreateWorkstationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::CreateWorkstationRequest const& request,
+             google::cloud::workstations::v1::CreateWorkstationRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateWorkstation(context, request, cq);
       },
@@ -340,29 +366,29 @@ DefaultWorkstationsStub::AsyncCreateWorkstation(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::CreateWorkstation(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateWorkstation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncUpdateWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::UpdateWorkstationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::UpdateWorkstationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
+             google::cloud::workstations::v1::UpdateWorkstationRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncUpdateWorkstation(context, request, cq);
       },
@@ -371,29 +397,29 @@ DefaultWorkstationsStub::AsyncUpdateWorkstation(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::UpdateWorkstation(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateWorkstation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncDeleteWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::DeleteWorkstationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::DeleteWorkstationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
+             google::cloud::workstations::v1::DeleteWorkstationRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteWorkstation(context, request, cq);
       },
@@ -402,29 +428,29 @@ DefaultWorkstationsStub::AsyncDeleteWorkstation(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::DeleteWorkstation(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteWorkstation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncStartWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::StartWorkstationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::StartWorkstationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::StartWorkstationRequest const& request,
+             google::cloud::workstations::v1::StartWorkstationRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncStartWorkstation(context, request, cq);
       },
@@ -433,29 +459,29 @@ DefaultWorkstationsStub::AsyncStartWorkstation(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::StartWorkstation(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->StartWorkstation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkstationsStub::AsyncStopWorkstation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::workstations::v1::StopWorkstationRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::workstations::v1::StopWorkstationRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::workstations::v1::StopWorkstationRequest const& request,
+             google::cloud::workstations::v1::StopWorkstationRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncStopWorkstation(context, request, cq);
       },
@@ -464,120 +490,107 @@ DefaultWorkstationsStub::AsyncStopWorkstation(
 
 StatusOr<google::longrunning::Operation>
 DefaultWorkstationsStub::StopWorkstation(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->StopWorkstation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopWorkstation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
 DefaultWorkstationsStub::GenerateAccessToken(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workstations::v1::GenerateAccessTokenRequest const& request) {
-    google::cloud::workstations::v1::GenerateAccessTokenResponse response;
-    auto status =
-        grpc_stub_->GenerateAccessToken(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workstations::v1::GenerateAccessTokenRequest const&
+        request) {
+  google::cloud::workstations::v1::GenerateAccessTokenResponse response;
+  auto status = grpc_stub_->GenerateAccessToken(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultWorkstationsStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultWorkstationsStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultWorkstationsStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultWorkstationsStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultWorkstationsStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultWorkstationsStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultWorkstationsStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultWorkstationsStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultWorkstationsStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultWorkstationsStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultWorkstationsStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultWorkstationsStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -606,13 +619,14 @@ future<Status> DefaultWorkstationsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

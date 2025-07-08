@@ -36,64 +36,73 @@ class InterconnectsTracingConnection
   ~InterconnectsTracingConnection() override = default;
 
   explicit InterconnectsTracingConnection(
-    std::shared_ptr<compute_interconnects_v1::InterconnectsConnection> child);
+      std::shared_ptr<compute_interconnects_v1::InterconnectsConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest const& request) override;
+  DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         DeleteInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInterconnect(NoAwaitTag,
-      google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnect(
+      NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                      DeleteInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnect(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-  GetInterconnect(google::cloud::cpp::compute::interconnects::v1::GetInterconnectRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
+      google::cloud::cpp::compute::interconnects::v1::
+          GetInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) override;
+  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::
+                     GetDiagnosticsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
-  GetMacsecConfig(google::cloud::cpp::compute::interconnects::v1::GetMacsecConfigRequest const& request) override;
+  StatusOr<
+      google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+  GetMacsecConfig(google::cloud::cpp::compute::interconnects::v1::
+                      GetMacsecConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest const& request) override;
+  InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         InsertInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInterconnect(NoAwaitTag,
-      google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnect(
+      NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                      InsertInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInterconnect(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-  ListInterconnects(google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest const& request) override;
+  PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                        PatchInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchInterconnect(NoAwaitTag,
-      google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnect(
+      NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                      PatchInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInterconnect(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

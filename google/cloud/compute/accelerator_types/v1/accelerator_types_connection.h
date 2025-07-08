@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ACCELERATOR_TYPES_V1_ACCELERATOR_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ACCELERATOR_TYPES_V1_ACCELERATOR_TYPES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_connection_idempotency_policy.h"
 #include "google/cloud/compute/accelerator_types/v1/internal/accelerator_types_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class AcceleratorTypesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AcceleratorTypesLimitedErrorCountRetryPolicy : public AcceleratorTypesRetryPolicy {
+class AcceleratorTypesLimitedErrorCountRetryPolicy
+    : public AcceleratorTypesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class AcceleratorTypesLimitedErrorCountRetryPolicy : public AcceleratorTypesRetr
    *     @p maximum_failures == 0.
    */
   explicit AcceleratorTypesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   AcceleratorTypesLimitedErrorCountRetryPolicy(
       AcceleratorTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AcceleratorTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AcceleratorTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AcceleratorTypesLimitedErrorCountRetryPolicy(
       AcceleratorTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AcceleratorTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AcceleratorTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class AcceleratorTypesLimitedErrorCountRetryPolicy : public AcceleratorTypesRetr
   using BaseType = AcceleratorTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_accelerator_types_v1_internal::AcceleratorTypesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_accelerator_types_v1_internal::AcceleratorTypesRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class AcceleratorTypesLimitedErrorCountRetryPolicy : public AcceleratorTypesRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AcceleratorTypesLimitedTimeRetryPolicy : public AcceleratorTypesRetryPolicy {
+class AcceleratorTypesLimitedTimeRetryPolicy
+    : public AcceleratorTypesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class AcceleratorTypesLimitedTimeRetryPolicy : public AcceleratorTypesRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit AcceleratorTypesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AcceleratorTypesLimitedTimeRetryPolicy(AcceleratorTypesLimitedTimeRetryPolicy&& rhs) noexcept
-    : AcceleratorTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AcceleratorTypesLimitedTimeRetryPolicy(AcceleratorTypesLimitedTimeRetryPolicy const& rhs) noexcept
-    : AcceleratorTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AcceleratorTypesLimitedTimeRetryPolicy(
+      AcceleratorTypesLimitedTimeRetryPolicy&& rhs) noexcept
+      : AcceleratorTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AcceleratorTypesLimitedTimeRetryPolicy(
+      AcceleratorTypesLimitedTimeRetryPolicy const& rhs) noexcept
+      : AcceleratorTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class AcceleratorTypesLimitedTimeRetryPolicy : public AcceleratorTypesRetryPolic
   using BaseType = AcceleratorTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_accelerator_types_v1_internal::AcceleratorTypesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_accelerator_types_v1_internal::AcceleratorTypesRetryTraits>
+      impl_;
 };
 
 /**
@@ -167,7 +175,8 @@ class AcceleratorTypesLimitedTimeRetryPolicy : public AcceleratorTypesRetryPolic
  *
  * To create a concrete instance, see `MakeAcceleratorTypesConnection()`.
  *
- * For mocking, see `compute_accelerator_types_v1_mocks::MockAcceleratorTypesConnection`.
+ * For mocking, see
+ * `compute_accelerator_types_v1_mocks::MockAcceleratorTypesConnection`.
  */
 class AcceleratorTypesConnection {
  public:
@@ -175,14 +184,19 @@ class AcceleratorTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
-  AggregatedListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
+  AggregatedListAcceleratorTypes(
+      google::cloud::cpp::compute::accelerator_types::v1::
+          AggregatedListAcceleratorTypesRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorType(google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request);
+  GetAcceleratorType(google::cloud::cpp::compute::accelerator_types::v1::
+                         GetAcceleratorTypeRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest request);
+  ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::
+                           ListAcceleratorTypesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

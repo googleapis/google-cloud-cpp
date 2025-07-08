@@ -37,30 +37,29 @@ namespace cloud {
 namespace bigquery_analyticshub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<AnalyticsHubServiceStub>
-CreateDefaultAnalyticsHubServiceStub(
+std::shared_ptr<AnalyticsHubServiceStub> CreateDefaultAnalyticsHubServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::bigquery::analyticshub::v1::AnalyticsHubService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::bigquery::analyticshub::v1::AnalyticsHubService::NewStub(
+          channel);
   std::shared_ptr<AnalyticsHubServiceStub> stub =
-    std::make_shared<DefaultAnalyticsHubServiceStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultAnalyticsHubServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<AnalyticsHubServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<AnalyticsHubServiceAuth>(std::move(auth),
+                                                     std::move(stub));
   }
   stub = std::make_shared<AnalyticsHubServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<AnalyticsHubServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

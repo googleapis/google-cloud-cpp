@@ -17,10 +17,10 @@
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
 #include "google/cloud/managedidentities/v1/internal/managed_identities_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/managedidentities/v1/managed_identities_connection.h"
 #include "google/cloud/managedidentities/v1/managed_identities_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,54 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ManagedIdentitiesServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_MANAGED_IDENTITIES_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_MANAGED_IDENTITIES_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_MANAGED_IDENTITIES_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_MANAGED_IDENTITIES_SERVICE_AUTHORITY",
       "managedidentities.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>()) {
-    options.set<managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>(
+  if (!options.has<
+          managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>()) {
+    options.set<
+        managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>(
         managedidentities_v1::ManagedIdentitiesServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption>()) {
-    options.set<managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<managedidentities_v1::
+                       ManagedIdentitiesServiceBackoffPolicyOption>()) {
+    options
+        .set<managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption>()) {
-    options.set<managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption::Type,
-            managedidentities_v1::ManagedIdentitiesServiceBackoffPolicyOption::Type>(
-            options.get<managedidentities_v1::ManagedIdentitiesServiceRetryPolicyOption>()->clone(),
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+  if (!options.has<managedidentities_v1::
+                       ManagedIdentitiesServicePollingPolicyOption>()) {
+    options
+        .set<managedidentities_v1::ManagedIdentitiesServicePollingPolicyOption>(
+            GenericPollingPolicy<
+                managedidentities_v1::
+                    ManagedIdentitiesServiceRetryPolicyOption::Type,
+                managedidentities_v1::
+                    ManagedIdentitiesServiceBackoffPolicyOption::Type>(
+                options
+                    .get<managedidentities_v1::
+                             ManagedIdentitiesServiceRetryPolicyOption>()
+                    ->clone(),
+                ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                         std::chrono::minutes(5),
+                                         kBackoffScaling)
+                    .clone())
+                .clone());
   }
-  if (!options.has<managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<managedidentities_v1::ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>(
-        managedidentities_v1::MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          managedidentities_v1::
+              ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<managedidentities_v1::
+                    ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>(
+        managedidentities_v1::
+            MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy());
   }
 
   return options;

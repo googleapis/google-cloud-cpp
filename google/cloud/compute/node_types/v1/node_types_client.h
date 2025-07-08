@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeTypesClient {
  public:
-  explicit NodeTypesClient(std::shared_ptr<NodeTypesConnection> connection, Options opts = {});
+  explicit NodeTypesClient(std::shared_ptr<NodeTypesConnection> connection,
+                           Options opts = {});
   ~NodeTypesClient();
 
   ///@{
@@ -117,7 +118,8 @@ class NodeTypesClient {
   /// [google.cloud.cpp.compute.v1.NodeTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L297}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::NodeTypesScopedList>>
   AggregatedListNodeTypes(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -158,8 +160,11 @@ class NodeTypesClient {
   /// [google.cloud.cpp.compute.v1.NodeTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L297}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
-  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest request, Options opts = {});
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::
+                              AggregatedListNodeTypesRequest request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +191,9 @@ class NodeTypesClient {
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeType>
-  GetNodeType(std::string const& project, std::string const& zone, std::string const& node_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
+      std::string const& project, std::string const& zone,
+      std::string const& node_type, Options opts = {});
 
   // clang-format off
   ///
@@ -217,8 +223,10 @@ class NodeTypesClient {
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NodeType>
-  GetNodeType(google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -253,8 +261,8 @@ class NodeTypesClient {
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L31}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::NodeType>
-  ListNodeTypes(std::string const& project, std::string const& zone, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
+      std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -293,8 +301,9 @@ class NodeTypesClient {
   /// [google.cloud.cpp.compute.v1.NodeType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_089.proto#L31}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::NodeType>
-  ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
+      google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<NodeTypesConnection> connection_;

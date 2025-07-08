@@ -28,40 +28,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudSchedulerClient::CloudSchedulerClient(
     std::shared_ptr<CloudSchedulerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudSchedulerClient::~CloudSchedulerClient() = default;
 
-StreamRange<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::ListJobs(std::string const& parent, Options opts) {
+StreamRange<google::cloud::scheduler::v1::Job> CloudSchedulerClient::ListJobs(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::scheduler::v1::ListJobsRequest request;
   request.set_parent(parent);
   return connection_->ListJobs(request);
 }
 
-StreamRange<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::ListJobs(google::cloud::scheduler::v1::ListJobsRequest request, Options opts) {
+StreamRange<google::cloud::scheduler::v1::Job> CloudSchedulerClient::ListJobs(
+    google::cloud::scheduler::v1::ListJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(std::move(request));
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::GetJob(std::string const& name, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::GetJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::scheduler::v1::GetJobRequest request;
   request.set_name(name);
   return connection_->GetJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::GetJob(google::cloud::scheduler::v1::GetJobRequest const& request, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::GetJob(
+    google::cloud::scheduler::v1::GetJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::CreateJob(std::string const& parent, google::cloud::scheduler::v1::Job const& job, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::CreateJob(
+    std::string const& parent, google::cloud::scheduler::v1::Job const& job,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::scheduler::v1::CreateJobRequest request;
   request.set_parent(parent);
@@ -69,14 +70,16 @@ CloudSchedulerClient::CreateJob(std::string const& parent, google::cloud::schedu
   return connection_->CreateJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::CreateJob(google::cloud::scheduler::v1::CreateJobRequest const& request, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::CreateJob(
+    google::cloud::scheduler::v1::CreateJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::UpdateJob(google::cloud::scheduler::v1::Job const& job, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::UpdateJob(
+    google::cloud::scheduler::v1::Job const& job,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::scheduler::v1::UpdateJobRequest request;
   *request.mutable_job() = job;
@@ -84,76 +87,80 @@ CloudSchedulerClient::UpdateJob(google::cloud::scheduler::v1::Job const& job, go
   return connection_->UpdateJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::UpdateJob(google::cloud::scheduler::v1::UpdateJobRequest const& request, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::UpdateJob(
+    google::cloud::scheduler::v1::UpdateJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateJob(request);
 }
 
-Status
-CloudSchedulerClient::DeleteJob(std::string const& name, Options opts) {
+Status CloudSchedulerClient::DeleteJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::scheduler::v1::DeleteJobRequest request;
   request.set_name(name);
   return connection_->DeleteJob(request);
 }
 
-Status
-CloudSchedulerClient::DeleteJob(google::cloud::scheduler::v1::DeleteJobRequest const& request, Options opts) {
+Status CloudSchedulerClient::DeleteJob(
+    google::cloud::scheduler::v1::DeleteJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::PauseJob(std::string const& name, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::PauseJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::scheduler::v1::PauseJobRequest request;
   request.set_name(name);
   return connection_->PauseJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::PauseJob(google::cloud::scheduler::v1::PauseJobRequest const& request, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::PauseJob(
+    google::cloud::scheduler::v1::PauseJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PauseJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::ResumeJob(std::string const& name, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::ResumeJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::scheduler::v1::ResumeJobRequest request;
   request.set_name(name);
   return connection_->ResumeJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::ResumeJob(google::cloud::scheduler::v1::ResumeJobRequest const& request, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::ResumeJob(
+    google::cloud::scheduler::v1::ResumeJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResumeJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::RunJob(std::string const& name, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::RunJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::scheduler::v1::RunJobRequest request;
   request.set_name(name);
   return connection_->RunJob(request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerClient::RunJob(google::cloud::scheduler::v1::RunJobRequest const& request, Options opts) {
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::RunJob(
+    google::cloud::scheduler::v1::RunJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunJob(request);
 }
 
 StreamRange<google::cloud::location::Location>
-CloudSchedulerClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+CloudSchedulerClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-CloudSchedulerClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> CloudSchedulerClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }

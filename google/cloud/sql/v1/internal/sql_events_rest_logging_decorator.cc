@@ -29,9 +29,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlEventsServiceRestLogging::SqlEventsServiceRestLogging(
     std::shared_ptr<SqlEventsServiceRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

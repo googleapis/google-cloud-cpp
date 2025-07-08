@@ -35,92 +35,91 @@ class SecretManagerServiceLogging : public SecretManagerServiceStub {
  public:
   ~SecretManagerServiceLogging() override = default;
   SecretManagerServiceLogging(std::shared_ptr<SecretManagerServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                              TracingOptions tracing_options,
+                              std::set<std::string> const& components);
 
   StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse> ListSecrets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::ListSecretsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::ListSecretsRequest const& request)
+      override;
 
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::CreateSecretRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::CreateSecretRequest const& request)
+      override;
 
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::AddSecretVersionRequest const& request)
+      override;
 
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::GetSecretRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::GetSecretRequest const& request)
+      override;
 
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::UpdateSecretRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::UpdateSecretRequest const& request)
+      override;
 
   Status DeleteSecret(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::DeleteSecretRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::DeleteSecretRequest const& request)
+      override;
 
-  StatusOr<google::cloud::secretmanager::v1::ListSecretVersionsResponse> ListSecretVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::ListSecretVersionsRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::ListSecretVersionsResponse>
+  ListSecretVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::GetSecretVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse> AccessSecretVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
+  AccessSecretVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion> DisableSecretVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  DisableSecretVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
+          request) override;
 
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::secretmanager::v1::SecretVersion> DestroySecretVersion(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) override;
+  StatusOr<google::cloud::secretmanager::v1::SecretVersion>
+  DestroySecretVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
+          request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_RULE_SET_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_RULE_SET_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/rule_set_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class RuleSetServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class RuleSetServiceLimitedErrorCountRetryPolicy : public RuleSetServiceRetryPolicy {
+class RuleSetServiceLimitedErrorCountRetryPolicy
+    : public RuleSetServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class RuleSetServiceLimitedErrorCountRetryPolicy : public RuleSetServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit RuleSetServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RuleSetServiceLimitedErrorCountRetryPolicy(
       RuleSetServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RuleSetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RuleSetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RuleSetServiceLimitedErrorCountRetryPolicy(
       RuleSetServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RuleSetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RuleSetServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class RuleSetServiceLimitedErrorCountRetryPolicy : public RuleSetServiceRetryPol
   using BaseType = RuleSetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<contentwarehouse_v1_internal::RuleSetServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      contentwarehouse_v1_internal::RuleSetServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class RuleSetServiceLimitedTimeRetryPolicy : public RuleSetServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RuleSetServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RuleSetServiceLimitedTimeRetryPolicy(RuleSetServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : RuleSetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RuleSetServiceLimitedTimeRetryPolicy(RuleSetServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : RuleSetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RuleSetServiceLimitedTimeRetryPolicy(
+      RuleSetServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : RuleSetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RuleSetServiceLimitedTimeRetryPolicy(
+      RuleSetServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : RuleSetServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class RuleSetServiceLimitedTimeRetryPolicy : public RuleSetServiceRetryPolicy {
   using BaseType = RuleSetServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<contentwarehouse_v1_internal::RuleSetServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      contentwarehouse_v1_internal::RuleSetServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,23 +182,24 @@ class RuleSetServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-  CreateRuleSet(google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request);
+  virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
+      google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request);
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-  GetRuleSet(google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request);
+  virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet> GetRuleSet(
+      google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request);
 
-  virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
-  UpdateRuleSet(google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request);
+  virtual StatusOr<google::cloud::contentwarehouse::v1::RuleSet> UpdateRuleSet(
+      google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request);
 
-  virtual Status
-  DeleteRuleSet(google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request);
+  virtual Status DeleteRuleSet(
+      google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request);
 
   virtual StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
-  ListRuleSets(google::cloud::contentwarehouse::v1::ListRuleSetsRequest request);
+  ListRuleSets(
+      google::cloud::contentwarehouse::v1::ListRuleSetsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

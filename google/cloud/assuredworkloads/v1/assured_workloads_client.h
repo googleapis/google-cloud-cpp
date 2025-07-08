@@ -64,23 +64,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AssuredWorkloadsServiceClient {
  public:
-  explicit AssuredWorkloadsServiceClient(std::shared_ptr<AssuredWorkloadsServiceConnection> connection, Options opts = {});
+  explicit AssuredWorkloadsServiceClient(
+      std::shared_ptr<AssuredWorkloadsServiceConnection> connection,
+      Options opts = {});
   ~AssuredWorkloadsServiceClient();
 
   ///@{
   /// @name Copy and move support
   AssuredWorkloadsServiceClient(AssuredWorkloadsServiceClient const&) = default;
-  AssuredWorkloadsServiceClient& operator=(AssuredWorkloadsServiceClient const&) = default;
+  AssuredWorkloadsServiceClient& operator=(
+      AssuredWorkloadsServiceClient const&) = default;
   AssuredWorkloadsServiceClient(AssuredWorkloadsServiceClient&&) = default;
-  AssuredWorkloadsServiceClient& operator=(AssuredWorkloadsServiceClient&&) = default;
+  AssuredWorkloadsServiceClient& operator=(AssuredWorkloadsServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(AssuredWorkloadsServiceClient const& a, AssuredWorkloadsServiceClient const& b) {
+  friend bool operator==(AssuredWorkloadsServiceClient const& a,
+                         AssuredWorkloadsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AssuredWorkloadsServiceClient const& a, AssuredWorkloadsServiceClient const& b) {
+  friend bool operator!=(AssuredWorkloadsServiceClient const& a,
+                         AssuredWorkloadsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,7 +123,9 @@ class AssuredWorkloadsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(std::string const& parent, google::cloud::assuredworkloads::v1::Workload const& workload, Options opts = {});
+  CreateWorkload(std::string const& parent,
+                 google::cloud::assuredworkloads::v1::Workload const& workload,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -130,8 +138,10 @@ class AssuredWorkloadsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateWorkload(NoAwaitTag, std::string const& parent, google::cloud::assuredworkloads::v1::Workload const& workload, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateWorkload(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::assuredworkloads::v1::Workload const& workload,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -168,7 +178,9 @@ class AssuredWorkloadsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request, Options opts = {});
+  CreateWorkload(
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -181,8 +193,10 @@ class AssuredWorkloadsServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateWorkload(NoAwaitTag, google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateWorkload(
+      NoAwaitTag,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -194,7 +208,8 @@ class AssuredWorkloadsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(google::longrunning::Operation const& operation, Options opts = {});
+  CreateWorkload(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -225,8 +240,9 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   // clang-format on
-  StatusOr<google::cloud::assuredworkloads::v1::Workload>
-  UpdateWorkload(google::cloud::assuredworkloads::v1::Workload const& workload, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
+      google::cloud::assuredworkloads::v1::Workload const& workload,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -258,8 +274,9 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   // clang-format on
-  StatusOr<google::cloud::assuredworkloads::v1::Workload>
-  UpdateWorkload(google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request, Options opts = {});
+  StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
+      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -293,8 +310,11 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.RestrictAllowedResourcesResponse]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L563}
   ///
   // clang-format on
-  StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
-  RestrictAllowedResources(google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(google::cloud::assuredworkloads::v1::
+                               RestrictAllowedResourcesRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -319,8 +339,7 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
   ///
   // clang-format on
-  Status
-  DeleteWorkload(std::string const& name, Options opts = {});
+  Status DeleteWorkload(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -348,8 +367,9 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
   ///
   // clang-format on
-  Status
-  DeleteWorkload(google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request, Options opts = {});
+  Status DeleteWorkload(
+      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -377,8 +397,8 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   // clang-format on
-  StatusOr<google::cloud::assuredworkloads::v1::Workload>
-  GetWorkload(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -407,8 +427,9 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   // clang-format on
-  StatusOr<google::cloud::assuredworkloads::v1::Workload>
-  GetWorkload(google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request, Options opts = {});
+  StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
+      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -442,8 +463,8 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   // clang-format on
-  StreamRange<google::cloud::assuredworkloads::v1::Workload>
-  ListWorkloads(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -481,8 +502,9 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
   // clang-format on
-  StreamRange<google::cloud::assuredworkloads::v1::Workload>
-  ListWorkloads(google::cloud::assuredworkloads::v1::ListWorkloadsRequest request, Options opts = {});
+  StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
+      google::cloud::assuredworkloads::v1::ListWorkloadsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -520,8 +542,8 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Violation]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
   ///
   // clang-format on
-  StreamRange<google::cloud::assuredworkloads::v1::Violation>
-  ListViolations(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::assuredworkloads::v1::Violation> ListViolations(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -563,8 +585,9 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Violation]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
   ///
   // clang-format on
-  StreamRange<google::cloud::assuredworkloads::v1::Violation>
-  ListViolations(google::cloud::assuredworkloads::v1::ListViolationsRequest request, Options opts = {});
+  StreamRange<google::cloud::assuredworkloads::v1::Violation> ListViolations(
+      google::cloud::assuredworkloads::v1::ListViolationsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -590,8 +613,8 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Violation]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
   ///
   // clang-format on
-  StatusOr<google::cloud::assuredworkloads::v1::Violation>
-  GetViolation(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -620,8 +643,9 @@ class AssuredWorkloadsServiceClient {
   /// [google.cloud.assuredworkloads.v1.Violation]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
   ///
   // clang-format on
-  StatusOr<google::cloud::assuredworkloads::v1::Violation>
-  GetViolation(google::cloud::assuredworkloads::v1::GetViolationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -654,7 +678,10 @@ class AssuredWorkloadsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
-  AcknowledgeViolation(google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const& request, Options opts = {});
+  AcknowledgeViolation(
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -689,8 +716,8 @@ class AssuredWorkloadsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -729,8 +756,8 @@ class AssuredWorkloadsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -756,8 +783,8 @@ class AssuredWorkloadsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -788,8 +815,9 @@ class AssuredWorkloadsServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AssuredWorkloadsServiceConnection> connection_;

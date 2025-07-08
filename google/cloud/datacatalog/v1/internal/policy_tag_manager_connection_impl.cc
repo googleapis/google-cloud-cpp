@@ -17,9 +17,9 @@
 // source: google/cloud/datacatalog/v1/policytagmanager.proto
 
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_connection_impl.h"
+#include "google/cloud/datacatalog/v1/internal/policy_tag_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/datacatalog/v1/internal/policy_tag_manager_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,93 +32,107 @@ namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()->clone();
+std::unique_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 PolicyTagManagerConnectionImpl::PolicyTagManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<datacatalog_v1_internal::PolicyTagManagerStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        PolicyTagManagerConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      PolicyTagManagerConnection::options())) {}
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerConnectionImpl::CreateTaxonomy(google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
+PolicyTagManagerConnectionImpl::CreateTaxonomy(
+    google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTaxonomy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
+             google::cloud::datacatalog::v1::CreateTaxonomyRequest const&
+                 request) {
         return stub_->CreateTaxonomy(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-PolicyTagManagerConnectionImpl::DeleteTaxonomy(google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
+Status PolicyTagManagerConnectionImpl::DeleteTaxonomy(
+    google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTaxonomy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
+             google::cloud::datacatalog::v1::DeleteTaxonomyRequest const&
+                 request) {
         return stub_->DeleteTaxonomy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerConnectionImpl::UpdateTaxonomy(google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
+PolicyTagManagerConnectionImpl::UpdateTaxonomy(
+    google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTaxonomy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
+             google::cloud::datacatalog::v1::UpdateTaxonomyRequest const&
+                 request) {
         return stub_->UpdateTaxonomy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerConnectionImpl::ListTaxonomies(google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
+PolicyTagManagerConnectionImpl::ListTaxonomies(
+    google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListTaxonomies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::datacatalog::v1::Taxonomy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::Taxonomy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::datacatalog::v1::ListTaxonomiesRequest const& r) {
+          Options const& options,
+          google::cloud::datacatalog::v1::ListTaxonomiesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
+                   google::cloud::datacatalog::v1::ListTaxonomiesRequest const&
+                       request) {
               return stub->ListTaxonomies(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::datacatalog::v1::ListTaxonomiesResponse r) {
-        std::vector<google::cloud::datacatalog::v1::Taxonomy> result(r.taxonomies().size());
+        std::vector<google::cloud::datacatalog::v1::Taxonomy> result(
+            r.taxonomies().size());
         auto& messages = *r.mutable_taxonomies();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -126,79 +140,92 @@ PolicyTagManagerConnectionImpl::ListTaxonomies(google::cloud::datacatalog::v1::L
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-PolicyTagManagerConnectionImpl::GetTaxonomy(google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
+PolicyTagManagerConnectionImpl::GetTaxonomy(
+    google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTaxonomy(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
         return stub_->GetTaxonomy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerConnectionImpl::CreatePolicyTag(google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
+PolicyTagManagerConnectionImpl::CreatePolicyTag(
+    google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePolicyTag(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
+             google::cloud::datacatalog::v1::CreatePolicyTagRequest const&
+                 request) {
         return stub_->CreatePolicyTag(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-PolicyTagManagerConnectionImpl::DeletePolicyTag(google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
+Status PolicyTagManagerConnectionImpl::DeletePolicyTag(
+    google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePolicyTag(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
+             google::cloud::datacatalog::v1::DeletePolicyTagRequest const&
+                 request) {
         return stub_->DeletePolicyTag(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerConnectionImpl::UpdatePolicyTag(google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
+PolicyTagManagerConnectionImpl::UpdatePolicyTag(
+    google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdatePolicyTag(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
+             google::cloud::datacatalog::v1::UpdatePolicyTagRequest const&
+                 request) {
         return stub_->UpdatePolicyTag(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerConnectionImpl::ListPolicyTags(google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
+PolicyTagManagerConnectionImpl::ListPolicyTags(
+    google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListPolicyTags(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::datacatalog::v1::PolicyTag>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::datacatalog::v1::PolicyTag>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::datacatalog::v1::ListPolicyTagsRequest const& r) {
+          Options const& options,
+          google::cloud::datacatalog::v1::ListPolicyTagsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
+                   google::cloud::datacatalog::v1::ListPolicyTagsRequest const&
+                       request) {
               return stub->ListPolicyTags(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::datacatalog::v1::ListPolicyTagsResponse r) {
-        std::vector<google::cloud::datacatalog::v1::PolicyTag> result(r.policy_tags().size());
+        std::vector<google::cloud::datacatalog::v1::PolicyTag> result(
+            r.policy_tags().size());
         auto& messages = *r.mutable_policy_tags();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -206,20 +233,22 @@ PolicyTagManagerConnectionImpl::ListPolicyTags(google::cloud::datacatalog::v1::L
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-PolicyTagManagerConnectionImpl::GetPolicyTag(google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
+PolicyTagManagerConnectionImpl::GetPolicyTag(
+    google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPolicyTag(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
         return stub_->GetPolicyTag(context, options, request);
       },
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-PolicyTagManagerConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> PolicyTagManagerConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -231,8 +260,8 @@ PolicyTagManagerConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyReques
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-PolicyTagManagerConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> PolicyTagManagerConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -245,7 +274,8 @@ PolicyTagManagerConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyReques
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-PolicyTagManagerConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+PolicyTagManagerConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -258,17 +288,21 @@ PolicyTagManagerConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermi
 }
 
 StreamRange<google::longrunning::Operation>
-PolicyTagManagerConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+PolicyTagManagerConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -278,7 +312,8 @@ PolicyTagManagerConnectionImpl::ListOperations(google::longrunning::ListOperatio
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -286,7 +321,8 @@ PolicyTagManagerConnectionImpl::ListOperations(google::longrunning::ListOperatio
 }
 
 StatusOr<google::longrunning::Operation>
-PolicyTagManagerConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+PolicyTagManagerConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -298,8 +334,8 @@ PolicyTagManagerConnectionImpl::GetOperation(google::longrunning::GetOperationRe
       *current, request, __func__);
 }
 
-Status
-PolicyTagManagerConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status PolicyTagManagerConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -311,8 +347,8 @@ PolicyTagManagerConnectionImpl::DeleteOperation(google::longrunning::DeleteOpera
       *current, request, __func__);
 }
 
-Status
-PolicyTagManagerConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status PolicyTagManagerConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

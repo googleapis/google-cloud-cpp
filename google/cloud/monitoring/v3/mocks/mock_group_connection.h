@@ -42,33 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockGroupServiceConnection : public monitoring_v3::GroupServiceConnection {
+class MockGroupServiceConnection
+    : public monitoring_v3::GroupServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::monitoring::v3::Group>),
-  ListGroups,
-  (google::monitoring::v3::ListGroupsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::monitoring::v3::Group>), ListGroups,
+              (google::monitoring::v3::ListGroupsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>,
-  GetGroup,
-  (google::monitoring::v3::GetGroupRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, GetGroup,
+              (google::monitoring::v3::GetGroupRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>,
-  CreateGroup,
-  (google::monitoring::v3::CreateGroupRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, CreateGroup,
+              (google::monitoring::v3::CreateGroupRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>,
-  UpdateGroup,
-  (google::monitoring::v3::UpdateGroupRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, UpdateGroup,
+              (google::monitoring::v3::UpdateGroupRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteGroup,
-  (google::monitoring::v3::DeleteGroupRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteGroup,
+              (google::monitoring::v3::DeleteGroupRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::api::MonitoredResource>),
-  ListGroupMembers,
-  (google::monitoring::v3::ListGroupMembersRequest request), (override));
+  MOCK_METHOD((StreamRange<google::api::MonitoredResource>), ListGroupMembers,
+              (google::monitoring::v3::ListGroupMembersRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

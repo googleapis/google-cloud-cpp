@@ -26,7 +26,8 @@ namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use iam_admin_v1::MakeDefaultIAMConnectionIdempotencyPolicy directly.
+/// @deprecated Use iam_admin_v1::MakeDefaultIAMConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::iam_admin_v1::MakeDefaultIAMConnectionIdempotencyPolicy;
 
 /// @deprecated Use iam_admin_v1::IAMConnectionIdempotencyPolicy directly.

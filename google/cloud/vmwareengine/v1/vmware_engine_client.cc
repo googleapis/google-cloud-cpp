@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VmwareEngineClient::VmwareEngineClient(
     std::shared_ptr<VmwareEngineConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 VmwareEngineClient::~VmwareEngineClient() = default;
 
 StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>
@@ -41,7 +41,9 @@ VmwareEngineClient::ListPrivateClouds(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>
-VmwareEngineClient::ListPrivateClouds(google::cloud::vmwareengine::v1::ListPrivateCloudsRequest request, Options opts) {
+VmwareEngineClient::ListPrivateClouds(
+    google::cloud::vmwareengine::v1::ListPrivateCloudsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPrivateClouds(std::move(request));
 }
@@ -55,13 +57,18 @@ VmwareEngineClient::GetPrivateCloud(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
-VmwareEngineClient::GetPrivateCloud(google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request, Options opts) {
+VmwareEngineClient::GetPrivateCloud(
+    google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPrivateCloud(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::CreatePrivateCloud(std::string const& parent, google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud, std::string const& private_cloud_id, Options opts) {
+VmwareEngineClient::CreatePrivateCloud(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
+    std::string const& private_cloud_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreatePrivateCloudRequest request;
   request.set_parent(parent);
@@ -70,8 +77,10 @@ VmwareEngineClient::CreatePrivateCloud(std::string const& parent, google::cloud:
   return connection_->CreatePrivateCloud(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreatePrivateCloud(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud, std::string const& private_cloud_id, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::CreatePrivateCloud(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
+    std::string const& private_cloud_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreatePrivateCloudRequest request;
   request.set_parent(parent);
@@ -81,25 +90,32 @@ VmwareEngineClient::CreatePrivateCloud(NoAwaitTag, std::string const& parent, go
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::CreatePrivateCloud(google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request, Options opts) {
+VmwareEngineClient::CreatePrivateCloud(
+    google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateCloud(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreatePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::CreatePrivateCloud(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateCloud(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::CreatePrivateCloud(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreatePrivateCloud(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateCloud(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::UpdatePrivateCloud(google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdatePrivateCloud(
+    google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest request;
   *request.mutable_private_cloud() = private_cloud;
@@ -107,8 +123,10 @@ VmwareEngineClient::UpdatePrivateCloud(google::cloud::vmwareengine::v1::PrivateC
   return connection_->UpdatePrivateCloud(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdatePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::UpdatePrivateCloud(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest request;
   *request.mutable_private_cloud() = private_cloud;
@@ -117,19 +135,24 @@ VmwareEngineClient::UpdatePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::UpdatePrivateCloud(google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request, Options opts) {
+VmwareEngineClient::UpdatePrivateCloud(
+    google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePrivateCloud(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdatePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::UpdatePrivateCloud(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePrivateCloud(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::UpdatePrivateCloud(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdatePrivateCloud(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePrivateCloud(operation);
 }
@@ -142,8 +165,8 @@ VmwareEngineClient::DeletePrivateCloud(std::string const& name, Options opts) {
   return connection_->DeletePrivateCloud(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeletePrivateCloud(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::DeletePrivateCloud(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeletePrivateCloudRequest request;
   request.set_name(name);
@@ -151,25 +174,31 @@ VmwareEngineClient::DeletePrivateCloud(NoAwaitTag, std::string const& name, Opti
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::DeletePrivateCloud(google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request, Options opts) {
+VmwareEngineClient::DeletePrivateCloud(
+    google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateCloud(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeletePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::DeletePrivateCloud(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateCloud(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::DeletePrivateCloud(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeletePrivateCloud(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateCloud(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::UndeletePrivateCloud(std::string const& name, Options opts) {
+VmwareEngineClient::UndeletePrivateCloud(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest request;
   request.set_name(name);
@@ -177,7 +206,8 @@ VmwareEngineClient::UndeletePrivateCloud(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UndeletePrivateCloud(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::UndeletePrivateCloud(NoAwaitTag, std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest request;
   request.set_name(name);
@@ -185,19 +215,25 @@ VmwareEngineClient::UndeletePrivateCloud(NoAwaitTag, std::string const& name, Op
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::UndeletePrivateCloud(google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const& request, Options opts) {
+VmwareEngineClient::UndeletePrivateCloud(
+    google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeletePrivateCloud(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UndeletePrivateCloud(NoAwaitTag, google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const& request, Options opts) {
+VmwareEngineClient::UndeletePrivateCloud(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeletePrivateCloud(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::UndeletePrivateCloud(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UndeletePrivateCloud(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeletePrivateCloud(operation);
 }
@@ -211,7 +247,9 @@ VmwareEngineClient::ListClusters(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Cluster>
-VmwareEngineClient::ListClusters(google::cloud::vmwareengine::v1::ListClustersRequest request, Options opts) {
+VmwareEngineClient::ListClusters(
+    google::cloud::vmwareengine::v1::ListClustersRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListClusters(std::move(request));
 }
@@ -225,13 +263,18 @@ VmwareEngineClient::GetCluster(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Cluster>
-VmwareEngineClient::GetCluster(google::cloud::vmwareengine::v1::GetClusterRequest const& request, Options opts) {
+VmwareEngineClient::GetCluster(
+    google::cloud::vmwareengine::v1::GetClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCluster(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
-VmwareEngineClient::CreateCluster(std::string const& parent, google::cloud::vmwareengine::v1::Cluster const& cluster, std::string const& cluster_id, Options opts) {
+VmwareEngineClient::CreateCluster(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::Cluster const& cluster,
+    std::string const& cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateClusterRequest request;
   request.set_parent(parent);
@@ -240,8 +283,10 @@ VmwareEngineClient::CreateCluster(std::string const& parent, google::cloud::vmwa
   return connection_->CreateCluster(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateCluster(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::Cluster const& cluster, std::string const& cluster_id, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::CreateCluster(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::Cluster const& cluster,
+    std::string const& cluster_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateClusterRequest request;
   request.set_parent(parent);
@@ -251,25 +296,32 @@ VmwareEngineClient::CreateCluster(NoAwaitTag, std::string const& parent, google:
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
-VmwareEngineClient::CreateCluster(google::cloud::vmwareengine::v1::CreateClusterRequest const& request, Options opts) {
+VmwareEngineClient::CreateCluster(
+    google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateCluster(NoAwaitTag, google::cloud::vmwareengine::v1::CreateClusterRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::CreateCluster(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
-VmwareEngineClient::CreateCluster(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateCluster(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
-VmwareEngineClient::UpdateCluster(google::cloud::vmwareengine::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateCluster(
+    google::cloud::vmwareengine::v1::Cluster const& cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateClusterRequest request;
   *request.mutable_cluster() = cluster;
@@ -277,8 +329,9 @@ VmwareEngineClient::UpdateCluster(google::cloud::vmwareengine::v1::Cluster const
   return connection_->UpdateCluster(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateCluster(NoAwaitTag, google::cloud::vmwareengine::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::UpdateCluster(
+    NoAwaitTag, google::cloud::vmwareengine::v1::Cluster const& cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateClusterRequest request;
   *request.mutable_cluster() = cluster;
@@ -287,19 +340,24 @@ VmwareEngineClient::UpdateCluster(NoAwaitTag, google::cloud::vmwareengine::v1::C
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
-VmwareEngineClient::UpdateCluster(google::cloud::vmwareengine::v1::UpdateClusterRequest const& request, Options opts) {
+VmwareEngineClient::UpdateCluster(
+    google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateCluster(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateClusterRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::UpdateCluster(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
-VmwareEngineClient::UpdateCluster(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateCluster(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(operation);
 }
@@ -312,8 +370,8 @@ VmwareEngineClient::DeleteCluster(std::string const& name, Options opts) {
   return connection_->DeleteCluster(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteCluster(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::DeleteCluster(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteClusterRequest request;
   request.set_name(name);
@@ -321,19 +379,24 @@ VmwareEngineClient::DeleteCluster(NoAwaitTag, std::string const& name, Options o
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteCluster(google::cloud::vmwareengine::v1::DeleteClusterRequest const& request, Options opts) {
+VmwareEngineClient::DeleteCluster(
+    google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCluster(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteCluster(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteClusterRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::DeleteCluster(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteCluster(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeleteCluster(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCluster(operation);
 }
@@ -347,27 +410,30 @@ VmwareEngineClient::ListNodes(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Node>
-VmwareEngineClient::ListNodes(google::cloud::vmwareengine::v1::ListNodesRequest request, Options opts) {
+VmwareEngineClient::ListNodes(
+    google::cloud::vmwareengine::v1::ListNodesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNodes(std::move(request));
 }
 
-StatusOr<google::cloud::vmwareengine::v1::Node>
-VmwareEngineClient::GetNode(std::string const& name, Options opts) {
+StatusOr<google::cloud::vmwareengine::v1::Node> VmwareEngineClient::GetNode(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GetNodeRequest request;
   request.set_name(name);
   return connection_->GetNode(request);
 }
 
-StatusOr<google::cloud::vmwareengine::v1::Node>
-VmwareEngineClient::GetNode(google::cloud::vmwareengine::v1::GetNodeRequest const& request, Options opts) {
+StatusOr<google::cloud::vmwareengine::v1::Node> VmwareEngineClient::GetNode(
+    google::cloud::vmwareengine::v1::GetNodeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNode(request);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
-VmwareEngineClient::ListExternalAddresses(std::string const& parent, Options opts) {
+VmwareEngineClient::ListExternalAddresses(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListExternalAddressesRequest request;
   request.set_parent(parent);
@@ -375,21 +441,28 @@ VmwareEngineClient::ListExternalAddresses(std::string const& parent, Options opt
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
-VmwareEngineClient::ListExternalAddresses(google::cloud::vmwareengine::v1::ListExternalAddressesRequest request, Options opts) {
+VmwareEngineClient::ListExternalAddresses(
+    google::cloud::vmwareengine::v1::ListExternalAddressesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListExternalAddresses(std::move(request));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
-VmwareEngineClient::FetchNetworkPolicyExternalAddresses(std::string const& network_policy, Options opts) {
+VmwareEngineClient::FetchNetworkPolicyExternalAddresses(
+    std::string const& network_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest request;
+  google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest
+      request;
   request.set_network_policy(network_policy);
   return connection_->FetchNetworkPolicyExternalAddresses(request);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
-VmwareEngineClient::FetchNetworkPolicyExternalAddresses(google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest request, Options opts) {
+VmwareEngineClient::FetchNetworkPolicyExternalAddresses(
+    google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchNetworkPolicyExternalAddresses(std::move(request));
 }
@@ -403,13 +476,18 @@ VmwareEngineClient::GetExternalAddress(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
-VmwareEngineClient::GetExternalAddress(google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request, Options opts) {
+VmwareEngineClient::GetExternalAddress(
+    google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetExternalAddress(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-VmwareEngineClient::CreateExternalAddress(std::string const& parent, google::cloud::vmwareengine::v1::ExternalAddress const& external_address, std::string const& external_address_id, Options opts) {
+VmwareEngineClient::CreateExternalAddress(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
+    std::string const& external_address_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateExternalAddressRequest request;
   request.set_parent(parent);
@@ -419,7 +497,10 @@ VmwareEngineClient::CreateExternalAddress(std::string const& parent, google::clo
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateExternalAddress(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::ExternalAddress const& external_address, std::string const& external_address_id, Options opts) {
+VmwareEngineClient::CreateExternalAddress(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
+    std::string const& external_address_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateExternalAddressRequest request;
   request.set_parent(parent);
@@ -429,25 +510,35 @@ VmwareEngineClient::CreateExternalAddress(NoAwaitTag, std::string const& parent,
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-VmwareEngineClient::CreateExternalAddress(google::cloud::vmwareengine::v1::CreateExternalAddressRequest const& request, Options opts) {
+VmwareEngineClient::CreateExternalAddress(
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExternalAddress(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateExternalAddress(NoAwaitTag, google::cloud::vmwareengine::v1::CreateExternalAddressRequest const& request, Options opts) {
+VmwareEngineClient::CreateExternalAddress(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExternalAddress(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-VmwareEngineClient::CreateExternalAddress(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateExternalAddress(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExternalAddress(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-VmwareEngineClient::UpdateExternalAddress(google::cloud::vmwareengine::v1::ExternalAddress const& external_address, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateExternalAddress(
+    google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateExternalAddressRequest request;
   *request.mutable_external_address() = external_address;
@@ -456,7 +547,10 @@ VmwareEngineClient::UpdateExternalAddress(google::cloud::vmwareengine::v1::Exter
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateExternalAddress(NoAwaitTag, google::cloud::vmwareengine::v1::ExternalAddress const& external_address, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateExternalAddress(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateExternalAddressRequest request;
   *request.mutable_external_address() = external_address;
@@ -465,25 +559,34 @@ VmwareEngineClient::UpdateExternalAddress(NoAwaitTag, google::cloud::vmwareengin
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-VmwareEngineClient::UpdateExternalAddress(google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const& request, Options opts) {
+VmwareEngineClient::UpdateExternalAddress(
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExternalAddress(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateExternalAddress(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const& request, Options opts) {
+VmwareEngineClient::UpdateExternalAddress(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExternalAddress(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-VmwareEngineClient::UpdateExternalAddress(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateExternalAddress(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExternalAddress(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteExternalAddress(std::string const& name, Options opts) {
+VmwareEngineClient::DeleteExternalAddress(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteExternalAddressRequest request;
   request.set_name(name);
@@ -491,7 +594,8 @@ VmwareEngineClient::DeleteExternalAddress(std::string const& name, Options opts)
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteExternalAddress(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::DeleteExternalAddress(NoAwaitTag, std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteExternalAddressRequest request;
   request.set_name(name);
@@ -499,19 +603,27 @@ VmwareEngineClient::DeleteExternalAddress(NoAwaitTag, std::string const& name, O
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteExternalAddress(google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const& request, Options opts) {
+VmwareEngineClient::DeleteExternalAddress(
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExternalAddress(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteExternalAddress(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const& request, Options opts) {
+VmwareEngineClient::DeleteExternalAddress(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExternalAddress(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteExternalAddress(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeleteExternalAddress(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExternalAddress(operation);
 }
@@ -525,27 +637,31 @@ VmwareEngineClient::ListSubnets(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Subnet>
-VmwareEngineClient::ListSubnets(google::cloud::vmwareengine::v1::ListSubnetsRequest request, Options opts) {
+VmwareEngineClient::ListSubnets(
+    google::cloud::vmwareengine::v1::ListSubnetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSubnets(std::move(request));
 }
 
-StatusOr<google::cloud::vmwareengine::v1::Subnet>
-VmwareEngineClient::GetSubnet(std::string const& name, Options opts) {
+StatusOr<google::cloud::vmwareengine::v1::Subnet> VmwareEngineClient::GetSubnet(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GetSubnetRequest request;
   request.set_name(name);
   return connection_->GetSubnet(request);
 }
 
-StatusOr<google::cloud::vmwareengine::v1::Subnet>
-VmwareEngineClient::GetSubnet(google::cloud::vmwareengine::v1::GetSubnetRequest const& request, Options opts) {
+StatusOr<google::cloud::vmwareengine::v1::Subnet> VmwareEngineClient::GetSubnet(
+    google::cloud::vmwareengine::v1::GetSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSubnet(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
-VmwareEngineClient::UpdateSubnet(google::cloud::vmwareengine::v1::Subnet const& subnet, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateSubnet(
+    google::cloud::vmwareengine::v1::Subnet const& subnet,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateSubnetRequest request;
   *request.mutable_subnet() = subnet;
@@ -553,8 +669,9 @@ VmwareEngineClient::UpdateSubnet(google::cloud::vmwareengine::v1::Subnet const& 
   return connection_->UpdateSubnet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateSubnet(NoAwaitTag, google::cloud::vmwareengine::v1::Subnet const& subnet, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::UpdateSubnet(
+    NoAwaitTag, google::cloud::vmwareengine::v1::Subnet const& subnet,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateSubnetRequest request;
   *request.mutable_subnet() = subnet;
@@ -563,25 +680,31 @@ VmwareEngineClient::UpdateSubnet(NoAwaitTag, google::cloud::vmwareengine::v1::Su
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
-VmwareEngineClient::UpdateSubnet(google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request, Options opts) {
+VmwareEngineClient::UpdateSubnet(
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSubnet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateSubnet(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::UpdateSubnet(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSubnet(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
-VmwareEngineClient::UpdateSubnet(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateSubnet(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSubnet(operation);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
-VmwareEngineClient::ListExternalAccessRules(std::string const& parent, Options opts) {
+VmwareEngineClient::ListExternalAccessRules(std::string const& parent,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request;
   request.set_parent(parent);
@@ -589,13 +712,16 @@ VmwareEngineClient::ListExternalAccessRules(std::string const& parent, Options o
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
-VmwareEngineClient::ListExternalAccessRules(google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request, Options opts) {
+VmwareEngineClient::ListExternalAccessRules(
+    google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListExternalAccessRules(std::move(request));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
-VmwareEngineClient::GetExternalAccessRule(std::string const& name, Options opts) {
+VmwareEngineClient::GetExternalAccessRule(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest request;
   request.set_name(name);
@@ -603,13 +729,20 @@ VmwareEngineClient::GetExternalAccessRule(std::string const& name, Options opts)
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
-VmwareEngineClient::GetExternalAccessRule(google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const& request, Options opts) {
+VmwareEngineClient::GetExternalAccessRule(
+    google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetExternalAccessRule(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-VmwareEngineClient::CreateExternalAccessRule(std::string const& parent, google::cloud::vmwareengine::v1::ExternalAccessRule const& external_access_rule, std::string const& external_access_rule_id, Options opts) {
+VmwareEngineClient::CreateExternalAccessRule(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::ExternalAccessRule const&
+        external_access_rule,
+    std::string const& external_access_rule_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest request;
   request.set_parent(parent);
@@ -619,7 +752,11 @@ VmwareEngineClient::CreateExternalAccessRule(std::string const& parent, google::
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateExternalAccessRule(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::ExternalAccessRule const& external_access_rule, std::string const& external_access_rule_id, Options opts) {
+VmwareEngineClient::CreateExternalAccessRule(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::ExternalAccessRule const&
+        external_access_rule,
+    std::string const& external_access_rule_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest request;
   request.set_parent(parent);
@@ -629,25 +766,36 @@ VmwareEngineClient::CreateExternalAccessRule(NoAwaitTag, std::string const& pare
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-VmwareEngineClient::CreateExternalAccessRule(google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const& request, Options opts) {
+VmwareEngineClient::CreateExternalAccessRule(
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExternalAccessRule(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateExternalAccessRule(NoAwaitTag, google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const& request, Options opts) {
+VmwareEngineClient::CreateExternalAccessRule(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExternalAccessRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-VmwareEngineClient::CreateExternalAccessRule(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateExternalAccessRule(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateExternalAccessRule(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-VmwareEngineClient::UpdateExternalAccessRule(google::cloud::vmwareengine::v1::ExternalAccessRule const& external_access_rule, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateExternalAccessRule(
+    google::cloud::vmwareengine::v1::ExternalAccessRule const&
+        external_access_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest request;
   *request.mutable_external_access_rule() = external_access_rule;
@@ -656,7 +804,11 @@ VmwareEngineClient::UpdateExternalAccessRule(google::cloud::vmwareengine::v1::Ex
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateExternalAccessRule(NoAwaitTag, google::cloud::vmwareengine::v1::ExternalAccessRule const& external_access_rule, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateExternalAccessRule(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::ExternalAccessRule const&
+        external_access_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest request;
   *request.mutable_external_access_rule() = external_access_rule;
@@ -665,25 +817,34 @@ VmwareEngineClient::UpdateExternalAccessRule(NoAwaitTag, google::cloud::vmwareen
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-VmwareEngineClient::UpdateExternalAccessRule(google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const& request, Options opts) {
+VmwareEngineClient::UpdateExternalAccessRule(
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExternalAccessRule(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateExternalAccessRule(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const& request, Options opts) {
+VmwareEngineClient::UpdateExternalAccessRule(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExternalAccessRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-VmwareEngineClient::UpdateExternalAccessRule(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateExternalAccessRule(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateExternalAccessRule(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteExternalAccessRule(std::string const& name, Options opts) {
+VmwareEngineClient::DeleteExternalAccessRule(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest request;
   request.set_name(name);
@@ -691,7 +852,9 @@ VmwareEngineClient::DeleteExternalAccessRule(std::string const& name, Options op
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteExternalAccessRule(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::DeleteExternalAccessRule(NoAwaitTag,
+                                             std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest request;
   request.set_name(name);
@@ -699,25 +862,34 @@ VmwareEngineClient::DeleteExternalAccessRule(NoAwaitTag, std::string const& name
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteExternalAccessRule(google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const& request, Options opts) {
+VmwareEngineClient::DeleteExternalAccessRule(
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExternalAccessRule(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteExternalAccessRule(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const& request, Options opts) {
+VmwareEngineClient::DeleteExternalAccessRule(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExternalAccessRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteExternalAccessRule(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeleteExternalAccessRule(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteExternalAccessRule(operation);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
-VmwareEngineClient::ListLoggingServers(std::string const& parent, Options opts) {
+VmwareEngineClient::ListLoggingServers(std::string const& parent,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListLoggingServersRequest request;
   request.set_parent(parent);
@@ -725,7 +897,9 @@ VmwareEngineClient::ListLoggingServers(std::string const& parent, Options opts) 
 }
 
 StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
-VmwareEngineClient::ListLoggingServers(google::cloud::vmwareengine::v1::ListLoggingServersRequest request, Options opts) {
+VmwareEngineClient::ListLoggingServers(
+    google::cloud::vmwareengine::v1::ListLoggingServersRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLoggingServers(std::move(request));
 }
@@ -739,13 +913,18 @@ VmwareEngineClient::GetLoggingServer(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
-VmwareEngineClient::GetLoggingServer(google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request, Options opts) {
+VmwareEngineClient::GetLoggingServer(
+    google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLoggingServer(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-VmwareEngineClient::CreateLoggingServer(std::string const& parent, google::cloud::vmwareengine::v1::LoggingServer const& logging_server, std::string const& logging_server_id, Options opts) {
+VmwareEngineClient::CreateLoggingServer(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
+    std::string const& logging_server_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateLoggingServerRequest request;
   request.set_parent(parent);
@@ -755,7 +934,10 @@ VmwareEngineClient::CreateLoggingServer(std::string const& parent, google::cloud
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateLoggingServer(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::LoggingServer const& logging_server, std::string const& logging_server_id, Options opts) {
+VmwareEngineClient::CreateLoggingServer(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
+    std::string const& logging_server_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateLoggingServerRequest request;
   request.set_parent(parent);
@@ -765,25 +947,33 @@ VmwareEngineClient::CreateLoggingServer(NoAwaitTag, std::string const& parent, g
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-VmwareEngineClient::CreateLoggingServer(google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request, Options opts) {
+VmwareEngineClient::CreateLoggingServer(
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLoggingServer(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateLoggingServer(NoAwaitTag, google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request, Options opts) {
+VmwareEngineClient::CreateLoggingServer(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLoggingServer(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-VmwareEngineClient::CreateLoggingServer(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateLoggingServer(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLoggingServer(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-VmwareEngineClient::UpdateLoggingServer(google::cloud::vmwareengine::v1::LoggingServer const& logging_server, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateLoggingServer(
+    google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateLoggingServerRequest request;
   *request.mutable_logging_server() = logging_server;
@@ -792,7 +982,10 @@ VmwareEngineClient::UpdateLoggingServer(google::cloud::vmwareengine::v1::Logging
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateLoggingServer(NoAwaitTag, google::cloud::vmwareengine::v1::LoggingServer const& logging_server, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateLoggingServer(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateLoggingServerRequest request;
   *request.mutable_logging_server() = logging_server;
@@ -801,19 +994,25 @@ VmwareEngineClient::UpdateLoggingServer(NoAwaitTag, google::cloud::vmwareengine:
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-VmwareEngineClient::UpdateLoggingServer(google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request, Options opts) {
+VmwareEngineClient::UpdateLoggingServer(
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLoggingServer(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateLoggingServer(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request, Options opts) {
+VmwareEngineClient::UpdateLoggingServer(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLoggingServer(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-VmwareEngineClient::UpdateLoggingServer(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateLoggingServer(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateLoggingServer(operation);
 }
@@ -827,7 +1026,8 @@ VmwareEngineClient::DeleteLoggingServer(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteLoggingServer(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::DeleteLoggingServer(NoAwaitTag, std::string const& name,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteLoggingServerRequest request;
   request.set_name(name);
@@ -835,19 +1035,25 @@ VmwareEngineClient::DeleteLoggingServer(NoAwaitTag, std::string const& name, Opt
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteLoggingServer(google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request, Options opts) {
+VmwareEngineClient::DeleteLoggingServer(
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLoggingServer(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteLoggingServer(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request, Options opts) {
+VmwareEngineClient::DeleteLoggingServer(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLoggingServer(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteLoggingServer(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeleteLoggingServer(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLoggingServer(operation);
 }
@@ -861,7 +1067,9 @@ VmwareEngineClient::ListNodeTypes(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
-VmwareEngineClient::ListNodeTypes(google::cloud::vmwareengine::v1::ListNodeTypesRequest request, Options opts) {
+VmwareEngineClient::ListNodeTypes(
+    google::cloud::vmwareengine::v1::ListNodeTypesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNodeTypes(std::move(request));
 }
@@ -875,13 +1083,16 @@ VmwareEngineClient::GetNodeType(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NodeType>
-VmwareEngineClient::GetNodeType(google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request, Options opts) {
+VmwareEngineClient::GetNodeType(
+    google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNodeType(request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
-VmwareEngineClient::ShowNsxCredentials(std::string const& private_cloud, Options opts) {
+VmwareEngineClient::ShowNsxCredentials(std::string const& private_cloud,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest request;
   request.set_private_cloud(private_cloud);
@@ -889,13 +1100,16 @@ VmwareEngineClient::ShowNsxCredentials(std::string const& private_cloud, Options
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
-VmwareEngineClient::ShowNsxCredentials(google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request, Options opts) {
+VmwareEngineClient::ShowNsxCredentials(
+    google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ShowNsxCredentials(request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
-VmwareEngineClient::ShowVcenterCredentials(std::string const& private_cloud, Options opts) {
+VmwareEngineClient::ShowVcenterCredentials(std::string const& private_cloud,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest request;
   request.set_private_cloud(private_cloud);
@@ -903,13 +1117,17 @@ VmwareEngineClient::ShowVcenterCredentials(std::string const& private_cloud, Opt
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
-VmwareEngineClient::ShowVcenterCredentials(google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const& request, Options opts) {
+VmwareEngineClient::ShowVcenterCredentials(
+    google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ShowVcenterCredentials(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::ResetNsxCredentials(std::string const& private_cloud, Options opts) {
+VmwareEngineClient::ResetNsxCredentials(std::string const& private_cloud,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest request;
   request.set_private_cloud(private_cloud);
@@ -917,7 +1135,9 @@ VmwareEngineClient::ResetNsxCredentials(std::string const& private_cloud, Option
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::ResetNsxCredentials(NoAwaitTag, std::string const& private_cloud, Options opts) {
+VmwareEngineClient::ResetNsxCredentials(NoAwaitTag,
+                                        std::string const& private_cloud,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest request;
   request.set_private_cloud(private_cloud);
@@ -925,25 +1145,32 @@ VmwareEngineClient::ResetNsxCredentials(NoAwaitTag, std::string const& private_c
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::ResetNsxCredentials(google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const& request, Options opts) {
+VmwareEngineClient::ResetNsxCredentials(
+    google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetNsxCredentials(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::ResetNsxCredentials(NoAwaitTag, google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const& request, Options opts) {
+VmwareEngineClient::ResetNsxCredentials(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetNsxCredentials(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::ResetNsxCredentials(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::ResetNsxCredentials(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetNsxCredentials(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::ResetVcenterCredentials(std::string const& private_cloud, Options opts) {
+VmwareEngineClient::ResetVcenterCredentials(std::string const& private_cloud,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest request;
   request.set_private_cloud(private_cloud);
@@ -951,7 +1178,9 @@ VmwareEngineClient::ResetVcenterCredentials(std::string const& private_cloud, Op
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::ResetVcenterCredentials(NoAwaitTag, std::string const& private_cloud, Options opts) {
+VmwareEngineClient::ResetVcenterCredentials(NoAwaitTag,
+                                            std::string const& private_cloud,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest request;
   request.set_private_cloud(private_cloud);
@@ -959,19 +1188,27 @@ VmwareEngineClient::ResetVcenterCredentials(NoAwaitTag, std::string const& priva
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::ResetVcenterCredentials(google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const& request, Options opts) {
+VmwareEngineClient::ResetVcenterCredentials(
+    google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetVcenterCredentials(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::ResetVcenterCredentials(NoAwaitTag, google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const& request, Options opts) {
+VmwareEngineClient::ResetVcenterCredentials(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetVcenterCredentials(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-VmwareEngineClient::ResetVcenterCredentials(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::ResetVcenterCredentials(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetVcenterCredentials(operation);
 }
@@ -985,13 +1222,17 @@ VmwareEngineClient::GetDnsForwarding(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
-VmwareEngineClient::GetDnsForwarding(google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request, Options opts) {
+VmwareEngineClient::GetDnsForwarding(
+    google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDnsForwarding(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
-VmwareEngineClient::UpdateDnsForwarding(google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateDnsForwarding(
+    google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest request;
   *request.mutable_dns_forwarding() = dns_forwarding;
@@ -1000,7 +1241,10 @@ VmwareEngineClient::UpdateDnsForwarding(google::cloud::vmwareengine::v1::DnsForw
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateDnsForwarding(NoAwaitTag, google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateDnsForwarding(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest request;
   *request.mutable_dns_forwarding() = dns_forwarding;
@@ -1009,19 +1253,25 @@ VmwareEngineClient::UpdateDnsForwarding(NoAwaitTag, google::cloud::vmwareengine:
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
-VmwareEngineClient::UpdateDnsForwarding(google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request, Options opts) {
+VmwareEngineClient::UpdateDnsForwarding(
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDnsForwarding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateDnsForwarding(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request, Options opts) {
+VmwareEngineClient::UpdateDnsForwarding(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDnsForwarding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
-VmwareEngineClient::UpdateDnsForwarding(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateDnsForwarding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDnsForwarding(operation);
 }
@@ -1035,13 +1285,16 @@ VmwareEngineClient::GetNetworkPeering(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
-VmwareEngineClient::GetNetworkPeering(google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request, Options opts) {
+VmwareEngineClient::GetNetworkPeering(
+    google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNetworkPeering(request);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
-VmwareEngineClient::ListNetworkPeerings(std::string const& parent, Options opts) {
+VmwareEngineClient::ListNetworkPeerings(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request;
   request.set_parent(parent);
@@ -1049,13 +1302,18 @@ VmwareEngineClient::ListNetworkPeerings(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
-VmwareEngineClient::ListNetworkPeerings(google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request, Options opts) {
+VmwareEngineClient::ListNetworkPeerings(
+    google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNetworkPeerings(std::move(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-VmwareEngineClient::CreateNetworkPeering(std::string const& parent, google::cloud::vmwareengine::v1::NetworkPeering const& network_peering, std::string const& network_peering_id, Options opts) {
+VmwareEngineClient::CreateNetworkPeering(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
+    std::string const& network_peering_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest request;
   request.set_parent(parent);
@@ -1065,7 +1323,10 @@ VmwareEngineClient::CreateNetworkPeering(std::string const& parent, google::clou
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateNetworkPeering(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::NetworkPeering const& network_peering, std::string const& network_peering_id, Options opts) {
+VmwareEngineClient::CreateNetworkPeering(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
+    std::string const& network_peering_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest request;
   request.set_parent(parent);
@@ -1075,25 +1336,32 @@ VmwareEngineClient::CreateNetworkPeering(NoAwaitTag, std::string const& parent, 
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-VmwareEngineClient::CreateNetworkPeering(google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request, Options opts) {
+VmwareEngineClient::CreateNetworkPeering(
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetworkPeering(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateNetworkPeering(NoAwaitTag, google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request, Options opts) {
+VmwareEngineClient::CreateNetworkPeering(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetworkPeering(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-VmwareEngineClient::CreateNetworkPeering(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateNetworkPeering(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetworkPeering(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteNetworkPeering(std::string const& name, Options opts) {
+VmwareEngineClient::DeleteNetworkPeering(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest request;
   request.set_name(name);
@@ -1101,7 +1369,8 @@ VmwareEngineClient::DeleteNetworkPeering(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteNetworkPeering(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::DeleteNetworkPeering(NoAwaitTag, std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest request;
   request.set_name(name);
@@ -1109,25 +1378,33 @@ VmwareEngineClient::DeleteNetworkPeering(NoAwaitTag, std::string const& name, Op
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteNetworkPeering(google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request, Options opts) {
+VmwareEngineClient::DeleteNetworkPeering(
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkPeering(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteNetworkPeering(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request, Options opts) {
+VmwareEngineClient::DeleteNetworkPeering(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkPeering(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteNetworkPeering(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeleteNetworkPeering(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkPeering(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-VmwareEngineClient::UpdateNetworkPeering(google::cloud::vmwareengine::v1::NetworkPeering const& network_peering, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateNetworkPeering(
+    google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest request;
   *request.mutable_network_peering() = network_peering;
@@ -1136,7 +1413,10 @@ VmwareEngineClient::UpdateNetworkPeering(google::cloud::vmwareengine::v1::Networ
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateNetworkPeering(NoAwaitTag, google::cloud::vmwareengine::v1::NetworkPeering const& network_peering, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateNetworkPeering(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest request;
   *request.mutable_network_peering() = network_peering;
@@ -1145,19 +1425,25 @@ VmwareEngineClient::UpdateNetworkPeering(NoAwaitTag, google::cloud::vmwareengine
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-VmwareEngineClient::UpdateNetworkPeering(google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request, Options opts) {
+VmwareEngineClient::UpdateNetworkPeering(
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNetworkPeering(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateNetworkPeering(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request, Options opts) {
+VmwareEngineClient::UpdateNetworkPeering(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNetworkPeering(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-VmwareEngineClient::UpdateNetworkPeering(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateNetworkPeering(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNetworkPeering(operation);
 }
@@ -1171,13 +1457,18 @@ VmwareEngineClient::ListPeeringRoutes(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
-VmwareEngineClient::ListPeeringRoutes(google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request, Options opts) {
+VmwareEngineClient::ListPeeringRoutes(
+    google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPeeringRoutes(std::move(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
-VmwareEngineClient::CreateHcxActivationKey(std::string const& parent, google::cloud::vmwareengine::v1::HcxActivationKey const& hcx_activation_key, std::string const& hcx_activation_key_id, Options opts) {
+VmwareEngineClient::CreateHcxActivationKey(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::HcxActivationKey const& hcx_activation_key,
+    std::string const& hcx_activation_key_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest request;
   request.set_parent(parent);
@@ -1187,7 +1478,10 @@ VmwareEngineClient::CreateHcxActivationKey(std::string const& parent, google::cl
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateHcxActivationKey(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::HcxActivationKey const& hcx_activation_key, std::string const& hcx_activation_key_id, Options opts) {
+VmwareEngineClient::CreateHcxActivationKey(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::HcxActivationKey const& hcx_activation_key,
+    std::string const& hcx_activation_key_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest request;
   request.set_parent(parent);
@@ -1197,25 +1491,34 @@ VmwareEngineClient::CreateHcxActivationKey(NoAwaitTag, std::string const& parent
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
-VmwareEngineClient::CreateHcxActivationKey(google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const& request, Options opts) {
+VmwareEngineClient::CreateHcxActivationKey(
+    google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateHcxActivationKey(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateHcxActivationKey(NoAwaitTag, google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const& request, Options opts) {
+VmwareEngineClient::CreateHcxActivationKey(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateHcxActivationKey(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
-VmwareEngineClient::CreateHcxActivationKey(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateHcxActivationKey(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateHcxActivationKey(operation);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
-VmwareEngineClient::ListHcxActivationKeys(std::string const& parent, Options opts) {
+VmwareEngineClient::ListHcxActivationKeys(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest request;
   request.set_parent(parent);
@@ -1223,7 +1526,9 @@ VmwareEngineClient::ListHcxActivationKeys(std::string const& parent, Options opt
 }
 
 StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
-VmwareEngineClient::ListHcxActivationKeys(google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest request, Options opts) {
+VmwareEngineClient::ListHcxActivationKeys(
+    google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListHcxActivationKeys(std::move(request));
 }
@@ -1237,7 +1542,9 @@ VmwareEngineClient::GetHcxActivationKey(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
-VmwareEngineClient::GetHcxActivationKey(google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const& request, Options opts) {
+VmwareEngineClient::GetHcxActivationKey(
+    google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetHcxActivationKey(request);
 }
@@ -1251,13 +1558,16 @@ VmwareEngineClient::GetNetworkPolicy(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
-VmwareEngineClient::GetNetworkPolicy(google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request, Options opts) {
+VmwareEngineClient::GetNetworkPolicy(
+    google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNetworkPolicy(request);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
-VmwareEngineClient::ListNetworkPolicies(std::string const& parent, Options opts) {
+VmwareEngineClient::ListNetworkPolicies(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request;
   request.set_parent(parent);
@@ -1265,13 +1575,18 @@ VmwareEngineClient::ListNetworkPolicies(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
-VmwareEngineClient::ListNetworkPolicies(google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request, Options opts) {
+VmwareEngineClient::ListNetworkPolicies(
+    google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNetworkPolicies(std::move(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-VmwareEngineClient::CreateNetworkPolicy(std::string const& parent, google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy, std::string const& network_policy_id, Options opts) {
+VmwareEngineClient::CreateNetworkPolicy(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
+    std::string const& network_policy_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest request;
   request.set_parent(parent);
@@ -1281,7 +1596,10 @@ VmwareEngineClient::CreateNetworkPolicy(std::string const& parent, google::cloud
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateNetworkPolicy(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy, std::string const& network_policy_id, Options opts) {
+VmwareEngineClient::CreateNetworkPolicy(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
+    std::string const& network_policy_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest request;
   request.set_parent(parent);
@@ -1291,25 +1609,33 @@ VmwareEngineClient::CreateNetworkPolicy(NoAwaitTag, std::string const& parent, g
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-VmwareEngineClient::CreateNetworkPolicy(google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const& request, Options opts) {
+VmwareEngineClient::CreateNetworkPolicy(
+    google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetworkPolicy(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const& request, Options opts) {
+VmwareEngineClient::CreateNetworkPolicy(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetworkPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-VmwareEngineClient::CreateNetworkPolicy(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateNetworkPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetworkPolicy(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-VmwareEngineClient::UpdateNetworkPolicy(google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateNetworkPolicy(
+    google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest request;
   *request.mutable_network_policy() = network_policy;
@@ -1318,7 +1644,10 @@ VmwareEngineClient::UpdateNetworkPolicy(google::cloud::vmwareengine::v1::Network
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateNetworkPolicy(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest request;
   *request.mutable_network_policy() = network_policy;
@@ -1327,19 +1656,25 @@ VmwareEngineClient::UpdateNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine:
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-VmwareEngineClient::UpdateNetworkPolicy(google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const& request, Options opts) {
+VmwareEngineClient::UpdateNetworkPolicy(
+    google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNetworkPolicy(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const& request, Options opts) {
+VmwareEngineClient::UpdateNetworkPolicy(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNetworkPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-VmwareEngineClient::UpdateNetworkPolicy(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateNetworkPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNetworkPolicy(operation);
 }
@@ -1353,7 +1688,8 @@ VmwareEngineClient::DeleteNetworkPolicy(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteNetworkPolicy(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::DeleteNetworkPolicy(NoAwaitTag, std::string const& name,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest request;
   request.set_name(name);
@@ -1361,25 +1697,32 @@ VmwareEngineClient::DeleteNetworkPolicy(NoAwaitTag, std::string const& name, Opt
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteNetworkPolicy(google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const& request, Options opts) {
+VmwareEngineClient::DeleteNetworkPolicy(
+    google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkPolicy(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteNetworkPolicy(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const& request, Options opts) {
+VmwareEngineClient::DeleteNetworkPolicy(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkPolicy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteNetworkPolicy(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeleteNetworkPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkPolicy(operation);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
-VmwareEngineClient::ListManagementDnsZoneBindings(std::string const& parent, Options opts) {
+VmwareEngineClient::ListManagementDnsZoneBindings(std::string const& parent,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest request;
   request.set_parent(parent);
@@ -1387,13 +1730,17 @@ VmwareEngineClient::ListManagementDnsZoneBindings(std::string const& parent, Opt
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
-VmwareEngineClient::ListManagementDnsZoneBindings(google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest request, Options opts) {
+VmwareEngineClient::ListManagementDnsZoneBindings(
+    google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListManagementDnsZoneBindings(std::move(request));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
-VmwareEngineClient::GetManagementDnsZoneBinding(std::string const& name, Options opts) {
+VmwareEngineClient::GetManagementDnsZoneBinding(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest request;
   request.set_name(name);
@@ -1401,15 +1748,23 @@ VmwareEngineClient::GetManagementDnsZoneBinding(std::string const& name, Options
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
-VmwareEngineClient::GetManagementDnsZoneBinding(google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::GetManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetManagementDnsZoneBinding(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::CreateManagementDnsZoneBinding(std::string const& parent, google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const& management_dns_zone_binding, std::string const& management_dns_zone_binding_id, Options opts) {
+VmwareEngineClient::CreateManagementDnsZoneBinding(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
+        management_dns_zone_binding,
+    std::string const& management_dns_zone_binding_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest request;
+  google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest
+      request;
   request.set_parent(parent);
   *request.mutable_management_dns_zone_binding() = management_dns_zone_binding;
   request.set_management_dns_zone_binding_id(management_dns_zone_binding_id);
@@ -1417,9 +1772,14 @@ VmwareEngineClient::CreateManagementDnsZoneBinding(std::string const& parent, go
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateManagementDnsZoneBinding(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const& management_dns_zone_binding, std::string const& management_dns_zone_binding_id, Options opts) {
+VmwareEngineClient::CreateManagementDnsZoneBinding(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
+        management_dns_zone_binding,
+    std::string const& management_dns_zone_binding_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest request;
+  google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest
+      request;
   request.set_parent(parent);
   *request.mutable_management_dns_zone_binding() = management_dns_zone_binding;
   request.set_management_dns_zone_binding_id(management_dns_zone_binding_id);
@@ -1427,129 +1787,184 @@ VmwareEngineClient::CreateManagementDnsZoneBinding(NoAwaitTag, std::string const
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::CreateManagementDnsZoneBinding(google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::CreateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateManagementDnsZoneBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::CreateManagementDnsZoneBinding(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateManagementDnsZoneBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::CreateManagementDnsZoneBinding(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateManagementDnsZoneBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateManagementDnsZoneBinding(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::UpdateManagementDnsZoneBinding(google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const& management_dns_zone_binding, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
+        management_dns_zone_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest request;
+  google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest
+      request;
   *request.mutable_management_dns_zone_binding() = management_dns_zone_binding;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateManagementDnsZoneBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const& management_dns_zone_binding, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateManagementDnsZoneBinding(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
+        management_dns_zone_binding,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest request;
+  google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest
+      request;
   *request.mutable_management_dns_zone_binding() = management_dns_zone_binding;
   *request.mutable_update_mask() = update_mask;
   return connection_->UpdateManagementDnsZoneBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::UpdateManagementDnsZoneBinding(google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::UpdateManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateManagementDnsZoneBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::UpdateManagementDnsZoneBinding(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateManagementDnsZoneBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::UpdateManagementDnsZoneBinding(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateManagementDnsZoneBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateManagementDnsZoneBinding(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteManagementDnsZoneBinding(std::string const& name, Options opts) {
+VmwareEngineClient::DeleteManagementDnsZoneBinding(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest request;
+  google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest
+      request;
   request.set_name(name);
   return connection_->DeleteManagementDnsZoneBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteManagementDnsZoneBinding(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::DeleteManagementDnsZoneBinding(NoAwaitTag,
+                                                   std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest request;
+  google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest
+      request;
   request.set_name(name);
   return connection_->DeleteManagementDnsZoneBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteManagementDnsZoneBinding(google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::DeleteManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteManagementDnsZoneBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::DeleteManagementDnsZoneBinding(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteManagementDnsZoneBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteManagementDnsZoneBinding(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeleteManagementDnsZoneBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteManagementDnsZoneBinding(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::RepairManagementDnsZoneBinding(std::string const& name, Options opts) {
+VmwareEngineClient::RepairManagementDnsZoneBinding(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest request;
+  google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest
+      request;
   request.set_name(name);
   return connection_->RepairManagementDnsZoneBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::RepairManagementDnsZoneBinding(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::RepairManagementDnsZoneBinding(NoAwaitTag,
+                                                   std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest request;
+  google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest
+      request;
   request.set_name(name);
   return connection_->RepairManagementDnsZoneBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::RepairManagementDnsZoneBinding(google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::RepairManagementDnsZoneBinding(
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RepairManagementDnsZoneBinding(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::RepairManagementDnsZoneBinding(NoAwaitTag, google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest const& request, Options opts) {
+VmwareEngineClient::RepairManagementDnsZoneBinding(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RepairManagementDnsZoneBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
-VmwareEngineClient::RepairManagementDnsZoneBinding(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::RepairManagementDnsZoneBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RepairManagementDnsZoneBinding(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-VmwareEngineClient::CreateVmwareEngineNetwork(std::string const& parent, google::cloud::vmwareengine::v1::VmwareEngineNetwork const& vmware_engine_network, std::string const& vmware_engine_network_id, Options opts) {
+VmwareEngineClient::CreateVmwareEngineNetwork(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
+        vmware_engine_network,
+    std::string const& vmware_engine_network_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest request;
   request.set_parent(parent);
@@ -1559,7 +1974,11 @@ VmwareEngineClient::CreateVmwareEngineNetwork(std::string const& parent, google:
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateVmwareEngineNetwork(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::VmwareEngineNetwork const& vmware_engine_network, std::string const& vmware_engine_network_id, Options opts) {
+VmwareEngineClient::CreateVmwareEngineNetwork(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
+        vmware_engine_network,
+    std::string const& vmware_engine_network_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest request;
   request.set_parent(parent);
@@ -1569,25 +1988,36 @@ VmwareEngineClient::CreateVmwareEngineNetwork(NoAwaitTag, std::string const& par
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-VmwareEngineClient::CreateVmwareEngineNetwork(google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const& request, Options opts) {
+VmwareEngineClient::CreateVmwareEngineNetwork(
+    google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVmwareEngineNetwork(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreateVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const& request, Options opts) {
+VmwareEngineClient::CreateVmwareEngineNetwork(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVmwareEngineNetwork(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-VmwareEngineClient::CreateVmwareEngineNetwork(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreateVmwareEngineNetwork(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVmwareEngineNetwork(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-VmwareEngineClient::UpdateVmwareEngineNetwork(google::cloud::vmwareengine::v1::VmwareEngineNetwork const& vmware_engine_network, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateVmwareEngineNetwork(
+    google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
+        vmware_engine_network,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest request;
   *request.mutable_vmware_engine_network() = vmware_engine_network;
@@ -1596,7 +2026,11 @@ VmwareEngineClient::UpdateVmwareEngineNetwork(google::cloud::vmwareengine::v1::V
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwareengine::v1::VmwareEngineNetwork const& vmware_engine_network, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdateVmwareEngineNetwork(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
+        vmware_engine_network,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest request;
   *request.mutable_vmware_engine_network() = vmware_engine_network;
@@ -1605,25 +2039,34 @@ VmwareEngineClient::UpdateVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwaree
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-VmwareEngineClient::UpdateVmwareEngineNetwork(google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const& request, Options opts) {
+VmwareEngineClient::UpdateVmwareEngineNetwork(
+    google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVmwareEngineNetwork(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdateVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const& request, Options opts) {
+VmwareEngineClient::UpdateVmwareEngineNetwork(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVmwareEngineNetwork(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-VmwareEngineClient::UpdateVmwareEngineNetwork(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdateVmwareEngineNetwork(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVmwareEngineNetwork(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteVmwareEngineNetwork(std::string const& name, Options opts) {
+VmwareEngineClient::DeleteVmwareEngineNetwork(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest request;
   request.set_name(name);
@@ -1631,7 +2074,9 @@ VmwareEngineClient::DeleteVmwareEngineNetwork(std::string const& name, Options o
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteVmwareEngineNetwork(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::DeleteVmwareEngineNetwork(NoAwaitTag,
+                                              std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest request;
   request.set_name(name);
@@ -1639,25 +2084,34 @@ VmwareEngineClient::DeleteVmwareEngineNetwork(NoAwaitTag, std::string const& nam
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteVmwareEngineNetwork(google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const& request, Options opts) {
+VmwareEngineClient::DeleteVmwareEngineNetwork(
+    google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVmwareEngineNetwork(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeleteVmwareEngineNetwork(NoAwaitTag, google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const& request, Options opts) {
+VmwareEngineClient::DeleteVmwareEngineNetwork(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVmwareEngineNetwork(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeleteVmwareEngineNetwork(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeleteVmwareEngineNetwork(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVmwareEngineNetwork(operation);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
-VmwareEngineClient::GetVmwareEngineNetwork(std::string const& name, Options opts) {
+VmwareEngineClient::GetVmwareEngineNetwork(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest request;
   request.set_name(name);
@@ -1665,13 +2119,17 @@ VmwareEngineClient::GetVmwareEngineNetwork(std::string const& name, Options opts
 }
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
-VmwareEngineClient::GetVmwareEngineNetwork(google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const& request, Options opts) {
+VmwareEngineClient::GetVmwareEngineNetwork(
+    google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetVmwareEngineNetwork(request);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
-VmwareEngineClient::ListVmwareEngineNetworks(std::string const& parent, Options opts) {
+VmwareEngineClient::ListVmwareEngineNetworks(std::string const& parent,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request;
   request.set_parent(parent);
@@ -1679,13 +2137,19 @@ VmwareEngineClient::ListVmwareEngineNetworks(std::string const& parent, Options 
 }
 
 StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
-VmwareEngineClient::ListVmwareEngineNetworks(google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request, Options opts) {
+VmwareEngineClient::ListVmwareEngineNetworks(
+    google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListVmwareEngineNetworks(std::move(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-VmwareEngineClient::CreatePrivateConnection(std::string const& parent, google::cloud::vmwareengine::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts) {
+VmwareEngineClient::CreatePrivateConnection(
+    std::string const& parent,
+    google::cloud::vmwareengine::v1::PrivateConnection const&
+        private_connection,
+    std::string const& private_connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest request;
   request.set_parent(parent);
@@ -1695,7 +2159,11 @@ VmwareEngineClient::CreatePrivateConnection(std::string const& parent, google::c
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreatePrivateConnection(NoAwaitTag, std::string const& parent, google::cloud::vmwareengine::v1::PrivateConnection const& private_connection, std::string const& private_connection_id, Options opts) {
+VmwareEngineClient::CreatePrivateConnection(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::vmwareengine::v1::PrivateConnection const&
+        private_connection,
+    std::string const& private_connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest request;
   request.set_parent(parent);
@@ -1705,25 +2173,34 @@ VmwareEngineClient::CreatePrivateConnection(NoAwaitTag, std::string const& paren
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-VmwareEngineClient::CreatePrivateConnection(google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const& request, Options opts) {
+VmwareEngineClient::CreatePrivateConnection(
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::CreatePrivateConnection(NoAwaitTag, google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const& request, Options opts) {
+VmwareEngineClient::CreatePrivateConnection(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-VmwareEngineClient::CreatePrivateConnection(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::CreatePrivateConnection(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(operation);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
-VmwareEngineClient::GetPrivateConnection(std::string const& name, Options opts) {
+VmwareEngineClient::GetPrivateConnection(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GetPrivateConnectionRequest request;
   request.set_name(name);
@@ -1731,13 +2208,16 @@ VmwareEngineClient::GetPrivateConnection(std::string const& name, Options opts) 
 }
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
-VmwareEngineClient::GetPrivateConnection(google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const& request, Options opts) {
+VmwareEngineClient::GetPrivateConnection(
+    google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPrivateConnection(request);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
-VmwareEngineClient::ListPrivateConnections(std::string const& parent, Options opts) {
+VmwareEngineClient::ListPrivateConnections(std::string const& parent,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request;
   request.set_parent(parent);
@@ -1745,13 +2225,18 @@ VmwareEngineClient::ListPrivateConnections(std::string const& parent, Options op
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
-VmwareEngineClient::ListPrivateConnections(google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request, Options opts) {
+VmwareEngineClient::ListPrivateConnections(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPrivateConnections(std::move(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-VmwareEngineClient::UpdatePrivateConnection(google::cloud::vmwareengine::v1::PrivateConnection const& private_connection, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdatePrivateConnection(
+    google::cloud::vmwareengine::v1::PrivateConnection const&
+        private_connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest request;
   *request.mutable_private_connection() = private_connection;
@@ -1760,7 +2245,11 @@ VmwareEngineClient::UpdatePrivateConnection(google::cloud::vmwareengine::v1::Pri
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdatePrivateConnection(NoAwaitTag, google::cloud::vmwareengine::v1::PrivateConnection const& private_connection, google::protobuf::FieldMask const& update_mask, Options opts) {
+VmwareEngineClient::UpdatePrivateConnection(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::PrivateConnection const&
+        private_connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest request;
   *request.mutable_private_connection() = private_connection;
@@ -1769,25 +2258,34 @@ VmwareEngineClient::UpdatePrivateConnection(NoAwaitTag, google::cloud::vmwareeng
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-VmwareEngineClient::UpdatePrivateConnection(google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const& request, Options opts) {
+VmwareEngineClient::UpdatePrivateConnection(
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePrivateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::UpdatePrivateConnection(NoAwaitTag, google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const& request, Options opts) {
+VmwareEngineClient::UpdatePrivateConnection(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePrivateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-VmwareEngineClient::UpdatePrivateConnection(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::UpdatePrivateConnection(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePrivateConnection(operation);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeletePrivateConnection(std::string const& name, Options opts) {
+VmwareEngineClient::DeletePrivateConnection(std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest request;
   request.set_name(name);
@@ -1795,7 +2293,8 @@ VmwareEngineClient::DeletePrivateConnection(std::string const& name, Options opt
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeletePrivateConnection(NoAwaitTag, std::string const& name, Options opts) {
+VmwareEngineClient::DeletePrivateConnection(NoAwaitTag, std::string const& name,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest request;
   request.set_name(name);
@@ -1803,39 +2302,54 @@ VmwareEngineClient::DeletePrivateConnection(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeletePrivateConnection(google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const& request, Options opts) {
+VmwareEngineClient::DeletePrivateConnection(
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::DeletePrivateConnection(NoAwaitTag, google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const& request, Options opts) {
+VmwareEngineClient::DeletePrivateConnection(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineClient::DeletePrivateConnection(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::DeletePrivateConnection(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(operation);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
-VmwareEngineClient::ListPrivateConnectionPeeringRoutes(std::string const& parent, Options opts) {
+VmwareEngineClient::ListPrivateConnectionPeeringRoutes(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest request;
+  google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+      request;
   request.set_parent(parent);
   return connection_->ListPrivateConnectionPeeringRoutes(request);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
-VmwareEngineClient::ListPrivateConnectionPeeringRoutes(google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest request, Options opts) {
+VmwareEngineClient::ListPrivateConnectionPeeringRoutes(
+    google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPrivateConnectionPeeringRoutes(std::move(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-VmwareEngineClient::GrantDnsBindPermission(std::string const& name, google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
+VmwareEngineClient::GrantDnsBindPermission(
+    std::string const& name,
+    google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest request;
   request.set_name(name);
@@ -1844,7 +2358,9 @@ VmwareEngineClient::GrantDnsBindPermission(std::string const& name, google::clou
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::GrantDnsBindPermission(NoAwaitTag, std::string const& name, google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
+VmwareEngineClient::GrantDnsBindPermission(
+    NoAwaitTag, std::string const& name,
+    google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest request;
   request.set_name(name);
@@ -1853,25 +2369,34 @@ VmwareEngineClient::GrantDnsBindPermission(NoAwaitTag, std::string const& name, 
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-VmwareEngineClient::GrantDnsBindPermission(google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const& request, Options opts) {
+VmwareEngineClient::GrantDnsBindPermission(
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GrantDnsBindPermission(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::GrantDnsBindPermission(NoAwaitTag, google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const& request, Options opts) {
+VmwareEngineClient::GrantDnsBindPermission(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GrantDnsBindPermission(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-VmwareEngineClient::GrantDnsBindPermission(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::GrantDnsBindPermission(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GrantDnsBindPermission(operation);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
-VmwareEngineClient::GetDnsBindPermission(std::string const& name, Options opts) {
+VmwareEngineClient::GetDnsBindPermission(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest request;
   request.set_name(name);
@@ -1879,13 +2404,17 @@ VmwareEngineClient::GetDnsBindPermission(std::string const& name, Options opts) 
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
-VmwareEngineClient::GetDnsBindPermission(google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const& request, Options opts) {
+VmwareEngineClient::GetDnsBindPermission(
+    google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDnsBindPermission(request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-VmwareEngineClient::RevokeDnsBindPermission(std::string const& name, google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
+VmwareEngineClient::RevokeDnsBindPermission(
+    std::string const& name,
+    google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest request;
   request.set_name(name);
@@ -1894,7 +2423,9 @@ VmwareEngineClient::RevokeDnsBindPermission(std::string const& name, google::clo
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::RevokeDnsBindPermission(NoAwaitTag, std::string const& name, google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
+VmwareEngineClient::RevokeDnsBindPermission(
+    NoAwaitTag, std::string const& name,
+    google::cloud::vmwareengine::v1::Principal const& principal, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest request;
   request.set_name(name);
@@ -1903,55 +2434,65 @@ VmwareEngineClient::RevokeDnsBindPermission(NoAwaitTag, std::string const& name,
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-VmwareEngineClient::RevokeDnsBindPermission(google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const& request, Options opts) {
+VmwareEngineClient::RevokeDnsBindPermission(
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RevokeDnsBindPermission(request);
 }
 
 StatusOr<google::longrunning::Operation>
-VmwareEngineClient::RevokeDnsBindPermission(NoAwaitTag, google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const& request, Options opts) {
+VmwareEngineClient::RevokeDnsBindPermission(
+    NoAwaitTag,
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RevokeDnsBindPermission(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-VmwareEngineClient::RevokeDnsBindPermission(google::longrunning::Operation const& operation, Options opts) {
+VmwareEngineClient::RevokeDnsBindPermission(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RevokeDnsBindPermission(operation);
 }
 
 StreamRange<google::cloud::location::Location>
-VmwareEngineClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+VmwareEngineClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-VmwareEngineClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> VmwareEngineClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-VmwareEngineClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> VmwareEngineClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-VmwareEngineClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> VmwareEngineClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-VmwareEngineClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+VmwareEngineClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StreamRange<google::longrunning::Operation>
-VmwareEngineClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> VmwareEngineClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -1959,36 +2500,36 @@ VmwareEngineClient::ListOperations(std::string const& name, std::string const& f
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-VmwareEngineClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> VmwareEngineClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-VmwareEngineClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> VmwareEngineClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-VmwareEngineClient::DeleteOperation(std::string const& name, Options opts) {
+Status VmwareEngineClient::DeleteOperation(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-VmwareEngineClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status VmwareEngineClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }

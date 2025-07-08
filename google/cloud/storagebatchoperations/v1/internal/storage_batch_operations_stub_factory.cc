@@ -17,17 +17,17 @@
 // source: google/cloud/storagebatchoperations/v1/storage_batch_operations.proto
 
 #include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub_factory.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_auth_decorator.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_logging_decorator.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_metadata_decorator.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_auth_decorator.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_logging_decorator.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_metadata_decorator.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_tracing_stub.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/storagebatchoperations/v1/storage_batch_operations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -43,27 +43,27 @@ std::shared_ptr<StorageBatchOperationsStub>
 CreateDefaultStorageBatchOperationsStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::storagebatchoperations::v1::StorageBatchOperations::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::storagebatchoperations::v1::
+      StorageBatchOperations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<StorageBatchOperationsStub> stub =
-    std::make_shared<DefaultStorageBatchOperationsStub>(
-      std::move(service_grpc_stub), std::move(service_locations_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultStorageBatchOperationsStub>(
+          std::move(service_grpc_stub), std::move(service_locations_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<StorageBatchOperationsAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<StorageBatchOperationsAuth>(std::move(auth),
+                                                        std::move(stub));
   }
   stub = std::make_shared<StorageBatchOperationsMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<StorageBatchOperationsLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

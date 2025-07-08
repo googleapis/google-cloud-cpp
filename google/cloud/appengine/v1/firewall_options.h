@@ -64,8 +64,7 @@ struct FirewallConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-appengine-options
  */
 using FirewallPolicyOptionList =
-    OptionList<FirewallRetryPolicyOption,
-               FirewallBackoffPolicyOption,
+    OptionList<FirewallRetryPolicyOption, FirewallBackoffPolicyOption,
                FirewallConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

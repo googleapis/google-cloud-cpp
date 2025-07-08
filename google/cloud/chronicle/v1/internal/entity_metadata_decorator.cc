@@ -46,82 +46,79 @@ EntityServiceMetadata::EntityServiceMetadata(
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 EntityServiceMetadata::GetWatchlist(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetWatchlist(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ListWatchlistsResponse>
 EntityServiceMetadata::ListWatchlists(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListWatchlistsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListWatchlists(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 EntityServiceMetadata::CreateWatchlist(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateWatchlist(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 EntityServiceMetadata::UpdateWatchlist(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("watchlist.name=", internal::UrlEncode(request.watchlist().name())));
+  SetMetadata(context, options,
+              absl::StrCat("watchlist.name=",
+                           internal::UrlEncode(request.watchlist().name())));
   return child_->UpdateWatchlist(context, options, request);
 }
 
-Status
-EntityServiceMetadata::DeleteWatchlist(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EntityServiceMetadata::DeleteWatchlist(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteWatchlist(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EntityServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-EntityServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> EntityServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-EntityServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EntityServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-EntityServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EntityServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -134,8 +131,8 @@ void EntityServiceMetadata::SetMetadata(grpc::ClientContext& context,
 
 void EntityServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

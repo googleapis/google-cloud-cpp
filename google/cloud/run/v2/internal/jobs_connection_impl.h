@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_JOBS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_JOBS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/run/v2/internal/jobs_retry_traits.h"
 #include "google/cloud/run/v2/internal/jobs_stub.h"
 #include "google/cloud/run/v2/jobs_connection.h"
 #include "google/cloud/run/v2/jobs_connection_idempotency_policy.h"
 #include "google/cloud/run/v2/jobs_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,88 +40,82 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class JobsConnectionImpl
-    : public run_v2::JobsConnection {
+class JobsConnectionImpl : public run_v2::JobsConnection {
  public:
   ~JobsConnectionImpl() override = default;
 
   JobsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<run_v2_internal::JobsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<run_v2_internal::JobsStub> stub, Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  CreateJob(google::cloud::run::v2::CreateJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateJob(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  CreateJob(
+  StatusOr<google::longrunning::Operation> CreateJob(
+      NoAwaitTag,
+      google::cloud::run::v2::CreateJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::run::v2::Job>
-  GetJob(google::cloud::run::v2::GetJobRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Job> GetJob(
+      google::cloud::run::v2::GetJobRequest const& request) override;
 
-  StreamRange<google::cloud::run::v2::Job>
-  ListJobs(google::cloud::run::v2::ListJobsRequest request) override;
+  StreamRange<google::cloud::run::v2::Job> ListJobs(
+      google::cloud::run::v2::ListJobsRequest request) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  UpdateJob(google::cloud::run::v2::UpdateJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateJob(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       google::cloud::run::v2::UpdateJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  UpdateJob(
+  StatusOr<google::longrunning::Operation> UpdateJob(
+      NoAwaitTag,
+      google::cloud::run::v2::UpdateJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  DeleteJob(google::cloud::run::v2::DeleteJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteJob(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       google::cloud::run::v2::DeleteJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Job>>
-  DeleteJob(
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      NoAwaitTag,
+      google::cloud::run::v2::DeleteJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  RunJob(google::cloud::run::v2::RunJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  RunJob(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Execution>>
-  RunJob(
+  StatusOr<google::longrunning::Operation> RunJob(
+      NoAwaitTag,
+      google::cloud::run::v2::RunJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

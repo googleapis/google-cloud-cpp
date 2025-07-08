@@ -26,23 +26,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PredictionServiceConnectionIdempotencyPolicy::~PredictionServiceConnectionIdempotencyPolicy() = default;
+PredictionServiceConnectionIdempotencyPolicy::
+    ~PredictionServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 PredictionServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(google::cloud::automl::v1::PredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(
+    google::cloud::automl::v1::PredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PredictionServiceConnectionIdempotencyPolicy::BatchPredict(google::cloud::automl::v1::BatchPredictRequest const&) {
+Idempotency PredictionServiceConnectionIdempotencyPolicy::BatchPredict(
+    google::cloud::automl::v1::BatchPredictRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-    MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
+MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>();
 }
 

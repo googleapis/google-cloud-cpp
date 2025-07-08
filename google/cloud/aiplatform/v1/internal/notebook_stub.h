@@ -24,10 +24,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/aiplatform/v1/notebook_service.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/aiplatform/v1/notebook_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,194 +40,215 @@ class NotebookServiceStub {
  public:
   virtual ~NotebookServiceStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateNotebookRuntimeTemplate(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateNotebookRuntimeTemplate(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) = 0;
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  CreateNotebookRuntimeTemplate(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> GetNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+  GetNotebookRuntimeTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse> ListNotebookRuntimeTemplates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse>
+  ListNotebookRuntimeTemplates(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNotebookRuntimeTemplate(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteNotebookRuntimeTemplate(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteNotebookRuntimeTemplate(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> UpdateNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+  UpdateNotebookRuntimeTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncAssignNotebookRuntime(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncAssignNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) = 0;
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
+  GetNotebookRuntime(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse> ListNotebookRuntimes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListNotebookRuntimesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse>
+  ListNotebookRuntimes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNotebookRuntimesRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNotebookRuntime(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpgradeNotebookRuntime(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpgradeNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) = 0;
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncStartNotebookRuntime(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncStartNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) = 0;
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> StartNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncStopNotebookRuntime(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncStopNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) = 0;
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> StopNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateNotebookExecutionJob(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateNotebookExecutionJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request) = 0;
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob> GetNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  GetNotebookExecutionJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse> ListNotebookExecutionJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse>
+  ListNotebookExecutionJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNotebookExecutionJob(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteNotebookExecutionJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request) = 0;
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -240,197 +261,210 @@ class NotebookServiceStub {
 class DefaultNotebookServiceStub : public NotebookServiceStub {
  public:
   DefaultNotebookServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::NotebookService::StubInterface> grpc_stub,
+      std::unique_ptr<
+          google::cloud::aiplatform::v1::NotebookService::StubInterface>
+          grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateNotebookRuntimeTemplate(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateNotebookRuntimeTemplate(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> GetNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+  GetNotebookRuntimeTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse> ListNotebookRuntimeTemplates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesResponse>
+  ListNotebookRuntimeTemplates(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNotebookRuntimeTemplatesRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteNotebookRuntimeTemplate(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteNotebookRuntimeTemplate(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate> UpdateNotebookRuntimeTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
+  UpdateNotebookRuntimeTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAssignNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) override;
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse> ListNotebookRuntimes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListNotebookRuntimesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListNotebookRuntimesResponse>
+  ListNotebookRuntimes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNotebookRuntimesRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) override;
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) override;
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> StartNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopNotebookRuntime(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) override;
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> StopNotebookRuntime(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request)
+      override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateNotebookExecutionJob(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateNotebookExecutionJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request) override;
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob> GetNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  GetNotebookExecutionJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse> ListNotebookExecutionJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse>
+  ListNotebookExecutionJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteNotebookExecutionJob(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteNotebookExecutionJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request) override;
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNotebookExecutionJob(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -446,10 +480,13 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::NotebookService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::NotebookService::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

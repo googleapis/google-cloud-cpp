@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CommentServiceClient::CommentServiceClient(
     std::shared_ptr<CommentServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CommentServiceClient::~CommentServiceClient() = default;
 
 StreamRange<google::cloud::support::v2::Comment>
@@ -41,13 +41,16 @@ CommentServiceClient::ListComments(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::support::v2::Comment>
-CommentServiceClient::ListComments(google::cloud::support::v2::ListCommentsRequest request, Options opts) {
+CommentServiceClient::ListComments(
+    google::cloud::support::v2::ListCommentsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListComments(std::move(request));
 }
 
 StatusOr<google::cloud::support::v2::Comment>
-CommentServiceClient::CreateComment(std::string const& parent, google::cloud::support::v2::Comment const& comment, Options opts) {
+CommentServiceClient::CreateComment(
+    std::string const& parent,
+    google::cloud::support::v2::Comment const& comment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::support::v2::CreateCommentRequest request;
   request.set_parent(parent);
@@ -56,7 +59,9 @@ CommentServiceClient::CreateComment(std::string const& parent, google::cloud::su
 }
 
 StatusOr<google::cloud::support::v2::Comment>
-CommentServiceClient::CreateComment(google::cloud::support::v2::CreateCommentRequest const& request, Options opts) {
+CommentServiceClient::CreateComment(
+    google::cloud::support::v2::CreateCommentRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateComment(request);
 }

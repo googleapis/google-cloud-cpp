@@ -36,86 +36,103 @@ class ReachabilityServiceTracingConnection
   ~ReachabilityServiceTracingConnection() override = default;
 
   explicit ReachabilityServiceTracingConnection(
-    std::shared_ptr<networkmanagement_v1::ReachabilityServiceConnection> child);
+      std::shared_ptr<networkmanagement_v1::ReachabilityServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-  ListConnectivityTests(google::cloud::networkmanagement::v1::ListConnectivityTestsRequest request) override;
+  ListConnectivityTests(
+      google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
+          request) override;
 
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
-  GetConnectivityTest(google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request) override;
+  GetConnectivityTest(
+      google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) override;
+  CreateConnectivityTest(
+      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateConnectivityTest(NoAwaitTag,
-      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateConnectivityTest(
+      NoAwaitTag,
+      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   CreateConnectivityTest(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) override;
+  UpdateConnectivityTest(
+      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateConnectivityTest(NoAwaitTag,
-      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
+      NoAwaitTag,
+      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   UpdateConnectivityTest(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  RerunConnectivityTest(google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) override;
+  RerunConnectivityTest(
+      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RerunConnectivityTest(NoAwaitTag,
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RerunConnectivityTest(
+      NoAwaitTag,
+      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   RerunConnectivityTest(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) override;
+  DeleteConnectivityTest(
+      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteConnectivityTest(NoAwaitTag,
-      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
+      NoAwaitTag,
+      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
   DeleteConnectivityTest(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<networkmanagement_v1::ReachabilityServiceConnection> child_;

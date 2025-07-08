@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_SEARCH_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_SEARCH_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/retail/v2/internal/search_retry_traits.h"
 #include "google/cloud/retail/v2/internal/search_stub.h"
 #include "google/cloud/retail/v2/search_connection.h"
 #include "google/cloud/retail/v2/search_connection_idempotency_policy.h"
 #include "google/cloud/retail/v2/search_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,26 +37,25 @@ namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SearchServiceConnectionImpl
-    : public retail_v2::SearchServiceConnection {
+class SearchServiceConnectionImpl : public retail_v2::SearchServiceConnection {
  public:
   ~SearchServiceConnectionImpl() override = default;
 
   SearchServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<retail_v2_internal::SearchServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<retail_v2_internal::SearchServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-  Search(google::cloud::retail::v2::SearchRequest request) override;
+  StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
+      google::cloud::retail::v2::SearchRequest request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

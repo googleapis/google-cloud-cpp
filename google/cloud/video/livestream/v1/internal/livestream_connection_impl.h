@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_INTERNAL_LIVESTREAM_CONNECTION_IMPL_H
 
+#include "google/cloud/video/livestream/v1/internal/livestream_retry_traits.h"
+#include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
+#include "google/cloud/video/livestream/v1/livestream_connection.h"
+#include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
+#include "google/cloud/video/livestream/v1/livestream_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -27,11 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_retry_traits.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
-#include "google/cloud/video/livestream/v1/livestream_connection.h"
-#include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
-#include "google/cloud/video/livestream/v1/livestream_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -46,250 +46,285 @@ class LivestreamServiceConnectionImpl
   ~LivestreamServiceConnectionImpl() override = default;
 
   LivestreamServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<video_livestream_v1_internal::LivestreamServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<video_livestream_v1_internal::LivestreamServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  CreateChannel(google::cloud::video::livestream::v1::CreateChannelRequest const& request) override;
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
+      google::cloud::video::livestream::v1::CreateChannelRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateChannel(NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateChannelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateChannelRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  CreateChannel(
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::video::livestream::v1::Channel>
-  ListChannels(google::cloud::video::livestream::v1::ListChannelsRequest request) override;
+  StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
+      google::cloud::video::livestream::v1::ListChannelsRequest request)
+      override;
 
-  StatusOr<google::cloud::video::livestream::v1::Channel>
-  GetChannel(google::cloud::video::livestream::v1::GetChannelRequest const& request) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteChannel(google::cloud::video::livestream::v1::DeleteChannelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteChannel(NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteChannelRequest const& request) override;
+  StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
+      google::cloud::video::livestream::v1::GetChannelRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteChannel(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::video::livestream::v1::DeleteChannelRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  UpdateChannel(google::cloud::video::livestream::v1::UpdateChannelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateChannel(NoAwaitTag,
-      google::cloud::video::livestream::v1::UpdateChannelRequest const& request) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  UpdateChannel(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StartChannel(google::cloud::video::livestream::v1::StartChannelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  StartChannel(NoAwaitTag,
-      google::cloud::video::livestream::v1::StartChannelRequest const& request) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StartChannel(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StopChannel(google::cloud::video::livestream::v1::StopChannelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  StopChannel(NoAwaitTag,
-      google::cloud::video::livestream::v1::StopChannelRequest const& request) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StopChannel(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  CreateInput(google::cloud::video::livestream::v1::CreateInputRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateInput(NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateInputRequest const& request) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  CreateInput(
-      google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::video::livestream::v1::Input>
-  ListInputs(google::cloud::video::livestream::v1::ListInputsRequest request) override;
-
-  StatusOr<google::cloud::video::livestream::v1::Input>
-  GetInput(google::cloud::video::livestream::v1::GetInputRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteChannelRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteInput(google::cloud::video::livestream::v1::DeleteInputRequest const& request) override;
+  DeleteChannel(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteInput(NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteInputRequest const& request) override;
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
+      google::cloud::video::livestream::v1::UpdateChannelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
+      google::longrunning::Operation const& operation) override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartChannel(google::cloud::video::livestream::v1::StartChannelRequest const&
+                   request) override;
+
+  StatusOr<google::longrunning::Operation> StartChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::StartChannelRequest const& request)
+      override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartChannel(google::longrunning::Operation const& operation) override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopChannel(google::cloud::video::livestream::v1::StopChannelRequest const&
+                  request) override;
+
+  StatusOr<google::longrunning::Operation> StopChannel(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::StopChannelRequest const& request)
+      override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopChannel(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
+      google::cloud::video::livestream::v1::CreateInputRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateInput(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateInputRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
+      google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
+      google::cloud::video::livestream::v1::ListInputsRequest request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::Input> GetInput(
+      google::cloud::video::livestream::v1::GetInputRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteInput(
+  DeleteInput(google::cloud::video::livestream::v1::DeleteInputRequest const&
+                  request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteInput(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteInput(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateInput(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  UpdateInput(google::cloud::video::livestream::v1::UpdateInputRequest const& request) override;
+  StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
+      google::cloud::video::livestream::v1::CreateEventRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateInput(NoAwaitTag,
-      google::cloud::video::livestream::v1::UpdateInputRequest const& request) override;
+  StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
+      google::cloud::video::livestream::v1::ListEventsRequest request) override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  UpdateInput(
-      google::longrunning::Operation const& operation) override;
+  StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
+      google::cloud::video::livestream::v1::GetEventRequest const& request)
+      override;
 
-  StatusOr<google::cloud::video::livestream::v1::Event>
-  CreateEvent(google::cloud::video::livestream::v1::CreateEventRequest const& request) override;
+  Status DeleteEvent(
+      google::cloud::video::livestream::v1::DeleteEventRequest const& request)
+      override;
 
-  StreamRange<google::cloud::video::livestream::v1::Event>
-  ListEvents(google::cloud::video::livestream::v1::ListEventsRequest request) override;
+  StreamRange<google::cloud::video::livestream::v1::Clip> ListClips(
+      google::cloud::video::livestream::v1::ListClipsRequest request) override;
 
-  StatusOr<google::cloud::video::livestream::v1::Event>
-  GetEvent(google::cloud::video::livestream::v1::GetEventRequest const& request) override;
+  StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
+      google::cloud::video::livestream::v1::GetClipRequest const& request)
+      override;
 
-  Status
-  DeleteEvent(google::cloud::video::livestream::v1::DeleteEventRequest const& request) override;
+  future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
+      google::cloud::video::livestream::v1::CreateClipRequest const& request)
+      override;
 
-  StreamRange<google::cloud::video::livestream::v1::Clip>
-  ListClips(google::cloud::video::livestream::v1::ListClipsRequest request) override;
+  StatusOr<google::longrunning::Operation> CreateClip(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request)
+      override;
 
-  StatusOr<google::cloud::video::livestream::v1::Clip>
-  GetClip(google::cloud::video::livestream::v1::GetClipRequest const& request) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::Clip>>
-  CreateClip(google::cloud::video::livestream::v1::CreateClipRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateClip(NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateClipRequest const& request) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::Clip>>
-  CreateClip(
+  future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteClip(google::cloud::video::livestream::v1::DeleteClipRequest const& request) override;
+  DeleteClip(google::cloud::video::livestream::v1::DeleteClipRequest const&
+                 request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteClip(NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteClipRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteClip(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteClip(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
-  CreateDvrSession(google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateDvrSession(NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateDvrSessionRequest const& request) override;
+  DeleteClip(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
   CreateDvrSession(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) override;
 
-  StreamRange<google::cloud::video::livestream::v1::DvrSession>
-  ListDvrSessions(google::cloud::video::livestream::v1::ListDvrSessionsRequest request) override;
+  StatusOr<google::longrunning::Operation> CreateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateDvrSessionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::video::livestream::v1::DvrSession>
-  GetDvrSession(google::cloud::video::livestream::v1::GetDvrSessionRequest const& request) override;
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  CreateDvrSession(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteDvrSession(google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request) override;
+  StreamRange<google::cloud::video::livestream::v1::DvrSession> ListDvrSessions(
+      google::cloud::video::livestream::v1::ListDvrSessionsRequest request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteDvrSession(NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const& request) override;
+  StatusOr<google::cloud::video::livestream::v1::DvrSession> GetDvrSession(
+      google::cloud::video::livestream::v1::GetDvrSessionRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteDvrSession(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
-  UpdateDvrSession(google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteDvrSessionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateDvrSession(NoAwaitTag,
-      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const& request) override;
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteDvrSession(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
   UpdateDvrSession(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::Asset>>
-  CreateAsset(google::cloud::video::livestream::v1::CreateAssetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateDvrSession(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateDvrSessionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateAsset(NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateAssetRequest const& request) override;
+  future<StatusOr<google::cloud::video::livestream::v1::DvrSession>>
+  UpdateDvrSession(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::Asset>>
-  CreateAsset(
+  future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateAsset(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteAsset(google::cloud::video::livestream::v1::DeleteAssetRequest const& request) override;
+  DeleteAsset(google::cloud::video::livestream::v1::DeleteAssetRequest const&
+                  request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteAsset(NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteAssetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteAsset(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteAsset(
+  DeleteAsset(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
+      google::cloud::video::livestream::v1::GetAssetRequest const& request)
+      override;
+
+  StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
+      google::cloud::video::livestream::v1::ListAssetsRequest request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
+      google::cloud::video::livestream::v1::GetPoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdatePool(
+      NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::video::livestream::v1::Asset>
-  GetAsset(google::cloud::video::livestream::v1::GetAssetRequest const& request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StreamRange<google::cloud::video::livestream::v1::Asset>
-  ListAssets(google::cloud::video::livestream::v1::ListAssetsRequest request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::cloud::video::livestream::v1::Pool>
-  GetPool(google::cloud::video::livestream::v1::GetPoolRequest const& request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::Pool>>
-  UpdatePool(google::cloud::video::livestream::v1::UpdatePoolRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdatePool(NoAwaitTag,
-      google::cloud::video::livestream::v1::UpdatePoolRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  future<StatusOr<google::cloud::video::livestream::v1::Pool>>
-  UpdatePool(
-      google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
-
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
-
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
-
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
-
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
-
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -34,23 +34,29 @@ class AdvisoryNotificationsServiceConnectionIdempotencyPolicy {
   virtual ~AdvisoryNotificationsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<
+      AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest request);
+  virtual google::cloud::Idempotency ListNotifications(
+      google::cloud::advisorynotifications::v1::ListNotificationsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const& request);
+  virtual google::cloud::Idempotency GetNotification(
+      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const& request);
+  virtual google::cloud::Idempotency GetSettings(
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request);
+  virtual google::cloud::Idempotency UpdateSettings(
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request);
 };
 
 std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
-    MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy();
+MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace advisorynotifications_v1

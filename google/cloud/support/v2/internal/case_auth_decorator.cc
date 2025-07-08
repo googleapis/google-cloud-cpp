@@ -32,26 +32,25 @@ CaseServiceAuth::CaseServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceAuth::GetCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::GetCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCase(context, options, request);
 }
 
-StatusOr<google::cloud::support::v2::ListCasesResponse> CaseServiceAuth::ListCases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::support::v2::ListCasesResponse>
+CaseServiceAuth::ListCases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListCasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListCases(context, options, request);
 }
 
-StatusOr<google::cloud::support::v2::SearchCasesResponse> CaseServiceAuth::SearchCases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::support::v2::SearchCasesResponse>
+CaseServiceAuth::SearchCases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::SearchCasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +58,7 @@ StatusOr<google::cloud::support::v2::SearchCasesResponse> CaseServiceAuth::Searc
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceAuth::CreateCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CreateCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +66,7 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceAuth::CreateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceAuth::UpdateCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::UpdateCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +74,7 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceAuth::UpdateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceAuth::EscalateCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::EscalateCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,18 +82,18 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceAuth::EscalateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceAuth::CloseCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CloseCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CloseCase(context, options, request);
 }
 
-StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse> CaseServiceAuth::SearchCaseClassifications(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::support::v2::SearchCaseClassificationsRequest const& request) {
+StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse>
+CaseServiceAuth::SearchCaseClassifications(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::SearchCaseClassificationsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchCaseClassifications(context, options, request);

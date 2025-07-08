@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `AuthorizedDomainsClient`. To do so,
- * construct an object of type `AuthorizedDomainsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `AuthorizedDomainsClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,13 +42,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockAuthorizedDomainsConnection : public appengine_v1::AuthorizedDomainsConnection {
+class MockAuthorizedDomainsConnection
+    : public appengine_v1::AuthorizedDomainsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::appengine::v1::AuthorizedDomain>),
-  ListAuthorizedDomains,
-  (google::appengine::v1::ListAuthorizedDomainsRequest request), (override));
+              ListAuthorizedDomains,
+              (google::appengine::v1::ListAuthorizedDomainsRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

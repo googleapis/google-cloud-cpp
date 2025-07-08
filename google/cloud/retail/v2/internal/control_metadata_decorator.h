@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_CONTROL_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_CONTROL_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/retail/v2/internal/control_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,49 +34,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ControlServiceMetadata : public ControlServiceStub {
  public:
   ~ControlServiceMetadata() override = default;
-  ControlServiceMetadata(
-      std::shared_ptr<ControlServiceStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  ControlServiceMetadata(std::shared_ptr<ControlServiceStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header = "");
 
   StatusOr<google::cloud::retail::v2::Control> CreateControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateControlRequest const& request) override;
 
   Status DeleteControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Control> UpdateControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Control> GetControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListControlsResponse> ListControls(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListControlsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

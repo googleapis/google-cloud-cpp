@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_EVENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_EVENTS_CONNECTION_H
 
+#include "google/cloud/sql/v1/internal/sql_events_retry_traits.h"
+#include "google/cloud/sql/v1/sql_events_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/sql/v1/internal/sql_events_retry_traits.h"
-#include "google/cloud/sql/v1/sql_events_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_events.pb.h>
@@ -51,7 +51,8 @@ class SqlEventsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlEventsServiceLimitedErrorCountRetryPolicy : public SqlEventsServiceRetryPolicy {
+class SqlEventsServiceLimitedErrorCountRetryPolicy
+    : public SqlEventsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class SqlEventsServiceLimitedErrorCountRetryPolicy : public SqlEventsServiceRetr
    *     @p maximum_failures == 0.
    */
   explicit SqlEventsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SqlEventsServiceLimitedErrorCountRetryPolicy(
       SqlEventsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SqlEventsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlEventsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SqlEventsServiceLimitedErrorCountRetryPolicy(
       SqlEventsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SqlEventsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlEventsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class SqlEventsServiceLimitedErrorCountRetryPolicy : public SqlEventsServiceRetr
   using BaseType = SqlEventsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlEventsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      sql_v1_internal::SqlEventsServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -101,7 +104,8 @@ class SqlEventsServiceLimitedErrorCountRetryPolicy : public SqlEventsServiceRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlEventsServiceLimitedTimeRetryPolicy : public SqlEventsServiceRetryPolicy {
+class SqlEventsServiceLimitedTimeRetryPolicy
+    : public SqlEventsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +130,14 @@ class SqlEventsServiceLimitedTimeRetryPolicy : public SqlEventsServiceRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlEventsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SqlEventsServiceLimitedTimeRetryPolicy(SqlEventsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SqlEventsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlEventsServiceLimitedTimeRetryPolicy(SqlEventsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SqlEventsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlEventsServiceLimitedTimeRetryPolicy(
+      SqlEventsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SqlEventsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlEventsServiceLimitedTimeRetryPolicy(
+      SqlEventsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SqlEventsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +159,9 @@ class SqlEventsServiceLimitedTimeRetryPolicy : public SqlEventsServiceRetryPolic
   using BaseType = SqlEventsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlEventsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      sql_v1_internal::SqlEventsServiceRetryTraits>
+      impl_;
 };
 
 /**

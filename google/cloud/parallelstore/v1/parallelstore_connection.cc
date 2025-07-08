@@ -17,17 +17,17 @@
 // source: google/cloud/parallelstore/v1/parallelstore.proto
 
 #include "google/cloud/parallelstore/v1/parallelstore_connection.h"
+#include "google/cloud/parallelstore/v1/internal/parallelstore_connection_impl.h"
+#include "google/cloud/parallelstore/v1/internal/parallelstore_option_defaults.h"
+#include "google/cloud/parallelstore/v1/internal/parallelstore_stub_factory.h"
+#include "google/cloud/parallelstore/v1/internal/parallelstore_tracing_connection.h"
+#include "google/cloud/parallelstore/v1/parallelstore_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/parallelstore/v1/internal/parallelstore_connection_impl.h"
-#include "google/cloud/parallelstore/v1/internal/parallelstore_option_defaults.h"
-#include "google/cloud/parallelstore/v1/internal/parallelstore_stub_factory.h"
-#include "google/cloud/parallelstore/v1/internal/parallelstore_tracing_connection.h"
-#include "google/cloud/parallelstore/v1/parallelstore_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ParallelstoreConnection::~ParallelstoreConnection() = default;
 
-StreamRange<google::cloud::parallelstore::v1::Instance> ParallelstoreConnection::ListInstances(
-    google::cloud::parallelstore::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::parallelstore::v1::Instance>
+ParallelstoreConnection::ListInstances(
+    google::cloud::parallelstore::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::parallelstore::v1::Instance>>();
 }
@@ -54,8 +56,8 @@ future<StatusOr<google::cloud::parallelstore::v1::Instance>>
 ParallelstoreConnection::CreateInstance(
     google::cloud::parallelstore::v1::CreateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -63,23 +65,22 @@ ParallelstoreConnection::CreateInstance(
     NoAwaitTag,
     google::cloud::parallelstore::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreConnection::CreateInstance(
-    google::longrunning::Operation const&) {
+ParallelstoreConnection::CreateInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
 ParallelstoreConnection::UpdateInstance(
     google::cloud::parallelstore::v1::UpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -87,23 +88,22 @@ ParallelstoreConnection::UpdateInstance(
     NoAwaitTag,
     google::cloud::parallelstore::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-ParallelstoreConnection::UpdateInstance(
-    google::longrunning::Operation const&) {
+ParallelstoreConnection::UpdateInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
 ParallelstoreConnection::DeleteInstance(
     google::cloud::parallelstore::v1::DeleteInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -111,67 +111,62 @@ ParallelstoreConnection::DeleteInstance(
     NoAwaitTag,
     google::cloud::parallelstore::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
-ParallelstoreConnection::DeleteInstance(
-    google::longrunning::Operation const&) {
+ParallelstoreConnection::DeleteInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
 ParallelstoreConnection::ImportData(
     google::cloud::parallelstore::v1::ImportDataRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreConnection::ImportData(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::ImportDataRequest const&) {
+StatusOr<google::longrunning::Operation> ParallelstoreConnection::ImportData(
+    NoAwaitTag, google::cloud::parallelstore::v1::ImportDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
-ParallelstoreConnection::ImportData(
-    google::longrunning::Operation const&) {
+ParallelstoreConnection::ImportData(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
 ParallelstoreConnection::ExportData(
     google::cloud::parallelstore::v1::ExportDataRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreConnection::ExportData(
-    NoAwaitTag,
-    google::cloud::parallelstore::v1::ExportDataRequest const&) {
+StatusOr<google::longrunning::Operation> ParallelstoreConnection::ExportData(
+    NoAwaitTag, google::cloud::parallelstore::v1::ExportDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
-ParallelstoreConnection::ExportData(
-    google::longrunning::Operation const&) {
+ParallelstoreConnection::ExportData(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> ParallelstoreConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ParallelstoreConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -182,26 +177,25 @@ ParallelstoreConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> ParallelstoreConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ParallelstoreConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ParallelstoreConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ParallelstoreConnection::DeleteOperation(
+Status ParallelstoreConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ParallelstoreConnection::CancelOperation(
+Status ParallelstoreConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -209,17 +203,18 @@ ParallelstoreConnection::CancelOperation(
 std::shared_ptr<ParallelstoreConnection> MakeParallelstoreConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ParallelstorePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ParallelstorePolicyOptionList>(options,
+                                                                __func__);
   options = parallelstore_v1_internal::ParallelstoreDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = parallelstore_v1_internal::CreateDefaultParallelstoreStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return parallelstore_v1_internal::MakeParallelstoreTracingConnection(
       std::make_shared<parallelstore_v1_internal::ParallelstoreConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

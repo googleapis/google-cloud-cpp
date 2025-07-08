@@ -26,10 +26,13 @@ namespace cloud {
 namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use vmmigration_v1::MakeDefaultVmMigrationConnectionIdempotencyPolicy directly.
-using ::google::cloud::vmmigration_v1::MakeDefaultVmMigrationConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// vmmigration_v1::MakeDefaultVmMigrationConnectionIdempotencyPolicy directly.
+using ::google::cloud::vmmigration_v1::
+    MakeDefaultVmMigrationConnectionIdempotencyPolicy;
 
-/// @deprecated Use vmmigration_v1::VmMigrationConnectionIdempotencyPolicy directly.
+/// @deprecated Use vmmigration_v1::VmMigrationConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::vmmigration_v1::VmMigrationConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ENCRYPTION_SPEC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ENCRYPTION_SPEC_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/encryption_spec_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/encryption_spec_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -48,7 +48,8 @@ class EncryptionSpecServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `EncryptionSpecServiceConnection` based on counting errors.
+ * A retry policy for `EncryptionSpecServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -57,7 +58,8 @@ class EncryptionSpecServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EncryptionSpecServiceLimitedErrorCountRetryPolicy : public EncryptionSpecServiceRetryPolicy {
+class EncryptionSpecServiceLimitedErrorCountRetryPolicy
+    : public EncryptionSpecServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,15 +68,18 @@ class EncryptionSpecServiceLimitedErrorCountRetryPolicy : public EncryptionSpecS
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit EncryptionSpecServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit EncryptionSpecServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   EncryptionSpecServiceLimitedErrorCountRetryPolicy(
       EncryptionSpecServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EncryptionSpecServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EncryptionSpecServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   EncryptionSpecServiceLimitedErrorCountRetryPolicy(
       EncryptionSpecServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EncryptionSpecServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EncryptionSpecServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +99,9 @@ class EncryptionSpecServiceLimitedErrorCountRetryPolicy : public EncryptionSpecS
   using BaseType = EncryptionSpecServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::EncryptionSpecServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::EncryptionSpecServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -107,7 +114,8 @@ class EncryptionSpecServiceLimitedErrorCountRetryPolicy : public EncryptionSpecS
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EncryptionSpecServiceLimitedTimeRetryPolicy : public EncryptionSpecServiceRetryPolicy {
+class EncryptionSpecServiceLimitedTimeRetryPolicy
+    : public EncryptionSpecServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +140,14 @@ class EncryptionSpecServiceLimitedTimeRetryPolicy : public EncryptionSpecService
   template <typename DurationRep, typename DurationPeriod>
   explicit EncryptionSpecServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EncryptionSpecServiceLimitedTimeRetryPolicy(EncryptionSpecServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : EncryptionSpecServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EncryptionSpecServiceLimitedTimeRetryPolicy(EncryptionSpecServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : EncryptionSpecServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EncryptionSpecServiceLimitedTimeRetryPolicy(
+      EncryptionSpecServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : EncryptionSpecServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EncryptionSpecServiceLimitedTimeRetryPolicy(
+      EncryptionSpecServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : EncryptionSpecServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,16 +169,19 @@ class EncryptionSpecServiceLimitedTimeRetryPolicy : public EncryptionSpecService
   using BaseType = EncryptionSpecServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::EncryptionSpecServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::EncryptionSpecServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `EncryptionSpecServiceConnection` object for `EncryptionSpecServiceClient`.
+ * The `EncryptionSpecServiceConnection` object for
+ * `EncryptionSpecServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `EncryptionSpecServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `EncryptionSpecServiceClient`.
+ * sets in `EncryptionSpecServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `EncryptionSpecServiceClient`.
  *
  * To create a concrete instance, see `MakeEncryptionSpecServiceConnection()`.
  *
@@ -181,42 +194,51 @@ class EncryptionSpecServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
-  GetEncryptionSpec(google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request);
+  GetEncryptionSpec(
+      google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(
+      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  InitializeEncryptionSpec(NoAwaitTag, google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `EncryptionSpecServiceConnection`.
+ * A factory function to construct an object of type
+ * `EncryptionSpecServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of EncryptionSpecServiceClient.
+ * should be passed as an argument to the constructor of
+ * EncryptionSpecServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `EncryptionSpecServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `EncryptionSpecServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -227,11 +249,12 @@ class EncryptionSpecServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `EncryptionSpecServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `EncryptionSpecServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<EncryptionSpecServiceConnection> MakeEncryptionSpecServiceConnection(
-    std::string const& location, Options options = {});
+std::shared_ptr<EncryptionSpecServiceConnection>
+MakeEncryptionSpecServiceConnection(std::string const& location,
+                                    Options options = {});
 
 /**
  * A backwards-compatible version of the previous factory function.  Unless
@@ -240,8 +263,8 @@ std::shared_ptr<EncryptionSpecServiceConnection> MakeEncryptionSpecServiceConnec
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<EncryptionSpecServiceConnection> MakeEncryptionSpecServiceConnection(
-    Options options = {});
+std::shared_ptr<EncryptionSpecServiceConnection>
+MakeEncryptionSpecServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

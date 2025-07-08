@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetInstancesClient {
  public:
-  explicit TargetInstancesClient(std::shared_ptr<TargetInstancesConnection> connection, Options opts = {});
+  explicit TargetInstancesClient(
+      std::shared_ptr<TargetInstancesConnection> connection, Options opts = {});
   ~TargetInstancesClient();
 
   ///@{
@@ -77,10 +78,12 @@ class TargetInstancesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TargetInstancesClient const& a, TargetInstancesClient const& b) {
+  friend bool operator==(TargetInstancesClient const& a,
+                         TargetInstancesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TargetInstancesClient const& a, TargetInstancesClient const& b) {
+  friend bool operator!=(TargetInstancesClient const& a,
+                         TargetInstancesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,7 +122,8 @@ class TargetInstancesClient {
   /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L304}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
   AggregatedListTargetInstances(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -161,8 +165,12 @@ class TargetInstancesClient {
   /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L304}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
-  AggregatedListTargetInstances(google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest request, Options opts = {});
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>
+  AggregatedListTargetInstances(
+      google::cloud::cpp::compute::target_instances::v1::
+          AggregatedListTargetInstancesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -196,7 +204,8 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstance(std::string const& project, std::string const& zone, std::string const& target_instance, Options opts = {});
+  DeleteTargetInstance(std::string const& project, std::string const& zone,
+                       std::string const& target_instance, Options opts = {});
 
   // clang-format off
   ///
@@ -209,8 +218,9 @@ class TargetInstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetInstance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& target_instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& target_instance, Options opts = {});
 
   // clang-format off
   ///
@@ -247,7 +257,9 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request, Options opts = {});
+  DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           DeleteTargetInstanceRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +272,11 @@ class TargetInstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetInstance(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          DeleteTargetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -273,7 +288,9 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  DeleteTargetInstance(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -300,8 +317,9 @@ class TargetInstancesClient {
   /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstance(std::string const& project, std::string const& zone, std::string const& target_instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
+      std::string const& project, std::string const& zone,
+      std::string const& target_instance, Options opts = {});
 
   // clang-format off
   ///
@@ -331,8 +349,10 @@ class TargetInstancesClient {
   /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstance(google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
+      google::cloud::cpp::compute::target_instances::v1::
+          GetTargetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -367,7 +387,10 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstance(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::TargetInstance const& target_instance_resource, Options opts = {});
+  InsertTargetInstance(std::string const& project, std::string const& zone,
+                       google::cloud::cpp::compute::v1::TargetInstance const&
+                           target_instance_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -380,8 +403,11 @@ class TargetInstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetInstance(NoAwaitTag, std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::TargetInstance const& target_instance_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::TargetInstance const&
+          target_instance_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -419,7 +445,9 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request, Options opts = {});
+  InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
+                           InsertTargetInstanceRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -432,8 +460,11 @@ class TargetInstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetInstance(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          InsertTargetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -445,7 +476,9 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  InsertTargetInstance(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -482,7 +515,8 @@ class TargetInstancesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(std::string const& project, std::string const& zone, Options opts = {});
+  ListTargetInstances(std::string const& project, std::string const& zone,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -523,7 +557,9 @@ class TargetInstancesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request, Options opts = {});
+  ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
+                          ListTargetInstancesRequest request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -560,7 +596,12 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(std::string const& project, std::string const& zone, std::string const& target_instance, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts = {});
+  SetSecurityPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& target_instance,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -573,8 +614,12 @@ class TargetInstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& target_instance, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& target_instance,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -612,7 +657,9 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request, Options opts = {});
+  SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::
+                        SetSecurityPolicyRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -625,8 +672,11 @@ class TargetInstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          SetSecurityPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -638,7 +688,8 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
 
  private:
   std::shared_ptr<TargetInstancesConnection> connection_;

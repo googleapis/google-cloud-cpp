@@ -35,41 +35,43 @@ class DirectAccessServiceLogging : public DirectAccessServiceStub {
  public:
   ~DirectAccessServiceLogging() override = default;
   DirectAccessServiceLogging(std::shared_ptr<DirectAccessServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                             TracingOptions tracing_options,
+                             std::set<std::string> const& components);
 
-  StatusOr<google::cloud::devicestreaming::v1::DeviceSession> CreateDeviceSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) override;
+  StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
+  CreateDeviceSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse> ListDeviceSessions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& request) override;
+  StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse>
+  ListDeviceSessions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::devicestreaming::v1::DeviceSession> GetDeviceSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+          request) override;
 
   Status CancelDeviceSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::devicestreaming::v1::DeviceSession> UpdateDeviceSession(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) override;
+  StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
+  UpdateDeviceSession(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+          request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::devicestreaming::v1::AdbMessage,
       google::cloud::devicestreaming::v1::DeviceMessage>>
-  AsyncAdbConnect(
-      google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options) override;
+  AsyncAdbConnect(google::cloud::CompletionQueue const& cq,
+                  std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::shared_ptr<DirectAccessServiceStub> child_;

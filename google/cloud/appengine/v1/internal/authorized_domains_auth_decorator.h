@@ -38,10 +38,11 @@ class AuthorizedDomainsAuth : public AuthorizedDomainsStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<AuthorizedDomainsStub> child);
 
-  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse> ListAuthorizedDomains(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::ListAuthorizedDomainsRequest const& request) override;
+  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
+  ListAuthorizedDomains(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::ListAuthorizedDomainsRequest const& request)
+      override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

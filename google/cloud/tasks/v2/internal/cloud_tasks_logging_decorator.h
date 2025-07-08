@@ -35,97 +35,79 @@ class CloudTasksLogging : public CloudTasksStub {
  public:
   ~CloudTasksLogging() override = default;
   CloudTasksLogging(std::shared_ptr<CloudTasksStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                    TracingOptions tracing_options,
+                    std::set<std::string> const& components);
 
   StatusOr<google::cloud::tasks::v2::ListQueuesResponse> ListQueues(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ListQueuesRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::GetQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::UpdateQueueRequest const& request) override;
 
   Status DeleteQueue(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::PurgeQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::PauseQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ResumeQueueRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ListTasksRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Task> GetTask(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateTaskRequest const& request) override;
 
   Status DeleteTask(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:

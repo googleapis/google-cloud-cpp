@@ -36,21 +36,23 @@ class SqlBackupRunsServiceTracingConnection
   ~SqlBackupRunsServiceTracingConnection() override = default;
 
   explicit SqlBackupRunsServiceTracingConnection(
-    std::shared_ptr<sql_v1::SqlBackupRunsServiceConnection> child);
+      std::shared_ptr<sql_v1::SqlBackupRunsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Delete(google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Delete(
+      google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::BackupRun>
-  Get(google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::BackupRun> Get(
+      google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Insert(google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Insert(
+      google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
-  List(google::cloud::sql::v1::SqlBackupRunsListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(
+      google::cloud::sql::v1::SqlBackupRunsListRequest const& request) override;
 
  private:
   std::shared_ptr<sql_v1::SqlBackupRunsServiceConnection> child_;

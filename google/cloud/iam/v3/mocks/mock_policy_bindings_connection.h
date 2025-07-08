@@ -51,12 +51,14 @@ class MockPolicyBindingsConnection : public iam_v3::PolicyBindingsConnection {
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreatePolicyBinding(Matcher<google::iam::v3::CreatePolicyBindingRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreatePolicyBinding(Matcher<google::iam::v3::CreatePolicyBindingRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v3::PolicyBinding>>,
-  CreatePolicyBinding,
-  (google::iam::v3::CreatePolicyBindingRequest const& request), (override));
-
+              CreatePolicyBinding,
+              (google::iam::v3::CreatePolicyBindingRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,37 +66,40 @@ class MockPolicyBindingsConnection : public iam_v3::PolicyBindingsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreatePolicyBinding(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreatePolicyBinding, (NoAwaitTag,
-    google::iam::v3::CreatePolicyBindingRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreatePolicyBinding(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::iam::v3::PolicyBinding>>,
-  CreatePolicyBinding, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v3::PolicyBinding>,
-  GetPolicyBinding,
-  (google::iam::v3::GetPolicyBindingRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePolicyBinding,
+              (NoAwaitTag,
+               google::iam::v3::CreatePolicyBindingRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdatePolicyBinding(Matcher<google::iam::v3::UpdatePolicyBindingRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreatePolicyBinding(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v3::PolicyBinding>>,
-  UpdatePolicyBinding,
-  (google::iam::v3::UpdatePolicyBindingRequest const& request), (override));
+              CreatePolicyBinding,
+              (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(StatusOr<google::iam::v3::PolicyBinding>, GetPolicyBinding,
+              (google::iam::v3::GetPolicyBindingRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePolicyBinding(Matcher<google::iam::v3::UpdatePolicyBindingRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::iam::v3::PolicyBinding>>,
+              UpdatePolicyBinding,
+              (google::iam::v3::UpdatePolicyBindingRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -102,33 +107,36 @@ class MockPolicyBindingsConnection : public iam_v3::PolicyBindingsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdatePolicyBinding(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdatePolicyBinding, (NoAwaitTag,
-    google::iam::v3::UpdatePolicyBindingRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdatePolicyBinding,
+              (NoAwaitTag,
+               google::iam::v3::UpdatePolicyBindingRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdatePolicyBinding(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdatePolicyBinding(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v3::PolicyBinding>>,
-  UpdatePolicyBinding, (
-    google::longrunning::Operation const& operation), (override));
+              UpdatePolicyBinding,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePolicyBinding(Matcher<google::iam::v3::DeletePolicyBindingRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeletePolicyBinding(Matcher<google::iam::v3::DeletePolicyBindingRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v3::OperationMetadata>>,
-  DeletePolicyBinding,
-  (google::iam::v3::DeletePolicyBindingRequest const& request), (override));
-
+              DeletePolicyBinding,
+              (google::iam::v3::DeletePolicyBindingRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -136,33 +144,34 @@ class MockPolicyBindingsConnection : public iam_v3::PolicyBindingsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeletePolicyBinding(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeletePolicyBinding, (NoAwaitTag,
-    google::iam::v3::DeletePolicyBindingRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePolicyBinding,
+              (NoAwaitTag,
+               google::iam::v3::DeletePolicyBindingRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePolicyBinding(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeletePolicyBinding(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v3::OperationMetadata>>,
-  DeletePolicyBinding, (
-    google::longrunning::Operation const& operation), (override));
+              DeletePolicyBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD((StreamRange<google::iam::v3::PolicyBinding>), ListPolicyBindings,
+              (google::iam::v3::ListPolicyBindingsRequest request), (override));
 
   MOCK_METHOD((StreamRange<google::iam::v3::PolicyBinding>),
-  ListPolicyBindings,
-  (google::iam::v3::ListPolicyBindingsRequest request), (override));
+              SearchTargetPolicyBindings,
+              (google::iam::v3::SearchTargetPolicyBindingsRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::iam::v3::PolicyBinding>),
-  SearchTargetPolicyBindings,
-  (google::iam::v3::SearchTargetPolicyBindingsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,8 +26,10 @@ namespace cloud {
 namespace asset {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use asset_v1::MakeDefaultAssetServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::asset_v1::MakeDefaultAssetServiceConnectionIdempotencyPolicy;
+/// @deprecated Use asset_v1::MakeDefaultAssetServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::asset_v1::
+    MakeDefaultAssetServiceConnectionIdempotencyPolicy;
 
 /// @deprecated Use asset_v1::AssetServiceConnectionIdempotencyPolicy directly.
 using ::google::cloud::asset_v1::AssetServiceConnectionIdempotencyPolicy;

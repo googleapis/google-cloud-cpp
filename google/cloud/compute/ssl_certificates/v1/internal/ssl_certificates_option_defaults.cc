@@ -35,32 +35,48 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SslCertificatesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SSL_CERTIFICATES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SSL_CERTIFICATES_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_SSL_CERTIFICATES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SSL_CERTIFICATES_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()) {
+  if (!options.has<
+          compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()) {
     options.set<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>(
         compute_ssl_certificates_v1::SslCertificatesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()) {
-    options.set<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<
+          compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()) {
+    options
+        .set<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<compute_ssl_certificates_v1::SslCertificatesPollingPolicyOption>()) {
-    options.set<compute_ssl_certificates_v1::SslCertificatesPollingPolicyOption>(
+  if (!options.has<
+          compute_ssl_certificates_v1::SslCertificatesPollingPolicyOption>()) {
+    options.set<
+        compute_ssl_certificates_v1::SslCertificatesPollingPolicyOption>(
         GenericPollingPolicy<
             compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption::Type,
-            compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption::Type>(
-            options.get<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()->clone(),
+            compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption::
+                Type>(
+            options
+                .get<compute_ssl_certificates_v1::
+                         SslCertificatesRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_ssl_certificates_v1::SslCertificatesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_ssl_certificates_v1::SslCertificatesConnectionIdempotencyPolicyOption>(
-        compute_ssl_certificates_v1::MakeDefaultSslCertificatesConnectionIdempotencyPolicy());
+  if (!options.has<compute_ssl_certificates_v1::
+                       SslCertificatesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_ssl_certificates_v1::
+                    SslCertificatesConnectionIdempotencyPolicyOption>(
+        compute_ssl_certificates_v1::
+            MakeDefaultSslCertificatesConnectionIdempotencyPolicy());
   }
 
   return options;

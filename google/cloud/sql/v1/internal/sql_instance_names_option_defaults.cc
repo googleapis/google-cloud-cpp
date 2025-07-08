@@ -17,10 +17,10 @@
 // source: google/cloud/sql/v1/cloud_sql_instance_names.proto
 
 #include "google/cloud/sql/v1/internal/sql_instance_names_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/sql/v1/sql_instance_names_connection.h"
 #include "google/cloud/sql/v1/sql_instance_names_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SqlInstanceNamesServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SQL_INSTANCE_NAMES_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SQL_INSTANCE_NAMES_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_SQL_INSTANCE_NAMES_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SQL_INSTANCE_NAMES_SERVICE_AUTHORITY",
       "sqladmin.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<sql_v1::SqlInstanceNamesServiceRetryPolicyOption>()) {
     options.set<sql_v1::SqlInstanceNamesServiceRetryPolicyOption>(
         sql_v1::SqlInstanceNamesServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<sql_v1::SqlInstanceNamesServiceBackoffPolicyOption>()) {
     options.set<sql_v1::SqlInstanceNamesServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<sql_v1::SqlInstanceNamesServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<sql_v1::SqlInstanceNamesServiceConnectionIdempotencyPolicyOption>(
-        sql_v1::MakeDefaultSqlInstanceNamesServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          sql_v1::SqlInstanceNamesServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        sql_v1::SqlInstanceNamesServiceConnectionIdempotencyPolicyOption>(
+        sql_v1::
+            MakeDefaultSqlInstanceNamesServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -39,220 +39,212 @@ class DataCatalogTracingStub : public DataCatalogStub {
   explicit DataCatalogTracingStub(std::shared_ptr<DataCatalogStub> child);
 
   StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse> SearchCatalog(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::SearchCatalogRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::SearchCatalogRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::GetEntryGroupRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request)
+      override;
 
   Status DeleteEntryGroup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::ListEntryGroupsResponse> ListEntryGroups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::ListEntryGroupsRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::ListEntryGroupsResponse>
+  ListEntryGroups(grpc::ClientContext& context, Options const& options,
+                  google::cloud::datacatalog::v1::ListEntryGroupsRequest const&
+                      request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::CreateEntryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::CreateEntryRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::UpdateEntryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::UpdateEntryRequest const& request)
+      override;
 
-  Status DeleteEntry(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::DeleteEntryRequest const& request) override;
+  Status DeleteEntry(grpc::ClientContext& context, Options const& options,
+                     google::cloud::datacatalog::v1::DeleteEntryRequest const&
+                         request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::GetEntryRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Entry> LookupEntry(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::LookupEntryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::LookupEntryRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse> ListEntries(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::ListEntriesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::ListEntriesRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::GetTagTemplateRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request)
+      override;
 
   Status DeleteTagTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::TagTemplateField> CreateTagTemplateField(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
+  CreateTagTemplateField(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
+          request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::TagTemplateField> UpdateTagTemplateField(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
+  UpdateTagTemplateField(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
+          request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::TagTemplateField> RenameTagTemplateField(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
+  RenameTagTemplateField(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
+          request) override;
 
-  StatusOr<google::cloud::datacatalog::v1::TagTemplateField> RenameTagTemplateFieldEnumValue(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
+  RenameTagTemplateFieldEnumValue(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::
+          RenameTagTemplateFieldEnumValueRequest const& request) override;
 
   Status DeleteTagTemplateField(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
+          request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::CreateTagRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::UpdateTagRequest const& request) override;
 
   Status DeleteTag(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::DeleteTagRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::ListTagsResponse> ListTags(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ListTagsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReconcileTags(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) override;
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ReconcileTags(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::UnstarEntryRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request)
+      override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::datacatalog::v1::ImportEntriesRequest const& request) override;
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ImportEntries(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::datacatalog::v1::ImportEntriesRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
+      override;
 
   StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::SetConfigRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::v1::OrganizationConfig> RetrieveConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request)
+      override;
 
-  StatusOr<google::cloud::datacatalog::v1::MigrationConfig> RetrieveEffectiveConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request) override;
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+  RetrieveEffectiveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -269,7 +261,8 @@ class DataCatalogTracingStub : public DataCatalogStub {
 
  private:
   std::shared_ptr<DataCatalogStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

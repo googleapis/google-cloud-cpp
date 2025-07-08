@@ -35,27 +35,26 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
  public:
   ~IAMCredentialsLogging() override = default;
   IAMCredentialsLogging(std::shared_ptr<IAMCredentialsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                        TracingOptions tracing_options,
+                        std::set<std::string> const& components);
 
-  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse> GenerateAccessToken(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::credentials::v1::GenerateAccessTokenRequest const& request) override;
+  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
+      override;
 
-  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse> GenerateIdToken(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::credentials::v1::GenerateIdTokenRequest const& request) override;
+  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
+  GenerateIdToken(grpc::ClientContext& context, Options const& options,
+                  google::iam::credentials::v1::GenerateIdTokenRequest const&
+                      request) override;
 
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::SignBlobRequest const& request) override;
 
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:
@@ -64,7 +63,7 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
 };  // IAMCredentialsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_credentials_v1_internal
 }  // namespace cloud
 }  // namespace google

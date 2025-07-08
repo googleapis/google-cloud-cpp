@@ -37,36 +37,36 @@ class ApiKeysConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ApiKeysConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request);
+  virtual google::cloud::Idempotency CreateKey(
+      google::api::apikeys::v2::CreateKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListKeys(google::api::apikeys::v2::ListKeysRequest request);
+  virtual google::cloud::Idempotency ListKeys(
+      google::api::apikeys::v2::ListKeysRequest request);
 
-  virtual google::cloud::Idempotency
-  GetKey(google::api::apikeys::v2::GetKeyRequest const& request);
+  virtual google::cloud::Idempotency GetKey(
+      google::api::apikeys::v2::GetKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request);
+  virtual google::cloud::Idempotency GetKeyString(
+      google::api::apikeys::v2::GetKeyStringRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request);
+  virtual google::cloud::Idempotency UpdateKey(
+      google::api::apikeys::v2::UpdateKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request);
+  virtual google::cloud::Idempotency DeleteKey(
+      google::api::apikeys::v2::DeleteKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request);
+  virtual google::cloud::Idempotency UndeleteKey(
+      google::api::apikeys::v2::UndeleteKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request);
+  virtual google::cloud::Idempotency LookupKey(
+      google::api::apikeys::v2::LookupKeyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ApiKeysConnectionIdempotencyPolicy>
-    MakeDefaultApiKeysConnectionIdempotencyPolicy();
+MakeDefaultApiKeysConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_v2

@@ -26,22 +26,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-OrganizationsConnectionIdempotencyPolicy::~OrganizationsConnectionIdempotencyPolicy() = default;
+OrganizationsConnectionIdempotencyPolicy::
+    ~OrganizationsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>
 OrganizationsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<OrganizationsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency OrganizationsConnectionIdempotencyPolicy::GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const&) {
+Idempotency OrganizationsConnectionIdempotencyPolicy::GetOrganization(
+    google::cloud::resourcemanager::v3::GetOrganizationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrganizationsConnectionIdempotencyPolicy::SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest) {  // NOLINT
+Idempotency OrganizationsConnectionIdempotencyPolicy::SearchOrganizations(
+    google::cloud::resourcemanager::v3::SearchOrganizationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrganizationsConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency OrganizationsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -51,16 +55,18 @@ Idempotency OrganizationsConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency OrganizationsConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency OrganizationsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency OrganizationsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency OrganizationsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>
-    MakeDefaultOrganizationsConnectionIdempotencyPolicy() {
+MakeDefaultOrganizationsConnectionIdempotencyPolicy() {
   return std::make_unique<OrganizationsConnectionIdempotencyPolicy>();
 }
 

@@ -36,39 +36,40 @@ class TagHoldsLogging : public TagHoldsStub {
  public:
   ~TagHoldsLogging() override = default;
   TagHoldsLogging(std::shared_ptr<TagHoldsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                  TracingOptions tracing_options,
+                  std::set<std::string> const& components);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTagHold(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateTagHold(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagHold(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteTagHold(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse> ListTagHolds(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
+  ListTagHolds(grpc::ClientContext& context, Options const& options,
+               google::cloud::resourcemanager::v3::ListTagHoldsRequest const&
+                   request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

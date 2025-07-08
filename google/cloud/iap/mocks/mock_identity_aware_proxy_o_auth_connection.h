@@ -30,8 +30,10 @@ namespace cloud {
 namespace iap_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use iap_v1_mocks::MockIdentityAwareProxyOAuthServiceConnection directly.
-using ::google::cloud::iap_v1_mocks::MockIdentityAwareProxyOAuthServiceConnection;
+/// @deprecated Use iap_v1_mocks::MockIdentityAwareProxyOAuthServiceConnection
+/// directly.
+using ::google::cloud::iap_v1_mocks::
+    MockIdentityAwareProxyOAuthServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_mocks

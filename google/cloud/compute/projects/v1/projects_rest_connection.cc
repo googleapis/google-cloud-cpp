@@ -17,12 +17,12 @@
 // source: google/cloud/compute/projects/v1/projects.proto
 
 #include "google/cloud/compute/projects/v1/projects_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/projects/v1/internal/projects_option_defaults.h"
 #include "google/cloud/compute/projects/v1/internal/projects_rest_connection_impl.h"
 #include "google/cloud/compute/projects/v1/internal/projects_rest_stub_factory.h"
 #include "google/cloud/compute/projects/v1/internal/projects_tracing_connection.h"
 #include "google/cloud/compute/projects/v1/projects_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,15 +36,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ProjectsConnection> MakeProjectsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      ProjectsPolicyOptionList>(options, __func__);
-  options = compute_projects_v1_internal::ProjectsDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, ProjectsPolicyOptionList>(
+      options, __func__);
+  options =
+      compute_projects_v1_internal::ProjectsDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_projects_v1_internal::CreateDefaultProjectsRestStub(
-      options);
+  auto stub =
+      compute_projects_v1_internal::CreateDefaultProjectsRestStub(options);
   return compute_projects_v1_internal::MakeProjectsTracingConnection(
       std::make_shared<
           compute_projects_v1_internal::ProjectsRestConnectionImpl>(

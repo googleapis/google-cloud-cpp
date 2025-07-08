@@ -26,27 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-LookupServiceConnectionIdempotencyPolicy::~LookupServiceConnectionIdempotencyPolicy() = default;
+LookupServiceConnectionIdempotencyPolicy::
+    ~LookupServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
 LookupServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<LookupServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency LookupServiceConnectionIdempotencyPolicy::ResolveService(google::cloud::servicedirectory::v1::ResolveServiceRequest const&) {
+Idempotency LookupServiceConnectionIdempotencyPolicy::ResolveService(
+    google::cloud::servicedirectory::v1::ResolveServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency LookupServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency LookupServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency LookupServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency LookupServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
-    MakeDefaultLookupServiceConnectionIdempotencyPolicy() {
+MakeDefaultLookupServiceConnectionIdempotencyPolicy() {
   return std::make_unique<LookupServiceConnectionIdempotencyPolicy>();
 }
 

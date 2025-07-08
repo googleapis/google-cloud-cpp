@@ -31,58 +31,66 @@ AgentEndpointServiceAuth::AgentEndpointServiceAuth(
     std::shared_ptr<AgentEndpointServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::osconfig::agentendpoint::v1::
+        ReceiveTaskNotificationResponse>>
 AgentEndpointServiceAuth::ReceiveTaskNotification(
-   std::shared_ptr<grpc::ClientContext> context,
-   Options const& options,
-   google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request) {
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::
+        ReceiveTaskNotificationRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
-      google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>;
+      google::cloud::osconfig::agentendpoint::v1::
+          ReceiveTaskNotificationResponse>;
   auto status = auth_->ConfigureContext(*context);
   if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->ReceiveTaskNotification(std::move(context), options, request);
 }
 
-StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse> AgentEndpointServiceAuth::StartNextTask(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request) {
+StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
+AgentEndpointServiceAuth::StartNextTask(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartNextTask(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse> AgentEndpointServiceAuth::ReportTaskProgress(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request) {
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
+AgentEndpointServiceAuth::ReportTaskProgress(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReportTaskProgress(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse> AgentEndpointServiceAuth::ReportTaskComplete(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request) {
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
+AgentEndpointServiceAuth::ReportTaskComplete(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReportTaskComplete(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse> AgentEndpointServiceAuth::RegisterAgent(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request) {
+StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
+AgentEndpointServiceAuth::RegisterAgent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RegisterAgent(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse> AgentEndpointServiceAuth::ReportInventory(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request) {
+StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
+AgentEndpointServiceAuth::ReportInventory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReportInventory(context, options, request);

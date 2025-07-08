@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_POLICY_TAG_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_POLICY_TAG_MANAGER_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_retry_traits.h"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class PolicyTagManagerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PolicyTagManagerLimitedErrorCountRetryPolicy : public PolicyTagManagerRetryPolicy {
+class PolicyTagManagerLimitedErrorCountRetryPolicy
+    : public PolicyTagManagerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class PolicyTagManagerLimitedErrorCountRetryPolicy : public PolicyTagManagerRetr
    *     @p maximum_failures == 0.
    */
   explicit PolicyTagManagerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   PolicyTagManagerLimitedErrorCountRetryPolicy(
       PolicyTagManagerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : PolicyTagManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : PolicyTagManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PolicyTagManagerLimitedErrorCountRetryPolicy(
       PolicyTagManagerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : PolicyTagManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : PolicyTagManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class PolicyTagManagerLimitedErrorCountRetryPolicy : public PolicyTagManagerRetr
   using BaseType = PolicyTagManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<datacatalog_v1_internal::PolicyTagManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      datacatalog_v1_internal::PolicyTagManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class PolicyTagManagerLimitedErrorCountRetryPolicy : public PolicyTagManagerRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class PolicyTagManagerLimitedTimeRetryPolicy : public PolicyTagManagerRetryPolicy {
+class PolicyTagManagerLimitedTimeRetryPolicy
+    : public PolicyTagManagerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class PolicyTagManagerLimitedTimeRetryPolicy : public PolicyTagManagerRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit PolicyTagManagerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  PolicyTagManagerLimitedTimeRetryPolicy(PolicyTagManagerLimitedTimeRetryPolicy&& rhs) noexcept
-    : PolicyTagManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PolicyTagManagerLimitedTimeRetryPolicy(PolicyTagManagerLimitedTimeRetryPolicy const& rhs) noexcept
-    : PolicyTagManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PolicyTagManagerLimitedTimeRetryPolicy(
+      PolicyTagManagerLimitedTimeRetryPolicy&& rhs) noexcept
+      : PolicyTagManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PolicyTagManagerLimitedTimeRetryPolicy(
+      PolicyTagManagerLimitedTimeRetryPolicy const& rhs) noexcept
+      : PolicyTagManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class PolicyTagManagerLimitedTimeRetryPolicy : public PolicyTagManagerRetryPolic
   using BaseType = PolicyTagManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<datacatalog_v1_internal::PolicyTagManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      datacatalog_v1_internal::PolicyTagManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,67 +183,68 @@ class PolicyTagManagerConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-  CreateTaxonomy(google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
+      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request);
 
-  virtual Status
-  DeleteTaxonomy(google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request);
+  virtual Status DeleteTaxonomy(
+      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-  UpdateTaxonomy(google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
+      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request);
 
-  virtual StreamRange<google::cloud::datacatalog::v1::Taxonomy>
-  ListTaxonomies(google::cloud::datacatalog::v1::ListTaxonomiesRequest request);
+  virtual StreamRange<google::cloud::datacatalog::v1::Taxonomy> ListTaxonomies(
+      google::cloud::datacatalog::v1::ListTaxonomiesRequest request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy>
-  GetTaxonomy(google::cloud::datacatalog::v1::GetTaxonomyRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
+      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-  CreatePolicyTag(google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
+      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request);
 
-  virtual Status
-  DeletePolicyTag(google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request);
+  virtual Status DeletePolicyTag(
+      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-  UpdatePolicyTag(google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
+      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request);
 
-  virtual StreamRange<google::cloud::datacatalog::v1::PolicyTag>
-  ListPolicyTags(google::cloud::datacatalog::v1::ListPolicyTagsRequest request);
+  virtual StreamRange<google::cloud::datacatalog::v1::PolicyTag> ListPolicyTags(
+      google::cloud::datacatalog::v1::ListPolicyTagsRequest request);
 
-  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag>
-  GetPolicyTag(google::cloud::datacatalog::v1::GetPolicyTagRequest const& request);
+  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
+      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `PolicyTagManagerConnection`.
+ * A factory function to construct an object of type
+ * `PolicyTagManagerConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of PolicyTagManagerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `PolicyTagManagerConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `PolicyTagManagerConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -245,8 +254,8 @@ class PolicyTagManagerConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `PolicyTagManagerConnection` created by
- * this function.
+ * @param options (optional) Configure the `PolicyTagManagerConnection` created
+ * by this function.
  */
 std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
     Options options = {});

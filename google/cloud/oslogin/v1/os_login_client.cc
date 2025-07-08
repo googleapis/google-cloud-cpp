@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsLoginServiceClient::OsLoginServiceClient(
     std::shared_ptr<OsLoginServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 OsLoginServiceClient::~OsLoginServiceClient() = default;
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceClient::CreateSshPublicKey(std::string const& parent, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, Options opts) {
+OsLoginServiceClient::CreateSshPublicKey(
+    std::string const& parent,
+    google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oslogin::v1::CreateSshPublicKeyRequest request;
   request.set_parent(parent);
@@ -42,35 +45,39 @@ OsLoginServiceClient::CreateSshPublicKey(std::string const& parent, google::clou
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceClient::CreateSshPublicKey(google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request, Options opts) {
+OsLoginServiceClient::CreateSshPublicKey(
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSshPublicKey(request);
 }
 
-Status
-OsLoginServiceClient::DeletePosixAccount(std::string const& name, Options opts) {
+Status OsLoginServiceClient::DeletePosixAccount(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oslogin::v1::DeletePosixAccountRequest request;
   request.set_name(name);
   return connection_->DeletePosixAccount(request);
 }
 
-Status
-OsLoginServiceClient::DeletePosixAccount(google::cloud::oslogin::v1::DeletePosixAccountRequest const& request, Options opts) {
+Status OsLoginServiceClient::DeletePosixAccount(
+    google::cloud::oslogin::v1::DeletePosixAccountRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePosixAccount(request);
 }
 
-Status
-OsLoginServiceClient::DeleteSshPublicKey(std::string const& name, Options opts) {
+Status OsLoginServiceClient::DeleteSshPublicKey(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oslogin::v1::DeleteSshPublicKeyRequest request;
   request.set_name(name);
   return connection_->DeleteSshPublicKey(request);
 }
 
-Status
-OsLoginServiceClient::DeleteSshPublicKey(google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request, Options opts) {
+Status OsLoginServiceClient::DeleteSshPublicKey(
+    google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSshPublicKey(request);
 }
@@ -84,7 +91,9 @@ OsLoginServiceClient::GetLoginProfile(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::oslogin::v1::LoginProfile>
-OsLoginServiceClient::GetLoginProfile(google::cloud::oslogin::v1::GetLoginProfileRequest const& request, Options opts) {
+OsLoginServiceClient::GetLoginProfile(
+    google::cloud::oslogin::v1::GetLoginProfileRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLoginProfile(request);
 }
@@ -98,13 +107,18 @@ OsLoginServiceClient::GetSshPublicKey(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceClient::GetSshPublicKey(google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request, Options opts) {
+OsLoginServiceClient::GetSshPublicKey(
+    google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSshPublicKey(request);
 }
 
 StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-OsLoginServiceClient::ImportSshPublicKey(std::string const& parent, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, Options opts) {
+OsLoginServiceClient::ImportSshPublicKey(
+    std::string const& parent,
+    google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oslogin::v1::ImportSshPublicKeyRequest request;
   request.set_parent(parent);
@@ -113,7 +127,10 @@ OsLoginServiceClient::ImportSshPublicKey(std::string const& parent, google::clou
 }
 
 StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-OsLoginServiceClient::ImportSshPublicKey(std::string const& parent, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, std::string const& project_id, Options opts) {
+OsLoginServiceClient::ImportSshPublicKey(
+    std::string const& parent,
+    google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+    std::string const& project_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oslogin::v1::ImportSshPublicKeyRequest request;
   request.set_parent(parent);
@@ -123,13 +140,18 @@ OsLoginServiceClient::ImportSshPublicKey(std::string const& parent, google::clou
 }
 
 StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-OsLoginServiceClient::ImportSshPublicKey(google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request, Options opts) {
+OsLoginServiceClient::ImportSshPublicKey(
+    google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportSshPublicKey(request);
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceClient::UpdateSshPublicKey(std::string const& name, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, Options opts) {
+OsLoginServiceClient::UpdateSshPublicKey(
+    std::string const& name,
+    google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oslogin::v1::UpdateSshPublicKeyRequest request;
   request.set_name(name);
@@ -138,7 +160,10 @@ OsLoginServiceClient::UpdateSshPublicKey(std::string const& name, google::cloud:
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceClient::UpdateSshPublicKey(std::string const& name, google::cloud::oslogin::common::SshPublicKey const& ssh_public_key, google::protobuf::FieldMask const& update_mask, Options opts) {
+OsLoginServiceClient::UpdateSshPublicKey(
+    std::string const& name,
+    google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::oslogin::v1::UpdateSshPublicKeyRequest request;
   request.set_name(name);
@@ -148,7 +173,9 @@ OsLoginServiceClient::UpdateSshPublicKey(std::string const& name, google::cloud:
 }
 
 StatusOr<google::cloud::oslogin::common::SshPublicKey>
-OsLoginServiceClient::UpdateSshPublicKey(google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request, Options opts) {
+OsLoginServiceClient::UpdateSshPublicKey(
+    google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSshPublicKey(request);
 }

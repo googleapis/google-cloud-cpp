@@ -26,63 +26,85 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SubnetworksConnectionIdempotencyPolicy::~SubnetworksConnectionIdempotencyPolicy() = default;
+SubnetworksConnectionIdempotencyPolicy::
+    ~SubnetworksConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SubnetworksConnectionIdempotencyPolicy>
 SubnetworksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SubnetworksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest) {  // NOLINT
+Idempotency SubnetworksConnectionIdempotencyPolicy::AggregatedListSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        AggregatedListSubnetworksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::DeleteSubnetwork(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::DeleteSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::
+        DeleteSubnetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::ExpandIpCidrRange(
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::GetSubnetwork(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::GetSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::InsertSubnetwork(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::InsertSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::
+        InsertSubnetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest) {  // NOLINT
+Idempotency SubnetworksConnectionIdempotencyPolicy::ListSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        ListSubnetworksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest) {  // NOLINT
+Idempotency SubnetworksConnectionIdempotencyPolicy::ListUsable(
+    google::cloud::cpp::compute::subnetworks::v1::
+        ListUsableRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::PatchSubnetwork(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::PatchSubnetwork(
+    google::cloud::cpp::compute::subnetworks::v1::
+        PatchSubnetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::SetPrivateIpGoogleAccess(
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SubnetworksConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const&) {
+Idempotency SubnetworksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::subnetworks::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SubnetworksConnectionIdempotencyPolicy>
-    MakeDefaultSubnetworksConnectionIdempotencyPolicy() {
+MakeDefaultSubnetworksConnectionIdempotencyPolicy() {
   return std::make_unique<SubnetworksConnectionIdempotencyPolicy>();
 }
 

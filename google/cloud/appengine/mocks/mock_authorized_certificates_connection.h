@@ -30,7 +30,8 @@ namespace cloud {
 namespace appengine_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use appengine_v1_mocks::MockAuthorizedCertificatesConnection directly.
+/// @deprecated Use appengine_v1_mocks::MockAuthorizedCertificatesConnection
+/// directly.
 using ::google::cloud::appengine_v1_mocks::MockAuthorizedCertificatesConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -35,53 +35,54 @@ class ProductServiceConnectionIdempotencyPolicy {
   virtual ~ProductServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ProductServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ProductServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateProduct(google::cloud::retail::v2::CreateProductRequest const& request);
+  virtual google::cloud::Idempotency CreateProduct(
+      google::cloud::retail::v2::CreateProductRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetProduct(google::cloud::retail::v2::GetProductRequest const& request);
+  virtual google::cloud::Idempotency GetProduct(
+      google::cloud::retail::v2::GetProductRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListProducts(google::cloud::retail::v2::ListProductsRequest request);
+  virtual google::cloud::Idempotency ListProducts(
+      google::cloud::retail::v2::ListProductsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateProduct(google::cloud::retail::v2::UpdateProductRequest const& request);
+  virtual google::cloud::Idempotency UpdateProduct(
+      google::cloud::retail::v2::UpdateProductRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteProduct(google::cloud::retail::v2::DeleteProductRequest const& request);
+  virtual google::cloud::Idempotency DeleteProduct(
+      google::cloud::retail::v2::DeleteProductRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PurgeProducts(google::cloud::retail::v2::PurgeProductsRequest const& request);
+  virtual google::cloud::Idempotency PurgeProducts(
+      google::cloud::retail::v2::PurgeProductsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportProducts(google::cloud::retail::v2::ImportProductsRequest const& request);
+  virtual google::cloud::Idempotency ImportProducts(
+      google::cloud::retail::v2::ImportProductsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request);
+  virtual google::cloud::Idempotency SetInventory(
+      google::cloud::retail::v2::SetInventoryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AddFulfillmentPlaces(google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request);
+  virtual google::cloud::Idempotency AddFulfillmentPlaces(
+      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RemoveFulfillmentPlaces(google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
+  virtual google::cloud::Idempotency RemoveFulfillmentPlaces(
+      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AddLocalInventories(google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
+  virtual google::cloud::Idempotency AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RemoveLocalInventories(google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
+  virtual google::cloud::Idempotency RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ProductServiceConnectionIdempotencyPolicy>
-    MakeDefaultProductServiceConnectionIdempotencyPolicy();
+MakeDefaultProductServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2

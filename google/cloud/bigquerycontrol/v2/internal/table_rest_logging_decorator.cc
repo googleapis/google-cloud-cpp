@@ -28,20 +28,17 @@ namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TableServiceRestLogging::TableServiceRestLogging(
-    std::shared_ptr<TableServiceRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<TableServiceRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceRestLogging::GetTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::v2::Table> TableServiceRestLogging::GetTable(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::GetTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::bigquery::v2::GetTableRequest const& request) {
         return child_->GetTable(rest_context, options, request);
       },
@@ -50,12 +47,10 @@ TableServiceRestLogging::GetTable(
 
 StatusOr<google::cloud::bigquery::v2::Table>
 TableServiceRestLogging::InsertTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::InsertTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::bigquery::v2::InsertTableRequest const& request) {
         return child_->InsertTable(rest_context, options, request);
       },
@@ -64,13 +59,12 @@ TableServiceRestLogging::InsertTable(
 
 StatusOr<google::cloud::bigquery::v2::Table>
 TableServiceRestLogging::PatchTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&
+                 request) {
         return child_->PatchTable(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -78,26 +72,22 @@ TableServiceRestLogging::PatchTable(
 
 StatusOr<google::cloud::bigquery::v2::Table>
 TableServiceRestLogging::UpdateTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&
+                 request) {
         return child_->UpdateTable(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status
-TableServiceRestLogging::DeleteTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+Status TableServiceRestLogging::DeleteTable(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::DeleteTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::bigquery::v2::DeleteTableRequest const& request) {
         return child_->DeleteTable(rest_context, options, request);
       },
@@ -106,12 +96,10 @@ TableServiceRestLogging::DeleteTable(
 
 StatusOr<google::cloud::bigquery::v2::TableList>
 TableServiceRestLogging::ListTables(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::ListTablesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::bigquery::v2::ListTablesRequest const& request) {
         return child_->ListTables(rest_context, options, request);
       },

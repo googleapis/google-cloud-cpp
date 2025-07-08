@@ -36,30 +36,36 @@ class TopicStatsServiceTracingConnection
   ~TopicStatsServiceTracingConnection() override = default;
 
   explicit TopicStatsServiceTracingConnection(
-    std::shared_ptr<pubsublite::TopicStatsServiceConnection> child);
+      std::shared_ptr<pubsublite::TopicStatsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-  ComputeMessageStats(google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) override;
+  ComputeMessageStats(
+      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request)
+      override;
 
   StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-  ComputeHeadCursor(google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) override;
+  ComputeHeadCursor(
+      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request)
+      override;
 
   StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-  ComputeTimeCursor(google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) override;
+  ComputeTimeCursor(
+      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<pubsublite::TopicStatsServiceConnection> child_;

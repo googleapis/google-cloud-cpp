@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_AVAILABLE_DATABASE_VERSIONS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_AVAILABLE_DATABASE_VERSIONS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_available_database_versions_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_available_database_versions_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_available_database_versions.pb.h>
 #include <memory>
@@ -32,7 +32,8 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SqlAvailableDatabaseVersionsServiceRestMetadata : public SqlAvailableDatabaseVersionsServiceRestStub {
+class SqlAvailableDatabaseVersionsServiceRestMetadata
+    : public SqlAvailableDatabaseVersionsServiceRestStub {
  public:
   ~SqlAvailableDatabaseVersionsServiceRestMetadata() override = default;
   explicit SqlAvailableDatabaseVersionsServiceRestMetadata(

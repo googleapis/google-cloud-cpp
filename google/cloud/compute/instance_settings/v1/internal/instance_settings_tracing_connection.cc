@@ -29,49 +29,62 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 InstanceSettingsTracingConnection::InstanceSettingsTracingConnection(
-    std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection> child)
+    std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-InstanceSettingsTracingConnection::GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request) {
-  auto span = internal::MakeSpan("compute_instance_settings_v1::InstanceSettingsConnection::GetInstanceSettings");
+InstanceSettingsTracingConnection::GetInstanceSettings(
+    google::cloud::cpp::compute::instance_settings::v1::
+        GetInstanceSettingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_settings_v1::InstanceSettingsConnection::"
+      "GetInstanceSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstanceSettings(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstanceSettingsTracingConnection::PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) {
+InstanceSettingsTracingConnection::PatchInstanceSettings(
+    google::cloud::cpp::compute::instance_settings::v1::
+        PatchInstanceSettingsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_settings_v1::InstanceSettingsConnection::PatchInstanceSettings");
+      "compute_instance_settings_v1::InstanceSettingsConnection::"
+      "PatchInstanceSettings");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchInstanceSettings(request));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchInstanceSettings(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceSettingsTracingConnection::PatchInstanceSettings(
-    NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
+                    PatchInstanceSettingsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_instance_settings_v1::InstanceSettingsConnection::PatchInstanceSettings");
+      "compute_instance_settings_v1::InstanceSettingsConnection::"
+      "PatchInstanceSettings");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PatchInstanceSettings(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->PatchInstanceSettings(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsTracingConnection::PatchInstanceSettings(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_instance_settings_v1::InstanceSettingsConnection::PatchInstanceSettings");
+      "compute_instance_settings_v1::InstanceSettingsConnection::"
+      "PatchInstanceSettings");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->PatchInstanceSettings(operation));
+                           child_->PatchInstanceSettings(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
 MakeInstanceSettingsTracingConnection(
-    std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection> conn) {
+    std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<InstanceSettingsTracingConnection>(std::move(conn));

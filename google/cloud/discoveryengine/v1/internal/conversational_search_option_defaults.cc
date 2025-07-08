@@ -35,23 +35,36 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ConversationalSearchServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CONVERSATIONAL_SEARCH_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CONVERSATIONAL_SEARCH_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_CONVERSATIONAL_SEARCH_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CONVERSATIONAL_SEARCH_SERVICE_AUTHORITY",
       "discoveryengine.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<discoveryengine_v1::ConversationalSearchServiceRetryPolicyOption>()) {
-    options.set<discoveryengine_v1::ConversationalSearchServiceRetryPolicyOption>(
+  if (!options.has<
+          discoveryengine_v1::ConversationalSearchServiceRetryPolicyOption>()) {
+    options.set<
+        discoveryengine_v1::ConversationalSearchServiceRetryPolicyOption>(
         discoveryengine_v1::ConversationalSearchServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<discoveryengine_v1::ConversationalSearchServiceBackoffPolicyOption>()) {
-    options.set<discoveryengine_v1::ConversationalSearchServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<discoveryengine_v1::
+                       ConversationalSearchServiceBackoffPolicyOption>()) {
+    options.set<
+        discoveryengine_v1::ConversationalSearchServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<discoveryengine_v1::ConversationalSearchServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<discoveryengine_v1::ConversationalSearchServiceConnectionIdempotencyPolicyOption>(
-        discoveryengine_v1::MakeDefaultConversationalSearchServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          discoveryengine_v1::
+              ConversationalSearchServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        discoveryengine_v1::
+            ConversationalSearchServiceConnectionIdempotencyPolicyOption>(
+        discoveryengine_v1::
+            MakeDefaultConversationalSearchServiceConnectionIdempotencyPolicy());
   }
 
   return options;

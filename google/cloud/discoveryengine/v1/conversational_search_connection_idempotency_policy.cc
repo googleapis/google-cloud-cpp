@@ -26,80 +26,112 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ConversationalSearchServiceConnectionIdempotencyPolicy::~ConversationalSearchServiceConnectionIdempotencyPolicy() = default;
+ConversationalSearchServiceConnectionIdempotencyPolicy::
+    ~ConversationalSearchServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ConversationalSearchServiceConnectionIdempotencyPolicy>
 ConversationalSearchServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ConversationalSearchServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<
+      ConversationalSearchServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::ConverseConversation(google::cloud::discoveryengine::v1::ConverseConversationRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::ConverseConversation(
+    google::cloud::discoveryengine::v1::ConverseConversationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::CreateConversation(google::cloud::discoveryengine::v1::CreateConversationRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::CreateConversation(
+    google::cloud::discoveryengine::v1::CreateConversationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::DeleteConversation(google::cloud::discoveryengine::v1::DeleteConversationRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::DeleteConversation(
+    google::cloud::discoveryengine::v1::DeleteConversationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::UpdateConversation(google::cloud::discoveryengine::v1::UpdateConversationRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::UpdateConversation(
+    google::cloud::discoveryengine::v1::UpdateConversationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::GetConversation(google::cloud::discoveryengine::v1::GetConversationRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::GetConversation(
+    google::cloud::discoveryengine::v1::GetConversationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::ListConversations(google::cloud::discoveryengine::v1::ListConversationsRequest) {  // NOLINT
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::ListConversations(
+    google::cloud::discoveryengine::v1::ListConversationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::AnswerQuery(google::cloud::discoveryengine::v1::AnswerQueryRequest const&) {
+Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::AnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::GetAnswer(google::cloud::discoveryengine::v1::GetAnswerRequest const&) {
+Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::GetAnswer(
+    google::cloud::discoveryengine::v1::GetAnswerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::CreateSession(google::cloud::discoveryengine::v1::CreateSessionRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::CreateSession(
+    google::cloud::discoveryengine::v1::CreateSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::DeleteSession(google::cloud::discoveryengine::v1::DeleteSessionRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::DeleteSession(
+    google::cloud::discoveryengine::v1::DeleteSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::UpdateSession(google::cloud::discoveryengine::v1::UpdateSessionRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::UpdateSession(
+    google::cloud::discoveryengine::v1::UpdateSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::GetSession(google::cloud::discoveryengine::v1::GetSessionRequest const&) {
+Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::GetSession(
+    google::cloud::discoveryengine::v1::GetSessionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::ListSessions(google::cloud::discoveryengine::v1::ListSessionsRequest) {  // NOLINT
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::ListSessions(
+    google::cloud::discoveryengine::v1::ListSessionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConversationalSearchServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ConversationalSearchServiceConnectionIdempotencyPolicy>
-    MakeDefaultConversationalSearchServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<ConversationalSearchServiceConnectionIdempotencyPolicy>();
+MakeDefaultConversationalSearchServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      ConversationalSearchServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

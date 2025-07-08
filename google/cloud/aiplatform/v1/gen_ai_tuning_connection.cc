@@ -50,14 +50,15 @@ GenAiTuningServiceConnection::GetTuningJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::TuningJob> GenAiTuningServiceConnection::ListTuningJobs(
-    google::cloud::aiplatform::v1::ListTuningJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::TuningJob>
+GenAiTuningServiceConnection::ListTuningJobs(
+    google::cloud::aiplatform::v1::
+        ListTuningJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TuningJob>>();
 }
 
-Status
-GenAiTuningServiceConnection::CancelTuningJob(
+Status GenAiTuningServiceConnection::CancelTuningJob(
     google::cloud::aiplatform::v1::CancelTuningJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -66,28 +67,29 @@ future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
 GenAiTuningServiceConnection::RebaseTunedModel(
     google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::TuningJob>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::TuningJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 GenAiTuningServiceConnection::RebaseTunedModel(
-    NoAwaitTag,
-    google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
 GenAiTuningServiceConnection::RebaseTunedModel(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::TuningJob>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::TuningJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> GenAiTuningServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+GenAiTuningServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -98,14 +100,12 @@ GenAiTuningServiceConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-GenAiTuningServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> GenAiTuningServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-GenAiTuningServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> GenAiTuningServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -116,8 +116,10 @@ GenAiTuningServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> GenAiTuningServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+GenAiTuningServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -128,14 +130,12 @@ GenAiTuningServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-GenAiTuningServiceConnection::DeleteOperation(
+Status GenAiTuningServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-GenAiTuningServiceConnection::CancelOperation(
+Status GenAiTuningServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -149,17 +149,19 @@ GenAiTuningServiceConnection::WaitOperation(
 std::shared_ptr<GenAiTuningServiceConnection> MakeGenAiTuningServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      GenAiTuningServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 GenAiTuningServicePolicyOptionList>(options,
+                                                                     __func__);
   options = aiplatform_v1_internal::GenAiTuningServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = aiplatform_v1_internal::CreateDefaultGenAiTuningServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return aiplatform_v1_internal::MakeGenAiTuningServiceTracingConnection(
-      std::make_shared<aiplatform_v1_internal::GenAiTuningServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          aiplatform_v1_internal::GenAiTuningServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

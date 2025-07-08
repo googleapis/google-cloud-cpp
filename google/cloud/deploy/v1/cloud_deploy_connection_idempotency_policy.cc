@@ -26,198 +26,246 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudDeployConnectionIdempotencyPolicy::~CloudDeployConnectionIdempotencyPolicy() = default;
+CloudDeployConnectionIdempotencyPolicy::
+    ~CloudDeployConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudDeployConnectionIdempotencyPolicy>
 CloudDeployConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CloudDeployConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListDeliveryPipelines(google::cloud::deploy::v1::ListDeliveryPipelinesRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListDeliveryPipelines(
+    google::cloud::deploy::v1::ListDeliveryPipelinesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetDeliveryPipeline(google::cloud::deploy::v1::GetDeliveryPipelineRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetDeliveryPipeline(
+    google::cloud::deploy::v1::GetDeliveryPipelineRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CreateDeliveryPipeline(google::cloud::deploy::v1::CreateDeliveryPipelineRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateDeliveryPipeline(
+    google::cloud::deploy::v1::CreateDeliveryPipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateDeliveryPipeline(google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateDeliveryPipeline(
+    google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteDeliveryPipeline(google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteDeliveryPipeline(
+    google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListTargets(google::cloud::deploy::v1::ListTargetsRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListTargets(
+    google::cloud::deploy::v1::ListTargetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::RollbackTarget(google::cloud::deploy::v1::RollbackTargetRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::RollbackTarget(
+    google::cloud::deploy::v1::RollbackTargetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetTarget(google::cloud::deploy::v1::GetTargetRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetTarget(
+    google::cloud::deploy::v1::GetTargetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CreateTarget(google::cloud::deploy::v1::CreateTargetRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateTarget(
+    google::cloud::deploy::v1::CreateTargetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateTarget(google::cloud::deploy::v1::UpdateTargetRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateTarget(
+    google::cloud::deploy::v1::UpdateTargetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteTarget(google::cloud::deploy::v1::DeleteTargetRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteTarget(
+    google::cloud::deploy::v1::DeleteTargetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListCustomTargetTypes(google::cloud::deploy::v1::ListCustomTargetTypesRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListCustomTargetTypes(
+    google::cloud::deploy::v1::ListCustomTargetTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetCustomTargetType(google::cloud::deploy::v1::GetCustomTargetTypeRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetCustomTargetType(
+    google::cloud::deploy::v1::GetCustomTargetTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CreateCustomTargetType(google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateCustomTargetType(
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateCustomTargetType(google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateCustomTargetType(
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteCustomTargetType(google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteCustomTargetType(
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListReleases(google::cloud::deploy::v1::ListReleasesRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListReleases(
+    google::cloud::deploy::v1::ListReleasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetRelease(google::cloud::deploy::v1::GetReleaseRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetRelease(
+    google::cloud::deploy::v1::GetReleaseRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CreateRelease(google::cloud::deploy::v1::CreateReleaseRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateRelease(
+    google::cloud::deploy::v1::CreateReleaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::AbandonRelease(google::cloud::deploy::v1::AbandonReleaseRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::AbandonRelease(
+    google::cloud::deploy::v1::AbandonReleaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CreateDeployPolicy(google::cloud::deploy::v1::CreateDeployPolicyRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateDeployPolicy(
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateDeployPolicy(google::cloud::deploy::v1::UpdateDeployPolicyRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateDeployPolicy(
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteDeployPolicy(google::cloud::deploy::v1::DeleteDeployPolicyRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteDeployPolicy(
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListDeployPolicies(google::cloud::deploy::v1::ListDeployPoliciesRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListDeployPolicies(
+    google::cloud::deploy::v1::ListDeployPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetDeployPolicy(google::cloud::deploy::v1::GetDeployPolicyRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetDeployPolicy(
+    google::cloud::deploy::v1::GetDeployPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ApproveRollout(google::cloud::deploy::v1::ApproveRolloutRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::ApproveRollout(
+    google::cloud::deploy::v1::ApproveRolloutRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::AdvanceRollout(google::cloud::deploy::v1::AdvanceRolloutRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::AdvanceRollout(
+    google::cloud::deploy::v1::AdvanceRolloutRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CancelRollout(google::cloud::deploy::v1::CancelRolloutRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CancelRollout(
+    google::cloud::deploy::v1::CancelRolloutRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListRollouts(google::cloud::deploy::v1::ListRolloutsRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListRollouts(
+    google::cloud::deploy::v1::ListRolloutsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetRollout(google::cloud::deploy::v1::GetRolloutRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetRollout(
+    google::cloud::deploy::v1::GetRolloutRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CreateRollout(google::cloud::deploy::v1::CreateRolloutRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateRollout(
+    google::cloud::deploy::v1::CreateRolloutRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::IgnoreJob(google::cloud::deploy::v1::IgnoreJobRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::IgnoreJob(
+    google::cloud::deploy::v1::IgnoreJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::RetryJob(google::cloud::deploy::v1::RetryJobRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::RetryJob(
+    google::cloud::deploy::v1::RetryJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListJobRuns(google::cloud::deploy::v1::ListJobRunsRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListJobRuns(
+    google::cloud::deploy::v1::ListJobRunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetJobRun(google::cloud::deploy::v1::GetJobRunRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetJobRun(
+    google::cloud::deploy::v1::GetJobRunRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::TerminateJobRun(google::cloud::deploy::v1::TerminateJobRunRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::TerminateJobRun(
+    google::cloud::deploy::v1::TerminateJobRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetConfig(google::cloud::deploy::v1::GetConfigRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetConfig(
+    google::cloud::deploy::v1::GetConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CreateAutomation(google::cloud::deploy::v1::CreateAutomationRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateAutomation(
+    google::cloud::deploy::v1::CreateAutomationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateAutomation(google::cloud::deploy::v1::UpdateAutomationRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateAutomation(
+    google::cloud::deploy::v1::UpdateAutomationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteAutomation(google::cloud::deploy::v1::DeleteAutomationRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteAutomation(
+    google::cloud::deploy::v1::DeleteAutomationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetAutomation(google::cloud::deploy::v1::GetAutomationRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetAutomation(
+    google::cloud::deploy::v1::GetAutomationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListAutomations(google::cloud::deploy::v1::ListAutomationsRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListAutomations(
+    google::cloud::deploy::v1::ListAutomationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetAutomationRun(google::cloud::deploy::v1::GetAutomationRunRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetAutomationRun(
+    google::cloud::deploy::v1::GetAutomationRunRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListAutomationRuns(google::cloud::deploy::v1::ListAutomationRunsRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListAutomationRuns(
+    google::cloud::deploy::v1::ListAutomationRunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CancelAutomationRun(google::cloud::deploy::v1::CancelAutomationRunRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CancelAutomationRun(
+    google::cloud::deploy::v1::CancelAutomationRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -227,32 +275,38 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudDeployConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency CloudDeployConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CloudDeployConnectionIdempotencyPolicy>
-    MakeDefaultCloudDeployConnectionIdempotencyPolicy() {
+MakeDefaultCloudDeployConnectionIdempotencyPolicy() {
   return std::make_unique<CloudDeployConnectionIdempotencyPolicy>();
 }
 

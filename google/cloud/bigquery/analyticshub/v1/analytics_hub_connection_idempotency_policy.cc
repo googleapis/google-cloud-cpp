@@ -26,90 +26,126 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AnalyticsHubServiceConnectionIdempotencyPolicy::~AnalyticsHubServiceConnectionIdempotencyPolicy() = default;
+AnalyticsHubServiceConnectionIdempotencyPolicy::
+    ~AnalyticsHubServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
 AnalyticsHubServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<AnalyticsHubServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AnalyticsHubServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListDataExchanges(google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest) {  // NOLINT
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListDataExchanges(
+    google::cloud::bigquery::analyticshub::v1::
+        ListDataExchangesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListOrgDataExchanges(google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest) {  // NOLINT
+Idempotency
+AnalyticsHubServiceConnectionIdempotencyPolicy::ListOrgDataExchanges(
+    google::cloud::bigquery::analyticshub::v1::
+        ListOrgDataExchangesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetDataExchange(google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetDataExchange(
+    google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::CreateDataExchange(google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::CreateDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        CreateDataExchangeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::UpdateDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        UpdateDataExchangeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        DeleteDataExchangeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListListings(google::cloud::bigquery::analyticshub::v1::ListListingsRequest) {  // NOLINT
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListListings(
+    google::cloud::bigquery::analyticshub::v1::ListListingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetListing(
+    google::cloud::bigquery::analyticshub::v1::GetListingRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::CreateListing(google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::CreateListing(
+    google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::UpdateListing(google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::UpdateListing(
+    google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteListing(google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteListing(
+    google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SubscribeListing(google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SubscribeListing(
+    google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const&) {
+Idempotency
+AnalyticsHubServiceConnectionIdempotencyPolicy::SubscribeDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::RefreshSubscription(google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::RefreshSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        RefreshSubscriptionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetSubscription(google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetSubscription(
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest) {  // NOLINT
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSubscriptionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::ListSharedResourceSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest) {  // NOLINT
+Idempotency
+AnalyticsHubServiceConnectionIdempotencyPolicy::ListSharedResourceSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::RevokeSubscription(google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::RevokeSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        RevokeSubscriptionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteSubscription(google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::DeleteSubscription(
+    google::cloud::bigquery::analyticshub::v1::
+        DeleteSubscriptionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -119,12 +155,13 @@ Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
-    MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy() {
+MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AnalyticsHubServiceConnectionIdempotencyPolicy>();
 }
 

@@ -28,27 +28,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-PublicCertificateAuthorityServiceTracingStub::PublicCertificateAuthorityServiceTracingStub(
-    std::shared_ptr<PublicCertificateAuthorityServiceStub> child)
+PublicCertificateAuthorityServiceTracingStub::
+    PublicCertificateAuthorityServiceTracingStub(
+        std::shared_ptr<PublicCertificateAuthorityServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey> PublicCertificateAuthorityServiceTracingStub::CreateExternalAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.security.publicca.v1.PublicCertificateAuthorityService", "CreateExternalAccountKey");
+StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
+PublicCertificateAuthorityServiceTracingStub::CreateExternalAccountKey(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::security::publicca::v1::
+        CreateExternalAccountKeyRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.publicca.v1.PublicCertificateAuthorityService",
+      "CreateExternalAccountKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateExternalAccountKey(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateExternalAccountKey(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<PublicCertificateAuthorityServiceStub> MakePublicCertificateAuthorityServiceTracingStub(
+std::shared_ptr<PublicCertificateAuthorityServiceStub>
+MakePublicCertificateAuthorityServiceTracingStub(
     std::shared_ptr<PublicCertificateAuthorityServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<PublicCertificateAuthorityServiceTracingStub>(std::move(stub));
+  return std::make_shared<PublicCertificateAuthorityServiceTracingStub>(
+      std::move(stub));
 #else
   return stub;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

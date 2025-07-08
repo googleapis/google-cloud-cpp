@@ -45,23 +45,20 @@ class CloudBuildStub {
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateBuild(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::GetBuildRequest const& request) = 0;
 
-  virtual StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse> ListBuilds(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
+  ListBuilds(
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::ListBuildsRequest const& request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::CancelBuildRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRetryBuild(
@@ -71,8 +68,7 @@ class CloudBuildStub {
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RetryBuild(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncApproveBuild(
@@ -82,98 +78,111 @@ class CloudBuildStub {
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> ApproveBuild(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) = 0;
 
-  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request) = 0;
+  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  CreateBuildTrigger(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) = 0;
+  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  GetBuildTrigger(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse> ListBuildTriggers(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) = 0;
+  virtual StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
+  ListBuildTriggers(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::ListBuildTriggersRequest const&
+          request) = 0;
 
   virtual Status DeleteBuildTrigger(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request) = 0;
+  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
+  UpdateBuildTrigger(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRunBuildTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) = 0;
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RunBuildTrigger(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse> ReceiveTriggerWebhook(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request) = 0;
+  virtual StatusOr<
+      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
+  ReceiveTriggerWebhook(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkerPool(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateWorkerPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) = 0;
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkerPool(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteWorkerPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) = 0;
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkerPool(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateWorkerPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) = 0;
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse> ListWorkerPools(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) = 0;
+  virtual StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
+  ListWorkerPools(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -186,8 +195,11 @@ class CloudBuildStub {
 class DefaultCloudBuildStub : public CloudBuildStub {
  public:
   DefaultCloudBuildStub(
-      std::unique_ptr<google::devtools::cloudbuild::v1::CloudBuild::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::devtools::cloudbuild::v1::CloudBuild::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -195,133 +207,143 @@ class DefaultCloudBuildStub : public CloudBuildStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request) override;
+      google::devtools::cloudbuild::v1::CreateBuildRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateBuild(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::CreateBuildRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::GetBuildRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::GetBuildRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse> ListBuilds(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::ListBuildsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::ListBuildsRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::CancelBuildRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::CancelBuildRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRetryBuild(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request) override;
+      google::devtools::cloudbuild::v1::RetryBuildRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RetryBuild(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::RetryBuildRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncApproveBuild(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) override;
+      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ApproveBuild(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
+          request) override;
 
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request)
+      override;
 
-  StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse> ListBuildTriggers(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
+  ListBuildTriggers(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request)
+      override;
 
   Status DeleteBuildTrigger(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
+          request) override;
 
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunBuildTrigger(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) override;
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RunBuildTrigger(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request)
+      override;
 
-  StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse> ReceiveTriggerWebhook(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
+  ReceiveTriggerWebhook(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkerPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) override;
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkerPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) override;
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkerPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) override;
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkerPool(
-      grpc::ClientContext& context,
-      Options options,
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request)
+      override;
 
-  StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse> ListWorkerPools(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) override;
+  StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
+  ListWorkerPools(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -336,8 +358,10 @@ class DefaultCloudBuildStub : public CloudBuildStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::devtools::cloudbuild::v1::CloudBuild::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::devtools::cloudbuild::v1::CloudBuild::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,13 +17,13 @@
 // source: google/cloud/video/stitcher/v1/video_stitcher_service.proto
 
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_connection_impl.h"
+#include "google/cloud/video/stitcher/v1/internal/video_stitcher_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/video/stitcher/v1/internal/video_stitcher_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -35,78 +35,94 @@ namespace {
 
 std::unique_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options.get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()->clone();
+  return options
+      .get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicy>
+std::unique_ptr<
+    video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<video_stitcher_v1::
+               VideoStitcherServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()->clone();
+  return options
+      .get<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 VideoStitcherServiceConnectionImpl::VideoStitcherServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<video_stitcher_v1_internal::VideoStitcherServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        VideoStitcherServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), VideoStitcherServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
-VideoStitcherServiceConnectionImpl::CreateCdnKey(google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
+VideoStitcherServiceConnectionImpl::CreateCdnKey(
+    google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateCdnKey(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::CdnKey>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
-     return stub->AsyncCreateCdnKey(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::CdnKey>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::CdnKey>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&
+              request) {
+        return stub->AsyncCreateCdnKey(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::CdnKey>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::CreateCdnKey(
-      NoAwaitTag, google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCdnKey(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&
+                 request) {
         return stub_->CreateCdnKey(context, options, request);
       },
       *current, request, __func__);
@@ -114,56 +130,71 @@ VideoStitcherServiceConnectionImpl::CreateCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceConnectionImpl::CreateCdnKey(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateCdnKey",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::CdnKey>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCdnKey",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::CdnKey>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::CdnKey>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::CdnKey>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::CdnKey>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::CdnKey>
-VideoStitcherServiceConnectionImpl::ListCdnKeys(google::cloud::video::stitcher::v1::ListCdnKeysRequest request) {
+VideoStitcherServiceConnectionImpl::ListCdnKeys(
+    google::cloud::video::stitcher::v1::ListCdnKeysRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListCdnKeys(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::video::stitcher::v1::CdnKey>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::CdnKey>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::video::stitcher::v1::ListCdnKeysRequest const& r) {
+          Options const& options,
+          google::cloud::video::stitcher::v1::ListCdnKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::video::stitcher::v1::ListCdnKeysRequest const& request) {
+                   google::cloud::video::stitcher::v1::ListCdnKeysRequest const&
+                       request) {
               return stub->ListCdnKeys(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::video::stitcher::v1::ListCdnKeysResponse r) {
-        std::vector<google::cloud::video::stitcher::v1::CdnKey> result(r.cdn_keys().size());
+        std::vector<google::cloud::video::stitcher::v1::CdnKey> result(
+            r.cdn_keys().size());
         auto& messages = *r.mutable_cdn_keys();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -171,62 +202,71 @@ VideoStitcherServiceConnectionImpl::ListCdnKeys(google::cloud::video::stitcher::
 }
 
 StatusOr<google::cloud::video::stitcher::v1::CdnKey>
-VideoStitcherServiceConnectionImpl::GetCdnKey(google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetCdnKey(
+    google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCdnKey(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request) {
         return stub_->GetCdnKey(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceConnectionImpl::DeleteCdnKey(google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
+VideoStitcherServiceConnectionImpl::DeleteCdnKey(
+    google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteCdnKey(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
-     return stub->AsyncDeleteCdnKey(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::video::stitcher::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&
+              request) {
+        return stub->AsyncDeleteCdnKey(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::stitcher::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::DeleteCdnKey(
-      NoAwaitTag, google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCdnKey(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&
+                 request) {
         return stub_->DeleteCdnKey(context, options, request);
       },
       *current, request, __func__);
@@ -234,78 +274,93 @@ VideoStitcherServiceConnectionImpl::DeleteCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnectionImpl::DeleteCdnKey(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteCdnKey",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCdnKey",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::video::stitcher::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::stitcher::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
-VideoStitcherServiceConnectionImpl::UpdateCdnKey(google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
+VideoStitcherServiceConnectionImpl::UpdateCdnKey(
+    google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateCdnKey(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::CdnKey>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
-     return stub->AsyncUpdateCdnKey(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::CdnKey>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::CdnKey>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&
+              request) {
+        return stub->AsyncUpdateCdnKey(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::CdnKey>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::UpdateCdnKey(
-      NoAwaitTag, google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCdnKey(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&
+                 request) {
         return stub_->UpdateCdnKey(context, options, request);
       },
       *current, request, __func__);
@@ -313,82 +368,104 @@ VideoStitcherServiceConnectionImpl::UpdateCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceConnectionImpl::UpdateCdnKey(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateCdnKey",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::CdnKey>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateCdnKey",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::CdnKey>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::CdnKey>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::CdnKey>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::CdnKey>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
-VideoStitcherServiceConnectionImpl::CreateVodSession(google::cloud::video::stitcher::v1::CreateVodSessionRequest const& request) {
+VideoStitcherServiceConnectionImpl::CreateVodSession(
+    google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateVodSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::CreateVodSessionRequest const& request) {
+             google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
+                 request) {
         return stub_->CreateVodSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
-VideoStitcherServiceConnectionImpl::GetVodSession(google::cloud::video::stitcher::v1::GetVodSessionRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetVodSession(
+    google::cloud::video::stitcher::v1::GetVodSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVodSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetVodSessionRequest const& request) {
+             google::cloud::video::stitcher::v1::GetVodSessionRequest const&
+                 request) {
         return stub_->GetVodSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>
-VideoStitcherServiceConnectionImpl::ListVodStitchDetails(google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request) {
+VideoStitcherServiceConnectionImpl::ListVodStitchDetails(
+    google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListVodStitchDetails(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListVodStitchDetails(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest const& r) {
+          Options const& options,
+          google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest const& request) {
+                   google::cloud::video::stitcher::v1::
+                       ListVodStitchDetailsRequest const& request) {
               return stub->ListVodStitchDetails(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::video::stitcher::v1::ListVodStitchDetailsResponse r) {
-        std::vector<google::cloud::video::stitcher::v1::VodStitchDetail> result(r.vod_stitch_details().size());
+        std::vector<google::cloud::video::stitcher::v1::VodStitchDetail> result(
+            r.vod_stitch_details().size());
         auto& messages = *r.mutable_vod_stitch_details();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -396,40 +473,52 @@ VideoStitcherServiceConnectionImpl::ListVodStitchDetails(google::cloud::video::s
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
-VideoStitcherServiceConnectionImpl::GetVodStitchDetail(google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetVodStitchDetail(
+    google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVodStitchDetail(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
+              request) {
         return stub_->GetVodStitchDetail(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
-VideoStitcherServiceConnectionImpl::ListVodAdTagDetails(google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request) {
+VideoStitcherServiceConnectionImpl::ListVodAdTagDetails(
+    google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListVodAdTagDetails(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest const& r) {
+          Options const& options,
+          google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest const& request) {
+                   google::cloud::video::stitcher::v1::
+                       ListVodAdTagDetailsRequest const& request) {
               return stub->ListVodAdTagDetails(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::video::stitcher::v1::ListVodAdTagDetailsResponse r) {
-        std::vector<google::cloud::video::stitcher::v1::VodAdTagDetail> result(r.vod_ad_tag_details().size());
+        std::vector<google::cloud::video::stitcher::v1::VodAdTagDetail> result(
+            r.vod_ad_tag_details().size());
         auto& messages = *r.mutable_vod_ad_tag_details();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -437,40 +526,52 @@ VideoStitcherServiceConnectionImpl::ListVodAdTagDetails(google::cloud::video::st
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
-VideoStitcherServiceConnectionImpl::GetVodAdTagDetail(google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetVodAdTagDetail(
+    google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVodAdTagDetail(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const& request) {
+             google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&
+                 request) {
         return stub_->GetVodAdTagDetail(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>
-VideoStitcherServiceConnectionImpl::ListLiveAdTagDetails(google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request) {
+VideoStitcherServiceConnectionImpl::ListLiveAdTagDetails(
+    google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListLiveAdTagDetails(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListLiveAdTagDetails(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest const& r) {
+          Options const& options,
+          google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest const& request) {
+                   google::cloud::video::stitcher::v1::
+                       ListLiveAdTagDetailsRequest const& request) {
               return stub->ListLiveAdTagDetails(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::video::stitcher::v1::ListLiveAdTagDetailsResponse r) {
-        std::vector<google::cloud::video::stitcher::v1::LiveAdTagDetail> result(r.live_ad_tag_details().size());
+        std::vector<google::cloud::video::stitcher::v1::LiveAdTagDetail> result(
+            r.live_ad_tag_details().size());
         auto& messages = *r.mutable_live_ad_tag_details();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -478,62 +579,73 @@ VideoStitcherServiceConnectionImpl::ListLiveAdTagDetails(google::cloud::video::s
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
-VideoStitcherServiceConnectionImpl::GetLiveAdTagDetail(google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetLiveAdTagDetail(
+    google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLiveAdTagDetail(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
+              request) {
         return stub_->GetLiveAdTagDetail(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
-VideoStitcherServiceConnectionImpl::CreateSlate(google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
+VideoStitcherServiceConnectionImpl::CreateSlate(
+    google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateSlate(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::Slate>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
-     return stub->AsyncCreateSlate(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::Slate>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::Slate>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::CreateSlateRequest const&
+              request) {
+        return stub->AsyncCreateSlate(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::Slate>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::CreateSlate(
-      NoAwaitTag, google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSlate(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::CreateSlateRequest const&
+                 request) {
         return stub_->CreateSlate(context, options, request);
       },
       *current, request, __func__);
@@ -541,56 +653,71 @@ VideoStitcherServiceConnectionImpl::CreateSlate(
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
 VideoStitcherServiceConnectionImpl::CreateSlate(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::Slate>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateSlate",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::Slate>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateSlate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::Slate>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::Slate>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::Slate>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::Slate>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::Slate>
-VideoStitcherServiceConnectionImpl::ListSlates(google::cloud::video::stitcher::v1::ListSlatesRequest request) {
+VideoStitcherServiceConnectionImpl::ListSlates(
+    google::cloud::video::stitcher::v1::ListSlatesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListSlates(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::video::stitcher::v1::Slate>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::Slate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::video::stitcher::v1::ListSlatesRequest const& r) {
+          Options const& options,
+          google::cloud::video::stitcher::v1::ListSlatesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::video::stitcher::v1::ListSlatesRequest const& request) {
+                   google::cloud::video::stitcher::v1::ListSlatesRequest const&
+                       request) {
               return stub->ListSlates(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::video::stitcher::v1::ListSlatesResponse r) {
-        std::vector<google::cloud::video::stitcher::v1::Slate> result(r.slates().size());
+        std::vector<google::cloud::video::stitcher::v1::Slate> result(
+            r.slates().size());
         auto& messages = *r.mutable_slates();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -598,62 +725,71 @@ VideoStitcherServiceConnectionImpl::ListSlates(google::cloud::video::stitcher::v
 }
 
 StatusOr<google::cloud::video::stitcher::v1::Slate>
-VideoStitcherServiceConnectionImpl::GetSlate(google::cloud::video::stitcher::v1::GetSlateRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetSlate(
+    google::cloud::video::stitcher::v1::GetSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSlate(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetSlateRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::video::stitcher::v1::GetSlateRequest const& request) {
         return stub_->GetSlate(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
-VideoStitcherServiceConnectionImpl::UpdateSlate(google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
+VideoStitcherServiceConnectionImpl::UpdateSlate(
+    google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateSlate(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::Slate>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
-     return stub->AsyncUpdateSlate(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::Slate>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::Slate>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::UpdateSlateRequest const&
+              request) {
+        return stub->AsyncUpdateSlate(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::Slate>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::UpdateSlate(
-      NoAwaitTag, google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSlate(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::UpdateSlateRequest const&
+                 request) {
         return stub_->UpdateSlate(context, options, request);
       },
       *current, request, __func__);
@@ -661,78 +797,93 @@ VideoStitcherServiceConnectionImpl::UpdateSlate(
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
 VideoStitcherServiceConnectionImpl::UpdateSlate(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::Slate>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateSlate",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::Slate>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateSlate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::Slate>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::Slate>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::Slate>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::Slate>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceConnectionImpl::DeleteSlate(google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
+VideoStitcherServiceConnectionImpl::DeleteSlate(
+    google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteSlate(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
-     return stub->AsyncDeleteSlate(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::video::stitcher::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::DeleteSlateRequest const&
+              request) {
+        return stub->AsyncDeleteSlate(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::stitcher::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::DeleteSlate(
-      NoAwaitTag, google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSlate(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::DeleteSlateRequest const&
+                 request) {
         return stub_->DeleteSlate(context, options, request);
       },
       *current, request, __func__);
@@ -740,104 +891,126 @@ VideoStitcherServiceConnectionImpl::DeleteSlate(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnectionImpl::DeleteSlate(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteSlate",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteSlate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::video::stitcher::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::stitcher::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
-VideoStitcherServiceConnectionImpl::CreateLiveSession(google::cloud::video::stitcher::v1::CreateLiveSessionRequest const& request) {
+VideoStitcherServiceConnectionImpl::CreateLiveSession(
+    google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateLiveSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::CreateLiveSessionRequest const& request) {
+             google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
+                 request) {
         return stub_->CreateLiveSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
-VideoStitcherServiceConnectionImpl::GetLiveSession(google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetLiveSession(
+    google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLiveSession(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request) {
+             google::cloud::video::stitcher::v1::GetLiveSessionRequest const&
+                 request) {
         return stub_->GetLiveSession(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-VideoStitcherServiceConnectionImpl::CreateLiveConfig(google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request) {
+VideoStitcherServiceConnectionImpl::CreateLiveConfig(
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateLiveConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::LiveConfig>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request) {
-     return stub->AsyncCreateLiveConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::LiveConfig>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::LiveConfig>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+              request) {
+        return stub->AsyncCreateLiveConfig(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::LiveConfig>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::CreateLiveConfig(
-      NoAwaitTag, google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateLiveConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::CreateLiveConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+                 request) {
         return stub_->CreateLiveConfig(context, options, request);
       },
       *current, request, __func__);
@@ -845,56 +1018,71 @@ VideoStitcherServiceConnectionImpl::CreateLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
 VideoStitcherServiceConnectionImpl::CreateLiveConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateLiveConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateLiveConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::LiveConfig>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::LiveConfig>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::LiveConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::LiveConfig>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::LiveConfig>
-VideoStitcherServiceConnectionImpl::ListLiveConfigs(google::cloud::video::stitcher::v1::ListLiveConfigsRequest request) {
+VideoStitcherServiceConnectionImpl::ListLiveConfigs(
+    google::cloud::video::stitcher::v1::ListLiveConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLiveConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::video::stitcher::v1::LiveConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::LiveConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::video::stitcher::v1::ListLiveConfigsRequest const& r) {
+          Options const& options,
+          google::cloud::video::stitcher::v1::ListLiveConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::video::stitcher::v1::ListLiveConfigsRequest const& request) {
+                   google::cloud::video::stitcher::v1::
+                       ListLiveConfigsRequest const& request) {
               return stub->ListLiveConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::video::stitcher::v1::ListLiveConfigsResponse r) {
-        std::vector<google::cloud::video::stitcher::v1::LiveConfig> result(r.live_configs().size());
+        std::vector<google::cloud::video::stitcher::v1::LiveConfig> result(
+            r.live_configs().size());
         auto& messages = *r.mutable_live_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -902,62 +1090,73 @@ VideoStitcherServiceConnectionImpl::ListLiveConfigs(google::cloud::video::stitch
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveConfig>
-VideoStitcherServiceConnectionImpl::GetLiveConfig(google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetLiveConfig(
+    google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLiveConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request) {
+             google::cloud::video::stitcher::v1::GetLiveConfigRequest const&
+                 request) {
         return stub_->GetLiveConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceConnectionImpl::DeleteLiveConfig(google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request) {
+VideoStitcherServiceConnectionImpl::DeleteLiveConfig(
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteLiveConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request) {
-     return stub->AsyncDeleteLiveConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::video::stitcher::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+              request) {
+        return stub->AsyncDeleteLiveConfig(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::stitcher::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::DeleteLiveConfig(
-      NoAwaitTag, google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteLiveConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+                 request) {
         return stub_->DeleteLiveConfig(context, options, request);
       },
       *current, request, __func__);
@@ -965,78 +1164,95 @@ VideoStitcherServiceConnectionImpl::DeleteLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnectionImpl::DeleteLiveConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteLiveConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteLiveConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::video::stitcher::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::stitcher::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-VideoStitcherServiceConnectionImpl::UpdateLiveConfig(google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request) {
+VideoStitcherServiceConnectionImpl::UpdateLiveConfig(
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateLiveConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::LiveConfig>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request) {
-     return stub->AsyncUpdateLiveConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::LiveConfig>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::LiveConfig>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+              request) {
+        return stub->AsyncUpdateLiveConfig(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::LiveConfig>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::UpdateLiveConfig(
-      NoAwaitTag, google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateLiveConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+                 request) {
         return stub_->UpdateLiveConfig(context, options, request);
       },
       *current, request, __func__);
@@ -1044,78 +1260,93 @@ VideoStitcherServiceConnectionImpl::UpdateLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
 VideoStitcherServiceConnectionImpl::UpdateLiveConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateLiveConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateLiveConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::LiveConfig>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::LiveConfig>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::LiveConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::LiveConfig>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-VideoStitcherServiceConnectionImpl::CreateVodConfig(google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+VideoStitcherServiceConnectionImpl::CreateVodConfig(
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateVodConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::VodConfig>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
-     return stub->AsyncCreateVodConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::VodConfig>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::VodConfig>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
+              request) {
+        return stub->AsyncCreateVodConfig(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::VodConfig>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::CreateVodConfig(
-      NoAwaitTag, google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateVodConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
+                 request) {
         return stub_->CreateVodConfig(context, options, request);
       },
       *current, request, __func__);
@@ -1123,56 +1354,72 @@ VideoStitcherServiceConnectionImpl::CreateVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
 VideoStitcherServiceConnectionImpl::CreateVodConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateVodConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::VodConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateVodConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::VodConfig>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::VodConfig>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::VodConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::VodConfig>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodConfig>
-VideoStitcherServiceConnectionImpl::ListVodConfigs(google::cloud::video::stitcher::v1::ListVodConfigsRequest request) {
+VideoStitcherServiceConnectionImpl::ListVodConfigs(
+    google::cloud::video::stitcher::v1::ListVodConfigsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListVodConfigs(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::video::stitcher::v1::VodConfig>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::VodConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::video::stitcher::v1::ListVodConfigsRequest const& r) {
+          Options const& options,
+          google::cloud::video::stitcher::v1::ListVodConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::video::stitcher::v1::ListVodConfigsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::video::stitcher::v1::ListVodConfigsRequest const&
+                    request) {
               return stub->ListVodConfigs(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::video::stitcher::v1::ListVodConfigsResponse r) {
-        std::vector<google::cloud::video::stitcher::v1::VodConfig> result(r.vod_configs().size());
+        std::vector<google::cloud::video::stitcher::v1::VodConfig> result(
+            r.vod_configs().size());
         auto& messages = *r.mutable_vod_configs();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1180,62 +1427,71 @@ VideoStitcherServiceConnectionImpl::ListVodConfigs(google::cloud::video::stitche
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodConfig>
-VideoStitcherServiceConnectionImpl::GetVodConfig(google::cloud::video::stitcher::v1::GetVodConfigRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetVodConfig(
+    google::cloud::video::stitcher::v1::GetVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVodConfig(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::video::stitcher::v1::GetVodConfigRequest const& request) {
+             google::cloud::video::stitcher::v1::GetVodConfigRequest const&
+                 request) {
         return stub_->GetVodConfig(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-VideoStitcherServiceConnectionImpl::DeleteVodConfig(google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+VideoStitcherServiceConnectionImpl::DeleteVodConfig(
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteVodConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::OperationMetadata>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
-     return stub->AsyncDeleteVodConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::video::stitcher::v1::OperationMetadata>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
+              request) {
+        return stub->AsyncDeleteVodConfig(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::stitcher::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::DeleteVodConfig(
-      NoAwaitTag, google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteVodConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
+                 request) {
         return stub_->DeleteVodConfig(context, options, request);
       },
       *current, request, __func__);
@@ -1243,78 +1499,93 @@ VideoStitcherServiceConnectionImpl::DeleteVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnectionImpl::DeleteVodConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteVodConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteVodConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::OperationMetadata>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultMetadata<google::cloud::video::stitcher::v1::OperationMetadata>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::video::stitcher::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-VideoStitcherServiceConnectionImpl::UpdateVodConfig(google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+VideoStitcherServiceConnectionImpl::UpdateVodConfig(
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateVodConfig(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::video::stitcher::v1::VodConfig>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
-     return stub->AsyncUpdateVodConfig(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::VodConfig>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::video::stitcher::v1::VodConfig>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
+              request) {
+        return stub->AsyncUpdateVodConfig(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::VodConfig>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::UpdateVodConfig(
-      NoAwaitTag, google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+    NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateVodConfig(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
+                 request) {
         return stub_->UpdateVodConfig(context, options, request);
       },
       *current, request, __func__);
@@ -1322,46 +1593,59 @@ VideoStitcherServiceConnectionImpl::UpdateVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
 VideoStitcherServiceConnectionImpl::UpdateVodConfig(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::video::stitcher::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateVodConfig",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::video::stitcher::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::video::stitcher::v1::VodConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateVodConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::video::stitcher::v1::VodConfig>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::video::stitcher::v1::VodConfig>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::video::stitcher::v1::VodConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::video::stitcher::v1::VodConfig>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-VideoStitcherServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+VideoStitcherServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -1371,7 +1655,8 @@ VideoStitcherServiceConnectionImpl::ListOperations(google::longrunning::ListOper
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -1379,7 +1664,8 @@ VideoStitcherServiceConnectionImpl::ListOperations(google::longrunning::ListOper
 }
 
 StatusOr<google::longrunning::Operation>
-VideoStitcherServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+VideoStitcherServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1391,8 +1677,8 @@ VideoStitcherServiceConnectionImpl::GetOperation(google::longrunning::GetOperati
       *current, request, __func__);
 }
 
-Status
-VideoStitcherServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status VideoStitcherServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1404,8 +1690,8 @@ VideoStitcherServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteO
       *current, request, __func__);
 }
 
-Status
-VideoStitcherServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status VideoStitcherServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

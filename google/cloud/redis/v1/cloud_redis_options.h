@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_CLOUD_REDIS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_CLOUD_REDIS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/redis/v1/cloud_redis_connection.h"
 #include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,8 +74,7 @@ struct CloudRedisPollingPolicyOption {
  * @ingroup google-cloud-redis-options
  */
 using CloudRedisPolicyOptionList =
-    OptionList<CloudRedisRetryPolicyOption,
-               CloudRedisBackoffPolicyOption,
+    OptionList<CloudRedisRetryPolicyOption, CloudRedisBackoffPolicyOption,
                CloudRedisPollingPolicyOption,
                CloudRedisConnectionIdempotencyPolicyOption>;
 

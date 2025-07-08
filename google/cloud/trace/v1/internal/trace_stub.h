@@ -35,45 +35,45 @@ class TraceServiceStub {
  public:
   virtual ~TraceServiceStub() = 0;
 
-  virtual StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
+  ListTraces(
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v1::ListTracesRequest const& request) = 0;
 
   virtual StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v1::GetTraceRequest const& request) = 0;
 
   virtual Status PatchTraces(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v1::PatchTracesRequest const& request) = 0;
 };
 
 class DefaultTraceServiceStub : public TraceServiceStub {
  public:
   explicit DefaultTraceServiceStub(
-      std::unique_ptr<google::devtools::cloudtrace::v1::TraceService::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::devtools::cloudtrace::v1::TraceService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::ListTracesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudtrace::v1::ListTracesRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::GetTraceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudtrace::v1::GetTraceRequest const& request)
+      override;
 
-  Status PatchTraces(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::PatchTracesRequest const& request) override;
+  Status PatchTraces(grpc::ClientContext& context, Options const& options,
+                     google::devtools::cloudtrace::v1::PatchTracesRequest const&
+                         request) override;
 
  private:
-  std::unique_ptr<google::devtools::cloudtrace::v1::TraceService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::devtools::cloudtrace::v1::TraceService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

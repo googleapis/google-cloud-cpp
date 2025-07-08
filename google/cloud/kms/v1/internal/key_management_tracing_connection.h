@@ -36,111 +36,119 @@ class KeyManagementServiceTracingConnection
   ~KeyManagementServiceTracingConnection() override = default;
 
   explicit KeyManagementServiceTracingConnection(
-    std::shared_ptr<kms_v1::KeyManagementServiceConnection> child);
+      std::shared_ptr<kms_v1::KeyManagementServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::kms::v1::KeyRing>
-  ListKeyRings(google::cloud::kms::v1::ListKeyRingsRequest request) override;
+  StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
+      google::cloud::kms::v1::ListKeyRingsRequest request) override;
 
-  StreamRange<google::cloud::kms::v1::CryptoKey>
-  ListCryptoKeys(google::cloud::kms::v1::ListCryptoKeysRequest request) override;
+  StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
+      google::cloud::kms::v1::ListCryptoKeysRequest request) override;
 
-  StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-  ListCryptoKeyVersions(google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) override;
+  StreamRange<google::cloud::kms::v1::CryptoKeyVersion> ListCryptoKeyVersions(
+      google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) override;
 
-  StreamRange<google::cloud::kms::v1::ImportJob>
-  ListImportJobs(google::cloud::kms::v1::ListImportJobsRequest request) override;
+  StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
+      google::cloud::kms::v1::ListImportJobsRequest request) override;
 
-  StatusOr<google::cloud::kms::v1::KeyRing>
-  GetKeyRing(google::cloud::kms::v1::GetKeyRingRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
+      google::cloud::kms::v1::GetKeyRingRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  GetCryptoKey(google::cloud::kms::v1::GetCryptoKeyRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
+      google::cloud::kms::v1::GetCryptoKeyRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  GetCryptoKeyVersion(google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> GetCryptoKeyVersion(
+      google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::kms::v1::PublicKey>
-  GetPublicKey(google::cloud::kms::v1::GetPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::PublicKey> GetPublicKey(
+      google::cloud::kms::v1::GetPublicKeyRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::ImportJob>
-  GetImportJob(google::cloud::kms::v1::GetImportJobRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
+      google::cloud::kms::v1::GetImportJobRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::KeyRing>
-  CreateKeyRing(google::cloud::kms::v1::CreateKeyRingRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
+      google::cloud::kms::v1::CreateKeyRingRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  CreateCryptoKey(google::cloud::kms::v1::CreateCryptoKeyRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKey> CreateCryptoKey(
+      google::cloud::kms::v1::CreateCryptoKeyRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  CreateCryptoKeyVersion(google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
+      google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  ImportCryptoKeyVersion(google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
+      google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::kms::v1::ImportJob>
-  CreateImportJob(google::cloud::kms::v1::CreateImportJobRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
+      google::cloud::kms::v1::CreateImportJobRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  UpdateCryptoKey(google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
+      google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  UpdateCryptoKeyVersion(google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> UpdateCryptoKeyVersion(
+      google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  UpdateCryptoKeyPrimaryVersion(google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKeyPrimaryVersion(
+      google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  DestroyCryptoKeyVersion(google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> DestroyCryptoKeyVersion(
+      google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  RestoreCryptoKeyVersion(google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> RestoreCryptoKeyVersion(
+      google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request)
+      override;
 
-  StatusOr<google::cloud::kms::v1::EncryptResponse>
-  Encrypt(google::cloud::kms::v1::EncryptRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
+      google::cloud::kms::v1::EncryptRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::DecryptResponse>
-  Decrypt(google::cloud::kms::v1::DecryptRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
+      google::cloud::kms::v1::DecryptRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::RawEncryptResponse>
-  RawEncrypt(google::cloud::kms::v1::RawEncryptRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
+      google::cloud::kms::v1::RawEncryptRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::RawDecryptResponse>
-  RawDecrypt(google::cloud::kms::v1::RawDecryptRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
+      google::cloud::kms::v1::RawDecryptRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
-  AsymmetricSign(google::cloud::kms::v1::AsymmetricSignRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
+      google::cloud::kms::v1::AsymmetricSignRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
-  AsymmetricDecrypt(google::cloud::kms::v1::AsymmetricDecryptRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse> AsymmetricDecrypt(
+      google::cloud::kms::v1::AsymmetricDecryptRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::MacSignResponse>
-  MacSign(google::cloud::kms::v1::MacSignRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
+      google::cloud::kms::v1::MacSignRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::MacVerifyResponse>
-  MacVerify(google::cloud::kms::v1::MacVerifyRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
+      google::cloud::kms::v1::MacVerifyRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
-  GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const& request) override;
+  GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const&
+                          request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<kms_v1::KeyManagementServiceConnection> child_;

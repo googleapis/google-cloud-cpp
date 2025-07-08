@@ -40,19 +40,20 @@ PublisherServiceAuth::AsyncPublish(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-    google::cloud::pubsublite::v1::PublishRequest, google::cloud::pubsublite::v1::PublishResponse>;
+      google::cloud::pubsublite::v1::PublishRequest,
+      google::cloud::pubsublite::v1::PublishResponse>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncPublish(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> PublisherServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+PublisherServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -60,8 +61,7 @@ StatusOr<google::longrunning::ListOperationsResponse> PublisherServiceAuth::List
 }
 
 StatusOr<google::longrunning::Operation> PublisherServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -69,8 +69,7 @@ StatusOr<google::longrunning::Operation> PublisherServiceAuth::GetOperation(
 }
 
 Status PublisherServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -78,8 +77,7 @@ Status PublisherServiceAuth::DeleteOperation(
 }
 
 Status PublisherServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

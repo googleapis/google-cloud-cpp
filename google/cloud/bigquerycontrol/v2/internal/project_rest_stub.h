@@ -36,9 +36,11 @@ class ProjectServiceRestStub {
  public:
   virtual ~ProjectServiceRestStub() = default;
 
-  virtual StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse> GetServiceAccount(
+  virtual StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
+  GetServiceAccount(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetServiceAccountRequest const& request) = 0;
+      Options const& options,
+      google::cloud::bigquery::v2::GetServiceAccountRequest const& request) = 0;
 };
 
 class DefaultProjectServiceRestStub : public ProjectServiceRestStub {
@@ -47,12 +49,13 @@ class DefaultProjectServiceRestStub : public ProjectServiceRestStub {
 
   explicit DefaultProjectServiceRestStub(Options options);
   DefaultProjectServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse> GetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetServiceAccountRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
+  GetServiceAccount(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::bigquery::v2::GetServiceAccountRequest const&
+                        request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

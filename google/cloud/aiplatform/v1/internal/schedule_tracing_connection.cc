@@ -34,14 +34,17 @@ ScheduleServiceTracingConnection::ScheduleServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceTracingConnection::CreateSchedule(google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::CreateSchedule");
+ScheduleServiceTracingConnection::CreateSchedule(
+    google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::CreateSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSchedule(request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-ScheduleServiceTracingConnection::DeleteSchedule(google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+ScheduleServiceTracingConnection::DeleteSchedule(
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ScheduleServiceConnection::DeleteSchedule");
   internal::OTelScope scope(span);
@@ -50,12 +53,13 @@ ScheduleServiceTracingConnection::DeleteSchedule(google::cloud::aiplatform::v1::
 
 StatusOr<google::longrunning::Operation>
 ScheduleServiceTracingConnection::DeleteSchedule(
-    NoAwaitTag, google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ScheduleServiceConnection::DeleteSchedule");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSchedule(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSchedule(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -64,117 +68,142 @@ ScheduleServiceTracingConnection::DeleteSchedule(
   auto span = internal::MakeSpan(
       "aiplatform_v1::ScheduleServiceConnection::DeleteSchedule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteSchedule(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSchedule(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceTracingConnection::GetSchedule(google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::GetSchedule");
+ScheduleServiceTracingConnection::GetSchedule(
+    google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::GetSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSchedule(request));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceTracingConnection::ListSchedules(google::cloud::aiplatform::v1::ListSchedulesRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::ListSchedules");
+ScheduleServiceTracingConnection::ListSchedules(
+    google::cloud::aiplatform::v1::ListSchedulesRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::ListSchedules");
   internal::OTelScope scope(span);
   auto sr = child_->ListSchedules(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::aiplatform::v1::Schedule>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::Schedule>(std::move(span), std::move(sr));
 }
 
-Status
-ScheduleServiceTracingConnection::PauseSchedule(google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::PauseSchedule");
+Status ScheduleServiceTracingConnection::PauseSchedule(
+    google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::PauseSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PauseSchedule(request));
 }
 
-Status
-ScheduleServiceTracingConnection::ResumeSchedule(google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::ResumeSchedule");
+Status ScheduleServiceTracingConnection::ResumeSchedule(
+    google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::ResumeSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResumeSchedule(request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
-ScheduleServiceTracingConnection::UpdateSchedule(google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::UpdateSchedule");
+ScheduleServiceTracingConnection::UpdateSchedule(
+    google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::UpdateSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSchedule(request));
 }
 
 StreamRange<google::cloud::location::Location>
-ScheduleServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::ListLocations");
+ScheduleServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ScheduleServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::GetLocation");
+ScheduleServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-ScheduleServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::SetIamPolicy");
+ScheduleServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-ScheduleServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::GetIamPolicy");
+ScheduleServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ScheduleServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::TestIamPermissions");
+ScheduleServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ScheduleServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::ListOperations");
+ScheduleServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ScheduleServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::GetOperation");
+ScheduleServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ScheduleServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::DeleteOperation");
+Status ScheduleServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-ScheduleServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::CancelOperation");
+Status ScheduleServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 StatusOr<google::longrunning::Operation>
-ScheduleServiceTracingConnection::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpan("aiplatform_v1::ScheduleServiceConnection::WaitOperation");
+ScheduleServiceTracingConnection::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WaitOperation(request));
 }

@@ -30,33 +30,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class FirewallTracingConnection
-    : public appengine_v1::FirewallConnection {
+class FirewallTracingConnection : public appengine_v1::FirewallConnection {
  public:
   ~FirewallTracingConnection() override = default;
 
   explicit FirewallTracingConnection(
-    std::shared_ptr<appengine_v1::FirewallConnection> child);
+      std::shared_ptr<appengine_v1::FirewallConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::appengine::v1::FirewallRule>
-  ListIngressRules(google::appengine::v1::ListIngressRulesRequest request) override;
+  StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
+      google::appengine::v1::ListIngressRulesRequest request) override;
 
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
-  BatchUpdateIngressRules(google::appengine::v1::BatchUpdateIngressRulesRequest const& request) override;
+  BatchUpdateIngressRules(
+      google::appengine::v1::BatchUpdateIngressRulesRequest const& request)
+      override;
 
-  StatusOr<google::appengine::v1::FirewallRule>
-  CreateIngressRule(google::appengine::v1::CreateIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
+      google::appengine::v1::CreateIngressRuleRequest const& request) override;
 
-  StatusOr<google::appengine::v1::FirewallRule>
-  GetIngressRule(google::appengine::v1::GetIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
+      google::appengine::v1::GetIngressRuleRequest const& request) override;
 
-  StatusOr<google::appengine::v1::FirewallRule>
-  UpdateIngressRule(google::appengine::v1::UpdateIngressRuleRequest const& request) override;
+  StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
+      google::appengine::v1::UpdateIngressRuleRequest const& request) override;
 
-  Status
-  DeleteIngressRule(google::appengine::v1::DeleteIngressRuleRequest const& request) override;
+  Status DeleteIngressRule(
+      google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:
   std::shared_ptr<appengine_v1::FirewallConnection> child_;
@@ -70,8 +71,7 @@ class FirewallTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<appengine_v1::FirewallConnection>
-MakeFirewallTracingConnection(
+std::shared_ptr<appengine_v1::FirewallConnection> MakeFirewallTracingConnection(
     std::shared_ptr<appengine_v1::FirewallConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

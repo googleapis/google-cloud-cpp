@@ -33,21 +33,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DirectAccessServiceLogging::DirectAccessServiceLogging(
     std::shared_ptr<DirectAccessServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const& components)
+    TracingOptions tracing_options, std::set<std::string> const& components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DirectAccessServiceLogging::CreateDeviceSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+              request) {
         return child_->CreateDeviceSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -55,13 +55,14 @@ DirectAccessServiceLogging::CreateDeviceSession(
 
 StatusOr<google::cloud::devicestreaming::v1::ListDeviceSessionsResponse>
 DirectAccessServiceLogging::ListDeviceSessions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::devicestreaming::v1::ListDeviceSessionsRequest const&
+              request) {
         return child_->ListDeviceSessions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -69,27 +70,27 @@ DirectAccessServiceLogging::ListDeviceSessions(
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DirectAccessServiceLogging::GetDeviceSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+                 request) {
         return child_->GetDeviceSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DirectAccessServiceLogging::CancelDeviceSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
+Status DirectAccessServiceLogging::CancelDeviceSession(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+              request) {
         return child_->CancelDeviceSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -97,13 +98,14 @@ DirectAccessServiceLogging::CancelDeviceSession(
 
 StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
 DirectAccessServiceLogging::UpdateDeviceSession(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+              request) {
         return child_->UpdateDeviceSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -117,12 +119,14 @@ DirectAccessServiceLogging::AsyncAdbConnect(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::cloud::devicestreaming::v1::AdbMessage, google::cloud::devicestreaming::v1::DeviceMessage>;
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::devicestreaming::v1::AdbMessage,
+          google::cloud::devicestreaming::v1::DeviceMessage>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncAdbConnect(
-      cq, std::move(context), std::move(options));
+  auto stream =
+      child_->AsyncAdbConnect(cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

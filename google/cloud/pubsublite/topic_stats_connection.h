@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_STATS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_TOPIC_STATS_CONNECTION_H
 
+#include "google/cloud/pubsublite/internal/topic_stats_retry_traits.h"
+#include "google/cloud/pubsublite/topic_stats_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsublite/internal/topic_stats_retry_traits.h"
-#include "google/cloud/pubsublite/topic_stats_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -53,7 +53,8 @@ class TopicStatsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * - [`kInternal`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TopicStatsServiceLimitedErrorCountRetryPolicy : public TopicStatsServiceRetryPolicy {
+class TopicStatsServiceLimitedErrorCountRetryPolicy
+    : public TopicStatsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,14 @@ class TopicStatsServiceLimitedErrorCountRetryPolicy : public TopicStatsServiceRe
    *     @p maximum_failures == 0.
    */
   explicit TopicStatsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TopicStatsServiceLimitedErrorCountRetryPolicy(
       TopicStatsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TopicStatsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TopicStatsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TopicStatsServiceLimitedErrorCountRetryPolicy(
       TopicStatsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TopicStatsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TopicStatsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +91,9 @@ class TopicStatsServiceLimitedErrorCountRetryPolicy : public TopicStatsServiceRe
   using BaseType = TopicStatsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<pubsublite_internal::TopicStatsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      pubsublite_internal::TopicStatsServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -104,7 +107,8 @@ class TopicStatsServiceLimitedErrorCountRetryPolicy : public TopicStatsServiceRe
  * - [`kInternal`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TopicStatsServiceLimitedTimeRetryPolicy : public TopicStatsServiceRetryPolicy {
+class TopicStatsServiceLimitedTimeRetryPolicy
+    : public TopicStatsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -129,12 +133,14 @@ class TopicStatsServiceLimitedTimeRetryPolicy : public TopicStatsServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit TopicStatsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TopicStatsServiceLimitedTimeRetryPolicy(TopicStatsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : TopicStatsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TopicStatsServiceLimitedTimeRetryPolicy(TopicStatsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : TopicStatsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TopicStatsServiceLimitedTimeRetryPolicy(
+      TopicStatsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : TopicStatsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TopicStatsServiceLimitedTimeRetryPolicy(
+      TopicStatsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : TopicStatsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -156,16 +162,18 @@ class TopicStatsServiceLimitedTimeRetryPolicy : public TopicStatsServiceRetryPol
   using BaseType = TopicStatsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<pubsublite_internal::TopicStatsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      pubsublite_internal::TopicStatsServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `TopicStatsServiceConnection` object for `TopicStatsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TopicStatsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TopicStatsServiceClient`.
+ * sets in `TopicStatsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TopicStatsServiceClient`.
  *
  * To create a concrete instance, see `MakeTopicStatsServiceConnection()`.
  *
@@ -178,36 +186,41 @@ class TopicStatsServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
-  ComputeMessageStats(google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request);
+  ComputeMessageStats(
+      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request);
 
   virtual StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
-  ComputeHeadCursor(google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request);
+  ComputeHeadCursor(
+      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request);
 
   virtual StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
-  ComputeTimeCursor(google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request);
+  ComputeTimeCursor(
+      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `TopicStatsServiceConnection`.
+ * A factory function to construct an object of type
+ * `TopicStatsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of TopicStatsServiceClient.
+ * should be passed as an argument to the constructor of
+ * TopicStatsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `TopicStatsServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `TopicStatsServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -217,8 +230,8 @@ class TopicStatsServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `TopicStatsServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `TopicStatsServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
     Options options = {});

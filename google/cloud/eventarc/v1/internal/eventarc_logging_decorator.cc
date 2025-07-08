@@ -30,21 +30,16 @@ namespace cloud {
 namespace eventarc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-EventarcLogging::EventarcLogging(
-    std::shared_ptr<EventarcStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+EventarcLogging::EventarcLogging(std::shared_ptr<EventarcStub> child,
+                                 TracingOptions tracing_options,
+                                 std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::eventarc::v1::Trigger>
-EventarcLogging::GetTrigger(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::eventarc::v1::Trigger> EventarcLogging::GetTrigger(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetTriggerRequest const& request) {
         return child_->GetTrigger(context, options, request);
       },
@@ -53,12 +48,10 @@ EventarcLogging::GetTrigger(
 
 StatusOr<google::cloud::eventarc::v1::ListTriggersResponse>
 EventarcLogging::ListTriggers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListTriggersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::ListTriggersRequest const& request) {
         return child_->ListTriggers(context, options, request);
       },
@@ -67,30 +60,27 @@ EventarcLogging::ListTriggers(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateTrigger(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
-        return child_->AsyncCreateTrigger(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCreateTrigger(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::CreateTrigger(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::CreateTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
         return child_->CreateTrigger(context, options, request);
       },
@@ -99,30 +89,27 @@ EventarcLogging::CreateTrigger(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateTrigger(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
-        return child_->AsyncUpdateTrigger(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUpdateTrigger(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::UpdateTrigger(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::UpdateTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
         return child_->UpdateTrigger(context, options, request);
       },
@@ -131,44 +118,38 @@ EventarcLogging::UpdateTrigger(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteTrigger(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
-        return child_->AsyncDeleteTrigger(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteTrigger(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::DeleteTrigger(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::DeleteTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
         return child_->DeleteTrigger(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::eventarc::v1::Channel>
-EventarcLogging::GetChannel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::eventarc::v1::Channel> EventarcLogging::GetChannel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetChannelRequest const& request) {
         return child_->GetChannel(context, options, request);
       },
@@ -177,12 +158,10 @@ EventarcLogging::GetChannel(
 
 StatusOr<google::cloud::eventarc::v1::ListChannelsResponse>
 EventarcLogging::ListChannels(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListChannelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::ListChannelsRequest const& request) {
         return child_->ListChannels(context, options, request);
       },
@@ -191,30 +170,27 @@ EventarcLogging::ListChannels(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateChannel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::eventarc::v1::CreateChannelRequest const& request) {
-        return child_->AsyncCreateChannel(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCreateChannel(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::CreateChannel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::CreateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::CreateChannelRequest const& request) {
         return child_->CreateChannel(context, options, request);
       },
@@ -223,30 +199,27 @@ EventarcLogging::CreateChannel(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateChannel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
-        return child_->AsyncUpdateChannel(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUpdateChannel(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::UpdateChannel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::UpdateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
         return child_->UpdateChannel(context, options, request);
       },
@@ -255,44 +228,38 @@ EventarcLogging::UpdateChannel(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteChannel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
-        return child_->AsyncDeleteChannel(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteChannel(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::DeleteChannel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::DeleteChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
         return child_->DeleteChannel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::eventarc::v1::Provider>
-EventarcLogging::GetProvider(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcLogging::GetProvider(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetProviderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetProviderRequest const& request) {
         return child_->GetProvider(context, options, request);
       },
@@ -301,12 +268,10 @@ EventarcLogging::GetProvider(
 
 StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
 EventarcLogging::ListProviders(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListProvidersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::ListProvidersRequest const& request) {
         return child_->ListProviders(context, options, request);
       },
@@ -315,13 +280,12 @@ EventarcLogging::ListProviders(
 
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcLogging::GetChannelConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::GetChannelConnectionRequest const&
+                 request) {
         return child_->GetChannelConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -329,13 +293,12 @@ EventarcLogging::GetChannelConnection(
 
 StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
 EventarcLogging::ListChannelConnections(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::ListChannelConnectionsRequest const&
+                 request) {
         return child_->ListChannelConnections(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -343,15 +306,17 @@ EventarcLogging::ListChannelConnections(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateChannelConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request) {
+             google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+                 request) {
         return child_->AsyncCreateChannelConnection(
             cq, std::move(context), std::move(options), request);
       },
@@ -361,13 +326,13 @@ EventarcLogging::AsyncCreateChannelConnection(
 
 StatusOr<google::longrunning::Operation>
 EventarcLogging::CreateChannelConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+                 request) {
         return child_->CreateChannelConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -375,15 +340,17 @@ EventarcLogging::CreateChannelConnection(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteChannelConnection(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request) {
+             google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+                 request) {
         return child_->AsyncDeleteChannelConnection(
             cq, std::move(context), std::move(options), request);
       },
@@ -393,13 +360,13 @@ EventarcLogging::AsyncDeleteChannelConnection(
 
 StatusOr<google::longrunning::Operation>
 EventarcLogging::DeleteChannelConnection(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+                 request) {
         return child_->DeleteChannelConnection(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -407,13 +374,12 @@ EventarcLogging::DeleteChannelConnection(
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 EventarcLogging::GetGoogleChannelConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
+                 request) {
         return child_->GetGoogleChannelConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -421,13 +387,14 @@ EventarcLogging::GetGoogleChannelConfig(
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 EventarcLogging::UpdateGoogleChannelConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+              request) {
         return child_->UpdateGoogleChannelConfig(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -435,12 +402,10 @@ EventarcLogging::UpdateGoogleChannelConfig(
 
 StatusOr<google::cloud::eventarc::v1::MessageBus>
 EventarcLogging::GetMessageBus(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetMessageBusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetMessageBusRequest const& request) {
         return child_->GetMessageBus(context, options, request);
       },
@@ -449,13 +414,12 @@ EventarcLogging::GetMessageBus(
 
 StatusOr<google::cloud::eventarc::v1::ListMessageBusesResponse>
 EventarcLogging::ListMessageBuses(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListMessageBusesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::ListMessageBusesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::ListMessageBusesRequest const& request) {
         return child_->ListMessageBuses(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -463,13 +427,14 @@ EventarcLogging::ListMessageBuses(
 
 StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
 EventarcLogging::ListMessageBusEnrollments(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+              request) {
         return child_->ListMessageBusEnrollments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -477,31 +442,30 @@ EventarcLogging::ListMessageBusEnrollments(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateMessageBus(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
-        return child_->AsyncCreateMessageBus(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
+        return child_->AsyncCreateMessageBus(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::CreateMessageBus(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::CreateMessageBus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
         return child_->CreateMessageBus(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -509,31 +473,30 @@ EventarcLogging::CreateMessageBus(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateMessageBus(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
-        return child_->AsyncUpdateMessageBus(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
+        return child_->AsyncUpdateMessageBus(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::UpdateMessageBus(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::UpdateMessageBus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
         return child_->UpdateMessageBus(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -541,31 +504,30 @@ EventarcLogging::UpdateMessageBus(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteMessageBus(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
-        return child_->AsyncDeleteMessageBus(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
+        return child_->AsyncDeleteMessageBus(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::DeleteMessageBus(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::DeleteMessageBus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
         return child_->DeleteMessageBus(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -573,12 +535,10 @@ EventarcLogging::DeleteMessageBus(
 
 StatusOr<google::cloud::eventarc::v1::Enrollment>
 EventarcLogging::GetEnrollment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetEnrollmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetEnrollmentRequest const& request) {
         return child_->GetEnrollment(context, options, request);
       },
@@ -587,13 +547,12 @@ EventarcLogging::GetEnrollment(
 
 StatusOr<google::cloud::eventarc::v1::ListEnrollmentsResponse>
 EventarcLogging::ListEnrollments(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListEnrollmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::ListEnrollmentsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::ListEnrollmentsRequest const& request) {
         return child_->ListEnrollments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -601,31 +560,30 @@ EventarcLogging::ListEnrollments(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateEnrollment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
-        return child_->AsyncCreateEnrollment(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
+        return child_->AsyncCreateEnrollment(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::CreateEnrollment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::CreateEnrollment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
         return child_->CreateEnrollment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -633,31 +591,30 @@ EventarcLogging::CreateEnrollment(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateEnrollment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
-        return child_->AsyncUpdateEnrollment(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
+        return child_->AsyncUpdateEnrollment(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::UpdateEnrollment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::UpdateEnrollment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
         return child_->UpdateEnrollment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -665,44 +622,40 @@ EventarcLogging::UpdateEnrollment(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteEnrollment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
-        return child_->AsyncDeleteEnrollment(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
+        return child_->AsyncDeleteEnrollment(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::DeleteEnrollment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::DeleteEnrollment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
         return child_->DeleteEnrollment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::eventarc::v1::Pipeline>
-EventarcLogging::GetPipeline(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::eventarc::v1::Pipeline> EventarcLogging::GetPipeline(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetPipelineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetPipelineRequest const& request) {
         return child_->GetPipeline(context, options, request);
       },
@@ -711,12 +664,10 @@ EventarcLogging::GetPipeline(
 
 StatusOr<google::cloud::eventarc::v1::ListPipelinesResponse>
 EventarcLogging::ListPipelines(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListPipelinesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::ListPipelinesRequest const& request) {
         return child_->ListPipelines(context, options, request);
       },
@@ -725,31 +676,30 @@ EventarcLogging::ListPipelines(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreatePipeline(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
-        return child_->AsyncCreatePipeline(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
+        return child_->AsyncCreatePipeline(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::CreatePipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::CreatePipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
         return child_->CreatePipeline(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -757,31 +707,30 @@ EventarcLogging::CreatePipeline(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdatePipeline(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
-        return child_->AsyncUpdatePipeline(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
+        return child_->AsyncUpdatePipeline(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::UpdatePipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::UpdatePipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
         return child_->UpdatePipeline(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -789,31 +738,30 @@ EventarcLogging::UpdatePipeline(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeletePipeline(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
-        return child_->AsyncDeletePipeline(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
+        return child_->AsyncDeletePipeline(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::DeletePipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::DeletePipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
         return child_->DeletePipeline(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -821,13 +769,12 @@ EventarcLogging::DeletePipeline(
 
 StatusOr<google::cloud::eventarc::v1::GoogleApiSource>
 EventarcLogging::GetGoogleApiSource(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::GetGoogleApiSourceRequest const&
+                 request) {
         return child_->GetGoogleApiSource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -835,13 +782,12 @@ EventarcLogging::GetGoogleApiSource(
 
 StatusOr<google::cloud::eventarc::v1::ListGoogleApiSourcesResponse>
 EventarcLogging::ListGoogleApiSources(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const&
+                 request) {
         return child_->ListGoogleApiSources(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -849,31 +795,30 @@ EventarcLogging::ListGoogleApiSources(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateGoogleApiSource(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
-        return child_->AsyncCreateGoogleApiSource(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const&
+                 request) {
+        return child_->AsyncCreateGoogleApiSource(cq, std::move(context),
+                                                  std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::CreateGoogleApiSource(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::CreateGoogleApiSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const&
+                 request) {
         return child_->CreateGoogleApiSource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -881,31 +826,30 @@ EventarcLogging::CreateGoogleApiSource(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateGoogleApiSource(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
-        return child_->AsyncUpdateGoogleApiSource(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const&
+                 request) {
+        return child_->AsyncUpdateGoogleApiSource(cq, std::move(context),
+                                                  std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::UpdateGoogleApiSource(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::UpdateGoogleApiSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const&
+                 request) {
         return child_->UpdateGoogleApiSource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -913,31 +857,30 @@ EventarcLogging::UpdateGoogleApiSource(
 
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteGoogleApiSource(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
-        return child_->AsyncDeleteGoogleApiSource(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const&
+                 request) {
+        return child_->AsyncDeleteGoogleApiSource(cq, std::move(context),
+                                                  std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::DeleteGoogleApiSource(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
+StatusOr<google::longrunning::Operation> EventarcLogging::DeleteGoogleApiSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const&
+                 request) {
         return child_->DeleteGoogleApiSource(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -945,54 +888,43 @@ EventarcLogging::DeleteGoogleApiSource(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 EventarcLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-EventarcLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> EventarcLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-EventarcLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> EventarcLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-EventarcLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> EventarcLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -1001,12 +933,10 @@ EventarcLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 EventarcLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -1015,54 +945,43 @@ EventarcLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EventarcLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EventarcLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> EventarcLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EventarcLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EventarcLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EventarcLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EventarcLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -1080,8 +999,8 @@ EventarcLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -1097,8 +1016,8 @@ future<Status> EventarcLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

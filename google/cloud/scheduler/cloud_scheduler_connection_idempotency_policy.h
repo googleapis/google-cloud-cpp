@@ -26,10 +26,13 @@ namespace cloud {
 namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use scheduler_v1::MakeDefaultCloudSchedulerConnectionIdempotencyPolicy directly.
-using ::google::cloud::scheduler_v1::MakeDefaultCloudSchedulerConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// scheduler_v1::MakeDefaultCloudSchedulerConnectionIdempotencyPolicy directly.
+using ::google::cloud::scheduler_v1::
+    MakeDefaultCloudSchedulerConnectionIdempotencyPolicy;
 
-/// @deprecated Use scheduler_v1::CloudSchedulerConnectionIdempotencyPolicy directly.
+/// @deprecated Use scheduler_v1::CloudSchedulerConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::scheduler_v1::CloudSchedulerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

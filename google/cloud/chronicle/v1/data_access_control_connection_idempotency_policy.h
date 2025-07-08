@@ -35,53 +35,60 @@ class DataAccessControlServiceConnectionIdempotencyPolicy {
   virtual ~DataAccessControlServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<DataAccessControlServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<DataAccessControlServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateDataAccessLabel(google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request);
+  virtual google::cloud::Idempotency CreateDataAccessLabel(
+      google::cloud::chronicle::v1::CreateDataAccessLabelRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetDataAccessLabel(google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request);
+  virtual google::cloud::Idempotency GetDataAccessLabel(
+      google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDataAccessLabels(google::cloud::chronicle::v1::ListDataAccessLabelsRequest request);
+  virtual google::cloud::Idempotency ListDataAccessLabels(
+      google::cloud::chronicle::v1::ListDataAccessLabelsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateDataAccessLabel(google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request);
+  virtual google::cloud::Idempotency UpdateDataAccessLabel(
+      google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteDataAccessLabel(google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request);
+  virtual google::cloud::Idempotency DeleteDataAccessLabel(
+      google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateDataAccessScope(google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request);
+  virtual google::cloud::Idempotency CreateDataAccessScope(
+      google::cloud::chronicle::v1::CreateDataAccessScopeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetDataAccessScope(google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request);
+  virtual google::cloud::Idempotency GetDataAccessScope(
+      google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDataAccessScopes(google::cloud::chronicle::v1::ListDataAccessScopesRequest request);
+  virtual google::cloud::Idempotency ListDataAccessScopes(
+      google::cloud::chronicle::v1::ListDataAccessScopesRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateDataAccessScope(google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request);
+  virtual google::cloud::Idempotency UpdateDataAccessScope(
+      google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteDataAccessScope(google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request);
+  virtual google::cloud::Idempotency DeleteDataAccessScope(
+      google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DataAccessControlServiceConnectionIdempotencyPolicy>
-    MakeDefaultDataAccessControlServiceConnectionIdempotencyPolicy();
+MakeDefaultDataAccessControlServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace chronicle_v1

@@ -26,31 +26,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ServicesConnectionIdempotencyPolicy::~ServicesConnectionIdempotencyPolicy() = default;
+ServicesConnectionIdempotencyPolicy::~ServicesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
 ServicesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ServicesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::ListServices(google::appengine::v1::ListServicesRequest) {  // NOLINT
+Idempotency ServicesConnectionIdempotencyPolicy::ListServices(
+    google::appengine::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::GetService(google::appengine::v1::GetServiceRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::GetService(
+    google::appengine::v1::GetServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::UpdateService(google::appengine::v1::UpdateServiceRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::UpdateService(
+    google::appengine::v1::UpdateServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServicesConnectionIdempotencyPolicy::DeleteService(google::appengine::v1::DeleteServiceRequest const&) {
+Idempotency ServicesConnectionIdempotencyPolicy::DeleteService(
+    google::appengine::v1::DeleteServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
-    MakeDefaultServicesConnectionIdempotencyPolicy() {
+MakeDefaultServicesConnectionIdempotencyPolicy() {
   return std::make_unique<ServicesConnectionIdempotencyPolicy>();
 }
 

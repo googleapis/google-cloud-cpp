@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFUSION_V1_INTERNAL_DATA_FUSION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFUSION_V1_INTERNAL_DATA_FUSION_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datafusion/v1/data_fusion_connection.h"
 #include "google/cloud/datafusion/v1/data_fusion_connection_idempotency_policy.h"
 #include "google/cloud/datafusion/v1/data_fusion_options.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_retry_traits.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,69 +40,74 @@ namespace cloud {
 namespace datafusion_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DataFusionConnectionImpl
-    : public datafusion_v1::DataFusionConnection {
+class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
  public:
   ~DataFusionConnectionImpl() override = default;
 
   DataFusionConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<datafusion_v1_internal::DataFusionStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<datafusion_v1_internal::DataFusionStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::datafusion::v1::Version>
-  ListAvailableVersions(google::cloud::datafusion::v1::ListAvailableVersionsRequest request) override;
+  StreamRange<google::cloud::datafusion::v1::Version> ListAvailableVersions(
+      google::cloud::datafusion::v1::ListAvailableVersionsRequest request)
+      override;
 
-  StreamRange<google::cloud::datafusion::v1::Instance>
-  ListInstances(google::cloud::datafusion::v1::ListInstancesRequest request) override;
+  StreamRange<google::cloud::datafusion::v1::Instance> ListInstances(
+      google::cloud::datafusion::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::datafusion::v1::Instance>
-  GetInstance(google::cloud::datafusion::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
+      google::cloud::datafusion::v1::GetInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance(google::cloud::datafusion::v1::CreateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag,
-      google::cloud::datafusion::v1::CreateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance(
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const& request) override;
+  DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag,
-      google::cloud::datafusion::v1::DeleteInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(
+  DeleteInstance(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance(google::cloud::datafusion::v1::UpdateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag,
-      google::cloud::datafusion::v1::UpdateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RestartInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  RestartInstance(google::cloud::datafusion::v1::RestartInstanceRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  RestartInstance(NoAwaitTag,
-      google::cloud::datafusion::v1::RestartInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  RestartInstance(
+  future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
       google::longrunning::Operation const& operation) override;
 
  private:

@@ -31,54 +31,56 @@ SynonymSetServiceAuth::SynonymSetServiceAuth(
     std::shared_ptr<SynonymSetServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> SynonymSetServiceAuth::CreateSynonymSet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request) {
+StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+SynonymSetServiceAuth::CreateSynonymSet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSynonymSet(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> SynonymSetServiceAuth::GetSynonymSet(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+SynonymSetServiceAuth::GetSynonymSet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSynonymSet(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::SynonymSet> SynonymSetServiceAuth::UpdateSynonymSet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request) {
+StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
+SynonymSetServiceAuth::UpdateSynonymSet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSynonymSet(context, options, request);
 }
 
 Status SynonymSetServiceAuth::DeleteSynonymSet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSynonymSet(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse> SynonymSetServiceAuth::ListSynonymSets(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const& request) {
+StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
+SynonymSetServiceAuth::ListSynonymSets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSynonymSets(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation> SynonymSetServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

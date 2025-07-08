@@ -32,15 +32,14 @@ QuotaControllerStub::~QuotaControllerStub() = default;
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 DefaultQuotaControllerStub::AllocateQuota(
-  grpc::ClientContext& context, Options const&,
-  google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-    google::api::servicecontrol::v1::AllocateQuotaResponse response;
-    auto status =
-        grpc_stub_->AllocateQuota(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
+  google::api::servicecontrol::v1::AllocateQuotaResponse response;
+  auto status = grpc_stub_->AllocateQuota(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

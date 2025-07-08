@@ -36,59 +36,71 @@ class StoragePoolsTracingConnection
   ~StoragePoolsTracingConnection() override = default;
 
   explicit StoragePoolsTracingConnection(
-    std::shared_ptr<compute_storage_pools_v1::StoragePoolsConnection> child);
+      std::shared_ptr<compute_storage_pools_v1::StoragePoolsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
-  AggregatedListStoragePools(google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
+  AggregatedListStoragePools(
+      google::cloud::cpp::compute::storage_pools::v1::
+          AggregatedListStoragePoolsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request) override;
+  DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        DeleteStoragePoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteStoragePool(NoAwaitTag,
-      google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
+      NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                      DeleteStoragePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteStoragePool(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePool>
-  GetStoragePool(google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
+      google::cloud::cpp::compute::storage_pools::v1::
+          GetStoragePoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request) override;
+  InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        InsertStoragePoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertStoragePool(NoAwaitTag,
-      google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
+      NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                      InsertStoragePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertStoragePool(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::StoragePool>
-  ListStoragePools(google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::StoragePool> ListStoragePools(
+      google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk>
-  ListDisks(google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk> ListDisks(
+      google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request) override;
+  UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        UpdateStoragePoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateStoragePool(NoAwaitTag,
-      google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
+      NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                      UpdateStoragePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateStoragePool(

@@ -31,9 +31,9 @@ CloudShellServiceAuth::CloudShellServiceAuth(
     std::shared_ptr<CloudShellServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::shell::v1::Environment> CloudShellServiceAuth::GetEnvironment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::shell::v1::Environment>
+CloudShellServiceAuth::GetEnvironment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -42,28 +42,28 @@ StatusOr<google::cloud::shell::v1::Environment> CloudShellServiceAuth::GetEnviro
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceAuth::AsyncStartEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncStartEnvironment(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncStartEnvironment(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceAuth::StartEnvironment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->StartEnvironment(context, options, request);
@@ -71,28 +71,28 @@ CloudShellServiceAuth::StartEnvironment(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceAuth::AsyncAuthorizeEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAuthorizeEnvironment(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncAuthorizeEnvironment(cq, *std::move(context),
+                                                std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceAuth::AuthorizeEnvironment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AuthorizeEnvironment(context, options, request);
@@ -100,28 +100,27 @@ CloudShellServiceAuth::AuthorizeEnvironment(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceAuth::AsyncAddPublicKey(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAddPublicKey(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncAddPublicKey(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudShellServiceAuth::AddPublicKey(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudShellServiceAuth::AddPublicKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AddPublicKey(context, options, request);
@@ -129,28 +128,27 @@ CloudShellServiceAuth::AddPublicKey(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceAuth::AsyncRemovePublicKey(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRemovePublicKey(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRemovePublicKey(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudShellServiceAuth::RemovePublicKey(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudShellServiceAuth::RemovePublicKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RemovePublicKey(context, options, request);
@@ -163,15 +161,16 @@ CloudShellServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -180,13 +179,14 @@ future<Status> CloudShellServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

@@ -26,10 +26,13 @@ namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use retail_v2::MakeDefaultCompletionServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::retail_v2::MakeDefaultCompletionServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// retail_v2::MakeDefaultCompletionServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::retail_v2::
+    MakeDefaultCompletionServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use retail_v2::CompletionServiceConnectionIdempotencyPolicy directly.
+/// @deprecated Use retail_v2::CompletionServiceConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::retail_v2::CompletionServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

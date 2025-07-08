@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_INTERNAL_VM_MIGRATION_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_INTERNAL_VM_MIGRATION_CONNECTION_IMPL_H
 
+#include "google/cloud/vmmigration/v1/internal/vm_migration_retry_traits.h"
+#include "google/cloud/vmmigration/v1/internal/vm_migration_stub.h"
+#include "google/cloud/vmmigration/v1/vm_migration_connection.h"
+#include "google/cloud/vmmigration/v1/vm_migration_connection_idempotency_policy.h"
+#include "google/cloud/vmmigration/v1/vm_migration_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -27,11 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vmmigration/v1/internal/vm_migration_retry_traits.h"
-#include "google/cloud/vmmigration/v1/internal/vm_migration_stub.h"
-#include "google/cloud/vmmigration/v1/vm_migration_connection.h"
-#include "google/cloud/vmmigration/v1/vm_migration_connection_idempotency_policy.h"
-#include "google/cloud/vmmigration/v1/vm_migration_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -40,389 +40,453 @@ namespace cloud {
 namespace vmmigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class VmMigrationConnectionImpl
-    : public vmmigration_v1::VmMigrationConnection {
+class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
  public:
   ~VmMigrationConnectionImpl() override = default;
 
   VmMigrationConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<vmmigration_v1_internal::VmMigrationStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<vmmigration_v1_internal::VmMigrationStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::vmmigration::v1::Source>
-  ListSources(google::cloud::vmmigration::v1::ListSourcesRequest request) override;
+  StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
+      google::cloud::vmmigration::v1::ListSourcesRequest request) override;
 
-  StatusOr<google::cloud::vmmigration::v1::Source>
-  GetSource(google::cloud::vmmigration::v1::GetSourceRequest const& request) override;
+  StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
+      google::cloud::vmmigration::v1::GetSourceRequest const& request) override;
 
-  future<StatusOr<google::cloud::vmmigration::v1::Source>>
-  CreateSource(google::cloud::vmmigration::v1::CreateSourceRequest const& request) override;
+  future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
+      google::cloud::vmmigration::v1::CreateSourceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateSource(NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateSourceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateSource(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateSourceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::vmmigration::v1::Source>>
-  CreateSource(
+  future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::vmmigration::v1::Source>>
-  UpdateSource(google::cloud::vmmigration::v1::UpdateSourceRequest const& request) override;
+  future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
+      google::cloud::vmmigration::v1::UpdateSourceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateSource(NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateSourceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateSource(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::UpdateSourceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::vmmigration::v1::Source>>
-  UpdateSource(
+  future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteSource(google::cloud::vmmigration::v1::DeleteSourceRequest const& request) override;
+  DeleteSource(google::cloud::vmmigration::v1::DeleteSourceRequest const&
+                   request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteSource(NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteSourceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteSource(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteSourceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteSource(
-      google::longrunning::Operation const& operation) override;
+  DeleteSource(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
-  FetchInventory(google::cloud::vmmigration::v1::FetchInventoryRequest const& request) override;
+  FetchInventory(google::cloud::vmmigration::v1::FetchInventoryRequest const&
+                     request) override;
 
   StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
-  ListUtilizationReports(google::cloud::vmmigration::v1::ListUtilizationReportsRequest request) override;
+  ListUtilizationReports(
+      google::cloud::vmmigration::v1::ListUtilizationReportsRequest request)
+      override;
 
   StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
-  GetUtilizationReport(google::cloud::vmmigration::v1::GetUtilizationReportRequest const& request) override;
+  GetUtilizationReport(
+      google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
-  CreateUtilizationReport(google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request) override;
+  CreateUtilizationReport(
+      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateUtilizationReport(NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateUtilizationReport(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
   CreateUtilizationReport(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteUtilizationReport(google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request) override;
+  DeleteUtilizationReport(
+      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteUtilizationReport(NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteUtilizationReport(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteUtilizationReport(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
-  ListDatacenterConnectors(google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request) override;
+  ListDatacenterConnectors(
+      google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request)
+      override;
 
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
-  GetDatacenterConnector(google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const& request) override;
+  GetDatacenterConnector(
+      google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
-  CreateDatacenterConnector(google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request) override;
+  CreateDatacenterConnector(
+      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDatacenterConnector(NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDatacenterConnector(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
   CreateDatacenterConnector(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteDatacenterConnector(google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request) override;
+  DeleteDatacenterConnector(
+      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteDatacenterConnector(NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDatacenterConnector(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteDatacenterConnector(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
-  UpgradeAppliance(google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) override;
+  UpgradeAppliance(
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpgradeAppliance(NoAwaitTag,
-      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpgradeAppliance(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
-  UpgradeAppliance(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  CreateMigratingVm(google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateMigratingVm(NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) override;
+  UpgradeAppliance(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   CreateMigratingVm(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request)
+      override;
 
-  StreamRange<google::cloud::vmmigration::v1::MigratingVm>
-  ListMigratingVms(google::cloud::vmmigration::v1::ListMigratingVmsRequest request) override;
-
-  StatusOr<google::cloud::vmmigration::v1::MigratingVm>
-  GetMigratingVm(google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateMigratingVm(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  UpdateMigratingVm(google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) override;
+  CreateMigratingVm(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateMigratingVm(NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) override;
+  StreamRange<google::cloud::vmmigration::v1::MigratingVm> ListMigratingVms(
+      google::cloud::vmmigration::v1::ListMigratingVmsRequest request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
+      google::cloud::vmmigration::v1::GetMigratingVmRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   UpdateMigratingVm(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteMigratingVm(google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateMigratingVm(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteMigratingVm(NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) override;
+  future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
+  UpdateMigratingVm(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteMigratingVm(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteMigratingVm(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteMigratingVm(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
-  StartMigration(google::cloud::vmmigration::v1::StartMigrationRequest const& request) override;
+  StartMigration(google::cloud::vmmigration::v1::StartMigrationRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  StartMigration(NoAwaitTag,
-      google::cloud::vmmigration::v1::StartMigrationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> StartMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::StartMigrationRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
-  StartMigration(
-      google::longrunning::Operation const& operation) override;
+  StartMigration(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
-  ResumeMigration(google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) override;
+  ResumeMigration(google::cloud::vmmigration::v1::ResumeMigrationRequest const&
+                      request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ResumeMigration(NoAwaitTag,
-      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ResumeMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::ResumeMigrationRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
-  ResumeMigration(
-      google::longrunning::Operation const& operation) override;
+  ResumeMigration(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
-  PauseMigration(google::cloud::vmmigration::v1::PauseMigrationRequest const& request) override;
+  PauseMigration(google::cloud::vmmigration::v1::PauseMigrationRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  PauseMigration(NoAwaitTag,
-      google::cloud::vmmigration::v1::PauseMigrationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> PauseMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::PauseMigrationRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
-  PauseMigration(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
-  FinalizeMigration(google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  FinalizeMigration(NoAwaitTag,
-      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) override;
+  PauseMigration(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
   FinalizeMigration(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
-  CreateCloneJob(google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) override;
+  StatusOr<google::longrunning::Operation> FinalizeMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateCloneJob(NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) override;
+  future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
+  FinalizeMigration(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
-  CreateCloneJob(
+  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
+      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateCloneJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateCloneJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
-  CancelCloneJob(google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) override;
+  CancelCloneJob(google::cloud::vmmigration::v1::CancelCloneJobRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CancelCloneJob(NoAwaitTag,
-      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CancelCloneJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CancelCloneJobRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
-  CancelCloneJob(
+  CancelCloneJob(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
+      google::cloud::vmmigration::v1::ListCloneJobsRequest request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
+      google::cloud::vmmigration::v1::GetCloneJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
+      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateCutoverJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
       google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::vmmigration::v1::CloneJob>
-  ListCloneJobs(google::cloud::vmmigration::v1::ListCloneJobsRequest request) override;
-
-  StatusOr<google::cloud::vmmigration::v1::CloneJob>
-  GetCloneJob(google::cloud::vmmigration::v1::GetCloneJobRequest const& request) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
-  CreateCutoverJob(google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateCutoverJob(NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
-  CreateCutoverJob(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
-  CancelCutoverJob(google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CancelCutoverJob(NoAwaitTag,
-      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
   CancelCutoverJob(
+      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CancelCutoverJob(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
+  CancelCutoverJob(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
+      google::cloud::vmmigration::v1::ListCutoverJobsRequest request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
+      google::cloud::vmmigration::v1::GetCutoverJobRequest const& request)
+      override;
+
+  StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
+      google::cloud::vmmigration::v1::ListGroupsRequest request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
+      google::cloud::vmmigration::v1::GetGroupRequest const& request) override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
+      google::cloud::vmmigration::v1::CreateGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateGroup(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::vmmigration::v1::CutoverJob>
-  ListCutoverJobs(google::cloud::vmmigration::v1::ListCutoverJobsRequest request) override;
+  future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
+      google::cloud::vmmigration::v1::UpdateGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::vmmigration::v1::CutoverJob>
-  GetCutoverJob(google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateGroup(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::UpdateGroupRequest const& request)
+      override;
 
-  StreamRange<google::cloud::vmmigration::v1::Group>
-  ListGroups(google::cloud::vmmigration::v1::ListGroupsRequest request) override;
-
-  StatusOr<google::cloud::vmmigration::v1::Group>
-  GetGroup(google::cloud::vmmigration::v1::GetGroupRequest const& request) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::Group>>
-  CreateGroup(google::cloud::vmmigration::v1::CreateGroupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateGroup(NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateGroupRequest const& request) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::Group>>
-  CreateGroup(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::Group>>
-  UpdateGroup(google::cloud::vmmigration::v1::UpdateGroupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateGroup(NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateGroupRequest const& request) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::Group>>
-  UpdateGroup(
+  future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteGroup(google::cloud::vmmigration::v1::DeleteGroupRequest const& request) override;
+  DeleteGroup(google::cloud::vmmigration::v1::DeleteGroupRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteGroup(NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteGroupRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteGroup(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteGroupRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteGroup(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
-  AddGroupMigration(google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  AddGroupMigration(NoAwaitTag,
-      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) override;
+  DeleteGroup(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
   AddGroupMigration(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> AddGroupMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
+  AddGroupMigration(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
-  RemoveGroupMigration(google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request) override;
+  RemoveGroupMigration(
+      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RemoveGroupMigration(NoAwaitTag,
-      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RemoveGroupMigration(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
   RemoveGroupMigration(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::vmmigration::v1::TargetProject>
-  ListTargetProjects(google::cloud::vmmigration::v1::ListTargetProjectsRequest request) override;
+  StreamRange<google::cloud::vmmigration::v1::TargetProject> ListTargetProjects(
+      google::cloud::vmmigration::v1::ListTargetProjectsRequest request)
+      override;
 
-  StatusOr<google::cloud::vmmigration::v1::TargetProject>
-  GetTargetProject(google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) override;
-
-  future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  CreateTargetProject(google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateTargetProject(NoAwaitTag,
-      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) override;
+  StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
+      google::cloud::vmmigration::v1::GetTargetProjectRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
   CreateTargetProject(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateTargetProject(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  UpdateTargetProject(google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateTargetProject(NoAwaitTag,
-      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) override;
+  CreateTargetProject(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
   UpdateTargetProject(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteTargetProject(google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateTargetProject(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteTargetProject(NoAwaitTag,
-      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) override;
+  future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
+  UpdateTargetProject(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteTargetProject(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTargetProject(
+      NoAwaitTag,
+      google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+  DeleteTargetProject(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
-  ListReplicationCycles(google::cloud::vmmigration::v1::ListReplicationCyclesRequest request) override;
+  ListReplicationCycles(
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest request)
+      override;
 
   StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
-  GetReplicationCycle(google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) override;
+  GetReplicationCycle(
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

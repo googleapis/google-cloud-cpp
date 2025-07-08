@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MigrationServiceClient {
  public:
-  explicit MigrationServiceClient(std::shared_ptr<MigrationServiceConnection> connection, Options opts = {});
+  explicit MigrationServiceClient(
+      std::shared_ptr<MigrationServiceConnection> connection,
+      Options opts = {});
   ~MigrationServiceClient();
 
   ///@{
@@ -75,10 +77,12 @@ class MigrationServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MigrationServiceClient const& a, MigrationServiceClient const& b) {
+  friend bool operator==(MigrationServiceClient const& a,
+                         MigrationServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MigrationServiceClient const& a, MigrationServiceClient const& b) {
+  friend bool operator!=(MigrationServiceClient const& a,
+                         MigrationServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -108,7 +112,11 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  CreateMigrationWorkflow(std::string const& parent, google::cloud::bigquery::migration::v2::MigrationWorkflow const& migration_workflow, Options opts = {});
+  CreateMigrationWorkflow(
+      std::string const& parent,
+      google::cloud::bigquery::migration::v2::MigrationWorkflow const&
+          migration_workflow,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -138,7 +146,9 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest const& request, Options opts = {});
+  CreateMigrationWorkflow(google::cloud::bigquery::migration::v2::
+                              CreateMigrationWorkflowRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -194,7 +204,10 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  GetMigrationWorkflow(google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const& request, Options opts = {});
+  GetMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -268,7 +281,10 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
-  ListMigrationWorkflows(google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest request, Options opts = {});
+  ListMigrationWorkflows(
+      google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -290,8 +306,7 @@ class MigrationServiceClient {
   /// [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L177}
   ///
   // clang-format on
-  Status
-  DeleteMigrationWorkflow(std::string const& name, Options opts = {});
+  Status DeleteMigrationWorkflow(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -317,8 +332,10 @@ class MigrationServiceClient {
   /// [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L177}
   ///
   // clang-format on
-  Status
-  DeleteMigrationWorkflow(google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest const& request, Options opts = {});
+  Status DeleteMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::
+          DeleteMigrationWorkflowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -343,8 +360,7 @@ class MigrationServiceClient {
   /// [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L189}
   ///
   // clang-format on
-  Status
-  StartMigrationWorkflow(std::string const& name, Options opts = {});
+  Status StartMigrationWorkflow(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +389,10 @@ class MigrationServiceClient {
   /// [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L189}
   ///
   // clang-format on
-  Status
-  StartMigrationWorkflow(google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const& request, Options opts = {});
+  Status StartMigrationWorkflow(
+      google::cloud::bigquery::migration::v2::
+          StartMigrationWorkflowRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -430,7 +448,10 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
-  GetMigrationSubtask(google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const& request, Options opts = {});
+  GetMigrationSubtask(
+      google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -504,7 +525,10 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
-  ListMigrationSubtasks(google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest request, Options opts = {});
+  ListMigrationSubtasks(
+      google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<MigrationServiceConnection> connection_;

@@ -17,14 +17,14 @@
 // source: google/cloud/sql/v1/cloud_sql_databases.proto
 
 #include "google/cloud/sql/v1/sql_databases_connection.h"
+#include "google/cloud/sql/v1/internal/sql_databases_option_defaults.h"
+#include "google/cloud/sql/v1/internal/sql_databases_tracing_connection.h"
+#include "google/cloud/sql/v1/sql_databases_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/sql/v1/internal/sql_databases_option_defaults.h"
-#include "google/cloud/sql/v1/internal/sql_databases_tracing_connection.h"
-#include "google/cloud/sql/v1/sql_databases_options.h"
 #include <memory>
 #include <utility>
 
@@ -41,8 +41,7 @@ SqlDatabasesServiceConnection::Delete(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::sql::v1::Database>
-SqlDatabasesServiceConnection::Get(
+StatusOr<google::cloud::sql::v1::Database> SqlDatabasesServiceConnection::Get(
     google::cloud::sql::v1::SqlDatabasesGetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

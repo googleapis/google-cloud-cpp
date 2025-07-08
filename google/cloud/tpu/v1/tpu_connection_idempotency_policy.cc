@@ -33,76 +33,93 @@ TpuConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TpuConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::ListNodes(google::cloud::tpu::v1::ListNodesRequest) {  // NOLINT
+Idempotency TpuConnectionIdempotencyPolicy::ListNodes(
+    google::cloud::tpu::v1::ListNodesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::GetNode(google::cloud::tpu::v1::GetNodeRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::GetNode(
+    google::cloud::tpu::v1::GetNodeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::CreateNode(google::cloud::tpu::v1::CreateNodeRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::CreateNode(
+    google::cloud::tpu::v1::CreateNodeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::DeleteNode(google::cloud::tpu::v1::DeleteNodeRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::DeleteNode(
+    google::cloud::tpu::v1::DeleteNodeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::ReimageNode(google::cloud::tpu::v1::ReimageNodeRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::ReimageNode(
+    google::cloud::tpu::v1::ReimageNodeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::StopNode(google::cloud::tpu::v1::StopNodeRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::StopNode(
+    google::cloud::tpu::v1::StopNodeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::StartNode(google::cloud::tpu::v1::StartNodeRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::StartNode(
+    google::cloud::tpu::v1::StartNodeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::ListTensorFlowVersions(google::cloud::tpu::v1::ListTensorFlowVersionsRequest) {  // NOLINT
+Idempotency TpuConnectionIdempotencyPolicy::ListTensorFlowVersions(
+    google::cloud::tpu::v1::ListTensorFlowVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::GetTensorFlowVersion(google::cloud::tpu::v1::GetTensorFlowVersionRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::GetTensorFlowVersion(
+    google::cloud::tpu::v1::GetTensorFlowVersionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::ListAcceleratorTypes(google::cloud::tpu::v1::ListAcceleratorTypesRequest) {  // NOLINT
+Idempotency TpuConnectionIdempotencyPolicy::ListAcceleratorTypes(
+    google::cloud::tpu::v1::ListAcceleratorTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::GetAcceleratorType(google::cloud::tpu::v1::GetAcceleratorTypeRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::GetAcceleratorType(
+    google::cloud::tpu::v1::GetAcceleratorTypeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency TpuConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency TpuConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TpuConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency TpuConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TpuConnectionIdempotencyPolicy>
-    MakeDefaultTpuConnectionIdempotencyPolicy() {
+MakeDefaultTpuConnectionIdempotencyPolicy() {
   return std::make_unique<TpuConnectionIdempotencyPolicy>();
 }
 

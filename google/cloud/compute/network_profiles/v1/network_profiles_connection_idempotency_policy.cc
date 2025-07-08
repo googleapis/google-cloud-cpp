@@ -26,23 +26,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NetworkProfilesConnectionIdempotencyPolicy::~NetworkProfilesConnectionIdempotencyPolicy() = default;
+NetworkProfilesConnectionIdempotencyPolicy::
+    ~NetworkProfilesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<NetworkProfilesConnectionIdempotencyPolicy>
 NetworkProfilesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<NetworkProfilesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency NetworkProfilesConnectionIdempotencyPolicy::GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const&) {
+Idempotency NetworkProfilesConnectionIdempotencyPolicy::GetNetworkProfile(
+    google::cloud::cpp::compute::network_profiles::v1::
+        GetNetworkProfileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NetworkProfilesConnectionIdempotencyPolicy::ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest) {  // NOLINT
+Idempotency NetworkProfilesConnectionIdempotencyPolicy::ListNetworkProfiles(
+    google::cloud::cpp::compute::network_profiles::v1::
+        ListNetworkProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<NetworkProfilesConnectionIdempotencyPolicy>
-    MakeDefaultNetworkProfilesConnectionIdempotencyPolicy() {
+MakeDefaultNetworkProfilesConnectionIdempotencyPolicy() {
   return std::make_unique<NetworkProfilesConnectionIdempotencyPolicy>();
 }
 

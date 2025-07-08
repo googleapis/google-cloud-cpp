@@ -17,10 +17,10 @@
 // source: google/cloud/oracledatabase/v1/oracledatabase.proto
 
 #include "google/cloud/oracledatabase/v1/internal/oracle_database_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/oracledatabase/v1/oracle_database_connection.h"
 #include "google/cloud/oracledatabase/v1/oracle_database_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options OracleDatabaseDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ORACLE_DATABASE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ORACLE_DATABASE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_ORACLE_DATABASE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ORACLE_DATABASE_AUTHORITY",
       "oracledatabase.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<oracledatabase_v1::OracleDatabaseRetryPolicyOption>()) {
     options.set<oracledatabase_v1::OracleDatabaseRetryPolicyOption>(
         oracledatabase_v1::OracleDatabaseLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<oracledatabase_v1::OracleDatabaseBackoffPolicyOption>()) {
     options.set<oracledatabase_v1::OracleDatabaseBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<oracledatabase_v1::OracleDatabasePollingPolicyOption>()) {
     options.set<oracledatabase_v1::OracleDatabasePollingPolicyOption>(
         GenericPollingPolicy<
             oracledatabase_v1::OracleDatabaseRetryPolicyOption::Type,
             oracledatabase_v1::OracleDatabaseBackoffPolicyOption::Type>(
-            options.get<oracledatabase_v1::OracleDatabaseRetryPolicyOption>()->clone(),
+            options.get<oracledatabase_v1::OracleDatabaseRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<oracledatabase_v1::OracleDatabaseConnectionIdempotencyPolicyOption>()) {
-    options.set<oracledatabase_v1::OracleDatabaseConnectionIdempotencyPolicyOption>(
-        oracledatabase_v1::MakeDefaultOracleDatabaseConnectionIdempotencyPolicy());
+  if (!options.has<oracledatabase_v1::
+                       OracleDatabaseConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        oracledatabase_v1::OracleDatabaseConnectionIdempotencyPolicyOption>(
+        oracledatabase_v1::
+            MakeDefaultOracleDatabaseConnectionIdempotencyPolicy());
   }
 
   return options;

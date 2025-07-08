@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V1_INTERNAL_TRACE_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V1_INTERNAL_TRACE_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/trace/v1/internal/trace_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,19 +39,18 @@ class TraceServiceAuth : public TraceServiceStub {
       std::shared_ptr<TraceServiceStub> child);
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::ListTracesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudtrace::v1::ListTracesRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::GetTraceRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudtrace::v1::GetTraceRequest const& request)
+      override;
 
-  Status PatchTraces(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudtrace::v1::PatchTracesRequest const& request) override;
+  Status PatchTraces(grpc::ClientContext& context, Options const& options,
+                     google::devtools::cloudtrace::v1::PatchTracesRequest const&
+                         request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

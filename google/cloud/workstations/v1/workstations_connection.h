@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKSTATIONS_V1_WORKSTATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKSTATIONS_V1_WORKSTATIONS_CONNECTION_H
 
+#include "google/cloud/workstations/v1/internal/workstations_retry_traits.h"
+#include "google/cloud/workstations/v1/workstations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -28,8 +30,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/workstations/v1/internal/workstations_retry_traits.h"
-#include "google/cloud/workstations/v1/workstations_connection_idempotency_policy.h"
 #include <google/cloud/workstations/v1/workstations.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -56,7 +56,8 @@ class WorkstationsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class WorkstationsLimitedErrorCountRetryPolicy : public WorkstationsRetryPolicy {
+class WorkstationsLimitedErrorCountRetryPolicy
+    : public WorkstationsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class WorkstationsLimitedErrorCountRetryPolicy : public WorkstationsRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit WorkstationsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   WorkstationsLimitedErrorCountRetryPolicy(
       WorkstationsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : WorkstationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : WorkstationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   WorkstationsLimitedErrorCountRetryPolicy(
       WorkstationsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : WorkstationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : WorkstationsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class WorkstationsLimitedErrorCountRetryPolicy : public WorkstationsRetryPolicy 
   using BaseType = WorkstationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<workstations_v1_internal::WorkstationsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      workstations_v1_internal::WorkstationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class WorkstationsLimitedTimeRetryPolicy : public WorkstationsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit WorkstationsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  WorkstationsLimitedTimeRetryPolicy(WorkstationsLimitedTimeRetryPolicy&& rhs) noexcept
-    : WorkstationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  WorkstationsLimitedTimeRetryPolicy(WorkstationsLimitedTimeRetryPolicy const& rhs) noexcept
-    : WorkstationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WorkstationsLimitedTimeRetryPolicy(
+      WorkstationsLimitedTimeRetryPolicy&& rhs) noexcept
+      : WorkstationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WorkstationsLimitedTimeRetryPolicy(
+      WorkstationsLimitedTimeRetryPolicy const& rhs) noexcept
+      : WorkstationsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class WorkstationsLimitedTimeRetryPolicy : public WorkstationsRetryPolicy {
   using BaseType = WorkstationsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<workstations_v1_internal::WorkstationsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      workstations_v1_internal::WorkstationsRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,151 +187,197 @@ class WorkstationsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::workstations::v1::WorkstationCluster>
-  GetWorkstationCluster(google::cloud::workstations::v1::GetWorkstationClusterRequest const& request);
+  GetWorkstationCluster(
+      google::cloud::workstations::v1::GetWorkstationClusterRequest const&
+          request);
 
   virtual StreamRange<google::cloud::workstations::v1::WorkstationCluster>
-  ListWorkstationClusters(google::cloud::workstations::v1::ListWorkstationClustersRequest request);
+  ListWorkstationClusters(
+      google::cloud::workstations::v1::ListWorkstationClustersRequest request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  CreateWorkstationCluster(google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request);
+  CreateWorkstationCluster(
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateWorkstationCluster(NoAwaitTag, google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  CreateWorkstationCluster( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  UpdateWorkstationCluster(google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateWorkstationCluster(NoAwaitTag, google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
+      NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  UpdateWorkstationCluster( google::longrunning::Operation const& operation);
+  CreateWorkstationCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  DeleteWorkstationCluster(google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request);
+  UpdateWorkstationCluster(
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteWorkstationCluster(NoAwaitTag, google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
+      NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  DeleteWorkstationCluster( google::longrunning::Operation const& operation);
+  UpdateWorkstationCluster(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+  DeleteWorkstationCluster(
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
+      NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+  DeleteWorkstationCluster(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::workstations::v1::WorkstationConfig>
-  GetWorkstationConfig(google::cloud::workstations::v1::GetWorkstationConfigRequest const& request);
+  GetWorkstationConfig(
+      google::cloud::workstations::v1::GetWorkstationConfigRequest const&
+          request);
 
   virtual StreamRange<google::cloud::workstations::v1::WorkstationConfig>
-  ListWorkstationConfigs(google::cloud::workstations::v1::ListWorkstationConfigsRequest request);
+  ListWorkstationConfigs(
+      google::cloud::workstations::v1::ListWorkstationConfigsRequest request);
 
   virtual StreamRange<google::cloud::workstations::v1::WorkstationConfig>
-  ListUsableWorkstationConfigs(google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest request);
+  ListUsableWorkstationConfigs(
+      google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest
+          request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  CreateWorkstationConfig(google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request);
+  CreateWorkstationConfig(
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateWorkstationConfig(NoAwaitTag, google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  CreateWorkstationConfig( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  UpdateWorkstationConfig(google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateWorkstationConfig(NoAwaitTag, google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
+      NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  UpdateWorkstationConfig( google::longrunning::Operation const& operation);
+  CreateWorkstationConfig(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  DeleteWorkstationConfig(google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request);
+  UpdateWorkstationConfig(
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteWorkstationConfig(NoAwaitTag, google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
+      NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  DeleteWorkstationConfig( google::longrunning::Operation const& operation);
+  UpdateWorkstationConfig(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::workstations::v1::Workstation>
-  GetWorkstation(google::cloud::workstations::v1::GetWorkstationRequest const& request);
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+  DeleteWorkstationConfig(
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
+      NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+  DeleteWorkstationConfig(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
+      google::cloud::workstations::v1::GetWorkstationRequest const& request);
 
   virtual StreamRange<google::cloud::workstations::v1::Workstation>
-  ListWorkstations(google::cloud::workstations::v1::ListWorkstationsRequest request);
+  ListWorkstations(
+      google::cloud::workstations::v1::ListWorkstationsRequest request);
 
   virtual StreamRange<google::cloud::workstations::v1::Workstation>
-  ListUsableWorkstations(google::cloud::workstations::v1::ListUsableWorkstationsRequest request);
+  ListUsableWorkstations(
+      google::cloud::workstations::v1::ListUsableWorkstationsRequest request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  CreateWorkstation(google::cloud::workstations::v1::CreateWorkstationRequest const& request);
+  CreateWorkstation(
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateWorkstation(NoAwaitTag, google::cloud::workstations::v1::CreateWorkstationRequest const& request);
-
-  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  CreateWorkstation( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  UpdateWorkstation(google::cloud::workstations::v1::UpdateWorkstationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateWorkstation(NoAwaitTag, google::cloud::workstations::v1::UpdateWorkstationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateWorkstation(
+      NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  UpdateWorkstation( google::longrunning::Operation const& operation);
+  CreateWorkstation(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  DeleteWorkstation(google::cloud::workstations::v1::DeleteWorkstationRequest const& request);
+  UpdateWorkstation(
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteWorkstation(NoAwaitTag, google::cloud::workstations::v1::DeleteWorkstationRequest const& request);
-
-  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  DeleteWorkstation( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StartWorkstation(google::cloud::workstations::v1::StartWorkstationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  StartWorkstation(NoAwaitTag, google::cloud::workstations::v1::StartWorkstationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateWorkstation(
+      NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StartWorkstation( google::longrunning::Operation const& operation);
+  UpdateWorkstation(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StopWorkstation(google::cloud::workstations::v1::StopWorkstationRequest const& request);
+  DeleteWorkstation(
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  StopWorkstation(NoAwaitTag, google::cloud::workstations::v1::StopWorkstationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteWorkstation(
+      NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request);
 
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StopWorkstation( google::longrunning::Operation const& operation);
+  DeleteWorkstation(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  StartWorkstation(
+      google::cloud::workstations::v1::StartWorkstationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StartWorkstation(
+      NoAwaitTag,
+      google::cloud::workstations::v1::StartWorkstationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  StartWorkstation(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  StopWorkstation(
+      google::cloud::workstations::v1::StopWorkstationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StopWorkstation(
+      NoAwaitTag,
+      google::cloud::workstations::v1::StopWorkstationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  StopWorkstation(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::cloud::workstations::v1::GenerateAccessTokenRequest const& request);
+  GenerateAccessToken(
+      google::cloud::workstations::v1::GenerateAccessTokenRequest const&
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

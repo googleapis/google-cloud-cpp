@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/featurestore_online_serving_option_defaults.h"
 #include "google/cloud/aiplatform/v1/featurestore_online_serving_connection.h"
 #include "google/cloud/aiplatform/v1/featurestore_online_serving_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,25 +34,39 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options FeaturestoreOnlineServingServiceDefaultOptions(std::string const& location, Options options) {
+Options FeaturestoreOnlineServingServiceDefaultOptions(
+    std::string const& location, Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FEATURESTORE_ONLINE_SERVING_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FEATURESTORE_ONLINE_SERVING_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_FEATURESTORE_ONLINE_SERVING_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FEATURESTORE_ONLINE_SERVING_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>()) {
-    options.set<aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>(
+  if (!options.has<
+          aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>()) {
+    options.set<
+        aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>(
         aiplatform_v1::FeaturestoreOnlineServingServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<aiplatform_v1::FeaturestoreOnlineServingServiceBackoffPolicyOption>()) {
-    options.set<aiplatform_v1::FeaturestoreOnlineServingServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<aiplatform_v1::
+                       FeaturestoreOnlineServingServiceBackoffPolicyOption>()) {
+    options.set<
+        aiplatform_v1::FeaturestoreOnlineServingServiceBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>(
-        aiplatform_v1::MakeDefaultFeaturestoreOnlineServingServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          aiplatform_v1::
+              FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        aiplatform_v1::
+            FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>(
+        aiplatform_v1::
+            MakeDefaultFeaturestoreOnlineServingServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use dataplex_v1::MetadataServiceBackoffPolicyOption directly.
 using ::google::cloud::dataplex_v1::MetadataServiceBackoffPolicyOption;
 
-/// @deprecated Use dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataplex_v1::
+    MetadataServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use dataplex_v1::MetadataServicePolicyOptionList directly.
 using ::google::cloud::dataplex_v1::MetadataServicePolicyOptionList;

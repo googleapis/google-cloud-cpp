@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -38,47 +38,53 @@ class TagBindingsStub {
  public:
   virtual ~TagBindingsStub() = 0;
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse> ListTagBindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
+  ListTagBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcemanager::v3::ListTagBindingsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateTagBinding(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateTagBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) = 0;
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateTagBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagBinding(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteTagBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) = 0;
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse> ListEffectiveTags(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
+  ListEffectiveTags(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -91,46 +97,52 @@ class TagBindingsStub {
 class DefaultTagBindingsStub : public TagBindingsStub {
  public:
   DefaultTagBindingsStub(
-      std::unique_ptr<google::cloud::resourcemanager::v3::TagBindings::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::cloud::resourcemanager::v3::TagBindings::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse> ListTagBindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
+  ListTagBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTagBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateTagBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse> ListEffectiveTags(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
+  ListEffectiveTags(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -146,8 +158,11 @@ class DefaultTagBindingsStub : public TagBindingsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::resourcemanager::v3::TagBindings::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<
+      google::cloud::resourcemanager::v3::TagBindings::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

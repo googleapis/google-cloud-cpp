@@ -42,41 +42,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockVizierServiceConnection : public aiplatform_v1::VizierServiceConnection {
+class MockVizierServiceConnection
+    : public aiplatform_v1::VizierServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Study>,
-  CreateStudy,
-  (google::cloud::aiplatform::v1::CreateStudyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Study>, CreateStudy,
+      (google::cloud::aiplatform::v1::CreateStudyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Study>,
-  GetStudy,
-  (google::cloud::aiplatform::v1::GetStudyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Study>, GetStudy,
+              (google::cloud::aiplatform::v1::GetStudyRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Study>),
-  ListStudies,
-  (google::cloud::aiplatform::v1::ListStudiesRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Study>), ListStudies,
+              (google::cloud::aiplatform::v1::ListStudiesRequest request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteStudy,
-  (google::cloud::aiplatform::v1::DeleteStudyRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteStudy,
+      (google::cloud::aiplatform::v1::DeleteStudyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Study>,
-  LookupStudy,
-  (google::cloud::aiplatform::v1::LookupStudyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Study>, LookupStudy,
+      (google::cloud::aiplatform::v1::LookupStudyRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SuggestTrials(Matcher<google::cloud::aiplatform::v1::SuggestTrialsRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SuggestTrials(Matcher<google::cloud::aiplatform::v1::SuggestTrialsRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
-  SuggestTrials,
-  (google::cloud::aiplatform::v1::SuggestTrialsRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
+      SuggestTrials,
+      (google::cloud::aiplatform::v1::SuggestTrialsRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -84,57 +91,70 @@ class MockVizierServiceConnection : public aiplatform_v1::VizierServiceConnectio
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SuggestTrials(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  SuggestTrials, (NoAwaitTag,
-    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SuggestTrials(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
-  SuggestTrials, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>,
-  CreateTrial,
-  (google::cloud::aiplatform::v1::CreateTrialRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>,
-  GetTrial,
-  (google::cloud::aiplatform::v1::GetTrialRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Trial>),
-  ListTrials,
-  (google::cloud::aiplatform::v1::ListTrialsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>,
-  AddTrialMeasurement,
-  (google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>,
-  CompleteTrial,
-  (google::cloud::aiplatform::v1::CompleteTrialRequest const& request), (override));
-
-  MOCK_METHOD(Status,
-  DeleteTrial,
-  (google::cloud::aiplatform::v1::DeleteTrialRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SuggestTrials,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CheckTrialEarlyStoppingState(Matcher<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&>(_)))
+  /// EXPECT_CALL(*mock, SuggestTrials(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,
-  CheckTrialEarlyStoppingState,
-  (google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
+      SuggestTrials, (google::longrunning::Operation const& operation),
+      (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Trial>, CreateTrial,
+      (google::cloud::aiplatform::v1::CreateTrialRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>, GetTrial,
+              (google::cloud::aiplatform::v1::GetTrialRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Trial>), ListTrials,
+              (google::cloud::aiplatform::v1::ListTrialsRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>,
+              AddTrialMeasurement,
+              (google::cloud::aiplatform::v1::AddTrialMeasurementRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::Trial>, CompleteTrial,
+      (google::cloud::aiplatform::v1::CompleteTrialRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteTrial,
+      (google::cloud::aiplatform::v1::DeleteTrialRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CheckTrialEarlyStoppingState(Matcher<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,
+      CheckTrialEarlyStoppingState,
+      (google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -142,69 +162,77 @@ class MockVizierServiceConnection : public aiplatform_v1::VizierServiceConnectio
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CheckTrialEarlyStoppingState(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CheckTrialEarlyStoppingState, (NoAwaitTag,
-    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CheckTrialEarlyStoppingState,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CheckTrialEarlyStoppingState(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CheckTrialEarlyStoppingState(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,
-  CheckTrialEarlyStoppingState, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,
+      CheckTrialEarlyStoppingState,
+      (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>,
-  StopTrial,
-  (google::cloud::aiplatform::v1::StopTrialRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>, StopTrial,
+              (google::cloud::aiplatform::v1::StopTrialRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>,
-  ListOptimalTrials,
-  (google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>,
+      ListOptimalTrials,
+      (google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  WaitOperation,
-  (google::longrunning::WaitOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
+              (google::longrunning::WaitOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

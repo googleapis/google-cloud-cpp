@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_ADAPTATION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_ADAPTATION_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/speech/v1/adaptation_connection.h"
 #include "google/cloud/speech/v1/adaptation_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -64,8 +64,7 @@ struct AdaptationConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-speech-options
  */
 using AdaptationPolicyOptionList =
-    OptionList<AdaptationRetryPolicyOption,
-               AdaptationBackoffPolicyOption,
+    OptionList<AdaptationRetryPolicyOption, AdaptationBackoffPolicyOption,
                AdaptationConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

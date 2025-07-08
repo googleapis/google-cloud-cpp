@@ -37,49 +37,67 @@ class RegionCommitmentsRestStub {
  public:
   virtual ~RegionCommitmentsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList> AggregatedListRegionCommitments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+  AggregatedListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          GetCommitmentRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertCommitment(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertCommitment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) = 0;
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentList> ListRegionCommitments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
+  ListRegionCommitments(google::cloud::rest_internal::RestContext& rest_context,
+                        Options const& options,
+                        google::cloud::cpp::compute::region_commitments::v1::
+                            ListRegionCommitmentsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateCommitment(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateCommitment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) = 0;
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request) = 0;
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) = 0;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteOperationRequest const& request) = 0;
 };
 
 class DefaultRegionCommitmentsRestStub : public RegionCommitmentsRestStub {
@@ -89,52 +107,70 @@ class DefaultRegionCommitmentsRestStub : public RegionCommitmentsRestStub {
   explicit DefaultRegionCommitmentsRestStub(Options options);
   DefaultRegionCommitmentsRestStub(
       std::shared_ptr<rest_internal::RestClient> service,
-      std::shared_ptr<rest_internal::RestClient> operations,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> operations, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList> AggregatedListRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+  AggregatedListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::AggregatedListRegionCommitmentsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetCommitment(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::GetCommitmentRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          GetCommitmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertCommitment(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncInsertCommitment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) override;
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentList> ListRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
+  ListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::ListRegionCommitmentsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          ListRegionCommitmentsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncUpdateCommitment(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateCommitment(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) override;
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::region_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -32,20 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataAccessControlServiceLogging::DataAccessControlServiceLogging(
     std::shared_ptr<DataAccessControlServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DataAccessControlServiceLogging::CreateDataAccessLabel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::CreateDataAccessLabelRequest const&
+                 request) {
         return child_->CreateDataAccessLabel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ DataAccessControlServiceLogging::CreateDataAccessLabel(
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DataAccessControlServiceLogging::GetDataAccessLabel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::GetDataAccessLabelRequest const&
+                 request) {
         return child_->GetDataAccessLabel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ DataAccessControlServiceLogging::GetDataAccessLabel(
 
 StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse>
 DataAccessControlServiceLogging::ListDataAccessLabels(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::ListDataAccessLabelsRequest const&
+                 request) {
         return child_->ListDataAccessLabels(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +76,24 @@ DataAccessControlServiceLogging::ListDataAccessLabels(
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DataAccessControlServiceLogging::UpdateDataAccessLabel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const&
+                 request) {
         return child_->UpdateDataAccessLabel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataAccessControlServiceLogging::DeleteDataAccessLabel(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataAccessControlServiceLogging::DeleteDataAccessLabel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const&
+                 request) {
         return child_->DeleteDataAccessLabel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +101,12 @@ DataAccessControlServiceLogging::DeleteDataAccessLabel(
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DataAccessControlServiceLogging::CreateDataAccessScope(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::CreateDataAccessScopeRequest const&
+                 request) {
         return child_->CreateDataAccessScope(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,13 +114,12 @@ DataAccessControlServiceLogging::CreateDataAccessScope(
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DataAccessControlServiceLogging::GetDataAccessScope(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::GetDataAccessScopeRequest const&
+                 request) {
         return child_->GetDataAccessScope(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,13 +127,12 @@ DataAccessControlServiceLogging::GetDataAccessScope(
 
 StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse>
 DataAccessControlServiceLogging::ListDataAccessScopes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::ListDataAccessScopesRequest const&
+                 request) {
         return child_->ListDataAccessScopes(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,27 +140,24 @@ DataAccessControlServiceLogging::ListDataAccessScopes(
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DataAccessControlServiceLogging::UpdateDataAccessScope(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const&
+                 request) {
         return child_->UpdateDataAccessScope(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataAccessControlServiceLogging::DeleteDataAccessScope(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataAccessControlServiceLogging::DeleteDataAccessScope(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const&
+                 request) {
         return child_->DeleteDataAccessScope(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -179,12 +165,10 @@ DataAccessControlServiceLogging::DeleteDataAccessScope(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DataAccessControlServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -193,40 +177,32 @@ DataAccessControlServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 DataAccessControlServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataAccessControlServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataAccessControlServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-DataAccessControlServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataAccessControlServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

@@ -36,140 +36,143 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
   virtual ~AlloyDBAdminConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AlloyDBAdminConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<AlloyDBAdminConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListClusters(google::cloud::alloydb::v1::ListClustersRequest request);
+  virtual google::cloud::Idempotency ListClusters(
+      google::cloud::alloydb::v1::ListClustersRequest request);
 
-  virtual google::cloud::Idempotency
-  GetCluster(google::cloud::alloydb::v1::GetClusterRequest const& request);
+  virtual google::cloud::Idempotency GetCluster(
+      google::cloud::alloydb::v1::GetClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateCluster(google::cloud::alloydb::v1::CreateClusterRequest const& request);
+  virtual google::cloud::Idempotency CreateCluster(
+      google::cloud::alloydb::v1::CreateClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateCluster(google::cloud::alloydb::v1::UpdateClusterRequest const& request);
+  virtual google::cloud::Idempotency UpdateCluster(
+      google::cloud::alloydb::v1::UpdateClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportCluster(google::cloud::alloydb::v1::ExportClusterRequest const& request);
+  virtual google::cloud::Idempotency ExportCluster(
+      google::cloud::alloydb::v1::ExportClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportCluster(google::cloud::alloydb::v1::ImportClusterRequest const& request);
+  virtual google::cloud::Idempotency ImportCluster(
+      google::cloud::alloydb::v1::ImportClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpgradeCluster(google::cloud::alloydb::v1::UpgradeClusterRequest const& request);
+  virtual google::cloud::Idempotency UpgradeCluster(
+      google::cloud::alloydb::v1::UpgradeClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteCluster(google::cloud::alloydb::v1::DeleteClusterRequest const& request);
+  virtual google::cloud::Idempotency DeleteCluster(
+      google::cloud::alloydb::v1::DeleteClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PromoteCluster(google::cloud::alloydb::v1::PromoteClusterRequest const& request);
+  virtual google::cloud::Idempotency PromoteCluster(
+      google::cloud::alloydb::v1::PromoteClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SwitchoverCluster(google::cloud::alloydb::v1::SwitchoverClusterRequest const& request);
+  virtual google::cloud::Idempotency SwitchoverCluster(
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RestoreCluster(google::cloud::alloydb::v1::RestoreClusterRequest const& request);
+  virtual google::cloud::Idempotency RestoreCluster(
+      google::cloud::alloydb::v1::RestoreClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateSecondaryCluster(google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
+  virtual google::cloud::Idempotency CreateSecondaryCluster(
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListInstances(google::cloud::alloydb::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency ListInstances(
+      google::cloud::alloydb::v1::ListInstancesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetInstance(google::cloud::alloydb::v1::GetInstanceRequest const& request);
+  virtual google::cloud::Idempotency GetInstance(
+      google::cloud::alloydb::v1::GetInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateInstance(google::cloud::alloydb::v1::CreateInstanceRequest const& request);
+  virtual google::cloud::Idempotency CreateInstance(
+      google::cloud::alloydb::v1::CreateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateSecondaryInstance(google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request);
+  virtual google::cloud::Idempotency CreateSecondaryInstance(
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  BatchCreateInstances(google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request);
+  virtual google::cloud::Idempotency BatchCreateInstances(
+      google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateInstance(google::cloud::alloydb::v1::UpdateInstanceRequest const& request);
+  virtual google::cloud::Idempotency UpdateInstance(
+      google::cloud::alloydb::v1::UpdateInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteInstance(google::cloud::alloydb::v1::DeleteInstanceRequest const& request);
+  virtual google::cloud::Idempotency DeleteInstance(
+      google::cloud::alloydb::v1::DeleteInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  FailoverInstance(google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
+  virtual google::cloud::Idempotency FailoverInstance(
+      google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InjectFault(google::cloud::alloydb::v1::InjectFaultRequest const& request);
+  virtual google::cloud::Idempotency InjectFault(
+      google::cloud::alloydb::v1::InjectFaultRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RestartInstance(google::cloud::alloydb::v1::RestartInstanceRequest const& request);
+  virtual google::cloud::Idempotency RestartInstance(
+      google::cloud::alloydb::v1::RestartInstanceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExecuteSql(google::cloud::alloydb::v1::ExecuteSqlRequest const& request);
+  virtual google::cloud::Idempotency ExecuteSql(
+      google::cloud::alloydb::v1::ExecuteSqlRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListBackups(google::cloud::alloydb::v1::ListBackupsRequest request);
+  virtual google::cloud::Idempotency ListBackups(
+      google::cloud::alloydb::v1::ListBackupsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetBackup(google::cloud::alloydb::v1::GetBackupRequest const& request);
+  virtual google::cloud::Idempotency GetBackup(
+      google::cloud::alloydb::v1::GetBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateBackup(google::cloud::alloydb::v1::CreateBackupRequest const& request);
+  virtual google::cloud::Idempotency CreateBackup(
+      google::cloud::alloydb::v1::CreateBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateBackup(google::cloud::alloydb::v1::UpdateBackupRequest const& request);
+  virtual google::cloud::Idempotency UpdateBackup(
+      google::cloud::alloydb::v1::UpdateBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteBackup(google::cloud::alloydb::v1::DeleteBackupRequest const& request);
+  virtual google::cloud::Idempotency DeleteBackup(
+      google::cloud::alloydb::v1::DeleteBackupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListSupportedDatabaseFlags(google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
+  virtual google::cloud::Idempotency ListSupportedDatabaseFlags(
+      google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest request);
 
-  virtual google::cloud::Idempotency
-  GenerateClientCertificate(google::cloud::alloydb::v1::GenerateClientCertificateRequest const& request);
+  virtual google::cloud::Idempotency GenerateClientCertificate(
+      google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetConnectionInfo(google::cloud::alloydb::v1::GetConnectionInfoRequest const& request);
+  virtual google::cloud::Idempotency GetConnectionInfo(
+      google::cloud::alloydb::v1::GetConnectionInfoRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListUsers(google::cloud::alloydb::v1::ListUsersRequest request);
+  virtual google::cloud::Idempotency ListUsers(
+      google::cloud::alloydb::v1::ListUsersRequest request);
 
-  virtual google::cloud::Idempotency
-  GetUser(google::cloud::alloydb::v1::GetUserRequest const& request);
+  virtual google::cloud::Idempotency GetUser(
+      google::cloud::alloydb::v1::GetUserRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateUser(google::cloud::alloydb::v1::CreateUserRequest const& request);
+  virtual google::cloud::Idempotency CreateUser(
+      google::cloud::alloydb::v1::CreateUserRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateUser(google::cloud::alloydb::v1::UpdateUserRequest const& request);
+  virtual google::cloud::Idempotency UpdateUser(
+      google::cloud::alloydb::v1::UpdateUserRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteUser(google::cloud::alloydb::v1::DeleteUserRequest const& request);
+  virtual google::cloud::Idempotency DeleteUser(
+      google::cloud::alloydb::v1::DeleteUserRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDatabases(google::cloud::alloydb::v1::ListDatabasesRequest request);
+  virtual google::cloud::Idempotency ListDatabases(
+      google::cloud::alloydb::v1::ListDatabasesRequest request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<AlloyDBAdminConnectionIdempotencyPolicy>
-    MakeDefaultAlloyDBAdminConnectionIdempotencyPolicy();
+MakeDefaultAlloyDBAdminConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace alloydb_v1

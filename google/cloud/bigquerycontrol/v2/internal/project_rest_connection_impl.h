@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_PROJECT_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_PROJECT_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/internal/project_rest_stub.h"
 #include "google/cloud/bigquerycontrol/v2/internal/project_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/project_connection.h"
 #include "google/cloud/bigquerycontrol/v2/project_connection_idempotency_policy.h"
 #include "google/cloud/bigquerycontrol/v2/project_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,28 +42,35 @@ class ProjectServiceRestConnectionImpl
   ~ProjectServiceRestConnectionImpl() override = default;
 
   ProjectServiceRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquerycontrol_v2_internal::ProjectServiceRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquerycontrol_v2_internal::ProjectServiceRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
-  GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const& request) override;
+  GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const&
+                        request) override;
 
  private:
   static std::unique_ptr<bigquerycontrol_v2::ProjectServiceRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::ProjectServiceRetryPolicyOption>()->clone();
+    return options.get<bigquerycontrol_v2::ProjectServiceRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::ProjectServiceBackoffPolicyOption>()->clone();
+    return options.get<bigquerycontrol_v2::ProjectServiceBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<bigquerycontrol_v2::ProjectServiceConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      bigquerycontrol_v2::ProjectServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::ProjectServiceConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<bigquerycontrol_v2::
+                 ProjectServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -42,25 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSslCertificatesConnection : public compute_ssl_certificates_v1::SslCertificatesConnection {
+class MockSslCertificatesConnection
+    : public compute_ssl_certificates_v1::SslCertificatesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslCertificatesScopedList>>),
-  AggregatedListSslCertificates,
-  (google::cloud::cpp::compute::ssl_certificates::v1::AggregatedListSslCertificatesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              SslCertificatesScopedList>>),
+      AggregatedListSslCertificates,
+      (google::cloud::cpp::compute::ssl_certificates::v1::
+           AggregatedListSslCertificatesRequest request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSslCertificate(Matcher<google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteSslCertificate(Matcher<google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteSslCertificate,
-  (google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request), (override));
-
+              DeleteSslCertificate,
+              (google::cloud::cpp::compute::ssl_certificates::v1::
+                   DeleteSslCertificateRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -69,36 +77,45 @@ class MockSslCertificatesConnection : public compute_ssl_certificates_v1::SslCer
   /// EXPECT_CALL(*mock, DeleteSslCertificate(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteSslCertificate, (NoAwaitTag,
-    google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest const& request), (override));
-
+              DeleteSslCertificate,
+              (NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::
+                               DeleteSslCertificateRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSslCertificate(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteSslCertificate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteSslCertificate, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              DeleteSslCertificate,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslCertificate>,
-  GetSslCertificate,
-  (google::cloud::cpp::compute::ssl_certificates::v1::GetSslCertificateRequest const& request), (override));
+              GetSslCertificate,
+              (google::cloud::cpp::compute::ssl_certificates::v1::
+                   GetSslCertificateRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertSslCertificate(Matcher<google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertSslCertificate(Matcher<google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertSslCertificate,
-  (google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request), (override));
-
+              InsertSslCertificate,
+              (google::cloud::cpp::compute::ssl_certificates::v1::
+                   InsertSslCertificateRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -107,24 +124,30 @@ class MockSslCertificatesConnection : public compute_ssl_certificates_v1::SslCer
   /// EXPECT_CALL(*mock, InsertSslCertificate(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertSslCertificate, (NoAwaitTag,
-    google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest const& request), (override));
-
+              InsertSslCertificate,
+              (NoAwaitTag, google::cloud::cpp::compute::ssl_certificates::v1::
+                               InsertSslCertificateRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertSslCertificate(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertSslCertificate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertSslCertificate, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              InsertSslCertificate,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::SslCertificate>),
-  ListSslCertificates,
-  (google::cloud::cpp::compute::ssl_certificates::v1::ListSslCertificatesRequest request), (override));
+              ListSslCertificates,
+              (google::cloud::cpp::compute::ssl_certificates::v1::
+                   ListSslCertificatesRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,28 +32,25 @@ EventServiceStub::~EventServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
 DefaultEventServiceStub::CreateClientEvent(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::CreateClientEventRequest const& request) {
-    google::cloud::talent::v4::ClientEvent response;
-    auto status =
-        grpc_stub_->CreateClientEvent(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::CreateClientEventRequest const& request) {
+  google::cloud::talent::v4::ClientEvent response;
+  auto status = grpc_stub_->CreateClientEvent(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultEventServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultEventServiceStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

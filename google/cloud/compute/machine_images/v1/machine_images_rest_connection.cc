@@ -17,12 +17,12 @@
 // source: google/cloud/compute/machine_images/v1/machine_images.proto
 
 #include "google/cloud/compute/machine_images/v1/machine_images_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_option_defaults.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_rest_connection_impl.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_rest_stub_factory.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_tracing_connection.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,15 +36,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<MachineImagesConnection> MakeMachineImagesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      MachineImagesPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, MachineImagesPolicyOptionList>(
+      options, __func__);
   options = compute_machine_images_v1_internal::MachineImagesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_machine_images_v1_internal::CreateDefaultMachineImagesRestStub(
-      options);
+  auto stub =
+      compute_machine_images_v1_internal::CreateDefaultMachineImagesRestStub(
+          options);
   return compute_machine_images_v1_internal::MakeMachineImagesTracingConnection(
       std::make_shared<
           compute_machine_images_v1_internal::MachineImagesRestConnectionImpl>(

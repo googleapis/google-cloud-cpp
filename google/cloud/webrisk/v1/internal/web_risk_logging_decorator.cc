@@ -31,21 +31,18 @@ namespace webrisk_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 WebRiskServiceLogging::WebRiskServiceLogging(
-    std::shared_ptr<WebRiskServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<WebRiskServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceLogging::ComputeThreatListDiff(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
+                 request) {
         return child_->ComputeThreatListDiff(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,12 +50,10 @@ WebRiskServiceLogging::ComputeThreatListDiff(
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 WebRiskServiceLogging::SearchUris(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SearchUrisRequest const& request) {
         return child_->SearchUris(context, options, request);
       },
@@ -67,12 +62,10 @@ WebRiskServiceLogging::SearchUris(
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 WebRiskServiceLogging::SearchHashes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SearchHashesRequest const& request) {
         return child_->SearchHashes(context, options, request);
       },
@@ -81,13 +74,12 @@ WebRiskServiceLogging::SearchHashes(
 
 StatusOr<google::cloud::webrisk::v1::Submission>
 WebRiskServiceLogging::CreateSubmission(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
         return child_->CreateSubmission(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,30 +87,27 @@ WebRiskServiceLogging::CreateSubmission(
 
 future<StatusOr<google::longrunning::Operation>>
 WebRiskServiceLogging::AsyncSubmitUri(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::webrisk::v1::SubmitUriRequest const& request) {
-        return child_->AsyncSubmitUri(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncSubmitUri(cq, std::move(context),
+                                      std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-WebRiskServiceLogging::SubmitUri(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+StatusOr<google::longrunning::Operation> WebRiskServiceLogging::SubmitUri(
+    grpc::ClientContext& context, Options options,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SubmitUriRequest const& request) {
         return child_->SubmitUri(context, options, request);
       },
@@ -127,54 +116,43 @@ WebRiskServiceLogging::SubmitUri(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 WebRiskServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-WebRiskServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> WebRiskServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-WebRiskServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status WebRiskServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-WebRiskServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status WebRiskServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -192,8 +170,8 @@ WebRiskServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -209,8 +187,8 @@ future<Status> WebRiskServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

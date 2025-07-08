@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_METRIC_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_METRIC_TRACING_STUB_H
 
-#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/monitoring/v3/internal/metric_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -38,49 +38,49 @@ class MetricServiceTracingStub : public MetricServiceStub {
 
   explicit MetricServiceTracingStub(std::shared_ptr<MetricServiceStub> child);
 
-  StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse> ListMonitoredResourceDescriptors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const& request) override;
+  StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
+  ListMonitoredResourceDescriptors(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
+          request) override;
 
-  StatusOr<google::api::MonitoredResourceDescriptor> GetMonitoredResourceDescriptor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) override;
+  StatusOr<google::api::MonitoredResourceDescriptor>
+  GetMonitoredResourceDescriptor(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
+          request) override;
 
-  StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse> ListMetricDescriptors(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::ListMetricDescriptorsRequest const& request) override;
+  StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
+  ListMetricDescriptors(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::ListMetricDescriptorsRequest const& request)
+      override;
 
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::GetMetricDescriptorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::GetMetricDescriptorRequest const& request)
+      override;
 
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::CreateMetricDescriptorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::CreateMetricDescriptorRequest const& request)
+      override;
 
   Status DeleteMetricDescriptor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::DeleteMetricDescriptorRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::DeleteMetricDescriptorRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::ListTimeSeriesResponse> ListTimeSeries(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListTimeSeriesRequest const& request) override;
 
   Status CreateTimeSeries(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
   Status CreateServiceTimeSeries(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
   future<Status> AsyncCreateTimeSeries(
@@ -91,7 +91,8 @@ class MetricServiceTracingStub : public MetricServiceStub {
 
  private:
   std::shared_ptr<MetricServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -35,20 +35,22 @@ class LookupServiceConnectionIdempotencyPolicy {
   virtual ~LookupServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<LookupServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<LookupServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ResolveService(google::cloud::servicedirectory::v1::ResolveServiceRequest const& request);
+  virtual google::cloud::Idempotency ResolveService(
+      google::cloud::servicedirectory::v1::ResolveServiceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
-    MakeDefaultLookupServiceConnectionIdempotencyPolicy();
+MakeDefaultLookupServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_v1

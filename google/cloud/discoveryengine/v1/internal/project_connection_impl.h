@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_PROJECT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_PROJECT_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/project_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/internal/project_stub.h"
 #include "google/cloud/discoveryengine/v1/project_connection.h"
 #include "google/cloud/discoveryengine/v1/project_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/project_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,31 +46,33 @@ class ProjectServiceConnectionImpl
   ~ProjectServiceConnectionImpl() override = default;
 
   ProjectServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<discoveryengine_v1_internal::ProjectServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<discoveryengine_v1_internal::ProjectServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
+  ProvisionProject(
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ProvisionProject(NoAwaitTag,
-      google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ProvisionProject(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(
-      google::longrunning::Operation const& operation) override;
+  ProvisionProject(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

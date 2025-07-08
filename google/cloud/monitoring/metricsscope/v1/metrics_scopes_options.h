@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_METRICS_SCOPES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_METRICS_SCOPES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection.h"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct MetricsScopesPollingPolicyOption {
  * @ingroup google-cloud-monitoring-options
  */
 using MetricsScopesPolicyOptionList =
-    OptionList<MetricsScopesRetryPolicyOption,
-               MetricsScopesBackoffPolicyOption,
+    OptionList<MetricsScopesRetryPolicyOption, MetricsScopesBackoffPolicyOption,
                MetricsScopesPollingPolicyOption,
                MetricsScopesConnectionIdempotencyPolicyOption>;
 

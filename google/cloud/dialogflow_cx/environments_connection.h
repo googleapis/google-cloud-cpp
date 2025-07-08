@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENVIRONMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENVIRONMENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/environments_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/environments_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -30,9 +30,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/struct.pb.h>
 #include <google/cloud/dialogflow/cx/v3/environment.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/protobuf/struct.pb.h>
 #include <memory>
 #include <string>
 
@@ -58,7 +58,8 @@ class EnvironmentsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EnvironmentsLimitedErrorCountRetryPolicy : public EnvironmentsRetryPolicy {
+class EnvironmentsLimitedErrorCountRetryPolicy
+    : public EnvironmentsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -68,14 +69,14 @@ class EnvironmentsLimitedErrorCountRetryPolicy : public EnvironmentsRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit EnvironmentsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   EnvironmentsLimitedErrorCountRetryPolicy(
       EnvironmentsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EnvironmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EnvironmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EnvironmentsLimitedErrorCountRetryPolicy(
       EnvironmentsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EnvironmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EnvironmentsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -95,7 +96,9 @@ class EnvironmentsLimitedErrorCountRetryPolicy : public EnvironmentsRetryPolicy 
   using BaseType = EnvironmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::EnvironmentsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_cx_internal::EnvironmentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -133,12 +136,14 @@ class EnvironmentsLimitedTimeRetryPolicy : public EnvironmentsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EnvironmentsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EnvironmentsLimitedTimeRetryPolicy(EnvironmentsLimitedTimeRetryPolicy&& rhs) noexcept
-    : EnvironmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EnvironmentsLimitedTimeRetryPolicy(EnvironmentsLimitedTimeRetryPolicy const& rhs) noexcept
-    : EnvironmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EnvironmentsLimitedTimeRetryPolicy(
+      EnvironmentsLimitedTimeRetryPolicy&& rhs) noexcept
+      : EnvironmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EnvironmentsLimitedTimeRetryPolicy(
+      EnvironmentsLimitedTimeRetryPolicy const& rhs) noexcept
+      : EnvironmentsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -160,7 +165,9 @@ class EnvironmentsLimitedTimeRetryPolicy : public EnvironmentsRetryPolicy {
   using BaseType = EnvironmentsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::EnvironmentsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_cx_internal::EnvironmentsRetryTraits>
+      impl_;
 };
 
 /**
@@ -182,70 +189,95 @@ class EnvironmentsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::Environment>
-  ListEnvironments(google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request);
+  ListEnvironments(
+      google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Environment>
-  GetEnvironment(google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request);
+  GetEnvironment(
+      google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  CreateEnvironment(google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request);
+  CreateEnvironment(
+      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateEnvironment(NoAwaitTag, google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  CreateEnvironment( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  UpdateEnvironment(google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateEnvironment(NoAwaitTag, google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  UpdateEnvironment( google::longrunning::Operation const& operation);
+  CreateEnvironment(google::longrunning::Operation const& operation);
 
-  virtual Status
-  DeleteEnvironment(google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const& request);
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
+  UpdateEnvironment(
+      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
+  UpdateEnvironment(google::longrunning::Operation const& operation);
+
+  virtual Status DeleteEnvironment(
+      google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
+          request);
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::Environment>
-  LookupEnvironmentHistory(google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest request);
+  LookupEnvironmentHistory(
+      google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
+          request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
-  RunContinuousTest(google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
+  RunContinuousTest(
+      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  RunContinuousTest(NoAwaitTag, google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> RunContinuousTest(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
-  RunContinuousTest( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
+  RunContinuousTest(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
-  ListContinuousTestResults(google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest request);
+  ListContinuousTestResults(
+      google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
+          request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-  DeployFlow(google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
+  DeployFlow(
+      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeployFlow(NoAwaitTag, google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeployFlow(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request);
 
-  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-  DeployFlow( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
+  DeployFlow(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

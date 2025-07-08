@@ -17,17 +17,17 @@
 // source: google/storage/control/v2/storage_control.proto
 
 #include "google/cloud/storagecontrol/v2/storage_control_connection.h"
+#include "google/cloud/storagecontrol/v2/internal/storage_control_connection_impl.h"
+#include "google/cloud/storagecontrol/v2/internal/storage_control_option_defaults.h"
+#include "google/cloud/storagecontrol/v2/internal/storage_control_stub_factory.h"
+#include "google/cloud/storagecontrol/v2/internal/storage_control_tracing_connection.h"
+#include "google/cloud/storagecontrol/v2/storage_control_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/storagecontrol/v2/internal/storage_control_connection_impl.h"
-#include "google/cloud/storagecontrol/v2/internal/storage_control_option_defaults.h"
-#include "google/cloud/storagecontrol/v2/internal/storage_control_stub_factory.h"
-#include "google/cloud/storagecontrol/v2/internal/storage_control_tracing_connection.h"
-#include "google/cloud/storagecontrol/v2/storage_control_options.h"
 #include <memory>
 #include <utility>
 
@@ -44,8 +44,7 @@ StorageControlConnection::CreateFolder(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-StorageControlConnection::DeleteFolder(
+Status StorageControlConnection::DeleteFolder(
     google::storage::control::v2::DeleteFolderRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -56,8 +55,10 @@ StorageControlConnection::GetFolder(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::storage::control::v2::Folder> StorageControlConnection::ListFolders(
-    google::storage::control::v2::ListFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::storage::control::v2::Folder>
+StorageControlConnection::ListFolders(
+    google::storage::control::v2::
+        ListFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storage::control::v2::Folder>>();
 }
@@ -66,24 +67,21 @@ future<StatusOr<google::storage::control::v2::Folder>>
 StorageControlConnection::RenameFolder(
     google::storage::control::v2::RenameFolderRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::storage::control::v2::Folder>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::storage::control::v2::Folder>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-StorageControlConnection::RenameFolder(
-    NoAwaitTag,
-    google::storage::control::v2::RenameFolderRequest const&) {
+StatusOr<google::longrunning::Operation> StorageControlConnection::RenameFolder(
+    NoAwaitTag, google::storage::control::v2::RenameFolderRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
-StorageControlConnection::RenameFolder(
-    google::longrunning::Operation const&) {
+StorageControlConnection::RenameFolder(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::storage::control::v2::Folder>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::storage::control::v2::Folder>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>
@@ -98,8 +96,7 @@ StorageControlConnection::CreateManagedFolder(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-StorageControlConnection::DeleteManagedFolder(
+Status StorageControlConnection::DeleteManagedFolder(
     google::storage::control::v2::DeleteManagedFolderRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -110,8 +107,10 @@ StorageControlConnection::GetManagedFolder(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::storage::control::v2::ManagedFolder> StorageControlConnection::ListManagedFolders(
-    google::storage::control::v2::ListManagedFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::storage::control::v2::ManagedFolder>
+StorageControlConnection::ListManagedFolders(
+    google::storage::control::v2::
+        ListManagedFoldersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storage::control::v2::ManagedFolder>>();
 }
@@ -120,8 +119,8 @@ future<StatusOr<google::storage::control::v2::AnywhereCache>>
 StorageControlConnection::CreateAnywhereCache(
     google::storage::control::v2::CreateAnywhereCacheRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::storage::control::v2::AnywhereCache>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::storage::control::v2::AnywhereCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -129,23 +128,23 @@ StorageControlConnection::CreateAnywhereCache(
     NoAwaitTag,
     google::storage::control::v2::CreateAnywhereCacheRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
 StorageControlConnection::CreateAnywhereCache(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::storage::control::v2::AnywhereCache>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::storage::control::v2::AnywhereCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
 StorageControlConnection::UpdateAnywhereCache(
     google::storage::control::v2::UpdateAnywhereCacheRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::storage::control::v2::AnywhereCache>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::storage::control::v2::AnywhereCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -153,15 +152,15 @@ StorageControlConnection::UpdateAnywhereCache(
     NoAwaitTag,
     google::storage::control::v2::UpdateAnywhereCacheRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::storage::control::v2::AnywhereCache>>
 StorageControlConnection::UpdateAnywhereCache(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::storage::control::v2::AnywhereCache>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::storage::control::v2::AnywhereCache>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::storage::control::v2::AnywhereCache>
@@ -188,8 +187,10 @@ StorageControlConnection::GetAnywhereCache(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::storage::control::v2::AnywhereCache> StorageControlConnection::ListAnywhereCaches(
-    google::storage::control::v2::ListAnywhereCachesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::storage::control::v2::AnywhereCache>
+StorageControlConnection::ListAnywhereCaches(
+    google::storage::control::v2::
+        ListAnywhereCachesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storage::control::v2::AnywhereCache>>();
 }
@@ -202,7 +203,8 @@ StorageControlConnection::GetProjectIntelligenceConfig(
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
 StorageControlConnection::UpdateProjectIntelligenceConfig(
-    google::storage::control::v2::UpdateProjectIntelligenceConfigRequest const&) {
+    google::storage::control::v2::
+        UpdateProjectIntelligenceConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -214,36 +216,41 @@ StorageControlConnection::GetFolderIntelligenceConfig(
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
 StorageControlConnection::UpdateFolderIntelligenceConfig(
-    google::storage::control::v2::UpdateFolderIntelligenceConfigRequest const&) {
+    google::storage::control::v2::
+        UpdateFolderIntelligenceConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
 StorageControlConnection::GetOrganizationIntelligenceConfig(
-    google::storage::control::v2::GetOrganizationIntelligenceConfigRequest const&) {
+    google::storage::control::v2::
+        GetOrganizationIntelligenceConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::storage::control::v2::IntelligenceConfig>
 StorageControlConnection::UpdateOrganizationIntelligenceConfig(
-    google::storage::control::v2::UpdateOrganizationIntelligenceConfigRequest const&) {
+    google::storage::control::v2::
+        UpdateOrganizationIntelligenceConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<StorageControlConnection> MakeStorageControlConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      StorageControlPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 StorageControlPolicyOptionList>(options,
+                                                                 __func__);
   options = storagecontrol_v2_internal::StorageControlDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = storagecontrol_v2_internal::CreateDefaultStorageControlStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return storagecontrol_v2_internal::MakeStorageControlTracingConnection(
-      std::make_shared<storagecontrol_v2_internal::StorageControlConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          storagecontrol_v2_internal::StorageControlConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

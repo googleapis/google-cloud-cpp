@@ -30,21 +30,16 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ExecutionsLogging::ExecutionsLogging(
-    std::shared_ptr<ExecutionsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+ExecutionsLogging::ExecutionsLogging(std::shared_ptr<ExecutionsStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
-StatusOr<google::cloud::run::v2::Execution>
-ExecutionsLogging::GetExecution(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::run::v2::Execution> ExecutionsLogging::GetExecution(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::GetExecutionRequest const& request) {
         return child_->GetExecution(context, options, request);
       },
@@ -53,12 +48,10 @@ ExecutionsLogging::GetExecution(
 
 StatusOr<google::cloud::run::v2::ListExecutionsResponse>
 ExecutionsLogging::ListExecutions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListExecutionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::ListExecutionsRequest const& request) {
         return child_->ListExecutions(context, options, request);
       },
@@ -67,30 +60,27 @@ ExecutionsLogging::ListExecutions(
 
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsLogging::AsyncDeleteExecution(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::run::v2::DeleteExecutionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::run::v2::DeleteExecutionRequest const& request) {
-        return child_->AsyncDeleteExecution(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteExecution(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ExecutionsLogging::DeleteExecution(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::run::v2::DeleteExecutionRequest const& request) {
+StatusOr<google::longrunning::Operation> ExecutionsLogging::DeleteExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::DeleteExecutionRequest const& request) {
         return child_->DeleteExecution(context, options, request);
       },
@@ -99,30 +89,27 @@ ExecutionsLogging::DeleteExecution(
 
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsLogging::AsyncCancelExecution(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::run::v2::CancelExecutionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::run::v2::CancelExecutionRequest const& request) {
-        return child_->AsyncCancelExecution(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelExecution(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ExecutionsLogging::CancelExecution(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::run::v2::CancelExecutionRequest const& request) {
+StatusOr<google::longrunning::Operation> ExecutionsLogging::CancelExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::CancelExecutionRequest const& request) {
         return child_->CancelExecution(context, options, request);
       },
@@ -131,54 +118,43 @@ ExecutionsLogging::CancelExecution(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ExecutionsLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ExecutionsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ExecutionsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ExecutionsLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ExecutionsLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ExecutionsLogging::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ExecutionsLogging::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::WaitOperationRequest const& request) {
         return child_->WaitOperation(context, options, request);
       },
@@ -196,8 +172,8 @@ ExecutionsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -213,8 +189,8 @@ future<Status> ExecutionsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_INSTANCE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_INSTANCE_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/instance_connection_idempotency_policy.h"
 #include "google/cloud/chronicle/v1/internal/instance_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class InstanceServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InstanceServiceLimitedErrorCountRetryPolicy : public InstanceServiceRetryPolicy {
+class InstanceServiceLimitedErrorCountRetryPolicy
+    : public InstanceServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class InstanceServiceLimitedErrorCountRetryPolicy : public InstanceServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit InstanceServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   InstanceServiceLimitedErrorCountRetryPolicy(
       InstanceServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : InstanceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstanceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   InstanceServiceLimitedErrorCountRetryPolicy(
       InstanceServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : InstanceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : InstanceServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class InstanceServiceLimitedErrorCountRetryPolicy : public InstanceServiceRetryP
   using BaseType = InstanceServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<chronicle_v1_internal::InstanceServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      chronicle_v1_internal::InstanceServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class InstanceServiceLimitedErrorCountRetryPolicy : public InstanceServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class InstanceServiceLimitedTimeRetryPolicy : public InstanceServiceRetryPolicy {
+class InstanceServiceLimitedTimeRetryPolicy
+    : public InstanceServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class InstanceServiceLimitedTimeRetryPolicy : public InstanceServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit InstanceServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  InstanceServiceLimitedTimeRetryPolicy(InstanceServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : InstanceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  InstanceServiceLimitedTimeRetryPolicy(InstanceServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : InstanceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceServiceLimitedTimeRetryPolicy(
+      InstanceServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : InstanceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  InstanceServiceLimitedTimeRetryPolicy(
+      InstanceServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : InstanceServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class InstanceServiceLimitedTimeRetryPolicy : public InstanceServiceRetryPolicy 
   using BaseType = InstanceServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<chronicle_v1_internal::InstanceServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      chronicle_v1_internal::InstanceServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,31 +183,32 @@ class InstanceServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::chronicle::v1::Instance>
-  GetInstance(google::cloud::chronicle::v1::GetInstanceRequest const& request);
+  virtual StatusOr<google::cloud::chronicle::v1::Instance> GetInstance(
+      google::cloud::chronicle::v1::GetInstanceRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `InstanceServiceConnection`.
+ * A factory function to construct an object of type
+ * `InstanceServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of InstanceServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `InstanceServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `InstanceServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -209,8 +218,8 @@ class InstanceServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `InstanceServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `InstanceServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<InstanceServiceConnection> MakeInstanceServiceConnection(
     Options options = {});

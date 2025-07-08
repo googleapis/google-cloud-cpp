@@ -45,13 +45,11 @@ class PolicyBindingsTracingStub : public PolicyBindingsStub {
       google::iam::v3::CreatePolicyBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::iam::v3::CreatePolicyBindingRequest const& request) override;
 
   StatusOr<google::iam::v3::PolicyBinding> GetPolicyBinding(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v3::GetPolicyBindingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePolicyBinding(
@@ -61,8 +59,7 @@ class PolicyBindingsTracingStub : public PolicyBindingsStub {
       google::iam::v3::UpdatePolicyBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::iam::v3::UpdatePolicyBindingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePolicyBinding(
@@ -72,23 +69,21 @@ class PolicyBindingsTracingStub : public PolicyBindingsStub {
       google::iam::v3::DeletePolicyBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePolicyBinding(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::iam::v3::DeletePolicyBindingRequest const& request) override;
 
   StatusOr<google::iam::v3::ListPolicyBindingsResponse> ListPolicyBindings(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v3::ListPolicyBindingsRequest const& request) override;
 
-  StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse> SearchTargetPolicyBindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::iam::v3::SearchTargetPolicyBindingsRequest const& request) override;
+  StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse>
+  SearchTargetPolicyBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::iam::v3::SearchTargetPolicyBindingsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -105,7 +100,8 @@ class PolicyBindingsTracingStub : public PolicyBindingsStub {
 
  private:
   std::shared_ptr<PolicyBindingsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

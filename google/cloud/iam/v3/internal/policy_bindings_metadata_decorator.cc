@@ -50,26 +50,27 @@ PolicyBindingsMetadata::AsyncCreatePolicyBinding(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::iam::v3::CreatePolicyBindingRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreatePolicyBinding(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreatePolicyBinding(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsMetadata::CreatePolicyBinding(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::iam::v3::CreatePolicyBindingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePolicyBinding(context, options, request);
 }
 
 StatusOr<google::iam::v3::PolicyBinding>
 PolicyBindingsMetadata::GetPolicyBinding(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::GetPolicyBindingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPolicyBinding(context, options, request);
 }
 
@@ -79,17 +80,22 @@ PolicyBindingsMetadata::AsyncUpdatePolicyBinding(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::iam::v3::UpdatePolicyBindingRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("policy_binding.name=", internal::UrlEncode(request.policy_binding().name())));
-  return child_->AsyncUpdatePolicyBinding(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("policy_binding.name=",
+                   internal::UrlEncode(request.policy_binding().name())));
+  return child_->AsyncUpdatePolicyBinding(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsMetadata::UpdatePolicyBinding(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::iam::v3::UpdatePolicyBindingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("policy_binding.name=", internal::UrlEncode(request.policy_binding().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("policy_binding.name=",
+                   internal::UrlEncode(request.policy_binding().name())));
   return child_->UpdatePolicyBinding(context, options, request);
 }
 
@@ -99,44 +105,44 @@ PolicyBindingsMetadata::AsyncDeletePolicyBinding(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::iam::v3::DeletePolicyBindingRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePolicyBinding(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeletePolicyBinding(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBindingsMetadata::DeletePolicyBinding(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::iam::v3::DeletePolicyBindingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePolicyBinding(context, options, request);
 }
 
 StatusOr<google::iam::v3::ListPolicyBindingsResponse>
 PolicyBindingsMetadata::ListPolicyBindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::ListPolicyBindingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPolicyBindings(context, options, request);
 }
 
 StatusOr<google::iam::v3::SearchTargetPolicyBindingsResponse>
 PolicyBindingsMetadata::SearchTargetPolicyBindings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v3::SearchTargetPolicyBindingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SearchTargetPolicyBindings(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-PolicyBindingsMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> PolicyBindingsMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -148,8 +154,8 @@ PolicyBindingsMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> PolicyBindingsMetadata::AsyncCancelOperation(
@@ -159,21 +165,21 @@ future<Status> PolicyBindingsMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void PolicyBindingsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void PolicyBindingsMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

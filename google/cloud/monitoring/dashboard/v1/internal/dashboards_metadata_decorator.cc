@@ -46,60 +46,60 @@ DashboardsServiceMetadata::DashboardsServiceMetadata(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::CreateDashboard(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDashboard(context, options, request);
 }
 
 StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DashboardsServiceMetadata::ListDashboards(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDashboards(context, options, request);
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::GetDashboard(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDashboard(context, options, request);
 }
 
-Status
-DashboardsServiceMetadata::DeleteDashboard(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DashboardsServiceMetadata::DeleteDashboard(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDashboard(context, options, request);
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceMetadata::UpdateDashboard(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("dashboard.name=", internal::UrlEncode(request.dashboard().name())));
+  SetMetadata(context, options,
+              absl::StrCat("dashboard.name=",
+                           internal::UrlEncode(request.dashboard().name())));
   return child_->UpdateDashboard(context, options, request);
 }
 
 void DashboardsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                            Options const& options,
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DashboardsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                            Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

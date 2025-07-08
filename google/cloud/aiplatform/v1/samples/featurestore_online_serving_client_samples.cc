@@ -42,17 +42,24 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto vpc_client = google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(
-      google::cloud::aiplatform_v1::MakeFeaturestoreOnlineServingServiceConnection("unused", options));
+  auto vpc_client =
+      google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(
+          google::cloud::aiplatform_v1::
+              MakeFeaturestoreOnlineServingServiceConnection("unused",
+                                                             options));
   //! [set-client-endpoint]
 }
 
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy
-   : public google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy {
+    : public google::cloud::aiplatform_v1::
+          FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy> clone() const override {
+  std::unique_ptr<
+      google::cloud::aiplatform_v1::
+          FeaturestoreOnlineServingServiceConnectionIdempotencyPolicy>
+  clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -64,27 +71,49 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options = google::cloud::Options{}
-    .set<google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>(
-      CustomIdempotencyPolicy().clone())
-    .set<google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>(
-      google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceLimitedErrorCountRetryPolicy(3).clone())
-    .set<google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceBackoffPolicyOption>(
-      google::cloud::ExponentialBackoffPolicy(
-          /*initial_delay=*/std::chrono::milliseconds(200),
-          /*maximum_delay=*/std::chrono::seconds(45),
-          /*scaling=*/2.0).clone());
-  auto connection = google::cloud::aiplatform_v1::MakeFeaturestoreOnlineServingServiceConnection("location-unused-in-this-example", options);
+  auto options =
+      google::cloud::Options{}
+          .set<
+              google::cloud::aiplatform_v1::
+                  FeaturestoreOnlineServingServiceConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::aiplatform_v1::
+                   FeaturestoreOnlineServingServiceRetryPolicyOption>(
+              google::cloud::aiplatform_v1::
+                  FeaturestoreOnlineServingServiceLimitedErrorCountRetryPolicy(
+                      3)
+                      .clone())
+          .set<google::cloud::aiplatform_v1::
+                   FeaturestoreOnlineServingServiceBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection = google::cloud::aiplatform_v1::
+      MakeFeaturestoreOnlineServingServiceConnection(
+          "location-unused-in-this-example", options);
 
   // c1 and c2 share the same retry policies
-  auto c1 = google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(connection);
-  auto c2 = google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(connection);
+  auto c1 =
+      google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(
+          connection);
+  auto c2 =
+      google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(
+          connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
-  auto c3 = google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(
-    connection, google::cloud::Options{}.set<google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceRetryPolicyOption>(
-      google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
+  auto c3 =
+      google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(
+          connection,
+          google::cloud::Options{}
+              .set<google::cloud::aiplatform_v1::
+                       FeaturestoreOnlineServingServiceRetryPolicyOption>(
+                  google::cloud::aiplatform_v1::
+                      FeaturestoreOnlineServingServiceLimitedTimeRetryPolicy(
+                          std::chrono::minutes(5))
+                          .clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -106,7 +135,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::aiplatform_v1::FeaturestoreOnlineServingServiceClient(
-      google::cloud::aiplatform_v1::MakeFeaturestoreOnlineServingServiceConnection("us-west1" /* regional service region */, options));
+        google::cloud::aiplatform_v1::
+            MakeFeaturestoreOnlineServingServiceConnection(
+                "us-west1" /* regional service region */, options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -116,9 +147,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet({
-    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
-  });
+  examples::CheckEnvironmentVariablesAreSet(
+      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

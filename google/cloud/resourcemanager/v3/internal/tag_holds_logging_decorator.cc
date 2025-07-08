@@ -30,40 +30,37 @@ namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TagHoldsLogging::TagHoldsLogging(
-    std::shared_ptr<TagHoldsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+TagHoldsLogging::TagHoldsLogging(std::shared_ptr<TagHoldsStub> child,
+                                 TracingOptions tracing_options,
+                                 std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsLogging::AsyncCreateTagHold(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
-        return child_->AsyncCreateTagHold(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::resourcemanager::v3::CreateTagHoldRequest const&
+                 request) {
+        return child_->AsyncCreateTagHold(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TagHoldsLogging::CreateTagHold(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+StatusOr<google::longrunning::Operation> TagHoldsLogging::CreateTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateTagHoldRequest const&
+                 request) {
         return child_->CreateTagHold(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -71,31 +68,30 @@ TagHoldsLogging::CreateTagHold(
 
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsLogging::AsyncDeleteTagHold(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
-        return child_->AsyncDeleteTagHold(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&
+                 request) {
+        return child_->AsyncDeleteTagHold(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TagHoldsLogging::DeleteTagHold(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+StatusOr<google::longrunning::Operation> TagHoldsLogging::DeleteTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&
+                 request) {
         return child_->DeleteTagHold(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -103,26 +99,22 @@ TagHoldsLogging::DeleteTagHold(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
 TagHoldsLogging::ListTagHolds(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::ListTagHoldsRequest const&
+                 request) {
         return child_->ListTagHolds(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TagHoldsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> TagHoldsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -140,8 +132,8 @@ TagHoldsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -157,8 +149,8 @@ future<Status> TagHoldsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

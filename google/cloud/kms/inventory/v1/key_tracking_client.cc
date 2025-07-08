@@ -28,26 +28,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KeyTrackingServiceClient::KeyTrackingServiceClient(
     std::shared_ptr<KeyTrackingServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 KeyTrackingServiceClient::~KeyTrackingServiceClient() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-KeyTrackingServiceClient::GetProtectedResourcesSummary(std::string const& name, Options opts) {
+KeyTrackingServiceClient::GetProtectedResourcesSummary(std::string const& name,
+                                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest request;
+  google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest
+      request;
   request.set_name(name);
   return connection_->GetProtectedResourcesSummary(request);
 }
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
-KeyTrackingServiceClient::GetProtectedResourcesSummary(google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest const& request, Options opts) {
+KeyTrackingServiceClient::GetProtectedResourcesSummary(
+    google::cloud::kms::inventory::v1::
+        GetProtectedResourcesSummaryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProtectedResourcesSummary(request);
 }
 
 StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
-KeyTrackingServiceClient::SearchProtectedResources(std::string const& scope, std::string const& crypto_key, Options opts) {
+KeyTrackingServiceClient::SearchProtectedResources(
+    std::string const& scope, std::string const& crypto_key, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request;
   request.set_scope(scope);
@@ -56,7 +62,9 @@ KeyTrackingServiceClient::SearchProtectedResources(std::string const& scope, std
 }
 
 StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
-KeyTrackingServiceClient::SearchProtectedResources(google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request, Options opts) {
+KeyTrackingServiceClient::SearchProtectedResources(
+    google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchProtectedResources(std::move(request));
 }

@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NodeGroupControllerClient::NodeGroupControllerClient(
     std::shared_ptr<NodeGroupControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 NodeGroupControllerClient::~NodeGroupControllerClient() = default;
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::CreateNodeGroup(std::string const& parent, google::cloud::dataproc::v1::NodeGroup const& node_group, std::string const& node_group_id, Options opts) {
+NodeGroupControllerClient::CreateNodeGroup(
+    std::string const& parent,
+    google::cloud::dataproc::v1::NodeGroup const& node_group,
+    std::string const& node_group_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateNodeGroupRequest request;
   request.set_parent(parent);
@@ -43,7 +46,10 @@ NodeGroupControllerClient::CreateNodeGroup(std::string const& parent, google::cl
 }
 
 StatusOr<google::longrunning::Operation>
-NodeGroupControllerClient::CreateNodeGroup(NoAwaitTag, std::string const& parent, google::cloud::dataproc::v1::NodeGroup const& node_group, std::string const& node_group_id, Options opts) {
+NodeGroupControllerClient::CreateNodeGroup(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::dataproc::v1::NodeGroup const& node_group,
+    std::string const& node_group_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::CreateNodeGroupRequest request;
   request.set_parent(parent);
@@ -53,25 +59,32 @@ NodeGroupControllerClient::CreateNodeGroup(NoAwaitTag, std::string const& parent
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::CreateNodeGroup(google::cloud::dataproc::v1::CreateNodeGroupRequest const& request, Options opts) {
+NodeGroupControllerClient::CreateNodeGroup(
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNodeGroup(request);
 }
 
 StatusOr<google::longrunning::Operation>
-NodeGroupControllerClient::CreateNodeGroup(NoAwaitTag, google::cloud::dataproc::v1::CreateNodeGroupRequest const& request, Options opts) {
+NodeGroupControllerClient::CreateNodeGroup(
+    NoAwaitTag,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNodeGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::CreateNodeGroup(google::longrunning::Operation const& operation, Options opts) {
+NodeGroupControllerClient::CreateNodeGroup(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNodeGroup(operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::ResizeNodeGroup(std::string const& name, std::int32_t size, Options opts) {
+NodeGroupControllerClient::ResizeNodeGroup(std::string const& name,
+                                           std::int32_t size, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ResizeNodeGroupRequest request;
   request.set_name(name);
@@ -80,7 +93,8 @@ NodeGroupControllerClient::ResizeNodeGroup(std::string const& name, std::int32_t
 }
 
 StatusOr<google::longrunning::Operation>
-NodeGroupControllerClient::ResizeNodeGroup(NoAwaitTag, std::string const& name, std::int32_t size, Options opts) {
+NodeGroupControllerClient::ResizeNodeGroup(NoAwaitTag, std::string const& name,
+                                           std::int32_t size, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::ResizeNodeGroupRequest request;
   request.set_name(name);
@@ -89,19 +103,25 @@ NodeGroupControllerClient::ResizeNodeGroup(NoAwaitTag, std::string const& name, 
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::ResizeNodeGroup(google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request, Options opts) {
+NodeGroupControllerClient::ResizeNodeGroup(
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResizeNodeGroup(request);
 }
 
 StatusOr<google::longrunning::Operation>
-NodeGroupControllerClient::ResizeNodeGroup(NoAwaitTag, google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request, Options opts) {
+NodeGroupControllerClient::ResizeNodeGroup(
+    NoAwaitTag,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResizeNodeGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
-NodeGroupControllerClient::ResizeNodeGroup(google::longrunning::Operation const& operation, Options opts) {
+NodeGroupControllerClient::ResizeNodeGroup(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResizeNodeGroup(operation);
 }
@@ -115,31 +135,36 @@ NodeGroupControllerClient::GetNodeGroup(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
-NodeGroupControllerClient::GetNodeGroup(google::cloud::dataproc::v1::GetNodeGroupRequest const& request, Options opts) {
+NodeGroupControllerClient::GetNodeGroup(
+    google::cloud::dataproc::v1::GetNodeGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNodeGroup(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-NodeGroupControllerClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> NodeGroupControllerClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-NodeGroupControllerClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> NodeGroupControllerClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-NodeGroupControllerClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+NodeGroupControllerClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::longrunning::Operation>
-NodeGroupControllerClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+NodeGroupControllerClient::ListOperations(std::string const& name,
+                                          std::string const& filter,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -148,7 +173,8 @@ NodeGroupControllerClient::ListOperations(std::string const& name, std::string c
 }
 
 StreamRange<google::longrunning::Operation>
-NodeGroupControllerClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+NodeGroupControllerClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
@@ -162,35 +188,36 @@ NodeGroupControllerClient::GetOperation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-NodeGroupControllerClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+NodeGroupControllerClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-NodeGroupControllerClient::DeleteOperation(std::string const& name, Options opts) {
+Status NodeGroupControllerClient::DeleteOperation(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-NodeGroupControllerClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status NodeGroupControllerClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-NodeGroupControllerClient::CancelOperation(std::string const& name, Options opts) {
+Status NodeGroupControllerClient::CancelOperation(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-NodeGroupControllerClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status NodeGroupControllerClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

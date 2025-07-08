@@ -26,78 +26,102 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataTaxonomyServiceConnectionIdempotencyPolicy::~DataTaxonomyServiceConnectionIdempotencyPolicy() = default;
+DataTaxonomyServiceConnectionIdempotencyPolicy::
+    ~DataTaxonomyServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataTaxonomyServiceConnectionIdempotencyPolicy>
 DataTaxonomyServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DataTaxonomyServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DataTaxonomyServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::CreateDataTaxonomy(google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::CreateDataTaxonomy(
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::UpdateDataTaxonomy(google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::UpdateDataTaxonomy(
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::DeleteDataTaxonomy(google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::DeleteDataTaxonomy(
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListDataTaxonomies(google::cloud::dataplex::v1::ListDataTaxonomiesRequest) {  // NOLINT
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListDataTaxonomies(
+    google::cloud::dataplex::v1::ListDataTaxonomiesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetDataTaxonomy(google::cloud::dataplex::v1::GetDataTaxonomyRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetDataTaxonomy(
+    google::cloud::dataplex::v1::GetDataTaxonomyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::CreateDataAttributeBinding(google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&) {
+Idempotency
+DataTaxonomyServiceConnectionIdempotencyPolicy::CreateDataAttributeBinding(
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::UpdateDataAttributeBinding(google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&) {
+Idempotency
+DataTaxonomyServiceConnectionIdempotencyPolicy::UpdateDataAttributeBinding(
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::DeleteDataAttributeBinding(google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&) {
+Idempotency
+DataTaxonomyServiceConnectionIdempotencyPolicy::DeleteDataAttributeBinding(
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListDataAttributeBindings(google::cloud::dataplex::v1::ListDataAttributeBindingsRequest) {  // NOLINT
+Idempotency
+DataTaxonomyServiceConnectionIdempotencyPolicy::ListDataAttributeBindings(
+    google::cloud::dataplex::v1::ListDataAttributeBindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetDataAttributeBinding(google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&) {
+Idempotency
+DataTaxonomyServiceConnectionIdempotencyPolicy::GetDataAttributeBinding(
+    google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::CreateDataAttribute(google::cloud::dataplex::v1::CreateDataAttributeRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::CreateDataAttribute(
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::UpdateDataAttribute(google::cloud::dataplex::v1::UpdateDataAttributeRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::UpdateDataAttribute(
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::DeleteDataAttribute(google::cloud::dataplex::v1::DeleteDataAttributeRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::DeleteDataAttribute(
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListDataAttributes(google::cloud::dataplex::v1::ListDataAttributesRequest) {  // NOLINT
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListDataAttributes(
+    google::cloud::dataplex::v1::ListDataAttributesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetDataAttribute(google::cloud::dataplex::v1::GetDataAttributeRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetDataAttribute(
+    google::cloud::dataplex::v1::GetDataAttributeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -107,32 +131,38 @@ Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DataTaxonomyServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataTaxonomyServiceConnectionIdempotencyPolicy>
-    MakeDefaultDataTaxonomyServiceConnectionIdempotencyPolicy() {
+MakeDefaultDataTaxonomyServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataTaxonomyServiceConnectionIdempotencyPolicy>();
 }
 

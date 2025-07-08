@@ -33,43 +33,53 @@ SqlDatabasesServiceTracingConnection::SqlDatabasesServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlDatabasesServiceTracingConnection::Delete(google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Delete");
+SqlDatabasesServiceTracingConnection::Delete(
+    google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Delete");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Delete(request));
 }
 
 StatusOr<google::cloud::sql::v1::Database>
-SqlDatabasesServiceTracingConnection::Get(google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
+SqlDatabasesServiceTracingConnection::Get(
+    google::cloud::sql::v1::SqlDatabasesGetRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Get");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Get(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlDatabasesServiceTracingConnection::Insert(google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Insert");
+SqlDatabasesServiceTracingConnection::Insert(
+    google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Insert");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Insert(request));
 }
 
 StatusOr<google::cloud::sql::v1::DatabasesListResponse>
-SqlDatabasesServiceTracingConnection::List(google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
+SqlDatabasesServiceTracingConnection::List(
+    google::cloud::sql::v1::SqlDatabasesListRequest const& request) {
   auto span = internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::List");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->List(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlDatabasesServiceTracingConnection::Patch(google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Patch");
+SqlDatabasesServiceTracingConnection::Patch(
+    google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Patch");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Patch(request));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlDatabasesServiceTracingConnection::Update(google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
-  auto span = internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Update");
+SqlDatabasesServiceTracingConnection::Update(
+    google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
+  auto span =
+      internal::MakeSpan("sql_v1::SqlDatabasesServiceConnection::Update");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Update(request));
 }
@@ -81,7 +91,8 @@ MakeSqlDatabasesServiceTracingConnection(
     std::shared_ptr<sql_v1::SqlDatabasesServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SqlDatabasesServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<SqlDatabasesServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

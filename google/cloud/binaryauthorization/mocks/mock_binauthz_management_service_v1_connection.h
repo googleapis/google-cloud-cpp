@@ -30,8 +30,11 @@ namespace cloud {
 namespace binaryauthorization_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use binaryauthorization_v1_mocks::MockBinauthzManagementServiceV1Connection directly.
-using ::google::cloud::binaryauthorization_v1_mocks::MockBinauthzManagementServiceV1Connection;
+/// @deprecated Use
+/// binaryauthorization_v1_mocks::MockBinauthzManagementServiceV1Connection
+/// directly.
+using ::google::cloud::binaryauthorization_v1_mocks::
+    MockBinauthzManagementServiceV1Connection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_mocks

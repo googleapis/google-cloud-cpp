@@ -45,72 +45,75 @@ GroundedGenerationServiceMetadata::GroundedGenerationServiceMetadata(
               : std::move(api_client_header)) {}
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
-      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
 GroundedGenerationServiceMetadata::AsyncStreamGenerateGroundedContent(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   SetMetadata(*context, *options);
-  return child_->AsyncStreamGenerateGroundedContent(cq, std::move(context), std::move(options));
+  return child_->AsyncStreamGenerateGroundedContent(cq, std::move(context),
+                                                    std::move(options));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
 GroundedGenerationServiceMetadata::GenerateGroundedContent(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("location=", internal::UrlEncode(request.location())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("location=", internal::UrlEncode(request.location())));
   return child_->GenerateGroundedContent(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceMetadata::CheckGrounding(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("grounding_config=", internal::UrlEncode(request.grounding_config())));
+  SetMetadata(context, options,
+              absl::StrCat("grounding_config=",
+                           internal::UrlEncode(request.grounding_config())));
   return child_->CheckGrounding(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 GroundedGenerationServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 GroundedGenerationServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-GroundedGenerationServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status GroundedGenerationServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
-void GroundedGenerationServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void GroundedGenerationServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
-void GroundedGenerationServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+void GroundedGenerationServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

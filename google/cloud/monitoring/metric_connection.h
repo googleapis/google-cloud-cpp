@@ -33,7 +33,8 @@ using ::google::cloud::monitoring_v3::MakeMetricServiceConnection;
 /// @deprecated Use monitoring_v3::MetricServiceConnection directly.
 using ::google::cloud::monitoring_v3::MetricServiceConnection;
 
-/// @deprecated Use monitoring_v3::MetricServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use monitoring_v3::MetricServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::monitoring_v3::MetricServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use monitoring_v3::MetricServiceLimitedTimeRetryPolicy directly.

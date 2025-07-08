@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_STATS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_STATS_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/pubsublite/internal/topic_stats_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,39 +38,38 @@ class TopicStatsServiceAuth : public TopicStatsServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<TopicStatsServiceStub> child);
 
-  StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse> ComputeMessageStats(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) override;
+  StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
+  ComputeMessageStats(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse> ComputeHeadCursor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) override;
+  StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
+  ComputeHeadCursor(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request)
+      override;
 
-  StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse> ComputeTimeCursor(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) override;
+  StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
+  ComputeTimeCursor(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request)
+      override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

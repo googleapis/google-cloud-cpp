@@ -35,23 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options GatewayControlDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_GATEWAY_CONTROL_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_GATEWAY_CONTROL_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_GATEWAY_CONTROL_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_GATEWAY_CONTROL_AUTHORITY",
       "connectgateway.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>()) {
     options.set<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>(
         gkeconnect_gateway_v1::GatewayControlLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<gkeconnect_gateway_v1::GatewayControlBackoffPolicyOption>()) {
+  if (!options
+           .has<gkeconnect_gateway_v1::GatewayControlBackoffPolicyOption>()) {
     options.set<gkeconnect_gateway_v1::GatewayControlBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<gkeconnect_gateway_v1::GatewayControlConnectionIdempotencyPolicyOption>()) {
-    options.set<gkeconnect_gateway_v1::GatewayControlConnectionIdempotencyPolicyOption>(
-        gkeconnect_gateway_v1::MakeDefaultGatewayControlConnectionIdempotencyPolicy());
+  if (!options.has<gkeconnect_gateway_v1::
+                       GatewayControlConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        gkeconnect_gateway_v1::GatewayControlConnectionIdempotencyPolicyOption>(
+        gkeconnect_gateway_v1::
+            MakeDefaultGatewayControlConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -17,10 +17,10 @@
 // source: google/cloud/kms/v1/ekm_service.proto
 
 #include "google/cloud/kms/v1/internal/ekm_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/kms/v1/ekm_connection.h"
 #include "google/cloud/kms/v1/ekm_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,19 +35,20 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options EkmServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EKM_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_EKM_SERVICE_AUTHORITY",
-      "cloudkms.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_EKM_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_EKM_SERVICE_AUTHORITY", "cloudkms.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_v1::EkmServiceRetryPolicyOption>()) {
     options.set<kms_v1::EkmServiceRetryPolicyOption>(
-        kms_v1::EkmServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        kms_v1::EkmServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<kms_v1::EkmServiceBackoffPolicyOption>()) {
     options.set<kms_v1::EkmServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<kms_v1::EkmServiceConnectionIdempotencyPolicyOption>()) {
     options.set<kms_v1::EkmServiceConnectionIdempotencyPolicyOption>(

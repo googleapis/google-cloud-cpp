@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/vizier_option_defaults.h"
 #include "google/cloud/aiplatform/v1/vizier_connection.h"
 #include "google/cloud/aiplatform/v1/vizier_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,32 +34,40 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options VizierServiceDefaultOptions(std::string const& location, Options options) {
+Options VizierServiceDefaultOptions(std::string const& location,
+                                    Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_VIZIER_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_VIZIER_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_VIZIER_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_VIZIER_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<aiplatform_v1::VizierServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::VizierServiceRetryPolicyOption>(
         aiplatform_v1::VizierServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<aiplatform_v1::VizierServiceBackoffPolicyOption>()) {
     options.set<aiplatform_v1::VizierServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<aiplatform_v1::VizierServicePollingPolicyOption>()) {
     options.set<aiplatform_v1::VizierServicePollingPolicyOption>(
         GenericPollingPolicy<
             aiplatform_v1::VizierServiceRetryPolicyOption::Type,
             aiplatform_v1::VizierServiceBackoffPolicyOption::Type>(
-            options.get<aiplatform_v1::VizierServiceRetryPolicyOption>()->clone(),
+            options.get<aiplatform_v1::VizierServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<aiplatform_v1::VizierServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          aiplatform_v1::VizierServiceConnectionIdempotencyPolicyOption>()) {
     options.set<aiplatform_v1::VizierServiceConnectionIdempotencyPolicyOption>(
         aiplatform_v1::MakeDefaultVizierServiceConnectionIdempotencyPolicy());
   }

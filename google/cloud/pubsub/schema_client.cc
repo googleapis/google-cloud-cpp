@@ -29,12 +29,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SchemaServiceClient::SchemaServiceClient(
     std::shared_ptr<SchemaServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SchemaServiceClient::~SchemaServiceClient() = default;
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::CreateSchema(std::string const& parent, google::pubsub::v1::Schema const& schema, std::string const& schema_id, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::CreateSchema(
+    std::string const& parent, google::pubsub::v1::Schema const& schema,
+    std::string const& schema_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::CreateSchemaRequest request;
   request.set_parent(parent);
@@ -43,42 +44,43 @@ SchemaServiceClient::CreateSchema(std::string const& parent, google::pubsub::v1:
   return connection_->CreateSchema(request);
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::CreateSchema(google::pubsub::v1::CreateSchemaRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::CreateSchema(
+    google::pubsub::v1::CreateSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSchema(request);
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::GetSchema(std::string const& name, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::GetSchema(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::GetSchemaRequest request;
   request.set_name(name);
   return connection_->GetSchema(request);
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::GetSchema(google::pubsub::v1::GetSchemaRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::GetSchema(
+    google::pubsub::v1::GetSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSchema(request);
 }
 
-StreamRange<google::pubsub::v1::Schema>
-SchemaServiceClient::ListSchemas(std::string const& parent, Options opts) {
+StreamRange<google::pubsub::v1::Schema> SchemaServiceClient::ListSchemas(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ListSchemasRequest request;
   request.set_parent(parent);
   return connection_->ListSchemas(request);
 }
 
-StreamRange<google::pubsub::v1::Schema>
-SchemaServiceClient::ListSchemas(google::pubsub::v1::ListSchemasRequest request, Options opts) {
+StreamRange<google::pubsub::v1::Schema> SchemaServiceClient::ListSchemas(
+    google::pubsub::v1::ListSchemasRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSchemas(std::move(request));
 }
 
 StreamRange<google::pubsub::v1::Schema>
-SchemaServiceClient::ListSchemaRevisions(std::string const& name, Options opts) {
+SchemaServiceClient::ListSchemaRevisions(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ListSchemaRevisionsRequest request;
   request.set_name(name);
@@ -86,13 +88,15 @@ SchemaServiceClient::ListSchemaRevisions(std::string const& name, Options opts) 
 }
 
 StreamRange<google::pubsub::v1::Schema>
-SchemaServiceClient::ListSchemaRevisions(google::pubsub::v1::ListSchemaRevisionsRequest request, Options opts) {
+SchemaServiceClient::ListSchemaRevisions(
+    google::pubsub::v1::ListSchemaRevisionsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSchemaRevisions(std::move(request));
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::CommitSchema(std::string const& name, google::pubsub::v1::Schema const& schema, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::CommitSchema(
+    std::string const& name, google::pubsub::v1::Schema const& schema,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::CommitSchemaRequest request;
   request.set_name(name);
@@ -100,14 +104,14 @@ SchemaServiceClient::CommitSchema(std::string const& name, google::pubsub::v1::S
   return connection_->CommitSchema(request);
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::CommitSchema(google::pubsub::v1::CommitSchemaRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::CommitSchema(
+    google::pubsub::v1::CommitSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CommitSchema(request);
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::RollbackSchema(std::string const& name, std::string const& revision_id, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::RollbackSchema(
+    std::string const& name, std::string const& revision_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::RollbackSchemaRequest request;
   request.set_name(name);
@@ -115,14 +119,14 @@ SchemaServiceClient::RollbackSchema(std::string const& name, std::string const& 
   return connection_->RollbackSchema(request);
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::RollbackSchema(google::pubsub::v1::RollbackSchemaRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::RollbackSchema(
+    google::pubsub::v1::RollbackSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackSchema(request);
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::DeleteSchemaRevision(std::string const& name, std::string const& revision_id, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::DeleteSchemaRevision(
+    std::string const& name, std::string const& revision_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::DeleteSchemaRevisionRequest request;
   request.set_name(name);
@@ -130,28 +134,31 @@ SchemaServiceClient::DeleteSchemaRevision(std::string const& name, std::string c
   return connection_->DeleteSchemaRevision(request);
 }
 
-StatusOr<google::pubsub::v1::Schema>
-SchemaServiceClient::DeleteSchemaRevision(google::pubsub::v1::DeleteSchemaRevisionRequest const& request, Options opts) {
+StatusOr<google::pubsub::v1::Schema> SchemaServiceClient::DeleteSchemaRevision(
+    google::pubsub::v1::DeleteSchemaRevisionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSchemaRevision(request);
 }
 
-Status
-SchemaServiceClient::DeleteSchema(std::string const& name, Options opts) {
+Status SchemaServiceClient::DeleteSchema(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::DeleteSchemaRequest request;
   request.set_name(name);
   return connection_->DeleteSchema(request);
 }
 
-Status
-SchemaServiceClient::DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const& request, Options opts) {
+Status SchemaServiceClient::DeleteSchema(
+    google::pubsub::v1::DeleteSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSchema(request);
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
-SchemaServiceClient::ValidateSchema(std::string const& parent, google::pubsub::v1::Schema const& schema, Options opts) {
+SchemaServiceClient::ValidateSchema(std::string const& parent,
+                                    google::pubsub::v1::Schema const& schema,
+                                    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::pubsub::v1::ValidateSchemaRequest request;
   request.set_parent(parent);
@@ -160,31 +167,34 @@ SchemaServiceClient::ValidateSchema(std::string const& parent, google::pubsub::v
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
-SchemaServiceClient::ValidateSchema(google::pubsub::v1::ValidateSchemaRequest const& request, Options opts) {
+SchemaServiceClient::ValidateSchema(
+    google::pubsub::v1::ValidateSchemaRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateSchema(request);
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
-SchemaServiceClient::ValidateMessage(google::pubsub::v1::ValidateMessageRequest const& request, Options opts) {
+SchemaServiceClient::ValidateMessage(
+    google::pubsub::v1::ValidateMessageRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateMessage(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SchemaServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> SchemaServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-SchemaServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> SchemaServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SchemaServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+SchemaServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

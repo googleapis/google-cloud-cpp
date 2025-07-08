@@ -17,10 +17,10 @@
 // source: google/cloud/video/stitcher/v1/video_stitcher_service.proto
 
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/video/stitcher/v1/video_stitcher_connection.h"
 #include "google/cloud/video/stitcher/v1/video_stitcher_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -39,28 +39,42 @@ Options VideoStitcherServiceDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_VIDEO_STITCHER_SERVICE_AUTHORITY",
       "videostitcher.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()) {
+  if (!options
+           .has<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()) {
     options.set<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>(
         video_stitcher_v1::VideoStitcherServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>()) {
     options.set<video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()) {
+  if (!options
+           .has<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()) {
     options.set<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>(
         GenericPollingPolicy<
             video_stitcher_v1::VideoStitcherServiceRetryPolicyOption::Type,
             video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption::Type>(
-            options.get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()->clone(),
+            options
+                .get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicyOption>(
-        video_stitcher_v1::MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<video_stitcher_v1::
+                    VideoStitcherServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<video_stitcher_v1::
+                    VideoStitcherServiceConnectionIdempotencyPolicyOption>(
+        video_stitcher_v1::
+            MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy());
   }
 
   return options;

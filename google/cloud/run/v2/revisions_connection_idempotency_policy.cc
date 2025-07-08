@@ -26,43 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RevisionsConnectionIdempotencyPolicy::~RevisionsConnectionIdempotencyPolicy() = default;
+RevisionsConnectionIdempotencyPolicy::~RevisionsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<RevisionsConnectionIdempotencyPolicy>
 RevisionsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RevisionsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RevisionsConnectionIdempotencyPolicy::GetRevision(google::cloud::run::v2::GetRevisionRequest const&) {
+Idempotency RevisionsConnectionIdempotencyPolicy::GetRevision(
+    google::cloud::run::v2::GetRevisionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RevisionsConnectionIdempotencyPolicy::ListRevisions(google::cloud::run::v2::ListRevisionsRequest) {  // NOLINT
+Idempotency RevisionsConnectionIdempotencyPolicy::ListRevisions(
+    google::cloud::run::v2::ListRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RevisionsConnectionIdempotencyPolicy::DeleteRevision(google::cloud::run::v2::DeleteRevisionRequest const&) {
+Idempotency RevisionsConnectionIdempotencyPolicy::DeleteRevision(
+    google::cloud::run::v2::DeleteRevisionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RevisionsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency RevisionsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency RevisionsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency RevisionsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RevisionsConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency RevisionsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RevisionsConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency RevisionsConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<RevisionsConnectionIdempotencyPolicy>
-    MakeDefaultRevisionsConnectionIdempotencyPolicy() {
+MakeDefaultRevisionsConnectionIdempotencyPolicy() {
   return std::make_unique<RevisionsConnectionIdempotencyPolicy>();
 }
 

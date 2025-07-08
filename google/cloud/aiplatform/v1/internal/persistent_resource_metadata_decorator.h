@@ -40,108 +40,108 @@ class PersistentResourceServiceMetadata : public PersistentResourceServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreatePersistentResource(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreatePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) override;
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreatePersistentResource(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::PersistentResource> GetPersistentResource(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::PersistentResource>
+  GetPersistentResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListPersistentResourcesResponse> ListPersistentResources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListPersistentResourcesRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListPersistentResourcesResponse>
+  ListPersistentResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListPersistentResourcesRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeletePersistentResource(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeletePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) override;
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeletePersistentResource(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdatePersistentResource(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdatePersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) override;
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePersistentResource(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncRebootPersistentResource(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRebootPersistentResource(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) override;
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> RebootPersistentResource(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -157,8 +157,7 @@ class PersistentResourceServiceMetadata : public PersistentResourceServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

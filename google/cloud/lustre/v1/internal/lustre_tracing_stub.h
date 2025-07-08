@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_INTERNAL_LUSTRE_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LUSTRE_V1_INTERNAL_LUSTRE_TRACING_STUB_H
 
-#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/lustre/v1/internal/lustre_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -39,13 +39,11 @@ class LustreTracingStub : public LustreStub {
   explicit LustreTracingStub(std::shared_ptr<LustreStub> child);
 
   StatusOr<google::cloud::lustre::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::lustre::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::lustre::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::lustre::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -55,8 +53,7 @@ class LustreTracingStub : public LustreStub {
       google::cloud::lustre::v1::CreateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::CreateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
@@ -66,8 +63,7 @@ class LustreTracingStub : public LustreStub {
       google::cloud::lustre::v1::UpdateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::UpdateInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
@@ -77,8 +73,7 @@ class LustreTracingStub : public LustreStub {
       google::cloud::lustre::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportData(
@@ -88,8 +83,7 @@ class LustreTracingStub : public LustreStub {
       google::cloud::lustre::v1::ImportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportData(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::ImportDataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportData(
@@ -99,38 +93,31 @@ class LustreTracingStub : public LustreStub {
       google::cloud::lustre::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportData(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::lustre::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -147,7 +134,8 @@ class LustreTracingStub : public LustreStub {
 
  private:
   std::shared_ptr<LustreStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

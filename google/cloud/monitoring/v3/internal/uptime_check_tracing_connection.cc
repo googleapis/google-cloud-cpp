@@ -34,49 +34,61 @@ UptimeCheckServiceTracingConnection::UptimeCheckServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceTracingConnection::ListUptimeCheckConfigs(google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::UptimeCheckServiceConnection::ListUptimeCheckConfigs");
+UptimeCheckServiceTracingConnection::ListUptimeCheckConfigs(
+    google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::UptimeCheckServiceConnection::ListUptimeCheckConfigs");
   internal::OTelScope scope(span);
   auto sr = child_->ListUptimeCheckConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<google::monitoring::v3::UptimeCheckConfig>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::v3::UptimeCheckConfig>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceTracingConnection::GetUptimeCheckConfig(google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::UptimeCheckServiceConnection::GetUptimeCheckConfig");
+UptimeCheckServiceTracingConnection::GetUptimeCheckConfig(
+    google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::UptimeCheckServiceConnection::GetUptimeCheckConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetUptimeCheckConfig(request));
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceTracingConnection::CreateUptimeCheckConfig(google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::UptimeCheckServiceConnection::CreateUptimeCheckConfig");
+UptimeCheckServiceTracingConnection::CreateUptimeCheckConfig(
+    google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::UptimeCheckServiceConnection::CreateUptimeCheckConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateUptimeCheckConfig(request));
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
-UptimeCheckServiceTracingConnection::UpdateUptimeCheckConfig(google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::UptimeCheckServiceConnection::UpdateUptimeCheckConfig");
+UptimeCheckServiceTracingConnection::UpdateUptimeCheckConfig(
+    google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::UptimeCheckServiceConnection::UpdateUptimeCheckConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateUptimeCheckConfig(request));
 }
 
-Status
-UptimeCheckServiceTracingConnection::DeleteUptimeCheckConfig(google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::UptimeCheckServiceConnection::DeleteUptimeCheckConfig");
+Status UptimeCheckServiceTracingConnection::DeleteUptimeCheckConfig(
+    google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::UptimeCheckServiceConnection::DeleteUptimeCheckConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteUptimeCheckConfig(request));
 }
 
 StreamRange<google::monitoring::v3::UptimeCheckIp>
-UptimeCheckServiceTracingConnection::ListUptimeCheckIps(google::monitoring::v3::ListUptimeCheckIpsRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::UptimeCheckServiceConnection::ListUptimeCheckIps");
+UptimeCheckServiceTracingConnection::ListUptimeCheckIps(
+    google::monitoring::v3::ListUptimeCheckIpsRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::UptimeCheckServiceConnection::ListUptimeCheckIps");
   internal::OTelScope scope(span);
   auto sr = child_->ListUptimeCheckIps(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::UptimeCheckIp>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -86,7 +98,8 @@ MakeUptimeCheckServiceTracingConnection(
     std::shared_ptr<monitoring_v3::UptimeCheckServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<UptimeCheckServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<UptimeCheckServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

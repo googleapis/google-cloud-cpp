@@ -26,11 +26,16 @@ namespace cloud {
 namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use secretmanager_v1::MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::secretmanager_v1::MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// secretmanager_v1::MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::secretmanager_v1::
+    MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::secretmanager_v1::
+    SecretManagerServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager

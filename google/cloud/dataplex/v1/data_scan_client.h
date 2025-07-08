@@ -66,7 +66,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataScanServiceClient {
  public:
-  explicit DataScanServiceClient(std::shared_ptr<DataScanServiceConnection> connection, Options opts = {});
+  explicit DataScanServiceClient(
+      std::shared_ptr<DataScanServiceConnection> connection, Options opts = {});
   ~DataScanServiceClient();
 
   ///@{
@@ -79,10 +80,12 @@ class DataScanServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataScanServiceClient const& a, DataScanServiceClient const& b) {
+  friend bool operator==(DataScanServiceClient const& a,
+                         DataScanServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataScanServiceClient const& a, DataScanServiceClient const& b) {
+  friend bool operator!=(DataScanServiceClient const& a,
+                         DataScanServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -127,8 +130,10 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  CreateDataScan(std::string const& parent, google::cloud::dataplex::v1::DataScan const& data_scan, std::string const& data_scan_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
+      std::string const& parent,
+      google::cloud::dataplex::v1::DataScan const& data_scan,
+      std::string const& data_scan_id, Options opts = {});
 
   // clang-format off
   ///
@@ -141,8 +146,10 @@ class DataScanServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDataScan(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::DataScan const& data_scan, std::string const& data_scan_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDataScan(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dataplex::v1::DataScan const& data_scan,
+      std::string const& data_scan_id, Options opts = {});
 
   // clang-format off
   ///
@@ -178,8 +185,9 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L428}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  CreateDataScan(google::cloud::dataplex::v1::CreateDataScanRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -192,8 +200,10 @@ class DataScanServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateDataScan(NoAwaitTag, google::cloud::dataplex::v1::CreateDataScanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -204,8 +214,8 @@ class DataScanServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  CreateDataScan(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -239,8 +249,9 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L180}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  UpdateDataScan(google::cloud::dataplex::v1::DataScan const& data_scan, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
+      google::cloud::dataplex::v1::DataScan const& data_scan,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -253,8 +264,9 @@ class DataScanServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDataScan(NoAwaitTag, google::cloud::dataplex::v1::DataScan const& data_scan, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDataScan(
+      NoAwaitTag, google::cloud::dataplex::v1::DataScan const& data_scan,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -290,8 +302,9 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L180}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  UpdateDataScan(google::cloud::dataplex::v1::UpdateDataScanRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +317,10 @@ class DataScanServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateDataScan(NoAwaitTag, google::cloud::dataplex::v1::UpdateDataScanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -316,8 +331,8 @@ class DataScanServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::DataScan>>
-  UpdateDataScan(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -365,8 +380,8 @@ class DataScanServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDataScan(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDataScan(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -403,7 +418,9 @@ class DataScanServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan(google::cloud::dataplex::v1::DeleteDataScanRequest const& request, Options opts = {});
+  DeleteDataScan(
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -416,8 +433,10 @@ class DataScanServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteDataScan(NoAwaitTag, google::cloud::dataplex::v1::DeleteDataScanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteDataScan(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -429,7 +448,8 @@ class DataScanServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteDataScan(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -456,8 +476,8 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::DataScan>
-  GetDataScan(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -486,8 +506,9 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L215}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::DataScan>
-  GetDataScan(google::cloud::dataplex::v1::GetDataScanRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
+      google::cloud::dataplex::v1::GetDataScanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -523,8 +544,8 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L244}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::DataScan>
-  ListDataScans(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::DataScan> ListDataScans(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -562,8 +583,9 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L244}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::DataScan>
-  ListDataScans(google::cloud::dataplex::v1::ListDataScansRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::DataScan> ListDataScans(
+      google::cloud::dataplex::v1::ListDataScansRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -592,8 +614,8 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L305}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::RunDataScanResponse>
-  RunDataScan(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> RunDataScan(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -622,8 +644,9 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L305}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::RunDataScanResponse>
-  RunDataScan(google::cloud::dataplex::v1::RunDataScanRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> RunDataScan(
+      google::cloud::dataplex::v1::RunDataScanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -650,8 +673,8 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L311}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::DataScanJob>
-  GetDataScanJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -680,8 +703,9 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L311}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::DataScanJob>
-  GetDataScanJob(google::cloud::dataplex::v1::GetDataScanJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
+      google::cloud::dataplex::v1::GetDataScanJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -717,8 +741,8 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L340}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::DataScanJob>
-  ListDataScanJobs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -756,8 +780,9 @@ class DataScanServiceClient {
   /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L340}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::DataScanJob>
-  ListDataScanJobs(google::cloud::dataplex::v1::ListDataScanJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
+      google::cloud::dataplex::v1::ListDataScanJobsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -823,7 +848,10 @@ class DataScanServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
-  GenerateDataQualityRules(google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const& request, Options opts = {});
+  GenerateDataQualityRules(
+      google::cloud::dataplex::v1::GenerateDataQualityRulesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -861,8 +889,8 @@ class DataScanServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -891,8 +919,9 @@ class DataScanServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -924,8 +953,8 @@ class DataScanServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -956,8 +985,8 @@ class DataScanServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -992,8 +1021,9 @@ class DataScanServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1028,8 +1058,8 @@ class DataScanServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1068,8 +1098,8 @@ class DataScanServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1095,8 +1125,8 @@ class DataScanServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1127,8 +1157,9 @@ class DataScanServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1152,8 +1183,7 @@ class DataScanServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1182,8 +1212,9 @@ class DataScanServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1217,8 +1248,7 @@ class DataScanServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1257,8 +1287,9 @@ class DataScanServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DataScanServiceConnection> connection_;

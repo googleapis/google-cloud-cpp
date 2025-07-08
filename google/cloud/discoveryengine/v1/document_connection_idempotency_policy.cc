@@ -26,59 +26,73 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DocumentServiceConnectionIdempotencyPolicy::~DocumentServiceConnectionIdempotencyPolicy() = default;
+DocumentServiceConnectionIdempotencyPolicy::
+    ~DocumentServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>
 DocumentServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DocumentServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::GetDocument(google::cloud::discoveryengine::v1::GetDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::GetDocument(
+    google::cloud::discoveryengine::v1::GetDocumentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::ListDocuments(google::cloud::discoveryengine::v1::ListDocumentsRequest) {  // NOLINT
+Idempotency DocumentServiceConnectionIdempotencyPolicy::ListDocuments(
+    google::cloud::discoveryengine::v1::ListDocumentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::CreateDocument(google::cloud::discoveryengine::v1::CreateDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::CreateDocument(
+    google::cloud::discoveryengine::v1::CreateDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::UpdateDocument(google::cloud::discoveryengine::v1::UpdateDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::UpdateDocument(
+    google::cloud::discoveryengine::v1::UpdateDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::DeleteDocument(google::cloud::discoveryengine::v1::DeleteDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::DeleteDocument(
+    google::cloud::discoveryengine::v1::DeleteDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::ImportDocuments(google::cloud::discoveryengine::v1::ImportDocumentsRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::ImportDocuments(
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::PurgeDocuments(google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::PurgeDocuments(
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&) {
+Idempotency
+DocumentServiceConnectionIdempotencyPolicy::BatchGetDocumentsMetadata(
+    google::cloud::discoveryengine::v1::
+        BatchGetDocumentsMetadataRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DocumentServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>
-    MakeDefaultDocumentServiceConnectionIdempotencyPolicy() {
+MakeDefaultDocumentServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentServiceConnectionIdempotencyPolicy>();
 }
 

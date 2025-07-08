@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_INTERNAL_CLOUD_SHELL_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_INTERNAL_CLOUD_SHELL_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/shell/v1/internal/cloud_shell_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -41,31 +41,32 @@ class CloudShellServiceMetadata : public CloudShellServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
+      google::cloud::shell::v1::StartEnvironmentRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> StartEnvironment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::shell::v1::StartEnvironmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAuthorizeEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAddPublicKey(
       google::cloud::CompletionQueue& cq,
@@ -74,8 +75,7 @@ class CloudShellServiceMetadata : public CloudShellServiceStub {
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AddPublicKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRemovePublicKey(
@@ -85,8 +85,7 @@ class CloudShellServiceMetadata : public CloudShellServiceStub {
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RemovePublicKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -102,8 +101,7 @@ class CloudShellServiceMetadata : public CloudShellServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

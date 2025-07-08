@@ -28,39 +28,42 @@ namespace compute_reservations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ReservationsRestLogging::ReservationsRestLogging(
-    std::shared_ptr<ReservationsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ReservationsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
 ReservationsRestLogging::AggregatedListReservations(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        AggregatedListReservationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) {
-        return child_->AggregatedListReservations(rest_context, options, request);
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 AggregatedListReservationsRequest const& request) {
+        return child_->AggregatedListReservations(rest_context, options,
+                                                  request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestLogging::AsyncDeleteReservation(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservations::v1::
+        DeleteReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request) {
-        return child_->AsyncDeleteReservation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::reservations::v1::
+                 DeleteReservationRequest const& request) {
+        return child_->AsyncDeleteReservation(cq, std::move(rest_context),
+                                              std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -68,13 +71,13 @@ ReservationsRestLogging::AsyncDeleteReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestLogging::DeleteReservation(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        DeleteReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::DeleteReservationRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 DeleteReservationRequest const& request) {
         return child_->DeleteReservation(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -82,13 +85,13 @@ ReservationsRestLogging::DeleteReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
 ReservationsRestLogging::GetReservation(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::GetReservationRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::GetReservationRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 GetReservationRequest const& request) {
         return child_->GetReservation(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -96,13 +99,13 @@ ReservationsRestLogging::GetReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ReservationsRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -110,17 +113,19 @@ ReservationsRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestLogging::AsyncInsertReservation(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservations::v1::
+        InsertReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request) {
-        return child_->AsyncInsertReservation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::reservations::v1::
+                 InsertReservationRequest const& request) {
+        return child_->AsyncInsertReservation(cq, std::move(rest_context),
+                                              std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -128,13 +133,13 @@ ReservationsRestLogging::AsyncInsertReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestLogging::InsertReservation(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        InsertReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::InsertReservationRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 InsertReservationRequest const& request) {
         return child_->InsertReservation(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -142,13 +147,13 @@ ReservationsRestLogging::InsertReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationList>
 ReservationsRestLogging::ListReservations(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::ListReservationsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        ListReservationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::ListReservationsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 ListReservationsRequest const& request) {
         return child_->ListReservations(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -156,17 +161,19 @@ ReservationsRestLogging::ListReservations(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestLogging::AsyncPerformMaintenance(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservations::v1::
+        PerformMaintenanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request) {
-        return child_->AsyncPerformMaintenance(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::reservations::v1::
+                 PerformMaintenanceRequest const& request) {
+        return child_->AsyncPerformMaintenance(cq, std::move(rest_context),
+                                               std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -174,13 +181,13 @@ ReservationsRestLogging::AsyncPerformMaintenance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestLogging::PerformMaintenance(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        PerformMaintenanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::PerformMaintenanceRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 PerformMaintenanceRequest const& request) {
         return child_->PerformMaintenance(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -188,17 +195,19 @@ ReservationsRestLogging::PerformMaintenance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestLogging::AsyncResize(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) {
-        return child_->AsyncResize(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+                 request) {
+        return child_->AsyncResize(cq, std::move(rest_context),
+                                   std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -206,13 +215,13 @@ ReservationsRestLogging::AsyncResize(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestLogging::Resize(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+                 request) {
         return child_->Resize(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -220,13 +229,13 @@ ReservationsRestLogging::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ReservationsRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -234,13 +243,13 @@ ReservationsRestLogging::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ReservationsRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -248,17 +257,19 @@ ReservationsRestLogging::TestIamPermissions(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestLogging::AsyncUpdateReservation(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::reservations::v1::
+        UpdateReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request) {
-        return child_->AsyncUpdateReservation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::reservations::v1::
+                 UpdateReservationRequest const& request) {
+        return child_->AsyncUpdateReservation(cq, std::move(rest_context),
+                                              std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -266,13 +277,13 @@ ReservationsRestLogging::AsyncUpdateReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestLogging::UpdateReservation(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::reservations::v1::
+        UpdateReservationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::reservations::v1::UpdateReservationRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::reservations::v1::
+                 UpdateReservationRequest const& request) {
         return child_->UpdateReservation(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -283,32 +294,35 @@ ReservationsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-ReservationsRestLogging::AsyncCancelOperation(
+future<Status> ReservationsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::zone_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::zone_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_EDGE_CONTAINER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_EDGE_CONTAINER_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/edgecontainer/v1/edge_container_connection.h"
 #include "google/cloud/edgecontainer/v1/edge_container_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct EdgeContainerPollingPolicyOption {
  * @ingroup google-cloud-edgecontainer-options
  */
 using EdgeContainerPolicyOptionList =
-    OptionList<EdgeContainerRetryPolicyOption,
-               EdgeContainerBackoffPolicyOption,
+    OptionList<EdgeContainerRetryPolicyOption, EdgeContainerBackoffPolicyOption,
                EdgeContainerPollingPolicyOption,
                EdgeContainerConnectionIdempotencyPolicyOption>;
 

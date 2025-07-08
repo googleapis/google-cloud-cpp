@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 JobServiceClient::JobServiceClient(
     std::shared_ptr<JobServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 JobServiceClient::~JobServiceClient() = default;
 
-StatusOr<google::cloud::talent::v4::Job>
-JobServiceClient::CreateJob(std::string const& parent, google::cloud::talent::v4::Job const& job, Options opts) {
+StatusOr<google::cloud::talent::v4::Job> JobServiceClient::CreateJob(
+    std::string const& parent, google::cloud::talent::v4::Job const& job,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::CreateJobRequest request;
   request.set_parent(parent);
@@ -41,14 +42,16 @@ JobServiceClient::CreateJob(std::string const& parent, google::cloud::talent::v4
   return connection_->CreateJob(request);
 }
 
-StatusOr<google::cloud::talent::v4::Job>
-JobServiceClient::CreateJob(google::cloud::talent::v4::CreateJobRequest const& request, Options opts) {
+StatusOr<google::cloud::talent::v4::Job> JobServiceClient::CreateJob(
+    google::cloud::talent::v4::CreateJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateJob(request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-JobServiceClient::BatchCreateJobs(std::string const& parent, std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts) {
+JobServiceClient::BatchCreateJobs(
+    std::string const& parent,
+    std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::BatchCreateJobsRequest request;
   request.set_parent(parent);
@@ -56,8 +59,9 @@ JobServiceClient::BatchCreateJobs(std::string const& parent, std::vector<google:
   return connection_->BatchCreateJobs(request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobServiceClient::BatchCreateJobs(NoAwaitTag, std::string const& parent, std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts) {
+StatusOr<google::longrunning::Operation> JobServiceClient::BatchCreateJobs(
+    NoAwaitTag, std::string const& parent,
+    std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::BatchCreateJobsRequest request;
   request.set_parent(parent);
@@ -66,39 +70,45 @@ JobServiceClient::BatchCreateJobs(NoAwaitTag, std::string const& parent, std::ve
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-JobServiceClient::BatchCreateJobs(google::cloud::talent::v4::BatchCreateJobsRequest const& request, Options opts) {
+JobServiceClient::BatchCreateJobs(
+    google::cloud::talent::v4::BatchCreateJobsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateJobs(request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobServiceClient::BatchCreateJobs(NoAwaitTag, google::cloud::talent::v4::BatchCreateJobsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> JobServiceClient::BatchCreateJobs(
+    NoAwaitTag,
+    google::cloud::talent::v4::BatchCreateJobsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateJobs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-JobServiceClient::BatchCreateJobs(google::longrunning::Operation const& operation, Options opts) {
+JobServiceClient::BatchCreateJobs(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateJobs(operation);
 }
 
-StatusOr<google::cloud::talent::v4::Job>
-JobServiceClient::GetJob(std::string const& name, Options opts) {
+StatusOr<google::cloud::talent::v4::Job> JobServiceClient::GetJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::GetJobRequest request;
   request.set_name(name);
   return connection_->GetJob(request);
 }
 
-StatusOr<google::cloud::talent::v4::Job>
-JobServiceClient::GetJob(google::cloud::talent::v4::GetJobRequest const& request, Options opts) {
+StatusOr<google::cloud::talent::v4::Job> JobServiceClient::GetJob(
+    google::cloud::talent::v4::GetJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
 
-StatusOr<google::cloud::talent::v4::Job>
-JobServiceClient::UpdateJob(google::cloud::talent::v4::Job const& job, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::cloud::talent::v4::Job> JobServiceClient::UpdateJob(
+    google::cloud::talent::v4::Job const& job,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::UpdateJobRequest request;
   *request.mutable_job() = job;
@@ -106,14 +116,16 @@ JobServiceClient::UpdateJob(google::cloud::talent::v4::Job const& job, google::p
   return connection_->UpdateJob(request);
 }
 
-StatusOr<google::cloud::talent::v4::Job>
-JobServiceClient::UpdateJob(google::cloud::talent::v4::UpdateJobRequest const& request, Options opts) {
+StatusOr<google::cloud::talent::v4::Job> JobServiceClient::UpdateJob(
+    google::cloud::talent::v4::UpdateJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateJob(request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-JobServiceClient::BatchUpdateJobs(std::string const& parent, std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts) {
+JobServiceClient::BatchUpdateJobs(
+    std::string const& parent,
+    std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::BatchUpdateJobsRequest request;
   request.set_parent(parent);
@@ -121,8 +133,9 @@ JobServiceClient::BatchUpdateJobs(std::string const& parent, std::vector<google:
   return connection_->BatchUpdateJobs(request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobServiceClient::BatchUpdateJobs(NoAwaitTag, std::string const& parent, std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts) {
+StatusOr<google::longrunning::Operation> JobServiceClient::BatchUpdateJobs(
+    NoAwaitTag, std::string const& parent,
+    std::vector<google::cloud::talent::v4::Job> const& jobs, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::BatchUpdateJobsRequest request;
   request.set_parent(parent);
@@ -131,39 +144,45 @@ JobServiceClient::BatchUpdateJobs(NoAwaitTag, std::string const& parent, std::ve
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-JobServiceClient::BatchUpdateJobs(google::cloud::talent::v4::BatchUpdateJobsRequest const& request, Options opts) {
+JobServiceClient::BatchUpdateJobs(
+    google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchUpdateJobs(request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobServiceClient::BatchUpdateJobs(NoAwaitTag, google::cloud::talent::v4::BatchUpdateJobsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> JobServiceClient::BatchUpdateJobs(
+    NoAwaitTag,
+    google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchUpdateJobs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-JobServiceClient::BatchUpdateJobs(google::longrunning::Operation const& operation, Options opts) {
+JobServiceClient::BatchUpdateJobs(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchUpdateJobs(operation);
 }
 
-Status
-JobServiceClient::DeleteJob(std::string const& name, Options opts) {
+Status JobServiceClient::DeleteJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::DeleteJobRequest request;
   request.set_name(name);
   return connection_->DeleteJob(request);
 }
 
-Status
-JobServiceClient::DeleteJob(google::cloud::talent::v4::DeleteJobRequest const& request, Options opts) {
+Status JobServiceClient::DeleteJob(
+    google::cloud::talent::v4::DeleteJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJob(request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-JobServiceClient::BatchDeleteJobs(std::string const& parent, std::vector<std::string> const& names, Options opts) {
+JobServiceClient::BatchDeleteJobs(std::string const& parent,
+                                  std::vector<std::string> const& names,
+                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::BatchDeleteJobsRequest request;
   request.set_parent(parent);
@@ -171,8 +190,9 @@ JobServiceClient::BatchDeleteJobs(std::string const& parent, std::vector<std::st
   return connection_->BatchDeleteJobs(request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobServiceClient::BatchDeleteJobs(NoAwaitTag, std::string const& parent, std::vector<std::string> const& names, Options opts) {
+StatusOr<google::longrunning::Operation> JobServiceClient::BatchDeleteJobs(
+    NoAwaitTag, std::string const& parent,
+    std::vector<std::string> const& names, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::BatchDeleteJobsRequest request;
   request.set_parent(parent);
@@ -181,25 +201,30 @@ JobServiceClient::BatchDeleteJobs(NoAwaitTag, std::string const& parent, std::ve
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-JobServiceClient::BatchDeleteJobs(google::cloud::talent::v4::BatchDeleteJobsRequest const& request, Options opts) {
+JobServiceClient::BatchDeleteJobs(
+    google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteJobs(request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobServiceClient::BatchDeleteJobs(NoAwaitTag, google::cloud::talent::v4::BatchDeleteJobsRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> JobServiceClient::BatchDeleteJobs(
+    NoAwaitTag,
+    google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteJobs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-JobServiceClient::BatchDeleteJobs(google::longrunning::Operation const& operation, Options opts) {
+JobServiceClient::BatchDeleteJobs(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchDeleteJobs(operation);
 }
 
-StreamRange<google::cloud::talent::v4::Job>
-JobServiceClient::ListJobs(std::string const& parent, std::string const& filter, Options opts) {
+StreamRange<google::cloud::talent::v4::Job> JobServiceClient::ListJobs(
+    std::string const& parent, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::ListJobsRequest request;
   request.set_parent(parent);
@@ -207,34 +232,36 @@ JobServiceClient::ListJobs(std::string const& parent, std::string const& filter,
   return connection_->ListJobs(request);
 }
 
-StreamRange<google::cloud::talent::v4::Job>
-JobServiceClient::ListJobs(google::cloud::talent::v4::ListJobsRequest request, Options opts) {
+StreamRange<google::cloud::talent::v4::Job> JobServiceClient::ListJobs(
+    google::cloud::talent::v4::ListJobsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(std::move(request));
 }
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>
-JobServiceClient::SearchJobs(google::cloud::talent::v4::SearchJobsRequest const& request, Options opts) {
+JobServiceClient::SearchJobs(
+    google::cloud::talent::v4::SearchJobsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchJobs(request);
 }
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>
-JobServiceClient::SearchJobsForAlert(google::cloud::talent::v4::SearchJobsRequest const& request, Options opts) {
+JobServiceClient::SearchJobsForAlert(
+    google::cloud::talent::v4::SearchJobsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchJobsForAlert(request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> JobServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> JobServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

@@ -32,20 +32,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AppGatewaysServiceLogging::AppGatewaysServiceLogging(
     std::shared_ptr<AppGatewaysServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
 AppGatewaysServiceLogging::ListAppGateways(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appgateways::v1::
+                 ListAppGatewaysRequest const& request) {
         return child_->ListAppGateways(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +51,13 @@ AppGatewaysServiceLogging::ListAppGateways(
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 AppGatewaysServiceLogging::GetAppGateway(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appgateways::v1::
+                 GetAppGatewayRequest const& request) {
         return child_->GetAppGateway(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,17 +65,19 @@ AppGatewaysServiceLogging::GetAppGateway(
 
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceLogging::AsyncCreateAppGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
-        return child_->AsyncCreateAppGateway(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::beyondcorp::appgateways::v1::
+                 CreateAppGatewayRequest const& request) {
+        return child_->AsyncCreateAppGateway(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -85,13 +85,13 @@ AppGatewaysServiceLogging::AsyncCreateAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceLogging::CreateAppGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appgateways::v1::
+                 CreateAppGatewayRequest const& request) {
         return child_->CreateAppGateway(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,17 +99,19 @@ AppGatewaysServiceLogging::CreateAppGateway(
 
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceLogging::AsyncDeleteAppGateway(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
-        return child_->AsyncDeleteAppGateway(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::beyondcorp::appgateways::v1::
+                 DeleteAppGatewayRequest const& request) {
+        return child_->AsyncDeleteAppGateway(cq, std::move(context),
+                                             std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -117,13 +119,13 @@ AppGatewaysServiceLogging::AsyncDeleteAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceLogging::DeleteAppGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appgateways::v1::
+                 DeleteAppGatewayRequest const& request) {
         return child_->DeleteAppGateway(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,12 +133,10 @@ AppGatewaysServiceLogging::DeleteAppGateway(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 AppGatewaysServiceLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -145,40 +145,32 @@ AppGatewaysServiceLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 AppGatewaysServiceLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-AppGatewaysServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> AppGatewaysServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-AppGatewaysServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> AppGatewaysServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -187,12 +179,10 @@ AppGatewaysServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AppGatewaysServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -201,12 +191,10 @@ AppGatewaysServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AppGatewaysServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -215,40 +203,32 @@ AppGatewaysServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AppGatewaysServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AppGatewaysServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AppGatewaysServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AppGatewaysServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -266,8 +246,8 @@ AppGatewaysServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -283,8 +263,8 @@ future<Status> AppGatewaysServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

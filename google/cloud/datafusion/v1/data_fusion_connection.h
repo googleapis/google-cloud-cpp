@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFUSION_V1_DATA_FUSION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFUSION_V1_DATA_FUSION_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datafusion/v1/data_fusion_connection_idempotency_policy.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class DataFusionLimitedErrorCountRetryPolicy : public DataFusionRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DataFusionLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DataFusionLimitedErrorCountRetryPolicy(
       DataFusionLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DataFusionLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataFusionLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DataFusionLimitedErrorCountRetryPolicy(
       DataFusionLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DataFusionLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DataFusionLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class DataFusionLimitedErrorCountRetryPolicy : public DataFusionRetryPolicy {
   using BaseType = DataFusionRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<datafusion_v1_internal::DataFusionRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      datafusion_v1_internal::DataFusionRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,14 @@ class DataFusionLimitedTimeRetryPolicy : public DataFusionRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DataFusionLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DataFusionLimitedTimeRetryPolicy(DataFusionLimitedTimeRetryPolicy&& rhs) noexcept
-    : DataFusionLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DataFusionLimitedTimeRetryPolicy(DataFusionLimitedTimeRetryPolicy const& rhs) noexcept
-    : DataFusionLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataFusionLimitedTimeRetryPolicy(
+      DataFusionLimitedTimeRetryPolicy&& rhs) noexcept
+      : DataFusionLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DataFusionLimitedTimeRetryPolicy(
+      DataFusionLimitedTimeRetryPolicy const& rhs) noexcept
+      : DataFusionLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +162,9 @@ class DataFusionLimitedTimeRetryPolicy : public DataFusionRetryPolicy {
   using BaseType = DataFusionRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<datafusion_v1_internal::DataFusionRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      datafusion_v1_internal::DataFusionRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,49 +186,58 @@ class DataFusionConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::datafusion::v1::Version>
-  ListAvailableVersions(google::cloud::datafusion::v1::ListAvailableVersionsRequest request);
+  ListAvailableVersions(
+      google::cloud::datafusion::v1::ListAvailableVersionsRequest request);
 
-  virtual StreamRange<google::cloud::datafusion::v1::Instance>
-  ListInstances(google::cloud::datafusion::v1::ListInstancesRequest request);
+  virtual StreamRange<google::cloud::datafusion::v1::Instance> ListInstances(
+      google::cloud::datafusion::v1::ListInstancesRequest request);
 
-  virtual StatusOr<google::cloud::datafusion::v1::Instance>
-  GetInstance(google::cloud::datafusion::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance(google::cloud::datafusion::v1::CreateInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, google::cloud::datafusion::v1::CreateInstanceRequest const& request);
+  virtual StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
+      google::cloud::datafusion::v1::GetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  CreateInstance( google::longrunning::Operation const& operation);
+  CreateInstance(
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
+  CreateInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const& request);
+  DeleteInstance(
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag, google::cloud::datafusion::v1::DeleteInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance( google::longrunning::Operation const& operation);
+  DeleteInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance(google::cloud::datafusion::v1::UpdateInstanceRequest const& request);
+  UpdateInstance(
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::datafusion::v1::UpdateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  UpdateInstance( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  RestartInstance(google::cloud::datafusion::v1::RestartInstanceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  RestartInstance(NoAwaitTag, google::cloud::datafusion::v1::RestartInstanceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
-  RestartInstance( google::longrunning::Operation const& operation);
+  UpdateInstance(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
+  RestartInstance(
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RestartInstance(
+      NoAwaitTag,
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
+  RestartInstance(google::longrunning::Operation const& operation);
 };
 
 /**

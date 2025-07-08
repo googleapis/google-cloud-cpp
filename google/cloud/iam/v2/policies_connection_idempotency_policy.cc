@@ -26,39 +26,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PoliciesConnectionIdempotencyPolicy::~PoliciesConnectionIdempotencyPolicy() = default;
+PoliciesConnectionIdempotencyPolicy::~PoliciesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<PoliciesConnectionIdempotencyPolicy>
 PoliciesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PoliciesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PoliciesConnectionIdempotencyPolicy::ListPolicies(google::iam::v2::ListPoliciesRequest) {  // NOLINT
+Idempotency PoliciesConnectionIdempotencyPolicy::ListPolicies(
+    google::iam::v2::ListPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PoliciesConnectionIdempotencyPolicy::GetPolicy(google::iam::v2::GetPolicyRequest const&) {
+Idempotency PoliciesConnectionIdempotencyPolicy::GetPolicy(
+    google::iam::v2::GetPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PoliciesConnectionIdempotencyPolicy::CreatePolicy(google::iam::v2::CreatePolicyRequest const&) {
+Idempotency PoliciesConnectionIdempotencyPolicy::CreatePolicy(
+    google::iam::v2::CreatePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PoliciesConnectionIdempotencyPolicy::UpdatePolicy(google::iam::v2::UpdatePolicyRequest const&) {
+Idempotency PoliciesConnectionIdempotencyPolicy::UpdatePolicy(
+    google::iam::v2::UpdatePolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PoliciesConnectionIdempotencyPolicy::DeletePolicy(google::iam::v2::DeletePolicyRequest const&) {
+Idempotency PoliciesConnectionIdempotencyPolicy::DeletePolicy(
+    google::iam::v2::DeletePolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PoliciesConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency PoliciesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<PoliciesConnectionIdempotencyPolicy>
-    MakeDefaultPoliciesConnectionIdempotencyPolicy() {
+MakeDefaultPoliciesConnectionIdempotencyPolicy() {
   return std::make_unique<PoliciesConnectionIdempotencyPolicy>();
 }
 

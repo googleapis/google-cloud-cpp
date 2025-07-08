@@ -28,12 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlFlagsServiceClient::SqlFlagsServiceClient(
     std::shared_ptr<SqlFlagsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SqlFlagsServiceClient::~SqlFlagsServiceClient() = default;
 
-StatusOr<google::cloud::sql::v1::FlagsListResponse>
-SqlFlagsServiceClient::List(google::cloud::sql::v1::SqlFlagsListRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::FlagsListResponse> SqlFlagsServiceClient::List(
+    google::cloud::sql::v1::SqlFlagsListRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->List(request);
 }

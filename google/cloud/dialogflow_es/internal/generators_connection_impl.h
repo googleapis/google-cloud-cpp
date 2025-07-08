@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_GENERATORS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_GENERATORS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/generators_connection.h"
 #include "google/cloud/dialogflow_es/generators_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/generators_options.h"
 #include "google/cloud/dialogflow_es/internal/generators_retry_traits.h"
 #include "google/cloud/dialogflow_es/internal/generators_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,47 +37,50 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GeneratorsConnectionImpl
-    : public dialogflow_es::GeneratorsConnection {
+class GeneratorsConnectionImpl : public dialogflow_es::GeneratorsConnection {
  public:
   ~GeneratorsConnectionImpl() override = default;
 
   GeneratorsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::GeneratorsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dialogflow_es_internal::GeneratorsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::dialogflow::v2::Generator>
-  CreateGenerator(google::cloud::dialogflow::v2::CreateGeneratorRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Generator> CreateGenerator(
+      google::cloud::dialogflow::v2::CreateGeneratorRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::Generator>
-  GetGenerator(google::cloud::dialogflow::v2::GetGeneratorRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Generator> GetGenerator(
+      google::cloud::dialogflow::v2::GetGeneratorRequest const& request)
+      override;
 
-  StreamRange<google::cloud::dialogflow::v2::Generator>
-  ListGenerators(google::cloud::dialogflow::v2::ListGeneratorsRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::Generator> ListGenerators(
+      google::cloud::dialogflow::v2::ListGeneratorsRequest request) override;
 
-  Status
-  DeleteGenerator(google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request) override;
+  Status DeleteGenerator(
+      google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::Generator>
-  UpdateGenerator(google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::Generator> UpdateGenerator(
+      google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

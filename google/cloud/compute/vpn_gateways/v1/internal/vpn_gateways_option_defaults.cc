@@ -35,32 +35,41 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options VpnGatewaysDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_VPN_GATEWAYS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_VPN_GATEWAYS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_VPN_GATEWAYS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_VPN_GATEWAYS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()) {
     options.set<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>(
         compute_vpn_gateways_v1::VpnGatewaysLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>()) {
     options.set<compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>()) {
     options.set<compute_vpn_gateways_v1::VpnGatewaysPollingPolicyOption>(
         GenericPollingPolicy<
             compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption::Type,
             compute_vpn_gateways_v1::VpnGatewaysBackoffPolicyOption::Type>(
-            options.get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()->clone(),
+            options
+                .get<compute_vpn_gateways_v1::VpnGatewaysRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicyOption>(
-        compute_vpn_gateways_v1::MakeDefaultVpnGatewaysConnectionIdempotencyPolicy());
+  if (!options.has<compute_vpn_gateways_v1::
+                       VpnGatewaysConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        compute_vpn_gateways_v1::VpnGatewaysConnectionIdempotencyPolicyOption>(
+        compute_vpn_gateways_v1::
+            MakeDefaultVpnGatewaysConnectionIdempotencyPolicy());
   }
 
   return options;

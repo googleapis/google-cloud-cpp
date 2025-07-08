@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_SEARCH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_SEARCH_CONNECTION_H
 
+#include "google/cloud/retail/v2/internal/search_retry_traits.h"
+#include "google/cloud/retail/v2/search_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/internal/search_retry_traits.h"
-#include "google/cloud/retail/v2/search_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,7 +52,8 @@ class SearchServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SearchServiceLimitedErrorCountRetryPolicy : public SearchServiceRetryPolicy {
+class SearchServiceLimitedErrorCountRetryPolicy
+    : public SearchServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class SearchServiceLimitedErrorCountRetryPolicy : public SearchServiceRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit SearchServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SearchServiceLimitedErrorCountRetryPolicy(
       SearchServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SearchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SearchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SearchServiceLimitedErrorCountRetryPolicy(
       SearchServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SearchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SearchServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class SearchServiceLimitedErrorCountRetryPolicy : public SearchServiceRetryPolic
   using BaseType = SearchServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<retail_v2_internal::SearchServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      retail_v2_internal::SearchServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class SearchServiceLimitedTimeRetryPolicy : public SearchServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit SearchServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SearchServiceLimitedTimeRetryPolicy(SearchServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SearchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SearchServiceLimitedTimeRetryPolicy(SearchServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SearchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SearchServiceLimitedTimeRetryPolicy(
+      SearchServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SearchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SearchServiceLimitedTimeRetryPolicy(
+      SearchServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SearchServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class SearchServiceLimitedTimeRetryPolicy : public SearchServiceRetryPolicy {
   using BaseType = SearchServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<retail_v2_internal::SearchServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      retail_v2_internal::SearchServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -178,11 +185,11 @@ class SearchServiceConnection {
   virtual StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
   Search(google::cloud::retail::v2::SearchRequest request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

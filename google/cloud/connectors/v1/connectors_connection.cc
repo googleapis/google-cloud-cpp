@@ -17,13 +17,13 @@
 // source: google/cloud/connectors/v1/connectors_service.proto
 
 #include "google/cloud/connectors/v1/connectors_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/connectors/v1/connectors_options.h"
 #include "google/cloud/connectors/v1/internal/connectors_connection_impl.h"
 #include "google/cloud/connectors/v1/internal/connectors_option_defaults.h"
 #include "google/cloud/connectors/v1/internal/connectors_stub_factory.h"
 #include "google/cloud/connectors/v1/internal/connectors_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConnectorsConnection::~ConnectorsConnection() = default;
 
-StreamRange<google::cloud::connectors::v1::Connection> ConnectorsConnection::ListConnections(
-    google::cloud::connectors::v1::ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::connectors::v1::Connection>
+ConnectorsConnection::ListConnections(
+    google::cloud::connectors::v1::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::connectors::v1::Connection>>();
 }
@@ -54,76 +56,69 @@ future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsConnection::CreateConnection(
     google::cloud::connectors::v1::CreateConnectionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::connectors::v1::Connection>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::connectors::v1::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ConnectorsConnection::CreateConnection(
-    NoAwaitTag,
-    google::cloud::connectors::v1::CreateConnectionRequest const&) {
+StatusOr<google::longrunning::Operation> ConnectorsConnection::CreateConnection(
+    NoAwaitTag, google::cloud::connectors::v1::CreateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsConnection::CreateConnection(
-    google::longrunning::Operation const&) {
+ConnectorsConnection::CreateConnection(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::connectors::v1::Connection>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::connectors::v1::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsConnection::UpdateConnection(
     google::cloud::connectors::v1::UpdateConnectionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::connectors::v1::Connection>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::connectors::v1::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ConnectorsConnection::UpdateConnection(
-    NoAwaitTag,
-    google::cloud::connectors::v1::UpdateConnectionRequest const&) {
+StatusOr<google::longrunning::Operation> ConnectorsConnection::UpdateConnection(
+    NoAwaitTag, google::cloud::connectors::v1::UpdateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsConnection::UpdateConnection(
-    google::longrunning::Operation const&) {
+ConnectorsConnection::UpdateConnection(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::connectors::v1::Connection>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::connectors::v1::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
 ConnectorsConnection::DeleteConnection(
     google::cloud::connectors::v1::DeleteConnectionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::connectors::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::connectors::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ConnectorsConnection::DeleteConnection(
-    NoAwaitTag,
-    google::cloud::connectors::v1::DeleteConnectionRequest const&) {
+StatusOr<google::longrunning::Operation> ConnectorsConnection::DeleteConnection(
+    NoAwaitTag, google::cloud::connectors::v1::DeleteConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-ConnectorsConnection::DeleteConnection(
-    google::longrunning::Operation const&) {
+ConnectorsConnection::DeleteConnection(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::connectors::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::connectors::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::connectors::v1::Provider> ConnectorsConnection::ListProviders(
-    google::cloud::connectors::v1::ListProvidersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::connectors::v1::Provider>
+ConnectorsConnection::ListProviders(
+    google::cloud::connectors::v1::
+        ListProvidersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::connectors::v1::Provider>>();
 }
@@ -134,8 +129,10 @@ ConnectorsConnection::GetProvider(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::connectors::v1::Connector> ConnectorsConnection::ListConnectors(
-    google::cloud::connectors::v1::ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::connectors::v1::Connector>
+ConnectorsConnection::ListConnectors(
+    google::cloud::connectors::v1::
+        ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::connectors::v1::Connector>>();
 }
@@ -146,8 +143,10 @@ ConnectorsConnection::GetConnector(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::connectors::v1::ConnectorVersion> ConnectorsConnection::ListConnectorVersions(
-    google::cloud::connectors::v1::ListConnectorVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::connectors::v1::ConnectorVersion>
+ConnectorsConnection::ListConnectorVersions(
+    google::cloud::connectors::v1::
+        ListConnectorVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::connectors::v1::ConnectorVersion>>();
 }
@@ -166,36 +165,41 @@ ConnectorsConnection::GetConnectionSchemaMetadata(
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
 ConnectorsConnection::RefreshConnectionSchemaMetadata(
-    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&) {
+    google::cloud::connectors::v1::
+        RefreshConnectionSchemaMetadataRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnection::RefreshConnectionSchemaMetadata(
-    NoAwaitTag,
-    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&) {
+    NoAwaitTag, google::cloud::connectors::v1::
+                    RefreshConnectionSchemaMetadataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
 ConnectorsConnection::RefreshConnectionSchemaMetadata(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema> ConnectorsConnection::ListRuntimeEntitySchemas(
-    google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
+ConnectorsConnection::ListRuntimeEntitySchemas(
+    google::cloud::connectors::v1::
+        ListRuntimeEntitySchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>>();
 }
 
-StreamRange<google::cloud::connectors::v1::RuntimeActionSchema> ConnectorsConnection::ListRuntimeActionSchemas(
-    google::cloud::connectors::v1::ListRuntimeActionSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
+ConnectorsConnection::ListRuntimeActionSchemas(
+    google::cloud::connectors::v1::
+        ListRuntimeActionSchemasRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>>();
 }
@@ -212,26 +216,25 @@ ConnectorsConnection::GetGlobalSettings(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> ConnectorsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ConnectorsConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-ConnectorsConnection::GetLocation(
+StatusOr<google::cloud::location::Location> ConnectorsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectorsConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> ConnectorsConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectorsConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> ConnectorsConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -242,26 +245,25 @@ ConnectorsConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> ConnectorsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ConnectorsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ConnectorsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ConnectorsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConnectorsConnection::DeleteOperation(
+Status ConnectorsConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConnectorsConnection::CancelOperation(
+Status ConnectorsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -269,17 +271,17 @@ ConnectorsConnection::CancelOperation(
 std::shared_ptr<ConnectorsConnection> MakeConnectorsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ConnectorsPolicyOptionList>(options, __func__);
-  options = connectors_v1_internal::ConnectorsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ConnectorsPolicyOptionList>(options, __func__);
+  options =
+      connectors_v1_internal::ConnectorsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = connectors_v1_internal::CreateDefaultConnectorsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return connectors_v1_internal::MakeConnectorsTracingConnection(
       std::make_shared<connectors_v1_internal::ConnectorsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

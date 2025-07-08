@@ -26,51 +26,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-WebRiskServiceConnectionIdempotencyPolicy::~WebRiskServiceConnectionIdempotencyPolicy() = default;
+WebRiskServiceConnectionIdempotencyPolicy::
+    ~WebRiskServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
 WebRiskServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<WebRiskServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&) {
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::ComputeThreatListDiff(
+    google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const&) {
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::SearchUris(
+    google::cloud::webrisk::v1::SearchUrisRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const&) {
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::SearchHashes(
+    google::cloud::webrisk::v1::SearchHashesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const&) {
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::CreateSubmission(
+    google::cloud::webrisk::v1::CreateSubmissionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::SubmitUri(google::cloud::webrisk::v1::SubmitUriRequest const&) {
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::SubmitUri(
+    google::cloud::webrisk::v1::SubmitUriRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebRiskServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
-    MakeDefaultWebRiskServiceConnectionIdempotencyPolicy() {
+MakeDefaultWebRiskServiceConnectionIdempotencyPolicy() {
   return std::make_unique<WebRiskServiceConnectionIdempotencyPolicy>();
 }
 

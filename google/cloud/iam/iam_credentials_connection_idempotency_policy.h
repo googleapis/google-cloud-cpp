@@ -26,11 +26,16 @@ namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use iam_credentials_v1::MakeDefaultIAMCredentialsConnectionIdempotencyPolicy directly.
-using ::google::cloud::iam_credentials_v1::MakeDefaultIAMCredentialsConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// iam_credentials_v1::MakeDefaultIAMCredentialsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::iam_credentials_v1::
+    MakeDefaultIAMCredentialsConnectionIdempotencyPolicy;
 
-/// @deprecated Use iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicy directly.
-using ::google::cloud::iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicy directly.
+using ::google::cloud::iam_credentials_v1::
+    IAMCredentialsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam

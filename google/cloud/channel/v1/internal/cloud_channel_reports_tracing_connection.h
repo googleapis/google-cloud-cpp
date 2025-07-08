@@ -36,38 +36,38 @@ class CloudChannelReportsServiceTracingConnection
   ~CloudChannelReportsServiceTracingConnection() override = default;
 
   explicit CloudChannelReportsServiceTracingConnection(
-    std::shared_ptr<channel_v1::CloudChannelReportsServiceConnection> child);
+      std::shared_ptr<channel_v1::CloudChannelReportsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request) override;
+  RunReportJob(
+      google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  RunReportJob(NoAwaitTag,
+  StatusOr<google::longrunning::Operation> RunReportJob(
+      NoAwaitTag,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob(
-      google::longrunning::Operation const& operation) override;
+  RunReportJob(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::channel::v1::Row>
-  FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest request) override;
+  StreamRange<google::cloud::channel::v1::Row> FetchReportResults(
+      google::cloud::channel::v1::FetchReportResultsRequest request) override;
 
-  StreamRange<google::cloud::channel::v1::Report>
-  ListReports(google::cloud::channel::v1::ListReportsRequest request) override;
+  StreamRange<google::cloud::channel::v1::Report> ListReports(
+      google::cloud::channel::v1::ListReportsRequest request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<channel_v1::CloudChannelReportsServiceConnection> child_;

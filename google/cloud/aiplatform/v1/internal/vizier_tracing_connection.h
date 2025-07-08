@@ -36,100 +36,113 @@ class VizierServiceTracingConnection
   ~VizierServiceTracingConnection() override = default;
 
   explicit VizierServiceTracingConnection(
-    std::shared_ptr<aiplatform_v1::VizierServiceConnection> child);
+      std::shared_ptr<aiplatform_v1::VizierServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  CreateStudy(google::cloud::aiplatform::v1::CreateStudyRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
+      google::cloud::aiplatform::v1::CreateStudyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  GetStudy(google::cloud::aiplatform::v1::GetStudyRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Study> GetStudy(
+      google::cloud::aiplatform::v1::GetStudyRequest const& request) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Study>
-  ListStudies(google::cloud::aiplatform::v1::ListStudiesRequest request) override;
+  StreamRange<google::cloud::aiplatform::v1::Study> ListStudies(
+      google::cloud::aiplatform::v1::ListStudiesRequest request) override;
 
-  Status
-  DeleteStudy(google::cloud::aiplatform::v1::DeleteStudyRequest const& request) override;
+  Status DeleteStudy(google::cloud::aiplatform::v1::DeleteStudyRequest const&
+                         request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Study>
-  LookupStudy(google::cloud::aiplatform::v1::LookupStudyRequest const& request) override;
-
-  future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials(google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  SuggestTrials(NoAwaitTag,
-      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Study> LookupStudy(
+      google::cloud::aiplatform::v1::LookupStudyRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials(
-      google::longrunning::Operation const& operation) override;
+  SuggestTrials(google::cloud::aiplatform::v1::SuggestTrialsRequest const&
+                    request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  CreateTrial(google::cloud::aiplatform::v1::CreateTrialRequest const& request) override;
+  StatusOr<google::longrunning::Operation> SuggestTrials(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  GetTrial(google::cloud::aiplatform::v1::GetTrialRequest const& request) override;
+  future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
+  SuggestTrials(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::aiplatform::v1::Trial>
-  ListTrials(google::cloud::aiplatform::v1::ListTrialsRequest request) override;
+  StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
+      google::cloud::aiplatform::v1::CreateTrialRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  AddTrialMeasurement(google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Trial> GetTrial(
+      google::cloud::aiplatform::v1::GetTrialRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  CompleteTrial(google::cloud::aiplatform::v1::CompleteTrialRequest const& request) override;
+  StreamRange<google::cloud::aiplatform::v1::Trial> ListTrials(
+      google::cloud::aiplatform::v1::ListTrialsRequest request) override;
 
-  Status
-  DeleteTrial(google::cloud::aiplatform::v1::DeleteTrialRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Trial> AddTrialMeasurement(
+      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-  CheckTrialEarlyStoppingState(google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Trial> CompleteTrial(
+      google::cloud::aiplatform::v1::CompleteTrialRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CheckTrialEarlyStoppingState(NoAwaitTag,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) override;
+  Status DeleteTrial(google::cloud::aiplatform::v1::DeleteTrialRequest const&
+                         request) override;
 
-  future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+  future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+  CheckTrialEarlyStoppingState(
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
   CheckTrialEarlyStoppingState(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::aiplatform::v1::Trial>
-  StopTrial(google::cloud::aiplatform::v1::StopTrialRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(
+      google::cloud::aiplatform::v1::StopTrialRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
-  ListOptimalTrials(google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) override;
+  ListOptimalTrials(
+      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<aiplatform_v1::VizierServiceConnection> child_;

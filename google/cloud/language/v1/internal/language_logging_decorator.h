@@ -35,42 +35,40 @@ class LanguageServiceLogging : public LanguageServiceStub {
  public:
   ~LanguageServiceLogging() override = default;
   LanguageServiceLogging(std::shared_ptr<LanguageServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                         TracingOptions tracing_options,
+                         std::set<std::string> const& components);
 
-  StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse> AnalyzeSentiment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::language::v1::AnalyzeSentimentRequest const& request) override;
+  StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
+  AnalyzeSentiment(grpc::ClientContext& context, Options const& options,
+                   google::cloud::language::v1::AnalyzeSentimentRequest const&
+                       request) override;
 
-  StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse> AnalyzeEntities(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::language::v1::AnalyzeEntitiesRequest const& request) override;
+  StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
+  AnalyzeEntities(grpc::ClientContext& context, Options const& options,
+                  google::cloud::language::v1::AnalyzeEntitiesRequest const&
+                      request) override;
 
-  StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse> AnalyzeEntitySentiment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) override;
+  StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
+  AnalyzeEntitySentiment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request)
+      override;
 
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::language::v1::AnalyzeSyntaxRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::language::v1::AnalyzeSyntaxRequest const& request)
+      override;
 
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v1::ClassifyTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v1::ModerateTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:

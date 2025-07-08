@@ -31,27 +31,29 @@ MetricServiceAuth::MetricServiceAuth(
     std::shared_ptr<MetricServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse> MetricServiceAuth::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const& request) {
+StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
+MetricServiceAuth::ListMonitoredResourceDescriptors(
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListMonitoredResourceDescriptors(context, options, request);
 }
 
-StatusOr<google::api::MonitoredResourceDescriptor> MetricServiceAuth::GetMonitoredResourceDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) {
+StatusOr<google::api::MonitoredResourceDescriptor>
+MetricServiceAuth::GetMonitoredResourceDescriptor(
+    grpc::ClientContext& context, Options const& options,
+    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetMonitoredResourceDescriptor(context, options, request);
 }
 
-StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse> MetricServiceAuth::ListMetricDescriptors(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
+MetricServiceAuth::ListMetricDescriptors(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,17 +61,16 @@ StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse> MetricServiceAut
 }
 
 StatusOr<google::api::MetricDescriptor> MetricServiceAuth::GetMetricDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetMetricDescriptorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetMetricDescriptor(context, options, request);
 }
 
-StatusOr<google::api::MetricDescriptor> MetricServiceAuth::CreateMetricDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::api::MetricDescriptor>
+MetricServiceAuth::CreateMetricDescriptor(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,17 +78,16 @@ StatusOr<google::api::MetricDescriptor> MetricServiceAuth::CreateMetricDescripto
 }
 
 Status MetricServiceAuth::DeleteMetricDescriptor(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteMetricDescriptor(context, options, request);
 }
 
-StatusOr<google::monitoring::v3::ListTimeSeriesResponse> MetricServiceAuth::ListTimeSeries(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::monitoring::v3::ListTimeSeriesResponse>
+MetricServiceAuth::ListTimeSeries(
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,8 +95,7 @@ StatusOr<google::monitoring::v3::ListTimeSeriesResponse> MetricServiceAuth::List
 }
 
 Status MetricServiceAuth::CreateTimeSeries(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,27 +103,26 @@ Status MetricServiceAuth::CreateTimeSeries(
 }
 
 Status MetricServiceAuth::CreateServiceTimeSeries(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateServiceTimeSeries(context, options, request);
 }
 
-future<Status>
-MetricServiceAuth::AsyncCreateTimeSeries(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+future<Status> MetricServiceAuth::AsyncCreateTimeSeries(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCreateTimeSeries(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateTimeSeries(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 

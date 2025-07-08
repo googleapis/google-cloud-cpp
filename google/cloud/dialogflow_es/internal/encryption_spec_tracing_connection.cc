@@ -34,75 +34,96 @@ EncryptionSpecServiceTracingConnection::EncryptionSpecServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
-EncryptionSpecServiceTracingConnection::GetEncryptionSpec(google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EncryptionSpecServiceConnection::GetEncryptionSpec");
+EncryptionSpecServiceTracingConnection::GetEncryptionSpec(
+    google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EncryptionSpecServiceConnection::GetEncryptionSpec");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEncryptionSpec(request));
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-EncryptionSpecServiceTracingConnection::InitializeEncryptionSpec(google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
+future<
+    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+EncryptionSpecServiceTracingConnection::InitializeEncryptionSpec(
+    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::EncryptionSpecServiceConnection::InitializeEncryptionSpec");
+      "dialogflow_es::EncryptionSpecServiceConnection::"
+      "InitializeEncryptionSpec");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InitializeEncryptionSpec(request));
+  return internal::EndSpan(std::move(span),
+                           child_->InitializeEncryptionSpec(request));
 }
 
 StatusOr<google::longrunning::Operation>
 EncryptionSpecServiceTracingConnection::InitializeEncryptionSpec(
-    NoAwaitTag, google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) {
+    NoAwaitTag,
+    google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::EncryptionSpecServiceConnection::InitializeEncryptionSpec");
+      "dialogflow_es::EncryptionSpecServiceConnection::"
+      "InitializeEncryptionSpec");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InitializeEncryptionSpec(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->InitializeEncryptionSpec(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+future<
+    StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
 EncryptionSpecServiceTracingConnection::InitializeEncryptionSpec(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "dialogflow_es::EncryptionSpecServiceConnection::InitializeEncryptionSpec");
+      "dialogflow_es::EncryptionSpecServiceConnection::"
+      "InitializeEncryptionSpec");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->InitializeEncryptionSpec(operation));
+                           child_->InitializeEncryptionSpec(operation));
 }
 
 StreamRange<google::cloud::location::Location>
-EncryptionSpecServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EncryptionSpecServiceConnection::ListLocations");
+EncryptionSpecServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EncryptionSpecServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-EncryptionSpecServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EncryptionSpecServiceConnection::GetLocation");
+EncryptionSpecServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EncryptionSpecServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-EncryptionSpecServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::EncryptionSpecServiceConnection::ListOperations");
+EncryptionSpecServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EncryptionSpecServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-EncryptionSpecServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EncryptionSpecServiceConnection::GetOperation");
+EncryptionSpecServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EncryptionSpecServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-EncryptionSpecServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::EncryptionSpecServiceConnection::CancelOperation");
+Status EncryptionSpecServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EncryptionSpecServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -114,7 +135,8 @@ MakeEncryptionSpecServiceTracingConnection(
     std::shared_ptr<dialogflow_es::EncryptionSpecServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<EncryptionSpecServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<EncryptionSpecServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

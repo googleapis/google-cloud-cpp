@@ -28,74 +28,79 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-FirewallTracingStub::FirewallTracingStub(
-    std::shared_ptr<FirewallStub> child)
+FirewallTracingStub::FirewallTracingStub(std::shared_ptr<FirewallStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::appengine::v1::ListIngressRulesResponse> FirewallTracingStub::ListIngressRules(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::ListIngressRulesResponse>
+FirewallTracingStub::ListIngressRules(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListIngressRulesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall", "ListIngressRules");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "ListIngressRules");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListIngressRules(context, options, request));
 }
 
-StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse> FirewallTracingStub::BatchUpdateIngressRules(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
+FirewallTracingStub::BatchUpdateIngressRules(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall", "BatchUpdateIngressRules");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "BatchUpdateIngressRules");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchUpdateIngressRules(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchUpdateIngressRules(context, options, request));
 }
 
-StatusOr<google::appengine::v1::FirewallRule> FirewallTracingStub::CreateIngressRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::FirewallRule>
+FirewallTracingStub::CreateIngressRule(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall", "CreateIngressRule");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "CreateIngressRule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateIngressRule(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateIngressRule(context, options, request));
 }
 
-StatusOr<google::appengine::v1::FirewallRule> FirewallTracingStub::GetIngressRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::FirewallRule>
+FirewallTracingStub::GetIngressRule(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetIngressRuleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall", "GetIngressRule");
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Firewall", "GetIngressRule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIngressRule(context, options, request));
 }
 
-StatusOr<google::appengine::v1::FirewallRule> FirewallTracingStub::UpdateIngressRule(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::FirewallRule>
+FirewallTracingStub::UpdateIngressRule(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall", "UpdateIngressRule");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "UpdateIngressRule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateIngressRule(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateIngressRule(context, options, request));
 }
 
 Status FirewallTracingStub::DeleteIngressRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall", "DeleteIngressRule");
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "DeleteIngressRule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteIngressRule(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteIngressRule(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

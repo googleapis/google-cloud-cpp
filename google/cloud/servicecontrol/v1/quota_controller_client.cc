@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 QuotaControllerClient::QuotaControllerClient(
     std::shared_ptr<QuotaControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 QuotaControllerClient::~QuotaControllerClient() = default;
 
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-QuotaControllerClient::AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const& request, Options opts) {
+QuotaControllerClient::AllocateQuota(
+    google::api::servicecontrol::v1::AllocateQuotaRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AllocateQuota(request);
 }

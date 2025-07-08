@@ -17,10 +17,10 @@
 // source: google/monitoring/v3/notification_service.proto
 
 #include "google/cloud/monitoring/v3/internal/notification_channel_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/monitoring/v3/notification_channel_connection.h"
 #include "google/cloud/monitoring/v3/notification_channel_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,34 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options NotificationChannelServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_NOTIFICATION_CHANNEL_SERVICE_AUTHORITY",
       "monitoring.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<monitoring_v3::NotificationChannelServiceRetryPolicyOption>()) {
+  if (!options
+           .has<monitoring_v3::NotificationChannelServiceRetryPolicyOption>()) {
     options.set<monitoring_v3::NotificationChannelServiceRetryPolicyOption>(
         monitoring_v3::NotificationChannelServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<monitoring_v3::NotificationChannelServiceBackoffPolicyOption>()) {
+  if (!options.has<
+          monitoring_v3::NotificationChannelServiceBackoffPolicyOption>()) {
     options.set<monitoring_v3::NotificationChannelServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<monitoring_v3::NotificationChannelServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<monitoring_v3::NotificationChannelServiceConnectionIdempotencyPolicyOption>(
-        monitoring_v3::MakeDefaultNotificationChannelServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          monitoring_v3::
+              NotificationChannelServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        monitoring_v3::
+            NotificationChannelServiceConnectionIdempotencyPolicyOption>(
+        monitoring_v3::
+            MakeDefaultNotificationChannelServiceConnectionIdempotencyPolicy());
   }
 
   return options;

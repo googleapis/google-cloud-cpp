@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PolicyTagManagerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_AUTHORITY",
       "datacatalog.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<datacatalog_v1::PolicyTagManagerRetryPolicyOption>()) {
     options.set<datacatalog_v1::PolicyTagManagerRetryPolicyOption>(
         datacatalog_v1::PolicyTagManagerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>()) {
     options.set<datacatalog_v1::PolicyTagManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption>(
-        datacatalog_v1::MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy());
+  if (!options.has<datacatalog_v1::
+                       PolicyTagManagerConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption>(
+            datacatalog_v1::
+                MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -17,14 +17,14 @@
 // source: google/cloud/dataproc/v1/node_groups.proto
 
 #include "google/cloud/dataproc/v1/node_group_controller_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_connection_impl.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_stub_factory.h"
 #include "google/cloud/dataproc/v1/internal/node_group_controller_tracing_connection.h"
 #include "google/cloud/dataproc/v1/node_group_controller_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,48 +42,46 @@ future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnection::CreateNodeGroup(
     google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerConnection::CreateNodeGroup(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
+    NoAwaitTag, google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnection::CreateNodeGroup(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnection::ResizeNodeGroup(
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerConnection::ResizeNodeGroup(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
+    NoAwaitTag, google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnection::ResizeNodeGroup(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
@@ -92,14 +90,12 @@ NodeGroupControllerConnection::GetNodeGroup(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-NodeGroupControllerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> NodeGroupControllerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-NodeGroupControllerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> NodeGroupControllerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -110,8 +106,10 @@ NodeGroupControllerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> NodeGroupControllerConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+NodeGroupControllerConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -122,32 +120,32 @@ NodeGroupControllerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-NodeGroupControllerConnection::DeleteOperation(
+Status NodeGroupControllerConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-NodeGroupControllerConnection::CancelOperation(
+Status NodeGroupControllerConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<NodeGroupControllerConnection> MakeNodeGroupControllerConnection(
-    std::string const& location, Options options) {
+std::shared_ptr<NodeGroupControllerConnection>
+MakeNodeGroupControllerConnection(std::string const& location,
+                                  Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      NodeGroupControllerPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 NodeGroupControllerPolicyOptionList>(options,
+                                                                      __func__);
   options = dataproc_v1_internal::NodeGroupControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataproc_v1_internal::CreateDefaultNodeGroupControllerStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dataproc_v1_internal::MakeNodeGroupControllerTracingConnection(
       std::make_shared<dataproc_v1_internal::NodeGroupControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

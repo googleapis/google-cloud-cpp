@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_QUERY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_QUERY_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/query_connection.h"
 #include "google/cloud/monitoring/v3/query_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct QueryServiceConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-monitoring-options
  */
 using QueryServicePolicyOptionList =
-    OptionList<QueryServiceRetryPolicyOption,
-               QueryServiceBackoffPolicyOption,
+    OptionList<QueryServiceRetryPolicyOption, QueryServiceBackoffPolicyOption,
                QueryServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

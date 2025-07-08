@@ -35,32 +35,44 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options InterconnectsDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_INTERCONNECTS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_INTERCONNECTS_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_INTERCONNECTS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_INTERCONNECTS_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_interconnects_v1::InterconnectsRetryPolicyOption>()) {
+  if (!options
+           .has<compute_interconnects_v1::InterconnectsRetryPolicyOption>()) {
     options.set<compute_interconnects_v1::InterconnectsRetryPolicyOption>(
         compute_interconnects_v1::InterconnectsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_interconnects_v1::InterconnectsBackoffPolicyOption>()) {
+  if (!options
+           .has<compute_interconnects_v1::InterconnectsBackoffPolicyOption>()) {
     options.set<compute_interconnects_v1::InterconnectsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_interconnects_v1::InterconnectsPollingPolicyOption>()) {
+  if (!options
+           .has<compute_interconnects_v1::InterconnectsPollingPolicyOption>()) {
     options.set<compute_interconnects_v1::InterconnectsPollingPolicyOption>(
         GenericPollingPolicy<
             compute_interconnects_v1::InterconnectsRetryPolicyOption::Type,
             compute_interconnects_v1::InterconnectsBackoffPolicyOption::Type>(
-            options.get<compute_interconnects_v1::InterconnectsRetryPolicyOption>()->clone(),
+            options
+                .get<compute_interconnects_v1::InterconnectsRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_interconnects_v1::InterconnectsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_interconnects_v1::InterconnectsConnectionIdempotencyPolicyOption>(
-        compute_interconnects_v1::MakeDefaultInterconnectsConnectionIdempotencyPolicy());
+  if (!options.has<compute_interconnects_v1::
+                       InterconnectsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_interconnects_v1::
+                    InterconnectsConnectionIdempotencyPolicyOption>(
+        compute_interconnects_v1::
+            MakeDefaultInterconnectsConnectionIdempotencyPolicy());
   }
 
   return options;

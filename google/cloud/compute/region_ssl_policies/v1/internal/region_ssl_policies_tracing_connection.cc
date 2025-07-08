@@ -30,124 +30,156 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RegionSslPoliciesTracingConnection::RegionSslPoliciesTracingConnection(
-    std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection> child)
+    std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection>
+        child)
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesTracingConnection::DeleteSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request) {
+RegionSslPoliciesTracingConnection::DeleteSslPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        DeleteSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::DeleteSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "DeleteSslPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSslPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesTracingConnection::DeleteSslPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
+                    DeleteSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::DeleteSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "DeleteSslPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSslPolicy(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSslPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesTracingConnection::DeleteSslPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::DeleteSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "DeleteSslPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteSslPolicy(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSslPolicy(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesTracingConnection::GetSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::GetSslPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_ssl_policies_v1::RegionSslPoliciesConnection::GetSslPolicy");
+RegionSslPoliciesTracingConnection::GetSslPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        GetSslPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "GetSslPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSslPolicy(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesTracingConnection::InsertSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request) {
+RegionSslPoliciesTracingConnection::InsertSslPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        InsertSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::InsertSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "InsertSslPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertSslPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesTracingConnection::InsertSslPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
+                    InsertSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::InsertSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "InsertSslPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertSslPolicy(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertSslPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesTracingConnection::InsertSslPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::InsertSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "InsertSslPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->InsertSslPolicy(operation));
+  return internal::EndSpan(std::move(span), child_->InsertSslPolicy(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesTracingConnection::ListRegionSslPolicies(google::cloud::cpp::compute::region_ssl_policies::v1::ListRegionSslPoliciesRequest request) {
-  auto span = internal::MakeSpan("compute_region_ssl_policies_v1::RegionSslPoliciesConnection::ListRegionSslPolicies");
+RegionSslPoliciesTracingConnection::ListRegionSslPolicies(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        ListRegionSslPoliciesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "ListRegionSslPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListRegionSslPolicies(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::SslPolicy>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::SslPolicy>(std::move(span),
+                                                  std::move(sr));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-RegionSslPoliciesTracingConnection::ListAvailableFeatures(google::cloud::cpp::compute::region_ssl_policies::v1::ListAvailableFeaturesRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_ssl_policies_v1::RegionSslPoliciesConnection::ListAvailableFeatures");
+StatusOr<
+    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+RegionSslPoliciesTracingConnection::ListAvailableFeatures(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        ListAvailableFeaturesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "ListAvailableFeatures");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListAvailableFeatures(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-RegionSslPoliciesTracingConnection::PatchSslPolicy(google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request) {
+RegionSslPoliciesTracingConnection::PatchSslPolicy(
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        PatchSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::PatchSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "PatchSslPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchSslPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesTracingConnection::PatchSslPolicy(
-    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
+                    PatchSslPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::PatchSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "PatchSslPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PatchSslPolicy(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->PatchSslPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesTracingConnection::PatchSslPolicy(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::PatchSslPolicy");
+      "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
+      "PatchSslPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->PatchSslPolicy(operation));
+  return internal::EndSpan(std::move(span), child_->PatchSslPolicy(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection>
 MakeRegionSslPoliciesTracingConnection(
-    std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection> conn) {
+    std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<RegionSslPoliciesTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<RegionSslPoliciesTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

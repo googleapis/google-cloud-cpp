@@ -32,22 +32,24 @@ SearchServiceTracingStub::SearchServiceTracingStub(
     std::shared_ptr<SearchServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::retail::v2::SearchResponse> SearchServiceTracingStub::Search(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::SearchResponse>
+SearchServiceTracingStub::Search(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::SearchRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.SearchService", "Search");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.retail.v2.SearchService", "Search");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->Search(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> SearchServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+SearchServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.SearchService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.SearchService",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -55,10 +57,10 @@ StatusOr<google::longrunning::ListOperationsResponse> SearchServiceTracingStub::
 }
 
 StatusOr<google::longrunning::Operation> SearchServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.SearchService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.SearchService",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

@@ -26,44 +26,58 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudChannelReportsServiceConnectionIdempotencyPolicy::~CloudChannelReportsServiceConnectionIdempotencyPolicy() = default;
+CloudChannelReportsServiceConnectionIdempotencyPolicy::
+    ~CloudChannelReportsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudChannelReportsServiceConnectionIdempotencyPolicy>
 CloudChannelReportsServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<CloudChannelReportsServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<
+      CloudChannelReportsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::RunReportJob(google::cloud::channel::v1::RunReportJobRequest const&) {
+Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::RunReportJob(
+    google::cloud::channel::v1::RunReportJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::FetchReportResults(google::cloud::channel::v1::FetchReportResultsRequest) {  // NOLINT
+Idempotency
+CloudChannelReportsServiceConnectionIdempotencyPolicy::FetchReportResults(
+    google::cloud::channel::v1::FetchReportResultsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::ListReports(google::cloud::channel::v1::ListReportsRequest) {  // NOLINT
+Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::ListReports(
+    google::cloud::channel::v1::ListReportsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency
+CloudChannelReportsServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency
+CloudChannelReportsServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency
+CloudChannelReportsServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CloudChannelReportsServiceConnectionIdempotencyPolicy>
-    MakeDefaultCloudChannelReportsServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<CloudChannelReportsServiceConnectionIdempotencyPolicy>();
+MakeDefaultCloudChannelReportsServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      CloudChannelReportsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

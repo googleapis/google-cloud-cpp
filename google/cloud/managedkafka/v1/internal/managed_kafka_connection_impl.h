@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_INTERNAL_MANAGED_KAFKA_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_INTERNAL_MANAGED_KAFKA_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_retry_traits.h"
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_stub.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection_idempotency_policy.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,116 +46,130 @@ class ManagedKafkaConnectionImpl
   ~ManagedKafkaConnectionImpl() override = default;
 
   ManagedKafkaConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<managedkafka_v1_internal::ManagedKafkaStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<managedkafka_v1_internal::ManagedKafkaStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::managedkafka::v1::Cluster>
-  ListClusters(google::cloud::managedkafka::v1::ListClustersRequest request) override;
+  StreamRange<google::cloud::managedkafka::v1::Cluster> ListClusters(
+      google::cloud::managedkafka::v1::ListClustersRequest request) override;
 
-  StatusOr<google::cloud::managedkafka::v1::Cluster>
-  GetCluster(google::cloud::managedkafka::v1::GetClusterRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::Cluster> GetCluster(
+      google::cloud::managedkafka::v1::GetClusterRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  CreateCluster(google::cloud::managedkafka::v1::CreateClusterRequest const& request) override;
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
+      google::cloud::managedkafka::v1::CreateClusterRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag,
-      google::cloud::managedkafka::v1::CreateClusterRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag,
+      google::cloud::managedkafka::v1::CreateClusterRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  CreateCluster(
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  UpdateCluster(google::cloud::managedkafka::v1::UpdateClusterRequest const& request) override;
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
+      google::cloud::managedkafka::v1::UpdateClusterRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag,
-      google::cloud::managedkafka::v1::UpdateClusterRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag,
+      google::cloud::managedkafka::v1::UpdateClusterRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  UpdateCluster(
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(google::cloud::managedkafka::v1::DeleteClusterRequest const& request) override;
+  DeleteCluster(google::cloud::managedkafka::v1::DeleteClusterRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteCluster(NoAwaitTag,
-      google::cloud::managedkafka::v1::DeleteClusterRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      NoAwaitTag,
+      google::cloud::managedkafka::v1::DeleteClusterRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(
-      google::longrunning::Operation const& operation) override;
+  DeleteCluster(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::managedkafka::v1::Topic>
-  ListTopics(google::cloud::managedkafka::v1::ListTopicsRequest request) override;
+  StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
+      google::cloud::managedkafka::v1::ListTopicsRequest request) override;
 
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  GetTopic(google::cloud::managedkafka::v1::GetTopicRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::Topic> GetTopic(
+      google::cloud::managedkafka::v1::GetTopicRequest const& request) override;
 
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  CreateTopic(google::cloud::managedkafka::v1::CreateTopicRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::Topic> CreateTopic(
+      google::cloud::managedkafka::v1::CreateTopicRequest const& request)
+      override;
 
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  UpdateTopic(google::cloud::managedkafka::v1::UpdateTopicRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::Topic> UpdateTopic(
+      google::cloud::managedkafka::v1::UpdateTopicRequest const& request)
+      override;
 
-  Status
-  DeleteTopic(google::cloud::managedkafka::v1::DeleteTopicRequest const& request) override;
+  Status DeleteTopic(google::cloud::managedkafka::v1::DeleteTopicRequest const&
+                         request) override;
 
   StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>
-  ListConsumerGroups(google::cloud::managedkafka::v1::ListConsumerGroupsRequest request) override;
+  ListConsumerGroups(google::cloud::managedkafka::v1::ListConsumerGroupsRequest
+                         request) override;
 
-  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-  GetConsumerGroup(google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> GetConsumerGroup(
+      google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-  UpdateConsumerGroup(google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> UpdateConsumerGroup(
+      google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
+          request) override;
 
-  Status
-  DeleteConsumerGroup(google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request) override;
+  Status DeleteConsumerGroup(
+      google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
+          request) override;
 
-  StreamRange<google::cloud::managedkafka::v1::Acl>
-  ListAcls(google::cloud::managedkafka::v1::ListAclsRequest request) override;
+  StreamRange<google::cloud::managedkafka::v1::Acl> ListAcls(
+      google::cloud::managedkafka::v1::ListAclsRequest request) override;
 
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  GetAcl(google::cloud::managedkafka::v1::GetAclRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(
+      google::cloud::managedkafka::v1::GetAclRequest const& request) override;
 
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  CreateAcl(google::cloud::managedkafka::v1::CreateAclRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      google::cloud::managedkafka::v1::CreateAclRequest const& request)
+      override;
 
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  UpdateAcl(google::cloud::managedkafka::v1::UpdateAclRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request)
+      override;
 
-  Status
-  DeleteAcl(google::cloud::managedkafka::v1::DeleteAclRequest const& request) override;
+  Status DeleteAcl(google::cloud::managedkafka::v1::DeleteAclRequest const&
+                       request) override;
 
-  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
-  AddAclEntry(google::cloud::managedkafka::v1::AddAclEntryRequest const& request) override;
+  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse> AddAclEntry(
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request)
+      override;
 
   StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
-  RemoveAclEntry(google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request) override;
+  RemoveAclEntry(google::cloud::managedkafka::v1::RemoveAclEntryRequest const&
+                     request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

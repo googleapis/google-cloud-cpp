@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_AVAILABLE_DATABASE_VERSIONS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_AVAILABLE_DATABASE_VERSIONS_CLIENT_H
 
+#include "google/cloud/sql/v1/sql_available_database_versions_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/sql/v1/sql_available_database_versions_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -62,23 +62,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlAvailableDatabaseVersionsServiceClient {
  public:
-  explicit SqlAvailableDatabaseVersionsServiceClient(std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnection> connection, Options opts = {});
+  explicit SqlAvailableDatabaseVersionsServiceClient(
+      std::shared_ptr<SqlAvailableDatabaseVersionsServiceConnection> connection,
+      Options opts = {});
   ~SqlAvailableDatabaseVersionsServiceClient();
 
   ///@{
   /// @name Copy and move support
-  SqlAvailableDatabaseVersionsServiceClient(SqlAvailableDatabaseVersionsServiceClient const&) = default;
-  SqlAvailableDatabaseVersionsServiceClient& operator=(SqlAvailableDatabaseVersionsServiceClient const&) = default;
-  SqlAvailableDatabaseVersionsServiceClient(SqlAvailableDatabaseVersionsServiceClient&&) = default;
-  SqlAvailableDatabaseVersionsServiceClient& operator=(SqlAvailableDatabaseVersionsServiceClient&&) = default;
+  SqlAvailableDatabaseVersionsServiceClient(
+      SqlAvailableDatabaseVersionsServiceClient const&) = default;
+  SqlAvailableDatabaseVersionsServiceClient& operator=(
+      SqlAvailableDatabaseVersionsServiceClient const&) = default;
+  SqlAvailableDatabaseVersionsServiceClient(
+      SqlAvailableDatabaseVersionsServiceClient&&) = default;
+  SqlAvailableDatabaseVersionsServiceClient& operator=(
+      SqlAvailableDatabaseVersionsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlAvailableDatabaseVersionsServiceClient const& a, SqlAvailableDatabaseVersionsServiceClient const& b) {
+  friend bool operator==(SqlAvailableDatabaseVersionsServiceClient const& a,
+                         SqlAvailableDatabaseVersionsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlAvailableDatabaseVersionsServiceClient const& a, SqlAvailableDatabaseVersionsServiceClient const& b) {
+  friend bool operator!=(SqlAvailableDatabaseVersionsServiceClient const& a,
+                         SqlAvailableDatabaseVersionsServiceClient const& b) {
     return !(a == b);
   }
   ///@}

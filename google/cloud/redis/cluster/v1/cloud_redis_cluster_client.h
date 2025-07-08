@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_CLOUD_REDIS_CLUSTER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLUSTER_V1_CLOUD_REDIS_CLUSTER_CLIENT_H
 
+#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -44,8 +44,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// The `redis.googleapis.com` service implements the Google Cloud Memorystore
 /// for Redis API and defines the following resource model for managing Redis
 /// clusters:
-/// * The service works with a collection of cloud projects, named: `/projects/*`
-/// * Each project has a collection of available locations, named: `/locations/*`
+/// * The service works with a collection of cloud projects, named:
+/// `/projects/*`
+/// * Each project has a collection of available locations, named:
+/// `/locations/*`
 /// * Each location has a collection of Redis clusters, named: `/clusters/*`
 /// * As such, Redis clusters are resources of the form:
 ///   `/projects/{project_id}/locations/{location_id}/clusters/{instance_id}`
@@ -78,7 +80,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudRedisClusterClient {
  public:
-  explicit CloudRedisClusterClient(std::shared_ptr<CloudRedisClusterConnection> connection, Options opts = {});
+  explicit CloudRedisClusterClient(
+      std::shared_ptr<CloudRedisClusterConnection> connection,
+      Options opts = {});
   ~CloudRedisClusterClient();
 
   ///@{
@@ -91,10 +95,12 @@ class CloudRedisClusterClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudRedisClusterClient const& a, CloudRedisClusterClient const& b) {
+  friend bool operator==(CloudRedisClusterClient const& a,
+                         CloudRedisClusterClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudRedisClusterClient const& a, CloudRedisClusterClient const& b) {
+  friend bool operator!=(CloudRedisClusterClient const& a,
+                         CloudRedisClusterClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -140,8 +146,8 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L366}
   ///
   // clang-format on
-  StreamRange<google::cloud::redis::cluster::v1::Cluster>
-  ListClusters(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -187,8 +193,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L366}
   ///
   // clang-format on
-  StreamRange<google::cloud::redis::cluster::v1::Cluster>
-  ListClusters(google::cloud::redis::cluster::v1::ListClustersRequest request, Options opts = {});
+  StreamRange<google::cloud::redis::cluster::v1::Cluster> ListClusters(
+      google::cloud::redis::cluster::v1::ListClustersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +221,8 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L434}
   ///
   // clang-format on
-  StatusOr<google::cloud::redis::cluster::v1::Cluster>
-  GetCluster(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -244,8 +251,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L434}
   ///
   // clang-format on
-  StatusOr<google::cloud::redis::cluster::v1::Cluster>
-  GetCluster(google::cloud::redis::cluster::v1::GetClusterRequest const& request, Options opts = {});
+  StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
+      google::cloud::redis::cluster::v1::GetClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -287,8 +295,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L415}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  UpdateCluster(google::cloud::redis::cluster::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
+      google::cloud::redis::cluster::v1::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -301,8 +310,9 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag, google::cloud::redis::cluster::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag, google::cloud::redis::cluster::v1::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -342,8 +352,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L415}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  UpdateCluster(google::cloud::redis::cluster::v1::UpdateClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -356,8 +367,10 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag, google::cloud::redis::cluster::v1::UpdateClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -368,8 +381,8 @@ class CloudRedisClusterClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  UpdateCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -403,8 +416,8 @@ class CloudRedisClusterClient {
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Any>>
-  DeleteCluster(std::string const& name, Options opts = {});
+  future<StatusOr<google::protobuf::Any>> DeleteCluster(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -417,8 +430,8 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteCluster(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -455,8 +468,9 @@ class CloudRedisClusterClient {
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Any>>
-  DeleteCluster(google::cloud::redis::cluster::v1::DeleteClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::protobuf::Any>> DeleteCluster(
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -469,8 +483,10 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteCluster(NoAwaitTag, google::cloud::redis::cluster::v1::DeleteClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -481,8 +497,8 @@ class CloudRedisClusterClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Any>>
-  DeleteCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Any>> DeleteCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -531,8 +547,10 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L337}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  CreateCluster(std::string const& parent, google::cloud::redis::cluster::v1::Cluster const& cluster, std::string const& cluster_id, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
+      std::string const& parent,
+      google::cloud::redis::cluster::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -545,8 +563,10 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag, std::string const& parent, google::cloud::redis::cluster::v1::Cluster const& cluster, std::string const& cluster_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::redis::cluster::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -589,8 +609,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L337}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  CreateCluster(google::cloud::redis::cluster::v1::CreateClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -603,8 +624,10 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag, google::cloud::redis::cluster::v1::CreateClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -615,8 +638,8 @@ class CloudRedisClusterClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  CreateCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -673,7 +696,10 @@ class CloudRedisClusterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
-  GetClusterCertificateAuthority(google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request, Options opts = {});
+  GetClusterCertificateAuthority(
+      google::cloud::redis::cluster::v1::
+          GetClusterCertificateAuthorityRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -712,7 +738,11 @@ class CloudRedisClusterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  RescheduleClusterMaintenance(std::string const& name, google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest::RescheduleType reschedule_type, google::protobuf::Timestamp const& schedule_time, Options opts = {});
+  RescheduleClusterMaintenance(
+      std::string const& name,
+      google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest::
+          RescheduleType reschedule_type,
+      google::protobuf::Timestamp const& schedule_time, Options opts = {});
 
   // clang-format off
   ///
@@ -725,8 +755,11 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RescheduleClusterMaintenance(NoAwaitTag, std::string const& name, google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest::RescheduleType reschedule_type, google::protobuf::Timestamp const& schedule_time, Options opts = {});
+  StatusOr<google::longrunning::Operation> RescheduleClusterMaintenance(
+      NoAwaitTag, std::string const& name,
+      google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest::
+          RescheduleType reschedule_type,
+      google::protobuf::Timestamp const& schedule_time, Options opts = {});
 
   // clang-format off
   ///
@@ -763,7 +796,10 @@ class CloudRedisClusterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  RescheduleClusterMaintenance(google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request, Options opts = {});
+  RescheduleClusterMaintenance(
+      google::cloud::redis::cluster::v1::
+          RescheduleClusterMaintenanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -776,8 +812,11 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RescheduleClusterMaintenance(NoAwaitTag, google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RescheduleClusterMaintenance(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::
+          RescheduleClusterMaintenanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -789,7 +828,8 @@ class CloudRedisClusterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  RescheduleClusterMaintenance(google::longrunning::Operation const& operation, Options opts = {});
+  RescheduleClusterMaintenance(google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -873,7 +913,9 @@ class CloudRedisClusterClient {
   ///
   // clang-format on
   StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
-  ListBackupCollections(google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request, Options opts = {});
+  ListBackupCollections(
+      google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -930,7 +972,10 @@ class CloudRedisClusterClient {
   ///
   // clang-format on
   StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
-  GetBackupCollection(google::cloud::redis::cluster::v1::GetBackupCollectionRequest const& request, Options opts = {});
+  GetBackupCollection(
+      google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -964,8 +1009,8 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L535}
   ///
   // clang-format on
-  StreamRange<google::cloud::redis::cluster::v1::Backup>
-  ListBackups(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::redis::cluster::v1::Backup> ListBackups(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1003,8 +1048,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L535}
   ///
   // clang-format on
-  StreamRange<google::cloud::redis::cluster::v1::Backup>
-  ListBackups(google::cloud::redis::cluster::v1::ListBackupsRequest request, Options opts = {});
+  StreamRange<google::cloud::redis::cluster::v1::Backup> ListBackups(
+      google::cloud::redis::cluster::v1::ListBackupsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1029,8 +1075,8 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L573}
   ///
   // clang-format on
-  StatusOr<google::cloud::redis::cluster::v1::Backup>
-  GetBackup(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1059,8 +1105,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L573}
   ///
   // clang-format on
-  StatusOr<google::cloud::redis::cluster::v1::Backup>
-  GetBackup(google::cloud::redis::cluster::v1::GetBackupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::redis::cluster::v1::Backup> GetBackup(
+      google::cloud::redis::cluster::v1::GetBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1092,8 +1139,8 @@ class CloudRedisClusterClient {
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Any>>
-  DeleteBackup(std::string const& name, Options opts = {});
+  future<StatusOr<google::protobuf::Any>> DeleteBackup(std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -1106,8 +1153,9 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteBackup(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteBackup(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1143,8 +1191,9 @@ class CloudRedisClusterClient {
   /// [google.protobuf.Any]: @googleapis_reference_link{google/protobuf/any.proto#L128}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Any>>
-  DeleteBackup(google::cloud::redis::cluster::v1::DeleteBackupRequest const& request, Options opts = {});
+  future<StatusOr<google::protobuf::Any>> DeleteBackup(
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1157,8 +1206,10 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteBackup(NoAwaitTag, google::cloud::redis::cluster::v1::DeleteBackupRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1169,8 +1220,8 @@ class CloudRedisClusterClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Any>>
-  DeleteBackup(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Any>> DeleteBackup(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1206,8 +1257,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.ExportBackupRequest]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L599}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
-  ExportBackup(google::cloud::redis::cluster::v1::ExportBackupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Backup>> ExportBackup(
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1220,8 +1272,10 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportBackup(NoAwaitTag, google::cloud::redis::cluster::v1::ExportBackupRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportBackup(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::ExportBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1232,8 +1286,8 @@ class CloudRedisClusterClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
-  ExportBackup(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Backup>> ExportBackup(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1277,8 +1331,8 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L634}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  BackupCluster(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> BackupCluster(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1291,8 +1345,8 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BackupCluster(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> BackupCluster(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1339,8 +1393,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.redis.cluster.v1.Cluster]: @googleapis_reference_link{google/cloud/redis/cluster/v1/cloud_redis_cluster.proto#L634}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  BackupCluster(google::cloud::redis::cluster::v1::BackupClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> BackupCluster(
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1353,8 +1408,10 @@ class CloudRedisClusterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BackupCluster(NoAwaitTag, google::cloud::redis::cluster::v1::BackupClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> BackupCluster(
+      NoAwaitTag,
+      google::cloud::redis::cluster::v1::BackupClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1365,8 +1422,8 @@ class CloudRedisClusterClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  BackupCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> BackupCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1404,8 +1461,8 @@ class CloudRedisClusterClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1434,8 +1491,9 @@ class CloudRedisClusterClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1470,8 +1528,8 @@ class CloudRedisClusterClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1510,8 +1568,8 @@ class CloudRedisClusterClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1537,8 +1595,8 @@ class CloudRedisClusterClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1569,8 +1627,9 @@ class CloudRedisClusterClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1594,8 +1653,7 @@ class CloudRedisClusterClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1624,8 +1682,9 @@ class CloudRedisClusterClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1659,8 +1718,7 @@ class CloudRedisClusterClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1699,8 +1757,9 @@ class CloudRedisClusterClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudRedisClusterConnection> connection_;

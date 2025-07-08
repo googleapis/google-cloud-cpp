@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `VideoIntelligenceServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `VideoIntelligenceServiceClient`. To do so,
- * construct an object of type `VideoIntelligenceServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `VideoIntelligenceServiceClient`. To
+ * do so, construct an object of type `VideoIntelligenceServiceClient` with an
+ * instance of this class. Then use the Google Test framework functions to
+ * program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockVideoIntelligenceServiceConnection : public videointelligence_v1::VideoIntelligenceServiceConnection {
+class MockVideoIntelligenceServiceConnection
+    : public videointelligence_v1::VideoIntelligenceServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,16 @@ class MockVideoIntelligenceServiceConnection : public videointelligence_v1::Vide
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AnnotateVideo(Matcher<google::cloud::videointelligence::v1::AnnotateVideoRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AnnotateVideo(Matcher<google::cloud::videointelligence::v1::AnnotateVideoRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
-  AnnotateVideo,
-  (google::cloud::videointelligence::v1::AnnotateVideoRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
+              AnnotateVideo,
+              (google::cloud::videointelligence::v1::AnnotateVideoRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,21 +69,24 @@ class MockVideoIntelligenceServiceConnection : public videointelligence_v1::Vide
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AnnotateVideo(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  AnnotateVideo, (NoAwaitTag,
-    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, AnnotateVideo,
+              (NoAwaitTag,
+               google::cloud::videointelligence::v1::AnnotateVideoRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AnnotateVideo(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, AnnotateVideo(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
-  AnnotateVideo, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
+              AnnotateVideo, (google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

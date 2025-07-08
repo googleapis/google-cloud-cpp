@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_RECOMMENDATION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_RECOMMENDATION_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/recommendation_connection.h"
 #include "google/cloud/discoveryengine/v1/recommendation_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct RecommendationServiceBackoffPolicyOption {
  * @ingroup google-cloud-discoveryengine-options
  */
 struct RecommendationServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<RecommendationServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<RecommendationServiceConnectionIdempotencyPolicy>;
 };
 
 /**

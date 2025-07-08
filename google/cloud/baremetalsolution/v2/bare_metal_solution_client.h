@@ -71,7 +71,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BareMetalSolutionClient {
  public:
-  explicit BareMetalSolutionClient(std::shared_ptr<BareMetalSolutionConnection> connection, Options opts = {});
+  explicit BareMetalSolutionClient(
+      std::shared_ptr<BareMetalSolutionConnection> connection,
+      Options opts = {});
   ~BareMetalSolutionClient();
 
   ///@{
@@ -84,10 +86,12 @@ class BareMetalSolutionClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BareMetalSolutionClient const& a, BareMetalSolutionClient const& b) {
+  friend bool operator==(BareMetalSolutionClient const& a,
+                         BareMetalSolutionClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BareMetalSolutionClient const& a, BareMetalSolutionClient const& b) {
+  friend bool operator!=(BareMetalSolutionClient const& a,
+                         BareMetalSolutionClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -123,8 +127,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L165}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::Instance>
-  ListInstances(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -162,8 +166,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L165}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::Instance>
-  ListInstances(google::cloud::baremetalsolution::v2::ListInstancesRequest request, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
+      google::cloud::baremetalsolution::v2::ListInstancesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -187,8 +192,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Instance>
-  GetInstance(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -217,8 +222,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Instance>
-  GetInstance(google::cloud::baremetalsolution::v2::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
+      google::cloud::baremetalsolution::v2::GetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -258,7 +264,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
-  UpdateInstance(google::cloud::baremetalsolution::v2::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateInstance(google::cloud::baremetalsolution::v2::Instance const& instance,
+                 google::protobuf::FieldMask const& update_mask,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -271,8 +279,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::baremetalsolution::v2::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -309,7 +319,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
-  UpdateInstance(google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request, Options opts = {});
+  UpdateInstance(
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -322,8 +335,11 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -335,7 +351,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateInstance(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -362,8 +379,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.RenameInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L214}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Instance>
-  RenameInstance(std::string const& name, std::string const& new_instance_id, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
+      std::string const& name, std::string const& new_instance_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -393,8 +411,10 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.RenameInstanceRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L214}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Instance>
-  RenameInstance(google::cloud::baremetalsolution::v2::RenameInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
+      google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -440,8 +460,8 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ResetInstance(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> ResetInstance(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -479,7 +499,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
-  ResetInstance(google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request, Options opts = {});
+  ResetInstance(
+      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -492,8 +514,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ResetInstance(NoAwaitTag, google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ResetInstance(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -505,7 +529,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
-  ResetInstance(google::longrunning::Operation const& operation, Options opts = {});
+  ResetInstance(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -550,8 +575,8 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StartInstance(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> StartInstance(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -588,7 +613,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
-  StartInstance(google::cloud::baremetalsolution::v2::StartInstanceRequest const& request, Options opts = {});
+  StartInstance(
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -601,8 +628,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StartInstance(NoAwaitTag, google::cloud::baremetalsolution::v2::StartInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> StartInstance(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -614,7 +643,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
-  StartInstance(google::longrunning::Operation const& operation, Options opts = {});
+  StartInstance(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -659,8 +689,9 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StopInstance(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> StopInstance(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -697,7 +728,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
-  StopInstance(google::cloud::baremetalsolution::v2::StopInstanceRequest const& request, Options opts = {});
+  StopInstance(
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -710,8 +743,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StopInstance(NoAwaitTag, google::cloud::baremetalsolution::v2::StopInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> StopInstance(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -723,7 +758,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
-  StopInstance(google::longrunning::Operation const& operation, Options opts = {});
+  StopInstance(google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -754,7 +790,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L279}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      EnableInteractiveSerialConsoleResponse>>
   EnableInteractiveSerialConsole(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -768,8 +805,8 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  EnableInteractiveSerialConsole(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> EnableInteractiveSerialConsole(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -805,8 +842,12 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.EnableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L279}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>
-  EnableInteractiveSerialConsole(google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      EnableInteractiveSerialConsoleResponse>>
+  EnableInteractiveSerialConsole(
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -819,8 +860,11 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  EnableInteractiveSerialConsole(NoAwaitTag, google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> EnableInteractiveSerialConsole(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -831,8 +875,10 @@ class BareMetalSolutionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleResponse>>
-  EnableInteractiveSerialConsole(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      EnableInteractiveSerialConsoleResponse>>
+  EnableInteractiveSerialConsole(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -863,7 +909,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L293}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      DisableInteractiveSerialConsoleResponse>>
   DisableInteractiveSerialConsole(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -877,8 +924,8 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DisableInteractiveSerialConsole(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DisableInteractiveSerialConsole(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -914,8 +961,12 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.DisableInteractiveSerialConsoleResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L293}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>
-  DisableInteractiveSerialConsole(google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      DisableInteractiveSerialConsoleResponse>>
+  DisableInteractiveSerialConsole(
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -928,8 +979,11 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DisableInteractiveSerialConsole(NoAwaitTag, google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DisableInteractiveSerialConsole(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -940,8 +994,10 @@ class BareMetalSolutionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleResponse>>
-  DisableInteractiveSerialConsole(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      DisableInteractiveSerialConsoleResponse>>
+  DisableInteractiveSerialConsole(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -973,8 +1029,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
-  DetachLun(std::string const& instance, std::string const& lun, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
+      std::string const& instance, std::string const& lun, Options opts = {});
 
   // clang-format off
   ///
@@ -987,8 +1043,9 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DetachLun(NoAwaitTag, std::string const& instance, std::string const& lun, Options opts = {});
+  StatusOr<google::longrunning::Operation> DetachLun(
+      NoAwaitTag, std::string const& instance, std::string const& lun,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1024,8 +1081,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Instance]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
-  DetachLun(google::cloud::baremetalsolution::v2::DetachLunRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1038,8 +1096,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DetachLun(NoAwaitTag, google::cloud::baremetalsolution::v2::DetachLunRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DetachLun(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1050,8 +1110,8 @@ class BareMetalSolutionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
-  DetachLun(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1086,8 +1146,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.SSHKey]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L31}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::SSHKey>
-  ListSSHKeys(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::SSHKey> ListSSHKeys(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1126,8 +1186,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.SSHKey]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L31}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::SSHKey>
-  ListSSHKeys(google::cloud::baremetalsolution::v2::ListSSHKeysRequest request, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::SSHKey> ListSSHKeys(
+      google::cloud::baremetalsolution::v2::ListSSHKeysRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1158,8 +1219,10 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.SSHKey]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
-  CreateSSHKey(std::string const& parent, google::cloud::baremetalsolution::v2::SSHKey const& ssh_key, std::string const& ssh_key_id, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::SSHKey const& ssh_key,
+      std::string const& ssh_key_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1189,8 +1252,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.SSHKey]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
-  CreateSSHKey(google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
+      google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1212,8 +1276,7 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.DeleteSSHKeyRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L95}
   ///
   // clang-format on
-  Status
-  DeleteSSHKey(std::string const& name, Options opts = {});
+  Status DeleteSSHKey(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1239,8 +1302,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.DeleteSSHKeyRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/ssh_key.proto#L95}
   ///
   // clang-format on
-  Status
-  DeleteSSHKey(google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request, Options opts = {});
+  Status DeleteSSHKey(
+      google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1273,8 +1337,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::Volume>
-  ListVolumes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::Volume> ListVolumes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1312,8 +1376,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::Volume>
-  ListVolumes(google::cloud::baremetalsolution::v2::ListVolumesRequest request, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::Volume> ListVolumes(
+      google::cloud::baremetalsolution::v2::ListVolumesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1337,8 +1402,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Volume>
-  GetVolume(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1367,8 +1432,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Volume>
-  GetVolume(google::cloud::baremetalsolution::v2::GetVolumeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
+      google::cloud::baremetalsolution::v2::GetVolumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1405,8 +1471,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
-  UpdateVolume(google::cloud::baremetalsolution::v2::Volume const& volume, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
+      google::cloud::baremetalsolution::v2::Volume const& volume,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1419,8 +1486,9 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateVolume(NoAwaitTag, google::cloud::baremetalsolution::v2::Volume const& volume, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateVolume(
+      NoAwaitTag, google::cloud::baremetalsolution::v2::Volume const& volume,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1456,8 +1524,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
-  UpdateVolume(google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
+      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1470,8 +1539,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateVolume(NoAwaitTag, google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateVolume(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1482,8 +1553,8 @@ class BareMetalSolutionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
-  UpdateVolume(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1510,8 +1581,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Volume>
-  RenameVolume(std::string const& name, std::string const& new_volume_id, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
+      std::string const& name, std::string const& new_volume_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1541,8 +1613,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Volume>
-  RenameVolume(google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
+      google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1588,8 +1661,9 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  EvictVolume(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> EvictVolume(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -1627,7 +1701,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  EvictVolume(google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request, Options opts = {});
+  EvictVolume(
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1640,8 +1716,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  EvictVolume(NoAwaitTag, google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> EvictVolume(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1653,7 +1731,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  EvictVolume(google::longrunning::Operation const& operation, Options opts = {});
+  EvictVolume(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -1685,8 +1764,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
-  ResizeVolume(std::string const& volume, std::int64_t size_gib, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
+      std::string const& volume, std::int64_t size_gib, Options opts = {});
 
   // clang-format off
   ///
@@ -1699,8 +1778,9 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ResizeVolume(NoAwaitTag, std::string const& volume, std::int64_t size_gib, Options opts = {});
+  StatusOr<google::longrunning::Operation> ResizeVolume(
+      NoAwaitTag, std::string const& volume, std::int64_t size_gib,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1736,8 +1816,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Volume]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
-  ResizeVolume(google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1750,8 +1831,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ResizeVolume(NoAwaitTag, google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ResizeVolume(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1762,8 +1845,8 @@ class BareMetalSolutionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
-  ResizeVolume(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1796,8 +1879,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::Network>
-  ListNetworks(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::Network> ListNetworks(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1835,8 +1918,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::Network>
-  ListNetworks(google::cloud::baremetalsolution::v2::ListNetworksRequest request, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::Network> ListNetworks(
+      google::cloud::baremetalsolution::v2::ListNetworksRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1893,7 +1977,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
-  ListNetworkUsage(google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const& request, Options opts = {});
+  ListNetworkUsage(
+      google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1917,8 +2004,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Network>
-  GetNetwork(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1947,8 +2034,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Network]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Network>
-  GetNetwork(google::cloud::baremetalsolution::v2::GetNetworkRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
+      google::cloud::baremetalsolution::v2::GetNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1985,8 +2073,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L292}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
-  UpdateNetwork(google::cloud::baremetalsolution::v2::Network const& network, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
+      google::cloud::baremetalsolution::v2::Network const& network,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1999,8 +2088,9 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateNetwork(NoAwaitTag, google::cloud::baremetalsolution::v2::Network const& network, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateNetwork(
+      NoAwaitTag, google::cloud::baremetalsolution::v2::Network const& network,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2036,8 +2126,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L292}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
-  UpdateNetwork(google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2050,8 +2141,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateNetwork(NoAwaitTag, google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateNetwork(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2062,8 +2155,8 @@ class BareMetalSolutionClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
-  UpdateNetwork(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2090,7 +2183,11 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  CreateVolumeSnapshot(std::string const& parent, google::cloud::baremetalsolution::v2::VolumeSnapshot const& volume_snapshot, Options opts = {});
+  CreateVolumeSnapshot(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::VolumeSnapshot const&
+          volume_snapshot,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2121,7 +2218,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  CreateVolumeSnapshot(google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const& request, Options opts = {});
+  CreateVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2168,8 +2268,8 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RestoreVolumeSnapshot(NoAwaitTag, std::string const& volume_snapshot, Options opts = {});
+  StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
+      NoAwaitTag, std::string const& volume_snapshot, Options opts = {});
 
   // clang-format off
   ///
@@ -2207,7 +2307,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
-  RestoreVolumeSnapshot(google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request, Options opts = {});
+  RestoreVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2220,8 +2323,11 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RestoreVolumeSnapshot(NoAwaitTag, google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2233,7 +2339,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
-  RestoreVolumeSnapshot(google::longrunning::Operation const& operation, Options opts = {});
+  RestoreVolumeSnapshot(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -2255,8 +2362,7 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.DeleteVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L118}
   ///
   // clang-format on
-  Status
-  DeleteVolumeSnapshot(std::string const& name, Options opts = {});
+  Status DeleteVolumeSnapshot(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2283,8 +2389,10 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.DeleteVolumeSnapshotRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/volume_snapshot.proto#L118}
   ///
   // clang-format on
-  Status
-  DeleteVolumeSnapshot(google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const& request, Options opts = {});
+  Status DeleteVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2341,7 +2449,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  GetVolumeSnapshot(google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const& request, Options opts = {});
+  GetVolumeSnapshot(
+      google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2418,7 +2529,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>
-  ListVolumeSnapshots(google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request, Options opts = {});
+  ListVolumeSnapshots(
+      google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2442,8 +2555,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Lun>
-  GetLun(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2472,8 +2585,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Lun>
-  GetLun(google::cloud::baremetalsolution::v2::GetLunRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
+      google::cloud::baremetalsolution::v2::GetLunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2506,8 +2620,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::Lun>
-  ListLuns(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::Lun> ListLuns(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2545,8 +2659,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.Lun]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/lun.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::Lun>
-  ListLuns(google::cloud::baremetalsolution::v2::ListLunsRequest request, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::Lun> ListLuns(
+      google::cloud::baremetalsolution::v2::ListLunsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2592,8 +2707,9 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  EvictLun(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> EvictLun(NoAwaitTag,
+                                                    std::string const& name,
+                                                    Options opts = {});
 
   // clang-format off
   ///
@@ -2631,7 +2747,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  EvictLun(google::cloud::baremetalsolution::v2::EvictLunRequest const& request, Options opts = {});
+  EvictLun(google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
+           Options opts = {});
 
   // clang-format off
   ///
@@ -2644,8 +2761,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  EvictLun(NoAwaitTag, google::cloud::baremetalsolution::v2::EvictLunRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> EvictLun(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2681,8 +2800,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
-  GetNfsShare(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2711,8 +2830,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
-  GetNfsShare(google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
+      google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2745,8 +2865,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::NfsShare>
-  ListNfsShares(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::NfsShare> ListNfsShares(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2784,8 +2904,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.NfsShare]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::NfsShare>
-  ListNfsShares(google::cloud::baremetalsolution::v2::ListNfsSharesRequest request, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::NfsShare> ListNfsShares(
+      google::cloud::baremetalsolution::v2::ListNfsSharesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2824,7 +2945,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
-  UpdateNfsShare(google::cloud::baremetalsolution::v2::NfsShare const& nfs_share, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateNfsShare(
+      google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2837,8 +2960,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateNfsShare(NoAwaitTag, google::cloud::baremetalsolution::v2::NfsShare const& nfs_share, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateNfsShare(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2875,7 +3000,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
-  UpdateNfsShare(google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request, Options opts = {});
+  UpdateNfsShare(
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2888,8 +3016,11 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateNfsShare(NoAwaitTag, google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateNfsShare(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2901,7 +3032,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
-  UpdateNfsShare(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateNfsShare(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -2934,7 +3066,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
-  CreateNfsShare(std::string const& parent, google::cloud::baremetalsolution::v2::NfsShare const& nfs_share, Options opts = {});
+  CreateNfsShare(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2947,8 +3082,10 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateNfsShare(NoAwaitTag, std::string const& parent, google::cloud::baremetalsolution::v2::NfsShare const& nfs_share, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateNfsShare(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2985,7 +3122,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
-  CreateNfsShare(google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request, Options opts = {});
+  CreateNfsShare(
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2998,8 +3138,11 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateNfsShare(NoAwaitTag, google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateNfsShare(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3011,7 +3154,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
-  CreateNfsShare(google::longrunning::Operation const& operation, Options opts = {});
+  CreateNfsShare(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -3038,8 +3182,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.RenameNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
-  RenameNfsShare(std::string const& name, std::string const& new_nfsshare_id, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> RenameNfsShare(
+      std::string const& name, std::string const& new_nfsshare_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3069,8 +3214,10 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.RenameNfsShareRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L210}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
-  RenameNfsShare(google::cloud::baremetalsolution::v2::RenameNfsShareRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::NfsShare> RenameNfsShare(
+      google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3115,8 +3262,8 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNfsShare(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNfsShare(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3153,7 +3300,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  DeleteNfsShare(google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request, Options opts = {});
+  DeleteNfsShare(
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3166,8 +3316,11 @@ class BareMetalSolutionClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNfsShare(NoAwaitTag, google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNfsShare(
+      NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3179,7 +3332,8 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
-  DeleteNfsShare(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteNfsShare(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -3252,7 +3406,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>
-  ListProvisioningQuotas(google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest request, Options opts = {});
+  ListProvisioningQuotas(
+      google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3278,8 +3435,13 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.SubmitProvisioningConfigResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L140}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
-  SubmitProvisioningConfig(std::string const& parent, google::cloud::baremetalsolution::v2::ProvisioningConfig const& provisioning_config, Options opts = {});
+  StatusOr<
+      google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
+  SubmitProvisioningConfig(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::ProvisioningConfig const&
+          provisioning_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3308,8 +3470,11 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.SubmitProvisioningConfigResponse]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/provisioning.proto#L140}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
-  SubmitProvisioningConfig(google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
+  SubmitProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               SubmitProvisioningConfigRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -3364,7 +3529,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
-  GetProvisioningConfig(google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const& request, Options opts = {});
+  GetProvisioningConfig(
+      google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3391,7 +3559,11 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
-  CreateProvisioningConfig(std::string const& parent, google::cloud::baremetalsolution::v2::ProvisioningConfig const& provisioning_config, Options opts = {});
+  CreateProvisioningConfig(
+      std::string const& parent,
+      google::cloud::baremetalsolution::v2::ProvisioningConfig const&
+          provisioning_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3421,7 +3593,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
-  CreateProvisioningConfig(google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const& request, Options opts = {});
+  CreateProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               CreateProvisioningConfigRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -3447,7 +3621,10 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
-  UpdateProvisioningConfig(google::cloud::baremetalsolution::v2::ProvisioningConfig const& provisioning_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateProvisioningConfig(
+      google::cloud::baremetalsolution::v2::ProvisioningConfig const&
+          provisioning_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3477,7 +3654,9 @@ class BareMetalSolutionClient {
   ///
   // clang-format on
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
-  UpdateProvisioningConfig(google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const& request, Options opts = {});
+  UpdateProvisioningConfig(google::cloud::baremetalsolution::v2::
+                               UpdateProvisioningConfigRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -3504,8 +3683,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.RenameNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L349}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Network>
-  RenameNetwork(std::string const& name, std::string const& new_network_id, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
+      std::string const& name, std::string const& new_network_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3535,8 +3715,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.RenameNetworkRequest]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L349}
   ///
   // clang-format on
-  StatusOr<google::cloud::baremetalsolution::v2::Network>
-  RenameNetwork(google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request, Options opts = {});
+  StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
+      google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3569,8 +3750,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.OSImage]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/osimage.proto#L31}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::OSImage>
-  ListOSImages(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::OSImage> ListOSImages(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3608,8 +3789,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.baremetalsolution.v2.OSImage]: @googleapis_reference_link{google/cloud/baremetalsolution/v2/osimage.proto#L31}
   ///
   // clang-format on
-  StreamRange<google::cloud::baremetalsolution::v2::OSImage>
-  ListOSImages(google::cloud::baremetalsolution::v2::ListOSImagesRequest request, Options opts = {});
+  StreamRange<google::cloud::baremetalsolution::v2::OSImage> ListOSImages(
+      google::cloud::baremetalsolution::v2::ListOSImagesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3647,8 +3829,8 @@ class BareMetalSolutionClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3677,8 +3859,9 @@ class BareMetalSolutionClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<BareMetalSolutionConnection> connection_;

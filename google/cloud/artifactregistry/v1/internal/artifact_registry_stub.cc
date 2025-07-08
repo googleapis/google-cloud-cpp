@@ -33,119 +33,122 @@ ArtifactRegistryStub::~ArtifactRegistryStub() = default;
 
 StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
 DefaultArtifactRegistryStub::ListDockerImages(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListDockerImagesRequest const& request) {
-    google::devtools::artifactregistry::v1::ListDockerImagesResponse response;
-    auto status =
-        grpc_stub_->ListDockerImages(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListDockerImagesResponse response;
+  auto status = grpc_stub_->ListDockerImages(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::DockerImage>
 DefaultArtifactRegistryStub::GetDockerImage(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetDockerImageRequest const& request) {
-    google::devtools::artifactregistry::v1::DockerImage response;
-    auto status =
-        grpc_stub_->GetDockerImage(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::DockerImage response;
+  auto status = grpc_stub_->GetDockerImage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
 DefaultArtifactRegistryStub::ListMavenArtifacts(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const& request) {
-    google::devtools::artifactregistry::v1::ListMavenArtifactsResponse response;
-    auto status =
-        grpc_stub_->ListMavenArtifacts(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListMavenArtifactsResponse response;
+  auto status = grpc_stub_->ListMavenArtifacts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
 DefaultArtifactRegistryStub::GetMavenArtifact(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetMavenArtifactRequest const& request) {
-    google::devtools::artifactregistry::v1::MavenArtifact response;
-    auto status =
-        grpc_stub_->GetMavenArtifact(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::MavenArtifact response;
+  auto status = grpc_stub_->GetMavenArtifact(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
 DefaultArtifactRegistryStub::ListNpmPackages(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListNpmPackagesRequest const& request) {
-    google::devtools::artifactregistry::v1::ListNpmPackagesResponse response;
-    auto status =
-        grpc_stub_->ListNpmPackages(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListNpmPackagesResponse response;
+  auto status = grpc_stub_->ListNpmPackages(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
 DefaultArtifactRegistryStub::GetNpmPackage(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request) {
-    google::devtools::artifactregistry::v1::NpmPackage response;
-    auto status =
-        grpc_stub_->GetNpmPackage(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::NpmPackage response;
+  auto status = grpc_stub_->GetNpmPackage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
 DefaultArtifactRegistryStub::ListPythonPackages(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListPythonPackagesRequest const& request) {
-    google::devtools::artifactregistry::v1::ListPythonPackagesResponse response;
-    auto status =
-        grpc_stub_->ListPythonPackages(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListPythonPackagesResponse response;
+  auto status = grpc_stub_->ListPythonPackages(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
 DefaultArtifactRegistryStub::GetPythonPackage(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetPythonPackageRequest const& request) {
-    google::devtools::artifactregistry::v1::PythonPackage response;
-    auto status =
-        grpc_stub_->GetPythonPackage(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::PythonPackage response;
+  auto status = grpc_stub_->GetPythonPackage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncImportAptArtifacts(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::ImportAptArtifactsRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request,
+             google::devtools::artifactregistry::v1::
+                 ImportAptArtifactsRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncImportAptArtifacts(context, request, cq);
       },
@@ -154,29 +157,31 @@ DefaultArtifactRegistryStub::AsyncImportAptArtifacts(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::ImportAptArtifacts(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ImportAptArtifacts(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportAptArtifacts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncImportYumArtifacts(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::ImportYumArtifactsRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request,
+             google::devtools::artifactregistry::v1::
+                 ImportYumArtifactsRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncImportYumArtifacts(context, request, cq);
       },
@@ -185,56 +190,59 @@ DefaultArtifactRegistryStub::AsyncImportYumArtifacts(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::ImportYumArtifacts(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->ImportYumArtifacts(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportYumArtifacts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
 DefaultArtifactRegistryStub::ListRepositories(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListRepositoriesRequest const& request) {
-    google::devtools::artifactregistry::v1::ListRepositoriesResponse response;
-    auto status =
-        grpc_stub_->ListRepositories(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListRepositoriesResponse response;
+  auto status = grpc_stub_->ListRepositories(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 DefaultArtifactRegistryStub::GetRepository(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetRepositoryRequest const& request) {
-    google::devtools::artifactregistry::v1::Repository response;
-    auto status =
-        grpc_stub_->GetRepository(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetRepositoryRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::Repository response;
+  auto status = grpc_stub_->GetRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncCreateRepository(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::CreateRepositoryRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateRepository(context, request, cq);
       },
       request, std::move(context));
@@ -242,43 +250,46 @@ DefaultArtifactRegistryStub::AsyncCreateRepository(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::CreateRepository(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::CreateRepositoryRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateRepository(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 DefaultArtifactRegistryStub::UpdateRepository(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::UpdateRepositoryRequest const& request) {
-    google::devtools::artifactregistry::v1::Repository response;
-    auto status =
-        grpc_stub_->UpdateRepository(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::Repository response;
+  auto status = grpc_stub_->UpdateRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncDeleteRepository(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::DeleteRepositoryRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteRepository(context, request, cq);
       },
       request, std::move(context));
@@ -286,55 +297,56 @@ DefaultArtifactRegistryStub::AsyncDeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::DeleteRepository(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteRepository(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRepository(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
 DefaultArtifactRegistryStub::ListPackages(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListPackagesRequest const& request) {
-    google::devtools::artifactregistry::v1::ListPackagesResponse response;
-    auto status =
-        grpc_stub_->ListPackages(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListPackagesRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListPackagesResponse response;
+  auto status = grpc_stub_->ListPackages(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
 DefaultArtifactRegistryStub::GetPackage(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
-    google::devtools::artifactregistry::v1::Package response;
-    auto status =
-        grpc_stub_->GetPackage(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
+  google::devtools::artifactregistry::v1::Package response;
+  auto status = grpc_stub_->GetPackage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncDeletePackage(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::DeletePackageRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::DeletePackageRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::DeletePackageRequest const& request,
+             google::devtools::artifactregistry::v1::DeletePackageRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeletePackage(context, request, cq);
       },
@@ -343,55 +355,56 @@ DefaultArtifactRegistryStub::AsyncDeletePackage(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::DeletePackage(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::DeletePackageRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeletePackage(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePackage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
 DefaultArtifactRegistryStub::ListVersions(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListVersionsRequest const& request) {
-    google::devtools::artifactregistry::v1::ListVersionsResponse response;
-    auto status =
-        grpc_stub_->ListVersions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListVersionsRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListVersionsResponse response;
+  auto status = grpc_stub_->ListVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
 DefaultArtifactRegistryStub::GetVersion(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
-    google::devtools::artifactregistry::v1::Version response;
-    auto status =
-        grpc_stub_->GetVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
+  google::devtools::artifactregistry::v1::Version response;
+  auto status = grpc_stub_->GetVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncDeleteVersion(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::DeleteVersionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::DeleteVersionRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::DeleteVersionRequest const& request,
+             google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteVersion(context, request, cq);
       },
@@ -400,29 +413,31 @@ DefaultArtifactRegistryStub::AsyncDeleteVersion(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::DeleteVersion(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::DeleteVersionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncBatchDeleteVersions(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request,
+             google::devtools::artifactregistry::v1::
+                 BatchDeleteVersionsRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncBatchDeleteVersions(context, request, cq);
       },
@@ -431,68 +446,67 @@ DefaultArtifactRegistryStub::AsyncBatchDeleteVersions(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::BatchDeleteVersions(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->BatchDeleteVersions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchDeleteVersions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
 DefaultArtifactRegistryStub::UpdateVersion(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::UpdateVersionRequest const& request) {
-    google::devtools::artifactregistry::v1::Version response;
-    auto status =
-        grpc_stub_->UpdateVersion(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::Version response;
+  auto status = grpc_stub_->UpdateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 DefaultArtifactRegistryStub::ListFiles(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
-    google::devtools::artifactregistry::v1::ListFilesResponse response;
-    auto status =
-        grpc_stub_->ListFiles(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
+  google::devtools::artifactregistry::v1::ListFilesResponse response;
+  auto status = grpc_stub_->ListFiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
 DefaultArtifactRegistryStub::GetFile(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetFileRequest const& request) {
-    google::devtools::artifactregistry::v1::File response;
-    auto status =
-        grpc_stub_->GetFile(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetFileRequest const& request) {
+  google::devtools::artifactregistry::v1::File response;
+  auto status = grpc_stub_->GetFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncDeleteFile(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::DeleteFileRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::DeleteFileRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::DeleteFileRequest const& request,
+             google::devtools::artifactregistry::v1::DeleteFileRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteFile(context, request, cq);
       },
@@ -501,303 +515,287 @@ DefaultArtifactRegistryStub::AsyncDeleteFile(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::DeleteFile(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteFile(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
 DefaultArtifactRegistryStub::UpdateFile(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
-    google::devtools::artifactregistry::v1::File response;
-    auto status =
-        grpc_stub_->UpdateFile(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
+  google::devtools::artifactregistry::v1::File response;
+  auto status = grpc_stub_->UpdateFile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
 DefaultArtifactRegistryStub::ListTags(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
-    google::devtools::artifactregistry::v1::ListTagsResponse response;
-    auto status =
-        grpc_stub_->ListTags(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
+  google::devtools::artifactregistry::v1::ListTagsResponse response;
+  auto status = grpc_stub_->ListTags(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 DefaultArtifactRegistryStub::GetTag(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetTagRequest const& request) {
-    google::devtools::artifactregistry::v1::Tag response;
-    auto status =
-        grpc_stub_->GetTag(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetTagRequest const& request) {
+  google::devtools::artifactregistry::v1::Tag response;
+  auto status = grpc_stub_->GetTag(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 DefaultArtifactRegistryStub::CreateTag(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
-    google::devtools::artifactregistry::v1::Tag response;
-    auto status =
-        grpc_stub_->CreateTag(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
+  google::devtools::artifactregistry::v1::Tag response;
+  auto status = grpc_stub_->CreateTag(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 DefaultArtifactRegistryStub::UpdateTag(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
-    google::devtools::artifactregistry::v1::Tag response;
-    auto status =
-        grpc_stub_->UpdateTag(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
+  google::devtools::artifactregistry::v1::Tag response;
+  auto status = grpc_stub_->UpdateTag(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultArtifactRegistryStub::DeleteTag(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteTag(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultArtifactRegistryStub::DeleteTag(
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteTag(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 DefaultArtifactRegistryStub::CreateRule(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
-    google::devtools::artifactregistry::v1::Rule response;
-    auto status =
-        grpc_stub_->CreateRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
+  google::devtools::artifactregistry::v1::Rule response;
+  auto status = grpc_stub_->CreateRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse>
 DefaultArtifactRegistryStub::ListRules(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListRulesRequest const& request) {
-    google::devtools::artifactregistry::v1::ListRulesResponse response;
-    auto status =
-        grpc_stub_->ListRules(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListRulesRequest const& request) {
+  google::devtools::artifactregistry::v1::ListRulesResponse response;
+  auto status = grpc_stub_->ListRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 DefaultArtifactRegistryStub::GetRule(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
-    google::devtools::artifactregistry::v1::Rule response;
-    auto status =
-        grpc_stub_->GetRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
+  google::devtools::artifactregistry::v1::Rule response;
+  auto status = grpc_stub_->GetRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Rule>
 DefaultArtifactRegistryStub::UpdateRule(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
-    google::devtools::artifactregistry::v1::Rule response;
-    auto status =
-        grpc_stub_->UpdateRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
+  google::devtools::artifactregistry::v1::Rule response;
+  auto status = grpc_stub_->UpdateRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultArtifactRegistryStub::DeleteRule(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteRule(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultArtifactRegistryStub::DeleteRule(
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultArtifactRegistryStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        grpc_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultArtifactRegistryStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultArtifactRegistryStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        grpc_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultArtifactRegistryStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultArtifactRegistryStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        grpc_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 DefaultArtifactRegistryStub::GetProjectSettings(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetProjectSettingsRequest const& request) {
-    google::devtools::artifactregistry::v1::ProjectSettings response;
-    auto status =
-        grpc_stub_->GetProjectSettings(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ProjectSettings response;
+  auto status = grpc_stub_->GetProjectSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 DefaultArtifactRegistryStub::UpdateProjectSettings(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const& request) {
-    google::devtools::artifactregistry::v1::ProjectSettings response;
-    auto status =
-        grpc_stub_->UpdateProjectSettings(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ProjectSettings response;
+  auto status = grpc_stub_->UpdateProjectSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 DefaultArtifactRegistryStub::GetVPCSCConfig(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const& request) {
-    google::devtools::artifactregistry::v1::VPCSCConfig response;
-    auto status =
-        grpc_stub_->GetVPCSCConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::VPCSCConfig response;
+  auto status = grpc_stub_->GetVPCSCConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 DefaultArtifactRegistryStub::UpdateVPCSCConfig(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const& request) {
-    google::devtools::artifactregistry::v1::VPCSCConfig response;
-    auto status =
-        grpc_stub_->UpdateVPCSCConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::VPCSCConfig response;
+  auto status = grpc_stub_->UpdateVPCSCConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
 DefaultArtifactRegistryStub::UpdatePackage(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::UpdatePackageRequest const& request) {
-    google::devtools::artifactregistry::v1::Package response;
-    auto status =
-        grpc_stub_->UpdatePackage(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::Package response;
+  auto status = grpc_stub_->UpdatePackage(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse>
 DefaultArtifactRegistryStub::ListAttachments(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::ListAttachmentsRequest const& request) {
-    google::devtools::artifactregistry::v1::ListAttachmentsResponse response;
-    auto status =
-        grpc_stub_->ListAttachments(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListAttachmentsResponse response;
+  auto status = grpc_stub_->ListAttachments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Attachment>
 DefaultArtifactRegistryStub::GetAttachment(
-  grpc::ClientContext& context, Options const&,
-  google::devtools::artifactregistry::v1::GetAttachmentRequest const& request) {
-    google::devtools::artifactregistry::v1::Attachment response;
-    auto status =
-        grpc_stub_->GetAttachment(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::Attachment response;
+  auto status = grpc_stub_->GetAttachment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncCreateAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::CreateAttachmentRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateAttachment(context, request, cq);
       },
       request, std::move(context));
@@ -805,30 +803,33 @@ DefaultArtifactRegistryStub::AsyncCreateAttachment(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::CreateAttachment(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::CreateAttachmentRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateAttachment(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAttachment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncDeleteAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::devtools::artifactregistry::v1::DeleteAttachmentRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteAttachment(context, request, cq);
       },
       request, std::move(context));
@@ -836,55 +837,51 @@ DefaultArtifactRegistryStub::AsyncDeleteAttachment(
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::DeleteAttachment(
-      grpc::ClientContext& context,
-      Options,
-      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteAttachment(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAttachment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultArtifactRegistryStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultArtifactRegistryStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultArtifactRegistryStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -913,13 +910,14 @@ future<Status> DefaultArtifactRegistryStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

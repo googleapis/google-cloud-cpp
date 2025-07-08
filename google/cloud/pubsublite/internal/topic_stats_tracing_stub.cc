@@ -32,55 +32,60 @@ TopicStatsServiceTracingStub::TopicStatsServiceTracingStub(
     std::shared_ptr<TopicStatsServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse> TopicStatsServiceTracingStub::ComputeMessageStats(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
+TopicStatsServiceTracingStub::ComputeMessageStats(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.TopicStatsService", "ComputeMessageStats");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "ComputeMessageStats");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ComputeMessageStats(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ComputeMessageStats(context, options, request));
 }
 
-StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse> TopicStatsServiceTracingStub::ComputeHeadCursor(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
+TopicStatsServiceTracingStub::ComputeHeadCursor(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.TopicStatsService", "ComputeHeadCursor");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "ComputeHeadCursor");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ComputeHeadCursor(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ComputeHeadCursor(context, options, request));
 }
 
-StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse> TopicStatsServiceTracingStub::ComputeTimeCursor(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
+TopicStatsServiceTracingStub::ComputeTimeCursor(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.TopicStatsService", "ComputeTimeCursor");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "ComputeTimeCursor");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ComputeTimeCursor(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ComputeTimeCursor(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> TopicStatsServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+TopicStatsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.TopicStatsService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> TopicStatsServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+TopicStatsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.TopicStatsService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -88,10 +93,10 @@ StatusOr<google::longrunning::Operation> TopicStatsServiceTracingStub::GetOperat
 }
 
 Status TopicStatsServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.TopicStatsService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -99,10 +104,10 @@ Status TopicStatsServiceTracingStub::DeleteOperation(
 }
 
 Status TopicStatsServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.TopicStatsService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

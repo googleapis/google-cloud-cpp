@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReferenceListServiceClient::ReferenceListServiceClient(
     std::shared_ptr<ReferenceListServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ReferenceListServiceClient::~ReferenceListServiceClient() = default;
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceClient::GetReferenceList(std::string const& name, Options opts) {
+ReferenceListServiceClient::GetReferenceList(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::GetReferenceListRequest request;
   request.set_name(name);
@@ -41,13 +42,16 @@ ReferenceListServiceClient::GetReferenceList(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceClient::GetReferenceList(google::cloud::chronicle::v1::GetReferenceListRequest const& request, Options opts) {
+ReferenceListServiceClient::GetReferenceList(
+    google::cloud::chronicle::v1::GetReferenceListRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReferenceList(request);
 }
 
 StreamRange<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceClient::ListReferenceLists(std::string const& parent, Options opts) {
+ReferenceListServiceClient::ListReferenceLists(std::string const& parent,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::ListReferenceListsRequest request;
   request.set_parent(parent);
@@ -55,13 +59,18 @@ ReferenceListServiceClient::ListReferenceLists(std::string const& parent, Option
 }
 
 StreamRange<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceClient::ListReferenceLists(google::cloud::chronicle::v1::ListReferenceListsRequest request, Options opts) {
+ReferenceListServiceClient::ListReferenceLists(
+    google::cloud::chronicle::v1::ListReferenceListsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReferenceLists(std::move(request));
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceClient::CreateReferenceList(std::string const& parent, google::cloud::chronicle::v1::ReferenceList const& reference_list, std::string const& reference_list_id, Options opts) {
+ReferenceListServiceClient::CreateReferenceList(
+    std::string const& parent,
+    google::cloud::chronicle::v1::ReferenceList const& reference_list,
+    std::string const& reference_list_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::CreateReferenceListRequest request;
   request.set_parent(parent);
@@ -71,13 +80,17 @@ ReferenceListServiceClient::CreateReferenceList(std::string const& parent, googl
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceClient::CreateReferenceList(google::cloud::chronicle::v1::CreateReferenceListRequest const& request, Options opts) {
+ReferenceListServiceClient::CreateReferenceList(
+    google::cloud::chronicle::v1::CreateReferenceListRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReferenceList(request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceClient::UpdateReferenceList(google::cloud::chronicle::v1::ReferenceList const& reference_list, google::protobuf::FieldMask const& update_mask, Options opts) {
+ReferenceListServiceClient::UpdateReferenceList(
+    google::cloud::chronicle::v1::ReferenceList const& reference_list,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::chronicle::v1::UpdateReferenceListRequest request;
   *request.mutable_reference_list() = reference_list;
@@ -86,13 +99,17 @@ ReferenceListServiceClient::UpdateReferenceList(google::cloud::chronicle::v1::Re
 }
 
 StatusOr<google::cloud::chronicle::v1::ReferenceList>
-ReferenceListServiceClient::UpdateReferenceList(google::cloud::chronicle::v1::UpdateReferenceListRequest const& request, Options opts) {
+ReferenceListServiceClient::UpdateReferenceList(
+    google::cloud::chronicle::v1::UpdateReferenceListRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateReferenceList(request);
 }
 
 StreamRange<google::longrunning::Operation>
-ReferenceListServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+ReferenceListServiceClient::ListOperations(std::string const& name,
+                                           std::string const& filter,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -101,13 +118,15 @@ ReferenceListServiceClient::ListOperations(std::string const& name, std::string 
 }
 
 StreamRange<google::longrunning::Operation>
-ReferenceListServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+ReferenceListServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
 StatusOr<google::longrunning::Operation>
-ReferenceListServiceClient::GetOperation(std::string const& name, Options opts) {
+ReferenceListServiceClient::GetOperation(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
@@ -115,35 +134,36 @@ ReferenceListServiceClient::GetOperation(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-ReferenceListServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+ReferenceListServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-ReferenceListServiceClient::DeleteOperation(std::string const& name, Options opts) {
+Status ReferenceListServiceClient::DeleteOperation(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-ReferenceListServiceClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status ReferenceListServiceClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-ReferenceListServiceClient::CancelOperation(std::string const& name, Options opts) {
+Status ReferenceListServiceClient::CancelOperation(std::string const& name,
+                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-ReferenceListServiceClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status ReferenceListServiceClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

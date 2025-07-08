@@ -34,26 +34,29 @@ class ContainerAnalysisConnectionIdempotencyPolicy {
   virtual ~ContainerAnalysisConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const& request);
+  virtual google::cloud::Idempotency GetVulnerabilityOccurrencesSummary(
+      google::devtools::containeranalysis::v1::
+          GetVulnerabilityOccurrencesSummaryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportSBOM(google::devtools::containeranalysis::v1::ExportSBOMRequest const& request);
+  virtual google::cloud::Idempotency ExportSBOM(
+      google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+          request);
 };
 
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
-    MakeDefaultContainerAnalysisConnectionIdempotencyPolicy();
+MakeDefaultContainerAnalysisConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_v1

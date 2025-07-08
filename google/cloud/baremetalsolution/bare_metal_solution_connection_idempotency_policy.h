@@ -26,11 +26,16 @@ namespace cloud {
 namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use baremetalsolution_v2::MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy directly.
-using ::google::cloud::baremetalsolution_v2::MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// baremetalsolution_v2::MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::baremetalsolution_v2::
+    MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy;
 
-/// @deprecated Use baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicy directly.
-using ::google::cloud::baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicy directly.
+using ::google::cloud::baremetalsolution_v2::
+    BareMetalSolutionConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution

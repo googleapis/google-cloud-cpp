@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_INTERNAL_CLOUD_TASKS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_INTERNAL_CLOUD_TASKS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
 #include "google/cloud/tasks/v2/cloud_tasks_connection.h"
 #include "google/cloud/tasks/v2/cloud_tasks_connection_idempotency_policy.h"
 #include "google/cloud/tasks/v2/cloud_tasks_options.h"
 #include "google/cloud/tasks/v2/internal/cloud_tasks_retry_traits.h"
 #include "google/cloud/tasks/v2/internal/cloud_tasks_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -37,71 +37,69 @@ namespace cloud {
 namespace tasks_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudTasksConnectionImpl
-    : public tasks_v2::CloudTasksConnection {
+class CloudTasksConnectionImpl : public tasks_v2::CloudTasksConnection {
  public:
   ~CloudTasksConnectionImpl() override = default;
 
   CloudTasksConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<tasks_v2_internal::CloudTasksStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<tasks_v2_internal::CloudTasksStub> stub, Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::tasks::v2::Queue>
-  ListQueues(google::cloud::tasks::v2::ListQueuesRequest request) override;
+  StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
+      google::cloud::tasks::v2::ListQueuesRequest request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  GetQueue(google::cloud::tasks::v2::GetQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
+      google::cloud::tasks::v2::GetQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
+      google::cloud::tasks::v2::CreateQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
+      google::cloud::tasks::v2::UpdateQueueRequest const& request) override;
 
-  Status
-  DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const& request) override;
+  Status DeleteQueue(
+      google::cloud::tasks::v2::DeleteQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
+      google::cloud::tasks::v2::PurgeQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
+      google::cloud::tasks::v2::PauseQueueRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Queue>
-  ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
+      google::cloud::tasks::v2::ResumeQueueRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::cloud::tasks::v2::Task>
-  ListTasks(google::cloud::tasks::v2::ListTasksRequest request) override;
+  StreamRange<google::cloud::tasks::v2::Task> ListTasks(
+      google::cloud::tasks::v2::ListTasksRequest request) override;
 
-  StatusOr<google::cloud::tasks::v2::Task>
-  GetTask(google::cloud::tasks::v2::GetTaskRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Task> GetTask(
+      google::cloud::tasks::v2::GetTaskRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Task>
-  CreateTask(google::cloud::tasks::v2::CreateTaskRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Task> CreateTask(
+      google::cloud::tasks::v2::CreateTaskRequest const& request) override;
 
-  Status
-  DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
+  Status DeleteTask(
+      google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
 
-  StatusOr<google::cloud::tasks::v2::Task>
-  RunTask(google::cloud::tasks::v2::RunTaskRequest const& request) override;
+  StatusOr<google::cloud::tasks::v2::Task> RunTask(
+      google::cloud::tasks::v2::RunTaskRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

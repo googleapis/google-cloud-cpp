@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instance_settings/v1/instance_settings.proto
 
 #include "google/cloud/compute/instance_settings/v1/instance_settings_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/instance_settings/v1/instance_settings_options.h"
 #include "google/cloud/compute/instance_settings/v1/internal/instance_settings_option_defaults.h"
 #include "google/cloud/compute/instance_settings/v1/internal/instance_settings_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -37,32 +37,34 @@ InstanceSettingsConnection::~InstanceSettingsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
 InstanceSettingsConnection::GetInstanceSettings(
-    google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const&) {
+    google::cloud::cpp::compute::instance_settings::v1::
+        GetInstanceSettingsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsConnection::PatchInstanceSettings(
-    google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const&) {
+    google::cloud::cpp::compute::instance_settings::v1::
+        PatchInstanceSettingsRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceSettingsConnection::PatchInstanceSettings(
-    NoAwaitTag,
-    google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
+                    PatchInstanceSettingsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsConnection::PatchInstanceSettings(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

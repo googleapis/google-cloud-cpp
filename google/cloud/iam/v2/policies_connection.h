@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/iam/v2/internal/policies_retry_traits.h"
 #include "google/cloud/iam/v2/policies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -66,14 +66,14 @@ class PoliciesLimitedErrorCountRetryPolicy : public PoliciesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit PoliciesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   PoliciesLimitedErrorCountRetryPolicy(
       PoliciesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : PoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : PoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PoliciesLimitedErrorCountRetryPolicy(
       PoliciesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : PoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : PoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class PoliciesLimitedErrorCountRetryPolicy : public PoliciesRetryPolicy {
   using BaseType = PoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<iam_v2_internal::PoliciesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      iam_v2_internal::PoliciesRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,13 @@ class PoliciesLimitedTimeRetryPolicy : public PoliciesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit PoliciesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   PoliciesLimitedTimeRetryPolicy(PoliciesLimitedTimeRetryPolicy&& rhs) noexcept
-    : PoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  PoliciesLimitedTimeRetryPolicy(PoliciesLimitedTimeRetryPolicy const& rhs) noexcept
-    : PoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : PoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  PoliciesLimitedTimeRetryPolicy(
+      PoliciesLimitedTimeRetryPolicy const& rhs) noexcept
+      : PoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -150,15 +153,16 @@ class PoliciesLimitedTimeRetryPolicy : public PoliciesRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<PoliciesRetryPolicy> clone() const override {
-    return std::make_unique<PoliciesLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<PoliciesLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = PoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<iam_v2_internal::PoliciesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      iam_v2_internal::PoliciesRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,41 +183,41 @@ class PoliciesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::iam::v2::Policy>
-  ListPolicies(google::iam::v2::ListPoliciesRequest request);
+  virtual StreamRange<google::iam::v2::Policy> ListPolicies(
+      google::iam::v2::ListPoliciesRequest request);
 
-  virtual StatusOr<google::iam::v2::Policy>
-  GetPolicy(google::iam::v2::GetPolicyRequest const& request);
+  virtual StatusOr<google::iam::v2::Policy> GetPolicy(
+      google::iam::v2::GetPolicyRequest const& request);
 
-  virtual future<StatusOr<google::iam::v2::Policy>>
-  CreatePolicy(google::iam::v2::CreatePolicyRequest const& request);
+  virtual future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
+      google::iam::v2::CreatePolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreatePolicy(NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreatePolicy(
+      NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request);
 
-  virtual future<StatusOr<google::iam::v2::Policy>>
-  CreatePolicy( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::iam::v2::Policy>>
-  UpdatePolicy(google::iam::v2::UpdatePolicyRequest const& request);
+  virtual future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
+      google::iam::v2::UpdatePolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdatePolicy(NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdatePolicy(
+      NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request);
 
-  virtual future<StatusOr<google::iam::v2::Policy>>
-  UpdatePolicy( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::iam::v2::Policy>>
-  DeletePolicy(google::iam::v2::DeletePolicyRequest const& request);
+  virtual future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
+      google::iam::v2::DeletePolicyRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeletePolicy(NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeletePolicy(
+      NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request);
 
-  virtual future<StatusOr<google::iam::v2::Policy>>
-  DeletePolicy( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
+      google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

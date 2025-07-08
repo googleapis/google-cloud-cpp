@@ -21,13 +21,13 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/iam_updater.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -68,23 +68,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BigtableInstanceAdminClient {
  public:
-  explicit BigtableInstanceAdminClient(std::shared_ptr<BigtableInstanceAdminConnection> connection, Options opts = {});
+  explicit BigtableInstanceAdminClient(
+      std::shared_ptr<BigtableInstanceAdminConnection> connection,
+      Options opts = {});
   ~BigtableInstanceAdminClient();
 
   ///@{
   /// @name Copy and move support
   BigtableInstanceAdminClient(BigtableInstanceAdminClient const&) = default;
-  BigtableInstanceAdminClient& operator=(BigtableInstanceAdminClient const&) = default;
+  BigtableInstanceAdminClient& operator=(BigtableInstanceAdminClient const&) =
+      default;
   BigtableInstanceAdminClient(BigtableInstanceAdminClient&&) = default;
-  BigtableInstanceAdminClient& operator=(BigtableInstanceAdminClient&&) = default;
+  BigtableInstanceAdminClient& operator=(BigtableInstanceAdminClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(BigtableInstanceAdminClient const& a, BigtableInstanceAdminClient const& b) {
+  friend bool operator==(BigtableInstanceAdminClient const& a,
+                         BigtableInstanceAdminClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BigtableInstanceAdminClient const& a, BigtableInstanceAdminClient const& b) {
+  friend bool operator!=(BigtableInstanceAdminClient const& a,
+                         BigtableInstanceAdminClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -134,8 +140,12 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Instance>>
-  CreateInstance(std::string const& parent, std::string const& instance_id, google::bigtable::admin::v2::Instance const& instance, std::map<std::string, google::bigtable::admin::v2::Cluster> const& clusters, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
+      std::string const& parent, std::string const& instance_id,
+      google::bigtable::admin::v2::Instance const& instance,
+      std::map<std::string, google::bigtable::admin::v2::Cluster> const&
+          clusters,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -148,8 +158,12 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, std::string const& parent, std::string const& instance_id, google::bigtable::admin::v2::Instance const& instance, std::map<std::string, google::bigtable::admin::v2::Cluster> const& clusters, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag, std::string const& parent, std::string const& instance_id,
+      google::bigtable::admin::v2::Instance const& instance,
+      std::map<std::string, google::bigtable::admin::v2::Cluster> const&
+          clusters,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -191,8 +205,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Instance>>
-  CreateInstance(google::bigtable::admin::v2::CreateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -205,8 +220,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, google::bigtable::admin::v2::CreateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -217,8 +234,8 @@ class BigtableInstanceAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -243,8 +260,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Instance>
-  GetInstance(std::string const& name, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -273,8 +290,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Instance>
-  GetInstance(google::bigtable::admin::v2::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
+      google::bigtable::admin::v2::GetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -299,8 +317,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L490}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
-  ListInstances(std::string const& parent, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -329,8 +347,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L490}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
-  ListInstances(google::bigtable::admin::v2::ListInstancesRequest const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
+      google::bigtable::admin::v2::ListInstancesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -360,8 +379,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Instance>
-  UpdateInstance(google::bigtable::admin::v2::Instance const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Instance> UpdateInstance(
+      google::bigtable::admin::v2::Instance const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -395,8 +414,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L507}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Instance>>
-  PartialUpdateInstance(google::bigtable::admin::v2::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
+      google::bigtable::admin::v2::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -409,8 +429,9 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PartialUpdateInstance(NoAwaitTag, google::bigtable::admin::v2::Instance const& instance, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> PartialUpdateInstance(
+      NoAwaitTag, google::bigtable::admin::v2::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -447,8 +468,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L507}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Instance>>
-  PartialUpdateInstance(google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -461,8 +483,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PartialUpdateInstance(NoAwaitTag, google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> PartialUpdateInstance(
+      NoAwaitTag,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -473,8 +497,8 @@ class BigtableInstanceAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Instance>>
-  PartialUpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -496,8 +520,7 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L518}
   ///
   // clang-format on
-  Status
-  DeleteInstance(std::string const& name, Options opts = {});
+  Status DeleteInstance(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -523,8 +546,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L518}
   ///
   // clang-format on
-  Status
-  DeleteInstance(google::bigtable::admin::v2::DeleteInstanceRequest const& request, Options opts = {});
+  Status DeleteInstance(
+      google::bigtable::admin::v2::DeleteInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -567,8 +591,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L530}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  CreateCluster(std::string const& parent, std::string const& cluster_id, google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
+      std::string const& parent, std::string const& cluster_id,
+      google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
 
   // clang-format off
   ///
@@ -581,8 +606,9 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag, std::string const& parent, std::string const& cluster_id, google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag, std::string const& parent, std::string const& cluster_id,
+      google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
 
   // clang-format off
   ///
@@ -624,8 +650,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L530}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  CreateCluster(google::bigtable::admin::v2::CreateClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
+      google::bigtable::admin::v2::CreateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -638,8 +665,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag, google::bigtable::admin::v2::CreateClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -650,8 +679,8 @@ class BigtableInstanceAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  CreateCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -676,8 +705,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L551}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Cluster>
-  GetCluster(std::string const& name, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -706,8 +735,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L551}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Cluster>
-  GetCluster(google::bigtable::admin::v2::GetClusterRequest const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
+      google::bigtable::admin::v2::GetClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -735,8 +765,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L581}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::ListClustersResponse>
-  ListClusters(std::string const& parent, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -765,8 +795,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L581}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::ListClustersResponse>
-  ListClusters(google::bigtable::admin::v2::ListClustersRequest const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
+      google::bigtable::admin::v2::ListClustersRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -805,8 +836,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L148}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  UpdateCluster(google::bigtable::admin::v2::Cluster const& request, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
+      google::bigtable::admin::v2::Cluster const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -819,8 +850,9 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag, google::bigtable::admin::v2::Cluster const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag, google::bigtable::admin::v2::Cluster const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -831,8 +863,8 @@ class BigtableInstanceAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  UpdateCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -876,8 +908,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L710}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  PartialUpdateCluster(google::bigtable::admin::v2::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+      google::bigtable::admin::v2::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -890,8 +923,9 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PartialUpdateCluster(NoAwaitTag, google::bigtable::admin::v2::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> PartialUpdateCluster(
+      NoAwaitTag, google::bigtable::admin::v2::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -938,8 +972,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L710}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  PartialUpdateCluster(google::bigtable::admin::v2::PartialUpdateClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -952,8 +987,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PartialUpdateCluster(NoAwaitTag, google::bigtable::admin::v2::PartialUpdateClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> PartialUpdateCluster(
+      NoAwaitTag,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -964,8 +1001,8 @@ class BigtableInstanceAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  PartialUpdateCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -987,8 +1024,7 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L597}
   ///
   // clang-format on
-  Status
-  DeleteCluster(std::string const& name, Options opts = {});
+  Status DeleteCluster(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1014,8 +1050,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L597}
   ///
   // clang-format on
-  Status
-  DeleteCluster(google::bigtable::admin::v2::DeleteClusterRequest const& request, Options opts = {});
+  Status DeleteCluster(
+      google::bigtable::admin::v2::DeleteClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1045,8 +1082,10 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L721}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::AppProfile>
-  CreateAppProfile(std::string const& parent, std::string const& app_profile_id, google::bigtable::admin::v2::AppProfile const& app_profile, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
+      std::string const& parent, std::string const& app_profile_id,
+      google::bigtable::admin::v2::AppProfile const& app_profile,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1075,8 +1114,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L721}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::AppProfile>
-  CreateAppProfile(google::bigtable::admin::v2::CreateAppProfileRequest const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
+      google::bigtable::admin::v2::CreateAppProfileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1101,8 +1141,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L745}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::AppProfile>
-  GetAppProfile(std::string const& name, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1131,8 +1171,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L745}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::AppProfile>
-  GetAppProfile(google::bigtable::admin::v2::GetAppProfileRequest const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
+      google::bigtable::admin::v2::GetAppProfileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1169,8 +1210,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L757}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::AppProfile>
-  ListAppProfiles(std::string const& parent, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1208,8 +1249,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L757}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::AppProfile>
-  ListAppProfiles(google::bigtable::admin::v2::ListAppProfilesRequest request, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
+      google::bigtable::admin::v2::ListAppProfilesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1242,8 +1284,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L803}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  UpdateAppProfile(google::bigtable::admin::v2::AppProfile const& app_profile, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
+      google::bigtable::admin::v2::AppProfile const& app_profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1256,8 +1299,9 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateAppProfile(NoAwaitTag, google::bigtable::admin::v2::AppProfile const& app_profile, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateAppProfile(
+      NoAwaitTag, google::bigtable::admin::v2::AppProfile const& app_profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1293,8 +1337,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L803}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  UpdateAppProfile(google::bigtable::admin::v2::UpdateAppProfileRequest const& request, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1307,8 +1352,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateAppProfile(NoAwaitTag, google::bigtable::admin::v2::UpdateAppProfileRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateAppProfile(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1319,8 +1366,8 @@ class BigtableInstanceAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  UpdateAppProfile(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1344,8 +1391,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L817}
   ///
   // clang-format on
-  Status
-  DeleteAppProfile(std::string const& name, bool ignore_warnings, Options opts = {});
+  Status DeleteAppProfile(std::string const& name, bool ignore_warnings,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1371,8 +1418,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L817}
   ///
   // clang-format on
-  Status
-  DeleteAppProfile(google::bigtable::admin::v2::DeleteAppProfileRequest const& request, Options opts = {});
+  Status DeleteAppProfile(
+      google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1398,8 +1446,8 @@ class BigtableInstanceAdminClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -1429,8 +1477,8 @@ class BigtableInstanceAdminClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1460,8 +1508,9 @@ class BigtableInstanceAdminClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -1483,8 +1532,9 @@ class BigtableInstanceAdminClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -1514,8 +1564,8 @@ class BigtableInstanceAdminClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1544,8 +1594,9 @@ class BigtableInstanceAdminClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1574,8 +1625,9 @@ class BigtableInstanceAdminClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1611,8 +1663,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L836}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::HotTablet>
-  ListHotTablets(std::string const& parent, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1651,8 +1703,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L836}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::HotTablet>
-  ListHotTablets(google::bigtable::admin::v2::ListHotTabletsRequest request, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
+      google::bigtable::admin::v2::ListHotTabletsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1687,8 +1740,10 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
-  CreateLogicalView(std::string const& parent, google::bigtable::admin::v2::LogicalView const& logical_view, std::string const& logical_view_id, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+      std::string const& parent,
+      google::bigtable::admin::v2::LogicalView const& logical_view,
+      std::string const& logical_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1701,8 +1756,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateLogicalView(NoAwaitTag, std::string const& parent, google::bigtable::admin::v2::LogicalView const& logical_view, std::string const& logical_view_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateLogicalView(
+      NoAwaitTag, std::string const& parent,
+      google::bigtable::admin::v2::LogicalView const& logical_view,
+      std::string const& logical_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1738,8 +1795,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
-  CreateLogicalView(google::bigtable::admin::v2::CreateLogicalViewRequest const& request, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1752,8 +1810,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateLogicalView(NoAwaitTag, google::bigtable::admin::v2::CreateLogicalViewRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateLogicalView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1764,8 +1824,8 @@ class BigtableInstanceAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
-  CreateLogicalView(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1790,8 +1850,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::LogicalView>
-  GetLogicalView(std::string const& name, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1820,8 +1880,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::LogicalView>
-  GetLogicalView(google::bigtable::admin::v2::GetLogicalViewRequest const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
+      google::bigtable::admin::v2::GetLogicalViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1856,8 +1917,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::LogicalView>
-  ListLogicalViews(std::string const& parent, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::LogicalView> ListLogicalViews(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1895,8 +1956,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::LogicalView>
-  ListLogicalViews(google::bigtable::admin::v2::ListLogicalViewsRequest request, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::LogicalView> ListLogicalViews(
+      google::bigtable::admin::v2::ListLogicalViewsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1932,8 +1994,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.UpdateLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L967}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
-  UpdateLogicalView(google::bigtable::admin::v2::LogicalView const& logical_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+      google::bigtable::admin::v2::LogicalView const& logical_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1946,8 +2009,9 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateLogicalView(NoAwaitTag, google::bigtable::admin::v2::LogicalView const& logical_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateLogicalView(
+      NoAwaitTag, google::bigtable::admin::v2::LogicalView const& logical_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1983,8 +2047,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.UpdateLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L967}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
-  UpdateLogicalView(google::bigtable::admin::v2::UpdateLogicalViewRequest const& request, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1997,8 +2062,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateLogicalView(NoAwaitTag, google::bigtable::admin::v2::UpdateLogicalViewRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateLogicalView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2009,8 +2076,8 @@ class BigtableInstanceAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::LogicalView>>
-  UpdateLogicalView(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2033,8 +2100,7 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L994}
   ///
   // clang-format on
-  Status
-  DeleteLogicalView(std::string const& name, Options opts = {});
+  Status DeleteLogicalView(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2060,8 +2126,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L994}
   ///
   // clang-format on
-  Status
-  DeleteLogicalView(google::bigtable::admin::v2::DeleteLogicalViewRequest const& request, Options opts = {});
+  Status DeleteLogicalView(
+      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2097,7 +2164,10 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
-  CreateMaterializedView(std::string const& parent, google::bigtable::admin::v2::MaterializedView const& materialized_view, std::string const& materialized_view_id, Options opts = {});
+  CreateMaterializedView(
+      std::string const& parent,
+      google::bigtable::admin::v2::MaterializedView const& materialized_view,
+      std::string const& materialized_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2110,8 +2180,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMaterializedView(NoAwaitTag, std::string const& parent, google::bigtable::admin::v2::MaterializedView const& materialized_view, std::string const& materialized_view_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMaterializedView(
+      NoAwaitTag, std::string const& parent,
+      google::bigtable::admin::v2::MaterializedView const& materialized_view,
+      std::string const& materialized_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2148,7 +2220,9 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
-  CreateMaterializedView(google::bigtable::admin::v2::CreateMaterializedViewRequest const& request, Options opts = {});
+  CreateMaterializedView(
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2161,8 +2235,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMaterializedView(NoAwaitTag, google::bigtable::admin::v2::CreateMaterializedViewRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2174,7 +2250,8 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
-  CreateMaterializedView(google::longrunning::Operation const& operation, Options opts = {});
+  CreateMaterializedView(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -2200,8 +2277,8 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::MaterializedView>
-  GetMaterializedView(std::string const& name, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2230,8 +2307,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L491}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::MaterializedView>
-  GetMaterializedView(google::bigtable::admin::v2::GetMaterializedViewRequest const& request, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
+      google::bigtable::admin::v2::GetMaterializedViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2306,7 +2384,9 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::MaterializedView>
-  ListMaterializedViews(google::bigtable::admin::v2::ListMaterializedViewsRequest request, Options opts = {});
+  ListMaterializedViews(
+      google::bigtable::admin::v2::ListMaterializedViewsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2343,7 +2423,9 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
-  UpdateMaterializedView(google::bigtable::admin::v2::MaterializedView const& materialized_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateMaterializedView(
+      google::bigtable::admin::v2::MaterializedView const& materialized_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2356,8 +2438,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateMaterializedView(NoAwaitTag, google::bigtable::admin::v2::MaterializedView const& materialized_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::MaterializedView const& materialized_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2394,7 +2478,9 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
-  UpdateMaterializedView(google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request, Options opts = {});
+  UpdateMaterializedView(
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2407,8 +2493,10 @@ class BigtableInstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateMaterializedView(NoAwaitTag, google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2420,7 +2508,8 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
-  UpdateMaterializedView(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateMaterializedView(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -2443,8 +2532,7 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1121}
   ///
   // clang-format on
-  Status
-  DeleteMaterializedView(std::string const& name, Options opts = {});
+  Status DeleteMaterializedView(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2470,8 +2558,9 @@ class BigtableInstanceAdminClient {
   /// [google.bigtable.admin.v2.DeleteMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1121}
   ///
   // clang-format on
-  Status
-  DeleteMaterializedView(google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request, Options opts = {});
+  Status DeleteMaterializedView(
+      google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<BigtableInstanceAdminConnection> connection_;

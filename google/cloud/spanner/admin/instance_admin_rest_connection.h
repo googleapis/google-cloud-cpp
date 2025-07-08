@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_REST_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_REST_CONNECTION_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/spanner/admin/instance_admin_connection.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 

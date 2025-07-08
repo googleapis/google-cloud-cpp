@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_DOCUMENT_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_INTERNAL_DOCUMENT_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/contentwarehouse/v1/document_connection.h"
 #include "google/cloud/contentwarehouse/v1/document_connection_idempotency_policy.h"
 #include "google/cloud/contentwarehouse/v1/document_options.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,38 +43,49 @@ class DocumentServiceConnectionImpl
   ~DocumentServiceConnectionImpl() override = default;
 
   DocumentServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<contentwarehouse_v1_internal::DocumentServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<contentwarehouse_v1_internal::DocumentServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
-  CreateDocument(google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) override;
+  CreateDocument(
+      google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::Document>
-  GetDocument(google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::Document> GetDocument(
+      google::cloud::contentwarehouse::v1::GetDocumentRequest const& request)
+      override;
 
   StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
-  UpdateDocument(google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) override;
+  UpdateDocument(
+      google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request)
+      override;
 
-  Status
-  DeleteDocument(google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) override;
+  Status DeleteDocument(
+      google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request)
+      override;
 
-  StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument>
-  SearchDocuments(google::cloud::contentwarehouse::v1::SearchDocumentsRequest request) override;
+  StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
+                  MatchingDocument>
+  SearchDocuments(google::cloud::contentwarehouse::v1::SearchDocumentsRequest
+                      request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::Document>
-  LockDocument(google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::Document> LockDocument(
+      google::cloud::contentwarehouse::v1::LockDocumentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
-  FetchAcl(google::cloud::contentwarehouse::v1::FetchAclRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse> FetchAcl(
+      google::cloud::contentwarehouse::v1::FetchAclRequest const& request)
+      override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
-  SetAcl(google::cloud::contentwarehouse::v1::SetAclRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
+      google::cloud::contentwarehouse::v1::SetAclRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

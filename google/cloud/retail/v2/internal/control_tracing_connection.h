@@ -36,30 +36,30 @@ class ControlServiceTracingConnection
   ~ControlServiceTracingConnection() override = default;
 
   explicit ControlServiceTracingConnection(
-    std::shared_ptr<retail_v2::ControlServiceConnection> child);
+      std::shared_ptr<retail_v2::ControlServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::retail::v2::Control>
-  CreateControl(google::cloud::retail::v2::CreateControlRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Control> CreateControl(
+      google::cloud::retail::v2::CreateControlRequest const& request) override;
 
-  Status
-  DeleteControl(google::cloud::retail::v2::DeleteControlRequest const& request) override;
+  Status DeleteControl(
+      google::cloud::retail::v2::DeleteControlRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::Control>
-  UpdateControl(google::cloud::retail::v2::UpdateControlRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Control> UpdateControl(
+      google::cloud::retail::v2::UpdateControlRequest const& request) override;
 
-  StatusOr<google::cloud::retail::v2::Control>
-  GetControl(google::cloud::retail::v2::GetControlRequest const& request) override;
+  StatusOr<google::cloud::retail::v2::Control> GetControl(
+      google::cloud::retail::v2::GetControlRequest const& request) override;
 
-  StreamRange<google::cloud::retail::v2::Control>
-  ListControls(google::cloud::retail::v2::ListControlsRequest request) override;
+  StreamRange<google::cloud::retail::v2::Control> ListControls(
+      google::cloud::retail::v2::ListControlsRequest request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<retail_v2::ControlServiceConnection> child_;

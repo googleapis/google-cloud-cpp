@@ -35,72 +35,63 @@ class EkmServiceLogging : public EkmServiceStub {
  public:
   ~EkmServiceLogging() override = default;
   EkmServiceLogging(std::shared_ptr<EkmServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                    TracingOptions tracing_options,
+                    std::set<std::string> const& components);
 
-  StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse> ListEkmConnections(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::v1::ListEkmConnectionsRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
+  ListEkmConnections(grpc::ClientContext& context, Options const& options,
+                     google::cloud::kms::v1::ListEkmConnectionsRequest const&
+                         request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConnectionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::v1::CreateEkmConnectionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::CreateEkmConnectionRequest const& request)
+      override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
+      override;
 
   StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse> VerifyConnectivity(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::kms::v1::VerifyConnectivityRequest const& request) override;
+  StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+  VerifyConnectivity(grpc::ClientContext& context, Options const& options,
+                     google::cloud::kms::v1::VerifyConnectivityRequest const&
+                         request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

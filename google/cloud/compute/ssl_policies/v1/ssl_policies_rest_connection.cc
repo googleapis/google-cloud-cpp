@@ -17,12 +17,12 @@
 // source: google/cloud/compute/ssl_policies/v1/ssl_policies.proto
 
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_option_defaults.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_rest_connection_impl.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_rest_stub_factory.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_tracing_connection.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,15 +36,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<SslPoliciesConnection> MakeSslPoliciesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      SslPoliciesPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, SslPoliciesPolicyOptionList>(
+      options, __func__);
   options = compute_ssl_policies_v1_internal::SslPoliciesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_ssl_policies_v1_internal::CreateDefaultSslPoliciesRestStub(
-      options);
+  auto stub =
+      compute_ssl_policies_v1_internal::CreateDefaultSslPoliciesRestStub(
+          options);
   return compute_ssl_policies_v1_internal::MakeSslPoliciesTracingConnection(
       std::make_shared<
           compute_ssl_policies_v1_internal::SslPoliciesRestConnectionImpl>(

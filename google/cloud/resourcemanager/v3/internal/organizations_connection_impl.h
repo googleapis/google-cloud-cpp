@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_ORGANIZATIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_ORGANIZATIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/resourcemanager/v3/internal/organizations_retry_traits.h"
 #include "google/cloud/resourcemanager/v3/internal/organizations_stub.h"
 #include "google/cloud/resourcemanager/v3/organizations_connection.h"
 #include "google/cloud/resourcemanager/v3/organizations_connection_idempotency_policy.h"
 #include "google/cloud/resourcemanager/v3/organizations_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,29 +43,32 @@ class OrganizationsConnectionImpl
   ~OrganizationsConnectionImpl() override = default;
 
   OrganizationsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<resourcemanager_v3_internal::OrganizationsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<resourcemanager_v3_internal::OrganizationsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::resourcemanager::v3::Organization>
-  GetOrganization(google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
+      google::cloud::resourcemanager::v3::GetOrganizationRequest const& request)
+      override;
 
   StreamRange<google::cloud::resourcemanager::v3::Organization>
-  SearchOrganizations(google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) override;
+  SearchOrganizations(
+      google::cloud::resourcemanager::v3::SearchOrganizationsRequest request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

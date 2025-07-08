@@ -29,20 +29,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RowAccessPolicyServiceRestLogging::RowAccessPolicyServiceRestLogging(
     std::shared_ptr<RowAccessPolicyServiceRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>
 RowAccessPolicyServiceRestLogging::ListRowAccessPolicies(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const&
+                 request) {
         return child_->ListRowAccessPolicies(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -50,13 +49,12 @@ RowAccessPolicyServiceRestLogging::ListRowAccessPolicies(
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
 RowAccessPolicyServiceRestLogging::GetRowAccessPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::GetRowAccessPolicyRequest const&
+                 request) {
         return child_->GetRowAccessPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -64,13 +62,12 @@ RowAccessPolicyServiceRestLogging::GetRowAccessPolicy(
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
 RowAccessPolicyServiceRestLogging::CreateRowAccessPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&
+                 request) {
         return child_->CreateRowAccessPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -78,42 +75,39 @@ RowAccessPolicyServiceRestLogging::CreateRowAccessPolicy(
 
 StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
 RowAccessPolicyServiceRestLogging::UpdateRowAccessPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&
+                 request) {
         return child_->UpdateRowAccessPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status
-RowAccessPolicyServiceRestLogging::DeleteRowAccessPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+Status RowAccessPolicyServiceRestLogging::DeleteRowAccessPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&
+                 request) {
         return child_->DeleteRowAccessPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status
-RowAccessPolicyServiceRestLogging::BatchDeleteRowAccessPolicies(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request) {
+Status RowAccessPolicyServiceRestLogging::BatchDeleteRowAccessPolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const& request) {
-        return child_->BatchDeleteRowAccessPolicies(rest_context, options, request);
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::
+                 BatchDeleteRowAccessPoliciesRequest const& request) {
+        return child_->BatchDeleteRowAccessPolicies(rest_context, options,
+                                                    request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }

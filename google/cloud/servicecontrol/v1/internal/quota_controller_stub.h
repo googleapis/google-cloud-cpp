@@ -35,25 +35,29 @@ class QuotaControllerStub {
  public:
   virtual ~QuotaControllerStub() = 0;
 
-  virtual StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse> AllocateQuota(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
+  AllocateQuota(
+      grpc::ClientContext& context, Options const& options,
       google::api::servicecontrol::v1::AllocateQuotaRequest const& request) = 0;
 };
 
 class DefaultQuotaControllerStub : public QuotaControllerStub {
  public:
   explicit DefaultQuotaControllerStub(
-      std::unique_ptr<google::api::servicecontrol::v1::QuotaController::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::api::servicecontrol::v1::QuotaController::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse> AllocateQuota(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::api::servicecontrol::v1::AllocateQuotaRequest const& request) override;
+  StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
+  AllocateQuota(grpc::ClientContext& context, Options const& options,
+                google::api::servicecontrol::v1::AllocateQuotaRequest const&
+                    request) override;
 
  private:
-  std::unique_ptr<google::api::servicecontrol::v1::QuotaController::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::api::servicecontrol::v1::QuotaController::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

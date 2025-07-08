@@ -17,17 +17,17 @@
 // source: google/cloud/run/v2/service.proto
 
 #include "google/cloud/run/v2/services_connection.h"
+#include "google/cloud/run/v2/internal/services_connection_impl.h"
+#include "google/cloud/run/v2/internal/services_option_defaults.h"
+#include "google/cloud/run/v2/internal/services_stub_factory.h"
+#include "google/cloud/run/v2/internal/services_tracing_connection.h"
+#include "google/cloud/run/v2/services_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/run/v2/internal/services_connection_impl.h"
-#include "google/cloud/run/v2/internal/services_option_defaults.h"
-#include "google/cloud/run/v2/internal/services_stub_factory.h"
-#include "google/cloud/run/v2/internal/services_tracing_connection.h"
-#include "google/cloud/run/v2/services_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,34 +42,31 @@ future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnection::CreateService(
     google::cloud::run::v2::CreateServiceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ServicesConnection::CreateService(
-    NoAwaitTag,
-    google::cloud::run::v2::CreateServiceRequest const&) {
+StatusOr<google::longrunning::Operation> ServicesConnection::CreateService(
+    NoAwaitTag, google::cloud::run::v2::CreateServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::run::v2::Service>>
-ServicesConnection::CreateService(
-    google::longrunning::Operation const&) {
+ServicesConnection::CreateService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::run::v2::Service>
-ServicesConnection::GetService(
+StatusOr<google::cloud::run::v2::Service> ServicesConnection::GetService(
     google::cloud::run::v2::GetServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::cloud::run::v2::Service> ServicesConnection::ListServices(
-    google::cloud::run::v2::ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::run::v2::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::run::v2::Service>>();
 }
@@ -78,58 +75,50 @@ future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnection::UpdateService(
     google::cloud::run::v2::UpdateServiceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ServicesConnection::UpdateService(
-    NoAwaitTag,
-    google::cloud::run::v2::UpdateServiceRequest const&) {
+StatusOr<google::longrunning::Operation> ServicesConnection::UpdateService(
+    NoAwaitTag, google::cloud::run::v2::UpdateServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::run::v2::Service>>
-ServicesConnection::UpdateService(
-    google::longrunning::Operation const&) {
+ServicesConnection::UpdateService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnection::DeleteService(
     google::cloud::run::v2::DeleteServiceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-ServicesConnection::DeleteService(
-    NoAwaitTag,
-    google::cloud::run::v2::DeleteServiceRequest const&) {
+StatusOr<google::longrunning::Operation> ServicesConnection::DeleteService(
+    NoAwaitTag, google::cloud::run::v2::DeleteServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::run::v2::Service>>
-ServicesConnection::DeleteService(
-    google::longrunning::Operation const&) {
+ServicesConnection::DeleteService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::run::v2::Service>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::run::v2::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::iam::v1::Policy>
-ServicesConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> ServicesConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-ServicesConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> ServicesConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -141,43 +130,39 @@ ServicesConnection::TestIamPermissions(
 }
 
 StreamRange<google::longrunning::Operation> ServicesConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ServicesConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ServicesConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ServicesConnection::DeleteOperation(
+Status ServicesConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::longrunning::Operation>
-ServicesConnection::WaitOperation(
+StatusOr<google::longrunning::Operation> ServicesConnection::WaitOperation(
     google::longrunning::WaitOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ServicesConnection> MakeServicesConnection(
-    Options options) {
+std::shared_ptr<ServicesConnection> MakeServicesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ServicesPolicyOptionList>(options, __func__);
-  options = run_v2_internal::ServicesDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ServicesPolicyOptionList>(options, __func__);
+  options = run_v2_internal::ServicesDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = run_v2_internal::CreateDefaultServicesStub(
-    std::move(auth), options);
+  auto stub =
+      run_v2_internal::CreateDefaultServicesStub(std::move(auth), options);
   return run_v2_internal::MakeServicesTracingConnection(
       std::make_shared<run_v2_internal::ServicesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,17 +17,17 @@
 // source: google/cloud/storagebatchoperations/v1/storage_batch_operations.proto
 
 #include "google/cloud/storagebatchoperations/v1/storage_batch_operations_connection.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_connection_impl.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_option_defaults.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub_factory.h"
+#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_tracing_connection.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_connection_impl.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_option_defaults.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_stub_factory.h"
-#include "google/cloud/storagebatchoperations/v1/internal/storage_batch_operations_tracing_connection.h"
-#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageBatchOperationsConnection::~StorageBatchOperationsConnection() = default;
 
-StreamRange<google::cloud::storagebatchoperations::v1::Job> StorageBatchOperationsConnection::ListJobs(
-    google::cloud::storagebatchoperations::v1::ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::storagebatchoperations::v1::Job>
+StorageBatchOperationsConnection::ListJobs(
+    google::cloud::storagebatchoperations::v1::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::storagebatchoperations::v1::Job>>();
 }
@@ -54,8 +56,8 @@ future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
 StorageBatchOperationsConnection::CreateJob(
     google::cloud::storagebatchoperations::v1::CreateJobRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::storagebatchoperations::v1::Job>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::storagebatchoperations::v1::Job>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -63,19 +65,18 @@ StorageBatchOperationsConnection::CreateJob(
     NoAwaitTag,
     google::cloud::storagebatchoperations::v1::CreateJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::storagebatchoperations::v1::Job>>
 StorageBatchOperationsConnection::CreateJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::storagebatchoperations::v1::Job>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::storagebatchoperations::v1::Job>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status
-StorageBatchOperationsConnection::DeleteJob(
+Status StorageBatchOperationsConnection::DeleteJob(
     google::cloud::storagebatchoperations::v1::DeleteJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -86,8 +87,10 @@ StorageBatchOperationsConnection::CancelJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> StorageBatchOperationsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+StorageBatchOperationsConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -98,8 +101,10 @@ StorageBatchOperationsConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> StorageBatchOperationsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+StorageBatchOperationsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -110,32 +115,34 @@ StorageBatchOperationsConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-StorageBatchOperationsConnection::DeleteOperation(
+Status StorageBatchOperationsConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-StorageBatchOperationsConnection::CancelOperation(
+Status StorageBatchOperationsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<StorageBatchOperationsConnection> MakeStorageBatchOperationsConnection(
-    Options options) {
+std::shared_ptr<StorageBatchOperationsConnection>
+MakeStorageBatchOperationsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      StorageBatchOperationsPolicyOptionList>(options, __func__);
-  options = storagebatchoperations_v1_internal::StorageBatchOperationsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 StorageBatchOperationsPolicyOptionList>(
+      options, __func__);
+  options =
+      storagebatchoperations_v1_internal::StorageBatchOperationsDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = storagebatchoperations_v1_internal::CreateDefaultStorageBatchOperationsStub(
-    std::move(auth), options);
-  return storagebatchoperations_v1_internal::MakeStorageBatchOperationsTracingConnection(
-      std::make_shared<storagebatchoperations_v1_internal::StorageBatchOperationsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub = storagebatchoperations_v1_internal::
+      CreateDefaultStorageBatchOperationsStub(std::move(auth), options);
+  return storagebatchoperations_v1_internal::
+      MakeStorageBatchOperationsTracingConnection(
+          std::make_shared<storagebatchoperations_v1_internal::
+                               StorageBatchOperationsConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_ZONAL_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_INTERNAL_OS_CONFIG_ZONAL_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -39,83 +39,95 @@ class OsConfigZonalServiceAuth : public OsConfigZonalServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<OsConfigZonalServiceStub> child);
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateOSPolicyAssignment(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request) override;
+      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateOSPolicyAssignment(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request) override;
+      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment> GetOSPolicyAssignment(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
+  GetOSPolicyAssignment(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentsResponse> ListOSPolicyAssignments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentsResponse>
+  ListOSPolicyAssignments(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsResponse> ListOSPolicyAssignmentRevisions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsResponse>
+  ListOSPolicyAssignmentRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteOSPolicyAssignment(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request) override;
+      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+          request) override;
 
-  StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport> GetOSPolicyAssignmentReport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
+  GetOSPolicyAssignmentReport(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
+          request) override;
 
-  StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsResponse> ListOSPolicyAssignmentReports(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsResponse>
+  ListOSPolicyAssignmentReports(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest const&
+          request) override;
 
   StatusOr<google::cloud::osconfig::v1::Inventory> GetInventory(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::osconfig::v1::GetInventoryRequest const& request) override;
 
-  StatusOr<google::cloud::osconfig::v1::ListInventoriesResponse> ListInventories(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::osconfig::v1::ListInventoriesRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::ListInventoriesResponse>
+  ListInventories(grpc::ClientContext& context, Options const& options,
+                  google::cloud::osconfig::v1::ListInventoriesRequest const&
+                      request) override;
 
-  StatusOr<google::cloud::osconfig::v1::VulnerabilityReport> GetVulnerabilityReport(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
+  GetVulnerabilityReport(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request)
+      override;
 
-  StatusOr<google::cloud::osconfig::v1::ListVulnerabilityReportsResponse> ListVulnerabilityReports(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const& request) override;
+  StatusOr<google::cloud::osconfig::v1::ListVulnerabilityReportsResponse>
+  ListVulnerabilityReports(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

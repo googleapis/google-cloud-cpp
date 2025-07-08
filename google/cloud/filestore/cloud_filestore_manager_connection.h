@@ -33,11 +33,15 @@ using ::google::cloud::filestore_v1::MakeCloudFilestoreManagerConnection;
 /// @deprecated Use filestore_v1::CloudFilestoreManagerConnection directly.
 using ::google::cloud::filestore_v1::CloudFilestoreManagerConnection;
 
-/// @deprecated Use filestore_v1::CloudFilestoreManagerLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::filestore_v1::CloudFilestoreManagerLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// filestore_v1::CloudFilestoreManagerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::filestore_v1::
+    CloudFilestoreManagerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use filestore_v1::CloudFilestoreManagerLimitedTimeRetryPolicy directly.
-using ::google::cloud::filestore_v1::CloudFilestoreManagerLimitedTimeRetryPolicy;
+/// @deprecated Use filestore_v1::CloudFilestoreManagerLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::filestore_v1::
+    CloudFilestoreManagerLimitedTimeRetryPolicy;
 
 /// @deprecated Use filestore_v1::CloudFilestoreManagerRetryPolicy directly.
 using ::google::cloud::filestore_v1::CloudFilestoreManagerRetryPolicy;

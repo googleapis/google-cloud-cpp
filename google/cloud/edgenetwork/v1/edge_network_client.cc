@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EdgeNetworkClient::EdgeNetworkClient(
     std::shared_ptr<EdgeNetworkConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EdgeNetworkClient::~EdgeNetworkClient() = default;
 
 StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
@@ -41,35 +41,38 @@ EdgeNetworkClient::InitializeZone(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
-EdgeNetworkClient::InitializeZone(google::cloud::edgenetwork::v1::InitializeZoneRequest const& request, Options opts) {
+EdgeNetworkClient::InitializeZone(
+    google::cloud::edgenetwork::v1::InitializeZoneRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InitializeZone(request);
 }
 
-StreamRange<google::cloud::edgenetwork::v1::Zone>
-EdgeNetworkClient::ListZones(std::string const& parent, Options opts) {
+StreamRange<google::cloud::edgenetwork::v1::Zone> EdgeNetworkClient::ListZones(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::ListZonesRequest request;
   request.set_parent(parent);
   return connection_->ListZones(request);
 }
 
-StreamRange<google::cloud::edgenetwork::v1::Zone>
-EdgeNetworkClient::ListZones(google::cloud::edgenetwork::v1::ListZonesRequest request, Options opts) {
+StreamRange<google::cloud::edgenetwork::v1::Zone> EdgeNetworkClient::ListZones(
+    google::cloud::edgenetwork::v1::ListZonesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListZones(std::move(request));
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Zone>
-EdgeNetworkClient::GetZone(std::string const& name, Options opts) {
+StatusOr<google::cloud::edgenetwork::v1::Zone> EdgeNetworkClient::GetZone(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::GetZoneRequest request;
   request.set_name(name);
   return connection_->GetZone(request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Zone>
-EdgeNetworkClient::GetZone(google::cloud::edgenetwork::v1::GetZoneRequest const& request, Options opts) {
+StatusOr<google::cloud::edgenetwork::v1::Zone> EdgeNetworkClient::GetZone(
+    google::cloud::edgenetwork::v1::GetZoneRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetZone(request);
 }
@@ -83,21 +86,23 @@ EdgeNetworkClient::ListNetworks(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Network>
-EdgeNetworkClient::ListNetworks(google::cloud::edgenetwork::v1::ListNetworksRequest request, Options opts) {
+EdgeNetworkClient::ListNetworks(
+    google::cloud::edgenetwork::v1::ListNetworksRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNetworks(std::move(request));
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Network>
-EdgeNetworkClient::GetNetwork(std::string const& name, Options opts) {
+StatusOr<google::cloud::edgenetwork::v1::Network> EdgeNetworkClient::GetNetwork(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::GetNetworkRequest request;
   request.set_name(name);
   return connection_->GetNetwork(request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Network>
-EdgeNetworkClient::GetNetwork(google::cloud::edgenetwork::v1::GetNetworkRequest const& request, Options opts) {
+StatusOr<google::cloud::edgenetwork::v1::Network> EdgeNetworkClient::GetNetwork(
+    google::cloud::edgenetwork::v1::GetNetworkRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNetwork(request);
 }
@@ -111,13 +116,18 @@ EdgeNetworkClient::DiagnoseNetwork(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
-EdgeNetworkClient::DiagnoseNetwork(google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request, Options opts) {
+EdgeNetworkClient::DiagnoseNetwork(
+    google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DiagnoseNetwork(request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-EdgeNetworkClient::CreateNetwork(std::string const& parent, google::cloud::edgenetwork::v1::Network const& network, std::string const& network_id, Options opts) {
+EdgeNetworkClient::CreateNetwork(
+    std::string const& parent,
+    google::cloud::edgenetwork::v1::Network const& network,
+    std::string const& network_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::CreateNetworkRequest request;
   request.set_parent(parent);
@@ -126,8 +136,10 @@ EdgeNetworkClient::CreateNetwork(std::string const& parent, google::cloud::edgen
   return connection_->CreateNetwork(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::CreateNetwork(NoAwaitTag, std::string const& parent, google::cloud::edgenetwork::v1::Network const& network, std::string const& network_id, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateNetwork(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::edgenetwork::v1::Network const& network,
+    std::string const& network_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::CreateNetworkRequest request;
   request.set_parent(parent);
@@ -137,19 +149,24 @@ EdgeNetworkClient::CreateNetwork(NoAwaitTag, std::string const& parent, google::
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-EdgeNetworkClient::CreateNetwork(google::cloud::edgenetwork::v1::CreateNetworkRequest const& request, Options opts) {
+EdgeNetworkClient::CreateNetwork(
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetwork(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::CreateNetwork(NoAwaitTag, google::cloud::edgenetwork::v1::CreateNetworkRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateNetwork(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetwork(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-EdgeNetworkClient::CreateNetwork(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::CreateNetwork(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNetwork(operation);
 }
@@ -162,8 +179,8 @@ EdgeNetworkClient::DeleteNetwork(std::string const& name, Options opts) {
   return connection_->DeleteNetwork(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::DeleteNetwork(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteNetwork(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteNetworkRequest request;
   request.set_name(name);
@@ -171,19 +188,24 @@ EdgeNetworkClient::DeleteNetwork(NoAwaitTag, std::string const& name, Options op
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request, Options opts) {
+EdgeNetworkClient::DeleteNetwork(
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetwork(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::DeleteNetwork(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteNetwork(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetwork(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteNetwork(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::DeleteNetwork(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetwork(operation);
 }
@@ -197,27 +219,32 @@ EdgeNetworkClient::ListSubnets(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Subnet>
-EdgeNetworkClient::ListSubnets(google::cloud::edgenetwork::v1::ListSubnetsRequest request, Options opts) {
+EdgeNetworkClient::ListSubnets(
+    google::cloud::edgenetwork::v1::ListSubnetsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSubnets(std::move(request));
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Subnet>
-EdgeNetworkClient::GetSubnet(std::string const& name, Options opts) {
+StatusOr<google::cloud::edgenetwork::v1::Subnet> EdgeNetworkClient::GetSubnet(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::GetSubnetRequest request;
   request.set_name(name);
   return connection_->GetSubnet(request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Subnet>
-EdgeNetworkClient::GetSubnet(google::cloud::edgenetwork::v1::GetSubnetRequest const& request, Options opts) {
+StatusOr<google::cloud::edgenetwork::v1::Subnet> EdgeNetworkClient::GetSubnet(
+    google::cloud::edgenetwork::v1::GetSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSubnet(request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkClient::CreateSubnet(std::string const& parent, google::cloud::edgenetwork::v1::Subnet const& subnet, std::string const& subnet_id, Options opts) {
+EdgeNetworkClient::CreateSubnet(
+    std::string const& parent,
+    google::cloud::edgenetwork::v1::Subnet const& subnet,
+    std::string const& subnet_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::CreateSubnetRequest request;
   request.set_parent(parent);
@@ -226,8 +253,10 @@ EdgeNetworkClient::CreateSubnet(std::string const& parent, google::cloud::edgene
   return connection_->CreateSubnet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::CreateSubnet(NoAwaitTag, std::string const& parent, google::cloud::edgenetwork::v1::Subnet const& subnet, std::string const& subnet_id, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateSubnet(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::edgenetwork::v1::Subnet const& subnet,
+    std::string const& subnet_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::CreateSubnetRequest request;
   request.set_parent(parent);
@@ -237,25 +266,32 @@ EdgeNetworkClient::CreateSubnet(NoAwaitTag, std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkClient::CreateSubnet(google::cloud::edgenetwork::v1::CreateSubnetRequest const& request, Options opts) {
+EdgeNetworkClient::CreateSubnet(
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSubnet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::CreateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::CreateSubnetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateSubnet(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSubnet(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkClient::CreateSubnet(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::CreateSubnet(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSubnet(operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkClient::UpdateSubnet(google::cloud::edgenetwork::v1::Subnet const& subnet, google::protobuf::FieldMask const& update_mask, Options opts) {
+EdgeNetworkClient::UpdateSubnet(
+    google::cloud::edgenetwork::v1::Subnet const& subnet,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::UpdateSubnetRequest request;
   *request.mutable_subnet() = subnet;
@@ -263,8 +299,9 @@ EdgeNetworkClient::UpdateSubnet(google::cloud::edgenetwork::v1::Subnet const& su
   return connection_->UpdateSubnet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::UpdateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::Subnet const& subnet, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::UpdateSubnet(
+    NoAwaitTag, google::cloud::edgenetwork::v1::Subnet const& subnet,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::UpdateSubnetRequest request;
   *request.mutable_subnet() = subnet;
@@ -273,19 +310,24 @@ EdgeNetworkClient::UpdateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::Subn
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkClient::UpdateSubnet(google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request, Options opts) {
+EdgeNetworkClient::UpdateSubnet(
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSubnet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::UpdateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::UpdateSubnet(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSubnet(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkClient::UpdateSubnet(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::UpdateSubnet(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSubnet(operation);
 }
@@ -298,8 +340,8 @@ EdgeNetworkClient::DeleteSubnet(std::string const& name, Options opts) {
   return connection_->DeleteSubnet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::DeleteSubnet(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteSubnet(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteSubnetRequest request;
   request.set_name(name);
@@ -307,19 +349,24 @@ EdgeNetworkClient::DeleteSubnet(NoAwaitTag, std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request, Options opts) {
+EdgeNetworkClient::DeleteSubnet(
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSubnet(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::DeleteSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteSubnet(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSubnet(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteSubnet(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::DeleteSubnet(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSubnet(operation);
 }
@@ -333,7 +380,9 @@ EdgeNetworkClient::ListInterconnects(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Interconnect>
-EdgeNetworkClient::ListInterconnects(google::cloud::edgenetwork::v1::ListInterconnectsRequest request, Options opts) {
+EdgeNetworkClient::ListInterconnects(
+    google::cloud::edgenetwork::v1::ListInterconnectsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInterconnects(std::move(request));
 }
@@ -347,7 +396,9 @@ EdgeNetworkClient::GetInterconnect(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::edgenetwork::v1::Interconnect>
-EdgeNetworkClient::GetInterconnect(google::cloud::edgenetwork::v1::GetInterconnectRequest const& request, Options opts) {
+EdgeNetworkClient::GetInterconnect(
+    google::cloud::edgenetwork::v1::GetInterconnectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInterconnect(request);
 }
@@ -361,13 +412,16 @@ EdgeNetworkClient::DiagnoseInterconnect(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
-EdgeNetworkClient::DiagnoseInterconnect(google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request, Options opts) {
+EdgeNetworkClient::DiagnoseInterconnect(
+    google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DiagnoseInterconnect(request);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>
-EdgeNetworkClient::ListInterconnectAttachments(std::string const& parent, Options opts) {
+EdgeNetworkClient::ListInterconnectAttachments(std::string const& parent,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request;
   request.set_parent(parent);
@@ -375,13 +429,16 @@ EdgeNetworkClient::ListInterconnectAttachments(std::string const& parent, Option
 }
 
 StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>
-EdgeNetworkClient::ListInterconnectAttachments(google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request, Options opts) {
+EdgeNetworkClient::ListInterconnectAttachments(
+    google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInterconnectAttachments(std::move(request));
 }
 
 StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
-EdgeNetworkClient::GetInterconnectAttachment(std::string const& name, Options opts) {
+EdgeNetworkClient::GetInterconnectAttachment(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest request;
   request.set_name(name);
@@ -389,13 +446,20 @@ EdgeNetworkClient::GetInterconnectAttachment(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
-EdgeNetworkClient::GetInterconnectAttachment(google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request, Options opts) {
+EdgeNetworkClient::GetInterconnectAttachment(
+    google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInterconnectAttachment(request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-EdgeNetworkClient::CreateInterconnectAttachment(std::string const& parent, google::cloud::edgenetwork::v1::InterconnectAttachment const& interconnect_attachment, std::string const& interconnect_attachment_id, Options opts) {
+EdgeNetworkClient::CreateInterconnectAttachment(
+    std::string const& parent,
+    google::cloud::edgenetwork::v1::InterconnectAttachment const&
+        interconnect_attachment,
+    std::string const& interconnect_attachment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest request;
   request.set_parent(parent);
@@ -405,7 +469,11 @@ EdgeNetworkClient::CreateInterconnectAttachment(std::string const& parent, googl
 }
 
 StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::CreateInterconnectAttachment(NoAwaitTag, std::string const& parent, google::cloud::edgenetwork::v1::InterconnectAttachment const& interconnect_attachment, std::string const& interconnect_attachment_id, Options opts) {
+EdgeNetworkClient::CreateInterconnectAttachment(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::edgenetwork::v1::InterconnectAttachment const&
+        interconnect_attachment,
+    std::string const& interconnect_attachment_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest request;
   request.set_parent(parent);
@@ -415,25 +483,34 @@ EdgeNetworkClient::CreateInterconnectAttachment(NoAwaitTag, std::string const& p
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-EdgeNetworkClient::CreateInterconnectAttachment(google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request, Options opts) {
+EdgeNetworkClient::CreateInterconnectAttachment(
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInterconnectAttachment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::CreateInterconnectAttachment(NoAwaitTag, google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request, Options opts) {
+EdgeNetworkClient::CreateInterconnectAttachment(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInterconnectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-EdgeNetworkClient::CreateInterconnectAttachment(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::CreateInterconnectAttachment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInterconnectAttachment(operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteInterconnectAttachment(std::string const& name, Options opts) {
+EdgeNetworkClient::DeleteInterconnectAttachment(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest request;
   request.set_name(name);
@@ -441,7 +518,9 @@ EdgeNetworkClient::DeleteInterconnectAttachment(std::string const& name, Options
 }
 
 StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::DeleteInterconnectAttachment(NoAwaitTag, std::string const& name, Options opts) {
+EdgeNetworkClient::DeleteInterconnectAttachment(NoAwaitTag,
+                                                std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest request;
   request.set_name(name);
@@ -449,19 +528,27 @@ EdgeNetworkClient::DeleteInterconnectAttachment(NoAwaitTag, std::string const& n
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteInterconnectAttachment(google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request, Options opts) {
+EdgeNetworkClient::DeleteInterconnectAttachment(
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnectAttachment(request);
 }
 
 StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::DeleteInterconnectAttachment(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request, Options opts) {
+EdgeNetworkClient::DeleteInterconnectAttachment(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteInterconnectAttachment(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::DeleteInterconnectAttachment(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnectAttachment(operation);
 }
@@ -475,21 +562,23 @@ EdgeNetworkClient::ListRouters(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Router>
-EdgeNetworkClient::ListRouters(google::cloud::edgenetwork::v1::ListRoutersRequest request, Options opts) {
+EdgeNetworkClient::ListRouters(
+    google::cloud::edgenetwork::v1::ListRoutersRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRouters(std::move(request));
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Router>
-EdgeNetworkClient::GetRouter(std::string const& name, Options opts) {
+StatusOr<google::cloud::edgenetwork::v1::Router> EdgeNetworkClient::GetRouter(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::GetRouterRequest request;
   request.set_name(name);
   return connection_->GetRouter(request);
 }
 
-StatusOr<google::cloud::edgenetwork::v1::Router>
-EdgeNetworkClient::GetRouter(google::cloud::edgenetwork::v1::GetRouterRequest const& request, Options opts) {
+StatusOr<google::cloud::edgenetwork::v1::Router> EdgeNetworkClient::GetRouter(
+    google::cloud::edgenetwork::v1::GetRouterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRouter(request);
 }
@@ -503,13 +592,18 @@ EdgeNetworkClient::DiagnoseRouter(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
-EdgeNetworkClient::DiagnoseRouter(google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request, Options opts) {
+EdgeNetworkClient::DiagnoseRouter(
+    google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DiagnoseRouter(request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkClient::CreateRouter(std::string const& parent, google::cloud::edgenetwork::v1::Router const& router, std::string const& router_id, Options opts) {
+EdgeNetworkClient::CreateRouter(
+    std::string const& parent,
+    google::cloud::edgenetwork::v1::Router const& router,
+    std::string const& router_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::CreateRouterRequest request;
   request.set_parent(parent);
@@ -518,8 +612,10 @@ EdgeNetworkClient::CreateRouter(std::string const& parent, google::cloud::edgene
   return connection_->CreateRouter(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::CreateRouter(NoAwaitTag, std::string const& parent, google::cloud::edgenetwork::v1::Router const& router, std::string const& router_id, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateRouter(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::edgenetwork::v1::Router const& router,
+    std::string const& router_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::CreateRouterRequest request;
   request.set_parent(parent);
@@ -529,25 +625,32 @@ EdgeNetworkClient::CreateRouter(NoAwaitTag, std::string const& parent, google::c
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkClient::CreateRouter(google::cloud::edgenetwork::v1::CreateRouterRequest const& request, Options opts) {
+EdgeNetworkClient::CreateRouter(
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRouter(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::CreateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::CreateRouterRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateRouter(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRouter(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkClient::CreateRouter(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::CreateRouter(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRouter(operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkClient::UpdateRouter(google::cloud::edgenetwork::v1::Router const& router, google::protobuf::FieldMask const& update_mask, Options opts) {
+EdgeNetworkClient::UpdateRouter(
+    google::cloud::edgenetwork::v1::Router const& router,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::UpdateRouterRequest request;
   *request.mutable_router() = router;
@@ -555,8 +658,9 @@ EdgeNetworkClient::UpdateRouter(google::cloud::edgenetwork::v1::Router const& ro
   return connection_->UpdateRouter(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::UpdateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::Router const& router, google::protobuf::FieldMask const& update_mask, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::UpdateRouter(
+    NoAwaitTag, google::cloud::edgenetwork::v1::Router const& router,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::UpdateRouterRequest request;
   *request.mutable_router() = router;
@@ -565,19 +669,24 @@ EdgeNetworkClient::UpdateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::Rout
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkClient::UpdateRouter(google::cloud::edgenetwork::v1::UpdateRouterRequest const& request, Options opts) {
+EdgeNetworkClient::UpdateRouter(
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRouter(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::UpdateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::UpdateRouterRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::UpdateRouter(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRouter(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkClient::UpdateRouter(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::UpdateRouter(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRouter(operation);
 }
@@ -590,8 +699,8 @@ EdgeNetworkClient::DeleteRouter(std::string const& name, Options opts) {
   return connection_->DeleteRouter(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::DeleteRouter(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteRouter(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteRouterRequest request;
   request.set_name(name);
@@ -599,37 +708,42 @@ EdgeNetworkClient::DeleteRouter(NoAwaitTag, std::string const& name, Options opt
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const& request, Options opts) {
+EdgeNetworkClient::DeleteRouter(
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRouter(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::DeleteRouter(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteRouterRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteRouter(
+    NoAwaitTag,
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRouter(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteRouter(google::longrunning::Operation const& operation, Options opts) {
+EdgeNetworkClient::DeleteRouter(google::longrunning::Operation const& operation,
+                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRouter(operation);
 }
 
-StreamRange<google::cloud::location::Location>
-EdgeNetworkClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StreamRange<google::cloud::location::Location> EdgeNetworkClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-EdgeNetworkClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> EdgeNetworkClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation>
-EdgeNetworkClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation> EdgeNetworkClient::ListOperations(
+    std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -637,50 +751,50 @@ EdgeNetworkClient::ListOperations(std::string const& name, std::string const& fi
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation>
-EdgeNetworkClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation> EdgeNetworkClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EdgeNetworkClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EdgeNetworkClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-EdgeNetworkClient::DeleteOperation(std::string const& name, Options opts) {
+Status EdgeNetworkClient::DeleteOperation(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-EdgeNetworkClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status EdgeNetworkClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-EdgeNetworkClient::CancelOperation(std::string const& name, Options opts) {
+Status EdgeNetworkClient::CancelOperation(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-EdgeNetworkClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status EdgeNetworkClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

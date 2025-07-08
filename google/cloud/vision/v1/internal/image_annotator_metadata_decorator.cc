@@ -46,8 +46,7 @@ ImageAnnotatorMetadata::ImageAnnotatorMetadata(
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorMetadata::BatchAnnotateImages(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
   SetMetadata(context, options);
   return child_->BatchAnnotateImages(context, options, request);
@@ -55,8 +54,7 @@ ImageAnnotatorMetadata::BatchAnnotateImages(
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorMetadata::BatchAnnotateFiles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
   SetMetadata(context, options);
   return child_->BatchAnnotateFiles(context, options, request);
@@ -69,14 +67,13 @@ ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateImages(
     google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   SetMetadata(*context, *options);
-  return child_->AsyncAsyncBatchAnnotateImages(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncAsyncBatchAnnotateImages(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorMetadata::AsyncBatchAnnotateImages(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   SetMetadata(context, options);
   return child_->AsyncBatchAnnotateImages(context, options, request);
@@ -89,25 +86,23 @@ ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateFiles(
     google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   SetMetadata(*context, *options);
-  return child_->AsyncAsyncBatchAnnotateFiles(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncAsyncBatchAnnotateFiles(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorMetadata::AsyncBatchAnnotateFiles(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   SetMetadata(context, options);
   return child_->AsyncBatchAnnotateFiles(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-ImageAnnotatorMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ImageAnnotatorMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
@@ -119,8 +114,8 @@ ImageAnnotatorMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ImageAnnotatorMetadata::AsyncCancelOperation(
@@ -130,21 +125,21 @@ future<Status> ImageAnnotatorMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ImageAnnotatorMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ImageAnnotatorMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

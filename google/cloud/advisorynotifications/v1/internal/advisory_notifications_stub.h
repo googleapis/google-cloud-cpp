@@ -35,55 +35,67 @@ class AdvisoryNotificationsServiceStub {
  public:
   virtual ~AdvisoryNotificationsServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse> ListNotifications(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::advisorynotifications::v1::ListNotificationsResponse>
+  ListNotifications(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::advisorynotifications::v1::Notification> GetNotification(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) = 0;
+  virtual StatusOr<google::cloud::advisorynotifications::v1::Notification>
+  GetNotification(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::advisorynotifications::v1::Settings>
+  GetSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::advisorynotifications::v1::Settings>
+  UpdateSettings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request) = 0;
 };
 
-class DefaultAdvisoryNotificationsServiceStub : public AdvisoryNotificationsServiceStub {
+class DefaultAdvisoryNotificationsServiceStub
+    : public AdvisoryNotificationsServiceStub {
  public:
   explicit DefaultAdvisoryNotificationsServiceStub(
-      std::unique_ptr<google::cloud::advisorynotifications::v1::AdvisoryNotificationsService::StubInterface> grpc_stub)
+      std::unique_ptr<google::cloud::advisorynotifications::v1::
+                          AdvisoryNotificationsService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse> ListNotifications(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
+  ListNotifications(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::advisorynotifications::v1::Notification> GetNotification(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) override;
+  StatusOr<google::cloud::advisorynotifications::v1::Notification>
+  GetNotification(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+          request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+          request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<google::cloud::advisorynotifications::v1::AdvisoryNotificationsService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::advisorynotifications::v1::
+                      AdvisoryNotificationsService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

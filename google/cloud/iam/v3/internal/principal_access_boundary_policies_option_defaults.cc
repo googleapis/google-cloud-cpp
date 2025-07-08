@@ -35,32 +35,48 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options PrincipalAccessBoundaryPoliciesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_PRINCIPAL_ACCESS_BOUNDARY_POLICIES_AUTHORITY",
       "iam.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>()) {
+  if (!options
+           .has<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>()) {
     options.set<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>(
         iam_v3::PrincipalAccessBoundaryPoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<iam_v3::PrincipalAccessBoundaryPoliciesBackoffPolicyOption>()) {
+  if (!options
+           .has<iam_v3::PrincipalAccessBoundaryPoliciesBackoffPolicyOption>()) {
     options.set<iam_v3::PrincipalAccessBoundaryPoliciesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<iam_v3::PrincipalAccessBoundaryPoliciesPollingPolicyOption>()) {
+  if (!options
+           .has<iam_v3::PrincipalAccessBoundaryPoliciesPollingPolicyOption>()) {
     options.set<iam_v3::PrincipalAccessBoundaryPoliciesPollingPolicyOption>(
         GenericPollingPolicy<
             iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption::Type,
             iam_v3::PrincipalAccessBoundaryPoliciesBackoffPolicyOption::Type>(
-            options.get<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>()->clone(),
+            options
+                .get<iam_v3::PrincipalAccessBoundaryPoliciesRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<iam_v3::PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption>()) {
-    options.set<iam_v3::PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption>(
-        iam_v3::MakeDefaultPrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy());
+  if (!options.has<
+          iam_v3::
+              PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        iam_v3::
+            PrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicyOption>(
+        iam_v3::
+            MakeDefaultPrincipalAccessBoundaryPoliciesConnectionIdempotencyPolicy());
   }
 
   return options;

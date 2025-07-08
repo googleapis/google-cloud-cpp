@@ -33,15 +33,17 @@ DataStoreServiceStub::~DataStoreServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataStoreServiceStub::AsyncCreateDataStore(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::CreateDataStoreRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request,
+             google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreateDataStore(context, request, cq);
       },
@@ -50,55 +52,53 @@ DefaultDataStoreServiceStub::AsyncCreateDataStore(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataStoreServiceStub::CreateDataStore(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateDataStore(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDataStore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DefaultDataStoreServiceStub::GetDataStore(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) {
-    google::cloud::discoveryengine::v1::DataStore response;
-    auto status =
-        grpc_stub_->GetDataStore(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) {
+  google::cloud::discoveryengine::v1::DataStore response;
+  auto status = grpc_stub_->GetDataStore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListDataStoresResponse>
 DefaultDataStoreServiceStub::ListDataStores(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::ListDataStoresRequest const& request) {
-    google::cloud::discoveryengine::v1::ListDataStoresResponse response;
-    auto status =
-        grpc_stub_->ListDataStores(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::ListDataStoresRequest const& request) {
+  google::cloud::discoveryengine::v1::ListDataStoresResponse response;
+  auto status = grpc_stub_->ListDataStores(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataStoreServiceStub::AsyncDeleteDataStore(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::DeleteDataStoreRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request,
+             google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteDataStore(context, request, cq);
       },
@@ -107,68 +107,61 @@ DefaultDataStoreServiceStub::AsyncDeleteDataStore(
 
 StatusOr<google::longrunning::Operation>
 DefaultDataStoreServiceStub::DeleteDataStore(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteDataStore(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataStore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DefaultDataStoreServiceStub::UpdateDataStore(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request) {
-    google::cloud::discoveryengine::v1::DataStore response;
-    auto status =
-        grpc_stub_->UpdateDataStore(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request) {
+  google::cloud::discoveryengine::v1::DataStore response;
+  auto status = grpc_stub_->UpdateDataStore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDataStoreServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDataStoreServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDataStoreServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDataStoreServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -197,13 +190,14 @@ future<Status> DefaultDataStoreServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

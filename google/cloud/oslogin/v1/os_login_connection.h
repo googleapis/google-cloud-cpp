@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_OS_LOGIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_OS_LOGIN_CONNECTION_H
 
+#include "google/cloud/oslogin/v1/internal/os_login_retry_traits.h"
+#include "google/cloud/oslogin/v1/os_login_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/oslogin/v1/internal/os_login_retry_traits.h"
-#include "google/cloud/oslogin/v1/os_login_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/oslogin/v1/oslogin.pb.h>
@@ -51,7 +51,8 @@ class OsLoginServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class OsLoginServiceLimitedErrorCountRetryPolicy : public OsLoginServiceRetryPolicy {
+class OsLoginServiceLimitedErrorCountRetryPolicy
+    : public OsLoginServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class OsLoginServiceLimitedErrorCountRetryPolicy : public OsLoginServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit OsLoginServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   OsLoginServiceLimitedErrorCountRetryPolicy(
       OsLoginServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : OsLoginServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : OsLoginServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   OsLoginServiceLimitedErrorCountRetryPolicy(
       OsLoginServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : OsLoginServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : OsLoginServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class OsLoginServiceLimitedErrorCountRetryPolicy : public OsLoginServiceRetryPol
   using BaseType = OsLoginServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<oslogin_v1_internal::OsLoginServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      oslogin_v1_internal::OsLoginServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +129,14 @@ class OsLoginServiceLimitedTimeRetryPolicy : public OsLoginServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit OsLoginServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  OsLoginServiceLimitedTimeRetryPolicy(OsLoginServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : OsLoginServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  OsLoginServiceLimitedTimeRetryPolicy(OsLoginServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : OsLoginServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OsLoginServiceLimitedTimeRetryPolicy(
+      OsLoginServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : OsLoginServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OsLoginServiceLimitedTimeRetryPolicy(
+      OsLoginServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : OsLoginServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +158,9 @@ class OsLoginServiceLimitedTimeRetryPolicy : public OsLoginServiceRetryPolicy {
   using BaseType = OsLoginServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<oslogin_v1_internal::OsLoginServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      oslogin_v1_internal::OsLoginServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,25 +182,29 @@ class OsLoginServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  CreateSshPublicKey(google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request);
+  CreateSshPublicKey(
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request);
 
-  virtual Status
-  DeletePosixAccount(google::cloud::oslogin::v1::DeletePosixAccountRequest const& request);
+  virtual Status DeletePosixAccount(
+      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request);
 
-  virtual Status
-  DeleteSshPublicKey(google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request);
+  virtual Status DeleteSshPublicKey(
+      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request);
 
-  virtual StatusOr<google::cloud::oslogin::v1::LoginProfile>
-  GetLoginProfile(google::cloud::oslogin::v1::GetLoginProfileRequest const& request);
+  virtual StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
+      google::cloud::oslogin::v1::GetLoginProfileRequest const& request);
 
   virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  GetSshPublicKey(google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request);
+  GetSshPublicKey(
+      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request);
 
   virtual StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-  ImportSshPublicKey(google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request);
+  ImportSshPublicKey(
+      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request);
 
   virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  UpdateSshPublicKey(google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request);
+  UpdateSshPublicKey(
+      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request);
 };
 
 /**

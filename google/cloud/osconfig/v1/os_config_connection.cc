@@ -17,17 +17,17 @@
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
 #include "google/cloud/osconfig/v1/os_config_connection.h"
+#include "google/cloud/osconfig/v1/internal/os_config_connection_impl.h"
+#include "google/cloud/osconfig/v1/internal/os_config_option_defaults.h"
+#include "google/cloud/osconfig/v1/internal/os_config_stub_factory.h"
+#include "google/cloud/osconfig/v1/internal/os_config_tracing_connection.h"
+#include "google/cloud/osconfig/v1/os_config_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/osconfig/v1/internal/os_config_connection_impl.h"
-#include "google/cloud/osconfig/v1/internal/os_config_option_defaults.h"
-#include "google/cloud/osconfig/v1/internal/os_config_stub_factory.h"
-#include "google/cloud/osconfig/v1/internal/os_config_tracing_connection.h"
-#include "google/cloud/osconfig/v1/os_config_options.h"
 #include <memory>
 #include <utility>
 
@@ -56,14 +56,18 @@ OsConfigServiceConnection::CancelPatchJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::osconfig::v1::PatchJob> OsConfigServiceConnection::ListPatchJobs(
-    google::cloud::osconfig::v1::ListPatchJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::osconfig::v1::PatchJob>
+OsConfigServiceConnection::ListPatchJobs(
+    google::cloud::osconfig::v1::
+        ListPatchJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJob>>();
 }
 
-StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails> OsConfigServiceConnection::ListPatchJobInstanceDetails(
-    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
+OsConfigServiceConnection::ListPatchJobInstanceDetails(
+    google::cloud::osconfig::v1::
+        ListPatchJobInstanceDetailsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>>();
 }
@@ -80,14 +84,15 @@ OsConfigServiceConnection::GetPatchDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceConnection::ListPatchDeployments(
-    google::cloud::osconfig::v1::ListPatchDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnection::ListPatchDeployments(
+    google::cloud::osconfig::v1::
+        ListPatchDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchDeployment>>();
 }
 
-Status
-OsConfigServiceConnection::DeletePatchDeployment(
+Status OsConfigServiceConnection::DeletePatchDeployment(
     google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -113,17 +118,18 @@ OsConfigServiceConnection::ResumePatchDeployment(
 std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      OsConfigServicePolicyOptionList>(options, __func__);
-  options = osconfig_v1_internal::OsConfigServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 OsConfigServicePolicyOptionList>(options,
+                                                                  __func__);
+  options =
+      osconfig_v1_internal::OsConfigServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = osconfig_v1_internal::CreateDefaultOsConfigServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return osconfig_v1_internal::MakeOsConfigServiceTracingConnection(
       std::make_shared<osconfig_v1_internal::OsConfigServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

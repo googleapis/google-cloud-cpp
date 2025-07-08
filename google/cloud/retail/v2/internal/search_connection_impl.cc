@@ -17,12 +17,12 @@
 // source: google/cloud/retail/v2/search_service.proto
 
 #include "google/cloud/retail/v2/internal/search_connection_impl.h"
+#include "google/cloud/retail/v2/internal/search_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/retail/v2/internal/search_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,44 +32,49 @@ namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<retail_v2::SearchServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<retail_v2::SearchServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<retail_v2::SearchServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<retail_v2::SearchServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<retail_v2::SearchServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<retail_v2::SearchServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<retail_v2::SearchServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 SearchServiceConnectionImpl::SearchServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<retail_v2_internal::SearchServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SearchServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      SearchServiceConnection::options())) {}
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-SearchServiceConnectionImpl::Search(google::cloud::retail::v2::SearchRequest request) {
+SearchServiceConnectionImpl::Search(
+    google::cloud::retail::v2::SearchRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->Search(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<retail_v2::SearchServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<retail_v2::SearchServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::retail::v2::SearchRequest const& r) {
+          Options const& options,
+          google::cloud::retail::v2::SearchRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -79,7 +84,8 @@ SearchServiceConnectionImpl::Search(google::cloud::retail::v2::SearchRequest req
             options, r, function_name);
       },
       [](google::cloud::retail::v2::SearchResponse r) {
-        std::vector<google::cloud::retail::v2::SearchResponse::SearchResult> result(r.results().size());
+        std::vector<google::cloud::retail::v2::SearchResponse::SearchResult>
+            result(r.results().size());
         auto& messages = *r.mutable_results();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -87,17 +93,21 @@ SearchServiceConnectionImpl::Search(google::cloud::retail::v2::SearchRequest req
 }
 
 StreamRange<google::longrunning::Operation>
-SearchServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+SearchServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<retail_v2::SearchServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<retail_v2::SearchServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -107,7 +117,8 @@ SearchServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsR
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -115,7 +126,8 @@ SearchServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsR
 }
 
 StatusOr<google::longrunning::Operation>
-SearchServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+SearchServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

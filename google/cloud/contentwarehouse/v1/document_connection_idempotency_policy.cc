@@ -26,51 +26,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DocumentServiceConnectionIdempotencyPolicy::~DocumentServiceConnectionIdempotencyPolicy() = default;
+DocumentServiceConnectionIdempotencyPolicy::
+    ~DocumentServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>
 DocumentServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DocumentServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::CreateDocument(google::cloud::contentwarehouse::v1::CreateDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::CreateDocument(
+    google::cloud::contentwarehouse::v1::CreateDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::GetDocument(google::cloud::contentwarehouse::v1::GetDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::GetDocument(
+    google::cloud::contentwarehouse::v1::GetDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::UpdateDocument(google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::UpdateDocument(
+    google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::DeleteDocument(google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::DeleteDocument(
+    google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::SearchDocuments(google::cloud::contentwarehouse::v1::SearchDocumentsRequest) {  // NOLINT
+Idempotency DocumentServiceConnectionIdempotencyPolicy::SearchDocuments(
+    google::cloud::contentwarehouse::v1::SearchDocumentsRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::LockDocument(google::cloud::contentwarehouse::v1::LockDocumentRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::LockDocument(
+    google::cloud::contentwarehouse::v1::LockDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::FetchAcl(google::cloud::contentwarehouse::v1::FetchAclRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::FetchAcl(
+    google::cloud::contentwarehouse::v1::FetchAclRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::SetAcl(google::cloud::contentwarehouse::v1::SetAclRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::SetAcl(
+    google::cloud::contentwarehouse::v1::SetAclRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DocumentServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DocumentServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>
-    MakeDefaultDocumentServiceConnectionIdempotencyPolicy() {
+MakeDefaultDocumentServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentServiceConnectionIdempotencyPolicy>();
 }
 

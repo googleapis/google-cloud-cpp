@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVICESTREAMING_V1_DIRECT_ACCESS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVICESTREAMING_V1_DIRECT_ACCESS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/devicestreaming/v1/direct_access_connection_idempotency_policy.h"
 #include "google/cloud/devicestreaming/v1/internal/direct_access_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -53,7 +53,8 @@ class DirectAccessServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DirectAccessServiceLimitedErrorCountRetryPolicy : public DirectAccessServiceRetryPolicy {
+class DirectAccessServiceLimitedErrorCountRetryPolicy
+    : public DirectAccessServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,16 @@ class DirectAccessServiceLimitedErrorCountRetryPolicy : public DirectAccessServi
    *     @p maximum_failures == 0.
    */
   explicit DirectAccessServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DirectAccessServiceLimitedErrorCountRetryPolicy(
       DirectAccessServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DirectAccessServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DirectAccessServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   DirectAccessServiceLimitedErrorCountRetryPolicy(
       DirectAccessServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DirectAccessServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DirectAccessServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +93,9 @@ class DirectAccessServiceLimitedErrorCountRetryPolicy : public DirectAccessServi
   using BaseType = DirectAccessServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<devicestreaming_v1_internal::DirectAccessServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      devicestreaming_v1_internal::DirectAccessServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -103,7 +108,8 @@ class DirectAccessServiceLimitedErrorCountRetryPolicy : public DirectAccessServi
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DirectAccessServiceLimitedTimeRetryPolicy : public DirectAccessServiceRetryPolicy {
+class DirectAccessServiceLimitedTimeRetryPolicy
+    : public DirectAccessServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -128,12 +134,14 @@ class DirectAccessServiceLimitedTimeRetryPolicy : public DirectAccessServiceRetr
   template <typename DurationRep, typename DurationPeriod>
   explicit DirectAccessServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DirectAccessServiceLimitedTimeRetryPolicy(DirectAccessServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DirectAccessServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DirectAccessServiceLimitedTimeRetryPolicy(DirectAccessServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DirectAccessServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DirectAccessServiceLimitedTimeRetryPolicy(
+      DirectAccessServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DirectAccessServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DirectAccessServiceLimitedTimeRetryPolicy(
+      DirectAccessServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DirectAccessServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,20 +163,23 @@ class DirectAccessServiceLimitedTimeRetryPolicy : public DirectAccessServiceRetr
   using BaseType = DirectAccessServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<devicestreaming_v1_internal::DirectAccessServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      devicestreaming_v1_internal::DirectAccessServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `DirectAccessServiceConnection` object for `DirectAccessServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DirectAccessServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `DirectAccessServiceClient`.
+ * sets in `DirectAccessServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `DirectAccessServiceClient`.
  *
  * To create a concrete instance, see `MakeDirectAccessServiceConnection()`.
  *
- * For mocking, see `devicestreaming_v1_mocks::MockDirectAccessServiceConnection`.
+ * For mocking, see
+ * `devicestreaming_v1_mocks::MockDirectAccessServiceConnection`.
  */
 class DirectAccessServiceConnection {
  public:
@@ -177,19 +188,27 @@ class DirectAccessServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  CreateDeviceSession(google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const& request);
+  CreateDeviceSession(
+      google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&
+          request);
 
   virtual StreamRange<google::cloud::devicestreaming::v1::DeviceSession>
-  ListDeviceSessions(google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request);
+  ListDeviceSessions(
+      google::cloud::devicestreaming::v1::ListDeviceSessionsRequest request);
 
   virtual StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  GetDeviceSession(google::cloud::devicestreaming::v1::GetDeviceSessionRequest const& request);
+  GetDeviceSession(
+      google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&
+          request);
 
-  virtual Status
-  CancelDeviceSession(google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const& request);
+  virtual Status CancelDeviceSession(
+      google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&
+          request);
 
   virtual StatusOr<google::cloud::devicestreaming::v1::DeviceSession>
-  UpdateDeviceSession(google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const& request);
+  UpdateDeviceSession(
+      google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&
+          request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::devicestreaming::v1::AdbMessage,
@@ -198,14 +217,16 @@ class DirectAccessServiceConnection {
 };
 
 /**
- * A factory function to construct an object of type `DirectAccessServiceConnection`.
+ * A factory function to construct an object of type
+ * `DirectAccessServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of DirectAccessServiceClient.
+ * should be passed as an argument to the constructor of
+ * DirectAccessServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DirectAccessServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `DirectAccessServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -215,11 +236,11 @@ class DirectAccessServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DirectAccessServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `DirectAccessServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<DirectAccessServiceConnection> MakeDirectAccessServiceConnection(
-    Options options = {});
+std::shared_ptr<DirectAccessServiceConnection>
+MakeDirectAccessServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace devicestreaming_v1

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_ADMIN_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/kms/v1/autokey_admin_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -39,8 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Autokey](https://cloud.google.com/kms/help/autokey) folder-level
 /// configurations. A configuration is inherited by all descendent projects. A
 /// configuration at one folder overrides any other configurations in its
-/// ancestry. Setting a configuration on a folder is a prerequisite for Cloud KMS
-/// Autokey, so that users working in a descendant project can request
+/// ancestry. Setting a configuration on a folder is a prerequisite for Cloud
+/// KMS Autokey, so that users working in a descendant project can request
 /// provisioned [CryptoKeys][google.cloud.kms.v1.CryptoKey], ready for Customer
 /// Managed Encryption Key (CMEK) use, on-demand.
 ///
@@ -69,7 +69,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AutokeyAdminClient {
  public:
-  explicit AutokeyAdminClient(std::shared_ptr<AutokeyAdminConnection> connection, Options opts = {});
+  explicit AutokeyAdminClient(
+      std::shared_ptr<AutokeyAdminConnection> connection, Options opts = {});
   ~AutokeyAdminClient();
 
   ///@{
@@ -82,10 +83,12 @@ class AutokeyAdminClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AutokeyAdminClient const& a, AutokeyAdminClient const& b) {
+  friend bool operator==(AutokeyAdminClient const& a,
+                         AutokeyAdminClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AutokeyAdminClient const& a, AutokeyAdminClient const& b) {
+  friend bool operator!=(AutokeyAdminClient const& a,
+                         AutokeyAdminClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,8 +125,9 @@ class AutokeyAdminClient {
   /// [google.cloud.kms.v1.UpdateAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L80}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::AutokeyConfig>
-  UpdateAutokeyConfig(google::cloud::kms::v1::AutokeyConfig const& autokey_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::kms::v1::AutokeyConfig> UpdateAutokeyConfig(
+      google::cloud::kms::v1::AutokeyConfig const& autokey_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -158,8 +162,9 @@ class AutokeyAdminClient {
   /// [google.cloud.kms.v1.UpdateAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L80}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::AutokeyConfig>
-  UpdateAutokeyConfig(google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::AutokeyConfig> UpdateAutokeyConfig(
+      google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -185,8 +190,8 @@ class AutokeyAdminClient {
   /// [google.cloud.kms.v1.GetAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L94}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::AutokeyConfig>
-  GetAutokeyConfig(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::AutokeyConfig> GetAutokeyConfig(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -216,8 +221,9 @@ class AutokeyAdminClient {
   /// [google.cloud.kms.v1.GetAutokeyConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey_admin.proto#L94}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::AutokeyConfig>
-  GetAutokeyConfig(google::cloud::kms::v1::GetAutokeyConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::AutokeyConfig> GetAutokeyConfig(
+      google::cloud::kms::v1::GetAutokeyConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -274,7 +280,9 @@ class AutokeyAdminClient {
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
-  ShowEffectiveAutokeyConfig(google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request, Options opts = {});
+  ShowEffectiveAutokeyConfig(
+      google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -312,8 +320,8 @@ class AutokeyAdminClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -342,8 +350,9 @@ class AutokeyAdminClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -375,8 +384,8 @@ class AutokeyAdminClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -407,8 +416,8 @@ class AutokeyAdminClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -443,8 +452,9 @@ class AutokeyAdminClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -470,8 +480,8 @@ class AutokeyAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -502,8 +512,9 @@ class AutokeyAdminClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AutokeyAdminConnection> connection_;

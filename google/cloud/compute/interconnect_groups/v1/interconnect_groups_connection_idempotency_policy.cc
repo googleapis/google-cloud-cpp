@@ -26,55 +26,80 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-InterconnectGroupsConnectionIdempotencyPolicy::~InterconnectGroupsConnectionIdempotencyPolicy() = default;
+InterconnectGroupsConnectionIdempotencyPolicy::
+    ~InterconnectGroupsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<InterconnectGroupsConnectionIdempotencyPolicy>
 InterconnectGroupsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<InterconnectGroupsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::CreateMembers(google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const&) {
+Idempotency InterconnectGroupsConnectionIdempotencyPolicy::CreateMembers(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        CreateMembersRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const&) {
+Idempotency
+InterconnectGroupsConnectionIdempotencyPolicy::DeleteInterconnectGroup(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        DeleteInterconnectGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const&) {
+Idempotency InterconnectGroupsConnectionIdempotencyPolicy::GetInterconnectGroup(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetInterconnectGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const&) {
+Idempotency InterconnectGroupsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const&) {
+Idempotency InterconnectGroupsConnectionIdempotencyPolicy::GetOperationalStatus(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetOperationalStatusRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const&) {
+Idempotency
+InterconnectGroupsConnectionIdempotencyPolicy::InsertInterconnectGroup(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        InsertInterconnectGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest) {  // NOLINT
+Idempotency
+InterconnectGroupsConnectionIdempotencyPolicy::ListInterconnectGroups(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        ListInterconnectGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const&) {
+Idempotency
+InterconnectGroupsConnectionIdempotencyPolicy::PatchInterconnectGroup(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        PatchInterconnectGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const&) {
+Idempotency InterconnectGroupsConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency InterconnectGroupsConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const&) {
+Idempotency InterconnectGroupsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<InterconnectGroupsConnectionIdempotencyPolicy>
-    MakeDefaultInterconnectGroupsConnectionIdempotencyPolicy() {
+MakeDefaultInterconnectGroupsConnectionIdempotencyPolicy() {
   return std::make_unique<InterconnectGroupsConnectionIdempotencyPolicy>();
 }
 

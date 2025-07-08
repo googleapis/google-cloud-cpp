@@ -48,7 +48,8 @@ class SpecialistPoolServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `SpecialistPoolServiceConnection` based on counting errors.
+ * A retry policy for `SpecialistPoolServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -57,7 +58,8 @@ class SpecialistPoolServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SpecialistPoolServiceLimitedErrorCountRetryPolicy : public SpecialistPoolServiceRetryPolicy {
+class SpecialistPoolServiceLimitedErrorCountRetryPolicy
+    : public SpecialistPoolServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,15 +68,18 @@ class SpecialistPoolServiceLimitedErrorCountRetryPolicy : public SpecialistPoolS
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit SpecialistPoolServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit SpecialistPoolServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   SpecialistPoolServiceLimitedErrorCountRetryPolicy(
       SpecialistPoolServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SpecialistPoolServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SpecialistPoolServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   SpecialistPoolServiceLimitedErrorCountRetryPolicy(
       SpecialistPoolServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SpecialistPoolServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SpecialistPoolServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +99,9 @@ class SpecialistPoolServiceLimitedErrorCountRetryPolicy : public SpecialistPoolS
   using BaseType = SpecialistPoolServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::SpecialistPoolServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::SpecialistPoolServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -107,7 +114,8 @@ class SpecialistPoolServiceLimitedErrorCountRetryPolicy : public SpecialistPoolS
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SpecialistPoolServiceLimitedTimeRetryPolicy : public SpecialistPoolServiceRetryPolicy {
+class SpecialistPoolServiceLimitedTimeRetryPolicy
+    : public SpecialistPoolServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +140,14 @@ class SpecialistPoolServiceLimitedTimeRetryPolicy : public SpecialistPoolService
   template <typename DurationRep, typename DurationPeriod>
   explicit SpecialistPoolServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SpecialistPoolServiceLimitedTimeRetryPolicy(SpecialistPoolServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SpecialistPoolServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SpecialistPoolServiceLimitedTimeRetryPolicy(SpecialistPoolServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SpecialistPoolServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SpecialistPoolServiceLimitedTimeRetryPolicy(
+      SpecialistPoolServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SpecialistPoolServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SpecialistPoolServiceLimitedTimeRetryPolicy(
+      SpecialistPoolServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SpecialistPoolServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,16 +169,19 @@ class SpecialistPoolServiceLimitedTimeRetryPolicy : public SpecialistPoolService
   using BaseType = SpecialistPoolServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::SpecialistPoolServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::SpecialistPoolServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `SpecialistPoolServiceConnection` object for `SpecialistPoolServiceClient`.
+ * The `SpecialistPoolServiceConnection` object for
+ * `SpecialistPoolServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SpecialistPoolServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `SpecialistPoolServiceClient`.
+ * sets in `SpecialistPoolServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `SpecialistPoolServiceClient`.
  *
  * To create a concrete instance, see `MakeSpecialistPoolServiceConnection()`.
  *
@@ -181,78 +194,96 @@ class SpecialistPoolServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request);
+  CreateSpecialistPool(
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateSpecialistPool(NoAwaitTag, google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateSpecialistPool(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool( google::longrunning::Operation const& operation);
+  CreateSpecialistPool(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
-  GetSpecialistPool(google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request);
+  GetSpecialistPool(
+      google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::SpecialistPool>
-  ListSpecialistPools(google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request);
+  ListSpecialistPools(
+      google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSpecialistPool(
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteSpecialistPool(NoAwaitTag, google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSpecialistPool(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request);
+  UpdateSpecialistPool(
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateSpecialistPool(NoAwaitTag, google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool( google::longrunning::Operation const& operation);
+  UpdateSpecialistPool(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `SpecialistPoolServiceConnection`.
+ * A factory function to construct an object of type
+ * `SpecialistPoolServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of SpecialistPoolServiceClient.
+ * should be passed as an argument to the constructor of
+ * SpecialistPoolServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SpecialistPoolServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `SpecialistPoolServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -263,11 +294,12 @@ class SpecialistPoolServiceConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `SpecialistPoolServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `SpecialistPoolServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<SpecialistPoolServiceConnection> MakeSpecialistPoolServiceConnection(
-    std::string const& location, Options options = {});
+std::shared_ptr<SpecialistPoolServiceConnection>
+MakeSpecialistPoolServiceConnection(std::string const& location,
+                                    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

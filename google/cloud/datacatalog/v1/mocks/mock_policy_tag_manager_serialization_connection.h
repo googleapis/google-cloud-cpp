@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `PolicyTagManagerSerializationConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `PolicyTagManagerSerializationClient`. To do so,
- * construct an object of type `PolicyTagManagerSerializationClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type
+ * `PolicyTagManagerSerializationClient`. To do so, construct an object of type
+ * `PolicyTagManagerSerializationClient` with an instance of this class. Then
+ * use the Google Test framework functions to program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,37 +42,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockPolicyTagManagerSerializationConnection : public datacatalog_v1::PolicyTagManagerSerializationConnection {
+class MockPolicyTagManagerSerializationConnection
+    : public datacatalog_v1::PolicyTagManagerSerializationConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Taxonomy>,
-  ReplaceTaxonomy,
-  (google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, ReplaceTaxonomy,
+      (google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>,
-  ImportTaxonomies,
-  (google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>,
+      ImportTaxonomies,
+      (google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>,
-  ExportTaxonomies,
-  (google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>,
+      ExportTaxonomies,
+      (google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

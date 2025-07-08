@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/image_family_views/v1/image_family_views_connection_idempotency_policy.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -51,7 +51,8 @@ class ImageFamilyViewsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ImageFamilyViewsLimitedErrorCountRetryPolicy : public ImageFamilyViewsRetryPolicy {
+class ImageFamilyViewsLimitedErrorCountRetryPolicy
+    : public ImageFamilyViewsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class ImageFamilyViewsLimitedErrorCountRetryPolicy : public ImageFamilyViewsRetr
    *     @p maximum_failures == 0.
    */
   explicit ImageFamilyViewsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ImageFamilyViewsLimitedErrorCountRetryPolicy(
       ImageFamilyViewsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ImageFamilyViewsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ImageFamilyViewsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ImageFamilyViewsLimitedErrorCountRetryPolicy(
       ImageFamilyViewsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ImageFamilyViewsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ImageFamilyViewsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class ImageFamilyViewsLimitedErrorCountRetryPolicy : public ImageFamilyViewsRetr
   using BaseType = ImageFamilyViewsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_image_family_views_v1_internal::ImageFamilyViewsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_image_family_views_v1_internal::ImageFamilyViewsRetryTraits>
+      impl_;
 };
 
 /**
@@ -101,7 +104,8 @@ class ImageFamilyViewsLimitedErrorCountRetryPolicy : public ImageFamilyViewsRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ImageFamilyViewsLimitedTimeRetryPolicy : public ImageFamilyViewsRetryPolicy {
+class ImageFamilyViewsLimitedTimeRetryPolicy
+    : public ImageFamilyViewsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +130,14 @@ class ImageFamilyViewsLimitedTimeRetryPolicy : public ImageFamilyViewsRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit ImageFamilyViewsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ImageFamilyViewsLimitedTimeRetryPolicy(ImageFamilyViewsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ImageFamilyViewsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ImageFamilyViewsLimitedTimeRetryPolicy(ImageFamilyViewsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ImageFamilyViewsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ImageFamilyViewsLimitedTimeRetryPolicy(
+      ImageFamilyViewsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ImageFamilyViewsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ImageFamilyViewsLimitedTimeRetryPolicy(
+      ImageFamilyViewsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ImageFamilyViewsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +159,9 @@ class ImageFamilyViewsLimitedTimeRetryPolicy : public ImageFamilyViewsRetryPolic
   using BaseType = ImageFamilyViewsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_image_family_views_v1_internal::ImageFamilyViewsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_image_family_views_v1_internal::ImageFamilyViewsRetryTraits>
+      impl_;
 };
 
 /**
@@ -166,7 +174,8 @@ class ImageFamilyViewsLimitedTimeRetryPolicy : public ImageFamilyViewsRetryPolic
  *
  * To create a concrete instance, see `MakeImageFamilyViewsConnection()`.
  *
- * For mocking, see `compute_image_family_views_v1_mocks::MockImageFamilyViewsConnection`.
+ * For mocking, see
+ * `compute_image_family_views_v1_mocks::MockImageFamilyViewsConnection`.
  */
 class ImageFamilyViewsConnection {
  public:
@@ -175,7 +184,8 @@ class ImageFamilyViewsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyView(google::cloud::cpp::compute::image_family_views::v1::GetImageFamilyViewRequest const& request);
+  GetImageFamilyView(google::cloud::cpp::compute::image_family_views::v1::
+                         GetImageFamilyViewRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/documentai/v1/document_processor_connection.h"
 #include "google/cloud/documentai/v1/document_processor_connection_idempotency_policy.h"
 #include "google/cloud/documentai/v1/document_processor_options.h"
 #include "google/cloud/documentai/v1/internal/document_processor_retry_traits.h"
 #include "google/cloud/documentai/v1/internal/document_processor_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,180 +46,226 @@ class DocumentProcessorServiceConnectionImpl
   ~DocumentProcessorServiceConnectionImpl() override = default;
 
   DocumentProcessorServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<documentai_v1_internal::DocumentProcessorServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<documentai_v1_internal::DocumentProcessorServiceStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::documentai::v1::ProcessResponse>
-  ProcessDocument(google::cloud::documentai::v1::ProcessRequest const& request) override;
+  StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
+      google::cloud::documentai::v1::ProcessRequest const& request) override;
 
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
-  BatchProcessDocuments(google::cloud::documentai::v1::BatchProcessRequest const& request) override;
+  BatchProcessDocuments(
+      google::cloud::documentai::v1::BatchProcessRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  BatchProcessDocuments(NoAwaitTag,
-      google::cloud::documentai::v1::BatchProcessRequest const& request) override;
+  StatusOr<google::longrunning::Operation> BatchProcessDocuments(
+      NoAwaitTag,
+      google::cloud::documentai::v1::BatchProcessRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
   BatchProcessDocuments(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
-  FetchProcessorTypes(google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) override;
+  FetchProcessorTypes(
+      google::cloud::documentai::v1::FetchProcessorTypesRequest const& request)
+      override;
 
-  StreamRange<google::cloud::documentai::v1::ProcessorType>
-  ListProcessorTypes(google::cloud::documentai::v1::ListProcessorTypesRequest request) override;
+  StreamRange<google::cloud::documentai::v1::ProcessorType> ListProcessorTypes(
+      google::cloud::documentai::v1::ListProcessorTypesRequest request)
+      override;
 
-  StatusOr<google::cloud::documentai::v1::ProcessorType>
-  GetProcessorType(google::cloud::documentai::v1::GetProcessorTypeRequest const& request) override;
+  StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
+      google::cloud::documentai::v1::GetProcessorTypeRequest const& request)
+      override;
 
-  StreamRange<google::cloud::documentai::v1::Processor>
-  ListProcessors(google::cloud::documentai::v1::ListProcessorsRequest request) override;
+  StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
+      google::cloud::documentai::v1::ListProcessorsRequest request) override;
 
-  StatusOr<google::cloud::documentai::v1::Processor>
-  GetProcessor(google::cloud::documentai::v1::GetProcessorRequest const& request) override;
+  StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
+      google::cloud::documentai::v1::GetProcessorRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
-  TrainProcessorVersion(google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) override;
+  TrainProcessorVersion(
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  TrainProcessorVersion(NoAwaitTag,
-      google::cloud::documentai::v1::TrainProcessorVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> TrainProcessorVersion(
+      NoAwaitTag,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
   TrainProcessorVersion(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::documentai::v1::ProcessorVersion>
-  GetProcessorVersion(google::cloud::documentai::v1::GetProcessorVersionRequest const& request) override;
+  StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
+      google::cloud::documentai::v1::GetProcessorVersionRequest const& request)
+      override;
 
   StreamRange<google::cloud::documentai::v1::ProcessorVersion>
-  ListProcessorVersions(google::cloud::documentai::v1::ListProcessorVersionsRequest request) override;
+  ListProcessorVersions(
+      google::cloud::documentai::v1::ListProcessorVersionsRequest request)
+      override;
 
-  future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
-  DeleteProcessorVersion(google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) override;
+  future<
+      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+  DeleteProcessorVersion(
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteProcessorVersion(NoAwaitTag,
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
+      NoAwaitTag,
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+  future<
+      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
   DeleteProcessorVersion(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
-  DeployProcessorVersion(google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) override;
+  future<
+      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+  DeployProcessorVersion(
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeployProcessorVersion(NoAwaitTag,
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeployProcessorVersion(
+      NoAwaitTag,
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+  future<
+      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
   DeployProcessorVersion(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
-  UndeployProcessorVersion(google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) override;
+  future<
+      StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+  UndeployProcessorVersion(
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UndeployProcessorVersion(NoAwaitTag,
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
+      NoAwaitTag,
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+  future<
+      StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
   UndeployProcessorVersion(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::documentai::v1::Processor>
-  CreateProcessor(google::cloud::documentai::v1::CreateProcessorRequest const& request) override;
+  StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
+      google::cloud::documentai::v1::CreateProcessorRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
-  DeleteProcessor(google::cloud::documentai::v1::DeleteProcessorRequest const& request) override;
+  DeleteProcessor(google::cloud::documentai::v1::DeleteProcessorRequest const&
+                      request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteProcessor(NoAwaitTag,
-      google::cloud::documentai::v1::DeleteProcessorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteProcessor(
+      NoAwaitTag,
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
-  DeleteProcessor(
-      google::longrunning::Operation const& operation) override;
+  DeleteProcessor(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
-  EnableProcessor(google::cloud::documentai::v1::EnableProcessorRequest const& request) override;
+  EnableProcessor(google::cloud::documentai::v1::EnableProcessorRequest const&
+                      request) override;
 
-  StatusOr<google::longrunning::Operation>
-  EnableProcessor(NoAwaitTag,
-      google::cloud::documentai::v1::EnableProcessorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> EnableProcessor(
+      NoAwaitTag,
+      google::cloud::documentai::v1::EnableProcessorRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
-  EnableProcessor(
-      google::longrunning::Operation const& operation) override;
+  EnableProcessor(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
-  DisableProcessor(google::cloud::documentai::v1::DisableProcessorRequest const& request) override;
+  DisableProcessor(google::cloud::documentai::v1::DisableProcessorRequest const&
+                       request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DisableProcessor(NoAwaitTag,
-      google::cloud::documentai::v1::DisableProcessorRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DisableProcessor(
+      NoAwaitTag,
+      google::cloud::documentai::v1::DisableProcessorRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
-  DisableProcessor(
-      google::longrunning::Operation const& operation) override;
+  DisableProcessor(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
-  SetDefaultProcessorVersion(google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) override;
+  future<StatusOr<
+      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+  SetDefaultProcessorVersion(
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  SetDefaultProcessorVersion(NoAwaitTag,
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
+      NoAwaitTag,
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+  future<StatusOr<
+      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
   SetDefaultProcessorVersion(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
-  ReviewDocument(google::cloud::documentai::v1::ReviewDocumentRequest const& request) override;
+  ReviewDocument(google::cloud::documentai::v1::ReviewDocumentRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ReviewDocument(NoAwaitTag,
-      google::cloud::documentai::v1::ReviewDocumentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ReviewDocument(
+      NoAwaitTag,
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
-  ReviewDocument(
-      google::longrunning::Operation const& operation) override;
+  ReviewDocument(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
-  EvaluateProcessorVersion(google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) override;
+  future<
+      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  EvaluateProcessorVersion(
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  EvaluateProcessorVersion(NoAwaitTag,
-      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
+      NoAwaitTag,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  future<
+      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
   EvaluateProcessorVersion(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::documentai::v1::Evaluation>
-  GetEvaluation(google::cloud::documentai::v1::GetEvaluationRequest const& request) override;
+  StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
+      google::cloud::documentai::v1::GetEvaluationRequest const& request)
+      override;
 
-  StreamRange<google::cloud::documentai::v1::Evaluation>
-  ListEvaluations(google::cloud::documentai::v1::ListEvaluationsRequest request) override;
+  StreamRange<google::cloud::documentai::v1::Evaluation> ListEvaluations(
+      google::cloud::documentai::v1::ListEvaluationsRequest request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

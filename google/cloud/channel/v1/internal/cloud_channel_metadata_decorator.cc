@@ -46,64 +46,65 @@ CloudChannelServiceMetadata::CloudChannelServiceMetadata(
 
 StatusOr<google::cloud::channel::v1::ListCustomersResponse>
 CloudChannelServiceMetadata::ListCustomers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListCustomersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCustomers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceMetadata::GetCustomer(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::GetCustomerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCustomer(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
 CloudChannelServiceMetadata::CheckCloudIdentityAccountsExist(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CheckCloudIdentityAccountsExist(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceMetadata::CreateCustomer(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::CreateCustomerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCustomer(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceMetadata::UpdateCustomer(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::UpdateCustomerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("customer.name=", internal::UrlEncode(request.customer().name())));
+  SetMetadata(context, options,
+              absl::StrCat("customer.name=",
+                           internal::UrlEncode(request.customer().name())));
   return child_->UpdateCustomer(context, options, request);
 }
 
-Status
-CloudChannelServiceMetadata::DeleteCustomer(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CloudChannelServiceMetadata::DeleteCustomer(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::DeleteCustomerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteCustomer(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceMetadata::ImportCustomer(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ImportCustomerRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportCustomer(context, options, request);
 }
 
@@ -113,53 +114,56 @@ CloudChannelServiceMetadata::AsyncProvisionCloudIdentity(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("customer=", internal::UrlEncode(request.customer())));
-  return child_->AsyncProvisionCloudIdentity(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("customer=", internal::UrlEncode(request.customer())));
+  return child_->AsyncProvisionCloudIdentity(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::ProvisionCloudIdentity(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("customer=", internal::UrlEncode(request.customer())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("customer=", internal::UrlEncode(request.customer())));
   return child_->ProvisionCloudIdentity(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
 CloudChannelServiceMetadata::ListEntitlements(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListEntitlementsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEntitlements(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListTransferableSkusResponse>
 CloudChannelServiceMetadata::ListTransferableSkus(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListTransferableSkusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTransferableSkus(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListTransferableOffersResponse>
 CloudChannelServiceMetadata::ListTransferableOffers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListTransferableOffersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTransferableOffers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Entitlement>
 CloudChannelServiceMetadata::GetEntitlement(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::GetEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEntitlement(context, options, request);
 }
 
@@ -169,17 +173,18 @@ CloudChannelServiceMetadata::AsyncCreateEntitlement(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEntitlement(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateEntitlement(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::CreateEntitlement(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEntitlement(context, options, request);
 }
 
@@ -189,17 +194,18 @@ CloudChannelServiceMetadata::AsyncChangeParameters(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncChangeParameters(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncChangeParameters(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::ChangeParameters(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ChangeParameters(context, options, request);
 }
 
@@ -209,17 +215,18 @@ CloudChannelServiceMetadata::AsyncChangeRenewalSettings(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncChangeRenewalSettings(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncChangeRenewalSettings(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::ChangeRenewalSettings(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ChangeRenewalSettings(context, options, request);
 }
 
@@ -229,17 +236,18 @@ CloudChannelServiceMetadata::AsyncChangeOffer(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncChangeOffer(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncChangeOffer(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::ChangeOffer(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ChangeOffer(context, options, request);
 }
 
@@ -249,17 +257,18 @@ CloudChannelServiceMetadata::AsyncStartPaidService(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStartPaidService(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStartPaidService(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::StartPaidService(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->StartPaidService(context, options, request);
 }
 
@@ -269,17 +278,18 @@ CloudChannelServiceMetadata::AsyncSuspendEntitlement(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncSuspendEntitlement(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncSuspendEntitlement(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::SuspendEntitlement(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->SuspendEntitlement(context, options, request);
 }
 
@@ -289,17 +299,18 @@ CloudChannelServiceMetadata::AsyncCancelEntitlement(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelEntitlement(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelEntitlement(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::CancelEntitlement(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelEntitlement(context, options, request);
 }
 
@@ -309,17 +320,18 @@ CloudChannelServiceMetadata::AsyncActivateEntitlement(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncActivateEntitlement(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncActivateEntitlement(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::ActivateEntitlement(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ActivateEntitlement(context, options, request);
 }
 
@@ -329,17 +341,18 @@ CloudChannelServiceMetadata::AsyncTransferEntitlements(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncTransferEntitlements(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncTransferEntitlements(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::TransferEntitlements(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->TransferEntitlements(context, options, request);
 }
 
@@ -348,178 +361,197 @@ CloudChannelServiceMetadata::AsyncTransferEntitlementsToGoogle(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncTransferEntitlementsToGoogle(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncTransferEntitlementsToGoogle(cq, std::move(context),
+                                                   std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::TransferEntitlementsToGoogle(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->TransferEntitlementsToGoogle(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>
 CloudChannelServiceMetadata::ListChannelPartnerLinks(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListChannelPartnerLinksRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListChannelPartnerLinks(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceMetadata::GetChannelPartnerLink(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetChannelPartnerLink(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceMetadata::CreateChannelPartnerLink(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::CreateChannelPartnerLinkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateChannelPartnerLink(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceMetadata::UpdateChannelPartnerLink(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UpdateChannelPartnerLink(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceMetadata::GetCustomerRepricingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCustomerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
 CloudChannelServiceMetadata::ListCustomerRepricingConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCustomerRepricingConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceMetadata::CreateCustomerRepricingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCustomerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceMetadata::UpdateCustomerRepricingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("customer_repricing_config.name=", internal::UrlEncode(request.customer_repricing_config().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("customer_repricing_config.name=",
+                           internal::UrlEncode(
+                               request.customer_repricing_config().name())));
   return child_->UpdateCustomerRepricingConfig(context, options, request);
 }
 
-Status
-CloudChannelServiceMetadata::DeleteCustomerRepricingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status CloudChannelServiceMetadata::DeleteCustomerRepricingConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteCustomerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceMetadata::GetChannelPartnerRepricingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetChannelPartnerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
 CloudChannelServiceMetadata::ListChannelPartnerRepricingConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListChannelPartnerRepricingConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceMetadata::CreateChannelPartnerRepricingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::
+        CreateChannelPartnerRepricingConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateChannelPartnerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceMetadata::UpdateChannelPartnerRepricingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("channel_partner_repricing_config.name=", internal::UrlEncode(request.channel_partner_repricing_config().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::
+        UpdateChannelPartnerRepricingConfigRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("channel_partner_repricing_config.name=",
+                   internal::UrlEncode(
+                       request.channel_partner_repricing_config().name())));
   return child_->UpdateChannelPartnerRepricingConfig(context, options, request);
 }
 
-Status
-CloudChannelServiceMetadata::DeleteChannelPartnerRepricingConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status CloudChannelServiceMetadata::DeleteChannelPartnerRepricingConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::
+        DeleteChannelPartnerRepricingConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteChannelPartnerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
 CloudChannelServiceMetadata::ListSkuGroups(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSkuGroups(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
 CloudChannelServiceMetadata::ListSkuGroupBillableSkus(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSkuGroupBillableSkus(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceMetadata::LookupOffer(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::LookupOfferRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("entitlement=", internal::UrlEncode(request.entitlement())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("entitlement=", internal::UrlEncode(request.entitlement())));
   return child_->LookupOffer(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListProductsResponse>
 CloudChannelServiceMetadata::ListProducts(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListProductsRequest const& request) {
   SetMetadata(context, options);
   return child_->ListProducts(context, options, request);
@@ -527,118 +559,120 @@ CloudChannelServiceMetadata::ListProducts(
 
 StatusOr<google::cloud::channel::v1::ListSkusResponse>
 CloudChannelServiceMetadata::ListSkus(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListSkusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSkus(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListOffersResponse>
 CloudChannelServiceMetadata::ListOffers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListOffersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListOffers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListPurchasableSkusResponse>
 CloudChannelServiceMetadata::ListPurchasableSkus(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListPurchasableSkusRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("customer=", internal::UrlEncode(request.customer())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("customer=", internal::UrlEncode(request.customer())));
   return child_->ListPurchasableSkus(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListPurchasableOffersResponse>
 CloudChannelServiceMetadata::ListPurchasableOffers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListPurchasableOffersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("customer=", internal::UrlEncode(request.customer())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("customer=", internal::UrlEncode(request.customer())));
   return child_->ListPurchasableOffers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
 CloudChannelServiceMetadata::QueryEligibleBillingAccounts(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("customer=", internal::UrlEncode(request.customer())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("customer=", internal::UrlEncode(request.customer())));
   return child_->QueryEligibleBillingAccounts(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceMetadata::RegisterSubscriber(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::RegisterSubscriberRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("account=", internal::UrlEncode(request.account())));
+  SetMetadata(context, options,
+              absl::StrCat("account=", internal::UrlEncode(request.account())));
   return child_->RegisterSubscriber(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
 CloudChannelServiceMetadata::UnregisterSubscriber(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::UnregisterSubscriberRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("account=", internal::UrlEncode(request.account())));
+  SetMetadata(context, options,
+              absl::StrCat("account=", internal::UrlEncode(request.account())));
   return child_->UnregisterSubscriber(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListSubscribersResponse>
 CloudChannelServiceMetadata::ListSubscribers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListSubscribersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("account=", internal::UrlEncode(request.account())));
+  SetMetadata(context, options,
+              absl::StrCat("account=", internal::UrlEncode(request.account())));
   return child_->ListSubscribers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
 CloudChannelServiceMetadata::ListEntitlementChanges(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListEntitlementChangesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEntitlementChanges(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CloudChannelServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-CloudChannelServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CloudChannelServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-CloudChannelServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CloudChannelServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -650,8 +684,8 @@ CloudChannelServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> CloudChannelServiceMetadata::AsyncCancelOperation(
@@ -661,21 +695,21 @@ future<Status> CloudChannelServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void CloudChannelServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void CloudChannelServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CloudChannelServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                              Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

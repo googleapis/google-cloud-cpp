@@ -33,58 +33,70 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::MigrationServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<aiplatform_v1::MigrationServiceRetryPolicyOption>()->clone();
+std::unique_ptr<aiplatform_v1::MigrationServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::MigrationServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<aiplatform_v1::MigrationServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::MigrationServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<aiplatform_v1::MigrationServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<aiplatform_v1::MigrationServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::MigrationServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<aiplatform_v1::MigrationServicePollingPolicyOption>()->clone();
+  return options.get<aiplatform_v1::MigrationServicePollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 MigrationServiceConnectionImpl::MigrationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::MigrationServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        MigrationServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      MigrationServiceConnection::options())) {}
 
 StreamRange<google::cloud::aiplatform::v1::MigratableResource>
-MigrationServiceConnectionImpl::SearchMigratableResources(google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request) {
+MigrationServiceConnectionImpl::SearchMigratableResources(
+    google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->SearchMigratableResources(request);
+  auto idempotency =
+      idempotency_policy(*current)->SearchMigratableResources(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::aiplatform::v1::MigratableResource>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::aiplatform::v1::MigratableResource>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::MigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::MigrationServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& r) {
+          Options const& options,
+          google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const& request) {
+                   google::cloud::aiplatform::v1::
+                       SearchMigratableResourcesRequest const& request) {
               return stub->SearchMigratableResources(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::SearchMigratableResourcesResponse r) {
-        std::vector<google::cloud::aiplatform::v1::MigratableResource> result(r.migratable_resources().size());
+        std::vector<google::cloud::aiplatform::v1::MigratableResource> result(
+            r.migratable_resources().size());
         auto& messages = *r.mutable_migratable_resources();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -92,49 +104,58 @@ MigrationServiceConnectionImpl::SearchMigratableResources(google::cloud::aiplatf
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-MigrationServiceConnectionImpl::BatchMigrateResources(google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
+MigrationServiceConnectionImpl::BatchMigrateResources(
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->BatchMigrateResources(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
-     return stub->AsyncBatchMigrateResources(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+              request) {
+        return stub->AsyncBatchMigrateResources(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 MigrationServiceConnectionImpl::BatchMigrateResources(
-      NoAwaitTag, google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchMigrateResources(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+                 request) {
         return stub_->BatchMigrateResources(context, options, request);
       },
       *current, request, __func__);
@@ -142,56 +163,70 @@ MigrationServiceConnectionImpl::BatchMigrateResources(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
 MigrationServiceConnectionImpl::BatchMigrateResources(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::aiplatform::v1::BatchMigrateResourcesOperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>(
-        internal::InvalidArgumentError("operation does not correspond to BatchMigrateResources",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::aiplatform::v1::
+                   BatchMigrateResourcesOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchMigrateResources",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-MigrationServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+MigrationServiceConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::MigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::MigrationServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -199,7 +234,8 @@ MigrationServiceConnectionImpl::ListLocations(google::cloud::location::ListLocat
 }
 
 StatusOr<google::cloud::location::Location>
-MigrationServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+MigrationServiceConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -211,8 +247,8 @@ MigrationServiceConnectionImpl::GetLocation(google::cloud::location::GetLocation
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-MigrationServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> MigrationServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -224,8 +260,8 @@ MigrationServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyReques
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-MigrationServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> MigrationServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -238,7 +274,8 @@ MigrationServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyReques
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-MigrationServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+MigrationServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -251,17 +288,21 @@ MigrationServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermi
 }
 
 StreamRange<google::longrunning::Operation>
-MigrationServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+MigrationServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::MigrationServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::MigrationServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -271,7 +312,8 @@ MigrationServiceConnectionImpl::ListOperations(google::longrunning::ListOperatio
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -279,7 +321,8 @@ MigrationServiceConnectionImpl::ListOperations(google::longrunning::ListOperatio
 }
 
 StatusOr<google::longrunning::Operation>
-MigrationServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+MigrationServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -291,8 +334,8 @@ MigrationServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRe
       *current, request, __func__);
 }
 
-Status
-MigrationServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status MigrationServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -304,8 +347,8 @@ MigrationServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOpera
       *current, request, __func__);
 }
 
-Status
-MigrationServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status MigrationServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -318,7 +361,8 @@ MigrationServiceConnectionImpl::CancelOperation(google::longrunning::CancelOpera
 }
 
 StatusOr<google::longrunning::Operation>
-MigrationServiceConnectionImpl::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
+MigrationServiceConnectionImpl::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

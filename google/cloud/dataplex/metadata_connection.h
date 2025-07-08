@@ -33,7 +33,8 @@ using ::google::cloud::dataplex_v1::MakeMetadataServiceConnection;
 /// @deprecated Use dataplex_v1::MetadataServiceConnection directly.
 using ::google::cloud::dataplex_v1::MetadataServiceConnection;
 
-/// @deprecated Use dataplex_v1::MetadataServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use dataplex_v1::MetadataServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::dataplex_v1::MetadataServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use dataplex_v1::MetadataServiceLimitedTimeRetryPolicy directly.

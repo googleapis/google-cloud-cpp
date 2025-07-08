@@ -31,9 +31,9 @@ CommentServiceAuth::CommentServiceAuth(
     std::shared_ptr<CommentServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::support::v2::ListCommentsResponse> CommentServiceAuth::ListComments(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::support::v2::ListCommentsResponse>
+CommentServiceAuth::ListComments(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListCommentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::support::v2::ListCommentsResponse> CommentServiceAuth::L
 }
 
 StatusOr<google::cloud::support::v2::Comment> CommentServiceAuth::CreateComment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CreateCommentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

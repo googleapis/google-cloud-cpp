@@ -17,11 +17,11 @@
 // source: google/cloud/compute/storage_pools/v1/storage_pools.proto
 
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/storage_pools/v1/internal/storage_pools_option_defaults.h"
 #include "google/cloud/compute/storage_pools/v1/internal/storage_pools_tracing_connection.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,118 +36,133 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StoragePoolsConnection::~StoragePoolsConnection() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>> StoragePoolsConnection::AggregatedListStoragePools(
-    google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
-  return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>>();
+StreamRange<std::pair<std::string,
+                      google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
+StoragePoolsConnection::AggregatedListStoragePools(
+    google::cloud::cpp::compute::storage_pools::v1::
+        AggregatedListStoragePoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::StoragePoolsScopedList>>>();
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsConnection::DeleteStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const&) {
+    google::cloud::cpp::compute::storage_pools::v1::
+        DeleteStoragePoolRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsConnection::DeleteStoragePool(
-    NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                    DeleteStoragePoolRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsConnection::DeleteStoragePool(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
 StoragePoolsConnection::GetStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const&) {
+    google::cloud::cpp::compute::storage_pools::v1::
+        GetStoragePoolRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 StoragePoolsConnection::GetIamPolicy(
-    google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::storage_pools::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsConnection::InsertStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const&) {
+    google::cloud::cpp::compute::storage_pools::v1::
+        InsertStoragePoolRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsConnection::InsertStoragePool(
-    NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                    InsertStoragePoolRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsConnection::InsertStoragePool(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::cpp::compute::v1::StoragePool> StoragePoolsConnection::ListStoragePools(
-    google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::StoragePool>
+StoragePoolsConnection::ListStoragePools(
+    google::cloud::cpp::compute::storage_pools::v1::
+        ListStoragePoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::StoragePool>>();
 }
 
-StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk> StoragePoolsConnection::ListDisks(
-    google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk>
+StoragePoolsConnection::ListDisks(
+    google::cloud::cpp::compute::storage_pools::v1::
+        ListDisksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 StoragePoolsConnection::SetIamPolicy(
-    google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::storage_pools::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 StoragePoolsConnection::TestIamPermissions(
-    google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::storage_pools::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsConnection::UpdateStoragePool(
-    google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const&) {
+    google::cloud::cpp::compute::storage_pools::v1::
+        UpdateStoragePoolRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsConnection::UpdateStoragePool(
-    NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                    UpdateStoragePoolRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsConnection::UpdateStoragePool(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

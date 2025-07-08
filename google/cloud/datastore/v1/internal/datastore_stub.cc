@@ -30,160 +30,143 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastoreStub::~DatastoreStub() = default;
 
-StatusOr<google::datastore::v1::LookupResponse>
-DefaultDatastoreStub::Lookup(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::v1::LookupRequest const& request) {
-    google::datastore::v1::LookupResponse response;
-    auto status =
-        grpc_stub_->Lookup(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::datastore::v1::LookupResponse> DefaultDatastoreStub::Lookup(
+    grpc::ClientContext& context, Options const&,
+    google::datastore::v1::LookupRequest const& request) {
+  google::datastore::v1::LookupResponse response;
+  auto status = grpc_stub_->Lookup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::datastore::v1::RunQueryResponse>
 DefaultDatastoreStub::RunQuery(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::v1::RunQueryRequest const& request) {
-    google::datastore::v1::RunQueryResponse response;
-    auto status =
-        grpc_stub_->RunQuery(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::datastore::v1::RunQueryRequest const& request) {
+  google::datastore::v1::RunQueryResponse response;
+  auto status = grpc_stub_->RunQuery(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
 DefaultDatastoreStub::RunAggregationQuery(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::v1::RunAggregationQueryRequest const& request) {
-    google::datastore::v1::RunAggregationQueryResponse response;
-    auto status =
-        grpc_stub_->RunAggregationQuery(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::datastore::v1::RunAggregationQueryRequest const& request) {
+  google::datastore::v1::RunAggregationQueryResponse response;
+  auto status = grpc_stub_->RunAggregationQuery(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
 DefaultDatastoreStub::BeginTransaction(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::v1::BeginTransactionRequest const& request) {
-    google::datastore::v1::BeginTransactionResponse response;
-    auto status =
-        grpc_stub_->BeginTransaction(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::datastore::v1::BeginTransactionRequest const& request) {
+  google::datastore::v1::BeginTransactionResponse response;
+  auto status = grpc_stub_->BeginTransaction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::datastore::v1::CommitResponse>
-DefaultDatastoreStub::Commit(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::v1::CommitRequest const& request) {
-    google::datastore::v1::CommitResponse response;
-    auto status =
-        grpc_stub_->Commit(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::datastore::v1::CommitResponse> DefaultDatastoreStub::Commit(
+    grpc::ClientContext& context, Options const&,
+    google::datastore::v1::CommitRequest const& request) {
+  google::datastore::v1::CommitResponse response;
+  auto status = grpc_stub_->Commit(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::datastore::v1::RollbackResponse>
 DefaultDatastoreStub::Rollback(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::v1::RollbackRequest const& request) {
-    google::datastore::v1::RollbackResponse response;
-    auto status =
-        grpc_stub_->Rollback(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::datastore::v1::RollbackRequest const& request) {
+  google::datastore::v1::RollbackResponse response;
+  auto status = grpc_stub_->Rollback(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
 DefaultDatastoreStub::AllocateIds(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::v1::AllocateIdsRequest const& request) {
-    google::datastore::v1::AllocateIdsResponse response;
-    auto status =
-        grpc_stub_->AllocateIds(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::datastore::v1::AllocateIdsRequest const& request) {
+  google::datastore::v1::AllocateIdsResponse response;
+  auto status = grpc_stub_->AllocateIds(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
 DefaultDatastoreStub::ReserveIds(
-  grpc::ClientContext& context, Options const&,
-  google::datastore::v1::ReserveIdsRequest const& request) {
-    google::datastore::v1::ReserveIdsResponse response;
-    auto status =
-        grpc_stub_->ReserveIds(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::datastore::v1::ReserveIdsRequest const& request) {
+  google::datastore::v1::ReserveIdsResponse response;
+  auto status = grpc_stub_->ReserveIds(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDatastoreStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultDatastoreStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultDatastoreStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDatastoreStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDatastoreStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultDatastoreStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDatastoreStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

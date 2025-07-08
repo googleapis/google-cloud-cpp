@@ -17,15 +17,15 @@
 // source: google/spanner/admin/instance/v1/spanner_instance_admin.proto
 
 #include "google/cloud/spanner/admin/instance_admin_rest_connection.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/rest_background_threads_impl.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/spanner/admin/instance_admin_options.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_rest_connection_impl.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_rest_stub_factory.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_tracing_connection.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,18 +36,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      InstanceAdminPolicyOptionList>(options, __func__);
-  options = spanner_admin_internal::InstanceAdminDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, InstanceAdminPolicyOptionList>(
+      options, __func__);
+  options =
+      spanner_admin_internal::InstanceAdminDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = spanner_admin_internal::CreateDefaultInstanceAdminRestStub(
-      options);
+  auto stub =
+      spanner_admin_internal::CreateDefaultInstanceAdminRestStub(options);
   return spanner_admin_internal::MakeInstanceAdminTracingConnection(
-      std::make_shared<
-          spanner_admin_internal::InstanceAdminRestConnectionImpl>(
+      std::make_shared<spanner_admin_internal::InstanceAdminRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

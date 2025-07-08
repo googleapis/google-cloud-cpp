@@ -32,119 +32,110 @@ DocumentServiceStub::~DocumentServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
 DefaultDocumentServiceStub::CreateDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
-    google::cloud::contentwarehouse::v1::CreateDocumentResponse response;
-    auto status =
-        grpc_stub_->CreateDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
+  google::cloud::contentwarehouse::v1::CreateDocumentResponse response;
+  auto status = grpc_stub_->CreateDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DefaultDocumentServiceStub::GetDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
-    google::cloud::contentwarehouse::v1::Document response;
-    auto status =
-        grpc_stub_->GetDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
+  google::cloud::contentwarehouse::v1::Document response;
+  auto status = grpc_stub_->GetDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
 DefaultDocumentServiceStub::UpdateDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
-    google::cloud::contentwarehouse::v1::UpdateDocumentResponse response;
-    auto status =
-        grpc_stub_->UpdateDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
+  google::cloud::contentwarehouse::v1::UpdateDocumentResponse response;
+  auto status = grpc_stub_->UpdateDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultDocumentServiceStub::DeleteDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultDocumentServiceStub::DeleteDocument(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
 DefaultDocumentServiceStub::SearchDocuments(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::SearchDocumentsRequest const& request) {
-    google::cloud::contentwarehouse::v1::SearchDocumentsResponse response;
-    auto status =
-        grpc_stub_->SearchDocuments(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
+        request) {
+  google::cloud::contentwarehouse::v1::SearchDocumentsResponse response;
+  auto status = grpc_stub_->SearchDocuments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DefaultDocumentServiceStub::LockDocument(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
-    google::cloud::contentwarehouse::v1::Document response;
-    auto status =
-        grpc_stub_->LockDocument(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
+  google::cloud::contentwarehouse::v1::Document response;
+  auto status = grpc_stub_->LockDocument(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
 DefaultDocumentServiceStub::FetchAcl(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
-    google::cloud::contentwarehouse::v1::FetchAclResponse response;
-    auto status =
-        grpc_stub_->FetchAcl(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
+  google::cloud::contentwarehouse::v1::FetchAclResponse response;
+  auto status = grpc_stub_->FetchAcl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
 DefaultDocumentServiceStub::SetAcl(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
-    google::cloud::contentwarehouse::v1::SetAclResponse response;
-    auto status =
-        grpc_stub_->SetAcl(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
+  google::cloud::contentwarehouse::v1::SetAclResponse response;
+  auto status = grpc_stub_->SetAcl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultDocumentServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

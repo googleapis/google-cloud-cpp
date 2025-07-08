@@ -32,81 +32,86 @@ OsLoginServiceTracingStub::OsLoginServiceTracingStub(
     std::shared_ptr<OsLoginServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::oslogin::common::SshPublicKey> OsLoginServiceTracingStub::CreateSshPublicKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceTracingStub::CreateSshPublicKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService", "CreateSshPublicKey");
+  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
+                                     "CreateSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateSshPublicKey(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateSshPublicKey(context, options, request));
 }
 
 Status OsLoginServiceTracingStub::DeletePosixAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService", "DeletePosixAccount");
+  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
+                                     "DeletePosixAccount");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeletePosixAccount(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeletePosixAccount(context, options, request));
 }
 
 Status OsLoginServiceTracingStub::DeleteSshPublicKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService", "DeleteSshPublicKey");
+  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
+                                     "DeleteSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteSshPublicKey(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteSshPublicKey(context, options, request));
 }
 
-StatusOr<google::cloud::oslogin::v1::LoginProfile> OsLoginServiceTracingStub::GetLoginProfile(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oslogin::v1::LoginProfile>
+OsLoginServiceTracingStub::GetLoginProfile(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oslogin::v1::GetLoginProfileRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService", "GetLoginProfile");
+  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
+                                     "GetLoginProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLoginProfile(context, options, request));
 }
 
-StatusOr<google::cloud::oslogin::common::SshPublicKey> OsLoginServiceTracingStub::GetSshPublicKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceTracingStub::GetSshPublicKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService", "GetSshPublicKey");
+  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
+                                     "GetSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSshPublicKey(context, options, request));
 }
 
-StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse> OsLoginServiceTracingStub::ImportSshPublicKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
+OsLoginServiceTracingStub::ImportSshPublicKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService", "ImportSshPublicKey");
+  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
+                                     "ImportSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ImportSshPublicKey(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ImportSshPublicKey(context, options, request));
 }
 
-StatusOr<google::cloud::oslogin::common::SshPublicKey> OsLoginServiceTracingStub::UpdateSshPublicKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceTracingStub::UpdateSshPublicKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService", "UpdateSshPublicKey");
+  auto span = internal::MakeSpanGrpc("google.cloud.oslogin.v1.OsLoginService",
+                                     "UpdateSshPublicKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateSshPublicKey(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateSshPublicKey(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

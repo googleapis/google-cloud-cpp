@@ -31,18 +31,18 @@ ImageAnnotatorAuth::ImageAnnotatorAuth(
     std::shared_ptr<ImageAnnotatorStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse> ImageAnnotatorAuth::BatchAnnotateImages(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
+ImageAnnotatorAuth::BatchAnnotateImages(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchAnnotateImages(context, options, request);
 }
 
-StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse> ImageAnnotatorAuth::BatchAnnotateFiles(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
+ImageAnnotatorAuth::BatchAnnotateFiles(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,14 +51,15 @@ StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse> ImageAnnotatorAu
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorAuth::AsyncAsyncBatchAnnotateImages(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -70,9 +71,8 @@ ImageAnnotatorAuth::AsyncAsyncBatchAnnotateImages(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorAuth::AsyncBatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AsyncBatchAnnotateImages(context, options, request);
@@ -80,36 +80,35 @@ ImageAnnotatorAuth::AsyncBatchAnnotateImages(
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorAuth::AsyncAsyncBatchAnnotateFiles(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncAsyncBatchAnnotateFiles(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncAsyncBatchAnnotateFiles(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorAuth::AsyncBatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AsyncBatchAnnotateFiles(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation> ImageAnnotatorAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -123,15 +122,16 @@ ImageAnnotatorAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -140,13 +140,14 @@ future<Status> ImageAnnotatorAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

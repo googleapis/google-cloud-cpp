@@ -30,36 +30,36 @@ namespace cloud {
 namespace apphub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AppHubLogging::AppHubLogging(
-    std::shared_ptr<AppHubStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+AppHubLogging::AppHubLogging(std::shared_ptr<AppHubStub> child,
+                             TracingOptions tracing_options,
+                             std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
 AppHubLogging::LookupServiceProjectAttachment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request) {
-        return child_->LookupServiceProjectAttachment(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::
+                 LookupServiceProjectAttachmentRequest const& request) {
+        return child_->LookupServiceProjectAttachment(context, options,
+                                                      request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apphub::v1::ListServiceProjectAttachmentsResponse>
 AppHubLogging::ListServiceProjectAttachments(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const&
+              request) {
         return child_->ListServiceProjectAttachments(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,15 +67,17 @@ AppHubLogging::ListServiceProjectAttachments(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncCreateServiceProjectAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
+             google::cloud::apphub::v1::
+                 CreateServiceProjectAttachmentRequest const& request) {
         return child_->AsyncCreateServiceProjectAttachment(
             cq, std::move(context), std::move(options), request);
       },
@@ -85,27 +87,29 @@ AppHubLogging::AsyncCreateServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubLogging::CreateServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request) {
-        return child_->CreateServiceProjectAttachment(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::
+                 CreateServiceProjectAttachmentRequest const& request) {
+        return child_->CreateServiceProjectAttachment(context, options,
+                                                      request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
 AppHubLogging::GetServiceProjectAttachment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+              request) {
         return child_->GetServiceProjectAttachment(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -113,15 +117,17 @@ AppHubLogging::GetServiceProjectAttachment(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncDeleteServiceProjectAttachment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
+             google::cloud::apphub::v1::
+                 DeleteServiceProjectAttachmentRequest const& request) {
         return child_->AsyncDeleteServiceProjectAttachment(
             cq, std::move(context), std::move(options), request);
       },
@@ -131,41 +137,42 @@ AppHubLogging::AsyncDeleteServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubLogging::DeleteServiceProjectAttachment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request) {
-        return child_->DeleteServiceProjectAttachment(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::
+                 DeleteServiceProjectAttachmentRequest const& request) {
+        return child_->DeleteServiceProjectAttachment(context, options,
+                                                      request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
 AppHubLogging::DetachServiceProjectAttachment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request) {
-        return child_->DetachServiceProjectAttachment(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::
+                 DetachServiceProjectAttachmentRequest const& request) {
+        return child_->DetachServiceProjectAttachment(context, options,
+                                                      request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apphub::v1::ListDiscoveredServicesResponse>
 AppHubLogging::ListDiscoveredServices(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::ListDiscoveredServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::ListDiscoveredServicesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::ListDiscoveredServicesRequest const&
+                 request) {
         return child_->ListDiscoveredServices(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -173,13 +180,12 @@ AppHubLogging::ListDiscoveredServices(
 
 StatusOr<google::cloud::apphub::v1::DiscoveredService>
 AppHubLogging::GetDiscoveredService(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::GetDiscoveredServiceRequest const&
+                 request) {
         return child_->GetDiscoveredService(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -187,13 +193,12 @@ AppHubLogging::GetDiscoveredService(
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
 AppHubLogging::LookupDiscoveredService(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::LookupDiscoveredServiceRequest const&
+                 request) {
         return child_->LookupDiscoveredService(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -201,12 +206,10 @@ AppHubLogging::LookupDiscoveredService(
 
 StatusOr<google::cloud::apphub::v1::ListServicesResponse>
 AppHubLogging::ListServices(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::ListServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::ListServicesRequest const& request) {
         return child_->ListServices(context, options, request);
       },
@@ -215,44 +218,38 @@ AppHubLogging::ListServices(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncCreateService(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::CreateServiceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::apphub::v1::CreateServiceRequest const& request) {
-        return child_->AsyncCreateService(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCreateService(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::CreateService(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::CreateServiceRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::CreateServiceRequest const& request) {
         return child_->CreateService(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::apphub::v1::Service>
-AppHubLogging::GetService(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apphub::v1::Service> AppHubLogging::GetService(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::GetServiceRequest const& request) {
         return child_->GetService(context, options, request);
       },
@@ -261,30 +258,27 @@ AppHubLogging::GetService(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncUpdateService(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::apphub::v1::UpdateServiceRequest const& request) {
-        return child_->AsyncUpdateService(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUpdateService(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::UpdateService(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::UpdateServiceRequest const& request) {
         return child_->UpdateService(context, options, request);
       },
@@ -293,30 +287,27 @@ AppHubLogging::UpdateService(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncDeleteService(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::apphub::v1::DeleteServiceRequest const& request) {
-        return child_->AsyncDeleteService(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteService(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::DeleteService(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::DeleteServiceRequest const& request) {
         return child_->DeleteService(context, options, request);
       },
@@ -325,13 +316,12 @@ AppHubLogging::DeleteService(
 
 StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
 AppHubLogging::ListDiscoveredWorkloads(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const&
+                 request) {
         return child_->ListDiscoveredWorkloads(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -339,13 +329,12 @@ AppHubLogging::ListDiscoveredWorkloads(
 
 StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
 AppHubLogging::GetDiscoveredWorkload(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const&
+                 request) {
         return child_->GetDiscoveredWorkload(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -353,13 +342,12 @@ AppHubLogging::GetDiscoveredWorkload(
 
 StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
 AppHubLogging::LookupDiscoveredWorkload(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const&
+                 request) {
         return child_->LookupDiscoveredWorkload(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -367,12 +355,10 @@ AppHubLogging::LookupDiscoveredWorkload(
 
 StatusOr<google::cloud::apphub::v1::ListWorkloadsResponse>
 AppHubLogging::ListWorkloads(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::ListWorkloadsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::ListWorkloadsRequest const& request) {
         return child_->ListWorkloads(context, options, request);
       },
@@ -381,44 +367,38 @@ AppHubLogging::ListWorkloads(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncCreateWorkload(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
-        return child_->AsyncCreateWorkload(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCreateWorkload(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::CreateWorkload(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::CreateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
         return child_->CreateWorkload(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::apphub::v1::Workload>
-AppHubLogging::GetWorkload(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apphub::v1::Workload> AppHubLogging::GetWorkload(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::GetWorkloadRequest const& request) {
         return child_->GetWorkload(context, options, request);
       },
@@ -427,30 +407,27 @@ AppHubLogging::GetWorkload(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncUpdateWorkload(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
-        return child_->AsyncUpdateWorkload(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUpdateWorkload(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::UpdateWorkload(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::UpdateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
         return child_->UpdateWorkload(context, options, request);
       },
@@ -459,30 +436,27 @@ AppHubLogging::UpdateWorkload(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncDeleteWorkload(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
-        return child_->AsyncDeleteWorkload(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteWorkload(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::DeleteWorkload(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::DeleteWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
         return child_->DeleteWorkload(context, options, request);
       },
@@ -491,13 +465,12 @@ AppHubLogging::DeleteWorkload(
 
 StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
 AppHubLogging::ListApplications(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::ListApplicationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::ListApplicationsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::ListApplicationsRequest const& request) {
         return child_->ListApplications(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -505,44 +478,40 @@ AppHubLogging::ListApplications(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncCreateApplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::apphub::v1::CreateApplicationRequest const& request) {
-        return child_->AsyncCreateApplication(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+        return child_->AsyncCreateApplication(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::CreateApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::CreateApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::CreateApplicationRequest const& request) {
         return child_->CreateApplication(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::apphub::v1::Application>
-AppHubLogging::GetApplication(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::apphub::v1::Application> AppHubLogging::GetApplication(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apphub::v1::GetApplicationRequest const& request) {
         return child_->GetApplication(context, options, request);
       },
@@ -551,31 +520,30 @@ AppHubLogging::GetApplication(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncUpdateApplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
-        return child_->AsyncUpdateApplication(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+        return child_->AsyncUpdateApplication(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::UpdateApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::UpdateApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
         return child_->UpdateApplication(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -583,31 +551,30 @@ AppHubLogging::UpdateApplication(
 
 future<StatusOr<google::longrunning::Operation>>
 AppHubLogging::AsyncDeleteApplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
-        return child_->AsyncDeleteApplication(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+        return child_->AsyncDeleteApplication(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::DeleteApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+StatusOr<google::longrunning::Operation> AppHubLogging::DeleteApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
         return child_->DeleteApplication(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -615,54 +582,43 @@ AppHubLogging::DeleteApplication(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 AppHubLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-AppHubLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> AppHubLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-AppHubLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> AppHubLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-AppHubLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> AppHubLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -671,12 +627,10 @@ AppHubLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AppHubLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -685,54 +639,43 @@ AppHubLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 AppHubLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-AppHubLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> AppHubLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AppHubLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AppHubLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-AppHubLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status AppHubLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -750,8 +693,8 @@ AppHubLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -767,8 +710,8 @@ future<Status> AppHubLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

@@ -28,12 +28,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegistrationServiceClient::RegistrationServiceClient(
     std::shared_ptr<RegistrationServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RegistrationServiceClient::~RegistrationServiceClient() = default;
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceClient::CreateNamespace(std::string const& parent, google::cloud::servicedirectory::v1::Namespace const& namespace_, std::string const& namespace_id, Options opts) {
+RegistrationServiceClient::CreateNamespace(
+    std::string const& parent,
+    google::cloud::servicedirectory::v1::Namespace const& namespace_,
+    std::string const& namespace_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::CreateNamespaceRequest request;
   request.set_parent(parent);
@@ -43,13 +46,16 @@ RegistrationServiceClient::CreateNamespace(std::string const& parent, google::cl
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceClient::CreateNamespace(google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request, Options opts) {
+RegistrationServiceClient::CreateNamespace(
+    google::cloud::servicedirectory::v1::CreateNamespaceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNamespace(request);
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceClient::ListNamespaces(std::string const& parent, Options opts) {
+RegistrationServiceClient::ListNamespaces(std::string const& parent,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::ListNamespacesRequest request;
   request.set_parent(parent);
@@ -57,7 +63,9 @@ RegistrationServiceClient::ListNamespaces(std::string const& parent, Options opt
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceClient::ListNamespaces(google::cloud::servicedirectory::v1::ListNamespacesRequest request, Options opts) {
+RegistrationServiceClient::ListNamespaces(
+    google::cloud::servicedirectory::v1::ListNamespacesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNamespaces(std::move(request));
 }
@@ -71,13 +79,17 @@ RegistrationServiceClient::GetNamespace(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceClient::GetNamespace(google::cloud::servicedirectory::v1::GetNamespaceRequest const& request, Options opts) {
+RegistrationServiceClient::GetNamespace(
+    google::cloud::servicedirectory::v1::GetNamespaceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNamespace(request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceClient::UpdateNamespace(google::cloud::servicedirectory::v1::Namespace const& namespace_, google::protobuf::FieldMask const& update_mask, Options opts) {
+RegistrationServiceClient::UpdateNamespace(
+    google::cloud::servicedirectory::v1::Namespace const& namespace_,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::UpdateNamespaceRequest request;
   *request.mutable_namespace_() = namespace_;
@@ -86,27 +98,33 @@ RegistrationServiceClient::UpdateNamespace(google::cloud::servicedirectory::v1::
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
-RegistrationServiceClient::UpdateNamespace(google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request, Options opts) {
+RegistrationServiceClient::UpdateNamespace(
+    google::cloud::servicedirectory::v1::UpdateNamespaceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNamespace(request);
 }
 
-Status
-RegistrationServiceClient::DeleteNamespace(std::string const& name, Options opts) {
+Status RegistrationServiceClient::DeleteNamespace(std::string const& name,
+                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::DeleteNamespaceRequest request;
   request.set_name(name);
   return connection_->DeleteNamespace(request);
 }
 
-Status
-RegistrationServiceClient::DeleteNamespace(google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request, Options opts) {
+Status RegistrationServiceClient::DeleteNamespace(
+    google::cloud::servicedirectory::v1::DeleteNamespaceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNamespace(request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceClient::CreateService(std::string const& parent, google::cloud::servicedirectory::v1::Service const& service, std::string const& service_id, Options opts) {
+RegistrationServiceClient::CreateService(
+    std::string const& parent,
+    google::cloud::servicedirectory::v1::Service const& service,
+    std::string const& service_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::CreateServiceRequest request;
   request.set_parent(parent);
@@ -116,13 +134,16 @@ RegistrationServiceClient::CreateService(std::string const& parent, google::clou
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceClient::CreateService(google::cloud::servicedirectory::v1::CreateServiceRequest const& request, Options opts) {
+RegistrationServiceClient::CreateService(
+    google::cloud::servicedirectory::v1::CreateServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateService(request);
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceClient::ListServices(std::string const& parent, Options opts) {
+RegistrationServiceClient::ListServices(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::ListServicesRequest request;
   request.set_parent(parent);
@@ -130,7 +151,9 @@ RegistrationServiceClient::ListServices(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceClient::ListServices(google::cloud::servicedirectory::v1::ListServicesRequest request, Options opts) {
+RegistrationServiceClient::ListServices(
+    google::cloud::servicedirectory::v1::ListServicesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListServices(std::move(request));
 }
@@ -144,13 +167,17 @@ RegistrationServiceClient::GetService(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceClient::GetService(google::cloud::servicedirectory::v1::GetServiceRequest const& request, Options opts) {
+RegistrationServiceClient::GetService(
+    google::cloud::servicedirectory::v1::GetServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetService(request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceClient::UpdateService(google::cloud::servicedirectory::v1::Service const& service, google::protobuf::FieldMask const& update_mask, Options opts) {
+RegistrationServiceClient::UpdateService(
+    google::cloud::servicedirectory::v1::Service const& service,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::UpdateServiceRequest request;
   *request.mutable_service() = service;
@@ -159,27 +186,33 @@ RegistrationServiceClient::UpdateService(google::cloud::servicedirectory::v1::Se
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
-RegistrationServiceClient::UpdateService(google::cloud::servicedirectory::v1::UpdateServiceRequest const& request, Options opts) {
+RegistrationServiceClient::UpdateService(
+    google::cloud::servicedirectory::v1::UpdateServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateService(request);
 }
 
-Status
-RegistrationServiceClient::DeleteService(std::string const& name, Options opts) {
+Status RegistrationServiceClient::DeleteService(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::DeleteServiceRequest request;
   request.set_name(name);
   return connection_->DeleteService(request);
 }
 
-Status
-RegistrationServiceClient::DeleteService(google::cloud::servicedirectory::v1::DeleteServiceRequest const& request, Options opts) {
+Status RegistrationServiceClient::DeleteService(
+    google::cloud::servicedirectory::v1::DeleteServiceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceClient::CreateEndpoint(std::string const& parent, google::cloud::servicedirectory::v1::Endpoint const& endpoint, std::string const& endpoint_id, Options opts) {
+RegistrationServiceClient::CreateEndpoint(
+    std::string const& parent,
+    google::cloud::servicedirectory::v1::Endpoint const& endpoint,
+    std::string const& endpoint_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::CreateEndpointRequest request;
   request.set_parent(parent);
@@ -189,13 +222,16 @@ RegistrationServiceClient::CreateEndpoint(std::string const& parent, google::clo
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceClient::CreateEndpoint(google::cloud::servicedirectory::v1::CreateEndpointRequest const& request, Options opts) {
+RegistrationServiceClient::CreateEndpoint(
+    google::cloud::servicedirectory::v1::CreateEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEndpoint(request);
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceClient::ListEndpoints(std::string const& parent, Options opts) {
+RegistrationServiceClient::ListEndpoints(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::ListEndpointsRequest request;
   request.set_parent(parent);
@@ -203,7 +239,9 @@ RegistrationServiceClient::ListEndpoints(std::string const& parent, Options opts
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceClient::ListEndpoints(google::cloud::servicedirectory::v1::ListEndpointsRequest request, Options opts) {
+RegistrationServiceClient::ListEndpoints(
+    google::cloud::servicedirectory::v1::ListEndpointsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEndpoints(std::move(request));
 }
@@ -217,13 +255,17 @@ RegistrationServiceClient::GetEndpoint(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceClient::GetEndpoint(google::cloud::servicedirectory::v1::GetEndpointRequest const& request, Options opts) {
+RegistrationServiceClient::GetEndpoint(
+    google::cloud::servicedirectory::v1::GetEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEndpoint(request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceClient::UpdateEndpoint(google::cloud::servicedirectory::v1::Endpoint const& endpoint, google::protobuf::FieldMask const& update_mask, Options opts) {
+RegistrationServiceClient::UpdateEndpoint(
+    google::cloud::servicedirectory::v1::Endpoint const& endpoint,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::UpdateEndpointRequest request;
   *request.mutable_endpoint() = endpoint;
@@ -232,51 +274,57 @@ RegistrationServiceClient::UpdateEndpoint(google::cloud::servicedirectory::v1::E
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
-RegistrationServiceClient::UpdateEndpoint(google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request, Options opts) {
+RegistrationServiceClient::UpdateEndpoint(
+    google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEndpoint(request);
 }
 
-Status
-RegistrationServiceClient::DeleteEndpoint(std::string const& name, Options opts) {
+Status RegistrationServiceClient::DeleteEndpoint(std::string const& name,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::servicedirectory::v1::DeleteEndpointRequest request;
   request.set_name(name);
   return connection_->DeleteEndpoint(request);
 }
 
-Status
-RegistrationServiceClient::DeleteEndpoint(google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request, Options opts) {
+Status RegistrationServiceClient::DeleteEndpoint(
+    google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEndpoint(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-RegistrationServiceClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> RegistrationServiceClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-RegistrationServiceClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> RegistrationServiceClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-RegistrationServiceClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+RegistrationServiceClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StreamRange<google::cloud::location::Location>
-RegistrationServiceClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+RegistrationServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
 StatusOr<google::cloud::location::Location>
-RegistrationServiceClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+RegistrationServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }

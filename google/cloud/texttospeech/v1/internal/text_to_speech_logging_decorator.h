@@ -35,18 +35,19 @@ class TextToSpeechLogging : public TextToSpeechStub {
  public:
   ~TextToSpeechLogging() override = default;
   TextToSpeechLogging(std::shared_ptr<TextToSpeechStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                      TracingOptions tracing_options,
+                      std::set<std::string> const& components);
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::texttospeech::v1::ListVoicesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::texttospeech::v1::ListVoicesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse> SynthesizeSpeech(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) override;
+  StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
+  SynthesizeSpeech(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
@@ -57,13 +58,11 @@ class TextToSpeechLogging : public TextToSpeechStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

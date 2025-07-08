@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_PREDICTION_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_PREDICTION_TRACING_STUB_H
 
+#include "google/cloud/retail/v2/internal/prediction_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/internal/prediction_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,26 +36,25 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
  public:
   ~PredictionServiceTracingStub() override = default;
 
-  explicit PredictionServiceTracingStub(std::shared_ptr<PredictionServiceStub> child);
+  explicit PredictionServiceTracingStub(
+      std::shared_ptr<PredictionServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::PredictRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<PredictionServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

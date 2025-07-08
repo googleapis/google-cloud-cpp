@@ -17,16 +17,16 @@
 // source: google/cloud/metastore/v1/metastore_federation.proto
 
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_stub_factory.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/opentelemetry.h"
-#include "google/cloud/log.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_auth_decorator.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_logging_decorator.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_metadata_decorator.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_stub.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_tracing_stub.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/metastore/v1/metastore_federation.grpc.pb.h>
@@ -44,28 +44,30 @@ std::shared_ptr<DataprocMetastoreFederationStub>
 CreateDefaultDataprocMetastoreFederationStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::metastore::v1::DataprocMetastoreFederation::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::metastore::v1::DataprocMetastoreFederation::NewStub(
+          channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<DataprocMetastoreFederationStub> stub =
-    std::make_shared<DefaultDataprocMetastoreFederationStub>(
-      std::move(service_grpc_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultDataprocMetastoreFederationStub>(
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+          std::move(service_locations_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<DataprocMetastoreFederationAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<DataprocMetastoreFederationAuth>(std::move(auth),
+                                                             std::move(stub));
   }
   stub = std::make_shared<DataprocMetastoreFederationMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DataprocMetastoreFederationLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

@@ -17,12 +17,12 @@
 // source: google/cloud/compute/region_disks/v1/region_disks.proto
 
 #include "google/cloud/compute/region_disks/v1/region_disks_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_option_defaults.h"
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_rest_connection_impl.h"
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_rest_stub_factory.h"
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_tracing_connection.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,15 +36,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<RegionDisksConnection> MakeRegionDisksConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      RegionDisksPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, RegionDisksPolicyOptionList>(
+      options, __func__);
   options = compute_region_disks_v1_internal::RegionDisksDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_region_disks_v1_internal::CreateDefaultRegionDisksRestStub(
-      options);
+  auto stub =
+      compute_region_disks_v1_internal::CreateDefaultRegionDisksRestStub(
+          options);
   return compute_region_disks_v1_internal::MakeRegionDisksTracingConnection(
       std::make_shared<
           compute_region_disks_v1_internal::RegionDisksRestConnectionImpl>(

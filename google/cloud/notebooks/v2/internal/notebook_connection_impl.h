@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V2_INTERNAL_NOTEBOOK_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V2_INTERNAL_NOTEBOOK_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/notebooks/v2/internal/notebook_retry_traits.h"
 #include "google/cloud/notebooks/v2/internal/notebook_stub.h"
 #include "google/cloud/notebooks/v2/notebook_connection.h"
 #include "google/cloud/notebooks/v2/notebook_connection_idempotency_policy.h"
 #include "google/cloud/notebooks/v2/notebook_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -46,146 +46,157 @@ class NotebookServiceConnectionImpl
   ~NotebookServiceConnectionImpl() override = default;
 
   NotebookServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<notebooks_v2_internal::NotebookServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<notebooks_v2_internal::NotebookServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::notebooks::v2::Instance>
-  ListInstances(google::cloud::notebooks::v2::ListInstancesRequest request) override;
+  StreamRange<google::cloud::notebooks::v2::Instance> ListInstances(
+      google::cloud::notebooks::v2::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::notebooks::v2::Instance>
-  GetInstance(google::cloud::notebooks::v2::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::notebooks::v2::Instance> GetInstance(
+      google::cloud::notebooks::v2::GetInstanceRequest const& request) override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  CreateInstance(google::cloud::notebooks::v2::CreateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> CreateInstance(
+      google::cloud::notebooks::v2::CreateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::CreateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::CreateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  CreateInstance(
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> CreateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  UpdateInstance(google::cloud::notebooks::v2::UpdateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> UpdateInstance(
+      google::cloud::notebooks::v2::UpdateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::UpdateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::UpdateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  UpdateInstance(
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> UpdateInstance(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
-  DeleteInstance(google::cloud::notebooks::v2::DeleteInstanceRequest const& request) override;
+  DeleteInstance(google::cloud::notebooks::v2::DeleteInstanceRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::DeleteInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
-  DeleteInstance(
+  DeleteInstance(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> StartInstance(
+      google::cloud::notebooks::v2::StartInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StartInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::StartInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> StartInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  StartInstance(google::cloud::notebooks::v2::StartInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
+      google::cloud::notebooks::v2::StopInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  StartInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::StartInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> StopInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::StopInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  StartInstance(
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  StopInstance(google::cloud::notebooks::v2::StopInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> ResetInstance(
+      google::cloud::notebooks::v2::ResetInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  StopInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::StopInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ResetInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::ResetInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  StopInstance(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  ResetInstance(google::cloud::notebooks::v2::ResetInstanceRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ResetInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::ResetInstanceRequest const& request) override;
-
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  ResetInstance(
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> ResetInstance(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
-  CheckInstanceUpgradability(google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const& request) override;
+  CheckInstanceUpgradability(
+      google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  UpgradeInstance(google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> UpgradeInstance(
+      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpgradeInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpgradeInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  UpgradeInstance(
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> UpgradeInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  RollbackInstance(google::cloud::notebooks::v2::RollbackInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> RollbackInstance(
+      google::cloud::notebooks::v2::RollbackInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  RollbackInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::RollbackInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> RollbackInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::RollbackInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  RollbackInstance(
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> RollbackInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  DiagnoseInstance(google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> DiagnoseInstance(
+      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DiagnoseInstance(NoAwaitTag,
-      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DiagnoseInstance(
+      NoAwaitTag,
+      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::notebooks::v2::Instance>>
-  DiagnoseInstance(
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> DiagnoseInstance(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

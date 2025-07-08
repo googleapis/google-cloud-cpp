@@ -26,31 +26,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SqlBackupRunsServiceConnectionIdempotencyPolicy::~SqlBackupRunsServiceConnectionIdempotencyPolicy() = default;
+SqlBackupRunsServiceConnectionIdempotencyPolicy::
+    ~SqlBackupRunsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SqlBackupRunsServiceConnectionIdempotencyPolicy>
 SqlBackupRunsServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<SqlBackupRunsServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<SqlBackupRunsServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency SqlBackupRunsServiceConnectionIdempotencyPolicy::Delete(google::cloud::sql::v1::SqlBackupRunsDeleteRequest const&) {
+Idempotency SqlBackupRunsServiceConnectionIdempotencyPolicy::Delete(
+    google::cloud::sql::v1::SqlBackupRunsDeleteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlBackupRunsServiceConnectionIdempotencyPolicy::Get(google::cloud::sql::v1::SqlBackupRunsGetRequest const&) {
+Idempotency SqlBackupRunsServiceConnectionIdempotencyPolicy::Get(
+    google::cloud::sql::v1::SqlBackupRunsGetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SqlBackupRunsServiceConnectionIdempotencyPolicy::Insert(google::cloud::sql::v1::SqlBackupRunsInsertRequest const&) {
+Idempotency SqlBackupRunsServiceConnectionIdempotencyPolicy::Insert(
+    google::cloud::sql::v1::SqlBackupRunsInsertRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SqlBackupRunsServiceConnectionIdempotencyPolicy::List(google::cloud::sql::v1::SqlBackupRunsListRequest const&) {
+Idempotency SqlBackupRunsServiceConnectionIdempotencyPolicy::List(
+    google::cloud::sql::v1::SqlBackupRunsListRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SqlBackupRunsServiceConnectionIdempotencyPolicy>
-    MakeDefaultSqlBackupRunsServiceConnectionIdempotencyPolicy() {
+MakeDefaultSqlBackupRunsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SqlBackupRunsServiceConnectionIdempotencyPolicy>();
 }
 

@@ -36,17 +36,25 @@ class AcceleratorTypesRestStub {
  public:
   virtual ~AcceleratorTypesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList> AggregatedListAcceleratorTypes(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+  AggregatedListAcceleratorTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::accelerator_types::v1::
+          AggregatedListAcceleratorTypesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
+  GetAcceleratorType(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::accelerator_types::v1::
+                         GetAcceleratorTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList> ListAcceleratorTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
+  ListAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::accelerator_types::v1::
+                           ListAcceleratorTypesRequest const& request) = 0;
 };
 
 class DefaultAcceleratorTypesRestStub : public AcceleratorTypesRestStub {
@@ -55,20 +63,26 @@ class DefaultAcceleratorTypesRestStub : public AcceleratorTypesRestStub {
 
   explicit DefaultAcceleratorTypesRestStub(Options options);
   DefaultAcceleratorTypesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList> AggregatedListAcceleratorTypes(
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+  AggregatedListAcceleratorTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::accelerator_types::v1::
+          AggregatedListAcceleratorTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::accelerator_types::v1::
+          GetAcceleratorTypeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList> ListAcceleratorTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
+  ListAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::accelerator_types::v1::
+                           ListAcceleratorTypesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

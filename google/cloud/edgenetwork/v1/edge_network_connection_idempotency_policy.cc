@@ -26,143 +26,181 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EdgeNetworkConnectionIdempotencyPolicy::~EdgeNetworkConnectionIdempotencyPolicy() = default;
+EdgeNetworkConnectionIdempotencyPolicy::
+    ~EdgeNetworkConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<EdgeNetworkConnectionIdempotencyPolicy>
 EdgeNetworkConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<EdgeNetworkConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::InitializeZone(google::cloud::edgenetwork::v1::InitializeZoneRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::InitializeZone(
+    google::cloud::edgenetwork::v1::InitializeZoneRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListZones(google::cloud::edgenetwork::v1::ListZonesRequest) {  // NOLINT
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListZones(
+    google::cloud::edgenetwork::v1::ListZonesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetZone(google::cloud::edgenetwork::v1::GetZoneRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetZone(
+    google::cloud::edgenetwork::v1::GetZoneRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListNetworks(google::cloud::edgenetwork::v1::ListNetworksRequest) {  // NOLINT
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListNetworks(
+    google::cloud::edgenetwork::v1::ListNetworksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetNetwork(google::cloud::edgenetwork::v1::GetNetworkRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetNetwork(
+    google::cloud::edgenetwork::v1::GetNetworkRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::DiagnoseNetwork(google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::DiagnoseNetwork(
+    google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::CreateNetwork(google::cloud::edgenetwork::v1::CreateNetworkRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::CreateNetwork(
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteNetwork(
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListSubnets(google::cloud::edgenetwork::v1::ListSubnetsRequest) {  // NOLINT
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListSubnets(
+    google::cloud::edgenetwork::v1::ListSubnetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetSubnet(google::cloud::edgenetwork::v1::GetSubnetRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetSubnet(
+    google::cloud::edgenetwork::v1::GetSubnetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::CreateSubnet(google::cloud::edgenetwork::v1::CreateSubnetRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::CreateSubnet(
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::UpdateSubnet(google::cloud::edgenetwork::v1::UpdateSubnetRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::UpdateSubnet(
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteSubnet(
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListInterconnects(google::cloud::edgenetwork::v1::ListInterconnectsRequest) {  // NOLINT
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListInterconnects(
+    google::cloud::edgenetwork::v1::ListInterconnectsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetInterconnect(google::cloud::edgenetwork::v1::GetInterconnectRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetInterconnect(
+    google::cloud::edgenetwork::v1::GetInterconnectRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::DiagnoseInterconnect(google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::DiagnoseInterconnect(
+    google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListInterconnectAttachments(google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest) {  // NOLINT
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListInterconnectAttachments(
+    google::cloud::edgenetwork::v1::
+        ListInterconnectAttachmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetInterconnectAttachment(google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetInterconnectAttachment(
+    google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::CreateInterconnectAttachment(google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&) {
+Idempotency
+EdgeNetworkConnectionIdempotencyPolicy::CreateInterconnectAttachment(
+    google::cloud::edgenetwork::v1::
+        CreateInterconnectAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteInterconnectAttachment(google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&) {
+Idempotency
+EdgeNetworkConnectionIdempotencyPolicy::DeleteInterconnectAttachment(
+    google::cloud::edgenetwork::v1::
+        DeleteInterconnectAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListRouters(google::cloud::edgenetwork::v1::ListRoutersRequest) {  // NOLINT
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListRouters(
+    google::cloud::edgenetwork::v1::ListRoutersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetRouter(google::cloud::edgenetwork::v1::GetRouterRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetRouter(
+    google::cloud::edgenetwork::v1::GetRouterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::DiagnoseRouter(google::cloud::edgenetwork::v1::DiagnoseRouterRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::DiagnoseRouter(
+    google::cloud::edgenetwork::v1::DiagnoseRouterRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::CreateRouter(google::cloud::edgenetwork::v1::CreateRouterRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::CreateRouter(
+    google::cloud::edgenetwork::v1::CreateRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::UpdateRouter(google::cloud::edgenetwork::v1::UpdateRouterRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::UpdateRouter(
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteRouter(
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EdgeNetworkConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<EdgeNetworkConnectionIdempotencyPolicy>
-    MakeDefaultEdgeNetworkConnectionIdempotencyPolicy() {
+MakeDefaultEdgeNetworkConnectionIdempotencyPolicy() {
   return std::make_unique<EdgeNetworkConnectionIdempotencyPolicy>();
 }
 

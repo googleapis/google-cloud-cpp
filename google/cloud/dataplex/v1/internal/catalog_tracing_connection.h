@@ -36,194 +36,208 @@ class CatalogServiceTracingConnection
   ~CatalogServiceTracingConnection() override = default;
 
   explicit CatalogServiceTracingConnection(
-    std::shared_ptr<dataplex_v1::CatalogServiceConnection> child);
+      std::shared_ptr<dataplex_v1::CatalogServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  CreateEntryType(google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) override;
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> CreateEntryType(
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateEntryType(NoAwaitTag,
-      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  CreateEntryType(
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> CreateEntryType(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  UpdateEntryType(google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) override;
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateEntryType(NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  UpdateEntryType(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType(google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteEntryType(NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType(
-      google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::dataplex::v1::EntryType>
-  ListEntryTypes(google::cloud::dataplex::v1::ListEntryTypesRequest request) override;
-
-  StatusOr<google::cloud::dataplex::v1::EntryType>
-  GetEntryType(google::cloud::dataplex::v1::GetEntryTypeRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  CreateAspectType(google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateAspectType(NoAwaitTag,
-      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  CreateAspectType(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  UpdateAspectType(google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateAspectType(NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  UpdateAspectType(
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType(google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) override;
+  DeleteEntryType(google::cloud::dataplex::v1::DeleteEntryTypeRequest const&
+                      request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteAspectType(NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType(
-      google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::dataplex::v1::AspectType>
-  ListAspectTypes(google::cloud::dataplex::v1::ListAspectTypesRequest request) override;
-
-  StatusOr<google::cloud::dataplex::v1::AspectType>
-  GetAspectType(google::cloud::dataplex::v1::GetAspectTypeRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  CreateEntryGroup(google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateEntryGroup(NoAwaitTag,
-      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  CreateEntryGroup(
-      google::longrunning::Operation const& operation) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  UpdateEntryGroup(google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateEntryGroup(NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  UpdateEntryGroup(
-      google::longrunning::Operation const& operation) override;
+  StatusOr<google::longrunning::Operation> DeleteEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup(google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) override;
+  DeleteEntryType(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteEntryGroup(NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) override;
+  StreamRange<google::cloud::dataplex::v1::EntryType> ListEntryTypes(
+      google::cloud::dataplex::v1::ListEntryTypesRequest request) override;
+
+  StatusOr<google::cloud::dataplex::v1::EntryType> GetEntryType(
+      google::cloud::dataplex::v1::GetEntryTypeRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> CreateAspectType(
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> CreateAspectType(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup(
+  DeleteAspectType(google::cloud::dataplex::v1::DeleteAspectTypeRequest const&
+                       request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteAspectType(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::dataplex::v1::AspectType> ListAspectTypes(
+      google::cloud::dataplex::v1::ListAspectTypesRequest request) override;
+
+  StatusOr<google::cloud::dataplex::v1::AspectType> GetAspectType(
+      google::cloud::dataplex::v1::GetAspectTypeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> CreateEntryGroup(
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> CreateEntryGroup(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::dataplex::v1::EntryGroup>
-  ListEntryGroups(google::cloud::dataplex::v1::ListEntryGroupsRequest request) override;
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dataplex::v1::EntryGroup>
-  GetEntryGroup(google::cloud::dataplex::v1::GetEntryGroupRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  CreateEntry(google::cloud::dataplex::v1::CreateEntryRequest const& request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  UpdateEntry(google::cloud::dataplex::v1::UpdateEntryRequest const& request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  DeleteEntry(google::cloud::dataplex::v1::DeleteEntryRequest const& request) override;
-
-  StreamRange<google::cloud::dataplex::v1::Entry>
-  ListEntries(google::cloud::dataplex::v1::ListEntriesRequest request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  GetEntry(google::cloud::dataplex::v1::GetEntryRequest const& request) override;
-
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  LookupEntry(google::cloud::dataplex::v1::LookupEntryRequest const& request) override;
-
-  StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
-  SearchEntries(google::cloud::dataplex::v1::SearchEntriesRequest request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
-  CreateMetadataJob(google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateMetadataJob(NoAwaitTag,
-      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) override;
-
-  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
-  CreateMetadataJob(
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::dataplex::v1::MetadataJob>
-  GetMetadataJob(google::cloud::dataplex::v1::GetMetadataJobRequest const& request) override;
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteEntryGroup(google::cloud::dataplex::v1::DeleteEntryGroupRequest const&
+                       request) override;
 
-  StreamRange<google::cloud::dataplex::v1::MetadataJob>
-  ListMetadataJobs(google::cloud::dataplex::v1::ListMetadataJobsRequest request) override;
+  StatusOr<google::longrunning::Operation> DeleteEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request)
+      override;
 
-  Status
-  CancelMetadataJob(google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) override;
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteEntryGroup(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::dataplex::v1::EntryGroup> ListEntryGroups(
+      google::cloud::dataplex::v1::ListEntryGroupsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::EntryGroup> GetEntryGroup(
+      google::cloud::dataplex::v1::GetEntryGroupRequest const& request)
+      override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::Entry> CreateEntry(
+      google::cloud::dataplex::v1::CreateEntryRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::Entry> UpdateEntry(
+      google::cloud::dataplex::v1::UpdateEntryRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::Entry> DeleteEntry(
+      google::cloud::dataplex::v1::DeleteEntryRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::cloud::dataplex::v1::Entry> ListEntries(
+      google::cloud::dataplex::v1::ListEntriesRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::Entry> GetEntry(
+      google::cloud::dataplex::v1::GetEntryRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
+      google::cloud::dataplex::v1::LookupEntryRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  StreamRange<google::cloud::dataplex::v1::SearchEntriesResult> SearchEntries(
+      google::cloud::dataplex::v1::SearchEntriesRequest request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request)
+      override;
+
+  StreamRange<google::cloud::dataplex::v1::MetadataJob> ListMetadataJobs(
+      google::cloud::dataplex::v1::ListMetadataJobsRequest request) override;
+
+  Status CancelMetadataJob(
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request)
+      override;
+
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dataplex_v1::CatalogServiceConnection> child_;

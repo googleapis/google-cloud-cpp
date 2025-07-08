@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_V1_SERVICE_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_V1_SERVICE_MANAGER_CONNECTION_H
 
+#include "google/cloud/servicemanagement/v1/internal/service_manager_retry_traits.h"
+#include "google/cloud/servicemanagement/v1/service_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/servicemanagement/v1/internal/service_manager_retry_traits.h"
-#include "google/cloud/servicemanagement/v1/service_manager_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -56,7 +56,8 @@ class ServiceManagerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ServiceManagerLimitedErrorCountRetryPolicy : public ServiceManagerRetryPolicy {
+class ServiceManagerLimitedErrorCountRetryPolicy
+    : public ServiceManagerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class ServiceManagerLimitedErrorCountRetryPolicy : public ServiceManagerRetryPol
    *     @p maximum_failures == 0.
    */
   explicit ServiceManagerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ServiceManagerLimitedErrorCountRetryPolicy(
       ServiceManagerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ServiceManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServiceManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ServiceManagerLimitedErrorCountRetryPolicy(
       ServiceManagerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ServiceManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServiceManagerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class ServiceManagerLimitedErrorCountRetryPolicy : public ServiceManagerRetryPol
   using BaseType = ServiceManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<servicemanagement_v1_internal::ServiceManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      servicemanagement_v1_internal::ServiceManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class ServiceManagerLimitedTimeRetryPolicy : public ServiceManagerRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ServiceManagerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ServiceManagerLimitedTimeRetryPolicy(ServiceManagerLimitedTimeRetryPolicy&& rhs) noexcept
-    : ServiceManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ServiceManagerLimitedTimeRetryPolicy(ServiceManagerLimitedTimeRetryPolicy const& rhs) noexcept
-    : ServiceManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceManagerLimitedTimeRetryPolicy(
+      ServiceManagerLimitedTimeRetryPolicy&& rhs) noexcept
+      : ServiceManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServiceManagerLimitedTimeRetryPolicy(
+      ServiceManagerLimitedTimeRetryPolicy const& rhs) noexcept
+      : ServiceManagerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class ServiceManagerLimitedTimeRetryPolicy : public ServiceManagerRetryPolicy {
   using BaseType = ServiceManagerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<servicemanagement_v1_internal::ServiceManagerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      servicemanagement_v1_internal::ServiceManagerRetryTraits>
+      impl_;
 };
 
 /**
@@ -183,82 +190,113 @@ class ServiceManagerConnection {
   ListServices(google::api::servicemanagement::v1::ListServicesRequest request);
 
   virtual StatusOr<google::api::servicemanagement::v1::ManagedService>
-  GetService(google::api::servicemanagement::v1::GetServiceRequest const& request);
+  GetService(
+      google::api::servicemanagement::v1::GetServiceRequest const& request);
 
   virtual future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(google::api::servicemanagement::v1::CreateServiceRequest const& request);
+  CreateService(
+      google::api::servicemanagement::v1::CreateServiceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateService(NoAwaitTag, google::api::servicemanagement::v1::CreateServiceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateService(
+      NoAwaitTag,
+      google::api::servicemanagement::v1::CreateServiceRequest const& request);
 
   virtual future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService( google::longrunning::Operation const& operation);
+  CreateService(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(google::api::servicemanagement::v1::DeleteServiceRequest const& request);
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
+  DeleteService(
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteService(NoAwaitTag, google::api::servicemanagement::v1::DeleteServiceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteService(
+      NoAwaitTag,
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request);
 
-  virtual future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
+  DeleteService(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(google::api::servicemanagement::v1::UndeleteServiceRequest const& request);
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+  UndeleteService(
+      google::api::servicemanagement::v1::UndeleteServiceRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UndeleteService(NoAwaitTag, google::api::servicemanagement::v1::UndeleteServiceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UndeleteService(
+      NoAwaitTag,
+      google::api::servicemanagement::v1::UndeleteServiceRequest const&
+          request);
 
-  virtual future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+  UndeleteService(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::api::Service>
-  ListServiceConfigs(google::api::servicemanagement::v1::ListServiceConfigsRequest request);
+  virtual StreamRange<google::api::Service> ListServiceConfigs(
+      google::api::servicemanagement::v1::ListServiceConfigsRequest request);
 
-  virtual StatusOr<google::api::Service>
-  GetServiceConfig(google::api::servicemanagement::v1::GetServiceConfigRequest const& request);
+  virtual StatusOr<google::api::Service> GetServiceConfig(
+      google::api::servicemanagement::v1::GetServiceConfigRequest const&
+          request);
 
-  virtual StatusOr<google::api::Service>
-  CreateServiceConfig(google::api::servicemanagement::v1::CreateServiceConfigRequest const& request);
+  virtual StatusOr<google::api::Service> CreateServiceConfig(
+      google::api::servicemanagement::v1::CreateServiceConfigRequest const&
+          request);
 
-  virtual future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request);
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  SubmitConfigSource(
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  SubmitConfigSource(NoAwaitTag, google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> SubmitConfigSource(
+      NoAwaitTag,
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request);
 
-  virtual future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  SubmitConfigSource(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::api::servicemanagement::v1::Rollout>
-  ListServiceRollouts(google::api::servicemanagement::v1::ListServiceRolloutsRequest request);
+  ListServiceRollouts(
+      google::api::servicemanagement::v1::ListServiceRolloutsRequest request);
 
   virtual StatusOr<google::api::servicemanagement::v1::Rollout>
-  GetServiceRollout(google::api::servicemanagement::v1::GetServiceRolloutRequest const& request);
+  GetServiceRollout(
+      google::api::servicemanagement::v1::GetServiceRolloutRequest const&
+          request);
 
   virtual future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout(google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request);
+  CreateServiceRollout(
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateServiceRollout(NoAwaitTag, google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateServiceRollout(
+      NoAwaitTag,
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request);
 
   virtual future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout( google::longrunning::Operation const& operation);
+  CreateServiceRollout(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
-  GenerateConfigReport(google::api::servicemanagement::v1::GenerateConfigReportRequest const& request);
+  virtual StatusOr<
+      google::api::servicemanagement::v1::GenerateConfigReportResponse>
+  GenerateConfigReport(
+      google::api::servicemanagement::v1::GenerateConfigReportRequest const&
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 };
 
 /**

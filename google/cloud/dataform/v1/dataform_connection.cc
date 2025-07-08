@@ -17,14 +17,14 @@
 // source: google/cloud/dataform/v1/dataform.proto
 
 #include "google/cloud/dataform/v1/dataform_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dataform/v1/dataform_options.h"
 #include "google/cloud/dataform/v1/internal/dataform_connection_impl.h"
 #include "google/cloud/dataform/v1/internal/dataform_option_defaults.h"
 #include "google/cloud/dataform/v1/internal/dataform_stub_factory.h"
 #include "google/cloud/dataform/v1/internal/dataform_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DataformConnection::~DataformConnection() = default;
 
-StreamRange<google::cloud::dataform::v1::Repository> DataformConnection::ListRepositories(
-    google::cloud::dataform::v1::ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::Repository>
+DataformConnection::ListRepositories(
+    google::cloud::dataform::v1::
+        ListRepositoriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::Repository>>();
 }
@@ -62,8 +64,7 @@ DataformConnection::UpdateRepository(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataformConnection::DeleteRepository(
+Status DataformConnection::DeleteRepository(
     google::cloud::dataform::v1::DeleteRepositoryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -80,21 +81,27 @@ DataformConnection::ReadRepositoryFile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataform::v1::DirectoryEntry> DataformConnection::QueryRepositoryDirectoryContents(
-    google::cloud::dataform::v1::QueryRepositoryDirectoryContentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::DirectoryEntry>
+DataformConnection::QueryRepositoryDirectoryContents(
+    google::cloud::dataform::v1::
+        QueryRepositoryDirectoryContentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::DirectoryEntry>>();
 }
 
-StreamRange<google::cloud::dataform::v1::CommitLogEntry> DataformConnection::FetchRepositoryHistory(
-    google::cloud::dataform::v1::FetchRepositoryHistoryRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::CommitLogEntry>
+DataformConnection::FetchRepositoryHistory(
+    google::cloud::dataform::v1::
+        FetchRepositoryHistoryRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::CommitLogEntry>>();
 }
 
-StatusOr<google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
+StatusOr<
+    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusResponse>
 DataformConnection::ComputeRepositoryAccessTokenStatus(
-    google::cloud::dataform::v1::ComputeRepositoryAccessTokenStatusRequest const&) {
+    google::cloud::dataform::v1::
+        ComputeRepositoryAccessTokenStatusRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -104,8 +111,10 @@ DataformConnection::FetchRemoteBranches(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataform::v1::Workspace> DataformConnection::ListWorkspaces(
-    google::cloud::dataform::v1::ListWorkspacesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::Workspace>
+DataformConnection::ListWorkspaces(
+    google::cloud::dataform::v1::
+        ListWorkspacesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::Workspace>>();
 }
@@ -122,8 +131,7 @@ DataformConnection::CreateWorkspace(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataformConnection::DeleteWorkspace(
+Status DataformConnection::DeleteWorkspace(
     google::cloud::dataform::v1::DeleteWorkspaceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -176,14 +184,18 @@ DataformConnection::FetchFileDiff(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataform::v1::DirectoryEntry> DataformConnection::QueryDirectoryContents(
-    google::cloud::dataform::v1::QueryDirectoryContentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::DirectoryEntry>
+DataformConnection::QueryDirectoryContents(
+    google::cloud::dataform::v1::
+        QueryDirectoryContentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::DirectoryEntry>>();
 }
 
-StreamRange<google::cloud::dataform::v1::SearchResult> DataformConnection::SearchFiles(
-    google::cloud::dataform::v1::SearchFilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::SearchResult>
+DataformConnection::SearchFiles(
+    google::cloud::dataform::v1::
+        SearchFilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::SearchResult>>();
 }
@@ -230,8 +242,10 @@ DataformConnection::WriteFile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataform::v1::ReleaseConfig> DataformConnection::ListReleaseConfigs(
-    google::cloud::dataform::v1::ListReleaseConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::ReleaseConfig>
+DataformConnection::ListReleaseConfigs(
+    google::cloud::dataform::v1::
+        ListReleaseConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::ReleaseConfig>>();
 }
@@ -254,14 +268,15 @@ DataformConnection::UpdateReleaseConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataformConnection::DeleteReleaseConfig(
+Status DataformConnection::DeleteReleaseConfig(
     google::cloud::dataform::v1::DeleteReleaseConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataform::v1::CompilationResult> DataformConnection::ListCompilationResults(
-    google::cloud::dataform::v1::ListCompilationResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::CompilationResult>
+DataformConnection::ListCompilationResults(
+    google::cloud::dataform::v1::
+        ListCompilationResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::CompilationResult>>();
 }
@@ -278,14 +293,18 @@ DataformConnection::CreateCompilationResult(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataform::v1::CompilationResultAction> DataformConnection::QueryCompilationResultActions(
-    google::cloud::dataform::v1::QueryCompilationResultActionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::CompilationResultAction>
+DataformConnection::QueryCompilationResultActions(
+    google::cloud::dataform::v1::
+        QueryCompilationResultActionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::CompilationResultAction>>();
 }
 
-StreamRange<google::cloud::dataform::v1::WorkflowConfig> DataformConnection::ListWorkflowConfigs(
-    google::cloud::dataform::v1::ListWorkflowConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::WorkflowConfig>
+DataformConnection::ListWorkflowConfigs(
+    google::cloud::dataform::v1::
+        ListWorkflowConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::WorkflowConfig>>();
 }
@@ -308,14 +327,15 @@ DataformConnection::UpdateWorkflowConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataformConnection::DeleteWorkflowConfig(
+Status DataformConnection::DeleteWorkflowConfig(
     google::cloud::dataform::v1::DeleteWorkflowConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataform::v1::WorkflowInvocation> DataformConnection::ListWorkflowInvocations(
-    google::cloud::dataform::v1::ListWorkflowInvocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::WorkflowInvocation>
+DataformConnection::ListWorkflowInvocations(
+    google::cloud::dataform::v1::
+        ListWorkflowInvocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::WorkflowInvocation>>();
 }
@@ -332,8 +352,7 @@ DataformConnection::CreateWorkflowInvocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DataformConnection::DeleteWorkflowInvocation(
+Status DataformConnection::DeleteWorkflowInvocation(
     google::cloud::dataform::v1::DeleteWorkflowInvocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -344,44 +363,43 @@ DataformConnection::CancelWorkflowInvocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction> DataformConnection::QueryWorkflowInvocationActions(
-    google::cloud::dataform::v1::QueryWorkflowInvocationActionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>
+DataformConnection::QueryWorkflowInvocationActions(
+    google::cloud::dataform::v1::
+        QueryWorkflowInvocationActionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataform::v1::WorkflowInvocationAction>>();
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformConnection::GetConfig(
+StatusOr<google::cloud::dataform::v1::Config> DataformConnection::GetConfig(
     google::cloud::dataform::v1::GetConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::dataform::v1::Config>
-DataformConnection::UpdateConfig(
+StatusOr<google::cloud::dataform::v1::Config> DataformConnection::UpdateConfig(
     google::cloud::dataform::v1::UpdateConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> DataformConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+DataformConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-DataformConnection::GetLocation(
+StatusOr<google::cloud::location::Location> DataformConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-DataformConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> DataformConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-DataformConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> DataformConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -392,20 +410,18 @@ DataformConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DataformConnection> MakeDataformConnection(
-    Options options) {
+std::shared_ptr<DataformConnection> MakeDataformConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DataformPolicyOptionList>(options, __func__);
-  options = dataform_v1_internal::DataformDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 DataformPolicyOptionList>(options, __func__);
+  options = dataform_v1_internal::DataformDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = dataform_v1_internal::CreateDefaultDataformStub(
-    std::move(auth), options);
+  auto stub =
+      dataform_v1_internal::CreateDefaultDataformStub(std::move(auth), options);
   return dataform_v1_internal::MakeDataformTracingConnection(
       std::make_shared<dataform_v1_internal::DataformConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

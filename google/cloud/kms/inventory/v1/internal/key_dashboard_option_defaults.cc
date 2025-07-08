@@ -17,10 +17,10 @@
 // source: google/cloud/kms/inventory/v1/key_dashboard_service.proto
 
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/kms/inventory/v1/key_dashboard_connection.h"
 #include "google/cloud/kms/inventory/v1/key_dashboard_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,31 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options KeyDashboardServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_KEY_DASHBOARD_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_KEY_DASHBOARD_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_KEY_DASHBOARD_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_KEY_DASHBOARD_SERVICE_AUTHORITY",
       "kmsinventory.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>()) {
     options.set<kms_inventory_v1::KeyDashboardServiceRetryPolicyOption>(
         kms_inventory_v1::KeyDashboardServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>()) {
     options.set<kms_inventory_v1::KeyDashboardServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<kms_inventory_v1::KeyDashboardServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<kms_inventory_v1::KeyDashboardServiceConnectionIdempotencyPolicyOption>(
-        kms_inventory_v1::MakeDefaultKeyDashboardServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<kms_inventory_v1::
+                    KeyDashboardServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        kms_inventory_v1::KeyDashboardServiceConnectionIdempotencyPolicyOption>(
+        kms_inventory_v1::
+            MakeDefaultKeyDashboardServiceConnectionIdempotencyPolicy());
   }
 
   return options;

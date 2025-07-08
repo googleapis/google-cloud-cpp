@@ -47,28 +47,38 @@ class MockCloudQuotasConnection : public cloudquotas_v1::CloudQuotasConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::api::cloudquotas::v1::QuotaInfo>),
-  ListQuotaInfos,
-  (google::api::cloudquotas::v1::ListQuotaInfosRequest request), (override));
+              ListQuotaInfos,
+              (google::api::cloudquotas::v1::ListQuotaInfosRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::api::cloudquotas::v1::QuotaInfo>,
-  GetQuotaInfo,
-  (google::api::cloudquotas::v1::GetQuotaInfoRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::api::cloudquotas::v1::QuotaInfo>, GetQuotaInfo,
+      (google::api::cloudquotas::v1::GetQuotaInfoRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::api::cloudquotas::v1::QuotaPreference>),
-  ListQuotaPreferences,
-  (google::api::cloudquotas::v1::ListQuotaPreferencesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::api::cloudquotas::v1::QuotaPreference>),
+      ListQuotaPreferences,
+      (google::api::cloudquotas::v1::ListQuotaPreferencesRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::api::cloudquotas::v1::QuotaPreference>,
+      GetQuotaPreference,
+      (google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::api::cloudquotas::v1::QuotaPreference>,
-  GetQuotaPreference,
-  (google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request), (override));
+              CreateQuotaPreference,
+              (google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&
+                   request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::api::cloudquotas::v1::QuotaPreference>,
-  CreateQuotaPreference,
-  (google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::api::cloudquotas::v1::QuotaPreference>,
-  UpdateQuotaPreference,
-  (google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request), (override));
+              UpdateQuotaPreference,
+              (google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,143 +26,176 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DatastreamConnectionIdempotencyPolicy::~DatastreamConnectionIdempotencyPolicy() = default;
+DatastreamConnectionIdempotencyPolicy::
+    ~DatastreamConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DatastreamConnectionIdempotencyPolicy>
 DatastreamConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DatastreamConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::ListConnectionProfiles(google::cloud::datastream::v1::ListConnectionProfilesRequest) {  // NOLINT
+Idempotency DatastreamConnectionIdempotencyPolicy::ListConnectionProfiles(
+    google::cloud::datastream::v1::ListConnectionProfilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::GetConnectionProfile(google::cloud::datastream::v1::GetConnectionProfileRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::GetConnectionProfile(
+    google::cloud::datastream::v1::GetConnectionProfileRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::CreateConnectionProfile(google::cloud::datastream::v1::CreateConnectionProfileRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::CreateConnectionProfile(
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::UpdateConnectionProfile(google::cloud::datastream::v1::UpdateConnectionProfileRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::UpdateConnectionProfile(
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::DeleteConnectionProfile(google::cloud::datastream::v1::DeleteConnectionProfileRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::DeleteConnectionProfile(
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::DiscoverConnectionProfile(google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::DiscoverConnectionProfile(
+    google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::ListStreams(google::cloud::datastream::v1::ListStreamsRequest) {  // NOLINT
+Idempotency DatastreamConnectionIdempotencyPolicy::ListStreams(
+    google::cloud::datastream::v1::ListStreamsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::GetStream(google::cloud::datastream::v1::GetStreamRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::GetStream(
+    google::cloud::datastream::v1::GetStreamRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::CreateStream(google::cloud::datastream::v1::CreateStreamRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::CreateStream(
+    google::cloud::datastream::v1::CreateStreamRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::UpdateStream(google::cloud::datastream::v1::UpdateStreamRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::UpdateStream(
+    google::cloud::datastream::v1::UpdateStreamRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::DeleteStream(google::cloud::datastream::v1::DeleteStreamRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::DeleteStream(
+    google::cloud::datastream::v1::DeleteStreamRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::RunStream(google::cloud::datastream::v1::RunStreamRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::RunStream(
+    google::cloud::datastream::v1::RunStreamRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::GetStreamObject(google::cloud::datastream::v1::GetStreamObjectRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::GetStreamObject(
+    google::cloud::datastream::v1::GetStreamObjectRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::LookupStreamObject(google::cloud::datastream::v1::LookupStreamObjectRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::LookupStreamObject(
+    google::cloud::datastream::v1::LookupStreamObjectRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::ListStreamObjects(google::cloud::datastream::v1::ListStreamObjectsRequest) {  // NOLINT
+Idempotency DatastreamConnectionIdempotencyPolicy::ListStreamObjects(
+    google::cloud::datastream::v1::ListStreamObjectsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::StartBackfillJob(google::cloud::datastream::v1::StartBackfillJobRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::StartBackfillJob(
+    google::cloud::datastream::v1::StartBackfillJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::StopBackfillJob(google::cloud::datastream::v1::StopBackfillJobRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::StopBackfillJob(
+    google::cloud::datastream::v1::StopBackfillJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::FetchStaticIps(google::cloud::datastream::v1::FetchStaticIpsRequest) {  // NOLINT
+Idempotency DatastreamConnectionIdempotencyPolicy::FetchStaticIps(
+    google::cloud::datastream::v1::FetchStaticIpsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::CreatePrivateConnection(google::cloud::datastream::v1::CreatePrivateConnectionRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::CreatePrivateConnection(
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::GetPrivateConnection(google::cloud::datastream::v1::GetPrivateConnectionRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::GetPrivateConnection(
+    google::cloud::datastream::v1::GetPrivateConnectionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::ListPrivateConnections(google::cloud::datastream::v1::ListPrivateConnectionsRequest) {  // NOLINT
+Idempotency DatastreamConnectionIdempotencyPolicy::ListPrivateConnections(
+    google::cloud::datastream::v1::ListPrivateConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::DeletePrivateConnection(google::cloud::datastream::v1::DeletePrivateConnectionRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::DeletePrivateConnection(
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::CreateRoute(google::cloud::datastream::v1::CreateRouteRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::CreateRoute(
+    google::cloud::datastream::v1::CreateRouteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::GetRoute(google::cloud::datastream::v1::GetRouteRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::GetRoute(
+    google::cloud::datastream::v1::GetRouteRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::ListRoutes(google::cloud::datastream::v1::ListRoutesRequest) {  // NOLINT
+Idempotency DatastreamConnectionIdempotencyPolicy::ListRoutes(
+    google::cloud::datastream::v1::ListRoutesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::DeleteRoute(
+    google::cloud::datastream::v1::DeleteRouteRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DatastreamConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency DatastreamConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DatastreamConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency DatastreamConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DatastreamConnectionIdempotencyPolicy>
-    MakeDefaultDatastreamConnectionIdempotencyPolicy() {
+MakeDefaultDatastreamConnectionIdempotencyPolicy() {
   return std::make_unique<DatastreamConnectionIdempotencyPolicy>();
 }
 

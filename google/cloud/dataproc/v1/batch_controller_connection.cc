@@ -17,14 +17,14 @@
 // source: google/cloud/dataproc/v1/batches.proto
 
 #include "google/cloud/dataproc/v1/batch_controller_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dataproc/v1/batch_controller_options.h"
 #include "google/cloud/dataproc/v1/internal/batch_controller_connection_impl.h"
 #include "google/cloud/dataproc/v1/internal/batch_controller_option_defaults.h"
 #include "google/cloud/dataproc/v1/internal/batch_controller_stub_factory.h"
 #include "google/cloud/dataproc/v1/internal/batch_controller_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -42,24 +42,21 @@ future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerConnection::CreateBatch(
     google::cloud::dataproc::v1::CreateBatchRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataproc::v1::Batch>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataproc::v1::Batch>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-BatchControllerConnection::CreateBatch(
-    NoAwaitTag,
-    google::cloud::dataproc::v1::CreateBatchRequest const&) {
+StatusOr<google::longrunning::Operation> BatchControllerConnection::CreateBatch(
+    NoAwaitTag, google::cloud::dataproc::v1::CreateBatchRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
-BatchControllerConnection::CreateBatch(
-    google::longrunning::Operation const&) {
+BatchControllerConnection::CreateBatch(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dataproc::v1::Batch>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dataproc::v1::Batch>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch>
@@ -68,26 +65,25 @@ BatchControllerConnection::GetBatch(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataproc::v1::Batch> BatchControllerConnection::ListBatches(
-    google::cloud::dataproc::v1::ListBatchesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataproc::v1::Batch>
+BatchControllerConnection::ListBatches(
+    google::cloud::dataproc::v1::
+        ListBatchesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::Batch>>();
 }
 
-Status
-BatchControllerConnection::DeleteBatch(
+Status BatchControllerConnection::DeleteBatch(
     google::cloud::dataproc::v1::DeleteBatchRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-BatchControllerConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> BatchControllerConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-BatchControllerConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> BatchControllerConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -98,8 +94,10 @@ BatchControllerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> BatchControllerConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+BatchControllerConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -110,14 +108,12 @@ BatchControllerConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-BatchControllerConnection::DeleteOperation(
+Status BatchControllerConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-BatchControllerConnection::CancelOperation(
+Status BatchControllerConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -125,17 +121,18 @@ BatchControllerConnection::CancelOperation(
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      BatchControllerPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 BatchControllerPolicyOptionList>(options,
+                                                                  __func__);
   options = dataproc_v1_internal::BatchControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataproc_v1_internal::CreateDefaultBatchControllerStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dataproc_v1_internal::MakeBatchControllerTracingConnection(
       std::make_shared<dataproc_v1_internal::BatchControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(

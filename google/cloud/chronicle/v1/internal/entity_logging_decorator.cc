@@ -31,20 +31,16 @@ namespace chronicle_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EntityServiceLogging::EntityServiceLogging(
-    std::shared_ptr<EntityServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<EntityServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 EntityServiceLogging::GetWatchlist(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::chronicle::v1::GetWatchlistRequest const& request) {
         return child_->GetWatchlist(context, options, request);
       },
@@ -53,13 +49,12 @@ EntityServiceLogging::GetWatchlist(
 
 StatusOr<google::cloud::chronicle::v1::ListWatchlistsResponse>
 EntityServiceLogging::ListWatchlists(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListWatchlistsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::ListWatchlistsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::chronicle::v1::ListWatchlistsRequest const& request) {
         return child_->ListWatchlists(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +62,12 @@ EntityServiceLogging::ListWatchlists(
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 EntityServiceLogging::CreateWatchlist(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::chronicle::v1::CreateWatchlistRequest const& request) {
         return child_->CreateWatchlist(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +75,24 @@ EntityServiceLogging::CreateWatchlist(
 
 StatusOr<google::cloud::chronicle::v1::Watchlist>
 EntityServiceLogging::UpdateWatchlist(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::chronicle::v1::UpdateWatchlistRequest const& request) {
         return child_->UpdateWatchlist(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EntityServiceLogging::DeleteWatchlist(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EntityServiceLogging::DeleteWatchlist(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::chronicle::v1::DeleteWatchlistRequest const& request) {
         return child_->DeleteWatchlist(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,54 +100,43 @@ EntityServiceLogging::DeleteWatchlist(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 EntityServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-EntityServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> EntityServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EntityServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EntityServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-EntityServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status EntityServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

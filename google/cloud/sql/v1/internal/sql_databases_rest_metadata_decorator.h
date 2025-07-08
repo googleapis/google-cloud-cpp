@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_DATABASES_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_DATABASES_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_databases_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_databases_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_databases.pb.h>
 #include <memory>
@@ -41,27 +41,37 @@ class SqlDatabasesServiceRestMetadata : public SqlDatabasesServiceRestStub {
 
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesDeleteRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::Database> Get(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesGetRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesGetRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesInsertRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::DatabasesListResponse> List(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesListRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesListRequest const& request) override;
 
   StatusOr<google::cloud::sql::v1::Operation> Patch(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request)
+      override;
 
   StatusOr<google::cloud::sql::v1::Operation> Update(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) override;
+      Options const& options,
+      google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request)
+      override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -36,26 +36,31 @@ class SnapshotSettingsTracingConnection
   ~SnapshotSettingsTracingConnection() override = default;
 
   explicit SnapshotSettingsTracingConnection(
-    std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection> child);
+      std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
-  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request) override;
+  GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::
+                          GetSnapshotSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request) override;
+  PatchSnapshotSettings(
+      google::cloud::cpp::compute::snapshot_settings::v1::
+          PatchSnapshotSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSnapshotSettings(NoAwaitTag,
-      google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
+      NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::
+                      PatchSnapshotSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSnapshotSettings(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection> child_;
+  std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -68,7 +73,8 @@ class SnapshotSettingsTracingConnection
  */
 std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection>
 MakeSnapshotSettingsTracingConnection(
-    std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection> conn);
+    std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_snapshot_settings_v1_internal

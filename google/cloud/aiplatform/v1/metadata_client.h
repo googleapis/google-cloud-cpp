@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MetadataServiceClient {
  public:
-  explicit MetadataServiceClient(std::shared_ptr<MetadataServiceConnection> connection, Options opts = {});
+  explicit MetadataServiceClient(
+      std::shared_ptr<MetadataServiceConnection> connection, Options opts = {});
   ~MetadataServiceClient();
 
   ///@{
@@ -77,10 +78,12 @@ class MetadataServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MetadataServiceClient const& a, MetadataServiceClient const& b) {
+  friend bool operator==(MetadataServiceClient const& a,
+                         MetadataServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MetadataServiceClient const& a, MetadataServiceClient const& b) {
+  friend bool operator!=(MetadataServiceClient const& a,
+                         MetadataServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -126,7 +129,10 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-  CreateMetadataStore(std::string const& parent, google::cloud::aiplatform::v1::MetadataStore const& metadata_store, std::string const& metadata_store_id, Options opts = {});
+  CreateMetadataStore(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
+      std::string const& metadata_store_id, Options opts = {});
 
   // clang-format off
   ///
@@ -139,8 +145,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMetadataStore(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::MetadataStore const& metadata_store, std::string const& metadata_store_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMetadataStore(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
+      std::string const& metadata_store_id, Options opts = {});
 
   // clang-format off
   ///
@@ -177,7 +185,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-  CreateMetadataStore(google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request, Options opts = {});
+  CreateMetadataStore(
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +200,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMetadataStore(NoAwaitTag, google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMetadataStore(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -203,7 +215,8 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-  CreateMetadataStore(google::longrunning::Operation const& operation, Options opts = {});
+  CreateMetadataStore(google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -229,8 +242,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.MetadataStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_store.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::MetadataStore>
-  GetMetadataStore(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::MetadataStore> GetMetadataStore(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -259,8 +272,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.MetadataStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_store.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::MetadataStore>
-  GetMetadataStore(google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::MetadataStore> GetMetadataStore(
+      google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -295,8 +309,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.MetadataStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_store.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::MetadataStore>
-  ListMetadataStores(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::MetadataStore> ListMetadataStores(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -334,8 +348,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.MetadataStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_store.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::MetadataStore>
-  ListMetadataStores(google::cloud::aiplatform::v1::ListMetadataStoresRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::MetadataStore> ListMetadataStores(
+      google::cloud::aiplatform::v1::ListMetadataStoresRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -369,7 +384,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.DeleteMetadataStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L480}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+  future<StatusOr<
+      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
   DeleteMetadataStore(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -383,8 +399,8 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteMetadataStore(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteMetadataStore(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -421,8 +437,11 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.DeleteMetadataStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L480}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-  DeleteMetadataStore(google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+  DeleteMetadataStore(
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -435,8 +454,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteMetadataStore(NoAwaitTag, google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteMetadataStore(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -447,8 +468,10 @@ class MetadataServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-  DeleteMetadataStore(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+  DeleteMetadataStore(google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -483,8 +506,10 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.CreateArtifactRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L504}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Artifact>
-  CreateArtifact(std::string const& parent, google::cloud::aiplatform::v1::Artifact const& artifact, std::string const& artifact_id, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Artifact> CreateArtifact(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Artifact const& artifact,
+      std::string const& artifact_id, Options opts = {});
 
   // clang-format off
   ///
@@ -513,8 +538,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.CreateArtifactRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L504}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Artifact>
-  CreateArtifact(google::cloud::aiplatform::v1::CreateArtifactRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Artifact> CreateArtifact(
+      google::cloud::aiplatform::v1::CreateArtifactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -540,8 +566,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.GetArtifactRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L531}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Artifact>
-  GetArtifact(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Artifact> GetArtifact(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -570,8 +596,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.GetArtifactRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L531}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Artifact>
-  GetArtifact(google::cloud::aiplatform::v1::GetArtifactRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Artifact> GetArtifact(
+      google::cloud::aiplatform::v1::GetArtifactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -606,8 +633,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.ListArtifactsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L545}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Artifact>
-  ListArtifacts(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Artifact> ListArtifacts(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -645,8 +672,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.ListArtifactsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L545}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Artifact>
-  ListArtifacts(google::cloud::aiplatform::v1::ListArtifactsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Artifact> ListArtifacts(
+      google::cloud::aiplatform::v1::ListArtifactsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -675,8 +703,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateArtifactRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L626}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Artifact>
-  UpdateArtifact(google::cloud::aiplatform::v1::Artifact const& artifact, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Artifact> UpdateArtifact(
+      google::cloud::aiplatform::v1::Artifact const& artifact,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -705,8 +734,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateArtifactRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L626}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Artifact>
-  UpdateArtifact(google::cloud::aiplatform::v1::UpdateArtifactRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Artifact> UpdateArtifact(
+      google::cloud::aiplatform::v1::UpdateArtifactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -753,8 +783,8 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteArtifact(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteArtifact(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -791,7 +821,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteArtifact(google::cloud::aiplatform::v1::DeleteArtifactRequest const& request, Options opts = {});
+  DeleteArtifact(
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -804,8 +836,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteArtifact(NoAwaitTag, google::cloud::aiplatform::v1::DeleteArtifactRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteArtifact(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -817,7 +851,8 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteArtifact(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteArtifact(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -864,8 +899,8 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeArtifacts(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeArtifacts(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -902,7 +937,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-  PurgeArtifacts(google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request, Options opts = {});
+  PurgeArtifacts(
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -915,8 +952,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeArtifacts(NoAwaitTag, google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeArtifacts(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -928,7 +967,8 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-  PurgeArtifacts(google::longrunning::Operation const& operation, Options opts = {});
+  PurgeArtifacts(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -962,8 +1002,10 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.CreateContextRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L709}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Context>
-  CreateContext(std::string const& parent, google::cloud::aiplatform::v1::Context const& context, std::string const& context_id, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Context> CreateContext(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Context const& context,
+      std::string const& context_id, Options opts = {});
 
   // clang-format off
   ///
@@ -992,8 +1034,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.CreateContextRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L709}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Context>
-  CreateContext(google::cloud::aiplatform::v1::CreateContextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Context> CreateContext(
+      google::cloud::aiplatform::v1::CreateContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1019,8 +1062,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.GetContextRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L735}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Context>
-  GetContext(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Context> GetContext(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1049,8 +1092,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.GetContextRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L735}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Context>
-  GetContext(google::cloud::aiplatform::v1::GetContextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Context> GetContext(
+      google::cloud::aiplatform::v1::GetContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1085,8 +1129,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.ListContextsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L749}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Context>
-  ListContexts(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Context> ListContexts(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1124,8 +1168,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.ListContextsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L749}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Context>
-  ListContexts(google::cloud::aiplatform::v1::ListContextsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Context> ListContexts(
+      google::cloud::aiplatform::v1::ListContextsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1154,8 +1199,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateContextRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L834}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Context>
-  UpdateContext(google::cloud::aiplatform::v1::Context const& context, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Context> UpdateContext(
+      google::cloud::aiplatform::v1::Context const& context,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1184,8 +1230,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateContextRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L834}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Context>
-  UpdateContext(google::cloud::aiplatform::v1::UpdateContextRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Context> UpdateContext(
+      google::cloud::aiplatform::v1::UpdateContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1232,8 +1279,8 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteContext(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteContext(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1270,7 +1317,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteContext(google::cloud::aiplatform::v1::DeleteContextRequest const& request, Options opts = {});
+  DeleteContext(
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1283,8 +1332,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteContext(NoAwaitTag, google::cloud::aiplatform::v1::DeleteContextRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteContext(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1296,7 +1347,8 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteContext(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteContext(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1343,8 +1395,8 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeContexts(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeContexts(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1381,7 +1433,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-  PurgeContexts(google::cloud::aiplatform::v1::PurgeContextsRequest const& request, Options opts = {});
+  PurgeContexts(
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1394,8 +1448,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeContexts(NoAwaitTag, google::cloud::aiplatform::v1::PurgeContextsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeContexts(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1407,7 +1463,8 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-  PurgeContexts(google::longrunning::Operation const& operation, Options opts = {});
+  PurgeContexts(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1444,8 +1501,12 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.AddContextArtifactsAndExecutionsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L951}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
-  AddContextArtifactsAndExecutions(std::string const& context, std::vector<std::string> const& artifacts, std::vector<std::string> const& executions, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
+  AddContextArtifactsAndExecutions(std::string const& context,
+                                   std::vector<std::string> const& artifacts,
+                                   std::vector<std::string> const& executions,
+                                   Options opts = {});
 
   // clang-format off
   ///
@@ -1476,8 +1537,12 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.AddContextArtifactsAndExecutionsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L951}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
-  AddContextArtifactsAndExecutions(google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
+  AddContextArtifactsAndExecutions(
+      google::cloud::aiplatform::v1::
+          AddContextArtifactsAndExecutionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1510,7 +1575,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
-  AddContextChildren(std::string const& context, std::vector<std::string> const& child_contexts, Options opts = {});
+  AddContextChildren(std::string const& context,
+                     std::vector<std::string> const& child_contexts,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1544,7 +1611,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
-  AddContextChildren(google::cloud::aiplatform::v1::AddContextChildrenRequest const& request, Options opts = {});
+  AddContextChildren(
+      google::cloud::aiplatform::v1::AddContextChildrenRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1575,7 +1644,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
-  RemoveContextChildren(std::string const& context, std::vector<std::string> const& child_contexts, Options opts = {});
+  RemoveContextChildren(std::string const& context,
+                        std::vector<std::string> const& child_contexts,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -1607,7 +1678,10 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
-  RemoveContextChildren(google::cloud::aiplatform::v1::RemoveContextChildrenRequest const& request, Options opts = {});
+  RemoveContextChildren(
+      google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1671,7 +1745,10 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-  QueryContextLineageSubgraph(google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const& request, Options opts = {});
+  QueryContextLineageSubgraph(
+      google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1707,8 +1784,10 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.Execution]: @googleapis_reference_link{google/cloud/aiplatform/v1/execution.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Execution>
-  CreateExecution(std::string const& parent, google::cloud::aiplatform::v1::Execution const& execution, std::string const& execution_id, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Execution> CreateExecution(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Execution const& execution,
+      std::string const& execution_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1737,8 +1816,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.Execution]: @googleapis_reference_link{google/cloud/aiplatform/v1/execution.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Execution>
-  CreateExecution(google::cloud::aiplatform::v1::CreateExecutionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Execution> CreateExecution(
+      google::cloud::aiplatform::v1::CreateExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1764,8 +1844,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.GetExecutionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L1050}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Execution>
-  GetExecution(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Execution> GetExecution(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1794,8 +1874,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.GetExecutionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L1050}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Execution>
-  GetExecution(google::cloud::aiplatform::v1::GetExecutionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Execution> GetExecution(
+      google::cloud::aiplatform::v1::GetExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1830,8 +1911,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L1064}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Execution>
-  ListExecutions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Execution> ListExecutions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1869,8 +1950,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L1064}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Execution>
-  ListExecutions(google::cloud::aiplatform::v1::ListExecutionsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Execution> ListExecutions(
+      google::cloud::aiplatform::v1::ListExecutionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1899,8 +1981,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateExecutionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L1145}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Execution>
-  UpdateExecution(google::cloud::aiplatform::v1::Execution const& execution, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Execution> UpdateExecution(
+      google::cloud::aiplatform::v1::Execution const& execution,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1929,8 +2012,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateExecutionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_service.proto#L1145}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Execution>
-  UpdateExecution(google::cloud::aiplatform::v1::UpdateExecutionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Execution> UpdateExecution(
+      google::cloud::aiplatform::v1::UpdateExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1977,8 +2061,8 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteExecution(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2015,7 +2099,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteExecution(google::cloud::aiplatform::v1::DeleteExecutionRequest const& request, Options opts = {});
+  DeleteExecution(
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2028,8 +2114,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteExecution(NoAwaitTag, google::cloud::aiplatform::v1::DeleteExecutionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2041,7 +2129,8 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteExecution(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteExecution(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -2088,8 +2177,8 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeExecutions(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeExecutions(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2126,7 +2215,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-  PurgeExecutions(google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request, Options opts = {});
+  PurgeExecutions(
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2139,8 +2230,10 @@ class MetadataServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeExecutions(NoAwaitTag, google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeExecutions(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2152,7 +2245,8 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-  PurgeExecutions(google::longrunning::Operation const& operation, Options opts = {});
+  PurgeExecutions(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -2184,7 +2278,10 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
-  AddExecutionEvents(std::string const& execution, std::vector<google::cloud::aiplatform::v1::Event> const& events, Options opts = {});
+  AddExecutionEvents(
+      std::string const& execution,
+      std::vector<google::cloud::aiplatform::v1::Event> const& events,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2217,7 +2314,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
-  AddExecutionEvents(google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request, Options opts = {});
+  AddExecutionEvents(
+      google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2246,7 +2345,8 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-  QueryExecutionInputsAndOutputs(std::string const& execution, Options opts = {});
+  QueryExecutionInputsAndOutputs(std::string const& execution,
+                                 Options opts = {});
 
   // clang-format off
   ///
@@ -2278,7 +2378,10 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-  QueryExecutionInputsAndOutputs(google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const& request, Options opts = {});
+  QueryExecutionInputsAndOutputs(
+      google::cloud::aiplatform::v1::
+          QueryExecutionInputsAndOutputsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2313,8 +2416,10 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.MetadataSchema]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_schema.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-  CreateMetadataSchema(std::string const& parent, google::cloud::aiplatform::v1::MetadataSchema const& metadata_schema, std::string const& metadata_schema_id, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::MetadataSchema> CreateMetadataSchema(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::MetadataSchema const& metadata_schema,
+      std::string const& metadata_schema_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2343,8 +2448,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.MetadataSchema]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_schema.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-  CreateMetadataSchema(google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::MetadataSchema> CreateMetadataSchema(
+      google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2370,8 +2476,8 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.MetadataSchema]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_schema.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-  GetMetadataSchema(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::MetadataSchema> GetMetadataSchema(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2400,8 +2506,9 @@ class MetadataServiceClient {
   /// [google.cloud.aiplatform.v1.MetadataSchema]: @googleapis_reference_link{google/cloud/aiplatform/v1/metadata_schema.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
-  GetMetadataSchema(google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::MetadataSchema> GetMetadataSchema(
+      google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2476,7 +2583,9 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::MetadataSchema>
-  ListMetadataSchemas(google::cloud::aiplatform::v1::ListMetadataSchemasRequest request, Options opts = {});
+  ListMetadataSchemas(
+      google::cloud::aiplatform::v1::ListMetadataSchemasRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2539,7 +2648,10 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
-  QueryArtifactLineageSubgraph(google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const& request, Options opts = {});
+  QueryArtifactLineageSubgraph(
+      google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2577,8 +2689,8 @@ class MetadataServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2607,8 +2719,9 @@ class MetadataServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2640,8 +2753,8 @@ class MetadataServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2672,8 +2785,8 @@ class MetadataServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2708,8 +2821,9 @@ class MetadataServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2744,8 +2858,8 @@ class MetadataServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2784,8 +2898,8 @@ class MetadataServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2811,8 +2925,8 @@ class MetadataServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2843,8 +2957,9 @@ class MetadataServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2868,8 +2983,7 @@ class MetadataServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2898,8 +3012,9 @@ class MetadataServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2933,8 +3048,7 @@ class MetadataServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2973,8 +3087,9 @@ class MetadataServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3011,8 +3126,9 @@ class MetadataServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<MetadataServiceConnection> connection_;

@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class VersionsClient {
  public:
-  explicit VersionsClient(std::shared_ptr<VersionsConnection> connection, Options opts = {});
+  explicit VersionsClient(std::shared_ptr<VersionsConnection> connection,
+                          Options opts = {});
   ~VersionsClient();
 
   ///@{
@@ -121,8 +122,8 @@ class VersionsClient {
   /// [google.appengine.v1.Version]: @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::appengine::v1::Version>
-  ListVersions(google::appengine::v1::ListVersionsRequest request, Options opts = {});
+  StreamRange<google::appengine::v1::Version> ListVersions(
+      google::appengine::v1::ListVersionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -153,8 +154,9 @@ class VersionsClient {
   /// [google.appengine.v1.Version]: @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::appengine::v1::Version>
-  GetVersion(google::appengine::v1::GetVersionRequest const& request, Options opts = {});
+  StatusOr<google::appengine::v1::Version> GetVersion(
+      google::appengine::v1::GetVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +192,9 @@ class VersionsClient {
   /// [google.appengine.v1.Version]: @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Version>>
-  CreateVersion(google::appengine::v1::CreateVersionRequest const& request, Options opts = {});
+  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+      google::appengine::v1::CreateVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -204,8 +207,9 @@ class VersionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateVersion(NoAwaitTag, google::appengine::v1::CreateVersionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      NoAwaitTag, google::appengine::v1::CreateVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -216,8 +220,8 @@ class VersionsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Version>>
-  CreateVersion(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -288,8 +292,9 @@ class VersionsClient {
   /// [google.appengine.v1.Version]: @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Version>>
-  UpdateVersion(google::appengine::v1::UpdateVersionRequest const& request, Options opts = {});
+  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+      google::appengine::v1::UpdateVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -302,8 +307,9 @@ class VersionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateVersion(NoAwaitTag, google::appengine::v1::UpdateVersionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateVersion(
+      NoAwaitTag, google::appengine::v1::UpdateVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -314,8 +320,8 @@ class VersionsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::Version>>
-  UpdateVersion(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -351,8 +357,9 @@ class VersionsClient {
   /// [google.appengine.v1.OperationMetadataV1]: @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request, Options opts = {});
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+      google::appengine::v1::DeleteVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -365,8 +372,9 @@ class VersionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteVersion(NoAwaitTag, google::appengine::v1::DeleteVersionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteVersion(
+      NoAwaitTag, google::appengine::v1::DeleteVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -377,8 +385,8 @@ class VersionsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteVersion(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<VersionsConnection> connection_;

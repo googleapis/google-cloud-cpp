@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AuthorizedDomainsConnection::~AuthorizedDomainsConnection() = default;
 
-StreamRange<google::appengine::v1::AuthorizedDomain> AuthorizedDomainsConnection::ListAuthorizedDomains(
-    google::appengine::v1::ListAuthorizedDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::appengine::v1::AuthorizedDomain>
+AuthorizedDomainsConnection::ListAuthorizedDomains(
+    google::appengine::v1::
+        ListAuthorizedDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::AuthorizedDomain>>();
 }
@@ -47,17 +49,18 @@ StreamRange<google::appengine::v1::AuthorizedDomain> AuthorizedDomainsConnection
 std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AuthorizedDomainsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 AuthorizedDomainsPolicyOptionList>(options,
+                                                                    __func__);
   options = appengine_v1_internal::AuthorizedDomainsDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = appengine_v1_internal::CreateDefaultAuthorizedDomainsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return appengine_v1_internal::MakeAuthorizedDomainsTracingConnection(
       std::make_shared<appengine_v1_internal::AuthorizedDomainsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

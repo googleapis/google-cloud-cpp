@@ -42,13 +42,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockSystemPolicyV1Connection : public binaryauthorization_v1::SystemPolicyV1Connection {
+class MockSystemPolicyV1Connection
+    : public binaryauthorization_v1::SystemPolicyV1Connection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::Policy>,
-  GetSystemPolicy,
-  (google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::binaryauthorization::v1::Policy>, GetSystemPolicy,
+      (google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

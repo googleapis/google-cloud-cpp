@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V2_INTERNAL_NOTEBOOK_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V2_INTERNAL_NOTEBOOK_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/notebooks/v2/internal/notebook_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,162 +40,162 @@ class NotebookServiceAuth : public NotebookServiceStub {
       std::shared_ptr<NotebookServiceStub> child);
 
   StatusOr<google::cloud::notebooks::v2::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::notebooks::v2::ListInstancesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::notebooks::v2::ListInstancesRequest const& request)
+      override;
 
   StatusOr<google::cloud::notebooks::v2::Instance> GetInstance(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::CreateInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::CreateInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::CreateInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::CreateInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::UpdateInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::UpdateInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::UpdateInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::UpdateInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::DeleteInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::DeleteInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::DeleteInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::StartInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::StartInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> StartInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::StartInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::StartInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::StopInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::StopInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> StopInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::StopInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::StopInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::ResetInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::ResetInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> ResetInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::ResetInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::ResetInstanceRequest const& request)
+      override;
 
-  StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse> CheckInstanceUpgradability(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const& request) override;
+  StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
+  CheckInstanceUpgradability(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpgradeInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRollbackInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::RollbackInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::RollbackInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RollbackInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::RollbackInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::RollbackInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) override;
+      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DiagnoseInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

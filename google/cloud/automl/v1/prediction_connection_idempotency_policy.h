@@ -34,17 +34,18 @@ class PredictionServiceConnectionIdempotencyPolicy {
   virtual ~PredictionServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  Predict(google::cloud::automl::v1::PredictRequest const& request);
+  virtual google::cloud::Idempotency Predict(
+      google::cloud::automl::v1::PredictRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BatchPredict(google::cloud::automl::v1::BatchPredictRequest const& request);
+  virtual google::cloud::Idempotency BatchPredict(
+      google::cloud::automl::v1::BatchPredictRequest const& request);
 };
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-    MakeDefaultPredictionServiceConnectionIdempotencyPolicy();
+MakeDefaultPredictionServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_v1

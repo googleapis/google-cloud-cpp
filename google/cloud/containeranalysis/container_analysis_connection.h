@@ -27,17 +27,23 @@ namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use containeranalysis_v1::MakeContainerAnalysisConnection directly.
+/// @deprecated Use containeranalysis_v1::MakeContainerAnalysisConnection
+/// directly.
 using ::google::cloud::containeranalysis_v1::MakeContainerAnalysisConnection;
 
 /// @deprecated Use containeranalysis_v1::ContainerAnalysisConnection directly.
 using ::google::cloud::containeranalysis_v1::ContainerAnalysisConnection;
 
-/// @deprecated Use containeranalysis_v1::ContainerAnalysisLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::containeranalysis_v1::ContainerAnalysisLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// containeranalysis_v1::ContainerAnalysisLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::containeranalysis_v1::
+    ContainerAnalysisLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use containeranalysis_v1::ContainerAnalysisLimitedTimeRetryPolicy directly.
-using ::google::cloud::containeranalysis_v1::ContainerAnalysisLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// containeranalysis_v1::ContainerAnalysisLimitedTimeRetryPolicy directly.
+using ::google::cloud::containeranalysis_v1::
+    ContainerAnalysisLimitedTimeRetryPolicy;
 
 /// @deprecated Use containeranalysis_v1::ContainerAnalysisRetryPolicy directly.
 using ::google::cloud::containeranalysis_v1::ContainerAnalysisRetryPolicy;

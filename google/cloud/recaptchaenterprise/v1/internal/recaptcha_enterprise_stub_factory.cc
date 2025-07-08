@@ -17,17 +17,17 @@
 // source: google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto
 
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_stub_factory.h"
+#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_auth_decorator.h"
+#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_logging_decorator.h"
+#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_metadata_decorator.h"
+#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_stub.h"
+#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_auth_decorator.h"
-#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_logging_decorator.h"
-#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_metadata_decorator.h"
-#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_stub.h"
-#include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_tracing_stub.h"
 #include <google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -41,24 +41,24 @@ std::shared_ptr<RecaptchaEnterpriseServiceStub>
 CreateDefaultRecaptchaEnterpriseServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::recaptchaenterprise::v1::RecaptchaEnterpriseService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::recaptchaenterprise::v1::
+      RecaptchaEnterpriseService::NewStub(channel);
   std::shared_ptr<RecaptchaEnterpriseServiceStub> stub =
-    std::make_shared<DefaultRecaptchaEnterpriseServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultRecaptchaEnterpriseServiceStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<RecaptchaEnterpriseServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<RecaptchaEnterpriseServiceAuth>(std::move(auth),
+                                                            std::move(stub));
   }
   stub = std::make_shared<RecaptchaEnterpriseServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<RecaptchaEnterpriseServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

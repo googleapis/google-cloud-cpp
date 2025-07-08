@@ -36,33 +36,33 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
  public:
   ~PredictionServiceTracingStub() override = default;
 
-  explicit PredictionServiceTracingStub(std::shared_ptr<PredictionServiceStub> child);
+  explicit PredictionServiceTracingStub(
+      std::shared_ptr<PredictionServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::PredictRequest const& request) override;
 
   StatusOr<google::api::HttpBody> RawPredict(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::api::HttpBody>>
-  StreamRawPredict(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) override;
+  std::unique_ptr<
+      google::cloud::internal::StreamingReadRpc<google::api::HttpBody>>
+  StreamRawPredict(std::shared_ptr<grpc::ClientContext> context,
+                   Options const& options,
+                   google::cloud::aiplatform::v1::StreamRawPredictRequest const&
+                       request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> DirectPredict(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::DirectPredictRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::DirectPredictRequest const& request)
+      override;
 
-  StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse> DirectRawPredict(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
+  DirectRawPredict(grpc::ClientContext& context, Options const& options,
+                   google::cloud::aiplatform::v1::DirectRawPredictRequest const&
+                       request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamDirectPredictRequest,
@@ -88,11 +88,12 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::StreamingPredictResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::StreamingPredictResponse>>
   ServerStreamingPredict(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::aiplatform::v1::StreamingPredictRequest const& request) override;
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::aiplatform::v1::StreamingPredictRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingRawPredictRequest,
@@ -103,74 +104,65 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse> GenerateContent(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GenerateContentRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+  GenerateContent(grpc::ClientContext& context, Options const& options,
+                  google::cloud::aiplatform::v1::GenerateContentRequest const&
+                      request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::aiplatform::v1::GenerateContentResponse>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::aiplatform::v1::GenerateContentResponse>>
   StreamGenerateContent(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::cloud::aiplatform::v1::GenerateContentRequest const& request) override;
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<PredictionServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

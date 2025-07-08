@@ -39,34 +39,35 @@ class DocumentLinkServiceMetadata : public DocumentLinkServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse> ListLinkedTargets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
+  ListLinkedTargets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse> ListLinkedSources(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
+  ListLinkedSources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::contentwarehouse::v1::DocumentLink> CreateDocumentLink(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const& request) override;
+  StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
+  CreateDocumentLink(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
+          request) override;
 
   Status DeleteDocumentLink(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

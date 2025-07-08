@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -34,78 +34,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SpannerMetadata : public SpannerStub {
  public:
   ~SpannerMetadata() override = default;
-  SpannerMetadata(
-      std::shared_ptr<SpannerStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  SpannerMetadata(std::shared_ptr<SpannerStub> child,
+                  std::multimap<std::string, std::string> fixed_metadata,
+                  std::string api_client_header = "");
 
   StatusOr<google::spanner::v1::Session> CreateSession(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::CreateSessionRequest const& request) override;
 
-  StatusOr<google::spanner::v1::BatchCreateSessionsResponse> BatchCreateSessions(
-      grpc::ClientContext& context,
-      Options const& options,
+  StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
+  BatchCreateSessions(
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::BatchCreateSessionsRequest const& request) override;
 
   Status DeleteSession(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::DeleteSessionRequest const& request) override;
 
   StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::PartialResultSet>>
   ExecuteStreamingSql(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
   StatusOr<google::spanner::v1::ExecuteBatchDmlResponse> ExecuteBatchDml(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::ExecuteBatchDmlRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::spanner::v1::PartialResultSet>>
-  StreamingRead(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::spanner::v1::ReadRequest const& request) override;
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::PartialResultSet>>
+  StreamingRead(std::shared_ptr<grpc::ClientContext> context,
+                Options const& options,
+                google::spanner::v1::ReadRequest const& request) override;
 
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::BeginTransactionRequest const& request) override;
 
   StatusOr<google::spanner::v1::CommitResponse> Commit(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::CommitRequest const& request) override;
 
-  Status Rollback(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::spanner::v1::RollbackRequest const& request) override;
+  Status Rollback(grpc::ClientContext& context, Options const& options,
+                  google::spanner::v1::RollbackRequest const& request) override;
 
   StatusOr<google::spanner::v1::PartitionResponse> PartitionQuery(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::PartitionQueryRequest const& request) override;
 
   StatusOr<google::spanner::v1::PartitionResponse> PartitionRead(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::PartitionReadRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::spanner::v1::BatchWriteResponse>>
-  BatchWrite(
-      std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
-      google::spanner::v1::BatchWriteRequest const& request) override;
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::spanner::v1::BatchWriteResponse>>
+  BatchWrite(std::shared_ptr<grpc::ClientContext> context,
+             Options const& options,
+             google::spanner::v1::BatchWriteRequest const& request) override;
 
   future<StatusOr<google::spanner::v1::Session>> AsyncCreateSession(
       google::cloud::CompletionQueue& cq,
@@ -113,7 +102,8 @@ class SpannerMetadata : public SpannerStub {
       google::cloud::internal::ImmutableOptions options,
       google::spanner::v1::CreateSessionRequest const& request) override;
 
-  future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>> AsyncBatchCreateSessions(
+  future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
+  AsyncBatchCreateSessions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
@@ -132,8 +122,7 @@ class SpannerMetadata : public SpannerStub {
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

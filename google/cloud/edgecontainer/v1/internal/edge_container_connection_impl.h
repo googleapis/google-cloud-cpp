@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/edgecontainer/v1/edge_container_connection.h"
 #include "google/cloud/edgecontainer/v1/edge_container_connection_idempotency_policy.h"
 #include "google/cloud/edgecontainer/v1/edge_container_options.h"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_retry_traits.h"
 #include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,161 +46,182 @@ class EdgeContainerConnectionImpl
   ~EdgeContainerConnectionImpl() override = default;
 
   EdgeContainerConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<edgecontainer_v1_internal::EdgeContainerStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<edgecontainer_v1_internal::EdgeContainerStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::edgecontainer::v1::Cluster>
-  ListClusters(google::cloud::edgecontainer::v1::ListClustersRequest request) override;
+  StreamRange<google::cloud::edgecontainer::v1::Cluster> ListClusters(
+      google::cloud::edgecontainer::v1::ListClustersRequest request) override;
 
-  StatusOr<google::cloud::edgecontainer::v1::Cluster>
-  GetCluster(google::cloud::edgecontainer::v1::GetClusterRequest const& request) override;
+  StatusOr<google::cloud::edgecontainer::v1::Cluster> GetCluster(
+      google::cloud::edgecontainer::v1::GetClusterRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  CreateCluster(google::cloud::edgecontainer::v1::CreateClusterRequest const& request) override;
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
+      google::cloud::edgecontainer::v1::CreateClusterRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag,
-      google::cloud::edgecontainer::v1::CreateClusterRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateClusterRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  CreateCluster(
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  UpdateCluster(google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) override;
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
+      google::cloud::edgecontainer::v1::UpdateClusterRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag,
-      google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpdateClusterRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  UpdateCluster(
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  UpgradeCluster(google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) override;
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpgradeCluster(NoAwaitTag,
-      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpgradeCluster(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
-  UpgradeCluster(
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteCluster(google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) override;
+  DeleteCluster(google::cloud::edgecontainer::v1::DeleteClusterRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteCluster(NoAwaitTag,
-      google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteClusterRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteCluster(
-      google::longrunning::Operation const& operation) override;
+  DeleteCluster(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const& request) override;
+  GenerateAccessToken(
+      google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
+          request) override;
 
   StatusOr<google::cloud::edgecontainer::v1::GenerateOfflineCredentialResponse>
-  GenerateOfflineCredential(google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const& request) override;
+  GenerateOfflineCredential(
+      google::cloud::edgecontainer::v1::GenerateOfflineCredentialRequest const&
+          request) override;
 
-  StreamRange<google::cloud::edgecontainer::v1::NodePool>
-  ListNodePools(google::cloud::edgecontainer::v1::ListNodePoolsRequest request) override;
+  StreamRange<google::cloud::edgecontainer::v1::NodePool> ListNodePools(
+      google::cloud::edgecontainer::v1::ListNodePoolsRequest request) override;
 
-  StatusOr<google::cloud::edgecontainer::v1::NodePool>
-  GetNodePool(google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) override;
+  StatusOr<google::cloud::edgecontainer::v1::NodePool> GetNodePool(
+      google::cloud::edgecontainer::v1::GetNodePoolRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-  CreateNodePool(google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) override;
+  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
+      google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateNodePool(NoAwaitTag,
-      google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateNodePool(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-  CreateNodePool(
+  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-  UpdateNodePool(google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) override;
+  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
+      google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateNodePool(NoAwaitTag,
-      google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateNodePool(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
-  UpdateNodePool(
+  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteNodePool(google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) override;
+  DeleteNodePool(google::cloud::edgecontainer::v1::DeleteNodePoolRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteNodePool(NoAwaitTag,
-      google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteNodePool(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteNodePool(
-      google::longrunning::Operation const& operation) override;
+  DeleteNodePool(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::edgecontainer::v1::Machine>
-  ListMachines(google::cloud::edgecontainer::v1::ListMachinesRequest request) override;
+  StreamRange<google::cloud::edgecontainer::v1::Machine> ListMachines(
+      google::cloud::edgecontainer::v1::ListMachinesRequest request) override;
 
-  StatusOr<google::cloud::edgecontainer::v1::Machine>
-  GetMachine(google::cloud::edgecontainer::v1::GetMachineRequest const& request) override;
+  StatusOr<google::cloud::edgecontainer::v1::Machine> GetMachine(
+      google::cloud::edgecontainer::v1::GetMachineRequest const& request)
+      override;
 
   StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
-  ListVpnConnections(google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request) override;
+  ListVpnConnections(google::cloud::edgecontainer::v1::ListVpnConnectionsRequest
+                         request) override;
 
-  StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
-  GetVpnConnection(google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) override;
-
-  future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
-  CreateVpnConnection(google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateVpnConnection(NoAwaitTag,
-      google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request) override;
+  StatusOr<google::cloud::edgecontainer::v1::VpnConnection> GetVpnConnection(
+      google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
   CreateVpnConnection(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteVpnConnection(google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateVpnConnection(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteVpnConnection(NoAwaitTag,
-      google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request) override;
+  future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
+  CreateVpnConnection(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteVpnConnection(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+          request) override;
 
-  StatusOr<google::cloud::edgecontainer::v1::ServerConfig>
-  GetServerConfig(google::cloud::edgecontainer::v1::GetServerConfigRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteVpnConnection(
+      NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+          request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+  DeleteVpnConnection(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::edgecontainer::v1::ServerConfig> GetServerConfig(
+      google::cloud::edgecontainer::v1::GetServerConfigRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

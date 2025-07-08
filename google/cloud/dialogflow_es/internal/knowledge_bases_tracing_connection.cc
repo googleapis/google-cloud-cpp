@@ -34,77 +34,96 @@ KnowledgeBasesTracingConnection::KnowledgeBasesTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesTracingConnection::ListKnowledgeBases(google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::ListKnowledgeBases");
+KnowledgeBasesTracingConnection::ListKnowledgeBases(
+    google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::ListKnowledgeBases");
   internal::OTelScope scope(span);
   auto sr = child_->ListKnowledgeBases(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::KnowledgeBase>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::KnowledgeBase>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesTracingConnection::GetKnowledgeBase(google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::GetKnowledgeBase");
+KnowledgeBasesTracingConnection::GetKnowledgeBase(
+    google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::GetKnowledgeBase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetKnowledgeBase(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesTracingConnection::CreateKnowledgeBase(google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::CreateKnowledgeBase");
+KnowledgeBasesTracingConnection::CreateKnowledgeBase(
+    google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::CreateKnowledgeBase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateKnowledgeBase(request));
 }
 
-Status
-KnowledgeBasesTracingConnection::DeleteKnowledgeBase(google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::DeleteKnowledgeBase");
+Status KnowledgeBasesTracingConnection::DeleteKnowledgeBase(
+    google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::DeleteKnowledgeBase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteKnowledgeBase(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-KnowledgeBasesTracingConnection::UpdateKnowledgeBase(google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::UpdateKnowledgeBase");
+KnowledgeBasesTracingConnection::UpdateKnowledgeBase(
+    google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::UpdateKnowledgeBase");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateKnowledgeBase(request));
 }
 
 StreamRange<google::cloud::location::Location>
-KnowledgeBasesTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::ListLocations");
+KnowledgeBasesTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-KnowledgeBasesTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::GetLocation");
+KnowledgeBasesTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-KnowledgeBasesTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::ListOperations");
+KnowledgeBasesTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-KnowledgeBasesTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::GetOperation");
+KnowledgeBasesTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-KnowledgeBasesTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dialogflow_es::KnowledgeBasesConnection::CancelOperation");
+Status KnowledgeBasesTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

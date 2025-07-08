@@ -31,9 +31,9 @@ MemorystoreAuth::MemorystoreAuth(
     std::shared_ptr<MemorystoreStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::memorystore::v1::ListInstancesResponse> MemorystoreAuth::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memorystore::v1::ListInstancesResponse>
+MemorystoreAuth::ListInstances(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::memorystore::v1::ListInstancesResponse> MemorystoreAuth:
 }
 
 StatusOr<google::cloud::memorystore::v1::Instance> MemorystoreAuth::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +50,27 @@ StatusOr<google::cloud::memorystore::v1::Instance> MemorystoreAuth::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreAuth::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> MemorystoreAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::CreateInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateInstance(context, options, request);
@@ -80,28 +78,27 @@ MemorystoreAuth::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreAuth::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> MemorystoreAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::UpdateInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInstance(context, options, request);
@@ -109,37 +106,37 @@ MemorystoreAuth::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreAuth::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> MemorystoreAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteInstance(context, options, request);
 }
 
-StatusOr<google::cloud::memorystore::v1::CertificateAuthority> MemorystoreAuth::GetCertificateAuthority(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::memorystore::v1::GetCertificateAuthorityRequest const& request) {
+StatusOr<google::cloud::memorystore::v1::CertificateAuthority>
+MemorystoreAuth::GetCertificateAuthority(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::GetCertificateAuthorityRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetCertificateAuthority(context, options, request);
@@ -147,54 +144,56 @@ StatusOr<google::cloud::memorystore::v1::CertificateAuthority> MemorystoreAuth::
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncRescheduleMaintenance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRescheduleMaintenance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRescheduleMaintenance(cq, *std::move(context),
+                                                 std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreAuth::RescheduleMaintenance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::RescheduleMaintenanceRequest const& request) {
+StatusOr<google::longrunning::Operation> MemorystoreAuth::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::RescheduleMaintenanceRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RescheduleMaintenance(context, options, request);
 }
 
-StatusOr<google::cloud::memorystore::v1::ListBackupCollectionsResponse> MemorystoreAuth::ListBackupCollections(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::memorystore::v1::ListBackupCollectionsRequest const& request) {
+StatusOr<google::cloud::memorystore::v1::ListBackupCollectionsResponse>
+MemorystoreAuth::ListBackupCollections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::memorystore::v1::ListBackupCollectionsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListBackupCollections(context, options, request);
 }
 
-StatusOr<google::cloud::memorystore::v1::BackupCollection> MemorystoreAuth::GetBackupCollection(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memorystore::v1::BackupCollection>
+MemorystoreAuth::GetBackupCollection(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::GetBackupCollectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetBackupCollection(context, options, request);
 }
 
-StatusOr<google::cloud::memorystore::v1::ListBackupsResponse> MemorystoreAuth::ListBackups(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::memorystore::v1::ListBackupsResponse>
+MemorystoreAuth::ListBackups(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -202,8 +201,7 @@ StatusOr<google::cloud::memorystore::v1::ListBackupsResponse> MemorystoreAuth::L
 }
 
 StatusOr<google::cloud::memorystore::v1::Backup> MemorystoreAuth::GetBackup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memorystore::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -212,28 +210,27 @@ StatusOr<google::cloud::memorystore::v1::Backup> MemorystoreAuth::GetBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncDeleteBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteBackup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteBackup(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreAuth::DeleteBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
+StatusOr<google::longrunning::Operation> MemorystoreAuth::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::DeleteBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBackup(context, options, request);
@@ -241,28 +238,27 @@ MemorystoreAuth::DeleteBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncExportBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::ExportBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncExportBackup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncExportBackup(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreAuth::ExportBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::ExportBackupRequest const& request) {
+StatusOr<google::longrunning::Operation> MemorystoreAuth::ExportBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::ExportBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExportBackup(context, options, request);
@@ -270,36 +266,35 @@ MemorystoreAuth::ExportBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 MemorystoreAuth::AsyncBackupInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBackupInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncBackupInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-MemorystoreAuth::BackupInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> MemorystoreAuth::BackupInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memorystore::v1::BackupInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BackupInstance(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> MemorystoreAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+MemorystoreAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -307,17 +302,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> MemorystoreAuth::ListLo
 }
 
 StatusOr<google::cloud::location::Location> MemorystoreAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> MemorystoreAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+MemorystoreAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -325,8 +319,7 @@ StatusOr<google::longrunning::ListOperationsResponse> MemorystoreAuth::ListOpera
 }
 
 StatusOr<google::longrunning::Operation> MemorystoreAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -334,8 +327,7 @@ StatusOr<google::longrunning::Operation> MemorystoreAuth::GetOperation(
 }
 
 Status MemorystoreAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -343,8 +335,7 @@ Status MemorystoreAuth::DeleteOperation(
 }
 
 Status MemorystoreAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -358,15 +349,16 @@ MemorystoreAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -375,13 +367,14 @@ future<Status> MemorystoreAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

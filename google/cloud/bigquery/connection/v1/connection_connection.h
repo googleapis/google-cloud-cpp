@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_V1_CONNECTION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_V1_CONNECTION_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/connection/v1/connection_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class ConnectionServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConnectionServiceLimitedErrorCountRetryPolicy : public ConnectionServiceRetryPolicy {
+class ConnectionServiceLimitedErrorCountRetryPolicy
+    : public ConnectionServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class ConnectionServiceLimitedErrorCountRetryPolicy : public ConnectionServiceRe
    *     @p maximum_failures == 0.
    */
   explicit ConnectionServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ConnectionServiceLimitedErrorCountRetryPolicy(
       ConnectionServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ConnectionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConnectionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ConnectionServiceLimitedErrorCountRetryPolicy(
       ConnectionServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ConnectionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ConnectionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class ConnectionServiceLimitedErrorCountRetryPolicy : public ConnectionServiceRe
   using BaseType = ConnectionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_connection_v1_internal::ConnectionServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_connection_v1_internal::ConnectionServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class ConnectionServiceLimitedErrorCountRetryPolicy : public ConnectionServiceRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ConnectionServiceLimitedTimeRetryPolicy : public ConnectionServiceRetryPolicy {
+class ConnectionServiceLimitedTimeRetryPolicy
+    : public ConnectionServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class ConnectionServiceLimitedTimeRetryPolicy : public ConnectionServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit ConnectionServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ConnectionServiceLimitedTimeRetryPolicy(ConnectionServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ConnectionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ConnectionServiceLimitedTimeRetryPolicy(ConnectionServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ConnectionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConnectionServiceLimitedTimeRetryPolicy(
+      ConnectionServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ConnectionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ConnectionServiceLimitedTimeRetryPolicy(
+      ConnectionServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ConnectionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +160,23 @@ class ConnectionServiceLimitedTimeRetryPolicy : public ConnectionServiceRetryPol
   using BaseType = ConnectionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_connection_v1_internal::ConnectionServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_connection_v1_internal::ConnectionServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `ConnectionServiceConnection` object for `ConnectionServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ConnectionServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ConnectionServiceClient`.
+ * sets in `ConnectionServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ConnectionServiceClient`.
  *
  * To create a concrete instance, see `MakeConnectionServiceConnection()`.
  *
- * For mocking, see `bigquery_connection_v1_mocks::MockConnectionServiceConnection`.
+ * For mocking, see
+ * `bigquery_connection_v1_mocks::MockConnectionServiceConnection`.
  */
 class ConnectionServiceConnection {
  public:
@@ -176,39 +185,49 @@ class ConnectionServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  CreateConnection(google::cloud::bigquery::connection::v1::CreateConnectionRequest const& request);
+  CreateConnection(
+      google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
+          request);
 
   virtual StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  GetConnection(google::cloud::bigquery::connection::v1::GetConnectionRequest const& request);
+  GetConnection(
+      google::cloud::bigquery::connection::v1::GetConnectionRequest const&
+          request);
 
   virtual StreamRange<google::cloud::bigquery::connection::v1::Connection>
-  ListConnections(google::cloud::bigquery::connection::v1::ListConnectionsRequest request);
+  ListConnections(
+      google::cloud::bigquery::connection::v1::ListConnectionsRequest request);
 
   virtual StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  UpdateConnection(google::cloud::bigquery::connection::v1::UpdateConnectionRequest const& request);
+  UpdateConnection(
+      google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
+          request);
 
-  virtual Status
-  DeleteConnection(google::cloud::bigquery::connection::v1::DeleteConnectionRequest const& request);
+  virtual Status DeleteConnection(
+      google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
+          request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ConnectionServiceConnection`.
+ * A factory function to construct an object of type
+ * `ConnectionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ConnectionServiceClient.
+ * should be passed as an argument to the constructor of
+ * ConnectionServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ConnectionServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ConnectionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -218,8 +237,8 @@ class ConnectionServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ConnectionServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `ConnectionServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options = {});

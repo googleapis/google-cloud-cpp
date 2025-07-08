@@ -37,45 +37,45 @@ class DatastoreConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DatastoreConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  Lookup(google::datastore::v1::LookupRequest const& request);
+  virtual google::cloud::Idempotency Lookup(
+      google::datastore::v1::LookupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RunQuery(google::datastore::v1::RunQueryRequest const& request);
+  virtual google::cloud::Idempotency RunQuery(
+      google::datastore::v1::RunQueryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  RunAggregationQuery(google::datastore::v1::RunAggregationQueryRequest const& request);
+  virtual google::cloud::Idempotency RunAggregationQuery(
+      google::datastore::v1::RunAggregationQueryRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BeginTransaction(google::datastore::v1::BeginTransactionRequest const& request);
+  virtual google::cloud::Idempotency BeginTransaction(
+      google::datastore::v1::BeginTransactionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Commit(google::datastore::v1::CommitRequest const& request);
+  virtual google::cloud::Idempotency Commit(
+      google::datastore::v1::CommitRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Rollback(google::datastore::v1::RollbackRequest const& request);
+  virtual google::cloud::Idempotency Rollback(
+      google::datastore::v1::RollbackRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AllocateIds(google::datastore::v1::AllocateIdsRequest const& request);
+  virtual google::cloud::Idempotency AllocateIds(
+      google::datastore::v1::AllocateIdsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ReserveIds(google::datastore::v1::ReserveIdsRequest const& request);
+  virtual google::cloud::Idempotency ReserveIds(
+      google::datastore::v1::ReserveIdsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<DatastoreConnectionIdempotencyPolicy>
-    MakeDefaultDatastoreConnectionIdempotencyPolicy();
+MakeDefaultDatastoreConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastore_v1

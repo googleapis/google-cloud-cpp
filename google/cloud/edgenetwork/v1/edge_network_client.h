@@ -67,7 +67,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EdgeNetworkClient {
  public:
-  explicit EdgeNetworkClient(std::shared_ptr<EdgeNetworkConnection> connection, Options opts = {});
+  explicit EdgeNetworkClient(std::shared_ptr<EdgeNetworkConnection> connection,
+                             Options opts = {});
   ~EdgeNetworkClient();
 
   ///@{
@@ -80,10 +81,12 @@ class EdgeNetworkClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EdgeNetworkClient const& a, EdgeNetworkClient const& b) {
+  friend bool operator==(EdgeNetworkClient const& a,
+                         EdgeNetworkClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EdgeNetworkClient const& a, EdgeNetworkClient const& b) {
+  friend bool operator!=(EdgeNetworkClient const& a,
+                         EdgeNetworkClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -141,7 +144,9 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
-  InitializeZone(google::cloud::edgenetwork::v1::InitializeZoneRequest const& request, Options opts = {});
+  InitializeZone(
+      google::cloud::edgenetwork::v1::InitializeZoneRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -178,8 +183,8 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StreamRange<google::cloud::edgenetwork::v1::Zone>
-  ListZones(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Zone> ListZones(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -221,8 +226,9 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StreamRange<google::cloud::edgenetwork::v1::Zone>
-  ListZones(google::cloud::edgenetwork::v1::ListZonesRequest request, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Zone> ListZones(
+      google::cloud::edgenetwork::v1::ListZonesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -250,8 +256,8 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StatusOr<google::cloud::edgenetwork::v1::Zone>
-  GetZone(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -284,8 +290,9 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
-  StatusOr<google::cloud::edgenetwork::v1::Zone>
-  GetZone(google::cloud::edgenetwork::v1::GetZoneRequest const& request, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
+      google::cloud::edgenetwork::v1::GetZoneRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -318,8 +325,8 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
   ///
   // clang-format on
-  StreamRange<google::cloud::edgenetwork::v1::Network>
-  ListNetworks(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Network> ListNetworks(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -357,8 +364,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
   ///
   // clang-format on
-  StreamRange<google::cloud::edgenetwork::v1::Network>
-  ListNetworks(google::cloud::edgenetwork::v1::ListNetworksRequest request, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Network> ListNetworks(
+      google::cloud::edgenetwork::v1::ListNetworksRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -382,8 +390,8 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
   ///
   // clang-format on
-  StatusOr<google::cloud::edgenetwork::v1::Network>
-  GetNetwork(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -412,8 +420,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
   ///
   // clang-format on
-  StatusOr<google::cloud::edgenetwork::v1::Network>
-  GetNetwork(google::cloud::edgenetwork::v1::GetNetworkRequest const& request, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
+      google::cloud::edgenetwork::v1::GetNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -468,7 +477,9 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
-  DiagnoseNetwork(google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request, Options opts = {});
+  DiagnoseNetwork(
+      google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -503,8 +514,10 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-  CreateNetwork(std::string const& parent, google::cloud::edgenetwork::v1::Network const& network, std::string const& network_id, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
+      std::string const& parent,
+      google::cloud::edgenetwork::v1::Network const& network,
+      std::string const& network_id, Options opts = {});
 
   // clang-format off
   ///
@@ -517,8 +530,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateNetwork(NoAwaitTag, std::string const& parent, google::cloud::edgenetwork::v1::Network const& network, std::string const& network_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateNetwork(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::edgenetwork::v1::Network const& network,
+      std::string const& network_id, Options opts = {});
 
   // clang-format off
   ///
@@ -554,8 +569,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Network]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L84}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-  CreateNetwork(google::cloud::edgenetwork::v1::CreateNetworkRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -568,8 +584,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateNetwork(NoAwaitTag, google::cloud::edgenetwork::v1::CreateNetworkRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateNetwork(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -580,8 +598,8 @@ class EdgeNetworkClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-  CreateNetwork(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -626,8 +644,8 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNetwork(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNetwork(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -664,7 +682,9 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request, Options opts = {});
+  DeleteNetwork(
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -677,8 +697,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteNetwork(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteNetwork(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -690,7 +712,8 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteNetwork(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteNetwork(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -723,8 +746,8 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
   ///
   // clang-format on
-  StreamRange<google::cloud::edgenetwork::v1::Subnet>
-  ListSubnets(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Subnet> ListSubnets(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -762,8 +785,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
   ///
   // clang-format on
-  StreamRange<google::cloud::edgenetwork::v1::Subnet>
-  ListSubnets(google::cloud::edgenetwork::v1::ListSubnetsRequest request, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Subnet> ListSubnets(
+      google::cloud::edgenetwork::v1::ListSubnetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -787,8 +811,8 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
   ///
   // clang-format on
-  StatusOr<google::cloud::edgenetwork::v1::Subnet>
-  GetSubnet(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -817,8 +841,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
   ///
   // clang-format on
-  StatusOr<google::cloud::edgenetwork::v1::Subnet>
-  GetSubnet(google::cloud::edgenetwork::v1::GetSubnetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
+      google::cloud::edgenetwork::v1::GetSubnetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -853,8 +878,10 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  CreateSubnet(std::string const& parent, google::cloud::edgenetwork::v1::Subnet const& subnet, std::string const& subnet_id, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+      std::string const& parent,
+      google::cloud::edgenetwork::v1::Subnet const& subnet,
+      std::string const& subnet_id, Options opts = {});
 
   // clang-format off
   ///
@@ -867,8 +894,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateSubnet(NoAwaitTag, std::string const& parent, google::cloud::edgenetwork::v1::Subnet const& subnet, std::string const& subnet_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateSubnet(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::edgenetwork::v1::Subnet const& subnet,
+      std::string const& subnet_id, Options opts = {});
 
   // clang-format off
   ///
@@ -904,8 +933,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Subnet]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L115}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  CreateSubnet(google::cloud::edgenetwork::v1::CreateSubnetRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -918,8 +948,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::CreateSubnetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateSubnet(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -930,8 +962,8 @@ class EdgeNetworkClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  CreateSubnet(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -967,8 +999,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L561}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  UpdateSubnet(google::cloud::edgenetwork::v1::Subnet const& subnet, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      google::cloud::edgenetwork::v1::Subnet const& subnet,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -981,8 +1014,9 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::Subnet const& subnet, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateSubnet(
+      NoAwaitTag, google::cloud::edgenetwork::v1::Subnet const& subnet,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1018,8 +1052,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L561}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  UpdateSubnet(google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1032,8 +1067,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateSubnet(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1044,8 +1081,8 @@ class EdgeNetworkClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-  UpdateSubnet(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1090,8 +1127,9 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSubnet(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSubnet(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1128,7 +1166,9 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request, Options opts = {});
+  DeleteSubnet(
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1141,8 +1181,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteSubnet(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteSubnet(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1154,7 +1196,8 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteSubnet(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteSubnet(google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -1187,8 +1230,8 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L616}
   ///
   // clang-format on
-  StreamRange<google::cloud::edgenetwork::v1::Interconnect>
-  ListInterconnects(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Interconnect> ListInterconnects(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1226,8 +1269,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.ListInterconnectsRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L616}
   ///
   // clang-format on
-  StreamRange<google::cloud::edgenetwork::v1::Interconnect>
-  ListInterconnects(google::cloud::edgenetwork::v1::ListInterconnectsRequest request, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Interconnect> ListInterconnects(
+      google::cloud::edgenetwork::v1::ListInterconnectsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1251,8 +1295,8 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L185}
   ///
   // clang-format on
-  StatusOr<google::cloud::edgenetwork::v1::Interconnect>
-  GetInterconnect(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Interconnect> GetInterconnect(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1281,8 +1325,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Interconnect]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L185}
   ///
   // clang-format on
-  StatusOr<google::cloud::edgenetwork::v1::Interconnect>
-  GetInterconnect(google::cloud::edgenetwork::v1::GetInterconnectRequest const& request, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Interconnect> GetInterconnect(
+      google::cloud::edgenetwork::v1::GetInterconnectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1337,7 +1382,10 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
-  DiagnoseInterconnect(google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const& request, Options opts = {});
+  DiagnoseInterconnect(
+      google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1410,7 +1458,10 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>
-  ListInterconnectAttachments(google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest request, Options opts = {});
+  ListInterconnectAttachments(
+      google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1465,7 +1516,10 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
-  GetInterconnectAttachment(google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const& request, Options opts = {});
+  GetInterconnectAttachment(
+      google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1501,7 +1555,11 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-  CreateInterconnectAttachment(std::string const& parent, google::cloud::edgenetwork::v1::InterconnectAttachment const& interconnect_attachment, std::string const& interconnect_attachment_id, Options opts = {});
+  CreateInterconnectAttachment(
+      std::string const& parent,
+      google::cloud::edgenetwork::v1::InterconnectAttachment const&
+          interconnect_attachment,
+      std::string const& interconnect_attachment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1514,8 +1572,11 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInterconnectAttachment(NoAwaitTag, std::string const& parent, google::cloud::edgenetwork::v1::InterconnectAttachment const& interconnect_attachment, std::string const& interconnect_attachment_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::edgenetwork::v1::InterconnectAttachment const&
+          interconnect_attachment,
+      std::string const& interconnect_attachment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1552,7 +1613,10 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-  CreateInterconnectAttachment(google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request, Options opts = {});
+  CreateInterconnectAttachment(
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1565,8 +1629,11 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInterconnectAttachment(NoAwaitTag, google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1578,7 +1645,8 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
-  CreateInterconnectAttachment(google::longrunning::Operation const& operation, Options opts = {});
+  CreateInterconnectAttachment(google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -1623,8 +1691,8 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteInterconnectAttachment(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1661,7 +1729,10 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteInterconnectAttachment(google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request, Options opts = {});
+  DeleteInterconnectAttachment(
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1674,8 +1745,11 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteInterconnectAttachment(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1687,7 +1761,8 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteInterconnectAttachment(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteInterconnectAttachment(google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -1720,8 +1795,8 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
   ///
   // clang-format on
-  StreamRange<google::cloud::edgenetwork::v1::Router>
-  ListRouters(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Router> ListRouters(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1759,8 +1834,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
   ///
   // clang-format on
-  StreamRange<google::cloud::edgenetwork::v1::Router>
-  ListRouters(google::cloud::edgenetwork::v1::ListRoutersRequest request, Options opts = {});
+  StreamRange<google::cloud::edgenetwork::v1::Router> ListRouters(
+      google::cloud::edgenetwork::v1::ListRoutersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1784,8 +1860,8 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
   ///
   // clang-format on
-  StatusOr<google::cloud::edgenetwork::v1::Router>
-  GetRouter(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1814,8 +1890,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
   ///
   // clang-format on
-  StatusOr<google::cloud::edgenetwork::v1::Router>
-  GetRouter(google::cloud::edgenetwork::v1::GetRouterRequest const& request, Options opts = {});
+  StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
+      google::cloud::edgenetwork::v1::GetRouterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1870,7 +1947,9 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
-  DiagnoseRouter(google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request, Options opts = {});
+  DiagnoseRouter(
+      google::cloud::edgenetwork::v1::DiagnoseRouterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1905,8 +1984,10 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  CreateRouter(std::string const& parent, google::cloud::edgenetwork::v1::Router const& router, std::string const& router_id, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+      std::string const& parent,
+      google::cloud::edgenetwork::v1::Router const& router,
+      std::string const& router_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1919,8 +2000,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRouter(NoAwaitTag, std::string const& parent, google::cloud::edgenetwork::v1::Router const& router, std::string const& router_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRouter(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::edgenetwork::v1::Router const& router,
+      std::string const& router_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1956,8 +2039,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Router]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L293}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  CreateRouter(google::cloud::edgenetwork::v1::CreateRouterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1970,8 +2054,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::CreateRouterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRouter(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1982,8 +2068,8 @@ class EdgeNetworkClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  CreateRouter(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2019,8 +2105,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.UpdateRouterRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L853}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  UpdateRouter(google::cloud::edgenetwork::v1::Router const& router, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      google::cloud::edgenetwork::v1::Router const& router,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2033,8 +2120,9 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::Router const& router, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateRouter(
+      NoAwaitTag, google::cloud::edgenetwork::v1::Router const& router,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2070,8 +2158,9 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.UpdateRouterRequest]: @googleapis_reference_link{google/cloud/edgenetwork/v1/service.proto#L853}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  UpdateRouter(google::cloud::edgenetwork::v1::UpdateRouterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2084,8 +2173,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateRouter(NoAwaitTag, google::cloud::edgenetwork::v1::UpdateRouterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateRouter(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2096,8 +2187,8 @@ class EdgeNetworkClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-  UpdateRouter(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2142,8 +2233,9 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRouter(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRouter(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2180,7 +2272,9 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const& request, Options opts = {});
+  DeleteRouter(
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2193,8 +2287,10 @@ class EdgeNetworkClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRouter(NoAwaitTag, google::cloud::edgenetwork::v1::DeleteRouterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRouter(
+      NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2206,7 +2302,8 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-  DeleteRouter(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteRouter(google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -2244,8 +2341,8 @@ class EdgeNetworkClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2274,8 +2371,9 @@ class EdgeNetworkClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2310,8 +2408,8 @@ class EdgeNetworkClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2350,8 +2448,8 @@ class EdgeNetworkClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2377,8 +2475,8 @@ class EdgeNetworkClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2409,8 +2507,9 @@ class EdgeNetworkClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2434,8 +2533,7 @@ class EdgeNetworkClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2464,8 +2562,9 @@ class EdgeNetworkClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2499,8 +2598,7 @@ class EdgeNetworkClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2539,8 +2637,9 @@ class EdgeNetworkClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<EdgeNetworkConnection> connection_;

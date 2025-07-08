@@ -17,12 +17,12 @@
 // source: google/cloud/chronicle/v1/rule.proto
 
 #include "google/cloud/chronicle/v1/rule_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/chronicle/v1/internal/rule_connection_impl.h"
 #include "google/cloud/chronicle/v1/internal/rule_option_defaults.h"
 #include "google/cloud/chronicle/v1/internal/rule_stub_factory.h"
 #include "google/cloud/chronicle/v1/internal/rule_tracing_connection.h"
 #include "google/cloud/chronicle/v1/rule_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,38 +38,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RuleServiceConnection::~RuleServiceConnection() = default;
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceConnection::CreateRule(
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceConnection::CreateRule(
     google::cloud::chronicle::v1::CreateRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceConnection::GetRule(
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceConnection::GetRule(
     google::cloud::chronicle::v1::GetRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::chronicle::v1::Rule> RuleServiceConnection::ListRules(
-    google::cloud::chronicle::v1::ListRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::chronicle::v1::Rule>
+RuleServiceConnection::ListRules(
+    google::cloud::chronicle::v1::
+        ListRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::chronicle::v1::Rule>>();
 }
 
-StatusOr<google::cloud::chronicle::v1::Rule>
-RuleServiceConnection::UpdateRule(
+StatusOr<google::cloud::chronicle::v1::Rule> RuleServiceConnection::UpdateRule(
     google::cloud::chronicle::v1::UpdateRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-RuleServiceConnection::DeleteRule(
+Status RuleServiceConnection::DeleteRule(
     google::cloud::chronicle::v1::DeleteRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::chronicle::v1::Rule> RuleServiceConnection::ListRuleRevisions(
-    google::cloud::chronicle::v1::ListRuleRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::chronicle::v1::Rule>
+RuleServiceConnection::ListRuleRevisions(
+    google::cloud::chronicle::v1::
+        ListRuleRevisionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::chronicle::v1::Rule>>();
 }
@@ -78,24 +78,21 @@ future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
 RuleServiceConnection::CreateRetrohunt(
     google::cloud::chronicle::v1::CreateRetrohuntRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::chronicle::v1::Retrohunt>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::chronicle::v1::Retrohunt>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-RuleServiceConnection::CreateRetrohunt(
-    NoAwaitTag,
-    google::cloud::chronicle::v1::CreateRetrohuntRequest const&) {
+StatusOr<google::longrunning::Operation> RuleServiceConnection::CreateRetrohunt(
+    NoAwaitTag, google::cloud::chronicle::v1::CreateRetrohuntRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::chronicle::v1::Retrohunt>>
-RuleServiceConnection::CreateRetrohunt(
-    google::longrunning::Operation const&) {
+RuleServiceConnection::CreateRetrohunt(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::chronicle::v1::Retrohunt>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::chronicle::v1::Retrohunt>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::chronicle::v1::Retrohunt>
@@ -104,8 +101,10 @@ RuleServiceConnection::GetRetrohunt(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::chronicle::v1::Retrohunt> RuleServiceConnection::ListRetrohunts(
-    google::cloud::chronicle::v1::ListRetrohuntsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::chronicle::v1::Retrohunt>
+RuleServiceConnection::ListRetrohunts(
+    google::cloud::chronicle::v1::
+        ListRetrohuntsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::chronicle::v1::Retrohunt>>();
 }
@@ -116,8 +115,10 @@ RuleServiceConnection::GetRuleDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::chronicle::v1::RuleDeployment> RuleServiceConnection::ListRuleDeployments(
-    google::cloud::chronicle::v1::ListRuleDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::chronicle::v1::RuleDeployment>
+RuleServiceConnection::ListRuleDeployments(
+    google::cloud::chronicle::v1::
+        ListRuleDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::chronicle::v1::RuleDeployment>>();
 }
@@ -128,26 +129,25 @@ RuleServiceConnection::UpdateRuleDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> RuleServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+RuleServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-RuleServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> RuleServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-RuleServiceConnection::DeleteOperation(
+Status RuleServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-RuleServiceConnection::CancelOperation(
+Status RuleServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -155,17 +155,18 @@ RuleServiceConnection::CancelOperation(
 std::shared_ptr<RuleServiceConnection> MakeRuleServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      RuleServicePolicyOptionList>(options, __func__);
-  options = chronicle_v1_internal::RuleServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 RuleServicePolicyOptionList>(options,
+                                                              __func__);
+  options =
+      chronicle_v1_internal::RuleServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = chronicle_v1_internal::CreateDefaultRuleServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return chronicle_v1_internal::MakeRuleServiceTracingConnection(
       std::make_shared<chronicle_v1_internal::RuleServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

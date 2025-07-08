@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V2_FUNCTION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V2_FUNCTION_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/functions/v2/function_connection_idempotency_policy.h"
 #include "google/cloud/functions/v2/internal/function_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class FunctionServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FunctionServiceLimitedErrorCountRetryPolicy : public FunctionServiceRetryPolicy {
+class FunctionServiceLimitedErrorCountRetryPolicy
+    : public FunctionServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class FunctionServiceLimitedErrorCountRetryPolicy : public FunctionServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit FunctionServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   FunctionServiceLimitedErrorCountRetryPolicy(
       FunctionServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : FunctionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FunctionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FunctionServiceLimitedErrorCountRetryPolicy(
       FunctionServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : FunctionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FunctionServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class FunctionServiceLimitedErrorCountRetryPolicy : public FunctionServiceRetryP
   using BaseType = FunctionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<functions_v2_internal::FunctionServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      functions_v2_internal::FunctionServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +109,8 @@ class FunctionServiceLimitedErrorCountRetryPolicy : public FunctionServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FunctionServiceLimitedTimeRetryPolicy : public FunctionServiceRetryPolicy {
+class FunctionServiceLimitedTimeRetryPolicy
+    : public FunctionServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +135,14 @@ class FunctionServiceLimitedTimeRetryPolicy : public FunctionServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit FunctionServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  FunctionServiceLimitedTimeRetryPolicy(FunctionServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : FunctionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  FunctionServiceLimitedTimeRetryPolicy(FunctionServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : FunctionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FunctionServiceLimitedTimeRetryPolicy(
+      FunctionServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : FunctionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FunctionServiceLimitedTimeRetryPolicy(
+      FunctionServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : FunctionServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +164,9 @@ class FunctionServiceLimitedTimeRetryPolicy : public FunctionServiceRetryPolicy 
   using BaseType = FunctionServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<functions_v2_internal::FunctionServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      functions_v2_internal::FunctionServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,76 +187,86 @@ class FunctionServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::functions::v2::Function>
-  GetFunction(google::cloud::functions::v2::GetFunctionRequest const& request);
+  virtual StatusOr<google::cloud::functions::v2::Function> GetFunction(
+      google::cloud::functions::v2::GetFunctionRequest const& request);
 
-  virtual StreamRange<google::cloud::functions::v2::Function>
-  ListFunctions(google::cloud::functions::v2::ListFunctionsRequest request);
-
-  virtual future<StatusOr<google::cloud::functions::v2::Function>>
-  CreateFunction(google::cloud::functions::v2::CreateFunctionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateFunction(NoAwaitTag, google::cloud::functions::v2::CreateFunctionRequest const& request);
+  virtual StreamRange<google::cloud::functions::v2::Function> ListFunctions(
+      google::cloud::functions::v2::ListFunctionsRequest request);
 
   virtual future<StatusOr<google::cloud::functions::v2::Function>>
-  CreateFunction( google::longrunning::Operation const& operation);
+  CreateFunction(
+      google::cloud::functions::v2::CreateFunctionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateFunction(
+      NoAwaitTag,
+      google::cloud::functions::v2::CreateFunctionRequest const& request);
 
   virtual future<StatusOr<google::cloud::functions::v2::Function>>
-  UpdateFunction(google::cloud::functions::v2::UpdateFunctionRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateFunction(NoAwaitTag, google::cloud::functions::v2::UpdateFunctionRequest const& request);
+  CreateFunction(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::functions::v2::Function>>
-  UpdateFunction( google::longrunning::Operation const& operation);
+  UpdateFunction(
+      google::cloud::functions::v2::UpdateFunctionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateFunction(
+      NoAwaitTag,
+      google::cloud::functions::v2::UpdateFunctionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::functions::v2::Function>>
+  UpdateFunction(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
-  DeleteFunction(google::cloud::functions::v2::DeleteFunctionRequest const& request);
+  DeleteFunction(
+      google::cloud::functions::v2::DeleteFunctionRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteFunction(NoAwaitTag, google::cloud::functions::v2::DeleteFunctionRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteFunction(
+      NoAwaitTag,
+      google::cloud::functions::v2::DeleteFunctionRequest const& request);
 
   virtual future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
-  DeleteFunction( google::longrunning::Operation const& operation);
+  DeleteFunction(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
-  GenerateUploadUrl(google::cloud::functions::v2::GenerateUploadUrlRequest const& request);
+  GenerateUploadUrl(
+      google::cloud::functions::v2::GenerateUploadUrlRequest const& request);
 
   virtual StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
-  GenerateDownloadUrl(google::cloud::functions::v2::GenerateDownloadUrlRequest const& request);
+  GenerateDownloadUrl(
+      google::cloud::functions::v2::GenerateDownloadUrlRequest const& request);
 
   virtual StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
-  ListRuntimes(google::cloud::functions::v2::ListRuntimesRequest const& request);
+  ListRuntimes(
+      google::cloud::functions::v2::ListRuntimesRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `FunctionServiceConnection`.
+ * A factory function to construct an object of type
+ * `FunctionServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of FunctionServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `FunctionServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `FunctionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -258,8 +276,8 @@ class FunctionServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `FunctionServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `FunctionServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<FunctionServiceConnection> MakeFunctionServiceConnection(
     Options options = {});

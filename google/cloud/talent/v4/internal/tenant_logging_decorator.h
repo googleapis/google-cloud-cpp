@@ -39,33 +39,27 @@ class TenantServiceLogging : public TenantServiceStub {
                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateTenantRequest const& request) override;
 
   Status DeleteTenant(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListTenantsResponse> ListTenants(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListTenantsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

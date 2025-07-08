@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_INTERNAL_OS_LOGIN_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_INTERNAL_OS_LOGIN_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/oslogin/v1/internal/os_login_retry_traits.h"
 #include "google/cloud/oslogin/v1/internal/os_login_stub.h"
 #include "google/cloud/oslogin/v1/os_login_connection.h"
 #include "google/cloud/oslogin/v1/os_login_connection_idempotency_policy.h"
 #include "google/cloud/oslogin/v1/os_login_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,32 +42,40 @@ class OsLoginServiceConnectionImpl
   ~OsLoginServiceConnectionImpl() override = default;
 
   OsLoginServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<oslogin_v1_internal::OsLoginServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<oslogin_v1_internal::OsLoginServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  CreateSshPublicKey(google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
 
-  Status
-  DeletePosixAccount(google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) override;
+  Status DeletePosixAccount(
+      google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
+      override;
 
-  Status
-  DeleteSshPublicKey(google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) override;
+  Status DeleteSshPublicKey(
+      google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oslogin::v1::LoginProfile>
-  GetLoginProfile(google::cloud::oslogin::v1::GetLoginProfileRequest const& request) override;
+  StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
+      google::cloud::oslogin::v1::GetLoginProfileRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  GetSshPublicKey(google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
+      google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request)
+      override;
 
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
-  ImportSshPublicKey(google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) override;
+  ImportSshPublicKey(
+      google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oslogin::common::SshPublicKey>
-  UpdateSshPublicKey(google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) override;
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
+      google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

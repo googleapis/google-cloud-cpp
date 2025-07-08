@@ -35,28 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options EventarcDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_EVENTARC_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_EVENTARC_AUTHORITY",
-      "eventarc.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_EVENTARC_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_EVENTARC_AUTHORITY", "eventarc.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<eventarc_v1::EventarcRetryPolicyOption>()) {
     options.set<eventarc_v1::EventarcRetryPolicyOption>(
-        eventarc_v1::EventarcLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        eventarc_v1::EventarcLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<eventarc_v1::EventarcBackoffPolicyOption>()) {
     options.set<eventarc_v1::EventarcBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<eventarc_v1::EventarcPollingPolicyOption>()) {
     options.set<eventarc_v1::EventarcPollingPolicyOption>(
-        GenericPollingPolicy<
-            eventarc_v1::EventarcRetryPolicyOption::Type,
-            eventarc_v1::EventarcBackoffPolicyOption::Type>(
+        GenericPollingPolicy<eventarc_v1::EventarcRetryPolicyOption::Type,
+                             eventarc_v1::EventarcBackoffPolicyOption::Type>(
             options.get<eventarc_v1::EventarcRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>()) {
     options.set<eventarc_v1::EventarcConnectionIdempotencyPolicyOption>(

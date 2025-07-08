@@ -33,7 +33,8 @@ using ::google::cloud::billing_v1::MakeCloudBillingConnection;
 /// @deprecated Use billing_v1::CloudBillingConnection directly.
 using ::google::cloud::billing_v1::CloudBillingConnection;
 
-/// @deprecated Use billing_v1::CloudBillingLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use billing_v1::CloudBillingLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::billing_v1::CloudBillingLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use billing_v1::CloudBillingLimitedTimeRetryPolicy directly.

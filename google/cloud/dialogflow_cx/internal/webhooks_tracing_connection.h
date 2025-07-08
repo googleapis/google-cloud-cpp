@@ -30,45 +30,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class WebhooksTracingConnection
-    : public dialogflow_cx::WebhooksConnection {
+class WebhooksTracingConnection : public dialogflow_cx::WebhooksConnection {
  public:
   ~WebhooksTracingConnection() override = default;
 
   explicit WebhooksTracingConnection(
-    std::shared_ptr<dialogflow_cx::WebhooksConnection> child);
+      std::shared_ptr<dialogflow_cx::WebhooksConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
-  ListWebhooks(google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Webhook> ListWebhooks(
+      google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  GetWebhook(google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
+      google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  CreateWebhook(google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
+      google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  UpdateWebhook(google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
+      google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request)
+      override;
 
-  Status
-  DeleteWebhook(google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) override;
+  Status DeleteWebhook(
+      google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::WebhooksConnection> child_;

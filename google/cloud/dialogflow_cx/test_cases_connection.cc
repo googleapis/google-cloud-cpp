@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/test_case.proto
 
 #include "google/cloud/dialogflow_cx/test_cases_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_stub_factory.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/test_cases_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -38,14 +38,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TestCasesConnection::~TestCasesConnection() = default;
 
-StreamRange<google::cloud::dialogflow::cx::v3::TestCase> TestCasesConnection::ListTestCases(
-    google::cloud::dialogflow::cx::v3::ListTestCasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
+TestCasesConnection::ListTestCases(
+    google::cloud::dialogflow::cx::v3::
+        ListTestCasesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::TestCase>>();
 }
 
-Status
-TestCasesConnection::BatchDeleteTestCases(
+Status TestCasesConnection::BatchDeleteTestCases(
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -72,48 +73,43 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
 TestCasesConnection::RunTestCase(
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesConnection::RunTestCase(
-    NoAwaitTag,
-    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&) {
+StatusOr<google::longrunning::Operation> TestCasesConnection::RunTestCase(
+    NoAwaitTag, google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-TestCasesConnection::RunTestCase(
-    google::longrunning::Operation const&) {
+TestCasesConnection::RunTestCase(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
 TestCasesConnection::BatchRunTestCases(
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesConnection::BatchRunTestCases(
+StatusOr<google::longrunning::Operation> TestCasesConnection::BatchRunTestCases(
     NoAwaitTag,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-TestCasesConnection::BatchRunTestCases(
-    google::longrunning::Operation const&) {
+TestCasesConnection::BatchRunTestCases(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -126,52 +122,50 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
 TestCasesConnection::ImportTestCases(
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesConnection::ImportTestCases(
+StatusOr<google::longrunning::Operation> TestCasesConnection::ImportTestCases(
     NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-TestCasesConnection::ImportTestCases(
-    google::longrunning::Operation const&) {
+TestCasesConnection::ImportTestCases(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
 TestCasesConnection::ExportTestCases(
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesConnection::ExportTestCases(
+StatusOr<google::longrunning::Operation> TestCasesConnection::ExportTestCases(
     NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-TestCasesConnection::ExportTestCases(
-    google::longrunning::Operation const&) {
+TestCasesConnection::ExportTestCases(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult> TestCasesConnection::ListTestCaseResults(
-    google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
+TestCasesConnection::ListTestCaseResults(
+    google::cloud::dialogflow::cx::v3::
+        ListTestCaseResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>>();
 }
@@ -182,32 +176,32 @@ TestCasesConnection::GetTestCaseResult(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> TestCasesConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+TestCasesConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-TestCasesConnection::GetLocation(
+StatusOr<google::cloud::location::Location> TestCasesConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<google::longrunning::Operation> TestCasesConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-TestCasesConnection::GetOperation(
+StatusOr<google::longrunning::Operation> TestCasesConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TestCasesConnection::CancelOperation(
+Status TestCasesConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -215,21 +209,20 @@ TestCasesConnection::CancelOperation(
 std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      TestCasesPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::TestCasesDefaultOptions(
-      location, std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TestCasesPolicyOptionList>(options, __func__);
+  options = dialogflow_cx_internal::TestCasesDefaultOptions(location,
+                                                            std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_cx_internal::CreateDefaultTestCasesStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dialogflow_cx_internal::MakeTestCasesTracingConnection(
       std::make_shared<dialogflow_cx_internal::TestCasesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
-    Options options) {
+std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(Options options) {
   return MakeTestCasesConnection(std::string{}, std::move(options));
 }
 

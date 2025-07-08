@@ -55,11 +55,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// https://cloud.google.com/access-approval/docs/overview#exclusions).
 ///
 /// Note: Using Access Approval functionality will mean that Google may not be
-/// able to meet the SLAs for your chosen products, as any support response times
-/// may be dramatically increased. As such the SLAs do not apply to any service
-/// disruption to the extent impacted by Customer's use of Access Approval. Do
-/// not enable Access Approval for projects where you may require high service
-/// availability and rapid response by Google Cloud Support.
+/// able to meet the SLAs for your chosen products, as any support response
+/// times may be dramatically increased. As such the SLAs do not apply to any
+/// service disruption to the extent impacted by Customer's use of Access
+/// Approval. Do not enable Access Approval for projects where you may require
+/// high service availability and rapid response by Google Cloud Support.
 ///
 /// After a request is approved or dismissed, no further action may be taken on
 /// it. Requests with the requested_expiration in the past or with no activity
@@ -91,11 +91,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.accessapproval.v1.ApprovalRequest]: @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+/// [google.cloud.accessapproval.v1.ApprovalRequest]:
+/// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
 ///
 class AccessApprovalClient {
  public:
-  explicit AccessApprovalClient(std::shared_ptr<AccessApprovalConnection> connection, Options opts = {});
+  explicit AccessApprovalClient(
+      std::shared_ptr<AccessApprovalConnection> connection, Options opts = {});
   ~AccessApprovalClient();
 
   ///@{
@@ -108,10 +110,12 @@ class AccessApprovalClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AccessApprovalClient const& a, AccessApprovalClient const& b) {
+  friend bool operator==(AccessApprovalClient const& a,
+                         AccessApprovalClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AccessApprovalClient const& a, AccessApprovalClient const& b) {
+  friend bool operator!=(AccessApprovalClient const& a,
+                         AccessApprovalClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -192,7 +196,9 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-  ListApprovalRequests(google::cloud::accessapproval::v1::ListApprovalRequestsMessage request, Options opts = {});
+  ListApprovalRequests(
+      google::cloud::accessapproval::v1::ListApprovalRequestsMessage request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -249,7 +255,10 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  GetApprovalRequest(google::cloud::accessapproval::v1::GetApprovalRequestMessage const& request, Options opts = {});
+  GetApprovalRequest(
+      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -282,7 +291,10 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  ApproveApprovalRequest(google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const& request, Options opts = {});
+  ApproveApprovalRequest(
+      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -321,7 +333,10 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  DismissApprovalRequest(google::cloud::accessapproval::v1::DismissApprovalRequestMessage const& request, Options opts = {});
+  DismissApprovalRequest(
+      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -358,7 +373,10 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  InvalidateApprovalRequest(google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const& request, Options opts = {});
+  InvalidateApprovalRequest(
+      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -414,7 +432,10 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  GetAccessApprovalSettings(google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const& request, Options opts = {});
+  GetAccessApprovalSettings(
+      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -450,7 +471,9 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::AccessApprovalSettings const& settings, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAccessApprovalSettings(
+      google::cloud::accessapproval::v1::AccessApprovalSettings const& settings,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -481,7 +504,10 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  UpdateAccessApprovalSettings(google::cloud::accessapproval::v1::UpdateAccessApprovalSettingsMessage const& request, Options opts = {});
+  UpdateAccessApprovalSettings(
+      google::cloud::accessapproval::v1::
+          UpdateAccessApprovalSettingsMessage const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -507,8 +533,8 @@ class AccessApprovalClient {
   /// [google.cloud.accessapproval.v1.DeleteAccessApprovalSettingsMessage]: @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L686}
   ///
   // clang-format on
-  Status
-  DeleteAccessApprovalSettings(std::string const& name, Options opts = {});
+  Status DeleteAccessApprovalSettings(std::string const& name,
+                                      Options opts = {});
 
   // clang-format off
   ///
@@ -539,8 +565,10 @@ class AccessApprovalClient {
   /// [google.cloud.accessapproval.v1.DeleteAccessApprovalSettingsMessage]: @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L686}
   ///
   // clang-format on
-  Status
-  DeleteAccessApprovalSettings(google::cloud::accessapproval::v1::DeleteAccessApprovalSettingsMessage const& request, Options opts = {});
+  Status DeleteAccessApprovalSettings(
+      google::cloud::accessapproval::v1::
+          DeleteAccessApprovalSettingsMessage const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -597,7 +625,10 @@ class AccessApprovalClient {
   ///
   // clang-format on
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
-  GetAccessApprovalServiceAccount(google::cloud::accessapproval::v1::GetAccessApprovalServiceAccountMessage const& request, Options opts = {});
+  GetAccessApprovalServiceAccount(
+      google::cloud::accessapproval::v1::
+          GetAccessApprovalServiceAccountMessage const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AccessApprovalConnection> connection_;

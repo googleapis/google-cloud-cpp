@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_INSTANCE_NAMES_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_INSTANCE_NAMES_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/sql/v1/internal/sql_instance_names_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_instance_names_rest_stub.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_instance_names.pb.h>
 #include <memory>
@@ -32,7 +32,8 @@ namespace cloud {
 namespace sql_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SqlInstanceNamesServiceRestMetadata : public SqlInstanceNamesServiceRestStub {
+class SqlInstanceNamesServiceRestMetadata
+    : public SqlInstanceNamesServiceRestStub {
  public:
   ~SqlInstanceNamesServiceRestMetadata() override = default;
   explicit SqlInstanceNamesServiceRestMetadata(

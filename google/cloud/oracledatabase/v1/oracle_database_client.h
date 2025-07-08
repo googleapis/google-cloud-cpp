@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_ORACLE_DATABASE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORACLEDATABASE_V1_ORACLE_DATABASE_CLIENT_H
 
+#include "google/cloud/oracledatabase/v1/oracle_database_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
-#include "google/cloud/oracledatabase/v1/oracle_database_connection.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class OracleDatabaseClient {
  public:
-  explicit OracleDatabaseClient(std::shared_ptr<OracleDatabaseConnection> connection, Options opts = {});
+  explicit OracleDatabaseClient(
+      std::shared_ptr<OracleDatabaseConnection> connection, Options opts = {});
   ~OracleDatabaseClient();
 
   ///@{
@@ -77,10 +78,12 @@ class OracleDatabaseClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(OracleDatabaseClient const& a, OracleDatabaseClient const& b) {
+  friend bool operator==(OracleDatabaseClient const& a,
+                         OracleDatabaseClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(OracleDatabaseClient const& a, OracleDatabaseClient const& b) {
+  friend bool operator!=(OracleDatabaseClient const& a,
+                         OracleDatabaseClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -157,7 +160,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-  ListCloudExadataInfrastructures(google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest request, Options opts = {});
+  ListCloudExadataInfrastructures(
+      google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -214,7 +220,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
-  GetCloudExadataInfrastructure(google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request, Options opts = {});
+  GetCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          GetCloudExadataInfrastructureRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -251,8 +260,13 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L376}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
-  CreateCloudExadataInfrastructure(std::string const& parent, google::cloud::oracledatabase::v1::CloudExadataInfrastructure const& cloud_exadata_infrastructure, std::string const& cloud_exadata_infrastructure_id, Options opts = {});
+  future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  CreateCloudExadataInfrastructure(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::CloudExadataInfrastructure const&
+          cloud_exadata_infrastructure,
+      std::string const& cloud_exadata_infrastructure_id, Options opts = {});
 
   // clang-format off
   ///
@@ -265,8 +279,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCloudExadataInfrastructure(NoAwaitTag, std::string const& parent, google::cloud::oracledatabase::v1::CloudExadataInfrastructure const& cloud_exadata_infrastructure, std::string const& cloud_exadata_infrastructure_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCloudExadataInfrastructure(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::CloudExadataInfrastructure const&
+          cloud_exadata_infrastructure,
+      std::string const& cloud_exadata_infrastructure_id, Options opts = {});
 
   // clang-format off
   ///
@@ -302,8 +319,12 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.CreateCloudExadataInfrastructureRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L376}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
-  CreateCloudExadataInfrastructure(google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request, Options opts = {});
+  future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  CreateCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          CreateCloudExadataInfrastructureRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -316,8 +337,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCloudExadataInfrastructure(NoAwaitTag, google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCloudExadataInfrastructure(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          CreateCloudExadataInfrastructureRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -328,8 +352,10 @@ class OracleDatabaseClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
-  CreateCloudExadataInfrastructure(google::longrunning::Operation const& operation, Options opts = {});
+  future<
+      StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>>
+  CreateCloudExadataInfrastructure(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -376,8 +402,8 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteCloudExadataInfrastructure(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteCloudExadataInfrastructure(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -414,7 +440,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteCloudExadataInfrastructure(google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request, Options opts = {});
+  DeleteCloudExadataInfrastructure(
+      google::cloud::oracledatabase::v1::
+          DeleteCloudExadataInfrastructureRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -427,8 +456,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteCloudExadataInfrastructure(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteCloudExadataInfrastructure(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::
+          DeleteCloudExadataInfrastructureRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -440,7 +472,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteCloudExadataInfrastructure(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteCloudExadataInfrastructure(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -514,7 +547,9 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::CloudVmCluster>
-  ListCloudVmClusters(google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request, Options opts = {});
+  ListCloudVmClusters(
+      google::cloud::oracledatabase::v1::ListCloudVmClustersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -539,8 +574,8 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L475}
   ///
   // clang-format on
-  StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>
-  GetCloudVmCluster(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -569,8 +604,10 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.GetCloudVmClusterRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L475}
   ///
   // clang-format on
-  StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>
-  GetCloudVmCluster(google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request, Options opts = {});
+  StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
+      google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -608,7 +645,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
-  CreateCloudVmCluster(std::string const& parent, google::cloud::oracledatabase::v1::CloudVmCluster const& cloud_vm_cluster, std::string const& cloud_vm_cluster_id, Options opts = {});
+  CreateCloudVmCluster(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::CloudVmCluster const& cloud_vm_cluster,
+      std::string const& cloud_vm_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -621,8 +661,10 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCloudVmCluster(NoAwaitTag, std::string const& parent, google::cloud::oracledatabase::v1::CloudVmCluster const& cloud_vm_cluster, std::string const& cloud_vm_cluster_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCloudVmCluster(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::CloudVmCluster const& cloud_vm_cluster,
+      std::string const& cloud_vm_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -659,7 +701,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
-  CreateCloudVmCluster(google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request, Options opts = {});
+  CreateCloudVmCluster(
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -672,8 +717,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCloudVmCluster(NoAwaitTag, google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCloudVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -685,7 +733,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>>
-  CreateCloudVmCluster(google::longrunning::Operation const& operation, Options opts = {});
+  CreateCloudVmCluster(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -731,8 +780,8 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteCloudVmCluster(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteCloudVmCluster(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -769,7 +818,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteCloudVmCluster(google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request, Options opts = {});
+  DeleteCloudVmCluster(
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -782,8 +834,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteCloudVmCluster(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteCloudVmCluster(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -795,7 +850,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteCloudVmCluster(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteCloudVmCluster(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -829,8 +885,8 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L551}
   ///
   // clang-format on
-  StreamRange<google::cloud::oracledatabase::v1::Entitlement>
-  ListEntitlements(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::oracledatabase::v1::Entitlement> ListEntitlements(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -868,8 +924,9 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L551}
   ///
   // clang-format on
-  StreamRange<google::cloud::oracledatabase::v1::Entitlement>
-  ListEntitlements(google::cloud::oracledatabase::v1::ListEntitlementsRequest request, Options opts = {});
+  StreamRange<google::cloud::oracledatabase::v1::Entitlement> ListEntitlements(
+      google::cloud::oracledatabase::v1::ListEntitlementsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -903,8 +960,8 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L580}
   ///
   // clang-format on
-  StreamRange<google::cloud::oracledatabase::v1::DbServer>
-  ListDbServers(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::oracledatabase::v1::DbServer> ListDbServers(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -942,8 +999,9 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.ListDbServersRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L580}
   ///
   // clang-format on
-  StreamRange<google::cloud::oracledatabase::v1::DbServer>
-  ListDbServers(google::cloud::oracledatabase::v1::ListDbServersRequest request, Options opts = {});
+  StreamRange<google::cloud::oracledatabase::v1::DbServer> ListDbServers(
+      google::cloud::oracledatabase::v1::ListDbServersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -977,8 +1035,8 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L609}
   ///
   // clang-format on
-  StreamRange<google::cloud::oracledatabase::v1::DbNode>
-  ListDbNodes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1016,8 +1074,9 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.ListDbNodesRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L609}
   ///
   // clang-format on
-  StreamRange<google::cloud::oracledatabase::v1::DbNode>
-  ListDbNodes(google::cloud::oracledatabase::v1::ListDbNodesRequest request, Options opts = {});
+  StreamRange<google::cloud::oracledatabase::v1::DbNode> ListDbNodes(
+      google::cloud::oracledatabase::v1::ListDbNodesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1052,8 +1111,8 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L638}
   ///
   // clang-format on
-  StreamRange<google::cloud::oracledatabase::v1::GiVersion>
-  ListGiVersions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::oracledatabase::v1::GiVersion> ListGiVersions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1092,8 +1151,9 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.ListGiVersionsRequest]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L638}
   ///
   // clang-format on
-  StreamRange<google::cloud::oracledatabase::v1::GiVersion>
-  ListGiVersions(google::cloud::oracledatabase::v1::ListGiVersionsRequest request, Options opts = {});
+  StreamRange<google::cloud::oracledatabase::v1::GiVersion> ListGiVersions(
+      google::cloud::oracledatabase::v1::ListGiVersionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1167,7 +1227,9 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::DbSystemShape>
-  ListDbSystemShapes(google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request, Options opts = {});
+  ListDbSystemShapes(
+      google::cloud::oracledatabase::v1::ListDbSystemShapesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1241,7 +1303,9 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabase>
-  ListAutonomousDatabases(google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest request, Options opts = {});
+  ListAutonomousDatabases(
+      google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1297,7 +1361,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
-  GetAutonomousDatabase(google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request, Options opts = {});
+  GetAutonomousDatabase(
+      google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1335,7 +1402,11 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  CreateAutonomousDatabase(std::string const& parent, google::cloud::oracledatabase::v1::AutonomousDatabase const& autonomous_database, std::string const& autonomous_database_id, Options opts = {});
+  CreateAutonomousDatabase(
+      std::string const& parent,
+      google::cloud::oracledatabase::v1::AutonomousDatabase const&
+          autonomous_database,
+      std::string const& autonomous_database_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1348,8 +1419,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateAutonomousDatabase(NoAwaitTag, std::string const& parent, google::cloud::oracledatabase::v1::AutonomousDatabase const& autonomous_database, std::string const& autonomous_database_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateAutonomousDatabase(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::oracledatabase::v1::AutonomousDatabase const&
+          autonomous_database,
+      std::string const& autonomous_database_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1386,7 +1460,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  CreateAutonomousDatabase(google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request, Options opts = {});
+  CreateAutonomousDatabase(
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1399,8 +1476,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1412,7 +1492,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  CreateAutonomousDatabase(google::longrunning::Operation const& operation, Options opts = {});
+  CreateAutonomousDatabase(google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -1458,8 +1539,8 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteAutonomousDatabase(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteAutonomousDatabase(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1496,7 +1577,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteAutonomousDatabase(google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request, Options opts = {});
+  DeleteAutonomousDatabase(
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1509,8 +1593,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1522,7 +1609,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::OperationMetadata>>
-  DeleteAutonomousDatabase(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteAutonomousDatabase(google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -1556,7 +1644,9 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestoreAutonomousDatabase(std::string const& name, google::protobuf::Timestamp const& restore_time, Options opts = {});
+  RestoreAutonomousDatabase(std::string const& name,
+                            google::protobuf::Timestamp const& restore_time,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -1569,8 +1659,9 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RestoreAutonomousDatabase(NoAwaitTag, std::string const& name, google::protobuf::Timestamp const& restore_time, Options opts = {});
+  StatusOr<google::longrunning::Operation> RestoreAutonomousDatabase(
+      NoAwaitTag, std::string const& name,
+      google::protobuf::Timestamp const& restore_time, Options opts = {});
 
   // clang-format off
   ///
@@ -1607,7 +1698,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestoreAutonomousDatabase(google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request, Options opts = {});
+  RestoreAutonomousDatabase(
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1620,8 +1714,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RestoreAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RestoreAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1633,7 +1730,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestoreAutonomousDatabase(google::longrunning::Operation const& operation, Options opts = {});
+  RestoreAutonomousDatabase(google::longrunning::Operation const& operation,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -1664,8 +1762,12 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L914}
   ///
   // clang-format on
-  StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
-  GenerateAutonomousDatabaseWallet(std::string const& name, google::cloud::oracledatabase::v1::GenerateType type, bool is_regional, std::string const& password, Options opts = {});
+  StatusOr<google::cloud::oracledatabase::v1::
+               GenerateAutonomousDatabaseWalletResponse>
+  GenerateAutonomousDatabaseWallet(
+      std::string const& name,
+      google::cloud::oracledatabase::v1::GenerateType type, bool is_regional,
+      std::string const& password, Options opts = {});
 
   // clang-format off
   ///
@@ -1694,8 +1796,12 @@ class OracleDatabaseClient {
   /// [google.cloud.oracledatabase.v1.GenerateAutonomousDatabaseWalletResponse]: @googleapis_reference_link{google/cloud/oracledatabase/v1/oracledatabase.proto#L914}
   ///
   // clang-format on
-  StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse>
-  GenerateAutonomousDatabaseWallet(google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request, Options opts = {});
+  StatusOr<google::cloud::oracledatabase::v1::
+               GenerateAutonomousDatabaseWalletResponse>
+  GenerateAutonomousDatabaseWallet(
+      google::cloud::oracledatabase::v1::
+          GenerateAutonomousDatabaseWalletRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1771,7 +1877,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDbVersion>
-  ListAutonomousDbVersions(google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest request, Options opts = {});
+  ListAutonomousDbVersions(
+      google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1806,7 +1915,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
-  ListAutonomousDatabaseCharacterSets(std::string const& parent, Options opts = {});
+  ListAutonomousDatabaseCharacterSets(std::string const& parent,
+                                      Options opts = {});
 
   // clang-format off
   ///
@@ -1845,7 +1955,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseCharacterSet>
-  ListAutonomousDatabaseCharacterSets(google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest request, Options opts = {});
+  ListAutonomousDatabaseCharacterSets(
+      google::cloud::oracledatabase::v1::
+          ListAutonomousDatabaseCharacterSetsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1919,7 +2032,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   StreamRange<google::cloud::oracledatabase::v1::AutonomousDatabaseBackup>
-  ListAutonomousDatabaseBackups(google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest request, Options opts = {});
+  ListAutonomousDatabaseBackups(
+      google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1965,8 +2081,8 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StopAutonomousDatabase(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> StopAutonomousDatabase(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2003,7 +2119,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  StopAutonomousDatabase(google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request, Options opts = {});
+  StopAutonomousDatabase(
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2016,8 +2135,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StopAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> StopAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2029,7 +2151,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  StopAutonomousDatabase(google::longrunning::Operation const& operation, Options opts = {});
+  StopAutonomousDatabase(google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -2075,8 +2198,8 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StartAutonomousDatabase(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> StartAutonomousDatabase(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2113,7 +2236,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  StartAutonomousDatabase(google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request, Options opts = {});
+  StartAutonomousDatabase(
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2126,8 +2252,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  StartAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> StartAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2139,7 +2268,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  StartAutonomousDatabase(google::longrunning::Operation const& operation, Options opts = {});
+  StartAutonomousDatabase(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -2185,8 +2315,8 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RestartAutonomousDatabase(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> RestartAutonomousDatabase(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2223,7 +2353,10 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestartAutonomousDatabase(google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request, Options opts = {});
+  RestartAutonomousDatabase(
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2236,8 +2369,11 @@ class OracleDatabaseClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RestartAutonomousDatabase(NoAwaitTag, google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RestartAutonomousDatabase(
+      NoAwaitTag,
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2249,7 +2385,8 @@ class OracleDatabaseClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>>
-  RestartAutonomousDatabase(google::longrunning::Operation const& operation, Options opts = {});
+  RestartAutonomousDatabase(google::longrunning::Operation const& operation,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -2287,8 +2424,8 @@ class OracleDatabaseClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2317,8 +2454,9 @@ class OracleDatabaseClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2353,8 +2491,8 @@ class OracleDatabaseClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2393,8 +2531,8 @@ class OracleDatabaseClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2420,8 +2558,8 @@ class OracleDatabaseClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2452,8 +2590,9 @@ class OracleDatabaseClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2477,8 +2616,7 @@ class OracleDatabaseClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2507,8 +2645,9 @@ class OracleDatabaseClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2542,8 +2681,7 @@ class OracleDatabaseClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2582,8 +2720,9 @@ class OracleDatabaseClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<OracleDatabaseConnection> connection_;

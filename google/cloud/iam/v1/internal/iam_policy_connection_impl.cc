@@ -17,10 +17,10 @@
 // source: google/iam/v1/iam_policy.proto
 
 #include "google/cloud/iam/v1/internal/iam_policy_connection_impl.h"
+#include "google/cloud/iam/v1/internal/iam_policy_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
-#include "google/cloud/iam/v1/internal/iam_policy_option_defaults.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 #include <utility>
@@ -31,34 +31,33 @@ namespace iam_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<iam_v1::IAMPolicyRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<iam_v1::IAMPolicyRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<iam_v1::IAMPolicyRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<iam_v1::IAMPolicyBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<iam_v1::IAMPolicyConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<iam_v1::IAMPolicyConnectionIdempotencyPolicyOption>()->clone();
+  return options.get<iam_v1::IAMPolicyConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 IAMPolicyConnectionImpl::IAMPolicyConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_v1_internal::IAMPolicyStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        IAMPolicyConnection::options())) {}
+    std::shared_ptr<iam_v1_internal::IAMPolicyStub> stub, Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      IAMPolicyConnection::options())) {}
 
-StatusOr<google::iam::v1::Policy>
-IAMPolicyConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> IAMPolicyConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -70,8 +69,8 @@ IAMPolicyConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const
       *current, request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy>
-IAMPolicyConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+StatusOr<google::iam::v1::Policy> IAMPolicyConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -84,7 +83,8 @@ IAMPolicyConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-IAMPolicyConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+IAMPolicyConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

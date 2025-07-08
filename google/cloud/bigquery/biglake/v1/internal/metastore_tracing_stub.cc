@@ -32,165 +32,183 @@ MetastoreServiceTracingStub::MetastoreServiceTracingStub(
     std::shared_ptr<MetastoreServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::bigquery::biglake::v1::Catalog> MetastoreServiceTracingStub::CreateCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+MetastoreServiceTracingStub::CreateCatalog(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::CreateCatalogRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "CreateCatalog");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "CreateCatalog");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateCatalog(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Catalog> MetastoreServiceTracingStub::DeleteCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+MetastoreServiceTracingStub::DeleteCatalog(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::DeleteCatalogRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteCatalog");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteCatalog");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteCatalog(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Catalog> MetastoreServiceTracingStub::GetCatalog(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Catalog>
+MetastoreServiceTracingStub::GetCatalog(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetCatalogRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "GetCatalog");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "GetCatalog");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCatalog(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse> MetastoreServiceTracingStub::ListCatalogs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::ListCatalogsResponse>
+MetastoreServiceTracingStub::ListCatalogs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "ListCatalogs");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "ListCatalogs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCatalogs(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceTracingStub::CreateDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "CreateDatabase");
+StatusOr<google::cloud::bigquery::biglake::v1::Database>
+MetastoreServiceTracingStub::CreateDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::CreateDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "CreateDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateDatabase(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceTracingStub::DeleteDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteDatabase");
+StatusOr<google::cloud::bigquery::biglake::v1::Database>
+MetastoreServiceTracingStub::DeleteDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::DeleteDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteDatabase(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceTracingStub::UpdateDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "UpdateDatabase");
+StatusOr<google::cloud::bigquery::biglake::v1::Database>
+MetastoreServiceTracingStub::UpdateDatabase(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::biglake::v1::UpdateDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "UpdateDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateDatabase(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Database> MetastoreServiceTracingStub::GetDatabase(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Database>
+MetastoreServiceTracingStub::GetDatabase(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetDatabaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "GetDatabase");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "GetDatabase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetDatabase(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse> MetastoreServiceTracingStub::ListDatabases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::ListDatabasesResponse>
+MetastoreServiceTracingStub::ListDatabases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "ListDatabases");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "ListDatabases");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDatabases(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceTracingStub::CreateTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceTracingStub::CreateTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::CreateTableRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "CreateTable");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "CreateTable");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateTable(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceTracingStub::DeleteTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceTracingStub::DeleteTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::DeleteTableRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteTable");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "DeleteTable");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTable(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceTracingStub::UpdateTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceTracingStub::UpdateTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::UpdateTableRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "UpdateTable");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "UpdateTable");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->UpdateTable(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceTracingStub::RenameTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceTracingStub::RenameTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::RenameTableRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "RenameTable");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "RenameTable");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->RenameTable(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::Table> MetastoreServiceTracingStub::GetTable(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::Table>
+MetastoreServiceTracingStub::GetTable(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::GetTableRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "GetTable");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "GetTable");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTable(context, options, request));
 }
 
-StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse> MetastoreServiceTracingStub::ListTables(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::bigquery::biglake::v1::ListTablesResponse>
+MetastoreServiceTracingStub::ListTables(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::biglake::v1::ListTablesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.biglake.v1.MetastoreService", "ListTables");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.biglake.v1.MetastoreService", "ListTables");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

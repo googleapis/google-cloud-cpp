@@ -34,23 +34,29 @@ SchemaServiceTracingConnection::SchemaServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
-SchemaServiceTracingConnection::GetSchema(google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SchemaServiceConnection::GetSchema");
+SchemaServiceTracingConnection::GetSchema(
+    google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SchemaServiceConnection::GetSchema");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSchema(request));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Schema>
-SchemaServiceTracingConnection::ListSchemas(google::cloud::discoveryengine::v1::ListSchemasRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SchemaServiceConnection::ListSchemas");
+SchemaServiceTracingConnection::ListSchemas(
+    google::cloud::discoveryengine::v1::ListSchemasRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SchemaServiceConnection::ListSchemas");
   internal::OTelScope scope(span);
   auto sr = child_->ListSchemas(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::Schema>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::Schema>(std::move(span),
+                                                  std::move(sr));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceTracingConnection::CreateSchema(google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+SchemaServiceTracingConnection::CreateSchema(
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::CreateSchema");
   internal::OTelScope scope(span);
@@ -59,12 +65,12 @@ SchemaServiceTracingConnection::CreateSchema(google::cloud::discoveryengine::v1:
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceTracingConnection::CreateSchema(
-    NoAwaitTag, google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::CreateSchema");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateSchema(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateSchema(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
@@ -73,12 +79,12 @@ SchemaServiceTracingConnection::CreateSchema(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::CreateSchema");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateSchema(operation));
+  return internal::EndSpan(std::move(span), child_->CreateSchema(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-SchemaServiceTracingConnection::UpdateSchema(google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+SchemaServiceTracingConnection::UpdateSchema(
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::UpdateSchema");
   internal::OTelScope scope(span);
@@ -87,12 +93,12 @@ SchemaServiceTracingConnection::UpdateSchema(google::cloud::discoveryengine::v1:
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceTracingConnection::UpdateSchema(
-    NoAwaitTag, google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::UpdateSchema");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateSchema(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateSchema(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
@@ -101,12 +107,12 @@ SchemaServiceTracingConnection::UpdateSchema(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::UpdateSchema");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->UpdateSchema(operation));
+  return internal::EndSpan(std::move(span), child_->UpdateSchema(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-SchemaServiceTracingConnection::DeleteSchema(google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+SchemaServiceTracingConnection::DeleteSchema(
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::DeleteSchema");
   internal::OTelScope scope(span);
@@ -115,12 +121,12 @@ SchemaServiceTracingConnection::DeleteSchema(google::cloud::discoveryengine::v1:
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceTracingConnection::DeleteSchema(
-    NoAwaitTag, google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::DeleteSchema");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSchema(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSchema(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
@@ -129,29 +135,33 @@ SchemaServiceTracingConnection::DeleteSchema(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::DeleteSchema");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteSchema(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSchema(operation));
 }
 
 StreamRange<google::longrunning::Operation>
-SchemaServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SchemaServiceConnection::ListOperations");
+SchemaServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SchemaServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SchemaServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SchemaServiceConnection::GetOperation");
+SchemaServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SchemaServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-SchemaServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SchemaServiceConnection::CancelOperation");
+Status SchemaServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SchemaServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

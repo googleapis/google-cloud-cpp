@@ -64,23 +64,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ContactCenterInsightsClient {
  public:
-  explicit ContactCenterInsightsClient(std::shared_ptr<ContactCenterInsightsConnection> connection, Options opts = {});
+  explicit ContactCenterInsightsClient(
+      std::shared_ptr<ContactCenterInsightsConnection> connection,
+      Options opts = {});
   ~ContactCenterInsightsClient();
 
   ///@{
   /// @name Copy and move support
   ContactCenterInsightsClient(ContactCenterInsightsClient const&) = default;
-  ContactCenterInsightsClient& operator=(ContactCenterInsightsClient const&) = default;
+  ContactCenterInsightsClient& operator=(ContactCenterInsightsClient const&) =
+      default;
   ContactCenterInsightsClient(ContactCenterInsightsClient&&) = default;
-  ContactCenterInsightsClient& operator=(ContactCenterInsightsClient&&) = default;
+  ContactCenterInsightsClient& operator=(ContactCenterInsightsClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ContactCenterInsightsClient const& a, ContactCenterInsightsClient const& b) {
+  friend bool operator==(ContactCenterInsightsClient const& a,
+                         ContactCenterInsightsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ContactCenterInsightsClient const& a, ContactCenterInsightsClient const& b) {
+  friend bool operator!=(ContactCenterInsightsClient const& a,
+                         ContactCenterInsightsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,7 +123,11 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-  CreateConversation(std::string const& parent, google::cloud::contactcenterinsights::v1::Conversation const& conversation, std::string const& conversation_id, Options opts = {});
+  CreateConversation(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::Conversation const&
+          conversation,
+      std::string const& conversation_id, Options opts = {});
 
   // clang-format off
   ///
@@ -149,7 +159,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-  CreateConversation(google::cloud::contactcenterinsights::v1::CreateConversationRequest const& request, Options opts = {});
+  CreateConversation(
+      google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -188,7 +201,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
-  UploadConversation(google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request, Options opts = {});
+  UploadConversation(
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -201,8 +217,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UploadConversation(NoAwaitTag, google::cloud::contactcenterinsights::v1::UploadConversationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UploadConversation(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -214,7 +233,8 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
-  UploadConversation(google::longrunning::Operation const& operation, Options opts = {});
+  UploadConversation(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -253,7 +273,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-  UpdateConversation(google::cloud::contactcenterinsights::v1::Conversation const& conversation, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateConversation(
+      google::cloud::contactcenterinsights::v1::Conversation const&
+          conversation,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -283,7 +306,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-  UpdateConversation(google::cloud::contactcenterinsights::v1::UpdateConversationRequest const& request, Options opts = {});
+  UpdateConversation(
+      google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -338,7 +364,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
-  GetConversation(google::cloud::contactcenterinsights::v1::GetConversationRequest const& request, Options opts = {});
+  GetConversation(
+      google::cloud::contactcenterinsights::v1::GetConversationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -411,7 +440,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
-  ListConversations(google::cloud::contactcenterinsights::v1::ListConversationsRequest request, Options opts = {});
+  ListConversations(
+      google::cloud::contactcenterinsights::v1::ListConversationsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -432,8 +464,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1077}
   ///
   // clang-format on
-  Status
-  DeleteConversation(std::string const& name, Options opts = {});
+  Status DeleteConversation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -459,8 +490,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1077}
   ///
   // clang-format on
-  Status
-  DeleteConversation(google::cloud::contactcenterinsights::v1::DeleteConversationRequest const& request, Options opts = {});
+  Status DeleteConversation(
+      google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -494,7 +527,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
-  CreateAnalysis(std::string const& parent, google::cloud::contactcenterinsights::v1::Analysis const& analysis, Options opts = {});
+  CreateAnalysis(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::Analysis const& analysis,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -507,8 +543,10 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateAnalysis(NoAwaitTag, std::string const& parent, google::cloud::contactcenterinsights::v1::Analysis const& analysis, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateAnalysis(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::contactcenterinsights::v1::Analysis const& analysis,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -546,7 +584,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
-  CreateAnalysis(google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request, Options opts = {});
+  CreateAnalysis(
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -559,8 +600,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateAnalysis(NoAwaitTag, google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateAnalysis(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -572,7 +616,8 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
-  CreateAnalysis(google::longrunning::Operation const& operation, Options opts = {});
+  CreateAnalysis(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -596,8 +641,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1296}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
-  GetAnalysis(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -626,8 +671,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1296}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
-  GetAnalysis(google::cloud::contactcenterinsights::v1::GetAnalysisRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
+      google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -660,8 +707,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
   ///
   // clang-format on
-  StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
-  ListAnalyses(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -699,8 +746,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
   ///
   // clang-format on
-  StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
-  ListAnalyses(google::cloud::contactcenterinsights::v1::ListAnalysesRequest request, Options opts = {});
+  StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
+      google::cloud::contactcenterinsights::v1::ListAnalysesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -721,8 +769,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1307}
   ///
   // clang-format on
-  Status
-  DeleteAnalysis(std::string const& name, Options opts = {});
+  Status DeleteAnalysis(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -748,8 +795,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1307}
   ///
   // clang-format on
-  Status
-  DeleteAnalysis(google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const& request, Options opts = {});
+  Status DeleteAnalysis(
+      google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -783,8 +832,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1367}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
-  BulkAnalyzeConversations(std::string const& parent, std::string const& filter, float analysis_percentage, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations(std::string const& parent, std::string const& filter,
+                           float analysis_percentage, Options opts = {});
 
   // clang-format off
   ///
@@ -797,8 +848,9 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkAnalyzeConversations(NoAwaitTag, std::string const& parent, std::string const& filter, float analysis_percentage, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
+      NoAwaitTag, std::string const& parent, std::string const& filter,
+      float analysis_percentage, Options opts = {});
 
   // clang-format off
   ///
@@ -834,8 +886,11 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1367}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
-  BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::
+                               BulkAnalyzeConversationsRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -848,8 +903,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkAnalyzeConversations(NoAwaitTag, google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkAnalyzeConversationsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -860,8 +918,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
-  BulkAnalyzeConversations(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations(google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -895,8 +955,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1416}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
-  BulkDeleteConversations(std::string const& parent, std::string const& filter, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDeleteConversationsResponse>>
+  BulkDeleteConversations(std::string const& parent, std::string const& filter,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -909,8 +971,9 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkDeleteConversations(NoAwaitTag, std::string const& parent, std::string const& filter, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkDeleteConversations(
+      NoAwaitTag, std::string const& parent, std::string const& filter,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -946,8 +1009,11 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.BulkDeleteConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1416}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
-  BulkDeleteConversations(google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDeleteConversationsResponse>>
+  BulkDeleteConversations(google::cloud::contactcenterinsights::v1::
+                              BulkDeleteConversationsRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -960,8 +1026,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkDeleteConversations(NoAwaitTag, google::cloud::contactcenterinsights::v1::BulkDeleteConversationsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkDeleteConversations(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkDeleteConversationsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -972,8 +1041,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
-  BulkDeleteConversations(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDeleteConversationsResponse>>
+  BulkDeleteConversations(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1005,7 +1076,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1243}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
   IngestConversations(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -1019,8 +1091,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  IngestConversations(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> IngestConversations(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1057,8 +1129,11 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1243}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
-  IngestConversations(google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  IngestConversations(google::cloud::contactcenterinsights::v1::
+                          IngestConversationsRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1071,8 +1146,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  IngestConversations(NoAwaitTag, google::cloud::contactcenterinsights::v1::IngestConversationsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> IngestConversations(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          IngestConversationsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1083,8 +1161,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
-  IngestConversations(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  IngestConversations(google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1115,7 +1195,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1497}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
   ExportInsightsData(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -1129,8 +1210,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportInsightsData(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportInsightsData(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1166,8 +1247,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1497}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
-  ExportInsightsData(google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+  ExportInsightsData(
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1180,8 +1265,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportInsightsData(NoAwaitTag, google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportInsightsData(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1192,8 +1280,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
-  ExportInsightsData(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+  ExportInsightsData(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1226,7 +1316,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
-  CreateIssueModel(std::string const& parent, google::cloud::contactcenterinsights::v1::IssueModel const& issue_model, Options opts = {});
+  CreateIssueModel(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1239,8 +1332,10 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateIssueModel(NoAwaitTag, std::string const& parent, google::cloud::contactcenterinsights::v1::IssueModel const& issue_model, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateIssueModel(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1277,7 +1372,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
-  CreateIssueModel(google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request, Options opts = {});
+  CreateIssueModel(
+      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1290,8 +1388,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1303,7 +1404,8 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
-  CreateIssueModel(google::longrunning::Operation const& operation, Options opts = {});
+  CreateIssueModel(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1329,7 +1431,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
-  UpdateIssueModel(google::cloud::contactcenterinsights::v1::IssueModel const& issue_model, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateIssueModel(
+      google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1359,7 +1463,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
-  UpdateIssueModel(google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const& request, Options opts = {});
+  UpdateIssueModel(
+      google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1383,8 +1490,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L734}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
-  GetIssueModel(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> GetIssueModel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1413,8 +1520,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L734}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
-  GetIssueModel(google::cloud::contactcenterinsights::v1::GetIssueModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> GetIssueModel(
+      google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1469,7 +1578,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
-  ListIssueModels(google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const& request, Options opts = {});
+  ListIssueModels(
+      google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1500,7 +1612,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1565}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
   DeleteIssueModel(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1514,8 +1627,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteIssueModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteIssueModel(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1551,8 +1664,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1565}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
-  DeleteIssueModel(google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+  DeleteIssueModel(
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1565,8 +1682,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1577,8 +1697,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
-  DeleteIssueModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+  DeleteIssueModel(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1610,7 +1732,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1601}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
   DeployIssueModel(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1624,8 +1747,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeployIssueModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeployIssueModel(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1662,8 +1785,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1601}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
-  DeployIssueModel(google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+  DeployIssueModel(
+      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1676,8 +1803,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeployIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeployIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1688,8 +1818,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
-  DeployIssueModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+  DeployIssueModel(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1721,7 +1853,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1629}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1735,8 +1868,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeployIssueModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeployIssueModel(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1773,8 +1906,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1629}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
-  UndeployIssueModel(google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+  UndeployIssueModel(
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1787,8 +1924,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeployIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeployIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1799,8 +1939,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
-  UndeployIssueModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+  UndeployIssueModel(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1831,7 +1973,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.ExportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1668}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
   ExportIssueModel(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1845,8 +1988,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportIssueModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportIssueModel(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1882,8 +2025,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.ExportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1668}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
-  ExportIssueModel(google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  ExportIssueModel(
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1896,8 +2043,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1908,8 +2058,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
-  ExportIssueModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  ExportIssueModel(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1940,7 +2092,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.ImportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1710}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
   ImportIssueModel(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -1954,8 +2107,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportIssueModel(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportIssueModel(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1991,8 +2144,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.ImportIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1710}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
-  ImportIssueModel(google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  ImportIssueModel(
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2005,8 +2162,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportIssueModel(NoAwaitTag, google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2017,8 +2177,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
-  ImportIssueModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  ImportIssueModel(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -2042,8 +2204,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L830}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Issue>
-  GetIssue(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2072,8 +2234,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L830}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Issue>
-  GetIssue(google::cloud::contactcenterinsights::v1::GetIssueRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
+      google::cloud::contactcenterinsights::v1::GetIssueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2128,7 +2291,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
-  ListIssues(google::cloud::contactcenterinsights::v1::ListIssuesRequest const& request, Options opts = {});
+  ListIssues(google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
+                 request,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -2153,8 +2318,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1753}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Issue>
-  UpdateIssue(google::cloud::contactcenterinsights::v1::Issue const& issue, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
+      google::cloud::contactcenterinsights::v1::Issue const& issue,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2183,8 +2349,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1753}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Issue>
-  UpdateIssue(google::cloud::contactcenterinsights::v1::UpdateIssueRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
+      google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2205,8 +2373,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1762}
   ///
   // clang-format on
-  Status
-  DeleteIssue(std::string const& name, Options opts = {});
+  Status DeleteIssue(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2232,8 +2399,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1762}
   ///
   // clang-format on
-  Status
-  DeleteIssue(google::cloud::contactcenterinsights::v1::DeleteIssueRequest const& request, Options opts = {});
+  Status DeleteIssue(
+      google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2257,7 +2426,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1784}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
+  StatusOr<google::cloud::contactcenterinsights::v1::
+               CalculateIssueModelStatsResponse>
   CalculateIssueModelStats(std::string const& issue_model, Options opts = {});
 
   // clang-format off
@@ -2287,8 +2457,11 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1784}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
-  CalculateIssueModelStats(google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::
+               CalculateIssueModelStatsResponse>
+  CalculateIssueModelStats(google::cloud::contactcenterinsights::v1::
+                               CalculateIssueModelStatsRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -2315,7 +2488,11 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  CreatePhraseMatcher(std::string const& parent, google::cloud::contactcenterinsights::v1::PhraseMatcher const& phrase_matcher, Options opts = {});
+  CreatePhraseMatcher(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::PhraseMatcher const&
+          phrase_matcher,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2345,7 +2522,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  CreatePhraseMatcher(google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const& request, Options opts = {});
+  CreatePhraseMatcher(google::cloud::contactcenterinsights::v1::
+                          CreatePhraseMatcherRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -2400,7 +2579,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  GetPhraseMatcher(google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const& request, Options opts = {});
+  GetPhraseMatcher(
+      google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2473,7 +2655,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  ListPhraseMatchers(google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest request, Options opts = {});
+  ListPhraseMatchers(
+      google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2494,8 +2679,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1855}
   ///
   // clang-format on
-  Status
-  DeletePhraseMatcher(std::string const& name, Options opts = {});
+  Status DeletePhraseMatcher(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2521,8 +2705,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1855}
   ///
   // clang-format on
-  Status
-  DeletePhraseMatcher(google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const& request, Options opts = {});
+  Status DeletePhraseMatcher(google::cloud::contactcenterinsights::v1::
+                                 DeletePhraseMatcherRequest const& request,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -2548,7 +2733,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::PhraseMatcher const& phrase_matcher, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdatePhraseMatcher(
+      google::cloud::contactcenterinsights::v1::PhraseMatcher const&
+          phrase_matcher,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2578,7 +2766,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const& request, Options opts = {});
+  UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::
+                          UpdatePhraseMatcherRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -2633,7 +2823,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
-  CalculateStats(google::cloud::contactcenterinsights::v1::CalculateStatsRequest const& request, Options opts = {});
+  CalculateStats(
+      google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2657,8 +2850,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1015}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Settings>
-  GetSettings(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Settings> GetSettings(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2687,8 +2880,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1015}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Settings>
-  GetSettings(google::cloud::contactcenterinsights::v1::GetSettingsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Settings> GetSettings(
+      google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2713,8 +2908,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1886}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Settings>
-  UpdateSettings(google::cloud::contactcenterinsights::v1::Settings const& settings, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
+      google::cloud::contactcenterinsights::v1::Settings const& settings,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2743,8 +2939,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1886}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::Settings>
-  UpdateSettings(google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
+      google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2771,7 +2969,11 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  CreateAnalysisRule(std::string const& parent, google::cloud::contactcenterinsights::v1::AnalysisRule const& analysis_rule, Options opts = {});
+  CreateAnalysisRule(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::AnalysisRule const&
+          analysis_rule,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2801,7 +3003,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  CreateAnalysisRule(google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const& request, Options opts = {});
+  CreateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2856,7 +3061,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  GetAnalysisRule(google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const& request, Options opts = {});
+  GetAnalysisRule(
+      google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2929,7 +3137,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  ListAnalysisRules(google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest request, Options opts = {});
+  ListAnalysisRules(
+      google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2957,7 +3168,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  UpdateAnalysisRule(google::cloud::contactcenterinsights::v1::AnalysisRule const& analysis_rule, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::AnalysisRule const&
+          analysis_rule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2987,7 +3201,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
-  UpdateAnalysisRule(google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const& request, Options opts = {});
+  UpdateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3008,8 +3225,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1937}
   ///
   // clang-format on
-  Status
-  DeleteAnalysisRule(std::string const& name, Options opts = {});
+  Status DeleteAnalysisRule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3035,8 +3251,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRuleRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1937}
   ///
   // clang-format on
-  Status
-  DeleteAnalysisRule(google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const& request, Options opts = {});
+  Status DeleteAnalysisRule(
+      google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3091,7 +3309,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
-  GetEncryptionSpec(google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const& request, Options opts = {});
+  GetEncryptionSpec(
+      google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3129,8 +3350,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2000}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(google::cloud::contactcenterinsights::v1::EncryptionSpec const& encryption_spec, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(
+      google::cloud::contactcenterinsights::v1::EncryptionSpec const&
+          encryption_spec,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3143,8 +3368,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  InitializeEncryptionSpec(NoAwaitTag, google::cloud::contactcenterinsights::v1::EncryptionSpec const& encryption_spec, Options opts = {});
+  StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::EncryptionSpec const&
+          encryption_spec,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3184,8 +3412,11 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2000}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(google::cloud::contactcenterinsights::v1::
+                               InitializeEncryptionSpecRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -3198,8 +3429,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  InitializeEncryptionSpec(NoAwaitTag, google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          InitializeEncryptionSpecRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3210,8 +3444,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -3239,8 +3475,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::View>
-  CreateView(std::string const& parent, google::cloud::contactcenterinsights::v1::View const& view, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::View const& view,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3269,8 +3507,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::View>
-  CreateView(google::cloud::contactcenterinsights::v1::CreateViewRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
+      google::cloud::contactcenterinsights::v1::CreateViewRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3294,8 +3534,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::View>
-  GetView(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3324,8 +3564,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::View>
-  GetView(google::cloud::contactcenterinsights::v1::GetViewRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
+      google::cloud::contactcenterinsights::v1::GetViewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3358,8 +3599,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
-  StreamRange<google::cloud::contactcenterinsights::v1::View>
-  ListViews(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3397,8 +3638,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
-  StreamRange<google::cloud::contactcenterinsights::v1::View>
-  ListViews(google::cloud::contactcenterinsights::v1::ListViewsRequest request, Options opts = {});
+  StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
+      google::cloud::contactcenterinsights::v1::ListViewsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3423,8 +3665,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::View>
-  UpdateView(google::cloud::contactcenterinsights::v1::View const& view, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
+      google::cloud::contactcenterinsights::v1::View const& view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3453,8 +3696,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1481}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::View>
-  UpdateView(google::cloud::contactcenterinsights::v1::UpdateViewRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
+      google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3475,8 +3720,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2091}
   ///
   // clang-format on
-  Status
-  DeleteView(std::string const& name, Options opts = {});
+  Status DeleteView(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3502,8 +3746,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2091}
   ///
   // clang-format on
-  Status
-  DeleteView(google::cloud::contactcenterinsights::v1::DeleteViewRequest const& request, Options opts = {});
+  Status DeleteView(
+      google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3539,8 +3785,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.QueryMetricsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2287}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
-  QueryMetrics(google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request, Options opts = {});
+  future<
+      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+  QueryMetrics(
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3553,8 +3803,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  QueryMetrics(NoAwaitTag, google::cloud::contactcenterinsights::v1::QueryMetricsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> QueryMetrics(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3565,8 +3818,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
-  QueryMetrics(google::longrunning::Operation const& operation, Options opts = {});
+  future<
+      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+  QueryMetrics(google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -3598,7 +3853,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  CreateQaQuestion(std::string const& parent, google::cloud::contactcenterinsights::v1::QaQuestion const& qa_question, std::string const& qa_question_id, Options opts = {});
+  CreateQaQuestion(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::QaQuestion const& qa_question,
+      std::string const& qa_question_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3628,7 +3886,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  CreateQaQuestion(google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const& request, Options opts = {});
+  CreateQaQuestion(
+      google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3652,8 +3913,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  GetQaQuestion(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> GetQaQuestion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3682,8 +3943,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.QaQuestion]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1610}
   ///
   // clang-format on
-  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  GetQaQuestion(google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> GetQaQuestion(
+      google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3718,7 +3981,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  UpdateQaQuestion(google::cloud::contactcenterinsights::v1::QaQuestion const& qa_question, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateQaQuestion(
+      google::cloud::contactcenterinsights::v1::QaQuestion const& qa_question,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3748,7 +4013,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
-  UpdateQaQuestion(google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const& request, Options opts = {});
+  UpdateQaQuestion(
+      google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3769,8 +4037,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2492}
   ///
   // clang-format on
-  Status
-  DeleteQaQuestion(std::string const& name, Options opts = {});
+  Status DeleteQaQuestion(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3796,8 +4063,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteQaQuestionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2492}
   ///
   // clang-format on
-  Status
-  DeleteQaQuestion(google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const& request, Options opts = {});
+  Status DeleteQaQuestion(
+      google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3870,7 +4139,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>
-  ListQaQuestions(google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request, Options opts = {});
+  ListQaQuestions(
+      google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3902,7 +4173,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-  CreateQaScorecard(std::string const& parent, google::cloud::contactcenterinsights::v1::QaScorecard const& qa_scorecard, std::string const& qa_scorecard_id, Options opts = {});
+  CreateQaScorecard(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::QaScorecard const& qa_scorecard,
+      std::string const& qa_scorecard_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3932,7 +4206,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-  CreateQaScorecard(google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const& request, Options opts = {});
+  CreateQaScorecard(
+      google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3987,7 +4264,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-  GetQaScorecard(google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const& request, Options opts = {});
+  GetQaScorecard(
+      google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4018,7 +4298,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-  UpdateQaScorecard(google::cloud::contactcenterinsights::v1::QaScorecard const& qa_scorecard, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateQaScorecard(
+      google::cloud::contactcenterinsights::v1::QaScorecard const& qa_scorecard,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4048,7 +4330,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
-  UpdateQaScorecard(google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const& request, Options opts = {});
+  UpdateQaScorecard(
+      google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4069,8 +4354,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2551}
   ///
   // clang-format on
-  Status
-  DeleteQaScorecard(std::string const& name, Options opts = {});
+  Status DeleteQaScorecard(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4096,8 +4380,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2551}
   ///
   // clang-format on
-  Status
-  DeleteQaScorecard(google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const& request, Options opts = {});
+  Status DeleteQaScorecard(
+      google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4170,7 +4456,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>
-  ListQaScorecards(google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest request, Options opts = {});
+  ListQaScorecards(
+      google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4202,7 +4490,11 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  CreateQaScorecardRevision(std::string const& parent, google::cloud::contactcenterinsights::v1::QaScorecardRevision const& qa_scorecard_revision, std::string const& qa_scorecard_revision_id, Options opts = {});
+  CreateQaScorecardRevision(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::QaScorecardRevision const&
+          qa_scorecard_revision,
+      std::string const& qa_scorecard_revision_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4232,7 +4524,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  CreateQaScorecardRevision(google::cloud::contactcenterinsights::v1::CreateQaScorecardRevisionRequest const& request, Options opts = {});
+  CreateQaScorecardRevision(google::cloud::contactcenterinsights::v1::
+                                CreateQaScorecardRevisionRequest const& request,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -4287,7 +4581,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  GetQaScorecardRevision(google::cloud::contactcenterinsights::v1::GetQaScorecardRevisionRequest const& request, Options opts = {});
+  GetQaScorecardRevision(google::cloud::contactcenterinsights::v1::
+                             GetQaScorecardRevisionRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -4327,8 +4623,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2624}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
-  TuneQaScorecardRevision(std::string const& parent, std::string const& filter, bool validate_only, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(std::string const& parent, std::string const& filter,
+                          bool validate_only, Options opts = {});
 
   // clang-format off
   ///
@@ -4341,8 +4639,9 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  TuneQaScorecardRevision(NoAwaitTag, std::string const& parent, std::string const& filter, bool validate_only, Options opts = {});
+  StatusOr<google::longrunning::Operation> TuneQaScorecardRevision(
+      NoAwaitTag, std::string const& parent, std::string const& filter,
+      bool validate_only, Options opts = {});
 
   // clang-format off
   ///
@@ -4378,8 +4677,11 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.TuneQaScorecardRevisionResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2624}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
-  TuneQaScorecardRevision(google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(google::cloud::contactcenterinsights::v1::
+                              TuneQaScorecardRevisionRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -4392,8 +4694,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  TuneQaScorecardRevision(NoAwaitTag, google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> TuneQaScorecardRevision(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          TuneQaScorecardRevisionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4404,8 +4709,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
-  TuneQaScorecardRevision(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -4435,7 +4742,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  DeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::DeployQaScorecardRevisionRequest const& request, Options opts = {});
+  DeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::
+                                DeployQaScorecardRevisionRequest const& request,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -4465,7 +4774,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  UndeployQaScorecardRevision(google::cloud::contactcenterinsights::v1::UndeployQaScorecardRevisionRequest const& request, Options opts = {});
+  UndeployQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          UndeployQaScorecardRevisionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4486,8 +4798,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2722}
   ///
   // clang-format on
-  Status
-  DeleteQaScorecardRevision(std::string const& name, Options opts = {});
+  Status DeleteQaScorecardRevision(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4513,8 +4824,10 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteQaScorecardRevisionRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2722}
   ///
   // clang-format on
-  Status
-  DeleteQaScorecardRevision(google::cloud::contactcenterinsights::v1::DeleteQaScorecardRevisionRequest const& request, Options opts = {});
+  Status DeleteQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          DeleteQaScorecardRevisionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4589,7 +4902,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
-  ListQaScorecardRevisions(google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest request, Options opts = {});
+  ListQaScorecardRevisions(
+      google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4617,7 +4933,11 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  CreateFeedbackLabel(std::string const& parent, google::cloud::contactcenterinsights::v1::FeedbackLabel const& feedback_label, std::string const& feedback_label_id, Options opts = {});
+  CreateFeedbackLabel(
+      std::string const& parent,
+      google::cloud::contactcenterinsights::v1::FeedbackLabel const&
+          feedback_label,
+      std::string const& feedback_label_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4647,7 +4967,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  CreateFeedbackLabel(google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const& request, Options opts = {});
+  CreateFeedbackLabel(google::cloud::contactcenterinsights::v1::
+                          CreateFeedbackLabelRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -4720,7 +5042,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  ListFeedbackLabels(google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest request, Options opts = {});
+  ListFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4775,7 +5100,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  GetFeedbackLabel(google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const& request, Options opts = {});
+  GetFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4801,7 +5129,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::FeedbackLabel const& feedback_label, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::FeedbackLabel const&
+          feedback_label,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4831,7 +5162,9 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const& request, Options opts = {});
+  UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::
+                          UpdateFeedbackLabelRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -4852,8 +5185,7 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2896}
   ///
   // clang-format on
-  Status
-  DeleteFeedbackLabel(std::string const& name, Options opts = {});
+  Status DeleteFeedbackLabel(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4879,8 +5211,9 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.DeleteFeedbackLabelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2896}
   ///
   // clang-format on
-  Status
-  DeleteFeedbackLabel(google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const& request, Options opts = {});
+  Status DeleteFeedbackLabel(google::cloud::contactcenterinsights::v1::
+                                 DeleteFeedbackLabelRequest const& request,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -4953,7 +5286,10 @@ class ContactCenterInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
-  ListAllFeedbackLabels(google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest request, Options opts = {});
+  ListAllFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4984,7 +5320,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2999}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsResponse>>
   BulkUploadFeedbackLabels(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -4998,8 +5335,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkUploadFeedbackLabels(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkUploadFeedbackLabels(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -5035,8 +5372,11 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.BulkUploadFeedbackLabelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L2999}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
-  BulkUploadFeedbackLabels(google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels(google::cloud::contactcenterinsights::v1::
+                               BulkUploadFeedbackLabelsRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -5049,8 +5389,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkUploadFeedbackLabels(NoAwaitTag, google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkUploadFeedbackLabels(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkUploadFeedbackLabelsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5061,8 +5404,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
-  BulkUploadFeedbackLabels(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels(google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -5093,7 +5438,8 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L3145}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDownloadFeedbackLabelsResponse>>
   BulkDownloadFeedbackLabels(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -5107,8 +5453,8 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkDownloadFeedbackLabels(NoAwaitTag, std::string const& parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkDownloadFeedbackLabels(
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -5144,8 +5490,12 @@ class ContactCenterInsightsClient {
   /// [google.cloud.contactcenterinsights.v1.BulkDownloadFeedbackLabelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L3145}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>
-  BulkDownloadFeedbackLabels(google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5158,8 +5508,11 @@ class ContactCenterInsightsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  BulkDownloadFeedbackLabels(NoAwaitTag, google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> BulkDownloadFeedbackLabels(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5170,8 +5523,10 @@ class ContactCenterInsightsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsResponse>>
-  BulkDownloadFeedbackLabels(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels(google::longrunning::Operation const& operation,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -5206,8 +5561,8 @@ class ContactCenterInsightsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -5246,8 +5601,8 @@ class ContactCenterInsightsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -5273,8 +5628,8 @@ class ContactCenterInsightsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -5305,8 +5660,9 @@ class ContactCenterInsightsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5340,8 +5696,7 @@ class ContactCenterInsightsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -5380,8 +5735,9 @@ class ContactCenterInsightsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ContactCenterInsightsConnection> connection_;

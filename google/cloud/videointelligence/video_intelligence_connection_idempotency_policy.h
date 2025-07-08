@@ -26,11 +26,17 @@ namespace cloud {
 namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use videointelligence_v1::MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::videointelligence_v1::MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// videointelligence_v1::MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::videointelligence_v1::
+    MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence

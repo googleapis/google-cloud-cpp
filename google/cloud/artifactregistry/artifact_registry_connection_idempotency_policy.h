@@ -26,11 +26,16 @@ namespace cloud {
 namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use artifactregistry_v1::MakeDefaultArtifactRegistryConnectionIdempotencyPolicy directly.
-using ::google::cloud::artifactregistry_v1::MakeDefaultArtifactRegistryConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// artifactregistry_v1::MakeDefaultArtifactRegistryConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::artifactregistry_v1::
+    MakeDefaultArtifactRegistryConnectionIdempotencyPolicy;
 
-/// @deprecated Use artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicy directly.
-using ::google::cloud::artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicy directly.
+using ::google::cloud::artifactregistry_v1::
+    ArtifactRegistryConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBLICCA_V1_INTERNAL_PUBLIC_CERTIFICATE_AUTHORITY_STUB_FACTORY_H
 
+#include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
-#include "google/cloud/publicca/v1/internal/public_certificate_authority_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -30,7 +30,8 @@ namespace cloud {
 namespace publicca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<PublicCertificateAuthorityServiceStub> CreateDefaultPublicCertificateAuthorityServiceStub(
+std::shared_ptr<PublicCertificateAuthorityServiceStub>
+CreateDefaultPublicCertificateAuthorityServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

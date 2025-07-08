@@ -32,55 +32,61 @@ AutokeyAdminTracingStub::AutokeyAdminTracingStub(
     std::shared_ptr<AutokeyAdminStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::kms::v1::AutokeyConfig> AutokeyAdminTracingStub::UpdateAutokeyConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::kms::v1::AutokeyConfig>
+AutokeyAdminTracingStub::UpdateAutokeyConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateAutokeyConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "UpdateAutokeyConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin",
+                                     "UpdateAutokeyConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateAutokeyConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateAutokeyConfig(context, options, request));
 }
 
-StatusOr<google::cloud::kms::v1::AutokeyConfig> AutokeyAdminTracingStub::GetAutokeyConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::kms::v1::AutokeyConfig>
+AutokeyAdminTracingStub::GetAutokeyConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetAutokeyConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "GetAutokeyConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin",
+                                     "GetAutokeyConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetAutokeyConfig(context, options, request));
 }
 
-StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse> AutokeyAdminTracingStub::ShowEffectiveAutokeyConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::kms::v1::ShowEffectiveAutokeyConfigResponse>
+AutokeyAdminTracingStub::ShowEffectiveAutokeyConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ShowEffectiveAutokeyConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "ShowEffectiveAutokeyConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin",
+                                     "ShowEffectiveAutokeyConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ShowEffectiveAutokeyConfig(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ShowEffectiveAutokeyConfig(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> AutokeyAdminTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+AutokeyAdminTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin",
+                                     "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> AutokeyAdminTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+AutokeyAdminTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "GetLocation");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -88,10 +94,10 @@ StatusOr<google::cloud::location::Location> AutokeyAdminTracingStub::GetLocation
 }
 
 StatusOr<google::iam::v1::Policy> AutokeyAdminTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin",
+                                     "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -99,32 +105,33 @@ StatusOr<google::iam::v1::Policy> AutokeyAdminTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> AutokeyAdminTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin",
+                                     "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> AutokeyAdminTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AutokeyAdminTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin",
+                                     "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 StatusOr<google::longrunning::Operation> AutokeyAdminTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.AutokeyAdmin",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

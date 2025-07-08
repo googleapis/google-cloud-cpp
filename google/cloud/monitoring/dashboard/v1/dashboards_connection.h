@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_DASHBOARDS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARD_V1_DASHBOARDS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/monitoring/dashboard/v1/dashboards_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -52,7 +52,8 @@ class DashboardsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DashboardsServiceLimitedErrorCountRetryPolicy : public DashboardsServiceRetryPolicy {
+class DashboardsServiceLimitedErrorCountRetryPolicy
+    : public DashboardsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class DashboardsServiceLimitedErrorCountRetryPolicy : public DashboardsServiceRe
    *     @p maximum_failures == 0.
    */
   explicit DashboardsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DashboardsServiceLimitedErrorCountRetryPolicy(
       DashboardsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DashboardsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DashboardsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DashboardsServiceLimitedErrorCountRetryPolicy(
       DashboardsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DashboardsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DashboardsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class DashboardsServiceLimitedErrorCountRetryPolicy : public DashboardsServiceRe
   using BaseType = DashboardsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<monitoring_dashboard_v1_internal::DashboardsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      monitoring_dashboard_v1_internal::DashboardsServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class DashboardsServiceLimitedErrorCountRetryPolicy : public DashboardsServiceRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DashboardsServiceLimitedTimeRetryPolicy : public DashboardsServiceRetryPolicy {
+class DashboardsServiceLimitedTimeRetryPolicy
+    : public DashboardsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class DashboardsServiceLimitedTimeRetryPolicy : public DashboardsServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit DashboardsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DashboardsServiceLimitedTimeRetryPolicy(DashboardsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : DashboardsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DashboardsServiceLimitedTimeRetryPolicy(DashboardsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : DashboardsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DashboardsServiceLimitedTimeRetryPolicy(
+      DashboardsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : DashboardsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DashboardsServiceLimitedTimeRetryPolicy(
+      DashboardsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : DashboardsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +160,23 @@ class DashboardsServiceLimitedTimeRetryPolicy : public DashboardsServiceRetryPol
   using BaseType = DashboardsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<monitoring_dashboard_v1_internal::DashboardsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      monitoring_dashboard_v1_internal::DashboardsServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `DashboardsServiceConnection` object for `DashboardsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `DashboardsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `DashboardsServiceClient`.
+ * sets in `DashboardsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `DashboardsServiceClient`.
  *
  * To create a concrete instance, see `MakeDashboardsServiceConnection()`.
  *
- * For mocking, see `monitoring_dashboard_v1_mocks::MockDashboardsServiceConnection`.
+ * For mocking, see
+ * `monitoring_dashboard_v1_mocks::MockDashboardsServiceConnection`.
  */
 class DashboardsServiceConnection {
  public:
@@ -176,30 +185,35 @@ class DashboardsServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  CreateDashboard(google::monitoring::dashboard::v1::CreateDashboardRequest const& request);
+  CreateDashboard(
+      google::monitoring::dashboard::v1::CreateDashboardRequest const& request);
 
   virtual StreamRange<google::monitoring::dashboard::v1::Dashboard>
-  ListDashboards(google::monitoring::dashboard::v1::ListDashboardsRequest request);
+  ListDashboards(
+      google::monitoring::dashboard::v1::ListDashboardsRequest request);
+
+  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
+      google::monitoring::dashboard::v1::GetDashboardRequest const& request);
+
+  virtual Status DeleteDashboard(
+      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request);
 
   virtual StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  GetDashboard(google::monitoring::dashboard::v1::GetDashboardRequest const& request);
-
-  virtual Status
-  DeleteDashboard(google::monitoring::dashboard::v1::DeleteDashboardRequest const& request);
-
-  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  UpdateDashboard(google::monitoring::dashboard::v1::UpdateDashboardRequest const& request);
+  UpdateDashboard(
+      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `DashboardsServiceConnection`.
+ * A factory function to construct an object of type
+ * `DashboardsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of DashboardsServiceClient.
+ * should be passed as an argument to the constructor of
+ * DashboardsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `DashboardsServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `DashboardsServiceConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -209,8 +223,8 @@ class DashboardsServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `DashboardsServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `DashboardsServiceConnection` created
+ * by this function.
  */
 std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
     Options options = {});

@@ -67,14 +67,14 @@ class AutoMlLimitedErrorCountRetryPolicy : public AutoMlRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit AutoMlLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   AutoMlLimitedErrorCountRetryPolicy(
       AutoMlLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AutoMlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AutoMlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AutoMlLimitedErrorCountRetryPolicy(
       AutoMlLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AutoMlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AutoMlLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +94,9 @@ class AutoMlLimitedErrorCountRetryPolicy : public AutoMlRetryPolicy {
   using BaseType = AutoMlRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<automl_v1_internal::AutoMlRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      automl_v1_internal::AutoMlRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +134,12 @@ class AutoMlLimitedTimeRetryPolicy : public AutoMlRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit AutoMlLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   AutoMlLimitedTimeRetryPolicy(AutoMlLimitedTimeRetryPolicy&& rhs) noexcept
-    : AutoMlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : AutoMlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   AutoMlLimitedTimeRetryPolicy(AutoMlLimitedTimeRetryPolicy const& rhs) noexcept
-    : AutoMlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : AutoMlLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -151,15 +153,16 @@ class AutoMlLimitedTimeRetryPolicy : public AutoMlRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<AutoMlRetryPolicy> clone() const override {
-    return std::make_unique<AutoMlLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<AutoMlLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = AutoMlRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<automl_v1_internal::AutoMlRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      automl_v1_internal::AutoMlRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,113 +183,118 @@ class AutoMlConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual future<StatusOr<google::cloud::automl::v1::Dataset>>
-  CreateDataset(google::cloud::automl::v1::CreateDatasetRequest const& request);
+  virtual future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
+      google::cloud::automl::v1::CreateDatasetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag, google::cloud::automl::v1::CreateDatasetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag,
+      google::cloud::automl::v1::CreateDatasetRequest const& request);
 
-  virtual future<StatusOr<google::cloud::automl::v1::Dataset>>
-  CreateDataset( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
+      google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::automl::v1::Dataset>
-  GetDataset(google::cloud::automl::v1::GetDatasetRequest const& request);
+  virtual StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
+      google::cloud::automl::v1::GetDatasetRequest const& request);
 
-  virtual StreamRange<google::cloud::automl::v1::Dataset>
-  ListDatasets(google::cloud::automl::v1::ListDatasetsRequest request);
+  virtual StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
+      google::cloud::automl::v1::ListDatasetsRequest request);
 
-  virtual StatusOr<google::cloud::automl::v1::Dataset>
-  UpdateDataset(google::cloud::automl::v1::UpdateDatasetRequest const& request);
+  virtual StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
+      google::cloud::automl::v1::UpdateDatasetRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   DeleteDataset(google::cloud::automl::v1::DeleteDatasetRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag, google::cloud::automl::v1::DeleteDatasetRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag,
+      google::cloud::automl::v1::DeleteDatasetRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteDataset( google::longrunning::Operation const& operation);
+  DeleteDataset(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   ImportData(google::cloud::automl::v1::ImportDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag, google::cloud::automl::v1::ImportDataRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag, google::cloud::automl::v1::ImportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ImportData( google::longrunning::Operation const& operation);
+  ImportData(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   ExportData(google::cloud::automl::v1::ExportDataRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag, google::cloud::automl::v1::ExportDataRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag, google::cloud::automl::v1::ExportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportData( google::longrunning::Operation const& operation);
+  ExportData(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::automl::v1::AnnotationSpec>
-  GetAnnotationSpec(google::cloud::automl::v1::GetAnnotationSpecRequest const& request);
+  virtual StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
+      google::cloud::automl::v1::GetAnnotationSpecRequest const& request);
 
-  virtual future<StatusOr<google::cloud::automl::v1::Model>>
-  CreateModel(google::cloud::automl::v1::CreateModelRequest const& request);
+  virtual future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
+      google::cloud::automl::v1::CreateModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateModel(NoAwaitTag, google::cloud::automl::v1::CreateModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag, google::cloud::automl::v1::CreateModelRequest const& request);
 
-  virtual future<StatusOr<google::cloud::automl::v1::Model>>
-  CreateModel( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
+      google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::automl::v1::Model>
-  GetModel(google::cloud::automl::v1::GetModelRequest const& request);
+  virtual StatusOr<google::cloud::automl::v1::Model> GetModel(
+      google::cloud::automl::v1::GetModelRequest const& request);
 
-  virtual StreamRange<google::cloud::automl::v1::Model>
-  ListModels(google::cloud::automl::v1::ListModelsRequest request);
+  virtual StreamRange<google::cloud::automl::v1::Model> ListModels(
+      google::cloud::automl::v1::ListModelsRequest request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   DeleteModel(google::cloud::automl::v1::DeleteModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag, google::cloud::automl::v1::DeleteModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag, google::cloud::automl::v1::DeleteModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteModel( google::longrunning::Operation const& operation);
+  DeleteModel(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::automl::v1::Model>
-  UpdateModel(google::cloud::automl::v1::UpdateModelRequest const& request);
+  virtual StatusOr<google::cloud::automl::v1::Model> UpdateModel(
+      google::cloud::automl::v1::UpdateModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   DeployModel(google::cloud::automl::v1::DeployModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeployModel(NoAwaitTag, google::cloud::automl::v1::DeployModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeployModel(
+      NoAwaitTag, google::cloud::automl::v1::DeployModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeployModel( google::longrunning::Operation const& operation);
+  DeployModel(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   UndeployModel(google::cloud::automl::v1::UndeployModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UndeployModel(NoAwaitTag, google::cloud::automl::v1::UndeployModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UndeployModel(
+      NoAwaitTag,
+      google::cloud::automl::v1::UndeployModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  UndeployModel( google::longrunning::Operation const& operation);
+  UndeployModel(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   ExportModel(google::cloud::automl::v1::ExportModelRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ExportModel(NoAwaitTag, google::cloud::automl::v1::ExportModelRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ExportModel(
+      NoAwaitTag, google::cloud::automl::v1::ExportModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportModel( google::longrunning::Operation const& operation);
+  ExportModel(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::automl::v1::ModelEvaluation>
-  GetModelEvaluation(google::cloud::automl::v1::GetModelEvaluationRequest const& request);
+  GetModelEvaluation(
+      google::cloud::automl::v1::GetModelEvaluationRequest const& request);
 
   virtual StreamRange<google::cloud::automl::v1::ModelEvaluation>
-  ListModelEvaluations(google::cloud::automl::v1::ListModelEvaluationsRequest request);
+  ListModelEvaluations(
+      google::cloud::automl::v1::ListModelEvaluationsRequest request);
 };
 
 /**
@@ -310,8 +318,7 @@ class AutoMlConnection {
  * @param options (optional) Configure the `AutoMlConnection` created by
  * this function.
  */
-std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(
-    Options options = {});
+std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_v1

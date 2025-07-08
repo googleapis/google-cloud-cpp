@@ -30,7 +30,8 @@ namespace cloud {
 namespace apigateway_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apigateway_v1_mocks::MockApiGatewayServiceConnection directly.
+/// @deprecated Use apigateway_v1_mocks::MockApiGatewayServiceConnection
+/// directly.
 using ::google::cloud::apigateway_v1_mocks::MockApiGatewayServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

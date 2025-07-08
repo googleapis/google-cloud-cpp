@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_MODEL_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_INTERNAL_MODEL_TRACING_STUB_H
 
+#include "google/cloud/retail/v2/internal/model_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/internal/model_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -45,38 +45,31 @@ class ModelServiceTracingStub : public ModelServiceStub {
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> GetModel(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> PauseModel(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::PauseModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> ResumeModel(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ResumeModelRequest const& request) override;
 
   Status DeleteModel(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListModelsResponse> ListModels(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListModelsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> UpdateModel(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTuneModel(
@@ -86,18 +79,15 @@ class ModelServiceTracingStub : public ModelServiceStub {
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TuneModel(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -114,7 +104,8 @@ class ModelServiceTracingStub : public ModelServiceStub {
 
  private:
   std::shared_ptr<ModelServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contentwarehouse/v1/document_schema_service.proto
 
-#include "google/cloud/common_options.h"
 #include "google/cloud/contentwarehouse/v1/document_schema_client.h"
 #include "google/cloud/contentwarehouse/v1/document_schema_connection_idempotency_policy.h"
 #include "google/cloud/contentwarehouse/v1/document_schema_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -42,17 +42,22 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto vpc_client = google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient(
-      google::cloud::contentwarehouse_v1::MakeDocumentSchemaServiceConnection(options));
+  auto vpc_client =
+      google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient(
+          google::cloud::contentwarehouse_v1::
+              MakeDocumentSchemaServiceConnection(options));
   //! [set-client-endpoint]
 }
 
 //! [custom-idempotency-policy]
 class CustomIdempotencyPolicy
-   : public google::cloud::contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicy {
+    : public google::cloud::contentwarehouse_v1::
+          DocumentSchemaServiceConnectionIdempotencyPolicy {
  public:
   ~CustomIdempotencyPolicy() override = default;
-  std::unique_ptr<google::cloud::contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicy> clone() const override {
+  std::unique_ptr<google::cloud::contentwarehouse_v1::
+                      DocumentSchemaServiceConnectionIdempotencyPolicy>
+  clone() const override {
     return std::make_unique<CustomIdempotencyPolicy>(*this);
   }
   // Override inherited functions to define as needed.
@@ -64,27 +69,43 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     throw google::cloud::testing_util::Usage{"set-client-retry-policy"};
   }
   //! [set-retry-policy]
-  auto options = google::cloud::Options{}
-    .set<google::cloud::contentwarehouse_v1::DocumentSchemaServiceConnectionIdempotencyPolicyOption>(
-      CustomIdempotencyPolicy().clone())
-    .set<google::cloud::contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>(
-      google::cloud::contentwarehouse_v1::DocumentSchemaServiceLimitedErrorCountRetryPolicy(3).clone())
-    .set<google::cloud::contentwarehouse_v1::DocumentSchemaServiceBackoffPolicyOption>(
-      google::cloud::ExponentialBackoffPolicy(
-          /*initial_delay=*/std::chrono::milliseconds(200),
-          /*maximum_delay=*/std::chrono::seconds(45),
-          /*scaling=*/2.0).clone());
-  auto connection = google::cloud::contentwarehouse_v1::MakeDocumentSchemaServiceConnection(options);
+  auto options =
+      google::cloud::Options{}
+          .set<google::cloud::contentwarehouse_v1::
+                   DocumentSchemaServiceConnectionIdempotencyPolicyOption>(
+              CustomIdempotencyPolicy().clone())
+          .set<google::cloud::contentwarehouse_v1::
+                   DocumentSchemaServiceRetryPolicyOption>(
+              google::cloud::contentwarehouse_v1::
+                  DocumentSchemaServiceLimitedErrorCountRetryPolicy(3)
+                      .clone())
+          .set<google::cloud::contentwarehouse_v1::
+                   DocumentSchemaServiceBackoffPolicyOption>(
+              google::cloud::ExponentialBackoffPolicy(
+                  /*initial_delay=*/std::chrono::milliseconds(200),
+                  /*maximum_delay=*/std::chrono::seconds(45),
+                  /*scaling=*/2.0)
+                  .clone());
+  auto connection =
+      google::cloud::contentwarehouse_v1::MakeDocumentSchemaServiceConnection(
+          options);
 
   // c1 and c2 share the same retry policies
-  auto c1 = google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient(connection);
-  auto c2 = google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient(connection);
+  auto c1 = google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient(
+      connection);
+  auto c2 = google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient(
+      connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient(
-    connection, google::cloud::Options{}.set<google::cloud::contentwarehouse_v1::DocumentSchemaServiceRetryPolicyOption>(
-      google::cloud::contentwarehouse_v1::DocumentSchemaServiceLimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
+      connection, google::cloud::Options{}
+                      .set<google::cloud::contentwarehouse_v1::
+                               DocumentSchemaServiceRetryPolicyOption>(
+                          google::cloud::contentwarehouse_v1::
+                              DocumentSchemaServiceLimitedTimeRetryPolicy(
+                                  std::chrono::minutes(5))
+                                  .clone()));
 
   // You can also override the policies in a single call:
   // c3.SomeRpc(..., google::cloud::Options{}
@@ -106,7 +127,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::contentwarehouse_v1::DocumentSchemaServiceClient(
-      google::cloud::contentwarehouse_v1::MakeDocumentSchemaServiceConnection(options));
+        google::cloud::contentwarehouse_v1::MakeDocumentSchemaServiceConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));
@@ -116,9 +138,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::internal::GetEnv;
   if (!argv.empty()) throw examples::Usage{"auto"};
-  examples::CheckEnvironmentVariablesAreSet({
-    "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"
-  });
+  examples::CheckEnvironmentVariablesAreSet(
+      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_INTERNAL_FLEET_ROUTING_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/optimization/v1/internal/fleet_routing_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -39,25 +39,25 @@ class FleetRoutingAuth : public FleetRoutingStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<FleetRoutingStub> child);
 
-  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse> OptimizeTours(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::optimization::v1::OptimizeToursRequest const& request) override;
+  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
+  OptimizeTours(grpc::ClientContext& context, Options const& options,
+                google::cloud::optimization::v1::OptimizeToursRequest const&
+                    request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchOptimizeTours(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

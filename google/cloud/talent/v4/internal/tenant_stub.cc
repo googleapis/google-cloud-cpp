@@ -32,80 +32,71 @@ TenantServiceStub::~TenantServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::Tenant>
 DefaultTenantServiceStub::CreateTenant(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::CreateTenantRequest const& request) {
-    google::cloud::talent::v4::Tenant response;
-    auto status =
-        grpc_stub_->CreateTenant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::CreateTenantRequest const& request) {
+  google::cloud::talent::v4::Tenant response;
+  auto status = grpc_stub_->CreateTenant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::talent::v4::Tenant>
-DefaultTenantServiceStub::GetTenant(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::GetTenantRequest const& request) {
-    google::cloud::talent::v4::Tenant response;
-    auto status =
-        grpc_stub_->GetTenant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::talent::v4::Tenant> DefaultTenantServiceStub::GetTenant(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::GetTenantRequest const& request) {
+  google::cloud::talent::v4::Tenant response;
+  auto status = grpc_stub_->GetTenant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::talent::v4::Tenant>
 DefaultTenantServiceStub::UpdateTenant(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::UpdateTenantRequest const& request) {
-    google::cloud::talent::v4::Tenant response;
-    auto status =
-        grpc_stub_->UpdateTenant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::UpdateTenantRequest const& request) {
+  google::cloud::talent::v4::Tenant response;
+  auto status = grpc_stub_->UpdateTenant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultTenantServiceStub::DeleteTenant(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::DeleteTenantRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteTenant(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultTenantServiceStub::DeleteTenant(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::DeleteTenantRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteTenant(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 DefaultTenantServiceStub::ListTenants(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::talent::v4::ListTenantsRequest const& request) {
-    google::cloud::talent::v4::ListTenantsResponse response;
-    auto status =
-        grpc_stub_->ListTenants(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::talent::v4::ListTenantsRequest const& request) {
+  google::cloud::talent::v4::ListTenantsResponse response;
+  auto status = grpc_stub_->ListTenants(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultTenantServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultTenantServiceStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

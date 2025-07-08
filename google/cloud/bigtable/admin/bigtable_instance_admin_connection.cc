@@ -17,12 +17,12 @@
 // source: google/bigtable/admin/v2/bigtable_instance_admin.proto
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_options.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_connection_impl.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_option_defaults.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_stub_factory.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -42,24 +42,23 @@ future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnection::CreateInstance(
     google::bigtable::admin::v2::CreateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::CreateInstance(
-    NoAwaitTag,
-    google::bigtable::admin::v2::CreateInstanceRequest const&) {
+    NoAwaitTag, google::bigtable::admin::v2::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnection::CreateInstance(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::bigtable::admin::v2::Instance>
@@ -84,8 +83,8 @@ future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnection::PartialUpdateInstance(
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -93,19 +92,18 @@ BigtableInstanceAdminConnection::PartialUpdateInstance(
     NoAwaitTag,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnection::PartialUpdateInstance(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Instance>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status
-BigtableInstanceAdminConnection::DeleteInstance(
+Status BigtableInstanceAdminConnection::DeleteInstance(
     google::bigtable::admin::v2::DeleteInstanceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -114,24 +112,23 @@ future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::CreateCluster(
     google::bigtable::admin::v2::CreateClusterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::CreateCluster(
-    NoAwaitTag,
-    google::bigtable::admin::v2::CreateClusterRequest const&) {
+    NoAwaitTag, google::bigtable::admin::v2::CreateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::CreateCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
@@ -150,32 +147,31 @@ future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::UpdateCluster(
     google::bigtable::admin::v2::Cluster const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::UpdateCluster(
-    NoAwaitTag,
-    google::bigtable::admin::v2::Cluster const&) {
+    NoAwaitTag, google::bigtable::admin::v2::Cluster const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::UpdateCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::PartialUpdateCluster(
     google::bigtable::admin::v2::PartialUpdateClusterRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -183,19 +179,18 @@ BigtableInstanceAdminConnection::PartialUpdateCluster(
     NoAwaitTag,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::PartialUpdateCluster(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::Cluster>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status
-BigtableInstanceAdminConnection::DeleteCluster(
+Status BigtableInstanceAdminConnection::DeleteCluster(
     google::bigtable::admin::v2::DeleteClusterRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -212,8 +207,10 @@ BigtableInstanceAdminConnection::GetAppProfile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::bigtable::admin::v2::AppProfile> BigtableInstanceAdminConnection::ListAppProfiles(
-    google::bigtable::admin::v2::ListAppProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::bigtable::admin::v2::AppProfile>
+BigtableInstanceAdminConnection::ListAppProfiles(
+    google::bigtable::admin::v2::
+        ListAppProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::AppProfile>>();
 }
@@ -222,40 +219,36 @@ future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminConnection::UpdateAppProfile(
     google::bigtable::admin::v2::UpdateAppProfileRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::AppProfile>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::AppProfile>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::UpdateAppProfile(
-    NoAwaitTag,
-    google::bigtable::admin::v2::UpdateAppProfileRequest const&) {
+    NoAwaitTag, google::bigtable::admin::v2::UpdateAppProfileRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminConnection::UpdateAppProfile(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::AppProfile>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::AppProfile>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status
-BigtableInstanceAdminConnection::DeleteAppProfile(
+Status BigtableInstanceAdminConnection::DeleteAppProfile(
     google::bigtable::admin::v2::DeleteAppProfileRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-BigtableInstanceAdminConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> BigtableInstanceAdminConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-BigtableInstanceAdminConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> BigtableInstanceAdminConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -266,8 +259,10 @@ BigtableInstanceAdminConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::bigtable::admin::v2::HotTablet> BigtableInstanceAdminConnection::ListHotTablets(
-    google::bigtable::admin::v2::ListHotTabletsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::bigtable::admin::v2::HotTablet>
+BigtableInstanceAdminConnection::ListHotTablets(
+    google::bigtable::admin::v2::
+        ListHotTabletsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::HotTablet>>();
 }
@@ -276,24 +271,23 @@ future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminConnection::CreateLogicalView(
     google::bigtable::admin::v2::CreateLogicalViewRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::LogicalView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::LogicalView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::CreateLogicalView(
-    NoAwaitTag,
-    google::bigtable::admin::v2::CreateLogicalViewRequest const&) {
+    NoAwaitTag, google::bigtable::admin::v2::CreateLogicalViewRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminConnection::CreateLogicalView(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::LogicalView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::LogicalView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::bigtable::admin::v2::LogicalView>
@@ -302,8 +296,10 @@ BigtableInstanceAdminConnection::GetLogicalView(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::bigtable::admin::v2::LogicalView> BigtableInstanceAdminConnection::ListLogicalViews(
-    google::bigtable::admin::v2::ListLogicalViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminConnection::ListLogicalViews(
+    google::bigtable::admin::v2::
+        ListLogicalViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::LogicalView>>();
 }
@@ -312,28 +308,26 @@ future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminConnection::UpdateLogicalView(
     google::bigtable::admin::v2::UpdateLogicalViewRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::LogicalView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::LogicalView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::UpdateLogicalView(
-    NoAwaitTag,
-    google::bigtable::admin::v2::UpdateLogicalViewRequest const&) {
+    NoAwaitTag, google::bigtable::admin::v2::UpdateLogicalViewRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::LogicalView>>
 BigtableInstanceAdminConnection::UpdateLogicalView(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::LogicalView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::LogicalView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status
-BigtableInstanceAdminConnection::DeleteLogicalView(
+Status BigtableInstanceAdminConnection::DeleteLogicalView(
     google::bigtable::admin::v2::DeleteLogicalViewRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -342,8 +336,8 @@ future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminConnection::CreateMaterializedView(
     google::bigtable::admin::v2::CreateMaterializedViewRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::MaterializedView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::MaterializedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -351,15 +345,15 @@ BigtableInstanceAdminConnection::CreateMaterializedView(
     NoAwaitTag,
     google::bigtable::admin::v2::CreateMaterializedViewRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminConnection::CreateMaterializedView(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::MaterializedView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::MaterializedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::bigtable::admin::v2::MaterializedView>
@@ -368,8 +362,10 @@ BigtableInstanceAdminConnection::GetMaterializedView(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::bigtable::admin::v2::MaterializedView> BigtableInstanceAdminConnection::ListMaterializedViews(
-    google::bigtable::admin::v2::ListMaterializedViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminConnection::ListMaterializedViews(
+    google::bigtable::admin::v2::
+        ListMaterializedViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::MaterializedView>>();
 }
@@ -378,8 +374,8 @@ future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminConnection::UpdateMaterializedView(
     google::bigtable::admin::v2::UpdateMaterializedViewRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::MaterializedView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::MaterializedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -387,37 +383,38 @@ BigtableInstanceAdminConnection::UpdateMaterializedView(
     NoAwaitTag,
     google::bigtable::admin::v2::UpdateMaterializedViewRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
 BigtableInstanceAdminConnection::UpdateMaterializedView(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::bigtable::admin::v2::MaterializedView>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::bigtable::admin::v2::MaterializedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status
-BigtableInstanceAdminConnection::DeleteMaterializedView(
+Status BigtableInstanceAdminConnection::DeleteMaterializedView(
     google::bigtable::admin::v2::DeleteMaterializedViewRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<BigtableInstanceAdminConnection> MakeBigtableInstanceAdminConnection(
-    Options options) {
+std::shared_ptr<BigtableInstanceAdminConnection>
+MakeBigtableInstanceAdminConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      BigtableInstanceAdminPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 BigtableInstanceAdminPolicyOptionList>(
+      options, __func__);
   options = bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = bigtable_admin_internal::CreateDefaultBigtableInstanceAdminStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return bigtable_admin_internal::MakeBigtableInstanceAdminTracingConnection(
-      std::make_shared<bigtable_admin_internal::BigtableInstanceAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          bigtable_admin_internal::BigtableInstanceAdminConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

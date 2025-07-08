@@ -35,42 +35,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class MetricsScopesMetadata : public MetricsScopesStub {
  public:
   ~MetricsScopesMetadata() override = default;
-  MetricsScopesMetadata(
-      std::shared_ptr<MetricsScopesStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  MetricsScopesMetadata(std::shared_ptr<MetricsScopesStub> child,
+                        std::multimap<std::string, std::string> fixed_metadata,
+                        std::string api_client_header = "");
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
+          request) override;
 
-  StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse> ListMetricsScopesByMonitoredProject(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) override;
+  StatusOr<google::monitoring::metricsscope::v1::
+               ListMetricsScopesByMonitoredProjectResponse>
+  ListMetricsScopesByMonitoredProject(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::metricsscope::v1::
+          ListMetricsScopesByMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -85,8 +88,7 @@ class MetricsScopesMetadata : public MetricsScopesStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

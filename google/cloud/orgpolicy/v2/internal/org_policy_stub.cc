@@ -32,158 +32,149 @@ OrgPolicyStub::~OrgPolicyStub() = default;
 
 StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
 DefaultOrgPolicyStub::ListConstraints(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
-    google::cloud::orgpolicy::v2::ListConstraintsResponse response;
-    auto status =
-        grpc_stub_->ListConstraints(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
+  google::cloud::orgpolicy::v2::ListConstraintsResponse response;
+  auto status = grpc_stub_->ListConstraints(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
 DefaultOrgPolicyStub::ListPolicies(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
-    google::cloud::orgpolicy::v2::ListPoliciesResponse response;
-    auto status =
-        grpc_stub_->ListPolicies(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
+  google::cloud::orgpolicy::v2::ListPoliciesResponse response;
+  auto status = grpc_stub_->ListPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::orgpolicy::v2::Policy>
-DefaultOrgPolicyStub::GetPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
-    google::cloud::orgpolicy::v2::Policy response;
-    auto status =
-        grpc_stub_->GetPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::orgpolicy::v2::Policy> DefaultOrgPolicyStub::GetPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
+  google::cloud::orgpolicy::v2::Policy response;
+  auto status = grpc_stub_->GetPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::GetEffectivePolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
-    google::cloud::orgpolicy::v2::Policy response;
-    auto status =
-        grpc_stub_->GetEffectivePolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
+  google::cloud::orgpolicy::v2::Policy response;
+  auto status = grpc_stub_->GetEffectivePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::CreatePolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
-    google::cloud::orgpolicy::v2::Policy response;
-    auto status =
-        grpc_stub_->CreatePolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
+  google::cloud::orgpolicy::v2::Policy response;
+  auto status = grpc_stub_->CreatePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::UpdatePolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
-    google::cloud::orgpolicy::v2::Policy response;
-    auto status =
-        grpc_stub_->UpdatePolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
+  google::cloud::orgpolicy::v2::Policy response;
+  auto status = grpc_stub_->UpdatePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultOrgPolicyStub::DeletePolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeletePolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultOrgPolicyStub::DeletePolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeletePolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 DefaultOrgPolicyStub::CreateCustomConstraint(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request) {
-    google::cloud::orgpolicy::v2::CustomConstraint response;
-    auto status =
-        grpc_stub_->CreateCustomConstraint(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+        request) {
+  google::cloud::orgpolicy::v2::CustomConstraint response;
+  auto status =
+      grpc_stub_->CreateCustomConstraint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 DefaultOrgPolicyStub::UpdateCustomConstraint(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request) {
-    google::cloud::orgpolicy::v2::CustomConstraint response;
-    auto status =
-        grpc_stub_->UpdateCustomConstraint(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+        request) {
+  google::cloud::orgpolicy::v2::CustomConstraint response;
+  auto status =
+      grpc_stub_->UpdateCustomConstraint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 DefaultOrgPolicyStub::GetCustomConstraint(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
-    google::cloud::orgpolicy::v2::CustomConstraint response;
-    auto status =
-        grpc_stub_->GetCustomConstraint(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+  google::cloud::orgpolicy::v2::CustomConstraint response;
+  auto status = grpc_stub_->GetCustomConstraint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
 DefaultOrgPolicyStub::ListCustomConstraints(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
-    google::cloud::orgpolicy::v2::ListCustomConstraintsResponse response;
-    auto status =
-        grpc_stub_->ListCustomConstraints(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
+  google::cloud::orgpolicy::v2::ListCustomConstraintsResponse response;
+  auto status = grpc_stub_->ListCustomConstraints(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultOrgPolicyStub::DeleteCustomConstraint(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteCustomConstraint(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultOrgPolicyStub::DeleteCustomConstraint(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteCustomConstraint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

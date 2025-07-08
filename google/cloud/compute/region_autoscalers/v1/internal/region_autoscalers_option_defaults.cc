@@ -35,32 +35,50 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionAutoscalersDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGION_AUTOSCALERS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_REGION_AUTOSCALERS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_REGION_AUTOSCALERS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REGION_AUTOSCALERS_AUTHORITY",
       "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>()) {
-    options.set<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>(
+  if (!options.has<compute_region_autoscalers_v1::
+                       RegionAutoscalersRetryPolicyOption>()) {
+    options.set<
+        compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>(
         compute_region_autoscalers_v1::RegionAutoscalersLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_region_autoscalers_v1::RegionAutoscalersBackoffPolicyOption>()) {
-    options.set<compute_region_autoscalers_v1::RegionAutoscalersBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<compute_region_autoscalers_v1::
+                       RegionAutoscalersBackoffPolicyOption>()) {
+    options.set<
+        compute_region_autoscalers_v1::RegionAutoscalersBackoffPolicyOption>(
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_region_autoscalers_v1::RegionAutoscalersPollingPolicyOption>()) {
-    options.set<compute_region_autoscalers_v1::RegionAutoscalersPollingPolicyOption>(
-        GenericPollingPolicy<
-            compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption::Type,
-            compute_region_autoscalers_v1::RegionAutoscalersBackoffPolicyOption::Type>(
-            options.get<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>()->clone(),
+  if (!options.has<compute_region_autoscalers_v1::
+                       RegionAutoscalersPollingPolicyOption>()) {
+    options.set<
+        compute_region_autoscalers_v1::RegionAutoscalersPollingPolicyOption>(
+        GenericPollingPolicy<compute_region_autoscalers_v1::
+                                 RegionAutoscalersRetryPolicyOption::Type,
+                             compute_region_autoscalers_v1::
+                                 RegionAutoscalersBackoffPolicyOption::Type>(
+            options
+                .get<compute_region_autoscalers_v1::
+                         RegionAutoscalersRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<compute_region_autoscalers_v1::RegionAutoscalersConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_region_autoscalers_v1::RegionAutoscalersConnectionIdempotencyPolicyOption>(
-        compute_region_autoscalers_v1::MakeDefaultRegionAutoscalersConnectionIdempotencyPolicy());
+  if (!options.has<compute_region_autoscalers_v1::
+                       RegionAutoscalersConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_region_autoscalers_v1::
+                    RegionAutoscalersConnectionIdempotencyPolicyOption>(
+        compute_region_autoscalers_v1::
+            MakeDefaultRegionAutoscalersConnectionIdempotencyPolicy());
   }
 
   return options;

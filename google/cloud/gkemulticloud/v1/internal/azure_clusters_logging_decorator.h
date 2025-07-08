@@ -43,163 +43,176 @@ class AzureClustersLogging : public AzureClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) override;
+      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateAzureClient(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request)
+      override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse> ListAzureClients(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
+  ListAzureClients(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAzureClient(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) override;
+      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteAzureClient(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAzureCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request) override;
+      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateAzureCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAzureCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request) override;
+      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAzureCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+          request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse> ListAzureClusters(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
+  ListAzureClusters(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAzureCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request) override;
+      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAzureCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+          request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse> GenerateAzureClusterAgentToken(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenRequest const& request) override;
+  StatusOr<
+      google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
+  GenerateAzureClusterAgentToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::
+          GenerateAzureClusterAgentTokenRequest const& request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse> GenerateAzureAccessToken(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
+  GenerateAzureAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAzureNodePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request) override;
+      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateAzureNodePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAzureNodePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request) override;
+      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+          request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse> ListAzureNodePools(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
+  ListAzureNodePools(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAzureNodePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request) override;
+      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+          request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig> GetAzureOpenIdConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
+  GetAzureOpenIdConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys> GetAzureJsonWebKeys(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
+  GetAzureJsonWebKeys(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
+          request) override;
 
-  StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig> GetAzureServerConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const& request) override;
+  StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
+  GetAzureServerConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

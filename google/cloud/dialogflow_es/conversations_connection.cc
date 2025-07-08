@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/conversation.proto
 
 #include "google/cloud/dialogflow_es/conversations_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/conversations_options.h"
 #include "google/cloud/dialogflow_es/internal/conversations_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/conversations_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/conversations_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/conversations_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -44,8 +44,10 @@ ConversationsConnection::CreateConversation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dialogflow::v2::Conversation> ConversationsConnection::ListConversations(
-    google::cloud::dialogflow::v2::ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::Conversation>
+ConversationsConnection::ListConversations(
+    google::cloud::dialogflow::v2::
+        ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Conversation>>();
 }
@@ -68,8 +70,10 @@ ConversationsConnection::IngestContextReferences(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dialogflow::v2::Message> ConversationsConnection::ListMessages(
-    google::cloud::dialogflow::v2::ListMessagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dialogflow::v2::Message>
+ConversationsConnection::ListMessages(
+    google::cloud::dialogflow::v2::
+        ListMessagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Message>>();
 }
@@ -104,8 +108,10 @@ ConversationsConnection::GenerateSuggestions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> ConversationsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ConversationsConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -116,20 +122,20 @@ ConversationsConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> ConversationsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ConversationsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-ConversationsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> ConversationsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConversationsConnection::CancelOperation(
+Status ConversationsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -137,17 +143,18 @@ ConversationsConnection::CancelOperation(
 std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ConversationsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ConversationsPolicyOptionList>(options,
+                                                                __func__);
   options = dialogflow_es_internal::ConversationsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultConversationsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dialogflow_es_internal::MakeConversationsTracingConnection(
       std::make_shared<dialogflow_es_internal::ConversationsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ConversationsConnection> MakeConversationsConnection(

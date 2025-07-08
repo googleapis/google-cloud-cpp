@@ -30,22 +30,19 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GeneratorsLogging::GeneratorsLogging(
-    std::shared_ptr<GeneratorsStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+GeneratorsLogging::GeneratorsLogging(std::shared_ptr<GeneratorsStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::dialogflow::v2::Generator>
 GeneratorsLogging::CreateGenerator(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateGeneratorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::CreateGeneratorRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::CreateGeneratorRequest const&
+                 request) {
         return child_->CreateGenerator(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ GeneratorsLogging::CreateGenerator(
 
 StatusOr<google::cloud::dialogflow::v2::Generator>
 GeneratorsLogging::GetGenerator(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetGeneratorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::GetGeneratorRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::GetGeneratorRequest const& request) {
         return child_->GetGenerator(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,27 +63,24 @@ GeneratorsLogging::GetGenerator(
 
 StatusOr<google::cloud::dialogflow::v2::ListGeneratorsResponse>
 GeneratorsLogging::ListGenerators(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListGeneratorsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::ListGeneratorsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::ListGeneratorsRequest const& request) {
         return child_->ListGenerators(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-GeneratorsLogging::DeleteGenerator(
-    grpc::ClientContext& context,
-    Options const& options,
+Status GeneratorsLogging::DeleteGenerator(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::DeleteGeneratorRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::DeleteGeneratorRequest const&
+                 request) {
         return child_->DeleteGenerator(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +88,12 @@ GeneratorsLogging::DeleteGenerator(
 
 StatusOr<google::cloud::dialogflow::v2::Generator>
 GeneratorsLogging::UpdateGenerator(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::dialogflow::v2::UpdateGeneratorRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::UpdateGeneratorRequest const&
+                 request) {
         return child_->UpdateGenerator(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,26 +101,21 @@ GeneratorsLogging::UpdateGenerator(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 GeneratorsLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-GeneratorsLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> GeneratorsLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -137,40 +124,32 @@ GeneratorsLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 GeneratorsLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-GeneratorsLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> GeneratorsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-GeneratorsLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status GeneratorsLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

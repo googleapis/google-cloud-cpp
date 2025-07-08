@@ -19,9 +19,9 @@
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_option_defaults.h"
 #include "google/cloud/aiplatform/v1/feature_online_store_connection.h"
 #include "google/cloud/aiplatform/v1/feature_online_store_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,25 +34,36 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options FeatureOnlineStoreServiceDefaultOptions(std::string const& location, Options options) {
+Options FeatureOnlineStoreServiceDefaultOptions(std::string const& location,
+                                                Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FEATURE_ONLINE_STORE_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FEATURE_ONLINE_STORE_SERVICE_AUTHORITY",
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_FEATURE_ONLINE_STORE_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FEATURE_ONLINE_STORE_SERVICE_AUTHORITY",
       absl::StrCat(location, "-", "aiplatform.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<aiplatform_v1::FeatureOnlineStoreServiceRetryPolicyOption>()) {
+  if (!options
+           .has<aiplatform_v1::FeatureOnlineStoreServiceRetryPolicyOption>()) {
     options.set<aiplatform_v1::FeatureOnlineStoreServiceRetryPolicyOption>(
         aiplatform_v1::FeatureOnlineStoreServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<aiplatform_v1::FeatureOnlineStoreServiceBackoffPolicyOption>()) {
+  if (!options.has<
+          aiplatform_v1::FeatureOnlineStoreServiceBackoffPolicyOption>()) {
     options.set<aiplatform_v1::FeatureOnlineStoreServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<aiplatform_v1::FeatureOnlineStoreServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<aiplatform_v1::FeatureOnlineStoreServiceConnectionIdempotencyPolicyOption>(
-        aiplatform_v1::MakeDefaultFeatureOnlineStoreServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          aiplatform_v1::
+              FeatureOnlineStoreServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<aiplatform_v1::
+                    FeatureOnlineStoreServiceConnectionIdempotencyPolicyOption>(
+        aiplatform_v1::
+            MakeDefaultFeatureOnlineStoreServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -36,54 +36,69 @@ class PrincipalAccessBoundaryPoliciesTracingConnection
   ~PrincipalAccessBoundaryPoliciesTracingConnection() override = default;
 
   explicit PrincipalAccessBoundaryPoliciesTracingConnection(
-    std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesConnection> child);
+      std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  CreatePrincipalAccessBoundaryPolicy(google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
+  CreatePrincipalAccessBoundaryPolicy(
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreatePrincipalAccessBoundaryPolicy(NoAwaitTag,
-      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreatePrincipalAccessBoundaryPolicy(
+      NoAwaitTag,
+      google::iam::v3::CreatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
   CreatePrincipalAccessBoundaryPolicy(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  GetPrincipalAccessBoundaryPolicy(google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request) override;
+  GetPrincipalAccessBoundaryPolicy(
+      google::iam::v3::GetPrincipalAccessBoundaryPolicyRequest const& request)
+      override;
 
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
-  UpdatePrincipalAccessBoundaryPolicy(google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
+  UpdatePrincipalAccessBoundaryPolicy(
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdatePrincipalAccessBoundaryPolicy(NoAwaitTag,
-      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdatePrincipalAccessBoundaryPolicy(
+      NoAwaitTag,
+      google::iam::v3::UpdatePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
   UpdatePrincipalAccessBoundaryPolicy(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::iam::v3::OperationMetadata>>
-  DeletePrincipalAccessBoundaryPolicy(google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
+  DeletePrincipalAccessBoundaryPolicy(
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeletePrincipalAccessBoundaryPolicy(NoAwaitTag,
-      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeletePrincipalAccessBoundaryPolicy(
+      NoAwaitTag,
+      google::iam::v3::DeletePrincipalAccessBoundaryPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::iam::v3::OperationMetadata>>
   DeletePrincipalAccessBoundaryPolicy(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
-  ListPrincipalAccessBoundaryPolicies(google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request) override;
+  ListPrincipalAccessBoundaryPolicies(
+      google::iam::v3::ListPrincipalAccessBoundaryPoliciesRequest request)
+      override;
 
   StreamRange<google::iam::v3::PolicyBinding>
-  SearchPrincipalAccessBoundaryPolicyBindings(google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest request) override;
+  SearchPrincipalAccessBoundaryPolicyBindings(
+      google::iam::v3::SearchPrincipalAccessBoundaryPolicyBindingsRequest
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::shared_ptr<iam_v3::PrincipalAccessBoundaryPoliciesConnection> child_;

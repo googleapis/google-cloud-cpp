@@ -26,44 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EssentialContactsServiceConnectionIdempotencyPolicy::~EssentialContactsServiceConnectionIdempotencyPolicy() = default;
+EssentialContactsServiceConnectionIdempotencyPolicy::
+    ~EssentialContactsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<EssentialContactsServiceConnectionIdempotencyPolicy>
 EssentialContactsServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<EssentialContactsServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<EssentialContactsServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::CreateContact(google::cloud::essentialcontacts::v1::CreateContactRequest const&) {
+Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::CreateContact(
+    google::cloud::essentialcontacts::v1::CreateContactRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::UpdateContact(google::cloud::essentialcontacts::v1::UpdateContactRequest const&) {
+Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::UpdateContact(
+    google::cloud::essentialcontacts::v1::UpdateContactRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::ListContacts(google::cloud::essentialcontacts::v1::ListContactsRequest) {  // NOLINT
+Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::ListContacts(
+    google::cloud::essentialcontacts::v1::ListContactsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::GetContact(google::cloud::essentialcontacts::v1::GetContactRequest const&) {
+Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::GetContact(
+    google::cloud::essentialcontacts::v1::GetContactRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::DeleteContact(google::cloud::essentialcontacts::v1::DeleteContactRequest const&) {
+Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::DeleteContact(
+    google::cloud::essentialcontacts::v1::DeleteContactRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::ComputeContacts(google::cloud::essentialcontacts::v1::ComputeContactsRequest) {  // NOLINT
+Idempotency
+EssentialContactsServiceConnectionIdempotencyPolicy::ComputeContacts(
+    google::cloud::essentialcontacts::v1::ComputeContactsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EssentialContactsServiceConnectionIdempotencyPolicy::SendTestMessage(google::cloud::essentialcontacts::v1::SendTestMessageRequest const&) {
+Idempotency
+EssentialContactsServiceConnectionIdempotencyPolicy::SendTestMessage(
+    google::cloud::essentialcontacts::v1::SendTestMessageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<EssentialContactsServiceConnectionIdempotencyPolicy>
-    MakeDefaultEssentialContactsServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<EssentialContactsServiceConnectionIdempotencyPolicy>();
+MakeDefaultEssentialContactsServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      EssentialContactsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

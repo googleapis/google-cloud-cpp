@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `CloudChannelReportsServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudChannelReportsServiceClient`. To do so,
- * construct an object of type `CloudChannelReportsServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `CloudChannelReportsServiceClient`.
+ * To do so, construct an object of type `CloudChannelReportsServiceClient` with
+ * an instance of this class. Then use the Google Test framework functions to
+ * program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCloudChannelReportsServiceConnection : public channel_v1::CloudChannelReportsServiceConnection {
+class MockCloudChannelReportsServiceConnection
+    : public channel_v1::CloudChannelReportsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,15 @@ class MockCloudChannelReportsServiceConnection : public channel_v1::CloudChannel
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RunReportJob(Matcher<google::cloud::channel::v1::RunReportJobRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// RunReportJob(Matcher<google::cloud::channel::v1::RunReportJobRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
-  RunReportJob,
-  (google::cloud::channel::v1::RunReportJobRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
+      RunReportJob,
+      (google::cloud::channel::v1::RunReportJobRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,45 +68,47 @@ class MockCloudChannelReportsServiceConnection : public channel_v1::CloudChannel
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RunReportJob(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RunReportJob, (NoAwaitTag,
-    google::cloud::channel::v1::RunReportJobRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RunReportJob,
+              (NoAwaitTag,
+               google::cloud::channel::v1::RunReportJobRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RunReportJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RunReportJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
-  RunReportJob, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
+      RunReportJob, (google::longrunning::Operation const& operation),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::channel::v1::Row>),
-  FetchReportResults,
-  (google::cloud::channel::v1::FetchReportResultsRequest request), (override));
+              FetchReportResults,
+              (google::cloud::channel::v1::FetchReportResultsRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Report>),
-  ListReports,
-  (google::cloud::channel::v1::ListReportsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::channel::v1::Report>), ListReports,
+              (google::cloud::channel::v1::ListReportsRequest request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

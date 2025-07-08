@@ -31,21 +31,18 @@ namespace parallelstore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ParallelstoreLogging::ParallelstoreLogging(
-    std::shared_ptr<ParallelstoreStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ParallelstoreStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::parallelstore::v1::ListInstancesResponse>
 ParallelstoreLogging::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parallelstore::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parallelstore::v1::ListInstancesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parallelstore::v1::ListInstancesRequest const&
+                 request) {
         return child_->ListInstances(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ ParallelstoreLogging::ListInstances(
 
 StatusOr<google::cloud::parallelstore::v1::Instance>
 ParallelstoreLogging::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,31 +63,30 @@ ParallelstoreLogging::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreLogging::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
-        return child_->AsyncCreateInstance(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::parallelstore::v1::CreateInstanceRequest const&
+                 request) {
+        return child_->AsyncCreateInstance(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreLogging::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> ParallelstoreLogging::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parallelstore::v1::CreateInstanceRequest const&
+                 request) {
         return child_->CreateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,31 +94,30 @@ ParallelstoreLogging::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreLogging::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
-        return child_->AsyncUpdateInstance(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::parallelstore::v1::UpdateInstanceRequest const&
+                 request) {
+        return child_->AsyncUpdateInstance(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreLogging::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> ParallelstoreLogging::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parallelstore::v1::UpdateInstanceRequest const&
+                 request) {
         return child_->UpdateInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,31 +125,30 @@ ParallelstoreLogging::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreLogging::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
-        return child_->AsyncDeleteInstance(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::parallelstore::v1::DeleteInstanceRequest const&
+                 request) {
+        return child_->AsyncDeleteInstance(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreLogging::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> ParallelstoreLogging::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parallelstore::v1::DeleteInstanceRequest const&
+                 request) {
         return child_->DeleteInstance(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,31 +156,30 @@ ParallelstoreLogging::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreLogging::AsyncImportData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::parallelstore::v1::ImportDataRequest const& request) {
-        return child_->AsyncImportData(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+        return child_->AsyncImportData(cq, std::move(context),
+                                       std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreLogging::ImportData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+StatusOr<google::longrunning::Operation> ParallelstoreLogging::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::parallelstore::v1::ImportDataRequest const& request) {
         return child_->ImportData(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -195,31 +187,30 @@ ParallelstoreLogging::ImportData(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreLogging::AsyncExportData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::parallelstore::v1::ExportDataRequest const& request) {
-        return child_->AsyncExportData(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+        return child_->AsyncExportData(cq, std::move(context),
+                                       std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreLogging::ExportData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+StatusOr<google::longrunning::Operation> ParallelstoreLogging::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::parallelstore::v1::ExportDataRequest const& request) {
         return child_->ExportData(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -227,26 +218,21 @@ ParallelstoreLogging::ExportData(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ParallelstoreLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-ParallelstoreLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> ParallelstoreLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
@@ -255,54 +241,43 @@ ParallelstoreLogging::GetLocation(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ParallelstoreLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ParallelstoreLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ParallelstoreLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ParallelstoreLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ParallelstoreLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ParallelstoreLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
@@ -320,8 +295,8 @@ ParallelstoreLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -337,8 +312,8 @@ future<Status> ParallelstoreLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

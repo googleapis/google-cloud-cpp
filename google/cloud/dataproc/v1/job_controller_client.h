@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class JobControllerClient {
  public:
-  explicit JobControllerClient(std::shared_ptr<JobControllerConnection> connection, Options opts = {});
+  explicit JobControllerClient(
+      std::shared_ptr<JobControllerConnection> connection, Options opts = {});
   ~JobControllerClient();
 
   ///@{
@@ -77,10 +78,12 @@ class JobControllerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(JobControllerClient const& a, JobControllerClient const& b) {
+  friend bool operator==(JobControllerClient const& a,
+                         JobControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(JobControllerClient const& a, JobControllerClient const& b) {
+  friend bool operator!=(JobControllerClient const& a,
+                         JobControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -110,8 +113,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L867}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Job>
-  SubmitJob(std::string const& project_id, std::string const& region, google::cloud::dataproc::v1::Job const& job, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
+      std::string const& project_id, std::string const& region,
+      google::cloud::dataproc::v1::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -140,8 +144,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L867}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Job>
-  SubmitJob(google::cloud::dataproc::v1::SubmitJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
+      google::cloud::dataproc::v1::SubmitJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -175,8 +180,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L867}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Job>>
-  SubmitJobAsOperation(std::string const& project_id, std::string const& region, google::cloud::dataproc::v1::Job const& job, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
+      std::string const& project_id, std::string const& region,
+      google::cloud::dataproc::v1::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -189,8 +195,9 @@ class JobControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SubmitJobAsOperation(NoAwaitTag, std::string const& project_id, std::string const& region, google::cloud::dataproc::v1::Job const& job, Options opts = {});
+  StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
+      NoAwaitTag, std::string const& project_id, std::string const& region,
+      google::cloud::dataproc::v1::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -226,8 +233,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L867}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Job>>
-  SubmitJobAsOperation(google::cloud::dataproc::v1::SubmitJobRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
+      google::cloud::dataproc::v1::SubmitJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -240,8 +248,9 @@ class JobControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SubmitJobAsOperation(NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
+      NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -252,8 +261,8 @@ class JobControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Job>>
-  SubmitJobAsOperation(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -280,8 +289,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Job>
-  GetJob(std::string const& project_id, std::string const& region, std::string const& job_id, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Job> GetJob(
+      std::string const& project_id, std::string const& region,
+      std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -310,8 +320,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Job>
-  GetJob(google::cloud::dataproc::v1::GetJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Job> GetJob(
+      google::cloud::dataproc::v1::GetJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -346,8 +357,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L923}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Job>
-  ListJobs(std::string const& project_id, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
+      std::string const& project_id, std::string const& region,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -396,8 +408,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L923}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Job>
-  ListJobs(std::string const& project_id, std::string const& region, std::string const& filter, Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
+      std::string const& project_id, std::string const& region,
+      std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -435,8 +448,8 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L923}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Job>
-  ListJobs(google::cloud::dataproc::v1::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
+      google::cloud::dataproc::v1::ListJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -465,8 +478,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.UpdateJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L980}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Job>
-  UpdateJob(google::cloud::dataproc::v1::UpdateJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
+      google::cloud::dataproc::v1::UpdateJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -497,8 +511,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Job>
-  CancelJob(std::string const& project_id, std::string const& region, std::string const& job_id, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
+      std::string const& project_id, std::string const& region,
+      std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -531,8 +546,9 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Job>
-  CancelJob(google::cloud::dataproc::v1::CancelJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
+      google::cloud::dataproc::v1::CancelJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -557,8 +573,8 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L1035}
   ///
   // clang-format on
-  Status
-  DeleteJob(std::string const& project_id, std::string const& region, std::string const& job_id, Options opts = {});
+  Status DeleteJob(std::string const& project_id, std::string const& region,
+                   std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -585,8 +601,8 @@ class JobControllerClient {
   /// [google.cloud.dataproc.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L1035}
   ///
   // clang-format on
-  Status
-  DeleteJob(google::cloud::dataproc::v1::DeleteJobRequest const& request, Options opts = {});
+  Status DeleteJob(google::cloud::dataproc::v1::DeleteJobRequest const& request,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -618,8 +634,8 @@ class JobControllerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -650,8 +666,8 @@ class JobControllerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -686,8 +702,9 @@ class JobControllerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -722,8 +739,8 @@ class JobControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -762,8 +779,8 @@ class JobControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -789,8 +806,8 @@ class JobControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -821,8 +838,9 @@ class JobControllerClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -846,8 +864,7 @@ class JobControllerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -876,8 +893,9 @@ class JobControllerClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -911,8 +929,7 @@ class JobControllerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -951,8 +968,9 @@ class JobControllerClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<JobControllerConnection> connection_;

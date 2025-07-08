@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_WEBHOOKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_WEBHOOKS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_retry_traits.h"
 #include "google/cloud/dialogflow_cx/webhooks_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -63,14 +63,14 @@ class WebhooksLimitedErrorCountRetryPolicy : public WebhooksRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit WebhooksLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   WebhooksLimitedErrorCountRetryPolicy(
       WebhooksLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : WebhooksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : WebhooksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   WebhooksLimitedErrorCountRetryPolicy(
       WebhooksLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : WebhooksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : WebhooksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +90,9 @@ class WebhooksLimitedErrorCountRetryPolicy : public WebhooksRetryPolicy {
   using BaseType = WebhooksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::WebhooksRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_cx_internal::WebhooksRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +130,13 @@ class WebhooksLimitedTimeRetryPolicy : public WebhooksRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit WebhooksLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   WebhooksLimitedTimeRetryPolicy(WebhooksLimitedTimeRetryPolicy&& rhs) noexcept
-    : WebhooksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  WebhooksLimitedTimeRetryPolicy(WebhooksLimitedTimeRetryPolicy const& rhs) noexcept
-    : WebhooksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : WebhooksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  WebhooksLimitedTimeRetryPolicy(
+      WebhooksLimitedTimeRetryPolicy const& rhs) noexcept
+      : WebhooksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -147,15 +150,16 @@ class WebhooksLimitedTimeRetryPolicy : public WebhooksRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<WebhooksRetryPolicy> clone() const override {
-    return std::make_unique<WebhooksLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<WebhooksLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = WebhooksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::WebhooksRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_cx_internal::WebhooksRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,35 +180,35 @@ class WebhooksConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
-  ListWebhooks(google::cloud::dialogflow::cx::v3::ListWebhooksRequest request);
+  virtual StreamRange<google::cloud::dialogflow::cx::v3::Webhook> ListWebhooks(
+      google::cloud::dialogflow::cx::v3::ListWebhooksRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  GetWebhook(google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
+      google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  CreateWebhook(google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
+      google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  UpdateWebhook(google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
+      google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request);
 
-  virtual Status
-  DeleteWebhook(google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request);
+  virtual Status DeleteWebhook(
+      google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

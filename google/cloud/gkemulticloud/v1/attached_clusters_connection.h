@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_ATTACHED_CLUSTERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_ATTACHED_CLUSTERS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
 #include "google/cloud/gkemulticloud/v1/attached_clusters_connection_idempotency_policy.h"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -57,7 +57,8 @@ class AttachedClustersRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AttachedClustersLimitedErrorCountRetryPolicy : public AttachedClustersRetryPolicy {
+class AttachedClustersLimitedErrorCountRetryPolicy
+    : public AttachedClustersRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,14 @@ class AttachedClustersLimitedErrorCountRetryPolicy : public AttachedClustersRetr
    *     @p maximum_failures == 0.
    */
   explicit AttachedClustersLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   AttachedClustersLimitedErrorCountRetryPolicy(
       AttachedClustersLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AttachedClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AttachedClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AttachedClustersLimitedErrorCountRetryPolicy(
       AttachedClustersLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AttachedClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AttachedClustersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +95,9 @@ class AttachedClustersLimitedErrorCountRetryPolicy : public AttachedClustersRetr
   using BaseType = AttachedClustersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<gkemulticloud_v1_internal::AttachedClustersRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      gkemulticloud_v1_internal::AttachedClustersRetryTraits>
+      impl_;
 };
 
 /**
@@ -107,7 +110,8 @@ class AttachedClustersLimitedErrorCountRetryPolicy : public AttachedClustersRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AttachedClustersLimitedTimeRetryPolicy : public AttachedClustersRetryPolicy {
+class AttachedClustersLimitedTimeRetryPolicy
+    : public AttachedClustersRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -132,12 +136,14 @@ class AttachedClustersLimitedTimeRetryPolicy : public AttachedClustersRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit AttachedClustersLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AttachedClustersLimitedTimeRetryPolicy(AttachedClustersLimitedTimeRetryPolicy&& rhs) noexcept
-    : AttachedClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AttachedClustersLimitedTimeRetryPolicy(AttachedClustersLimitedTimeRetryPolicy const& rhs) noexcept
-    : AttachedClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AttachedClustersLimitedTimeRetryPolicy(
+      AttachedClustersLimitedTimeRetryPolicy&& rhs) noexcept
+      : AttachedClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AttachedClustersLimitedTimeRetryPolicy(
+      AttachedClustersLimitedTimeRetryPolicy const& rhs) noexcept
+      : AttachedClustersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,7 +165,9 @@ class AttachedClustersLimitedTimeRetryPolicy : public AttachedClustersRetryPolic
   using BaseType = AttachedClustersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<gkemulticloud_v1_internal::AttachedClustersRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      gkemulticloud_v1_internal::AttachedClustersRetryTraits>
+      impl_;
 };
 
 /**
@@ -181,78 +189,106 @@ class AttachedClustersConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  CreateAttachedCluster(google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request);
+  CreateAttachedCluster(
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  CreateAttachedCluster( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  UpdateAttachedCluster(google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAttachedCluster(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  UpdateAttachedCluster( google::longrunning::Operation const& operation);
+  CreateAttachedCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  ImportAttachedCluster(google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request);
+  UpdateAttachedCluster(
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  ImportAttachedCluster( google::longrunning::Operation const& operation);
+  UpdateAttachedCluster(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+  ImportAttachedCluster(
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportAttachedCluster(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+  ImportAttachedCluster(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
-  GetAttachedCluster(google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request);
+  GetAttachedCluster(
+      google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
+          request);
 
   virtual StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
-  ListAttachedClusters(google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request);
+  ListAttachedClusters(
+      google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAttachedCluster(google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request);
+  DeleteAttachedCluster(
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
+      NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAttachedCluster( google::longrunning::Operation const& operation);
+  DeleteAttachedCluster(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
-  GetAttachedServerConfig(google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request);
+  GetAttachedServerConfig(
+      google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse>
-  GenerateAttachedClusterInstallManifest(google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request);
+  virtual StatusOr<google::cloud::gkemulticloud::v1::
+                       GenerateAttachedClusterInstallManifestResponse>
+  GenerateAttachedClusterInstallManifest(
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterInstallManifestRequest const& request);
 
-  virtual StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
-  GenerateAttachedClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request);
+  virtual StatusOr<google::cloud::gkemulticloud::v1::
+                       GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(
+      google::cloud::gkemulticloud::v1::
+          GenerateAttachedClusterAgentTokenRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `AttachedClustersConnection`.
+ * A factory function to construct an object of type
+ * `AttachedClustersConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of AttachedClustersClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AttachedClustersConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `AttachedClustersConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -263,8 +299,8 @@ class AttachedClustersConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `AttachedClustersConnection` created by
- * this function.
+ * @param options (optional) Configure the `AttachedClustersConnection` created
+ * by this function.
  */
 std::shared_ptr<AttachedClustersConnection> MakeAttachedClustersConnection(
     std::string const& location, Options options = {});

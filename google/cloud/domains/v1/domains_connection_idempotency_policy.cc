@@ -26,75 +26,91 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DomainsConnectionIdempotencyPolicy::~DomainsConnectionIdempotencyPolicy() = default;
+DomainsConnectionIdempotencyPolicy::~DomainsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<DomainsConnectionIdempotencyPolicy>
 DomainsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DomainsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::SearchDomains(google::cloud::domains::v1::SearchDomainsRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::SearchDomains(
+    google::cloud::domains::v1::SearchDomainsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::RetrieveRegisterParameters(google::cloud::domains::v1::RetrieveRegisterParametersRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::RetrieveRegisterParameters(
+    google::cloud::domains::v1::RetrieveRegisterParametersRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::RegisterDomain(google::cloud::domains::v1::RegisterDomainRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::RegisterDomain(
+    google::cloud::domains::v1::RegisterDomainRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::RetrieveTransferParameters(google::cloud::domains::v1::RetrieveTransferParametersRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::RetrieveTransferParameters(
+    google::cloud::domains::v1::RetrieveTransferParametersRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::TransferDomain(google::cloud::domains::v1::TransferDomainRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::TransferDomain(
+    google::cloud::domains::v1::TransferDomainRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::ListRegistrations(google::cloud::domains::v1::ListRegistrationsRequest) {  // NOLINT
+Idempotency DomainsConnectionIdempotencyPolicy::ListRegistrations(
+    google::cloud::domains::v1::ListRegistrationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::GetRegistration(google::cloud::domains::v1::GetRegistrationRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::GetRegistration(
+    google::cloud::domains::v1::GetRegistrationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::UpdateRegistration(google::cloud::domains::v1::UpdateRegistrationRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::UpdateRegistration(
+    google::cloud::domains::v1::UpdateRegistrationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::ConfigureManagementSettings(google::cloud::domains::v1::ConfigureManagementSettingsRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::ConfigureManagementSettings(
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::ConfigureDnsSettings(google::cloud::domains::v1::ConfigureDnsSettingsRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::ConfigureDnsSettings(
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::ConfigureContactSettings(google::cloud::domains::v1::ConfigureContactSettingsRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::ConfigureContactSettings(
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::ExportRegistration(google::cloud::domains::v1::ExportRegistrationRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::ExportRegistration(
+    google::cloud::domains::v1::ExportRegistrationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::DeleteRegistration(google::cloud::domains::v1::DeleteRegistrationRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::DeleteRegistration(
+    google::cloud::domains::v1::DeleteRegistrationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::RetrieveAuthorizationCode(google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::RetrieveAuthorizationCode(
+    google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DomainsConnectionIdempotencyPolicy::ResetAuthorizationCode(google::cloud::domains::v1::ResetAuthorizationCodeRequest const&) {
+Idempotency DomainsConnectionIdempotencyPolicy::ResetAuthorizationCode(
+    google::cloud::domains::v1::ResetAuthorizationCodeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DomainsConnectionIdempotencyPolicy>
-    MakeDefaultDomainsConnectionIdempotencyPolicy() {
+MakeDefaultDomainsConnectionIdempotencyPolicy() {
   return std::make_unique<DomainsConnectionIdempotencyPolicy>();
 }
 

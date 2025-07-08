@@ -46,177 +46,193 @@ DataTransferServiceMetadata::DataTransferServiceMetadata(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
 DataTransferServiceMetadata::GetDataSource(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataSource(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse>
 DataTransferServiceMetadata::ListDataSources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataSources(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceMetadata::CreateTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        CreateTransferConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateTransferConfig(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceMetadata::UpdateTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("transfer_config.name=", internal::UrlEncode(request.transfer_config().name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        UpdateTransferConfigRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("transfer_config.name=",
+                   internal::UrlEncode(request.transfer_config().name())));
   return child_->UpdateTransferConfig(context, options, request);
 }
 
-Status
-DataTransferServiceMetadata::DeleteTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status DataTransferServiceMetadata::DeleteTransferConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        DeleteTransferConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTransferConfig(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceMetadata::GetTransferConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTransferConfig(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse>
 DataTransferServiceMetadata::ListTransferConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTransferConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
+StatusOr<
+    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
 DataTransferServiceMetadata::ScheduleTransferRuns(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        ScheduleTransferRunsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ScheduleTransferRuns(context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
+StatusOr<
+    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
 DataTransferServiceMetadata::StartManualTransferRuns(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::
+        StartManualTransferRunsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->StartManualTransferRuns(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
 DataTransferServiceMetadata::GetTransferRun(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetTransferRun(context, options, request);
 }
 
-Status
-DataTransferServiceMetadata::DeleteTransferRun(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status DataTransferServiceMetadata::DeleteTransferRun(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTransferRun(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse>
 DataTransferServiceMetadata::ListTransferRuns(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTransferRuns(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse>
 DataTransferServiceMetadata::ListTransferLogs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListTransferLogs(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
 DataTransferServiceMetadata::CheckValidCreds(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CheckValidCreds(context, options, request);
 }
 
-Status
-DataTransferServiceMetadata::EnrollDataSources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status DataTransferServiceMetadata::EnrollDataSources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->EnrollDataSources(context, options, request);
 }
 
-Status
-DataTransferServiceMetadata::UnenrollDataSources(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+Status DataTransferServiceMetadata::UnenrollDataSources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->UnenrollDataSources(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DataTransferServiceMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 DataTransferServiceMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-void DataTransferServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void DataTransferServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DataTransferServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                              Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

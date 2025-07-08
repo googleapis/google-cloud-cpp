@@ -17,13 +17,13 @@
 // source: google/cloud/contentwarehouse/v1/synonymset_service.proto
 
 #include "google/cloud/contentwarehouse/v1/synonym_set_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_connection_impl.h"
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_option_defaults.h"
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_stub_factory.h"
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_tracing_connection.h"
 #include "google/cloud/contentwarehouse/v1/synonym_set_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -56,14 +56,15 @@ SynonymSetServiceConnection::UpdateSynonymSet(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-SynonymSetServiceConnection::DeleteSynonymSet(
+Status SynonymSetServiceConnection::DeleteSynonymSet(
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contentwarehouse::v1::SynonymSet> SynonymSetServiceConnection::ListSynonymSets(
-    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
+SynonymSetServiceConnection::ListSynonymSets(
+    google::cloud::contentwarehouse::v1::
+        ListSynonymSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>>();
 }
@@ -77,17 +78,19 @@ SynonymSetServiceConnection::GetOperation(
 std::shared_ptr<SynonymSetServiceConnection> MakeSynonymSetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      SynonymSetServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 SynonymSetServicePolicyOptionList>(options,
+                                                                    __func__);
   options = contentwarehouse_v1_internal::SynonymSetServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = contentwarehouse_v1_internal::CreateDefaultSynonymSetServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return contentwarehouse_v1_internal::MakeSynonymSetServiceTracingConnection(
-      std::make_shared<contentwarehouse_v1_internal::SynonymSetServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          contentwarehouse_v1_internal::SynonymSetServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

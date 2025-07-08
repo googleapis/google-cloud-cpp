@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_INTERNAL_IMAGE_VERSIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_INTERNAL_IMAGE_VERSIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/composer/v1/image_versions_connection.h"
 #include "google/cloud/composer/v1/image_versions_connection_idempotency_policy.h"
 #include "google/cloud/composer/v1/image_versions_options.h"
 #include "google/cloud/composer/v1/internal/image_versions_retry_traits.h"
 #include "google/cloud/composer/v1/internal/image_versions_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,23 +43,24 @@ class ImageVersionsConnectionImpl
   ~ImageVersionsConnectionImpl() override = default;
 
   ImageVersionsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<composer_v1_internal::ImageVersionsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<composer_v1_internal::ImageVersionsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-  ListImageVersions(google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest request) override;
+  ListImageVersions(google::cloud::orchestration::airflow::service::v1::
+                        ListImageVersionsRequest request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

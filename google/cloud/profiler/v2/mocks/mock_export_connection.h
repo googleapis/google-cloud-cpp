@@ -42,13 +42,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockExportServiceConnection : public profiler_v2::ExportServiceConnection {
+class MockExportServiceConnection
+    : public profiler_v2::ExportServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::devtools::cloudprofiler::v2::Profile>),
-  ListProfiles,
-  (google::devtools::cloudprofiler::v2::ListProfilesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<google::devtools::cloudprofiler::v2::Profile>), ListProfiles,
+      (google::devtools::cloudprofiler::v2::ListProfilesRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

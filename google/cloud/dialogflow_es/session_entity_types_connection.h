@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_SESSION_ENTITY_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_SESSION_ENTITY_TYPES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/internal/session_entity_types_retry_traits.h"
 #include "google/cloud/dialogflow_es/session_entity_types_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -53,7 +53,8 @@ class SessionEntityTypesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SessionEntityTypesLimitedErrorCountRetryPolicy : public SessionEntityTypesRetryPolicy {
+class SessionEntityTypesLimitedErrorCountRetryPolicy
+    : public SessionEntityTypesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,16 @@ class SessionEntityTypesLimitedErrorCountRetryPolicy : public SessionEntityTypes
    *     @p maximum_failures == 0.
    */
   explicit SessionEntityTypesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SessionEntityTypesLimitedErrorCountRetryPolicy(
       SessionEntityTypesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SessionEntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SessionEntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
   SessionEntityTypesLimitedErrorCountRetryPolicy(
       SessionEntityTypesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SessionEntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SessionEntityTypesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {
+  }
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +93,9 @@ class SessionEntityTypesLimitedErrorCountRetryPolicy : public SessionEntityTypes
   using BaseType = SessionEntityTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::SessionEntityTypesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::SessionEntityTypesRetryTraits>
+      impl_;
 };
 
 /**
@@ -103,7 +108,8 @@ class SessionEntityTypesLimitedErrorCountRetryPolicy : public SessionEntityTypes
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SessionEntityTypesLimitedTimeRetryPolicy : public SessionEntityTypesRetryPolicy {
+class SessionEntityTypesLimitedTimeRetryPolicy
+    : public SessionEntityTypesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -128,12 +134,14 @@ class SessionEntityTypesLimitedTimeRetryPolicy : public SessionEntityTypesRetryP
   template <typename DurationRep, typename DurationPeriod>
   explicit SessionEntityTypesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SessionEntityTypesLimitedTimeRetryPolicy(SessionEntityTypesLimitedTimeRetryPolicy&& rhs) noexcept
-    : SessionEntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SessionEntityTypesLimitedTimeRetryPolicy(SessionEntityTypesLimitedTimeRetryPolicy const& rhs) noexcept
-    : SessionEntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SessionEntityTypesLimitedTimeRetryPolicy(
+      SessionEntityTypesLimitedTimeRetryPolicy&& rhs) noexcept
+      : SessionEntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SessionEntityTypesLimitedTimeRetryPolicy(
+      SessionEntityTypesLimitedTimeRetryPolicy const& rhs) noexcept
+      : SessionEntityTypesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,16 +163,18 @@ class SessionEntityTypesLimitedTimeRetryPolicy : public SessionEntityTypesRetryP
   using BaseType = SessionEntityTypesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::SessionEntityTypesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::SessionEntityTypesRetryTraits>
+      impl_;
 };
 
 /**
  * The `SessionEntityTypesConnection` object for `SessionEntityTypesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SessionEntityTypesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `SessionEntityTypesClient`.
+ * sets in `SessionEntityTypesClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `SessionEntityTypesClient`.
  *
  * To create a concrete instance, see `MakeSessionEntityTypesConnection()`.
  *
@@ -177,45 +187,55 @@ class SessionEntityTypesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::v2::SessionEntityType>
-  ListSessionEntityTypes(google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request);
+  ListSessionEntityTypes(
+      google::cloud::dialogflow::v2::ListSessionEntityTypesRequest request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  GetSessionEntityType(google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request);
+  GetSessionEntityType(
+      google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const&
+          request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  CreateSessionEntityType(google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const& request);
+  CreateSessionEntityType(
+      google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
+          request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
-  UpdateSessionEntityType(google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const& request);
+  UpdateSessionEntityType(
+      google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
+          request);
 
-  virtual Status
-  DeleteSessionEntityType(google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const& request);
+  virtual Status DeleteSessionEntityType(
+      google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `SessionEntityTypesConnection`.
+ * A factory function to construct an object of type
+ * `SessionEntityTypesConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of SessionEntityTypesClient.
+ * should be passed as an argument to the constructor of
+ * SessionEntityTypesClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `SessionEntityTypesConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `SessionEntityTypesConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -226,8 +246,8 @@ class SessionEntityTypesConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `SessionEntityTypesConnection` created by
- * this function.
+ * @param options (optional) Configure the `SessionEntityTypesConnection`
+ * created by this function.
  */
 std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
     std::string const& location, Options options = {});

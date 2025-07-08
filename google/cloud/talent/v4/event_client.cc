@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EventServiceClient::EventServiceClient(
     std::shared_ptr<EventServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 EventServiceClient::~EventServiceClient() = default;
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
-EventServiceClient::CreateClientEvent(std::string const& parent, google::cloud::talent::v4::ClientEvent const& client_event, Options opts) {
+EventServiceClient::CreateClientEvent(
+    std::string const& parent,
+    google::cloud::talent::v4::ClientEvent const& client_event, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::talent::v4::CreateClientEventRequest request;
   request.set_parent(parent);
@@ -42,21 +44,23 @@ EventServiceClient::CreateClientEvent(std::string const& parent, google::cloud::
 }
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
-EventServiceClient::CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const& request, Options opts) {
+EventServiceClient::CreateClientEvent(
+    google::cloud::talent::v4::CreateClientEventRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateClientEvent(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> EventServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-EventServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> EventServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

@@ -36,21 +36,24 @@ class ExecutionsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ExecutionsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListExecutions(google::cloud::workflows::executions::v1::ListExecutionsRequest request);
+  virtual google::cloud::Idempotency ListExecutions(
+      google::cloud::workflows::executions::v1::ListExecutionsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateExecution(google::cloud::workflows::executions::v1::CreateExecutionRequest const& request);
+  virtual google::cloud::Idempotency CreateExecution(
+      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetExecution(google::cloud::workflows::executions::v1::GetExecutionRequest const& request);
+  virtual google::cloud::Idempotency GetExecution(
+      google::cloud::workflows::executions::v1::GetExecutionRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CancelExecution(google::cloud::workflows::executions::v1::CancelExecutionRequest const& request);
+  virtual google::cloud::Idempotency CancelExecution(
+      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+          request);
 };
 
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
-    MakeDefaultExecutionsConnectionIdempotencyPolicy();
+MakeDefaultExecutionsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_executions_v1

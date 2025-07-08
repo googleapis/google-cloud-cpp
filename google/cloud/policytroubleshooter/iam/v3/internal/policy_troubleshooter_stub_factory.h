@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_STUB_FACTORY_H
 
+#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
-#include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

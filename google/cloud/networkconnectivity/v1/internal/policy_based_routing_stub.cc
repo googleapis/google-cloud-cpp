@@ -33,41 +33,45 @@ PolicyBasedRoutingServiceStub::~PolicyBasedRoutingServiceStub() = default;
 
 StatusOr<google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse>
 DefaultPolicyBasedRoutingServiceStub::ListPolicyBasedRoutes(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const& request) {
-    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse response;
-    auto status =
-        grpc_stub_->ListPolicyBasedRoutes(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const&
+        request) {
+  google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse
+      response;
+  auto status = grpc_stub_->ListPolicyBasedRoutes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
 DefaultPolicyBasedRoutingServiceStub::GetPolicyBasedRoute(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) {
-    google::cloud::networkconnectivity::v1::PolicyBasedRoute response;
-    auto status =
-        grpc_stub_->GetPolicyBasedRoute(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
+        request) {
+  google::cloud::networkconnectivity::v1::PolicyBasedRoute response;
+  auto status = grpc_stub_->GetPolicyBasedRoute(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPolicyBasedRoutingServiceStub::AsyncCreatePolicyBasedRoute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request,
+             google::cloud::networkconnectivity::v1::
+                 CreatePolicyBasedRouteRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncCreatePolicyBasedRoute(context, request, cq);
       },
@@ -76,29 +80,32 @@ DefaultPolicyBasedRoutingServiceStub::AsyncCreatePolicyBasedRoute(
 
 StatusOr<google::longrunning::Operation>
 DefaultPolicyBasedRoutingServiceStub::CreatePolicyBasedRoute(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreatePolicyBasedRoute(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreatePolicyBasedRoute(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultPolicyBasedRoutingServiceStub::AsyncDeletePolicyBasedRoute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request,
+             google::cloud::networkconnectivity::v1::
+                 DeletePolicyBasedRouteRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeletePolicyBasedRoute(context, request, cq);
       },
@@ -107,133 +114,123 @@ DefaultPolicyBasedRoutingServiceStub::AsyncDeletePolicyBasedRoute(
 
 StatusOr<google::longrunning::Operation>
 DefaultPolicyBasedRoutingServiceStub::DeletePolicyBasedRoute(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeletePolicyBasedRoute(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeletePolicyBasedRoute(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultPolicyBasedRoutingServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultPolicyBasedRoutingServiceStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy>
 DefaultPolicyBasedRoutingServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy>
 DefaultPolicyBasedRoutingServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultPolicyBasedRoutingServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultPolicyBasedRoutingServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultPolicyBasedRoutingServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultPolicyBasedRoutingServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultPolicyBasedRoutingServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultPolicyBasedRoutingServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultPolicyBasedRoutingServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -262,13 +259,14 @@ future<Status> DefaultPolicyBasedRoutingServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

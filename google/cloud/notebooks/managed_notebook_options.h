@@ -28,19 +28,26 @@ namespace cloud {
 namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use notebooks_v1::ManagedNotebookServicePollingPolicyOption directly.
+/// @deprecated Use notebooks_v1::ManagedNotebookServicePollingPolicyOption
+/// directly.
 using ::google::cloud::notebooks_v1::ManagedNotebookServicePollingPolicyOption;
 
-/// @deprecated Use notebooks_v1::ManagedNotebookServiceBackoffPolicyOption directly.
+/// @deprecated Use notebooks_v1::ManagedNotebookServiceBackoffPolicyOption
+/// directly.
 using ::google::cloud::notebooks_v1::ManagedNotebookServiceBackoffPolicyOption;
 
-/// @deprecated Use notebooks_v1::ManagedNotebookServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::notebooks_v1::ManagedNotebookServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// notebooks_v1::ManagedNotebookServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::notebooks_v1::
+    ManagedNotebookServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use notebooks_v1::ManagedNotebookServicePolicyOptionList directly.
+/// @deprecated Use notebooks_v1::ManagedNotebookServicePolicyOptionList
+/// directly.
 using ::google::cloud::notebooks_v1::ManagedNotebookServicePolicyOptionList;
 
-/// @deprecated Use notebooks_v1::ManagedNotebookServiceRetryPolicyOption directly.
+/// @deprecated Use notebooks_v1::ManagedNotebookServiceRetryPolicyOption
+/// directly.
 using ::google::cloud::notebooks_v1::ManagedNotebookServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

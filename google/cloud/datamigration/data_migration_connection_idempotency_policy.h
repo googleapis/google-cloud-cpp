@@ -26,11 +26,16 @@ namespace cloud {
 namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datamigration_v1::MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::datamigration_v1::MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// datamigration_v1::MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::datamigration_v1::
+    MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// datamigration_v1::DataMigrationServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::datamigration_v1::
+    DataMigrationServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration

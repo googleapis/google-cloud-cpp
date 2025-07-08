@@ -42,13 +42,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockQuotaControllerConnection : public servicecontrol_v1::QuotaControllerConnection {
+class MockQuotaControllerConnection
+    : public servicecontrol_v1::QuotaControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>,
-  AllocateQuota,
-  (google::api::servicecontrol::v1::AllocateQuotaRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>,
+      AllocateQuota,
+      (google::api::servicecontrol::v1::AllocateQuotaRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

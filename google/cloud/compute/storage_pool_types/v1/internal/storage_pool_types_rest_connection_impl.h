@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOL_TYPES_V1_INTERNAL_STORAGE_POOL_TYPES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOL_TYPES_V1_INTERNAL_STORAGE_POOL_TYPES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_rest_stub.h"
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_retry_traits.h"
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_connection.h"
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_connection_idempotency_policy.h"
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,38 +43,57 @@ class StoragePoolTypesRestConnectionImpl
   ~StoragePoolTypesRestConnectionImpl() override = default;
 
   StoragePoolTypesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_storage_pool_types_v1_internal::StoragePoolTypesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_storage_pool_types_v1_internal::StoragePoolTypesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
-  AggregatedListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::AggregatedListStoragePoolTypesRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>
+  AggregatedListStoragePoolTypes(
+      google::cloud::cpp::compute::storage_pool_types::v1::
+          AggregatedListStoragePoolTypesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePoolType>
-  GetStoragePoolType(google::cloud::cpp::compute::storage_pool_types::v1::GetStoragePoolTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::StoragePoolType> GetStoragePoolType(
+      google::cloud::cpp::compute::storage_pool_types::v1::
+          GetStoragePoolTypeRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>
-  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::ListStoragePoolTypesRequest request) override;
+  ListStoragePoolTypes(google::cloud::cpp::compute::storage_pool_types::v1::
+                           ListStoragePoolTypesRequest request) override;
 
  private:
-  static std::unique_ptr<compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>
+  static std::unique_ptr<
+      compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_storage_pool_types_v1::StoragePoolTypesRetryPolicyOption>()->clone();
+    return options
+        .get<compute_storage_pool_types_v1::StoragePoolTypesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_storage_pool_types_v1::StoragePoolTypesBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_storage_pool_types_v1::
+                 StoragePoolTypesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_storage_pool_types_v1::StoragePoolTypesConnectionIdempotencyPolicy>
+  static std::unique_ptr<compute_storage_pool_types_v1::
+                             StoragePoolTypesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_storage_pool_types_v1::StoragePoolTypesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_storage_pool_types_v1::
+                 StoragePoolTypesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_storage_pool_types_v1_internal::StoragePoolTypesRestStub> stub_;
+  std::shared_ptr<
+      compute_storage_pool_types_v1_internal::StoragePoolTypesRestStub>
+      stub_;
   Options options_;
 };
 

@@ -33,10 +33,9 @@ namespace cloud {
 namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-IDSMetadata::IDSMetadata(
-    std::shared_ptr<IDSStub> child,
-    std::multimap<std::string, std::string> fixed_metadata,
-    std::string api_client_header)
+IDSMetadata::IDSMetadata(std::shared_ptr<IDSStub> child,
+                         std::multimap<std::string, std::string> fixed_metadata,
+                         std::string api_client_header)
     : child_(std::move(child)),
       fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
@@ -46,19 +45,18 @@ IDSMetadata::IDSMetadata(
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 IDSMetadata::ListEndpoints(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListEndpoints(context, options, request);
 }
 
-StatusOr<google::cloud::ids::v1::Endpoint>
-IDSMetadata::GetEndpoint(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::ids::v1::Endpoint> IDSMetadata::GetEndpoint(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetEndpoint(context, options, request);
 }
 
@@ -68,17 +66,17 @@ IDSMetadata::AsyncCreateEndpoint(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEndpoint(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateEndpoint(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-IDSMetadata::CreateEndpoint(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> IDSMetadata::CreateEndpoint(
+    grpc::ClientContext& context, Options options,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateEndpoint(context, options, request);
 }
 
@@ -88,30 +86,29 @@ IDSMetadata::AsyncDeleteEndpoint(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteEndpoint(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteEndpoint(cq, std::move(context), std::move(options),
+                                     request);
 }
 
-StatusOr<google::longrunning::Operation>
-IDSMetadata::DeleteEndpoint(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> IDSMetadata::DeleteEndpoint(
+    grpc::ClientContext& context, Options options,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteEndpoint(context, options, request);
 }
 
-future<StatusOr<google::longrunning::Operation>>
-IDSMetadata::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>> IDSMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> IDSMetadata::AsyncCancelOperation(
@@ -121,21 +118,21 @@ future<Status> IDSMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void IDSMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                              Options const& options,
+                              std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void IDSMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                              Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

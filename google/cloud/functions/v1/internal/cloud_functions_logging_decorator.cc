@@ -32,20 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFunctionsServiceLogging::CloudFunctionsServiceLogging(
     std::shared_ptr<CloudFunctionsServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::functions::v1::ListFunctionsResponse>
 CloudFunctionsServiceLogging::ListFunctions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::ListFunctionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::functions::v1::ListFunctionsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::functions::v1::ListFunctionsRequest const& request) {
         return child_->ListFunctions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,12 +50,10 @@ CloudFunctionsServiceLogging::ListFunctions(
 
 StatusOr<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceLogging::GetFunction(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GetFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v1::GetFunctionRequest const& request) {
         return child_->GetFunction(context, options, request);
       },
@@ -67,17 +62,18 @@ CloudFunctionsServiceLogging::GetFunction(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncCreateFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::CreateFunctionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::functions::v1::CreateFunctionRequest const& request) {
-        return child_->AsyncCreateFunction(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::functions::v1::CreateFunctionRequest const& request) {
+        return child_->AsyncCreateFunction(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -85,13 +81,12 @@ CloudFunctionsServiceLogging::AsyncCreateFunction(
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceLogging::CreateFunction(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::functions::v1::CreateFunctionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::functions::v1::CreateFunctionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::functions::v1::CreateFunctionRequest const& request) {
         return child_->CreateFunction(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -99,17 +94,18 @@ CloudFunctionsServiceLogging::CreateFunction(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncUpdateFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-        return child_->AsyncUpdateFunction(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+        return child_->AsyncUpdateFunction(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -117,13 +113,12 @@ CloudFunctionsServiceLogging::AsyncUpdateFunction(
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceLogging::UpdateFunction(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::functions::v1::UpdateFunctionRequest const& request) {
         return child_->UpdateFunction(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,17 +126,18 @@ CloudFunctionsServiceLogging::UpdateFunction(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncDeleteFunction(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-        return child_->AsyncDeleteFunction(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+        return child_->AsyncDeleteFunction(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -149,13 +145,12 @@ CloudFunctionsServiceLogging::AsyncDeleteFunction(
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceLogging::DeleteFunction(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::functions::v1::DeleteFunctionRequest const& request) {
         return child_->DeleteFunction(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,12 +158,10 @@ CloudFunctionsServiceLogging::DeleteFunction(
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>
 CloudFunctionsServiceLogging::CallFunction(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::CallFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v1::CallFunctionRequest const& request) {
         return child_->CallFunction(context, options, request);
       },
@@ -177,13 +170,12 @@ CloudFunctionsServiceLogging::CallFunction(
 
 StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
 CloudFunctionsServiceLogging::GenerateUploadUrl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateUploadUrlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::functions::v1::GenerateUploadUrlRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::functions::v1::GenerateUploadUrlRequest const&
+                 request) {
         return child_->GenerateUploadUrl(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -191,40 +183,33 @@ CloudFunctionsServiceLogging::GenerateUploadUrl(
 
 StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
 CloudFunctionsServiceLogging::GenerateDownloadUrl(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::functions::v1::GenerateDownloadUrlRequest const&
+                 request) {
         return child_->GenerateDownloadUrl(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudFunctionsServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> CloudFunctionsServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudFunctionsServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> CloudFunctionsServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -233,12 +218,10 @@ CloudFunctionsServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudFunctionsServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -247,12 +230,10 @@ CloudFunctionsServiceLogging::TestIamPermissions(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudFunctionsServiceLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -261,12 +242,10 @@ CloudFunctionsServiceLogging::ListLocations(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CloudFunctionsServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -275,12 +254,10 @@ CloudFunctionsServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -298,8 +275,8 @@ CloudFunctionsServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -315,8 +292,8 @@ future<Status> CloudFunctionsServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

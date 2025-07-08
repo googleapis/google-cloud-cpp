@@ -30,22 +30,19 @@ namespace cloud {
 namespace cloudquotas_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-CloudQuotasLogging::CloudQuotasLogging(
-    std::shared_ptr<CloudQuotasStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+CloudQuotasLogging::CloudQuotasLogging(std::shared_ptr<CloudQuotasStub> child,
+                                       TracingOptions tracing_options,
+                                       std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse>
 CloudQuotasLogging::ListQuotaInfos(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
         return child_->ListQuotaInfos(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,12 +50,10 @@ CloudQuotasLogging::ListQuotaInfos(
 
 StatusOr<google::api::cloudquotas::v1::QuotaInfo>
 CloudQuotasLogging::GetQuotaInfo(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
         return child_->GetQuotaInfo(context, options, request);
       },
@@ -67,13 +62,12 @@ CloudQuotasLogging::GetQuotaInfo(
 
 StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
 CloudQuotasLogging::ListQuotaPreferences(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::cloudquotas::v1::ListQuotaPreferencesRequest const&
+                 request) {
         return child_->ListQuotaPreferences(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +75,12 @@ CloudQuotasLogging::ListQuotaPreferences(
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasLogging::GetQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::cloudquotas::v1::GetQuotaPreferenceRequest const&
+                 request) {
         return child_->GetQuotaPreference(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +88,12 @@ CloudQuotasLogging::GetQuotaPreference(
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasLogging::CreateQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&
+                 request) {
         return child_->CreateQuotaPreference(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +101,12 @@ CloudQuotasLogging::CreateQuotaPreference(
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasLogging::UpdateQuotaPreference(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&
+                 request) {
         return child_->UpdateQuotaPreference(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

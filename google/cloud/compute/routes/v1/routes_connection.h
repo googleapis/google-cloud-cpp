@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/routes/v1/internal/routes_retry_traits.h"
 #include "google/cloud/compute/routes/v1/routes_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -65,14 +65,14 @@ class RoutesLimitedErrorCountRetryPolicy : public RoutesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RoutesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RoutesLimitedErrorCountRetryPolicy(
       RoutesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RoutesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RoutesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RoutesLimitedErrorCountRetryPolicy(
       RoutesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RoutesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RoutesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +92,9 @@ class RoutesLimitedErrorCountRetryPolicy : public RoutesRetryPolicy {
   using BaseType = RoutesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_routes_v1_internal::RoutesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_routes_v1_internal::RoutesRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +132,12 @@ class RoutesLimitedTimeRetryPolicy : public RoutesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RoutesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   RoutesLimitedTimeRetryPolicy(RoutesLimitedTimeRetryPolicy&& rhs) noexcept
-    : RoutesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : RoutesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   RoutesLimitedTimeRetryPolicy(RoutesLimitedTimeRetryPolicy const& rhs) noexcept
-    : RoutesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : RoutesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -149,15 +151,16 @@ class RoutesLimitedTimeRetryPolicy : public RoutesRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<RoutesRetryPolicy> clone() const override {
-    return std::make_unique<RoutesLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<RoutesLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = RoutesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_routes_v1_internal::RoutesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_routes_v1_internal::RoutesRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,28 +182,34 @@ class RoutesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRoute(google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request);
+  DeleteRoute(google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+                  request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRoute(NoAwaitTag, google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRoute( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Route>
-  GetRoute(google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRoute(google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request);
+  DeleteRoute(google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRoute(NoAwaitTag, google::cloud::cpp::compute::routes::v1::InsertRouteRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
+      google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRoute( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertRoute(google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+                  request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Route>
-  ListRoutes(google::cloud::cpp::compute::routes::v1::ListRoutesRequest request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRoute(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
+      google::cloud::cpp::compute::routes::v1::ListRoutesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

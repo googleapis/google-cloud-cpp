@@ -33,10 +33,13 @@ using ::google::cloud::edgecontainer_v1::MakeEdgeContainerConnection;
 /// @deprecated Use edgecontainer_v1::EdgeContainerConnection directly.
 using ::google::cloud::edgecontainer_v1::EdgeContainerConnection;
 
-/// @deprecated Use edgecontainer_v1::EdgeContainerLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::edgecontainer_v1::EdgeContainerLimitedErrorCountRetryPolicy;
+/// @deprecated Use edgecontainer_v1::EdgeContainerLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::edgecontainer_v1::
+    EdgeContainerLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use edgecontainer_v1::EdgeContainerLimitedTimeRetryPolicy directly.
+/// @deprecated Use edgecontainer_v1::EdgeContainerLimitedTimeRetryPolicy
+/// directly.
 using ::google::cloud::edgecontainer_v1::EdgeContainerLimitedTimeRetryPolicy;
 
 /// @deprecated Use edgecontainer_v1::EdgeContainerRetryPolicy directly.

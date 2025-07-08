@@ -36,18 +36,20 @@ class PublisherConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<PublisherConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  PublishChannelConnectionEvents(google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request);
+  virtual google::cloud::Idempotency PublishChannelConnectionEvents(
+      google::cloud::eventarc::publishing::v1::
+          PublishChannelConnectionEventsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PublishEvents(google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request);
+  virtual google::cloud::Idempotency PublishEvents(
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  Publish(google::cloud::eventarc::publishing::v1::PublishRequest const& request);
+  virtual google::cloud::Idempotency Publish(
+      google::cloud::eventarc::publishing::v1::PublishRequest const& request);
 };
 
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>
-    MakeDefaultPublisherConnectionIdempotencyPolicy();
+MakeDefaultPublisherConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_publishing_v1

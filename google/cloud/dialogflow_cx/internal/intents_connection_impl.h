@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_INTENTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_INTENTS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/intents_connection.h"
 #include "google/cloud/dialogflow_cx/intents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/intents_options.h"
 #include "google/cloud/dialogflow_cx/internal/intents_retry_traits.h"
 #include "google/cloud/dialogflow_cx/internal/intents_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,69 +40,74 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IntentsConnectionImpl
-    : public dialogflow_cx::IntentsConnection {
+class IntentsConnectionImpl : public dialogflow_cx::IntentsConnection {
  public:
   ~IntentsConnectionImpl() override = default;
 
   IntentsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_cx_internal::IntentsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<dialogflow_cx_internal::IntentsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Intent>
-  ListIntents(google::cloud::dialogflow::cx::v3::ListIntentsRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
+      google::cloud::dialogflow::cx::v3::ListIntentsRequest request) override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Intent>
-  GetIntent(google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Intent> GetIntent(
+      google::cloud::dialogflow::cx::v3::GetIntentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Intent>
-  CreateIntent(google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Intent> CreateIntent(
+      google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Intent>
-  UpdateIntent(google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
+      google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request)
+      override;
 
-  Status
-  DeleteIntent(google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request) override;
-
-  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
-  ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ImportIntents(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) override;
+  Status DeleteIntent(
+      google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
-  ImportIntents(
-      google::longrunning::Operation const& operation) override;
+  ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
+                    request) override;
+
+  StatusOr<google::longrunning::Operation> ImportIntents(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+  ImportIntents(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
-  ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) override;
+  ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
+                    request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportIntents(NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportIntents(
+      NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
-  ExportIntents(
-      google::longrunning::Operation const& operation) override;
+  ExportIntents(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

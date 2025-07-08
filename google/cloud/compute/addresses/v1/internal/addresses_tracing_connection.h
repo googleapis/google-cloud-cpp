@@ -36,61 +36,70 @@ class AddressesTracingConnection
   ~AddressesTracingConnection() override = default;
 
   explicit AddressesTracingConnection(
-    std::shared_ptr<compute_addresses_v1::AddressesConnection> child);
+      std::shared_ptr<compute_addresses_v1::AddressesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>
-  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest request) override;
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::AddressesScopedList>>
+  AggregatedListAddresses(
+      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress(google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAddress(NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
+      NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetAddress(google::cloud::cpp::compute::addresses::v1::GetAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
+      google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress(google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertAddress(NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
+      NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
+      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move(google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Move(NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

@@ -38,10 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
 /// The primary resources offered by this service are EntryGroups, EntryTypes,
-/// AspectTypes, and Entries. They collectively let data administrators organize,
-/// manage, secure, and catalog data located across cloud projects in their
-/// organization in a variety of storage systems, including Cloud Storage and
-/// BigQuery.
+/// AspectTypes, and Entries. They collectively let data administrators
+/// organize, manage, secure, and catalog data located across cloud projects in
+/// their organization in a variety of storage systems, including Cloud Storage
+/// and BigQuery.
 ///
 /// @par Equality
 ///
@@ -68,7 +68,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CatalogServiceClient {
  public:
-  explicit CatalogServiceClient(std::shared_ptr<CatalogServiceConnection> connection, Options opts = {});
+  explicit CatalogServiceClient(
+      std::shared_ptr<CatalogServiceConnection> connection, Options opts = {});
   ~CatalogServiceClient();
 
   ///@{
@@ -81,10 +82,12 @@ class CatalogServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CatalogServiceClient const& a, CatalogServiceClient const& b) {
+  friend bool operator==(CatalogServiceClient const& a,
+                         CatalogServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CatalogServiceClient const& a, CatalogServiceClient const& b) {
+  friend bool operator!=(CatalogServiceClient const& a,
+                         CatalogServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,8 +125,10 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.EntryType]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L570}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  CreateEntryType(std::string const& parent, google::cloud::dataplex::v1::EntryType const& entry_type, std::string const& entry_type_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> CreateEntryType(
+      std::string const& parent,
+      google::cloud::dataplex::v1::EntryType const& entry_type,
+      std::string const& entry_type_id, Options opts = {});
 
   // clang-format off
   ///
@@ -136,8 +141,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEntryType(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::EntryType const& entry_type, std::string const& entry_type_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEntryType(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dataplex::v1::EntryType const& entry_type,
+      std::string const& entry_type_id, Options opts = {});
 
   // clang-format off
   ///
@@ -173,8 +180,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.EntryType]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L570}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  CreateEntryType(google::cloud::dataplex::v1::CreateEntryTypeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> CreateEntryType(
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -187,8 +195,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEntryType(NoAwaitTag, google::cloud::dataplex::v1::CreateEntryTypeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -199,8 +209,8 @@ class CatalogServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  CreateEntryType(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> CreateEntryType(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -232,8 +242,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEntryTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L935}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  UpdateEntryType(google::cloud::dataplex::v1::EntryType const& entry_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
+      google::cloud::dataplex::v1::EntryType const& entry_type,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -246,8 +257,9 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEntryType(NoAwaitTag, google::cloud::dataplex::v1::EntryType const& entry_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEntryType(
+      NoAwaitTag, google::cloud::dataplex::v1::EntryType const& entry_type,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -283,8 +295,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEntryTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L935}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  UpdateEntryType(google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -297,8 +310,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEntryType(NoAwaitTag, google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -309,8 +324,8 @@ class CatalogServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  UpdateEntryType(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -356,8 +371,8 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEntryType(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEntryType(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -394,7 +409,9 @@ class CatalogServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType(google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request, Options opts = {});
+  DeleteEntryType(
+      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -407,8 +424,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEntryType(NoAwaitTag, google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -420,7 +439,8 @@ class CatalogServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteEntryType(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -455,8 +475,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.ListEntryTypesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L965}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::EntryType>
-  ListEntryTypes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::EntryType> ListEntryTypes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -494,8 +514,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.ListEntryTypesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L965}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::EntryType>
-  ListEntryTypes(google::cloud::dataplex::v1::ListEntryTypesRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::EntryType> ListEntryTypes(
+      google::cloud::dataplex::v1::ListEntryTypesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -520,8 +541,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.GetEntryTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1017}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::EntryType>
-  GetEntryType(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::EntryType> GetEntryType(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -550,8 +571,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.GetEntryTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1017}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::EntryType>
-  GetEntryType(google::cloud::dataplex::v1::GetEntryTypeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::EntryType> GetEntryType(
+      google::cloud::dataplex::v1::GetEntryTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -586,8 +608,10 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.CreateAspectTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1029}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  CreateAspectType(std::string const& parent, google::cloud::dataplex::v1::AspectType const& aspect_type, std::string const& aspect_type_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> CreateAspectType(
+      std::string const& parent,
+      google::cloud::dataplex::v1::AspectType const& aspect_type,
+      std::string const& aspect_type_id, Options opts = {});
 
   // clang-format off
   ///
@@ -600,8 +624,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateAspectType(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::AspectType const& aspect_type, std::string const& aspect_type_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateAspectType(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dataplex::v1::AspectType const& aspect_type,
+      std::string const& aspect_type_id, Options opts = {});
 
   // clang-format off
   ///
@@ -637,8 +663,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.CreateAspectTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1029}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  CreateAspectType(google::cloud::dataplex::v1::CreateAspectTypeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> CreateAspectType(
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -651,8 +678,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateAspectType(NoAwaitTag, google::cloud::dataplex::v1::CreateAspectTypeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -663,8 +692,8 @@ class CatalogServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  CreateAspectType(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> CreateAspectType(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -696,8 +725,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.UpdateAspectTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1052}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  UpdateAspectType(google::cloud::dataplex::v1::AspectType const& aspect_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
+      google::cloud::dataplex::v1::AspectType const& aspect_type,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -710,8 +740,9 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateAspectType(NoAwaitTag, google::cloud::dataplex::v1::AspectType const& aspect_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateAspectType(
+      NoAwaitTag, google::cloud::dataplex::v1::AspectType const& aspect_type,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -747,8 +778,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.UpdateAspectTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1052}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  UpdateAspectType(google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -761,8 +793,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateAspectType(NoAwaitTag, google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -773,8 +807,8 @@ class CatalogServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  UpdateAspectType(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -820,8 +854,8 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteAspectType(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteAspectType(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -858,7 +892,9 @@ class CatalogServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType(google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request, Options opts = {});
+  DeleteAspectType(
+      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -871,8 +907,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteAspectType(NoAwaitTag, google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -884,7 +922,8 @@ class CatalogServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteAspectType(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -919,8 +958,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.ListAspectTypesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1083}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::AspectType>
-  ListAspectTypes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::AspectType> ListAspectTypes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -958,8 +997,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.ListAspectTypesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1083}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::AspectType>
-  ListAspectTypes(google::cloud::dataplex::v1::ListAspectTypesRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::AspectType> ListAspectTypes(
+      google::cloud::dataplex::v1::ListAspectTypesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -984,8 +1024,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.GetAspectTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1135}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::AspectType>
-  GetAspectType(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::AspectType> GetAspectType(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1014,8 +1054,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.GetAspectTypeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1135}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::AspectType>
-  GetAspectType(google::cloud::dataplex::v1::GetAspectTypeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::AspectType> GetAspectType(
+      google::cloud::dataplex::v1::GetAspectTypeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1050,8 +1091,10 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.EntryGroup]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L519}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  CreateEntryGroup(std::string const& parent, google::cloud::dataplex::v1::EntryGroup const& entry_group, std::string const& entry_group_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> CreateEntryGroup(
+      std::string const& parent,
+      google::cloud::dataplex::v1::EntryGroup const& entry_group,
+      std::string const& entry_group_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1064,8 +1107,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEntryGroup(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::EntryGroup const& entry_group, std::string const& entry_group_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEntryGroup(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dataplex::v1::EntryGroup const& entry_group,
+      std::string const& entry_group_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1101,8 +1146,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.EntryGroup]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L519}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  CreateEntryGroup(google::cloud::dataplex::v1::CreateEntryGroupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> CreateEntryGroup(
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1115,8 +1161,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEntryGroup(NoAwaitTag, google::cloud::dataplex::v1::CreateEntryGroupRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1127,8 +1175,8 @@ class CatalogServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  CreateEntryGroup(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> CreateEntryGroup(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1160,8 +1208,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L825}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  UpdateEntryGroup(google::cloud::dataplex::v1::EntryGroup const& entry_group, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
+      google::cloud::dataplex::v1::EntryGroup const& entry_group,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1174,8 +1223,9 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEntryGroup(NoAwaitTag, google::cloud::dataplex::v1::EntryGroup const& entry_group, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEntryGroup(
+      NoAwaitTag, google::cloud::dataplex::v1::EntryGroup const& entry_group,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1211,8 +1261,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L825}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  UpdateEntryGroup(google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1225,8 +1276,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEntryGroup(NoAwaitTag, google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1237,8 +1290,8 @@ class CatalogServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  UpdateEntryGroup(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1284,8 +1337,8 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEntryGroup(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEntryGroup(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1322,7 +1375,9 @@ class CatalogServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup(google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request, Options opts = {});
+  DeleteEntryGroup(
+      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1335,8 +1390,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEntryGroup(NoAwaitTag, google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1348,7 +1405,8 @@ class CatalogServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteEntryGroup(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1383,8 +1441,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L856}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::EntryGroup>
-  ListEntryGroups(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::EntryGroup> ListEntryGroups(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1422,8 +1480,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L856}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::EntryGroup>
-  ListEntryGroups(google::cloud::dataplex::v1::ListEntryGroupsRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::EntryGroup> ListEntryGroups(
+      google::cloud::dataplex::v1::ListEntryGroupsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1448,8 +1507,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L900}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::EntryGroup>
-  GetEntryGroup(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::EntryGroup> GetEntryGroup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1478,8 +1537,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L900}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::EntryGroup>
-  GetEntryGroup(google::cloud::dataplex::v1::GetEntryGroupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::EntryGroup> GetEntryGroup(
+      google::cloud::dataplex::v1::GetEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1525,8 +1585,10 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.Entry]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L688}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  CreateEntry(std::string const& parent, google::cloud::dataplex::v1::Entry const& entry, std::string const& entry_id, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> CreateEntry(
+      std::string const& parent,
+      google::cloud::dataplex::v1::Entry const& entry,
+      std::string const& entry_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1555,8 +1617,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.Entry]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L688}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  CreateEntry(google::cloud::dataplex::v1::CreateEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> CreateEntry(
+      google::cloud::dataplex::v1::CreateEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1585,8 +1648,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1184}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  UpdateEntry(google::cloud::dataplex::v1::Entry const& entry, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> UpdateEntry(
+      google::cloud::dataplex::v1::Entry const& entry,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1615,8 +1679,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1184}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  UpdateEntry(google::cloud::dataplex::v1::UpdateEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> UpdateEntry(
+      google::cloud::dataplex::v1::UpdateEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1641,8 +1706,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.Entry]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L688}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  DeleteEntry(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> DeleteEntry(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1671,8 +1736,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.Entry]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L688}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  DeleteEntry(google::cloud::dataplex::v1::DeleteEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> DeleteEntry(
+      google::cloud::dataplex::v1::DeleteEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1706,8 +1772,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1237}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Entry>
-  ListEntries(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Entry> ListEntries(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1745,8 +1811,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1237}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::Entry>
-  ListEntries(google::cloud::dataplex::v1::ListEntriesRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::Entry> ListEntries(
+      google::cloud::dataplex::v1::ListEntriesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1771,8 +1838,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1292}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  GetEntry(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> GetEntry(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1801,8 +1868,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1292}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  GetEntry(google::cloud::dataplex::v1::GetEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> GetEntry(
+      google::cloud::dataplex::v1::GetEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1831,8 +1899,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.LookupEntryRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1314}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::Entry>
-  LookupEntry(google::cloud::dataplex::v1::LookupEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
+      google::cloud::dataplex::v1::LookupEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1869,8 +1938,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.SearchEntriesResult]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1383}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
-  SearchEntries(std::string const& name, std::string const& query, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::SearchEntriesResult> SearchEntries(
+      std::string const& name, std::string const& query, Options opts = {});
 
   // clang-format off
   ///
@@ -1908,8 +1977,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.SearchEntriesResult]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1383}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
-  SearchEntries(google::cloud::dataplex::v1::SearchEntriesRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::SearchEntriesResult> SearchEntries(
+      google::cloud::dataplex::v1::SearchEntriesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1945,8 +2015,10 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1574}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
-  CreateMetadataJob(std::string const& parent, google::cloud::dataplex::v1::MetadataJob const& metadata_job, std::string const& metadata_job_id, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
+      std::string const& parent,
+      google::cloud::dataplex::v1::MetadataJob const& metadata_job,
+      std::string const& metadata_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1959,8 +2031,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMetadataJob(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::MetadataJob const& metadata_job, std::string const& metadata_job_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::dataplex::v1::MetadataJob const& metadata_job,
+      std::string const& metadata_job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1997,8 +2071,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1574}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
-  CreateMetadataJob(google::cloud::dataplex::v1::CreateMetadataJobRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2011,8 +2086,10 @@ class CatalogServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMetadataJob(NoAwaitTag, google::cloud::dataplex::v1::CreateMetadataJobRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2023,8 +2100,8 @@ class CatalogServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
-  CreateMetadataJob(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2049,8 +2126,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1574}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::MetadataJob>
-  GetMetadataJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2079,8 +2156,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1574}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::MetadataJob>
-  GetMetadataJob(google::cloud::dataplex::v1::GetMetadataJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2114,8 +2192,8 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1574}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::MetadataJob>
-  ListMetadataJobs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::MetadataJob> ListMetadataJobs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2153,8 +2231,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.MetadataJob]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1574}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::MetadataJob>
-  ListMetadataJobs(google::cloud::dataplex::v1::ListMetadataJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::MetadataJob> ListMetadataJobs(
+      google::cloud::dataplex::v1::ListMetadataJobsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2181,8 +2260,7 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.CancelMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1562}
   ///
   // clang-format on
-  Status
-  CancelMetadataJob(std::string const& name, Options opts = {});
+  Status CancelMetadataJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2213,8 +2291,9 @@ class CatalogServiceClient {
   /// [google.cloud.dataplex.v1.CancelMetadataJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/catalog.proto#L1562}
   ///
   // clang-format on
-  Status
-  CancelMetadataJob(google::cloud::dataplex::v1::CancelMetadataJobRequest const& request, Options opts = {});
+  Status CancelMetadataJob(
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2252,8 +2331,8 @@ class CatalogServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2282,8 +2361,9 @@ class CatalogServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2315,8 +2395,8 @@ class CatalogServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2347,8 +2427,8 @@ class CatalogServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2383,8 +2463,9 @@ class CatalogServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2419,8 +2500,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2459,8 +2540,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2486,8 +2567,8 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2518,8 +2599,9 @@ class CatalogServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2543,8 +2625,7 @@ class CatalogServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2573,8 +2654,9 @@ class CatalogServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2608,8 +2690,7 @@ class CatalogServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2648,8 +2729,9 @@ class CatalogServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CatalogServiceConnection> connection_;

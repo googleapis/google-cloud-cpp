@@ -36,27 +36,29 @@ class CloudQuotasConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<CloudQuotasConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest request);
+  virtual google::cloud::Idempotency ListQuotaInfos(
+      google::api::cloudquotas::v1::ListQuotaInfosRequest request);
 
-  virtual google::cloud::Idempotency
-  GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const& request);
+  virtual google::cloud::Idempotency GetQuotaInfo(
+      google::api::cloudquotas::v1::GetQuotaInfoRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest request);
+  virtual google::cloud::Idempotency ListQuotaPreferences(
+      google::api::cloudquotas::v1::ListQuotaPreferencesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request);
+  virtual google::cloud::Idempotency GetQuotaPreference(
+      google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request);
+  virtual google::cloud::Idempotency CreateQuotaPreference(
+      google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request);
+  virtual google::cloud::Idempotency UpdateQuotaPreference(
+      google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&
+          request);
 };
 
 std::unique_ptr<CloudQuotasConnectionIdempotencyPolicy>
-    MakeDefaultCloudQuotasConnectionIdempotencyPolicy();
+MakeDefaultCloudQuotasConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudquotas_v1

@@ -28,36 +28,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CompletionServiceClient::CompletionServiceClient(
     std::shared_ptr<CompletionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CompletionServiceClient::~CompletionServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
-CompletionServiceClient::CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request, Options opts) {
+CompletionServiceClient::CompleteQuery(
+    google::cloud::retail::v2::CompleteQueryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CompleteQuery(request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-CompletionServiceClient::ImportCompletionData(google::cloud::retail::v2::ImportCompletionDataRequest const& request, Options opts) {
+CompletionServiceClient::ImportCompletionData(
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCompletionData(request);
 }
 
 StatusOr<google::longrunning::Operation>
-CompletionServiceClient::ImportCompletionData(NoAwaitTag, google::cloud::retail::v2::ImportCompletionDataRequest const& request, Options opts) {
+CompletionServiceClient::ImportCompletionData(
+    NoAwaitTag,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCompletionData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-CompletionServiceClient::ImportCompletionData(google::longrunning::Operation const& operation, Options opts) {
+CompletionServiceClient::ImportCompletionData(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportCompletionData(operation);
 }
 
 StreamRange<google::longrunning::Operation>
-CompletionServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+CompletionServiceClient::ListOperations(std::string const& name,
+                                        std::string const& filter,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -66,21 +76,22 @@ CompletionServiceClient::ListOperations(std::string const& name, std::string con
 }
 
 StreamRange<google::longrunning::Operation>
-CompletionServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+CompletionServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-CompletionServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> CompletionServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CompletionServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> CompletionServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

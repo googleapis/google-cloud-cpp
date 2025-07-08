@@ -31,27 +31,27 @@ RuleSetServiceAuth::RuleSetServiceAuth(
     std::shared_ptr<RuleSetServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::contentwarehouse::v1::RuleSet> RuleSetServiceAuth::CreateRuleSet(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+RuleSetServiceAuth::CreateRuleSet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateRuleSet(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::RuleSet> RuleSetServiceAuth::GetRuleSet(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+RuleSetServiceAuth::GetRuleSet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRuleSet(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::RuleSet> RuleSetServiceAuth::UpdateRuleSet(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
+RuleSetServiceAuth::UpdateRuleSet(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,17 +59,16 @@ StatusOr<google::cloud::contentwarehouse::v1::RuleSet> RuleSetServiceAuth::Updat
 }
 
 Status RuleSetServiceAuth::DeleteRuleSet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteRuleSet(context, options, request);
 }
 
-StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse> RuleSetServiceAuth::ListRuleSets(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
+RuleSetServiceAuth::ListRuleSets(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +76,7 @@ StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse> RuleSetServi
 }
 
 StatusOr<google::longrunning::Operation> RuleSetServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

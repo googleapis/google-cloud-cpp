@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTPS_HEALTH_CHECKS_V1_HTTPS_HEALTH_CHECKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTPS_HEALTH_CHECKS_V1_HTTPS_HEALTH_CHECKS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/https_health_checks/v1/https_health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/https_health_checks/v1/internal/https_health_checks_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class HttpsHealthChecksRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class HttpsHealthChecksLimitedErrorCountRetryPolicy : public HttpsHealthChecksRetryPolicy {
+class HttpsHealthChecksLimitedErrorCountRetryPolicy
+    : public HttpsHealthChecksRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class HttpsHealthChecksLimitedErrorCountRetryPolicy : public HttpsHealthChecksRe
    *     @p maximum_failures == 0.
    */
   explicit HttpsHealthChecksLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   HttpsHealthChecksLimitedErrorCountRetryPolicy(
       HttpsHealthChecksLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : HttpsHealthChecksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : HttpsHealthChecksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   HttpsHealthChecksLimitedErrorCountRetryPolicy(
       HttpsHealthChecksLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : HttpsHealthChecksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : HttpsHealthChecksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class HttpsHealthChecksLimitedErrorCountRetryPolicy : public HttpsHealthChecksRe
   using BaseType = HttpsHealthChecksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_https_health_checks_v1_internal::HttpsHealthChecksRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_https_health_checks_v1_internal::HttpsHealthChecksRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class HttpsHealthChecksLimitedErrorCountRetryPolicy : public HttpsHealthChecksRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class HttpsHealthChecksLimitedTimeRetryPolicy : public HttpsHealthChecksRetryPolicy {
+class HttpsHealthChecksLimitedTimeRetryPolicy
+    : public HttpsHealthChecksRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class HttpsHealthChecksLimitedTimeRetryPolicy : public HttpsHealthChecksRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit HttpsHealthChecksLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  HttpsHealthChecksLimitedTimeRetryPolicy(HttpsHealthChecksLimitedTimeRetryPolicy&& rhs) noexcept
-    : HttpsHealthChecksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  HttpsHealthChecksLimitedTimeRetryPolicy(HttpsHealthChecksLimitedTimeRetryPolicy const& rhs) noexcept
-    : HttpsHealthChecksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  HttpsHealthChecksLimitedTimeRetryPolicy(
+      HttpsHealthChecksLimitedTimeRetryPolicy&& rhs) noexcept
+      : HttpsHealthChecksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  HttpsHealthChecksLimitedTimeRetryPolicy(
+      HttpsHealthChecksLimitedTimeRetryPolicy const& rhs) noexcept
+      : HttpsHealthChecksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,20 +163,23 @@ class HttpsHealthChecksLimitedTimeRetryPolicy : public HttpsHealthChecksRetryPol
   using BaseType = HttpsHealthChecksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_https_health_checks_v1_internal::HttpsHealthChecksRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_https_health_checks_v1_internal::HttpsHealthChecksRetryTraits>
+      impl_;
 };
 
 /**
  * The `HttpsHealthChecksConnection` object for `HttpsHealthChecksClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `HttpsHealthChecksClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `HttpsHealthChecksClient`.
+ * sets in `HttpsHealthChecksClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `HttpsHealthChecksClient`.
  *
  * To create a concrete instance, see `MakeHttpsHealthChecksConnection()`.
  *
- * For mocking, see `compute_https_health_checks_v1_mocks::MockHttpsHealthChecksConnection`.
+ * For mocking, see
+ * `compute_https_health_checks_v1_mocks::MockHttpsHealthChecksConnection`.
  */
 class HttpsHealthChecksConnection {
  public:
@@ -179,46 +188,64 @@ class HttpsHealthChecksConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::DeleteHttpsHealthCheckRequest const& request);
+  DeleteHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
+                             DeleteHttpsHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHttpsHealthCheck(NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::DeleteHttpsHealthCheckRequest const& request);
+  DeleteHttpsHealthCheck(NoAwaitTag,
+                         google::cloud::cpp::compute::https_health_checks::v1::
+                             DeleteHttpsHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHttpsHealthCheck( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteHttpsHealthCheck(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  GetHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::GetHttpsHealthCheckRequest const& request);
+  GetHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
+                          GetHttpsHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::InsertHttpsHealthCheckRequest const& request);
+  InsertHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
+                             InsertHttpsHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHttpsHealthCheck(NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::InsertHttpsHealthCheckRequest const& request);
+  InsertHttpsHealthCheck(NoAwaitTag,
+                         google::cloud::cpp::compute::https_health_checks::v1::
+                             InsertHttpsHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHttpsHealthCheck( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertHttpsHealthCheck(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::ListHttpsHealthChecksRequest request);
+  ListHttpsHealthChecks(google::cloud::cpp::compute::https_health_checks::v1::
+                            ListHttpsHealthChecksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::PatchHttpsHealthCheckRequest const& request);
+  PatchHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
+                            PatchHttpsHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchHttpsHealthCheck(NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::PatchHttpsHealthCheckRequest const& request);
+  PatchHttpsHealthCheck(NoAwaitTag,
+                        google::cloud::cpp::compute::https_health_checks::v1::
+                            PatchHttpsHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHttpsHealthCheck( google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchHttpsHealthCheck(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::UpdateHttpsHealthCheckRequest const& request);
+  UpdateHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
+                             UpdateHttpsHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHttpsHealthCheck(NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::UpdateHttpsHealthCheckRequest const& request);
+  UpdateHttpsHealthCheck(NoAwaitTag,
+                         google::cloud::cpp::compute::https_health_checks::v1::
+                             UpdateHttpsHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHttpsHealthCheck( google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateHttpsHealthCheck(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

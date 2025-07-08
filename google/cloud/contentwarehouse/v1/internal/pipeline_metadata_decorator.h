@@ -44,16 +44,16 @@ class PipelineServiceMetadata : public PipelineServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RunPipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -69,8 +69,7 @@ class PipelineServiceMetadata : public PipelineServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

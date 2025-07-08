@@ -44,26 +44,27 @@ PolicyTroubleshooterMetadata::PolicyTroubleshooterMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
+StatusOr<
+    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
 PolicyTroubleshooterMetadata::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::policytroubleshooter::iam::v3::
+        TroubleshootIamPolicyRequest const& request) {
   SetMetadata(context, options);
   return child_->TroubleshootIamPolicy(context, options, request);
 }
 
-void PolicyTroubleshooterMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void PolicyTroubleshooterMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void PolicyTroubleshooterMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                               Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

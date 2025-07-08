@@ -35,30 +35,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FleetRoutingMetadata : public FleetRoutingStub {
  public:
   ~FleetRoutingMetadata() override = default;
-  FleetRoutingMetadata(
-      std::shared_ptr<FleetRoutingStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  FleetRoutingMetadata(std::shared_ptr<FleetRoutingStub> child,
+                       std::multimap<std::string, std::string> fixed_metadata,
+                       std::string api_client_header = "");
 
-  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse> OptimizeTours(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::optimization::v1::OptimizeToursRequest const& request) override;
+  StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
+  OptimizeTours(grpc::ClientContext& context, Options const& options,
+                google::cloud::optimization::v1::OptimizeToursRequest const&
+                    request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchOptimizeTours(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -74,8 +73,7 @@ class FleetRoutingMetadata : public FleetRoutingStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

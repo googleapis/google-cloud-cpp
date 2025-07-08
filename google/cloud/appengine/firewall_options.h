@@ -31,7 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use appengine_v1::FirewallBackoffPolicyOption directly.
 using ::google::cloud::appengine_v1::FirewallBackoffPolicyOption;
 
-/// @deprecated Use appengine_v1::FirewallConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use appengine_v1::FirewallConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::appengine_v1::FirewallConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use appengine_v1::FirewallPolicyOptionList directly.

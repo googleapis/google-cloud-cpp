@@ -38,42 +38,49 @@ class MetricsScopesStub {
  public:
   virtual ~MetricsScopesStub() = 0;
 
-  virtual StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) = 0;
+  virtual StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
+  GetMetricsScope(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse> ListMetricsScopesByMonitoredProject(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) = 0;
+  virtual StatusOr<google::monitoring::metricsscope::v1::
+                       ListMetricsScopesByMonitoredProjectResponse>
+  ListMetricsScopesByMonitoredProject(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::metricsscope::v1::
+          ListMetricsScopesByMonitoredProjectRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateMonitoredProject(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) = 0;
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteMonitoredProject(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) = 0;
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -86,42 +93,49 @@ class MetricsScopesStub {
 class DefaultMetricsScopesStub : public MetricsScopesStub {
  public:
   DefaultMetricsScopesStub(
-      std::unique_ptr<google::monitoring::metricsscope::v1::MetricsScopes::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::monitoring::metricsscope::v1::MetricsScopes::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
+          request) override;
 
-  StatusOr<google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectResponse> ListMetricsScopesByMonitoredProject(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::metricsscope::v1::ListMetricsScopesByMonitoredProjectRequest const& request) override;
+  StatusOr<google::monitoring::metricsscope::v1::
+               ListMetricsScopesByMonitoredProjectResponse>
+  ListMetricsScopesByMonitoredProject(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::metricsscope::v1::
+          ListMetricsScopesByMonitoredProjectRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      grpc::ClientContext& context,
-      Options options,
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -136,8 +150,11 @@ class DefaultMetricsScopesStub : public MetricsScopesStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::monitoring::metricsscope::v1::MetricsScopes::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<
+      google::monitoring::metricsscope::v1::MetricsScopes::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

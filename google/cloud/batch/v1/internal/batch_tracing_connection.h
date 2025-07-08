@@ -30,70 +30,67 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class BatchServiceTracingConnection
-    : public batch_v1::BatchServiceConnection {
+class BatchServiceTracingConnection : public batch_v1::BatchServiceConnection {
  public:
   ~BatchServiceTracingConnection() override = default;
 
   explicit BatchServiceTracingConnection(
-    std::shared_ptr<batch_v1::BatchServiceConnection> child);
+      std::shared_ptr<batch_v1::BatchServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::batch::v1::Job>
-  CreateJob(google::cloud::batch::v1::CreateJobRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Job> CreateJob(
+      google::cloud::batch::v1::CreateJobRequest const& request) override;
 
-  StatusOr<google::cloud::batch::v1::Job>
-  GetJob(google::cloud::batch::v1::GetJobRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Job> GetJob(
+      google::cloud::batch::v1::GetJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-  DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteJob(NoAwaitTag,
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-  DeleteJob(
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      NoAwaitTag,
+      google::cloud::batch::v1::DeleteJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
-  CancelJob(google::cloud::batch::v1::CancelJobRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CancelJob(NoAwaitTag,
+  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>> CancelJob(
       google::cloud::batch::v1::CancelJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
-  CancelJob(
+  StatusOr<google::longrunning::Operation> CancelJob(
+      NoAwaitTag,
+      google::cloud::batch::v1::CancelJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::batch::v1::CancelJobResponse>> CancelJob(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::batch::v1::Job>
-  ListJobs(google::cloud::batch::v1::ListJobsRequest request) override;
+  StreamRange<google::cloud::batch::v1::Job> ListJobs(
+      google::cloud::batch::v1::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::batch::v1::Task>
-  GetTask(google::cloud::batch::v1::GetTaskRequest const& request) override;
+  StatusOr<google::cloud::batch::v1::Task> GetTask(
+      google::cloud::batch::v1::GetTaskRequest const& request) override;
 
-  StreamRange<google::cloud::batch::v1::Task>
-  ListTasks(google::cloud::batch::v1::ListTasksRequest request) override;
+  StreamRange<google::cloud::batch::v1::Task> ListTasks(
+      google::cloud::batch::v1::ListTasksRequest request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<batch_v1::BatchServiceConnection> child_;

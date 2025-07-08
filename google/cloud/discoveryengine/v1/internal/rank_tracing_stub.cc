@@ -32,22 +32,24 @@ RankServiceTracingStub::RankServiceTracingStub(
     std::shared_ptr<RankServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::discoveryengine::v1::RankResponse> RankServiceTracingStub::Rank(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::RankResponse>
+RankServiceTracingStub::Rank(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::RankRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.RankService", "Rank");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.RankService", "Rank");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->Rank(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> RankServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+RankServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.RankService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.RankService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -55,10 +57,10 @@ StatusOr<google::longrunning::ListOperationsResponse> RankServiceTracingStub::Li
 }
 
 StatusOr<google::longrunning::Operation> RankServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.RankService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.RankService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -66,10 +68,10 @@ StatusOr<google::longrunning::Operation> RankServiceTracingStub::GetOperation(
 }
 
 Status RankServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.RankService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.RankService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

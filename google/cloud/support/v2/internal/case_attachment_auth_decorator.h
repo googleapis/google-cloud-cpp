@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/support/v2/internal/case_attachment_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,9 +39,9 @@ class CaseAttachmentServiceAuth : public CaseAttachmentServiceStub {
       std::shared_ptr<CaseAttachmentServiceStub> child);
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::support::v2::ListAttachmentsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::ListAttachmentsRequest const& request)
+      override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

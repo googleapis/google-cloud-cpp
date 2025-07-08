@@ -26,35 +26,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TagBindingsConnectionIdempotencyPolicy::~TagBindingsConnectionIdempotencyPolicy() = default;
+TagBindingsConnectionIdempotencyPolicy::
+    ~TagBindingsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TagBindingsConnectionIdempotencyPolicy>
 TagBindingsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TagBindingsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TagBindingsConnectionIdempotencyPolicy::ListTagBindings(google::cloud::resourcemanager::v3::ListTagBindingsRequest) {  // NOLINT
+Idempotency TagBindingsConnectionIdempotencyPolicy::ListTagBindings(
+    google::cloud::resourcemanager::v3::ListTagBindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagBindingsConnectionIdempotencyPolicy::CreateTagBinding(google::cloud::resourcemanager::v3::CreateTagBindingRequest const&) {
+Idempotency TagBindingsConnectionIdempotencyPolicy::CreateTagBinding(
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagBindingsConnectionIdempotencyPolicy::DeleteTagBinding(google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&) {
+Idempotency TagBindingsConnectionIdempotencyPolicy::DeleteTagBinding(
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TagBindingsConnectionIdempotencyPolicy::ListEffectiveTags(google::cloud::resourcemanager::v3::ListEffectiveTagsRequest) {  // NOLINT
+Idempotency TagBindingsConnectionIdempotencyPolicy::ListEffectiveTags(
+    google::cloud::resourcemanager::v3::ListEffectiveTagsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TagBindingsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TagBindingsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TagBindingsConnectionIdempotencyPolicy>
-    MakeDefaultTagBindingsConnectionIdempotencyPolicy() {
+MakeDefaultTagBindingsConnectionIdempotencyPolicy() {
   return std::make_unique<TagBindingsConnectionIdempotencyPolicy>();
 }
 

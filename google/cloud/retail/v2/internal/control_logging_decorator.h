@@ -35,42 +35,35 @@ class ControlServiceLogging : public ControlServiceStub {
  public:
   ~ControlServiceLogging() override = default;
   ControlServiceLogging(std::shared_ptr<ControlServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                        TracingOptions tracing_options,
+                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::retail::v2::Control> CreateControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateControlRequest const& request) override;
 
   Status DeleteControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Control> UpdateControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Control> GetControl(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetControlRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListControlsResponse> ListControls(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListControlsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
  private:

@@ -35,17 +35,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class LicenseCodesRestMetadata : public LicenseCodesRestStub {
  public:
   ~LicenseCodesRestMetadata() override = default;
-  explicit LicenseCodesRestMetadata(
-      std::shared_ptr<LicenseCodesRestStub> child,
-      std::string api_client_header = "");
+  explicit LicenseCodesRestMetadata(std::shared_ptr<LicenseCodesRestStub> child,
+                                    std::string api_client_header = "");
 
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCode(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::license_codes::v1::GetLicenseCodeRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::license_codes::v1::
+          GetLicenseCodeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::license_codes::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     Options const& options,
+                     google::cloud::cpp::compute::license_codes::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/v2/routine.proto
 
 #include "google/cloud/bigquerycontrol/v2/internal/routine_rest_stub_factory.h"
-#include "absl/strings/match.h"
 #include "google/cloud/bigquerycontrol/v2/internal/routine_rest_logging_decorator.h"
 #include "google/cloud/bigquerycontrol/v2/internal/routine_rest_metadata_decorator.h"
 #include "google/cloud/bigquerycontrol/v2/internal/routine_rest_stub.h"
@@ -27,6 +26,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
+#include "absl/strings/match.h"
 #include <memory>
 #include <utility>
 
@@ -35,18 +35,16 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RoutineServiceRestStub>
-CreateDefaultRoutineServiceRestStub(Options const& options) {
+std::shared_ptr<RoutineServiceRestStub> CreateDefaultRoutineServiceRestStub(
+    Options const& options) {
   auto opts = internal::PopulateRestOptions(options);
   std::shared_ptr<RoutineServiceRestStub> stub =
       std::make_shared<DefaultRoutineServiceRestStub>(std::move(opts));
   stub = std::make_shared<RoutineServiceRestMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<RoutineServiceRestLogging>(
-        std::move(stub),
-        options.get<RestTracingOptionsOption>(),
+        std::move(stub), options.get<RestTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   return stub;

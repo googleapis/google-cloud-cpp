@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_KEY_MANAGEMENT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_KEY_MANAGEMENT_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/kms/v1/key_management_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -37,8 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// Google Cloud Key Management Service
 ///
-/// Manages cryptographic keys and operations using those keys. Implements a REST
-/// model with the following objects:
+/// Manages cryptographic keys and operations using those keys. Implements a
+/// REST model with the following objects:
 ///
 /// * [KeyRing][google.cloud.kms.v1.KeyRing]
 /// * [CryptoKey][google.cloud.kms.v1.CryptoKey]
@@ -71,30 +71,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
-/// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L303}
-/// [google.cloud.kms.v1.ImportJob]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L812}
-/// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L36}
+/// [google.cloud.kms.v1.CryptoKey]:
+/// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L59}
+/// [google.cloud.kms.v1.CryptoKeyVersion]:
+/// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L303}
+/// [google.cloud.kms.v1.ImportJob]:
+/// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L812}
+/// [google.cloud.kms.v1.KeyRing]:
+/// @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L36}
 ///
 class KeyManagementServiceClient {
  public:
-  explicit KeyManagementServiceClient(std::shared_ptr<KeyManagementServiceConnection> connection, Options opts = {});
+  explicit KeyManagementServiceClient(
+      std::shared_ptr<KeyManagementServiceConnection> connection,
+      Options opts = {});
   ~KeyManagementServiceClient();
 
   ///@{
   /// @name Copy and move support
   KeyManagementServiceClient(KeyManagementServiceClient const&) = default;
-  KeyManagementServiceClient& operator=(KeyManagementServiceClient const&) = default;
+  KeyManagementServiceClient& operator=(KeyManagementServiceClient const&) =
+      default;
   KeyManagementServiceClient(KeyManagementServiceClient&&) = default;
   KeyManagementServiceClient& operator=(KeyManagementServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(KeyManagementServiceClient const& a, KeyManagementServiceClient const& b) {
+  friend bool operator==(KeyManagementServiceClient const& a,
+                         KeyManagementServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(KeyManagementServiceClient const& a, KeyManagementServiceClient const& b) {
+  friend bool operator!=(KeyManagementServiceClient const& a,
+                         KeyManagementServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -132,8 +141,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ListKeyRingsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L408}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::KeyRing>
-  ListKeyRings(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -171,8 +180,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ListKeyRingsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L408}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::KeyRing>
-  ListKeyRings(google::cloud::kms::v1::ListKeyRingsRequest request, Options opts = {});
+  StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
+      google::cloud::kms::v1::ListKeyRingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -207,8 +216,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L447}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::CryptoKey>
-  ListCryptoKeys(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -246,8 +255,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L447}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::CryptoKey>
-  ListCryptoKeys(google::cloud::kms::v1::ListCryptoKeysRequest request, Options opts = {});
+  StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
+      google::cloud::kms::v1::ListCryptoKeysRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -283,8 +292,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ListCryptoKeyVersionsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L488}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-  ListCryptoKeyVersions(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::kms::v1::CryptoKeyVersion> ListCryptoKeyVersions(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -322,8 +331,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ListCryptoKeyVersionsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L488}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-  ListCryptoKeyVersions(google::cloud::kms::v1::ListCryptoKeyVersionsRequest request, Options opts = {});
+  StreamRange<google::cloud::kms::v1::CryptoKeyVersion> ListCryptoKeyVersions(
+      google::cloud::kms::v1::ListCryptoKeyVersionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -358,8 +368,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ListImportJobsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L530}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::ImportJob>
-  ListImportJobs(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -397,8 +407,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ListImportJobsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L530}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::ImportJob>
-  ListImportJobs(google::cloud::kms::v1::ListImportJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
+      google::cloud::kms::v1::ListImportJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +434,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyRing.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L45}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::KeyRing>
-  GetKeyRing(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -454,8 +464,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::KeyRing>
-  GetKeyRing(google::cloud::kms::v1::GetKeyRingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::KeyRing> GetKeyRing(
+      google::cloud::kms::v1::GetKeyRingRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -485,8 +496,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.GetCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L662}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  GetCryptoKey(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -519,8 +530,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.GetCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L662}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  GetCryptoKey(google::cloud::kms::v1::GetCryptoKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
+      google::cloud::kms::v1::GetCryptoKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -547,8 +559,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.GetCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L675}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  GetCryptoKeyVersion(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> GetCryptoKeyVersion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -578,8 +590,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.GetCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L675}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  GetCryptoKeyVersion(google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> GetCryptoKeyVersion(
+      google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -614,8 +627,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.PublicKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L695}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::PublicKey>
-  GetPublicKey(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::PublicKey> GetPublicKey(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -653,8 +666,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.PublicKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L695}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::PublicKey>
-  GetPublicKey(google::cloud::kms::v1::GetPublicKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::PublicKey> GetPublicKey(
+      google::cloud::kms::v1::GetPublicKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -680,8 +694,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ImportJob.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L908}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::ImportJob>
-  GetImportJob(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -710,8 +724,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ImportJob]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L812}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::ImportJob>
-  GetImportJob(google::cloud::kms::v1::GetImportJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::ImportJob> GetImportJob(
+      google::cloud::kms::v1::GetImportJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -742,8 +757,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::KeyRing>
-  CreateKeyRing(std::string const& parent, std::string const& key_ring_id, google::cloud::kms::v1::KeyRing const& key_ring, Options opts = {});
+  StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
+      std::string const& parent, std::string const& key_ring_id,
+      google::cloud::kms::v1::KeyRing const& key_ring, Options opts = {});
 
   // clang-format off
   ///
@@ -773,8 +789,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::KeyRing>
-  CreateKeyRing(google::cloud::kms::v1::CreateKeyRingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::KeyRing> CreateKeyRing(
+      google::cloud::kms::v1::CreateKeyRingRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -812,8 +829,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyRing.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L45}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  CreateCryptoKey(std::string const& parent, std::string const& crypto_key_id, google::cloud::kms::v1::CryptoKey const& crypto_key, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKey> CreateCryptoKey(
+      std::string const& parent, std::string const& crypto_key_id,
+      google::cloud::kms::v1::CryptoKey const& crypto_key, Options opts = {});
 
   // clang-format off
   ///
@@ -850,8 +868,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  CreateCryptoKey(google::cloud::kms::v1::CreateCryptoKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKey> CreateCryptoKey(
+      google::cloud::kms::v1::CreateCryptoKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -888,8 +907,10 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKeyVersion.state]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L577}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  CreateCryptoKeyVersion(std::string const& parent, google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
+      std::string const& parent,
+      google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -926,8 +947,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKeyVersion.state]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L577}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  CreateCryptoKeyVersion(google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> CreateCryptoKeyVersion(
+      google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -964,8 +986,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ImportCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L796}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  ImportCryptoKeyVersion(google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
+      google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1002,8 +1025,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyRing.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L45}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::ImportJob>
-  CreateImportJob(std::string const& parent, std::string const& import_job_id, google::cloud::kms::v1::ImportJob const& import_job, Options opts = {});
+  StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
+      std::string const& parent, std::string const& import_job_id,
+      google::cloud::kms::v1::ImportJob const& import_job, Options opts = {});
 
   // clang-format off
   ///
@@ -1038,8 +1062,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::ImportJob>
-  CreateImportJob(google::cloud::kms::v1::CreateImportJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::ImportJob> CreateImportJob(
+      google::cloud::kms::v1::CreateImportJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1064,8 +1089,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.UpdateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L928}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  UpdateCryptoKey(google::cloud::kms::v1::CryptoKey const& crypto_key, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
+      google::cloud::kms::v1::CryptoKey const& crypto_key,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1094,8 +1120,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.UpdateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L928}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  UpdateCryptoKey(google::cloud::kms::v1::UpdateCryptoKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
+      google::cloud::kms::v1::UpdateCryptoKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1137,8 +1164,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.UpdateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L939}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  UpdateCryptoKeyVersion(google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> UpdateCryptoKeyVersion(
+      google::cloud::kms::v1::CryptoKeyVersion const& crypto_key_version,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1183,8 +1211,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.UpdateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L939}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  UpdateCryptoKeyVersion(google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> UpdateCryptoKeyVersion(
+      google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1219,8 +1248,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.UpdateCryptoKeyPrimaryVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L952}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  UpdateCryptoKeyPrimaryVersion(std::string const& name, std::string const& crypto_key_version_id, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKeyPrimaryVersion(
+      std::string const& name, std::string const& crypto_key_version_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1256,8 +1286,10 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.UpdateCryptoKeyPrimaryVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L952}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKey>
-  UpdateCryptoKeyPrimaryVersion(google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKeyPrimaryVersion(
+      google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1308,8 +1340,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L286}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  DestroyCryptoKeyVersion(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> DestroyCryptoKeyVersion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1364,8 +1396,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L286}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  DestroyCryptoKeyVersion(google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> DestroyCryptoKeyVersion(
+      google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1402,8 +1435,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.RestoreCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L982}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  RestoreCryptoKeyVersion(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> RestoreCryptoKeyVersion(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1444,8 +1477,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.RestoreCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L982}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
-  RestoreCryptoKeyVersion(google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::CryptoKeyVersion> RestoreCryptoKeyVersion(
+      google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1500,8 +1534,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.ProtectionLevel.SOFTWARE]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L1009}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EncryptResponse>
-  Encrypt(std::string const& name, std::string const& plaintext, Options opts = {});
+  StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
+      std::string const& name, std::string const& plaintext, Options opts = {});
 
   // clang-format off
   ///
@@ -1536,8 +1570,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L311}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::EncryptResponse>
-  Encrypt(google::cloud::kms::v1::EncryptRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
+      google::cloud::kms::v1::EncryptRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1573,8 +1607,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L299}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::DecryptResponse>
-  Decrypt(std::string const& name, std::string const& ciphertext, Options opts = {});
+  StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
+      std::string const& name, std::string const& ciphertext,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1609,8 +1644,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L299}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::DecryptResponse>
-  Decrypt(google::cloud::kms::v1::DecryptRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
+      google::cloud::kms::v1::DecryptRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1648,8 +1683,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.RawEncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1667}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::RawEncryptResponse>
-  RawEncrypt(google::cloud::kms::v1::RawEncryptRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
+      google::cloud::kms::v1::RawEncryptRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1683,8 +1719,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.RawDecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1766}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::RawDecryptResponse>
-  RawDecrypt(google::cloud::kms::v1::RawDecryptRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
+      google::cloud::kms::v1::RawDecryptRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1726,8 +1763,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L119}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
-  AsymmetricSign(std::string const& name, google::cloud::kms::v1::Digest const& digest, Options opts = {});
+  StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
+      std::string const& name, google::cloud::kms::v1::Digest const& digest,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1763,8 +1801,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L119}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
-  AsymmetricSign(google::cloud::kms::v1::AsymmetricSignRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
+      google::cloud::kms::v1::AsymmetricSignRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1800,8 +1839,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L119}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
-  AsymmetricDecrypt(std::string const& name, std::string const& ciphertext, Options opts = {});
+  StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse> AsymmetricDecrypt(
+      std::string const& name, std::string const& ciphertext,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1837,8 +1877,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L119}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
-  AsymmetricDecrypt(google::cloud::kms::v1::AsymmetricDecryptRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse> AsymmetricDecrypt(
+      google::cloud::kms::v1::AsymmetricDecryptRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1870,8 +1911,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.MacSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1946}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::MacSignResponse>
-  MacSign(std::string const& name, std::string const& data, Options opts = {});
+  StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
+      std::string const& name, std::string const& data, Options opts = {});
 
   // clang-format off
   ///
@@ -1904,8 +1945,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.MacSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1946}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::MacSignResponse>
-  MacSign(google::cloud::kms::v1::MacSignRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
+      google::cloud::kms::v1::MacSignRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1941,8 +1982,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.MacVerifyResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1993}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::MacVerifyResponse>
-  MacVerify(std::string const& name, std::string const& data, std::string const& mac, Options opts = {});
+  StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
+      std::string const& name, std::string const& data, std::string const& mac,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1976,8 +2018,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.MacVerifyResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1993}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::MacVerifyResponse>
-  MacVerify(google::cloud::kms::v1::MacVerifyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
+      google::cloud::kms::v1::MacVerifyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2012,7 +2055,9 @@ class KeyManagementServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
-  GenerateRandomBytes(std::string const& location, std::int32_t length_bytes, google::cloud::kms::v1::ProtectionLevel protection_level, Options opts = {});
+  GenerateRandomBytes(std::string const& location, std::int32_t length_bytes,
+                      google::cloud::kms::v1::ProtectionLevel protection_level,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -2043,7 +2088,9 @@ class KeyManagementServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
-  GenerateRandomBytes(google::cloud::kms::v1::GenerateRandomBytesRequest const& request, Options opts = {});
+  GenerateRandomBytes(
+      google::cloud::kms::v1::GenerateRandomBytesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2081,8 +2128,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2111,8 +2158,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2144,8 +2192,8 @@ class KeyManagementServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2176,8 +2224,8 @@ class KeyManagementServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2212,8 +2260,9 @@ class KeyManagementServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2239,8 +2288,8 @@ class KeyManagementServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2271,8 +2320,9 @@ class KeyManagementServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<KeyManagementServiceConnection> connection_;

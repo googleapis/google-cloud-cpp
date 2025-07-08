@@ -17,12 +17,12 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/v1/validation_helper_v1_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_connection_impl.h"
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_option_defaults.h"
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_stub_factory.h"
 #include "google/cloud/binaryauthorization/v1/internal/validation_helper_v1_tracing_connection.h"
 #include "google/cloud/binaryauthorization/v1/validation_helper_v1_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -37,26 +37,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ValidationHelperV1Connection::~ValidationHelperV1Connection() = default;
 
-StatusOr<google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse>
+StatusOr<google::cloud::binaryauthorization::v1::
+             ValidateAttestationOccurrenceResponse>
 ValidationHelperV1Connection::ValidateAttestationOccurrence(
-    google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceRequest const&) {
+    google::cloud::binaryauthorization::v1::
+        ValidateAttestationOccurrenceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ValidationHelperV1PolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ValidationHelperV1PolicyOptionList>(options,
+                                                                     __func__);
   options = binaryauthorization_v1_internal::ValidationHelperV1DefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = binaryauthorization_v1_internal::CreateDefaultValidationHelperV1Stub(
-    std::move(auth), options);
-  return binaryauthorization_v1_internal::MakeValidationHelperV1TracingConnection(
-      std::make_shared<binaryauthorization_v1_internal::ValidationHelperV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      binaryauthorization_v1_internal::CreateDefaultValidationHelperV1Stub(
+          std::move(auth), options);
+  return binaryauthorization_v1_internal::
+      MakeValidationHelperV1TracingConnection(
+          std::make_shared<binaryauthorization_v1_internal::
+                               ValidationHelperV1ConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

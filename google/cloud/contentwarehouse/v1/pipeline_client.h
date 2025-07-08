@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PipelineServiceClient {
  public:
-  explicit PipelineServiceClient(std::shared_ptr<PipelineServiceConnection> connection, Options opts = {});
+  explicit PipelineServiceClient(
+      std::shared_ptr<PipelineServiceConnection> connection, Options opts = {});
   ~PipelineServiceClient();
 
   ///@{
@@ -76,10 +77,12 @@ class PipelineServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(PipelineServiceClient const& a, PipelineServiceClient const& b) {
+  friend bool operator==(PipelineServiceClient const& a,
+                         PipelineServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PipelineServiceClient const& a, PipelineServiceClient const& b) {
+  friend bool operator!=(PipelineServiceClient const& a,
+                         PipelineServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -128,8 +131,9 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RunPipeline(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> RunPipeline(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -166,7 +170,9 @@ class PipelineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const& request, Options opts = {});
+  RunPipeline(
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -179,8 +185,10 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RunPipeline(NoAwaitTag, google::cloud::contentwarehouse::v1::RunPipelineRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RunPipeline(
+      NoAwaitTag,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -192,7 +200,8 @@ class PipelineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::longrunning::Operation const& operation, Options opts = {});
+  RunPipeline(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +227,8 @@ class PipelineServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -250,8 +259,9 @@ class PipelineServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<PipelineServiceConnection> connection_;

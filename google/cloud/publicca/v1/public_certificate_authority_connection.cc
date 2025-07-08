@@ -17,16 +17,16 @@
 // source: google/cloud/security/publicca/v1/service.proto
 
 #include "google/cloud/publicca/v1/public_certificate_authority_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_connection_impl.h"
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_option_defaults.h"
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_stub_factory.h"
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_tracing_connection.h"
 #include "google/cloud/publicca/v1/public_certificate_authority_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
 
@@ -35,28 +35,34 @@ namespace cloud {
 namespace publicca_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PublicCertificateAuthorityServiceConnection::~PublicCertificateAuthorityServiceConnection() = default;
+PublicCertificateAuthorityServiceConnection::
+    ~PublicCertificateAuthorityServiceConnection() = default;
 
 StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>
 PublicCertificateAuthorityServiceConnection::CreateExternalAccountKey(
-    google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const&) {
+    google::cloud::security::publicca::v1::
+        CreateExternalAccountKeyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<PublicCertificateAuthorityServiceConnection> MakePublicCertificateAuthorityServiceConnection(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
+std::shared_ptr<PublicCertificateAuthorityServiceConnection>
+MakePublicCertificateAuthorityServiceConnection(Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       PublicCertificateAuthorityServicePolicyOptionList>(options, __func__);
-  options = publicca_v1_internal::PublicCertificateAuthorityServiceDefaultOptions(
-      std::move(options));
+  options =
+      publicca_v1_internal::PublicCertificateAuthorityServiceDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = publicca_v1_internal::CreateDefaultPublicCertificateAuthorityServiceStub(
-    std::move(auth), options);
-  return publicca_v1_internal::MakePublicCertificateAuthorityServiceTracingConnection(
-      std::make_shared<publicca_v1_internal::PublicCertificateAuthorityServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      publicca_v1_internal::CreateDefaultPublicCertificateAuthorityServiceStub(
+          std::move(auth), options);
+  return publicca_v1_internal::
+      MakePublicCertificateAuthorityServiceTracingConnection(
+          std::make_shared<publicca_v1_internal::
+                               PublicCertificateAuthorityServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

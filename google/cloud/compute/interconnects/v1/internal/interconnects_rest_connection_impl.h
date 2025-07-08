@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECTS_V1_INTERNAL_INTERCONNECTS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECTS_V1_INTERNAL_INTERCONNECTS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/interconnects/v1/interconnects_connection.h"
 #include "google/cloud/compute/interconnects/v1/interconnects_connection_idempotency_policy.h"
 #include "google/cloud/compute/interconnects/v1/interconnects_options.h"
 #include "google/cloud/compute/interconnects/v1/internal/interconnects_rest_stub.h"
 #include "google/cloud/compute/interconnects/v1/internal/interconnects_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,89 +44,110 @@ class InterconnectsRestConnectionImpl
   ~InterconnectsRestConnectionImpl() override = default;
 
   InterconnectsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_interconnects_v1_internal::InterconnectsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_interconnects_v1_internal::InterconnectsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest const& request) override;
+  DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         DeleteInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInterconnect(NoAwaitTag,
-      google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnect(
+      NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                      DeleteInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnect(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-  GetInterconnect(google::cloud::cpp::compute::interconnects::v1::GetInterconnectRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
+      google::cloud::cpp::compute::interconnects::v1::
+          GetInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) override;
+  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::
+                     GetDiagnosticsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
-  GetMacsecConfig(google::cloud::cpp::compute::interconnects::v1::GetMacsecConfigRequest const& request) override;
+  StatusOr<
+      google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
+  GetMacsecConfig(google::cloud::cpp::compute::interconnects::v1::
+                      GetMacsecConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest const& request) override;
+  InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                         InsertInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInterconnect(NoAwaitTag,
-      google::cloud::cpp::compute::interconnects::v1::InsertInterconnectRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnect(
+      NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                      InsertInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInterconnect(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-  ListInterconnects(google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest const& request) override;
+  PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::
+                        PatchInterconnectRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchInterconnect(NoAwaitTag,
-      google::cloud::cpp::compute::interconnects::v1::PatchInterconnectRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnect(
+      NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                      PatchInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInterconnect(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_interconnects_v1::InterconnectsRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_interconnects_v1::InterconnectsRetryPolicyOption>()->clone();
+    return options
+        .get<compute_interconnects_v1::InterconnectsRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_interconnects_v1::InterconnectsBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_interconnects_v1::InterconnectsBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_interconnects_v1::InterconnectsConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_interconnects_v1::InterconnectsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_interconnects_v1::InterconnectsConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_interconnects_v1::
+                 InterconnectsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_interconnects_v1::InterconnectsPollingPolicyOption>()->clone();
+    return options
+        .get<compute_interconnects_v1::InterconnectsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_interconnects_v1_internal::InterconnectsRestStub> stub_;
+  std::shared_ptr<compute_interconnects_v1_internal::InterconnectsRestStub>
+      stub_;
   Options options_;
 };
 

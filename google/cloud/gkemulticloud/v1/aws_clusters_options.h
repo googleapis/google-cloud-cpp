@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct AwsClustersPollingPolicyOption {
  * @ingroup google-cloud-gkemulticloud-options
  */
 using AwsClustersPolicyOptionList =
-    OptionList<AwsClustersRetryPolicyOption,
-               AwsClustersBackoffPolicyOption,
+    OptionList<AwsClustersRetryPolicyOption, AwsClustersBackoffPolicyOption,
                AwsClustersPollingPolicyOption,
                AwsClustersConnectionIdempotencyPolicyOption>;
 

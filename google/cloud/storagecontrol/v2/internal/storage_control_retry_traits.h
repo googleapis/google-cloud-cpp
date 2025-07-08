@@ -30,7 +30,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Define the gRPC status code semantics for retrying requests.
 struct StorageControlRetryTraits {
   static bool IsPermanentFailure(google::cloud::Status const& status) {
-    return status.code() != StatusCode::kOk && status.code() != StatusCode::kDeadlineExceeded && status.code() != StatusCode::kInternal && status.code() != StatusCode::kResourceExhausted && status.code() != StatusCode::kUnavailable && status.code() != StatusCode::kUnknown;
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kDeadlineExceeded &&
+           status.code() != StatusCode::kInternal &&
+           status.code() != StatusCode::kResourceExhausted &&
+           status.code() != StatusCode::kUnavailable &&
+           status.code() != StatusCode::kUnknown;
   }
 };
 

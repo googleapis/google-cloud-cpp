@@ -28,26 +28,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-DocumentsTracingStub::DocumentsTracingStub(
-    std::shared_ptr<DocumentsStub> child)
+DocumentsTracingStub::DocumentsTracingStub(std::shared_ptr<DocumentsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> DocumentsTracingStub::ListDocuments(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
+DocumentsTracingStub::ListDocuments(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ListDocuments");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ListDocuments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListDocuments(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::v2::Document> DocumentsTracingStub::GetDocument(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::v2::Document>
+DocumentsTracingStub::GetDocument(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "GetDocument");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +57,24 @@ StatusOr<google::cloud::dialogflow::v2::Document> DocumentsTracingStub::GetDocum
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncCreateDocument(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "CreateDocument");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "CreateDocument");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateDocument(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateDocument(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentsTracingStub::CreateDocument(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "CreateDocument");
+StatusOr<google::longrunning::Operation> DocumentsTracingStub::CreateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "CreateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +83,24 @@ DocumentsTracingStub::CreateDocument(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncImportDocuments(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ImportDocuments");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ImportDocuments");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportDocuments(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncImportDocuments(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentsTracingStub::ImportDocuments(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ImportDocuments");
+StatusOr<google::longrunning::Operation> DocumentsTracingStub::ImportDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ImportDocuments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,23 +109,24 @@ DocumentsTracingStub::ImportDocuments(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncDeleteDocument(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "DeleteDocument");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "DeleteDocument");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteDocument(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteDocument(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentsTracingStub::DeleteDocument(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "DeleteDocument");
+StatusOr<google::longrunning::Operation> DocumentsTracingStub::DeleteDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "DeleteDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -131,23 +135,24 @@ DocumentsTracingStub::DeleteDocument(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncUpdateDocument(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "UpdateDocument");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "UpdateDocument");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateDocument(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateDocument(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentsTracingStub::UpdateDocument(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "UpdateDocument");
+StatusOr<google::longrunning::Operation> DocumentsTracingStub::UpdateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "UpdateDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -156,23 +161,24 @@ DocumentsTracingStub::UpdateDocument(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncReloadDocument(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ReloadDocument");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ReloadDocument");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncReloadDocument(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncReloadDocument(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentsTracingStub::ReloadDocument(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ReloadDocument");
+StatusOr<google::longrunning::Operation> DocumentsTracingStub::ReloadDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ReloadDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -181,34 +187,36 @@ DocumentsTracingStub::ReloadDocument(
 
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncExportDocument(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ExportDocument");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ExportDocument");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportDocument(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncExportDocument(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-DocumentsTracingStub::ExportDocument(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ExportDocument");
+StatusOr<google::longrunning::Operation> DocumentsTracingStub::ExportDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ExportDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ExportDocument(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> DocumentsTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DocumentsTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -216,21 +224,22 @@ StatusOr<google::cloud::location::ListLocationsResponse> DocumentsTracingStub::L
 }
 
 StatusOr<google::cloud::location::Location> DocumentsTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DocumentsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DocumentsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -238,10 +247,10 @@ StatusOr<google::longrunning::ListOperationsResponse> DocumentsTracingStub::List
 }
 
 StatusOr<google::longrunning::Operation> DocumentsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -249,10 +258,10 @@ StatusOr<google::longrunning::Operation> DocumentsTracingStub::GetOperation(
 }
 
 Status DocumentsTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -269,8 +278,7 @@ DocumentsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -283,8 +291,8 @@ future<Status> DocumentsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

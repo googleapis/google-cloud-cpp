@@ -36,12 +36,13 @@ class IamCheckerConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<IamCheckerConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency TroubleshootIamPolicy(
+      google::cloud::policytroubleshooter::v1::
+          TroubleshootIamPolicyRequest const& request);
 };
 
 std::unique_ptr<IamCheckerConnectionIdempotencyPolicy>
-    MakeDefaultIamCheckerConnectionIdempotencyPolicy();
+MakeDefaultIamCheckerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_v1

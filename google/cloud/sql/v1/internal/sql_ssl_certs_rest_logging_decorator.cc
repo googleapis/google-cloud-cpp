@@ -29,33 +29,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SqlSslCertsServiceRestLogging::SqlSslCertsServiceRestLogging(
     std::shared_ptr<SqlSslCertsServiceRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
 SqlSslCertsServiceRestLogging::Delete(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
         return child_->Delete(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::sql::v1::SslCert>
-SqlSslCertsServiceRestLogging::Get(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::cloud::sql::v1::SslCert> SqlSslCertsServiceRestLogging::Get(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
         return child_->Get(rest_context, options, request);
       },
@@ -64,12 +59,10 @@ SqlSslCertsServiceRestLogging::Get(
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
 SqlSslCertsServiceRestLogging::Insert(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
         return child_->Insert(rest_context, options, request);
       },
@@ -78,12 +71,10 @@ SqlSslCertsServiceRestLogging::Insert(
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
 SqlSslCertsServiceRestLogging::List(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
         return child_->List(rest_context, options, request);
       },

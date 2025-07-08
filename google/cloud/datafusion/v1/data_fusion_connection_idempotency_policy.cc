@@ -26,43 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataFusionConnectionIdempotencyPolicy::~DataFusionConnectionIdempotencyPolicy() = default;
+DataFusionConnectionIdempotencyPolicy::
+    ~DataFusionConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataFusionConnectionIdempotencyPolicy>
 DataFusionConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DataFusionConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DataFusionConnectionIdempotencyPolicy::ListAvailableVersions(google::cloud::datafusion::v1::ListAvailableVersionsRequest) {  // NOLINT
+Idempotency DataFusionConnectionIdempotencyPolicy::ListAvailableVersions(
+    google::cloud::datafusion::v1::ListAvailableVersionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataFusionConnectionIdempotencyPolicy::ListInstances(google::cloud::datafusion::v1::ListInstancesRequest) {  // NOLINT
+Idempotency DataFusionConnectionIdempotencyPolicy::ListInstances(
+    google::cloud::datafusion::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataFusionConnectionIdempotencyPolicy::GetInstance(google::cloud::datafusion::v1::GetInstanceRequest const&) {
+Idempotency DataFusionConnectionIdempotencyPolicy::GetInstance(
+    google::cloud::datafusion::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataFusionConnectionIdempotencyPolicy::CreateInstance(google::cloud::datafusion::v1::CreateInstanceRequest const&) {
+Idempotency DataFusionConnectionIdempotencyPolicy::CreateInstance(
+    google::cloud::datafusion::v1::CreateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataFusionConnectionIdempotencyPolicy::DeleteInstance(google::cloud::datafusion::v1::DeleteInstanceRequest const&) {
+Idempotency DataFusionConnectionIdempotencyPolicy::DeleteInstance(
+    google::cloud::datafusion::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataFusionConnectionIdempotencyPolicy::UpdateInstance(google::cloud::datafusion::v1::UpdateInstanceRequest const&) {
+Idempotency DataFusionConnectionIdempotencyPolicy::UpdateInstance(
+    google::cloud::datafusion::v1::UpdateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataFusionConnectionIdempotencyPolicy::RestartInstance(google::cloud::datafusion::v1::RestartInstanceRequest const&) {
+Idempotency DataFusionConnectionIdempotencyPolicy::RestartInstance(
+    google::cloud::datafusion::v1::RestartInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataFusionConnectionIdempotencyPolicy>
-    MakeDefaultDataFusionConnectionIdempotencyPolicy() {
+MakeDefaultDataFusionConnectionIdempotencyPolicy() {
   return std::make_unique<DataFusionConnectionIdempotencyPolicy>();
 }
 

@@ -26,46 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EkmServiceConnectionIdempotencyPolicy::~EkmServiceConnectionIdempotencyPolicy() = default;
+EkmServiceConnectionIdempotencyPolicy::
+    ~EkmServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
 EkmServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<EkmServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::ListEkmConnections(google::cloud::kms::v1::ListEkmConnectionsRequest) {  // NOLINT
+Idempotency EkmServiceConnectionIdempotencyPolicy::ListEkmConnections(
+    google::cloud::kms::v1::ListEkmConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::GetEkmConnection(google::cloud::kms::v1::GetEkmConnectionRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::GetEkmConnection(
+    google::cloud::kms::v1::GetEkmConnectionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::CreateEkmConnection(google::cloud::kms::v1::CreateEkmConnectionRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::CreateEkmConnection(
+    google::cloud::kms::v1::CreateEkmConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConnection(google::cloud::kms::v1::UpdateEkmConnectionRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConnection(
+    google::cloud::kms::v1::UpdateEkmConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::GetEkmConfig(google::cloud::kms::v1::GetEkmConfigRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::GetEkmConfig(
+    google::cloud::kms::v1::GetEkmConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConfig(google::cloud::kms::v1::UpdateEkmConfigRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConfig(
+    google::cloud::kms::v1::UpdateEkmConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::VerifyConnectivity(
+    google::cloud::kms::v1::VerifyConnectivityRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency EkmServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -75,20 +85,23 @@ Idempotency EkmServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EkmServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency EkmServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
-    MakeDefaultEkmServiceConnectionIdempotencyPolicy() {
+MakeDefaultEkmServiceConnectionIdempotencyPolicy() {
   return std::make_unique<EkmServiceConnectionIdempotencyPolicy>();
 }
 

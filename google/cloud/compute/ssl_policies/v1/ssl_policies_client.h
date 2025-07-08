@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SslPoliciesClient {
  public:
-  explicit SslPoliciesClient(std::shared_ptr<SslPoliciesConnection> connection, Options opts = {});
+  explicit SslPoliciesClient(std::shared_ptr<SslPoliciesConnection> connection,
+                             Options opts = {});
   ~SslPoliciesClient();
 
   ///@{
@@ -77,10 +78,12 @@ class SslPoliciesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SslPoliciesClient const& a, SslPoliciesClient const& b) {
+  friend bool operator==(SslPoliciesClient const& a,
+                         SslPoliciesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SslPoliciesClient const& a, SslPoliciesClient const& b) {
+  friend bool operator!=(SslPoliciesClient const& a,
+                         SslPoliciesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -119,7 +122,8 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SslPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L139}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
   AggregatedListSslPolicies(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -161,8 +165,11 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SslPoliciesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_127.proto#L139}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
-  AggregatedListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::AggregatedListSslPoliciesRequest request, Options opts = {});
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::SslPoliciesScopedList>>
+  AggregatedListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::
+                                AggregatedListSslPoliciesRequest request,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -197,8 +204,9 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.ssl_policies.v1.DeleteSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L207}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicy(std::string const& project, std::string const& ssl_policy, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
+      std::string const& project, std::string const& ssl_policy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -211,8 +219,9 @@ class SslPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSslPolicy(NoAwaitTag, std::string const& project, std::string const& ssl_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
+      NoAwaitTag, std::string const& project, std::string const& ssl_policy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -250,8 +259,10 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.ssl_policies.v1.DeleteSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L207}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::
+          DeleteSslPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -264,8 +275,11 @@ class SslPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          DeleteSslPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -276,8 +290,9 @@ class SslPoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +319,9 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_128.proto#L140}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetSslPolicy(std::string const& project, std::string const& ssl_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
+      std::string const& project, std::string const& ssl_policy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -335,8 +351,10 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_128.proto#L140}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -368,8 +386,10 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.ssl_policies.v1.InsertSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L246}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicy(std::string const& project, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -382,8 +402,10 @@ class SslPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSslPolicy(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
+      NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -419,8 +441,10 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.ssl_policies.v1.InsertSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L246}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::
+          InsertSslPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -433,8 +457,11 @@ class SslPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          InsertSslPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -445,8 +472,9 @@ class SslPoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -481,8 +509,8 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_128.proto#L140}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListSslPolicies(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -522,8 +550,10 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SslPolicy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_128.proto#L140}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListSslPolicies(google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
+      google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -549,7 +579,8 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_128.proto#L132}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
   ListAvailableFeatures(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -581,8 +612,11 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_128.proto#L132}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::ssl_policies::v1::ListAvailableFeaturesRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(google::cloud::cpp::compute::ssl_policies::v1::
+                            ListAvailableFeaturesRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -616,8 +650,10 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.ssl_policies.v1.PatchSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L408}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicy(std::string const& project, std::string const& ssl_policy, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
+      std::string const& project, std::string const& ssl_policy,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -630,8 +666,10 @@ class SslPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSslPolicy(NoAwaitTag, std::string const& project, std::string const& ssl_policy, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
+      NoAwaitTag, std::string const& project, std::string const& ssl_policy,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -667,8 +705,10 @@ class SslPoliciesClient {
   /// [google.cloud.cpp.compute.ssl_policies.v1.PatchSslPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L408}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicy(google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
+      google::cloud::cpp::compute::ssl_policies::v1::
+          PatchSslPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -681,8 +721,11 @@ class SslPoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSslPolicy(NoAwaitTag, google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          PatchSslPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -693,8 +736,9 @@ class SslPoliciesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<SslPoliciesConnection> connection_;

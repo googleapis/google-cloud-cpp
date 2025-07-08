@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_RECOMMENDER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_RECOMMENDER_CONNECTION_H
 
+#include "google/cloud/recommender/v1/internal/recommender_retry_traits.h"
+#include "google/cloud/recommender/v1/recommender_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/recommender/v1/internal/recommender_retry_traits.h"
-#include "google/cloud/recommender/v1/recommender_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -62,14 +62,14 @@ class RecommenderLimitedErrorCountRetryPolicy : public RecommenderRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RecommenderLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RecommenderLimitedErrorCountRetryPolicy(
       RecommenderLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RecommenderLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RecommenderLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RecommenderLimitedErrorCountRetryPolicy(
       RecommenderLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RecommenderLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RecommenderLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +89,9 @@ class RecommenderLimitedErrorCountRetryPolicy : public RecommenderRetryPolicy {
   using BaseType = RecommenderRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<recommender_v1_internal::RecommenderRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      recommender_v1_internal::RecommenderRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +129,14 @@ class RecommenderLimitedTimeRetryPolicy : public RecommenderRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RecommenderLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  RecommenderLimitedTimeRetryPolicy(RecommenderLimitedTimeRetryPolicy&& rhs) noexcept
-    : RecommenderLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RecommenderLimitedTimeRetryPolicy(RecommenderLimitedTimeRetryPolicy const& rhs) noexcept
-    : RecommenderLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RecommenderLimitedTimeRetryPolicy(
+      RecommenderLimitedTimeRetryPolicy&& rhs) noexcept
+      : RecommenderLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RecommenderLimitedTimeRetryPolicy(
+      RecommenderLimitedTimeRetryPolicy const& rhs) noexcept
+      : RecommenderLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +158,9 @@ class RecommenderLimitedTimeRetryPolicy : public RecommenderRetryPolicy {
   using BaseType = RecommenderRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<recommender_v1_internal::RecommenderRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      recommender_v1_internal::RecommenderRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,44 +181,63 @@ class RecommenderConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::recommender::v1::Insight>
-  ListInsights(google::cloud::recommender::v1::ListInsightsRequest request);
+  virtual StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
+      google::cloud::recommender::v1::ListInsightsRequest request);
 
-  virtual StatusOr<google::cloud::recommender::v1::Insight>
-  GetInsight(google::cloud::recommender::v1::GetInsightRequest const& request);
+  virtual StatusOr<google::cloud::recommender::v1::Insight> GetInsight(
+      google::cloud::recommender::v1::GetInsightRequest const& request);
 
-  virtual StatusOr<google::cloud::recommender::v1::Insight>
-  MarkInsightAccepted(google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request);
+  virtual StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
+      google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
+          request);
 
   virtual StreamRange<google::cloud::recommender::v1::Recommendation>
-  ListRecommendations(google::cloud::recommender::v1::ListRecommendationsRequest request);
+  ListRecommendations(
+      google::cloud::recommender::v1::ListRecommendationsRequest request);
 
   virtual StatusOr<google::cloud::recommender::v1::Recommendation>
-  GetRecommendation(google::cloud::recommender::v1::GetRecommendationRequest const& request);
+  GetRecommendation(
+      google::cloud::recommender::v1::GetRecommendationRequest const& request);
 
   virtual StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationDismissed(google::cloud::recommender::v1::MarkRecommendationDismissedRequest const& request);
+  MarkRecommendationDismissed(
+      google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
+          request);
 
   virtual StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationClaimed(google::cloud::recommender::v1::MarkRecommendationClaimedRequest const& request);
+  MarkRecommendationClaimed(
+      google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
+          request);
 
   virtual StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationSucceeded(google::cloud::recommender::v1::MarkRecommendationSucceededRequest const& request);
+  MarkRecommendationSucceeded(
+      google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
+          request);
 
   virtual StatusOr<google::cloud::recommender::v1::Recommendation>
-  MarkRecommendationFailed(google::cloud::recommender::v1::MarkRecommendationFailedRequest const& request);
+  MarkRecommendationFailed(
+      google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
+          request);
 
   virtual StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  GetRecommenderConfig(google::cloud::recommender::v1::GetRecommenderConfigRequest const& request);
+  GetRecommenderConfig(
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request);
 
   virtual StatusOr<google::cloud::recommender::v1::RecommenderConfig>
-  UpdateRecommenderConfig(google::cloud::recommender::v1::UpdateRecommenderConfigRequest const& request);
+  UpdateRecommenderConfig(
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request);
 
   virtual StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  GetInsightTypeConfig(google::cloud::recommender::v1::GetInsightTypeConfigRequest const& request);
+  GetInsightTypeConfig(
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request);
 
   virtual StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
-  UpdateInsightTypeConfig(google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const& request);
+  UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+          request);
 };
 
 /**

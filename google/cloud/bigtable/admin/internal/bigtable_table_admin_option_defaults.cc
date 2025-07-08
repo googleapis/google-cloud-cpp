@@ -36,31 +36,41 @@ auto constexpr kBackoffScaling = 2.0;
 Options BigtableTableAdminDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_BIGTABLE_TABLE_ADMIN_ENDPOINT",
-      "BIGTABLE_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_BIGTABLE_TABLE_ADMIN_AUTHORITY",
+      "BIGTABLE_EMULATOR_HOST",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TABLE_ADMIN_AUTHORITY",
       "bigtableadmin.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<bigtable_admin::BigtableTableAdminRetryPolicyOption>()) {
     options.set<bigtable_admin::BigtableTableAdminRetryPolicyOption>(
         bigtable_admin::BigtableTableAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<bigtable_admin::BigtableTableAdminBackoffPolicyOption>()) {
     options.set<bigtable_admin::BigtableTableAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<bigtable_admin::BigtableTableAdminPollingPolicyOption>()) {
     options.set<bigtable_admin::BigtableTableAdminPollingPolicyOption>(
         GenericPollingPolicy<
             bigtable_admin::BigtableTableAdminRetryPolicyOption::Type,
             bigtable_admin::BigtableTableAdminBackoffPolicyOption::Type>(
-            options.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()->clone(),
+            options.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicyOption>()) {
-    options.set<bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicyOption>(
-        bigtable_admin::MakeDefaultBigtableTableAdminConnectionIdempotencyPolicy());
+  if (!options.has<bigtable_admin::
+                       BigtableTableAdminConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        bigtable_admin::BigtableTableAdminConnectionIdempotencyPolicyOption>(
+        bigtable_admin::
+            MakeDefaultBigtableTableAdminConnectionIdempotencyPolicy());
   }
 
   return options;

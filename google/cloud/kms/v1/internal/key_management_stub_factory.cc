@@ -17,15 +17,15 @@
 // source: google/cloud/kms/v1/service.proto
 
 #include "google/cloud/kms/v1/internal/key_management_stub_factory.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/kms/v1/internal/key_management_auth_decorator.h"
 #include "google/cloud/kms/v1/internal/key_management_logging_decorator.h"
 #include "google/cloud/kms/v1/internal/key_management_metadata_decorator.h"
 #include "google/cloud/kms/v1/internal/key_management_stub.h"
 #include "google/cloud/kms/v1/internal/key_management_tracing_stub.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/kms/v1/service.grpc.pb.h>
@@ -40,31 +40,33 @@ namespace cloud {
 namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<KeyManagementServiceStub>
-CreateDefaultKeyManagementServiceStub(
+std::shared_ptr<KeyManagementServiceStub> CreateDefaultKeyManagementServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::kms::v1::KeyManagementService::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::kms::v1::KeyManagementService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<KeyManagementServiceStub> stub =
-    std::make_shared<DefaultKeyManagementServiceStub>(std::move(service_grpc_stub), std::move(service_operations_stub), std::move(service_iampolicy_stub), std::move(service_locations_stub));
+      std::make_shared<DefaultKeyManagementServiceStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_iampolicy_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<KeyManagementServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<KeyManagementServiceAuth>(std::move(auth),
+                                                      std::move(stub));
   }
   stub = std::make_shared<KeyManagementServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<KeyManagementServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

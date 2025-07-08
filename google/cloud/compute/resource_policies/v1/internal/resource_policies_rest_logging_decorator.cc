@@ -29,38 +29,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ResourcePoliciesRestLogging::ResourcePoliciesRestLogging(
     std::shared_ptr<ResourcePoliciesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
 ResourcePoliciesRestLogging::AggregatedListResourcePolicies(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        AggregatedListResourcePoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest const& request) {
-        return child_->AggregatedListResourcePolicies(rest_context, options, request);
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 AggregatedListResourcePoliciesRequest const& request) {
+        return child_->AggregatedListResourcePolicies(rest_context, options,
+                                                      request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestLogging::AsyncDeleteResourcePolicy(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) {
-        return child_->AsyncDeleteResourcePolicy(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::resource_policies::v1::
+                 DeleteResourcePolicyRequest const& request) {
+        return child_->AsyncDeleteResourcePolicy(cq, std::move(rest_context),
+                                                 std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -68,13 +71,13 @@ ResourcePoliciesRestLogging::AsyncDeleteResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestLogging::DeleteResourcePolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 DeleteResourcePolicyRequest const& request) {
         return child_->DeleteResourcePolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -82,13 +85,13 @@ ResourcePoliciesRestLogging::DeleteResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
 ResourcePoliciesRestLogging::GetResourcePolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        GetResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 GetResourcePolicyRequest const& request) {
         return child_->GetResourcePolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -96,13 +99,13 @@ ResourcePoliciesRestLogging::GetResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -110,17 +113,19 @@ ResourcePoliciesRestLogging::GetIamPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestLogging::AsyncInsertResourcePolicy(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) {
-        return child_->AsyncInsertResourcePolicy(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::resource_policies::v1::
+                 InsertResourcePolicyRequest const& request) {
+        return child_->AsyncInsertResourcePolicy(cq, std::move(rest_context),
+                                                 std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -128,13 +133,13 @@ ResourcePoliciesRestLogging::AsyncInsertResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestLogging::InsertResourcePolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 InsertResourcePolicyRequest const& request) {
         return child_->InsertResourcePolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -142,13 +147,13 @@ ResourcePoliciesRestLogging::InsertResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
 ResourcePoliciesRestLogging::ListResourcePolicies(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        ListResourcePoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 ListResourcePoliciesRequest const& request) {
         return child_->ListResourcePolicies(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -156,17 +161,19 @@ ResourcePoliciesRestLogging::ListResourcePolicies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestLogging::AsyncPatchResourcePolicy(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) {
-        return child_->AsyncPatchResourcePolicy(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::resource_policies::v1::
+                 PatchResourcePolicyRequest const& request) {
+        return child_->AsyncPatchResourcePolicy(cq, std::move(rest_context),
+                                                std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -174,13 +181,13 @@ ResourcePoliciesRestLogging::AsyncPatchResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestLogging::PatchResourcePolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 PatchResourcePolicyRequest const& request) {
         return child_->PatchResourcePolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -188,13 +195,13 @@ ResourcePoliciesRestLogging::PatchResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ResourcePoliciesRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -202,13 +209,13 @@ ResourcePoliciesRestLogging::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ResourcePoliciesRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::resource_policies::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -219,32 +226,35 @@ ResourcePoliciesRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-ResourcePoliciesRestLogging::AsyncCancelOperation(
+future<Status> ResourcePoliciesRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::region_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::region_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::region_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

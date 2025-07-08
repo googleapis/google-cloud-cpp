@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/operation.pb.h>
 #include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -67,14 +67,14 @@ class ServicesLimitedErrorCountRetryPolicy : public ServicesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ServicesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ServicesLimitedErrorCountRetryPolicy(
       ServicesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ServicesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServicesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ServicesLimitedErrorCountRetryPolicy(
       ServicesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ServicesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ServicesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +94,9 @@ class ServicesLimitedErrorCountRetryPolicy : public ServicesRetryPolicy {
   using BaseType = ServicesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<appengine_v1_internal::ServicesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      appengine_v1_internal::ServicesRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +134,13 @@ class ServicesLimitedTimeRetryPolicy : public ServicesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ServicesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   ServicesLimitedTimeRetryPolicy(ServicesLimitedTimeRetryPolicy&& rhs) noexcept
-    : ServicesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ServicesLimitedTimeRetryPolicy(ServicesLimitedTimeRetryPolicy const& rhs) noexcept
-    : ServicesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ServicesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ServicesLimitedTimeRetryPolicy(
+      ServicesLimitedTimeRetryPolicy const& rhs) noexcept
+      : ServicesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -151,15 +154,16 @@ class ServicesLimitedTimeRetryPolicy : public ServicesRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ServicesRetryPolicy> clone() const override {
-    return std::make_unique<ServicesLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<ServicesLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ServicesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<appengine_v1_internal::ServicesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      appengine_v1_internal::ServicesRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,29 +184,29 @@ class ServicesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::appengine::v1::Service>
-  ListServices(google::appengine::v1::ListServicesRequest request);
+  virtual StreamRange<google::appengine::v1::Service> ListServices(
+      google::appengine::v1::ListServicesRequest request);
 
-  virtual StatusOr<google::appengine::v1::Service>
-  GetService(google::appengine::v1::GetServiceRequest const& request);
+  virtual StatusOr<google::appengine::v1::Service> GetService(
+      google::appengine::v1::GetServiceRequest const& request);
 
-  virtual future<StatusOr<google::appengine::v1::Service>>
-  UpdateService(google::appengine::v1::UpdateServiceRequest const& request);
+  virtual future<StatusOr<google::appengine::v1::Service>> UpdateService(
+      google::appengine::v1::UpdateServiceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateService(NoAwaitTag, google::appengine::v1::UpdateServiceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateService(
+      NoAwaitTag, google::appengine::v1::UpdateServiceRequest const& request);
 
-  virtual future<StatusOr<google::appengine::v1::Service>>
-  UpdateService( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::appengine::v1::Service>> UpdateService(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteService(google::appengine::v1::DeleteServiceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteService(NoAwaitTag, google::appengine::v1::DeleteServiceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteService(
+      NoAwaitTag, google::appengine::v1::DeleteServiceRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteService( google::longrunning::Operation const& operation);
+  DeleteService(google::longrunning::Operation const& operation);
 };
 
 /**

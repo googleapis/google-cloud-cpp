@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_INTERNAL_DATAPROC_METASTORE_FEDERATION_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_INTERNAL_DATAPROC_METASTORE_FEDERATION_TRACING_STUB_H
 
-#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_stub.h"
+#include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -32,98 +32,94 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class DataprocMetastoreFederationTracingStub : public DataprocMetastoreFederationStub {
+class DataprocMetastoreFederationTracingStub
+    : public DataprocMetastoreFederationStub {
  public:
   ~DataprocMetastoreFederationTracingStub() override = default;
 
-  explicit DataprocMetastoreFederationTracingStub(std::shared_ptr<DataprocMetastoreFederationStub> child);
+  explicit DataprocMetastoreFederationTracingStub(
+      std::shared_ptr<DataprocMetastoreFederationStub> child);
 
-  StatusOr<google::cloud::metastore::v1::ListFederationsResponse> ListFederations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::metastore::v1::ListFederationsRequest const& request) override;
+  StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
+  ListFederations(grpc::ClientContext& context, Options const& options,
+                  google::cloud::metastore::v1::ListFederationsRequest const&
+                      request) override;
 
   StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::metastore::v1::GetFederationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::metastore::v1::GetFederationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFederation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::CreateFederationRequest const& request) override;
+      google::cloud::metastore::v1::CreateFederationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateFederation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::metastore::v1::CreateFederationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::metastore::v1::CreateFederationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFederation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::UpdateFederationRequest const& request) override;
+      google::cloud::metastore::v1::UpdateFederationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateFederation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::metastore::v1::UpdateFederationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::metastore::v1::UpdateFederationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFederation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::metastore::v1::DeleteFederationRequest const& request) override;
+      google::cloud::metastore::v1::DeleteFederationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteFederation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::metastore::v1::DeleteFederationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::metastore::v1::DeleteFederationRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -140,7 +136,8 @@ class DataprocMetastoreFederationTracingStub : public DataprocMetastoreFederatio
 
  private:
   std::shared_ptr<DataprocMetastoreFederationStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -151,7 +148,8 @@ class DataprocMetastoreFederationTracingStub : public DataprocMetastoreFederatio
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<DataprocMetastoreFederationStub> MakeDataprocMetastoreFederationTracingStub(
+std::shared_ptr<DataprocMetastoreFederationStub>
+MakeDataprocMetastoreFederationTracingStub(
     std::shared_ptr<DataprocMetastoreFederationStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

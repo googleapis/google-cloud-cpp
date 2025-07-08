@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_INTERNAL_TRANSCODER_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_INTERNAL_TRANSCODER_METADATA_DECORATOR_H
 
+#include "google/cloud/video/transcoder/v1/internal/transcoder_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/video/transcoder/v1/internal/transcoder_stub.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -40,48 +40,47 @@ class TranscoderServiceMetadata : public TranscoderServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::CreateJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::CreateJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::ListJobsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::ListJobsRequest const& request)
+      override;
 
   StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::GetJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::GetJobRequest const& request)
+      override;
 
-  Status DeleteJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::DeleteJobRequest const& request) override;
+  Status DeleteJob(grpc::ClientContext& context, Options const& options,
+                   google::cloud::video::transcoder::v1::DeleteJobRequest const&
+                       request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
+          request) override;
 
-  StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse> ListJobTemplates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) override;
+  StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
+  ListJobTemplates(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
+          request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
+          request) override;
 
   Status DeleteJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
+          request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

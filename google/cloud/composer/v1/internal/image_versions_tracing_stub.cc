@@ -32,22 +32,28 @@ ImageVersionsTracingStub::ImageVersionsTracingStub(
     std::shared_ptr<ImageVersionsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::orchestration::airflow::service::v1::ListImageVersionsResponse> ImageVersionsTracingStub::ListImageVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.ImageVersions", "ListImageVersions");
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListImageVersionsResponse>
+ImageVersionsTracingStub::ListImageVersions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::orchestration::airflow::service::v1::
+        ListImageVersionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.ImageVersions",
+      "ListImageVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListImageVersions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ListImageVersions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ImageVersionsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ImageVersionsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.ImageVersions", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.ImageVersions",
+      "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -55,10 +61,11 @@ StatusOr<google::longrunning::ListOperationsResponse> ImageVersionsTracingStub::
 }
 
 StatusOr<google::longrunning::Operation> ImageVersionsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.ImageVersions", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.ImageVersions",
+      "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -66,10 +73,11 @@ StatusOr<google::longrunning::Operation> ImageVersionsTracingStub::GetOperation(
 }
 
 Status ImageVersionsTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.orchestration.airflow.service.v1.ImageVersions", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.ImageVersions",
+      "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

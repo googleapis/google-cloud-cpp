@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,7 +65,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ManagedKafkaClient {
  public:
-  explicit ManagedKafkaClient(std::shared_ptr<ManagedKafkaConnection> connection, Options opts = {});
+  explicit ManagedKafkaClient(
+      std::shared_ptr<ManagedKafkaConnection> connection, Options opts = {});
   ~ManagedKafkaClient();
 
   ///@{
@@ -78,10 +79,12 @@ class ManagedKafkaClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ManagedKafkaClient const& a, ManagedKafkaClient const& b) {
+  friend bool operator==(ManagedKafkaClient const& a,
+                         ManagedKafkaClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ManagedKafkaClient const& a, ManagedKafkaClient const& b) {
+  friend bool operator!=(ManagedKafkaClient const& a,
+                         ManagedKafkaClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,8 +121,8 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L243}
   ///
   // clang-format on
-  StreamRange<google::cloud::managedkafka::v1::Cluster>
-  ListClusters(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::managedkafka::v1::Cluster> ListClusters(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -157,8 +160,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L243}
   ///
   // clang-format on
-  StreamRange<google::cloud::managedkafka::v1::Cluster>
-  ListClusters(google::cloud::managedkafka::v1::ListClustersRequest request, Options opts = {});
+  StreamRange<google::cloud::managedkafka::v1::Cluster> ListClusters(
+      google::cloud::managedkafka::v1::ListClustersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -182,8 +186,8 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L286}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Cluster>
-  GetCluster(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Cluster> GetCluster(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -212,8 +216,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L286}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Cluster>
-  GetCluster(google::cloud::managedkafka::v1::GetClusterRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Cluster> GetCluster(
+      google::cloud::managedkafka::v1::GetClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -253,8 +258,10 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L297}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  CreateCluster(std::string const& parent, google::cloud::managedkafka::v1::Cluster const& cluster, std::string const& cluster_id, Options opts = {});
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
+      std::string const& parent,
+      google::cloud::managedkafka::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -267,8 +274,10 @@ class ManagedKafkaClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag, std::string const& parent, google::cloud::managedkafka::v1::Cluster const& cluster, std::string const& cluster_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::managedkafka::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +313,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L297}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  CreateCluster(google::cloud::managedkafka::v1::CreateClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
+      google::cloud::managedkafka::v1::CreateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -318,8 +328,10 @@ class ManagedKafkaClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateCluster(NoAwaitTag, google::cloud::managedkafka::v1::CreateClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      NoAwaitTag,
+      google::cloud::managedkafka::v1::CreateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -330,8 +342,8 @@ class ManagedKafkaClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  CreateCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -367,8 +379,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L340}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  UpdateCluster(google::cloud::managedkafka::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
+      google::cloud::managedkafka::v1::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -381,8 +394,9 @@ class ManagedKafkaClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag, google::cloud::managedkafka::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag, google::cloud::managedkafka::v1::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -418,8 +432,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L340}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  UpdateCluster(google::cloud::managedkafka::v1::UpdateClusterRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
+      google::cloud::managedkafka::v1::UpdateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -432,8 +447,10 @@ class ManagedKafkaClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateCluster(NoAwaitTag, google::cloud::managedkafka::v1::UpdateClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      NoAwaitTag,
+      google::cloud::managedkafka::v1::UpdateClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +461,8 @@ class ManagedKafkaClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  UpdateCluster(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -490,8 +507,8 @@ class ManagedKafkaClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteCluster(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -528,7 +545,9 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(google::cloud::managedkafka::v1::DeleteClusterRequest const& request, Options opts = {});
+  DeleteCluster(
+      google::cloud::managedkafka::v1::DeleteClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -541,8 +560,10 @@ class ManagedKafkaClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteCluster(NoAwaitTag, google::cloud::managedkafka::v1::DeleteClusterRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      NoAwaitTag,
+      google::cloud::managedkafka::v1::DeleteClusterRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -554,7 +575,8 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteCluster(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -588,8 +610,8 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
-  StreamRange<google::cloud::managedkafka::v1::Topic>
-  ListTopics(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -627,8 +649,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
-  StreamRange<google::cloud::managedkafka::v1::Topic>
-  ListTopics(google::cloud::managedkafka::v1::ListTopicsRequest request, Options opts = {});
+  StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
+      google::cloud::managedkafka::v1::ListTopicsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -654,8 +677,8 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  GetTopic(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Topic> GetTopic(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -684,8 +707,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  GetTopic(google::cloud::managedkafka::v1::GetTopicRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Topic> GetTopic(
+      google::cloud::managedkafka::v1::GetTopicRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -717,8 +741,10 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  CreateTopic(std::string const& parent, google::cloud::managedkafka::v1::Topic const& topic, std::string const& topic_id, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Topic> CreateTopic(
+      std::string const& parent,
+      google::cloud::managedkafka::v1::Topic const& topic,
+      std::string const& topic_id, Options opts = {});
 
   // clang-format off
   ///
@@ -747,8 +773,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L179}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  CreateTopic(google::cloud::managedkafka::v1::CreateTopicRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Topic> CreateTopic(
+      google::cloud::managedkafka::v1::CreateTopicRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -777,8 +804,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L474}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  UpdateTopic(google::cloud::managedkafka::v1::Topic const& topic, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Topic> UpdateTopic(
+      google::cloud::managedkafka::v1::Topic const& topic,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -807,8 +835,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L474}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Topic>
-  UpdateTopic(google::cloud::managedkafka::v1::UpdateTopicRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Topic> UpdateTopic(
+      google::cloud::managedkafka::v1::UpdateTopicRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -830,8 +859,7 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L488}
   ///
   // clang-format on
-  Status
-  DeleteTopic(std::string const& name, Options opts = {});
+  Status DeleteTopic(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -857,8 +885,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.DeleteTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L488}
   ///
   // clang-format on
-  Status
-  DeleteTopic(google::cloud::managedkafka::v1::DeleteTopicRequest const& request, Options opts = {});
+  Status DeleteTopic(
+      google::cloud::managedkafka::v1::DeleteTopicRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -933,7 +962,9 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>
-  ListConsumerGroups(google::cloud::managedkafka::v1::ListConsumerGroupsRequest request, Options opts = {});
+  ListConsumerGroups(
+      google::cloud::managedkafka::v1::ListConsumerGroupsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -958,8 +989,8 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.GetConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L536}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-  GetConsumerGroup(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> GetConsumerGroup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -988,8 +1019,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.GetConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L536}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-  GetConsumerGroup(google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> GetConsumerGroup(
+      google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1018,8 +1050,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.UpdateConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L548}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-  UpdateConsumerGroup(google::cloud::managedkafka::v1::ConsumerGroup const& consumer_group, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> UpdateConsumerGroup(
+      google::cloud::managedkafka::v1::ConsumerGroup const& consumer_group,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1048,8 +1081,10 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.UpdateConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L548}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-  UpdateConsumerGroup(google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::ConsumerGroup> UpdateConsumerGroup(
+      google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1071,8 +1106,7 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.DeleteConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L562}
   ///
   // clang-format on
-  Status
-  DeleteConsumerGroup(std::string const& name, Options opts = {});
+  Status DeleteConsumerGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1098,8 +1132,10 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.DeleteConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L562}
   ///
   // clang-format on
-  Status
-  DeleteConsumerGroup(google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request, Options opts = {});
+  Status DeleteConsumerGroup(
+      google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1134,8 +1170,8 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.ListAclsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L574}
   ///
   // clang-format on
-  StreamRange<google::cloud::managedkafka::v1::Acl>
-  ListAcls(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::managedkafka::v1::Acl> ListAcls(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1173,8 +1209,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.ListAclsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L574}
   ///
   // clang-format on
-  StreamRange<google::cloud::managedkafka::v1::Acl>
-  ListAcls(google::cloud::managedkafka::v1::ListAclsRequest request, Options opts = {});
+  StreamRange<google::cloud::managedkafka::v1::Acl> ListAcls(
+      google::cloud::managedkafka::v1::ListAclsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1204,8 +1241,8 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.GetAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  GetAcl(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1234,8 +1271,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.GetAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  GetAcl(google::cloud::managedkafka::v1::GetAclRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Acl> GetAcl(
+      google::cloud::managedkafka::v1::GetAclRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1268,8 +1306,10 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.CreateAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L627}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  CreateAcl(std::string const& parent, google::cloud::managedkafka::v1::Acl const& acl, std::string const& acl_id, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      std::string const& parent,
+      google::cloud::managedkafka::v1::Acl const& acl,
+      std::string const& acl_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1298,8 +1338,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.CreateAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L627}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  CreateAcl(google::cloud::managedkafka::v1::CreateAclRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Acl> CreateAcl(
+      google::cloud::managedkafka::v1::CreateAclRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1329,8 +1370,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.UpdateAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L667}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  UpdateAcl(google::cloud::managedkafka::v1::Acl const& acl, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      google::cloud::managedkafka::v1::Acl const& acl,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1359,8 +1401,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.UpdateAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L667}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::Acl>
-  UpdateAcl(google::cloud::managedkafka::v1::UpdateAclRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::Acl> UpdateAcl(
+      google::cloud::managedkafka::v1::UpdateAclRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1386,8 +1429,7 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.DeleteAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L682}
   ///
   // clang-format on
-  Status
-  DeleteAcl(std::string const& name, Options opts = {});
+  Status DeleteAcl(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1413,8 +1455,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.DeleteAclRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L682}
   ///
   // clang-format on
-  Status
-  DeleteAcl(google::cloud::managedkafka::v1::DeleteAclRequest const& request, Options opts = {});
+  Status DeleteAcl(
+      google::cloud::managedkafka::v1::DeleteAclRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1446,8 +1489,10 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.AddAclEntryResponse]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L718}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
-  AddAclEntry(std::string const& acl, google::cloud::managedkafka::v1::AclEntry const& acl_entry, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse> AddAclEntry(
+      std::string const& acl,
+      google::cloud::managedkafka::v1::AclEntry const& acl_entry,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1477,8 +1522,9 @@ class ManagedKafkaClient {
   /// [google.cloud.managedkafka.v1.AddAclEntryResponse]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L718}
   ///
   // clang-format on
-  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse>
-  AddAclEntry(google::cloud::managedkafka::v1::AddAclEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::managedkafka::v1::AddAclEntryResponse> AddAclEntry(
+      google::cloud::managedkafka::v1::AddAclEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1512,7 +1558,9 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
-  RemoveAclEntry(std::string const& acl, google::cloud::managedkafka::v1::AclEntry const& acl_entry, Options opts = {});
+  RemoveAclEntry(std::string const& acl,
+                 google::cloud::managedkafka::v1::AclEntry const& acl_entry,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1544,7 +1592,9 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::RemoveAclEntryResponse>
-  RemoveAclEntry(google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request, Options opts = {});
+  RemoveAclEntry(
+      google::cloud::managedkafka::v1::RemoveAclEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1582,8 +1632,8 @@ class ManagedKafkaClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1612,8 +1662,9 @@ class ManagedKafkaClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1648,8 +1699,8 @@ class ManagedKafkaClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1688,8 +1739,8 @@ class ManagedKafkaClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1715,8 +1766,8 @@ class ManagedKafkaClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1747,8 +1798,9 @@ class ManagedKafkaClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1772,8 +1824,7 @@ class ManagedKafkaClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1802,8 +1853,9 @@ class ManagedKafkaClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1837,8 +1889,7 @@ class ManagedKafkaClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1877,8 +1928,9 @@ class ManagedKafkaClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ManagedKafkaConnection> connection_;

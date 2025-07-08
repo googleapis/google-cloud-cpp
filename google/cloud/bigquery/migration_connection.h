@@ -27,17 +27,23 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_migration_v2::MakeMigrationServiceConnection directly.
+/// @deprecated Use bigquery_migration_v2::MakeMigrationServiceConnection
+/// directly.
 using ::google::cloud::bigquery_migration_v2::MakeMigrationServiceConnection;
 
 /// @deprecated Use bigquery_migration_v2::MigrationServiceConnection directly.
 using ::google::cloud::bigquery_migration_v2::MigrationServiceConnection;
 
-/// @deprecated Use bigquery_migration_v2::MigrationServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::bigquery_migration_v2::MigrationServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// bigquery_migration_v2::MigrationServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_migration_v2::
+    MigrationServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use bigquery_migration_v2::MigrationServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::bigquery_migration_v2::MigrationServiceLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// bigquery_migration_v2::MigrationServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::bigquery_migration_v2::
+    MigrationServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use bigquery_migration_v2::MigrationServiceRetryPolicy directly.
 using ::google::cloud::bigquery_migration_v2::MigrationServiceRetryPolicy;

@@ -33,11 +33,15 @@ using ::google::cloud::functions_v1::MakeCloudFunctionsServiceConnection;
 /// @deprecated Use functions_v1::CloudFunctionsServiceConnection directly.
 using ::google::cloud::functions_v1::CloudFunctionsServiceConnection;
 
-/// @deprecated Use functions_v1::CloudFunctionsServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::functions_v1::CloudFunctionsServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// functions_v1::CloudFunctionsServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::functions_v1::
+    CloudFunctionsServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use functions_v1::CloudFunctionsServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::functions_v1::CloudFunctionsServiceLimitedTimeRetryPolicy;
+/// @deprecated Use functions_v1::CloudFunctionsServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::functions_v1::
+    CloudFunctionsServiceLimitedTimeRetryPolicy;
 
 /// @deprecated Use functions_v1::CloudFunctionsServiceRetryPolicy directly.
 using ::google::cloud::functions_v1::CloudFunctionsServiceRetryPolicy;

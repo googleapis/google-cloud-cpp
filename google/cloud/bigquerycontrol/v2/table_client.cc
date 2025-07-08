@@ -28,42 +28,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TableServiceClient::TableServiceClient(
     std::shared_ptr<TableServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TableServiceClient::~TableServiceClient() = default;
 
-StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceClient::GetTable(google::cloud::bigquery::v2::GetTableRequest const& request, Options opts) {
+StatusOr<google::cloud::bigquery::v2::Table> TableServiceClient::GetTable(
+    google::cloud::bigquery::v2::GetTableRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTable(request);
 }
 
-StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceClient::InsertTable(google::cloud::bigquery::v2::InsertTableRequest const& request, Options opts) {
+StatusOr<google::cloud::bigquery::v2::Table> TableServiceClient::InsertTable(
+    google::cloud::bigquery::v2::InsertTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTable(request);
 }
 
-StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceClient::PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request, Options opts) {
+StatusOr<google::cloud::bigquery::v2::Table> TableServiceClient::PatchTable(
+    google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchTable(request);
 }
 
-StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceClient::UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request, Options opts) {
+StatusOr<google::cloud::bigquery::v2::Table> TableServiceClient::UpdateTable(
+    google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTable(request);
 }
 
-Status
-TableServiceClient::DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const& request, Options opts) {
+Status TableServiceClient::DeleteTable(
+    google::cloud::bigquery::v2::DeleteTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTable(request);
 }
 
 StreamRange<google::cloud::bigquery::v2::ListFormatTable>
-TableServiceClient::ListTables(google::cloud::bigquery::v2::ListTablesRequest request, Options opts) {
+TableServiceClient::ListTables(
+    google::cloud::bigquery::v2::ListTablesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTables(std::move(request));
 }

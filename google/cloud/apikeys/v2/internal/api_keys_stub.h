@@ -24,8 +24,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/api/apikeys/v2/apikeys.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -45,23 +45,19 @@ class ApiKeysStub {
       google::api::apikeys::v2::CreateKeyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::CreateKeyRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::ListKeysRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::Key> GetKey(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyStringRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateKey(
@@ -71,8 +67,7 @@ class ApiKeysStub {
       google::api::apikeys::v2::UpdateKeyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::UpdateKeyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteKey(
@@ -82,8 +77,7 @@ class ApiKeysStub {
       google::api::apikeys::v2::DeleteKeyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::DeleteKeyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeleteKey(
@@ -93,24 +87,21 @@ class ApiKeysStub {
       google::api::apikeys::v2::UndeleteKeyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UndeleteKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) = 0;
 
   virtual StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::LookupKeyRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -123,8 +114,10 @@ class ApiKeysStub {
 class DefaultApiKeysStub : public ApiKeysStub {
  public:
   DefaultApiKeysStub(
-      std::unique_ptr<google::api::apikeys::v2::ApiKeys::StubInterface> grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::api::apikeys::v2::ApiKeys::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
@@ -135,23 +128,19 @@ class DefaultApiKeysStub : public ApiKeysStub {
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::ListKeysRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::Key> GetKey(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyStringRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateKey(
@@ -161,8 +150,7 @@ class DefaultApiKeysStub : public ApiKeysStub {
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteKey(
@@ -172,8 +160,7 @@ class DefaultApiKeysStub : public ApiKeysStub {
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteKey(
@@ -183,18 +170,15 @@ class DefaultApiKeysStub : public ApiKeysStub {
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeleteKey(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -211,7 +195,8 @@ class DefaultApiKeysStub : public ApiKeysStub {
 
  private:
   std::unique_ptr<google::api::apikeys::v2::ApiKeys::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

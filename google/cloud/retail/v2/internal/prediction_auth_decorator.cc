@@ -31,18 +31,18 @@ PredictionServiceAuth::PredictionServiceAuth(
     std::shared_ptr<PredictionServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::retail::v2::PredictResponse> PredictionServiceAuth::Predict(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::retail::v2::PredictResponse>
+PredictionServiceAuth::Predict(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::PredictRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Predict(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> PredictionServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+PredictionServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +50,7 @@ StatusOr<google::longrunning::ListOperationsResponse> PredictionServiceAuth::Lis
 }
 
 StatusOr<google::longrunning::Operation> PredictionServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

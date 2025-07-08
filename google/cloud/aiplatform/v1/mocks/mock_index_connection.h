@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockIndexServiceConnection : public aiplatform_v1::IndexServiceConnection {
+class MockIndexServiceConnection
+    : public aiplatform_v1::IndexServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,14 @@ class MockIndexServiceConnection : public aiplatform_v1::IndexServiceConnection 
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateIndex(Matcher<google::cloud::aiplatform::v1::CreateIndexRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateIndex(Matcher<google::cloud::aiplatform::v1::CreateIndexRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-  CreateIndex,
-  (google::cloud::aiplatform::v1::CreateIndexRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::Index>>, CreateIndex,
+      (google::cloud::aiplatform::v1::CreateIndexRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,41 +67,45 @@ class MockIndexServiceConnection : public aiplatform_v1::IndexServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateIndex(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateIndex, (NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateIndexRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateIndex(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-  CreateIndex, (
-    google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Index>,
-  GetIndex,
-  (google::cloud::aiplatform::v1::GetIndexRequest const& request), (override));
-
-  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Index>),
-  ListIndexes,
-  (google::cloud::aiplatform::v1::ListIndexesRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateIndex,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateIndexRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateIndex(Matcher<google::cloud::aiplatform::v1::UpdateIndexRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-  UpdateIndex,
-  (google::cloud::aiplatform::v1::UpdateIndexRequest const& request), (override));
+              CreateIndex, (google::longrunning::Operation const& operation),
+              (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Index>, GetIndex,
+              (google::cloud::aiplatform::v1::GetIndexRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Index>), ListIndexes,
+              (google::cloud::aiplatform::v1::ListIndexesRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateIndex(Matcher<google::cloud::aiplatform::v1::UpdateIndexRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::Index>>, UpdateIndex,
+      (google::cloud::aiplatform::v1::UpdateIndexRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +113,38 @@ class MockIndexServiceConnection : public aiplatform_v1::IndexServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateIndex(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateIndex, (NoAwaitTag,
-    google::cloud::aiplatform::v1::UpdateIndexRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateIndex,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateIndexRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateIndex(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-  UpdateIndex, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateIndex, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteIndex(Matcher<google::cloud::aiplatform::v1::DeleteIndexRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteIndex(Matcher<google::cloud::aiplatform::v1::DeleteIndexRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteIndex,
-  (google::cloud::aiplatform::v1::DeleteIndexRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteIndex,
+      (google::cloud::aiplatform::v1::DeleteIndexRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,69 +152,76 @@ class MockIndexServiceConnection : public aiplatform_v1::IndexServiceConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteIndex(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteIndex, (NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteIndexRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteIndex,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteIndexRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteIndex(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-  DeleteIndex, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteIndex, (google::longrunning::Operation const& operation),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>,
-  UpsertDatapoints,
-  (google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>,
+      UpsertDatapoints,
+      (google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>,
-  RemoveDatapoints,
-  (google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>,
+      RemoveDatapoints,
+      (google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  WaitOperation,
-  (google::longrunning::WaitOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, WaitOperation,
+              (google::longrunning::WaitOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

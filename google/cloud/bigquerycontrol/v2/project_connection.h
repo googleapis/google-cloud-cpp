@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_PROJECT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_PROJECT_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/internal/project_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/project_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -51,7 +51,8 @@ class ProjectServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ProjectServiceLimitedErrorCountRetryPolicy : public ProjectServiceRetryPolicy {
+class ProjectServiceLimitedErrorCountRetryPolicy
+    : public ProjectServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class ProjectServiceLimitedErrorCountRetryPolicy : public ProjectServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit ProjectServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ProjectServiceLimitedErrorCountRetryPolicy(
       ProjectServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ProjectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProjectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ProjectServiceLimitedErrorCountRetryPolicy(
       ProjectServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ProjectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProjectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class ProjectServiceLimitedErrorCountRetryPolicy : public ProjectServiceRetryPol
   using BaseType = ProjectServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquerycontrol_v2_internal::ProjectServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquerycontrol_v2_internal::ProjectServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +129,14 @@ class ProjectServiceLimitedTimeRetryPolicy : public ProjectServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ProjectServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ProjectServiceLimitedTimeRetryPolicy(ProjectServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ProjectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ProjectServiceLimitedTimeRetryPolicy(ProjectServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ProjectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProjectServiceLimitedTimeRetryPolicy(
+      ProjectServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ProjectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProjectServiceLimitedTimeRetryPolicy(
+      ProjectServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ProjectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +158,9 @@ class ProjectServiceLimitedTimeRetryPolicy : public ProjectServiceRetryPolicy {
   using BaseType = ProjectServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquerycontrol_v2_internal::ProjectServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquerycontrol_v2_internal::ProjectServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,7 +182,8 @@ class ProjectServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>
-  GetServiceAccount(google::cloud::bigquery::v2::GetServiceAccountRequest const& request);
+  GetServiceAccount(
+      google::cloud::bigquery::v2::GetServiceAccountRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_JOB_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_JOB_CONNECTION_H
 
+#include "google/cloud/talent/v4/internal/job_retry_traits.h"
+#include "google/cloud/talent/v4/job_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,8 +29,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/talent/v4/internal/job_retry_traits.h"
-#include "google/cloud/talent/v4/job_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/job_service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -66,14 +66,14 @@ class JobServiceLimitedErrorCountRetryPolicy : public JobServiceRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit JobServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   JobServiceLimitedErrorCountRetryPolicy(
       JobServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : JobServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : JobServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   JobServiceLimitedErrorCountRetryPolicy(
       JobServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : JobServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : JobServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class JobServiceLimitedErrorCountRetryPolicy : public JobServiceRetryPolicy {
   using BaseType = JobServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<talent_v4_internal::JobServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      talent_v4_internal::JobServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,14 @@ class JobServiceLimitedTimeRetryPolicy : public JobServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit JobServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  JobServiceLimitedTimeRetryPolicy(JobServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : JobServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  JobServiceLimitedTimeRetryPolicy(JobServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : JobServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  JobServiceLimitedTimeRetryPolicy(
+      JobServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : JobServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  JobServiceLimitedTimeRetryPolicy(
+      JobServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : JobServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +162,9 @@ class JobServiceLimitedTimeRetryPolicy : public JobServiceRetryPolicy {
   using BaseType = JobServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<talent_v4_internal::JobServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      talent_v4_internal::JobServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,56 +185,63 @@ class JobServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::talent::v4::Job>
-  CreateJob(google::cloud::talent::v4::CreateJobRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Job> CreateJob(
+      google::cloud::talent::v4::CreateJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(google::cloud::talent::v4::BatchCreateJobsRequest const& request);
+  BatchCreateJobs(
+      google::cloud::talent::v4::BatchCreateJobsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchCreateJobs(NoAwaitTag, google::cloud::talent::v4::BatchCreateJobsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchCreateJobs(
+      NoAwaitTag,
+      google::cloud::talent::v4::BatchCreateJobsRequest const& request);
 
   virtual future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs( google::longrunning::Operation const& operation);
+  BatchCreateJobs(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::talent::v4::Job>
-  GetJob(google::cloud::talent::v4::GetJobRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Job> GetJob(
+      google::cloud::talent::v4::GetJobRequest const& request);
 
-  virtual StatusOr<google::cloud::talent::v4::Job>
-  UpdateJob(google::cloud::talent::v4::UpdateJobRequest const& request);
-
-  virtual future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(google::cloud::talent::v4::BatchUpdateJobsRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  BatchUpdateJobs(NoAwaitTag, google::cloud::talent::v4::BatchUpdateJobsRequest const& request);
+  virtual StatusOr<google::cloud::talent::v4::Job> UpdateJob(
+      google::cloud::talent::v4::UpdateJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs( google::longrunning::Operation const& operation);
+  BatchUpdateJobs(
+      google::cloud::talent::v4::BatchUpdateJobsRequest const& request);
 
-  virtual Status
-  DeleteJob(google::cloud::talent::v4::DeleteJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchUpdateJobs(
+      NoAwaitTag,
+      google::cloud::talent::v4::BatchUpdateJobsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
+  BatchUpdateJobs(google::longrunning::Operation const& operation);
+
+  virtual Status DeleteJob(
+      google::cloud::talent::v4::DeleteJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(google::cloud::talent::v4::BatchDeleteJobsRequest const& request);
+  BatchDeleteJobs(
+      google::cloud::talent::v4::BatchDeleteJobsRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  BatchDeleteJobs(NoAwaitTag, google::cloud::talent::v4::BatchDeleteJobsRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> BatchDeleteJobs(
+      NoAwaitTag,
+      google::cloud::talent::v4::BatchDeleteJobsRequest const& request);
 
   virtual future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs( google::longrunning::Operation const& operation);
+  BatchDeleteJobs(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::talent::v4::Job>
-  ListJobs(google::cloud::talent::v4::ListJobsRequest request);
+  virtual StreamRange<google::cloud::talent::v4::Job> ListJobs(
+      google::cloud::talent::v4::ListJobsRequest request);
+
+  virtual StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
+      google::cloud::talent::v4::SearchJobsRequest const& request);
 
   virtual StatusOr<google::cloud::talent::v4::SearchJobsResponse>
-  SearchJobs(google::cloud::talent::v4::SearchJobsRequest const& request);
+  SearchJobsForAlert(
+      google::cloud::talent::v4::SearchJobsRequest const& request);
 
-  virtual StatusOr<google::cloud::talent::v4::SearchJobsResponse>
-  SearchJobsForAlert(google::cloud::talent::v4::SearchJobsRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

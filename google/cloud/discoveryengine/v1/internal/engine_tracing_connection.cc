@@ -34,7 +34,8 @@ EngineServiceTracingConnection::EngineServiceTracingConnection(
     : child_(std::move(child)) {}
 
 future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-EngineServiceTracingConnection::CreateEngine(google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
+EngineServiceTracingConnection::CreateEngine(
+    google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::EngineServiceConnection::CreateEngine");
   internal::OTelScope scope(span);
@@ -43,12 +44,12 @@ EngineServiceTracingConnection::CreateEngine(google::cloud::discoveryengine::v1:
 
 StatusOr<google::longrunning::Operation>
 EngineServiceTracingConnection::CreateEngine(
-    NoAwaitTag, google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::EngineServiceConnection::CreateEngine");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateEngine(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateEngine(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
@@ -57,12 +58,12 @@ EngineServiceTracingConnection::CreateEngine(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::EngineServiceConnection::CreateEngine");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateEngine(operation));
+  return internal::EndSpan(std::move(span), child_->CreateEngine(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-EngineServiceTracingConnection::DeleteEngine(google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
+EngineServiceTracingConnection::DeleteEngine(
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::EngineServiceConnection::DeleteEngine");
   internal::OTelScope scope(span);
@@ -71,12 +72,12 @@ EngineServiceTracingConnection::DeleteEngine(google::cloud::discoveryengine::v1:
 
 StatusOr<google::longrunning::Operation>
 EngineServiceTracingConnection::DeleteEngine(
-    NoAwaitTag, google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::EngineServiceConnection::DeleteEngine");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteEngine(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteEngine(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
@@ -85,52 +86,63 @@ EngineServiceTracingConnection::DeleteEngine(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::EngineServiceConnection::DeleteEngine");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteEngine(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteEngine(operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>
-EngineServiceTracingConnection::UpdateEngine(google::cloud::discoveryengine::v1::UpdateEngineRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::EngineServiceConnection::UpdateEngine");
+EngineServiceTracingConnection::UpdateEngine(
+    google::cloud::discoveryengine::v1::UpdateEngineRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::UpdateEngine");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateEngine(request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>
-EngineServiceTracingConnection::GetEngine(google::cloud::discoveryengine::v1::GetEngineRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::EngineServiceConnection::GetEngine");
+EngineServiceTracingConnection::GetEngine(
+    google::cloud::discoveryengine::v1::GetEngineRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::GetEngine");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEngine(request));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Engine>
-EngineServiceTracingConnection::ListEngines(google::cloud::discoveryengine::v1::ListEnginesRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::EngineServiceConnection::ListEngines");
+EngineServiceTracingConnection::ListEngines(
+    google::cloud::discoveryengine::v1::ListEnginesRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::ListEngines");
   internal::OTelScope scope(span);
   auto sr = child_->ListEngines(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::Engine>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::Engine>(std::move(span),
+                                                  std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-EngineServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::EngineServiceConnection::ListOperations");
+EngineServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-EngineServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::EngineServiceConnection::GetOperation");
+EngineServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-EngineServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::EngineServiceConnection::CancelOperation");
+Status EngineServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

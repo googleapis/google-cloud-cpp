@@ -36,94 +36,101 @@ class TranscoderServiceStub {
   virtual ~TranscoderServiceStub() = 0;
 
   virtual StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::CreateJobRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::CreateJobRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse>
+  ListJobs(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::transcoder::v1::ListJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::transcoder::v1::GetJobRequest const& request) = 0;
 
   virtual Status DeleteJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::DeleteJobRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::DeleteJobRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) = 0;
+  virtual StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
+  CreateJobTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse> ListJobTemplates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
+  ListJobTemplates(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) = 0;
+  virtual StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
+  GetJobTemplate(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
+          request) = 0;
 
   virtual Status DeleteJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
+          request) = 0;
 };
 
 class DefaultTranscoderServiceStub : public TranscoderServiceStub {
  public:
   explicit DefaultTranscoderServiceStub(
-      std::unique_ptr<google::cloud::video::transcoder::v1::TranscoderService::StubInterface> grpc_stub)
+      std::unique_ptr<google::cloud::video::transcoder::v1::TranscoderService::
+                          StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::CreateJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::CreateJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::ListJobsRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::ListJobsRequest const& request)
+      override;
 
   StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::GetJobRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::GetJobRequest const& request)
+      override;
 
-  Status DeleteJob(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::DeleteJobRequest const& request) override;
+  Status DeleteJob(grpc::ClientContext& context, Options const& options,
+                   google::cloud::video::transcoder::v1::DeleteJobRequest const&
+                       request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
+          request) override;
 
-  StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse> ListJobTemplates(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::ListJobTemplatesRequest const& request) override;
+  StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
+  ListJobTemplates(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
+          request) override;
 
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
+          request) override;
 
   Status DeleteJobTemplate(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<google::cloud::video::transcoder::v1::TranscoderService::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::video::transcoder::v1::TranscoderService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -29,20 +29,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatabaseAdminRestLogging::DatabaseAdminRestLogging(
     std::shared_ptr<DatabaseAdminRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DatabaseAdminRestLogging::ListDatabases(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::ListDatabasesRequest const&
+                 request) {
         return child_->ListDatabases(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -50,17 +49,19 @@ DatabaseAdminRestLogging::ListDatabases(
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncCreateDatabase(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::CreateDatabaseRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::database::v1::CreateDatabaseRequest const& request) {
-        return child_->AsyncCreateDatabase(
-            cq, std::move(rest_context), std::move(options), request);
+             google::spanner::admin::database::v1::CreateDatabaseRequest const&
+                 request) {
+        return child_->AsyncCreateDatabase(cq, std::move(rest_context),
+                                           std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -68,13 +69,13 @@ DatabaseAdminRestLogging::AsyncCreateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestLogging::CreateDatabase(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::CreateDatabaseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::CreateDatabaseRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::CreateDatabaseRequest const&
+                 request) {
         return child_->CreateDatabase(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -82,13 +83,12 @@ DatabaseAdminRestLogging::CreateDatabase(
 
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminRestLogging::GetDatabase(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::GetDatabaseRequest const&
+                 request) {
         return child_->GetDatabase(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -96,17 +96,19 @@ DatabaseAdminRestLogging::GetDatabase(
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncUpdateDatabase(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::UpdateDatabaseRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::database::v1::UpdateDatabaseRequest const& request) {
-        return child_->AsyncUpdateDatabase(
-            cq, std::move(rest_context), std::move(options), request);
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+                 request) {
+        return child_->AsyncUpdateDatabase(cq, std::move(rest_context),
+                                           std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -114,13 +116,13 @@ DatabaseAdminRestLogging::AsyncUpdateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestLogging::UpdateDatabase(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::UpdateDatabaseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::UpdateDatabaseRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+                 request) {
         return child_->UpdateDatabase(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -128,17 +130,20 @@ DatabaseAdminRestLogging::UpdateDatabase(
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncUpdateDatabaseDdl(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq,
-             std::unique_ptr<rest_internal::RestContext> rest_context,
-             google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
-        return child_->AsyncUpdateDatabaseDdl(
-            cq, std::move(rest_context), std::move(options), request);
+      [this](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> rest_context,
+          google::cloud::internal::ImmutableOptions options,
+          google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+              request) {
+        return child_->AsyncUpdateDatabaseDdl(cq, std::move(rest_context),
+                                              std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -146,27 +151,26 @@ DatabaseAdminRestLogging::AsyncUpdateDatabaseDdl(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestLogging::UpdateDatabaseDdl(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+              request) {
         return child_->UpdateDatabaseDdl(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status
-DatabaseAdminRestLogging::DropDatabase(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+Status DatabaseAdminRestLogging::DropDatabase(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::DropDatabaseRequest const&
+                 request) {
         return child_->DropDatabase(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -174,40 +178,34 @@ DatabaseAdminRestLogging::DropDatabase(
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
 DatabaseAdminRestLogging::GetDatabaseDdl(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::GetDatabaseDdlRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
+                 request) {
         return child_->GetDatabaseDdl(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-DatabaseAdminRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DatabaseAdminRestLogging::SetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-DatabaseAdminRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> DatabaseAdminRestLogging::GetIamPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
@@ -216,12 +214,10 @@ DatabaseAdminRestLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
@@ -230,31 +226,30 @@ DatabaseAdminRestLogging::TestIamPermissions(
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncCreateBackup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::database::v1::CreateBackupRequest const& request) {
-        return child_->AsyncCreateBackup(
-            cq, std::move(rest_context), std::move(options), request);
+             google::spanner::admin::database::v1::CreateBackupRequest const&
+                 request) {
+        return child_->AsyncCreateBackup(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DatabaseAdminRestLogging::CreateBackup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> DatabaseAdminRestLogging::CreateBackup(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::CreateBackupRequest const&
+                 request) {
         return child_->CreateBackup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -262,31 +257,30 @@ DatabaseAdminRestLogging::CreateBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncCopyBackup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::database::v1::CopyBackupRequest const& request) {
-        return child_->AsyncCopyBackup(
-            cq, std::move(rest_context), std::move(options), request);
+             google::spanner::admin::database::v1::CopyBackupRequest const&
+                 request) {
+        return child_->AsyncCopyBackup(cq, std::move(rest_context),
+                                       std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DatabaseAdminRestLogging::CopyBackup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> DatabaseAdminRestLogging::CopyBackup(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::CopyBackupRequest const&
+                 request) {
         return child_->CopyBackup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -294,13 +288,12 @@ DatabaseAdminRestLogging::CopyBackup(
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminRestLogging::GetBackup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::GetBackupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::GetBackupRequest const&
+                 request) {
         return child_->GetBackup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -308,27 +301,24 @@ DatabaseAdminRestLogging::GetBackup(
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminRestLogging::UpdateBackup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::UpdateBackupRequest const&
+                 request) {
         return child_->UpdateBackup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status
-DatabaseAdminRestLogging::DeleteBackup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+Status DatabaseAdminRestLogging::DeleteBackup(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::DeleteBackupRequest const&
+                 request) {
         return child_->DeleteBackup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -336,13 +326,12 @@ DatabaseAdminRestLogging::DeleteBackup(
 
 StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DatabaseAdminRestLogging::ListBackups(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::ListBackupsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::ListBackupsRequest const&
+                 request) {
         return child_->ListBackups(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -350,17 +339,19 @@ DatabaseAdminRestLogging::ListBackups(
 
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncRestoreDatabase(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) {
-        return child_->AsyncRestoreDatabase(
-            cq, std::move(rest_context), std::move(options), request);
+             google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+                 request) {
+        return child_->AsyncRestoreDatabase(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -368,13 +359,13 @@ DatabaseAdminRestLogging::AsyncRestoreDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestLogging::RestoreDatabase(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::RestoreDatabaseRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+                 request) {
         return child_->RestoreDatabase(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -382,13 +373,13 @@ DatabaseAdminRestLogging::RestoreDatabase(
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
 DatabaseAdminRestLogging::ListDatabaseOperations(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 ListDatabaseOperationsRequest const& request) {
         return child_->ListDatabaseOperations(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -396,13 +387,13 @@ DatabaseAdminRestLogging::ListDatabaseOperations(
 
 StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
 DatabaseAdminRestLogging::ListBackupOperations(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::ListBackupOperationsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::ListBackupOperationsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::ListBackupOperationsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 ListBackupOperationsRequest const& request) {
         return child_->ListBackupOperations(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -410,13 +401,14 @@ DatabaseAdminRestLogging::ListBackupOperations(
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
 DatabaseAdminRestLogging::ListDatabaseRoles(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::ListDatabaseRolesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::ListDatabaseRolesRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+              request) {
         return child_->ListDatabaseRoles(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -424,13 +416,13 @@ DatabaseAdminRestLogging::ListDatabaseRoles(
 
 StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
 DatabaseAdminRestLogging::AddSplitPoints(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::AddSplitPointsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::AddSplitPointsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::AddSplitPointsRequest const&
+                 request) {
         return child_->AddSplitPoints(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -438,13 +430,13 @@ DatabaseAdminRestLogging::AddSplitPoints(
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminRestLogging::CreateBackupSchedule(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::CreateBackupScheduleRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::CreateBackupScheduleRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 CreateBackupScheduleRequest const& request) {
         return child_->CreateBackupSchedule(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -452,13 +444,14 @@ DatabaseAdminRestLogging::CreateBackupSchedule(
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminRestLogging::GetBackupSchedule(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::GetBackupScheduleRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::GetBackupScheduleRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+              request) {
         return child_->GetBackupSchedule(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -466,27 +459,26 @@ DatabaseAdminRestLogging::GetBackupSchedule(
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminRestLogging::UpdateBackupSchedule(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::UpdateBackupScheduleRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 UpdateBackupScheduleRequest const& request) {
         return child_->UpdateBackupSchedule(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status
-DatabaseAdminRestLogging::DeleteBackupSchedule(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const& request) {
+Status DatabaseAdminRestLogging::DeleteBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::DeleteBackupScheduleRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 DeleteBackupScheduleRequest const& request) {
         return child_->DeleteBackupSchedule(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -494,13 +486,13 @@ DatabaseAdminRestLogging::DeleteBackupSchedule(
 
 StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
 DatabaseAdminRestLogging::ListBackupSchedules(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::spanner::admin::database::v1::ListBackupSchedulesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::spanner::admin::database::v1::ListBackupSchedulesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 ListBackupSchedulesRequest const& request) {
         return child_->ListBackupSchedules(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -508,54 +500,43 @@ DatabaseAdminRestLogging::ListBackupSchedules(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DatabaseAdminRestLogging::ListOperations(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+    rest_internal::RestContext& rest_context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-DatabaseAdminRestLogging::GetOperation(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> DatabaseAdminRestLogging::GetOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status
-DatabaseAdminRestLogging::DeleteOperation(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+Status DatabaseAdminRestLogging::DeleteOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-Status
-DatabaseAdminRestLogging::CancelOperation(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+Status DatabaseAdminRestLogging::CancelOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(rest_context, options, request);
       },
@@ -573,15 +554,14 @@ DatabaseAdminRestLogging::AsyncGetOperation(
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-DatabaseAdminRestLogging::AsyncCancelOperation(
+future<Status> DatabaseAdminRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
@@ -591,8 +571,8 @@ DatabaseAdminRestLogging::AsyncCancelOperation(
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

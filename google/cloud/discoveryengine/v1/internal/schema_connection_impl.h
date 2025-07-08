@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_SCHEMA_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_SCHEMA_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/schema_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/internal/schema_stub.h"
 #include "google/cloud/discoveryengine/v1/schema_connection.h"
 #include "google/cloud/discoveryengine/v1/schema_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/schema_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -46,59 +46,63 @@ class SchemaServiceConnectionImpl
   ~SchemaServiceConnectionImpl() override = default;
 
   SchemaServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<discoveryengine_v1_internal::SchemaServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<discoveryengine_v1_internal::SchemaServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::discoveryengine::v1::Schema>
-  GetSchema(google::cloud::discoveryengine::v1::GetSchemaRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Schema> GetSchema(
+      google::cloud::discoveryengine::v1::GetSchemaRequest const& request)
+      override;
 
-  StreamRange<google::cloud::discoveryengine::v1::Schema>
-  ListSchemas(google::cloud::discoveryengine::v1::ListSchemasRequest request) override;
+  StreamRange<google::cloud::discoveryengine::v1::Schema> ListSchemas(
+      google::cloud::discoveryengine::v1::ListSchemasRequest request) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  CreateSchema(google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateSchema(NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  CreateSchema(
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  UpdateSchema(google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateSchema(NoAwaitTag,
-      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  UpdateSchema(
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) override;
+  DeleteSchema(google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
+                   request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteSchema(NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteSchema(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(
-      google::longrunning::Operation const& operation) override;
+  DeleteSchema(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_INTERNAL_TRANSCODER_TRACING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_INTERNAL_TRANSCODER_TRACING_CONNECTION_H
 
-#include "google/cloud/version.h"
 #include "google/cloud/video/transcoder/v1/transcoder_connection.h"
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
@@ -36,33 +36,39 @@ class TranscoderServiceTracingConnection
   ~TranscoderServiceTracingConnection() override = default;
 
   explicit TranscoderServiceTracingConnection(
-    std::shared_ptr<video_transcoder_v1::TranscoderServiceConnection> child);
+      std::shared_ptr<video_transcoder_v1::TranscoderServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::video::transcoder::v1::Job>
-  CreateJob(google::cloud::video::transcoder::v1::CreateJobRequest const& request) override;
+  StatusOr<google::cloud::video::transcoder::v1::Job> CreateJob(
+      google::cloud::video::transcoder::v1::CreateJobRequest const& request)
+      override;
 
-  StreamRange<google::cloud::video::transcoder::v1::Job>
-  ListJobs(google::cloud::video::transcoder::v1::ListJobsRequest request) override;
+  StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
+      google::cloud::video::transcoder::v1::ListJobsRequest request) override;
 
-  StatusOr<google::cloud::video::transcoder::v1::Job>
-  GetJob(google::cloud::video::transcoder::v1::GetJobRequest const& request) override;
+  StatusOr<google::cloud::video::transcoder::v1::Job> GetJob(
+      google::cloud::video::transcoder::v1::GetJobRequest const& request)
+      override;
 
-  Status
-  DeleteJob(google::cloud::video::transcoder::v1::DeleteJobRequest const& request) override;
+  Status DeleteJob(google::cloud::video::transcoder::v1::DeleteJobRequest const&
+                       request) override;
 
-  StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-  CreateJobTemplate(google::cloud::video::transcoder::v1::CreateJobTemplateRequest const& request) override;
+  StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
+      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
+          request) override;
 
   StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
-  ListJobTemplates(google::cloud::video::transcoder::v1::ListJobTemplatesRequest request) override;
+  ListJobTemplates(google::cloud::video::transcoder::v1::ListJobTemplatesRequest
+                       request) override;
 
-  StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
-  GetJobTemplate(google::cloud::video::transcoder::v1::GetJobTemplateRequest const& request) override;
+  StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
+      google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
+          request) override;
 
-  Status
-  DeleteJobTemplate(google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const& request) override;
+  Status DeleteJobTemplate(
+      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
+          request) override;
 
  private:
   std::shared_ptr<video_transcoder_v1::TranscoderServiceConnection> child_;

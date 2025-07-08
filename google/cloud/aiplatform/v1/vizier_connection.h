@@ -57,7 +57,8 @@ class VizierServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class VizierServiceLimitedErrorCountRetryPolicy : public VizierServiceRetryPolicy {
+class VizierServiceLimitedErrorCountRetryPolicy
+    : public VizierServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -67,14 +68,14 @@ class VizierServiceLimitedErrorCountRetryPolicy : public VizierServiceRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit VizierServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   VizierServiceLimitedErrorCountRetryPolicy(
       VizierServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : VizierServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : VizierServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   VizierServiceLimitedErrorCountRetryPolicy(
       VizierServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : VizierServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : VizierServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -94,7 +95,9 @@ class VizierServiceLimitedErrorCountRetryPolicy : public VizierServiceRetryPolic
   using BaseType = VizierServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<aiplatform_v1_internal::VizierServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      aiplatform_v1_internal::VizierServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -132,12 +135,14 @@ class VizierServiceLimitedTimeRetryPolicy : public VizierServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit VizierServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  VizierServiceLimitedTimeRetryPolicy(VizierServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : VizierServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  VizierServiceLimitedTimeRetryPolicy(VizierServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : VizierServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VizierServiceLimitedTimeRetryPolicy(
+      VizierServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : VizierServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  VizierServiceLimitedTimeRetryPolicy(
+      VizierServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : VizierServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -159,7 +164,9 @@ class VizierServiceLimitedTimeRetryPolicy : public VizierServiceRetryPolicy {
   using BaseType = VizierServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<aiplatform_v1_internal::VizierServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      aiplatform_v1_internal::VizierServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,92 +187,101 @@ class VizierServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Study>
-  CreateStudy(google::cloud::aiplatform::v1::CreateStudyRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
+      google::cloud::aiplatform::v1::CreateStudyRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Study>
-  GetStudy(google::cloud::aiplatform::v1::GetStudyRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Study> GetStudy(
+      google::cloud::aiplatform::v1::GetStudyRequest const& request);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Study>
-  ListStudies(google::cloud::aiplatform::v1::ListStudiesRequest request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Study> ListStudies(
+      google::cloud::aiplatform::v1::ListStudiesRequest request);
 
-  virtual Status
-  DeleteStudy(google::cloud::aiplatform::v1::DeleteStudyRequest const& request);
+  virtual Status DeleteStudy(
+      google::cloud::aiplatform::v1::DeleteStudyRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Study>
-  LookupStudy(google::cloud::aiplatform::v1::LookupStudyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials(google::cloud::aiplatform::v1::SuggestTrialsRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  SuggestTrials(NoAwaitTag, google::cloud::aiplatform::v1::SuggestTrialsRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Study> LookupStudy(
+      google::cloud::aiplatform::v1::LookupStudyRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials( google::longrunning::Operation const& operation);
+  SuggestTrials(
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Trial>
-  CreateTrial(google::cloud::aiplatform::v1::CreateTrialRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> SuggestTrials(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Trial>
-  GetTrial(google::cloud::aiplatform::v1::GetTrialRequest const& request);
+  virtual future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
+  SuggestTrials(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::aiplatform::v1::Trial>
-  ListTrials(google::cloud::aiplatform::v1::ListTrialsRequest request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
+      google::cloud::aiplatform::v1::CreateTrialRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Trial>
-  AddTrialMeasurement(google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Trial> GetTrial(
+      google::cloud::aiplatform::v1::GetTrialRequest const& request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Trial>
-  CompleteTrial(google::cloud::aiplatform::v1::CompleteTrialRequest const& request);
+  virtual StreamRange<google::cloud::aiplatform::v1::Trial> ListTrials(
+      google::cloud::aiplatform::v1::ListTrialsRequest request);
 
-  virtual Status
-  DeleteTrial(google::cloud::aiplatform::v1::DeleteTrialRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Trial> AddTrialMeasurement(
+      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-  CheckTrialEarlyStoppingState(google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request);
+  virtual StatusOr<google::cloud::aiplatform::v1::Trial> CompleteTrial(
+      google::cloud::aiplatform::v1::CompleteTrialRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CheckTrialEarlyStoppingState(NoAwaitTag, google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request);
+  virtual Status DeleteTrial(
+      google::cloud::aiplatform::v1::DeleteTrialRequest const& request);
 
-  virtual future<StatusOr<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-  CheckTrialEarlyStoppingState( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+  CheckTrialEarlyStoppingState(
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::aiplatform::v1::Trial>
-  StopTrial(google::cloud::aiplatform::v1::StopTrialRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+  CheckTrialEarlyStoppingState(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(
+      google::cloud::aiplatform::v1::StopTrialRequest const& request);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
-  ListOptimalTrials(google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request);
+  ListOptimalTrials(
+      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 /**

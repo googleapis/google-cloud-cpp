@@ -38,16 +38,20 @@ class NetworkProfilesRestLogging : public NetworkProfilesRestStub {
  public:
   ~NetworkProfilesRestLogging() override = default;
   NetworkProfilesRestLogging(std::shared_ptr<NetworkProfilesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                             TracingOptions tracing_options,
+                             std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkProfile> GetNetworkProfile(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::network_profiles::v1::
+          GetNetworkProfileRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse> ListNetworkProfiles(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NetworkProfilesListResponse>
+  ListNetworkProfiles(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
+                      google::cloud::cpp::compute::network_profiles::v1::
+                          ListNetworkProfilesRequest const& request) override;
 
  private:
   std::shared_ptr<NetworkProfilesRestStub> child_;

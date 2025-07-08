@@ -32,44 +32,54 @@ ConfidentialComputingTracingStub::ConfidentialComputingTracingStub(
     std::shared_ptr<ConfidentialComputingStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::confidentialcomputing::v1::Challenge> ConfidentialComputingTracingStub::CreateChallenge(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.confidentialcomputing.v1.ConfidentialComputing", "CreateChallenge");
+StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
+ConfidentialComputingTracingStub::CreateChallenge(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
+      "CreateChallenge");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CreateChallenge(context, options, request));
 }
 
-StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse> ConfidentialComputingTracingStub::VerifyAttestation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.confidentialcomputing.v1.ConfidentialComputing", "VerifyAttestation");
+StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
+ConfidentialComputingTracingStub::VerifyAttestation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
+      "VerifyAttestation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->VerifyAttestation(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->VerifyAttestation(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ConfidentialComputingTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ConfidentialComputingTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.confidentialcomputing.v1.ConfidentialComputing", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
+      "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> ConfidentialComputingTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+ConfidentialComputingTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.confidentialcomputing.v1.ConfidentialComputing", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
+      "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

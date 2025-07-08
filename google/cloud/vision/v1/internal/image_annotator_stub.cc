@@ -33,41 +33,41 @@ ImageAnnotatorStub::~ImageAnnotatorStub() = default;
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 DefaultImageAnnotatorStub::BatchAnnotateImages(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
-    google::cloud::vision::v1::BatchAnnotateImagesResponse response;
-    auto status =
-        grpc_stub_->BatchAnnotateImages(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
+  google::cloud::vision::v1::BatchAnnotateImagesResponse response;
+  auto status = grpc_stub_->BatchAnnotateImages(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 DefaultImageAnnotatorStub::BatchAnnotateFiles(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
-    google::cloud::vision::v1::BatchAnnotateFilesResponse response;
-    auto status =
-        grpc_stub_->BatchAnnotateFiles(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
+  google::cloud::vision::v1::BatchAnnotateFilesResponse response;
+  auto status = grpc_stub_->BatchAnnotateFiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultImageAnnotatorStub::AsyncAsyncBatchAnnotateImages(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
+             google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncAsyncBatchAnnotateImages(context, request, cq);
       },
@@ -76,29 +76,30 @@ DefaultImageAnnotatorStub::AsyncAsyncBatchAnnotateImages(
 
 StatusOr<google::longrunning::Operation>
 DefaultImageAnnotatorStub::AsyncBatchAnnotateImages(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->AsyncBatchAnnotateImages(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->AsyncBatchAnnotateImages(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultImageAnnotatorStub::AsyncAsyncBatchAnnotateFiles(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
+             google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncAsyncBatchAnnotateFiles(context, request, cq);
       },
@@ -107,29 +108,27 @@ DefaultImageAnnotatorStub::AsyncAsyncBatchAnnotateFiles(
 
 StatusOr<google::longrunning::Operation>
 DefaultImageAnnotatorStub::AsyncBatchAnnotateFiles(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->AsyncBatchAnnotateFiles(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->AsyncBatchAnnotateFiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultImageAnnotatorStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -158,13 +157,14 @@ future<Status> DefaultImageAnnotatorStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

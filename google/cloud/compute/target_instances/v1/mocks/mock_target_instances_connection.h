@@ -42,25 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTargetInstancesConnection : public compute_target_instances_v1::TargetInstancesConnection {
+class MockTargetInstancesConnection
+    : public compute_target_instances_v1::TargetInstancesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::TargetInstancesScopedList>>),
-  AggregatedListTargetInstances,
-  (google::cloud::cpp::compute::target_instances::v1::AggregatedListTargetInstancesRequest request), (override));
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              TargetInstancesScopedList>>),
+      AggregatedListTargetInstances,
+      (google::cloud::cpp::compute::target_instances::v1::
+           AggregatedListTargetInstancesRequest request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTargetInstance(Matcher<google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetInstance(Matcher<google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetInstance,
-  (google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request), (override));
-
+              DeleteTargetInstance,
+              (google::cloud::cpp::compute::target_instances::v1::
+                   DeleteTargetInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -69,36 +77,45 @@ class MockTargetInstancesConnection : public compute_target_instances_v1::Target
   /// EXPECT_CALL(*mock, DeleteTargetInstance(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteTargetInstance, (NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::DeleteTargetInstanceRequest const& request), (override));
-
+              DeleteTargetInstance,
+              (NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                               DeleteTargetInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTargetInstance(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetInstance(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  DeleteTargetInstance, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              DeleteTargetInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetInstance>,
-  GetTargetInstance,
-  (google::cloud::cpp::compute::target_instances::v1::GetTargetInstanceRequest const& request), (override));
+              GetTargetInstance,
+              (google::cloud::cpp::compute::target_instances::v1::
+                   GetTargetInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertTargetInstance(Matcher<google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetInstance(Matcher<google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetInstance,
-  (google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request), (override));
-
+              InsertTargetInstance,
+              (google::cloud::cpp::compute::target_instances::v1::
+                   InsertTargetInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -107,36 +124,45 @@ class MockTargetInstancesConnection : public compute_target_instances_v1::Target
   /// EXPECT_CALL(*mock, InsertTargetInstance(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertTargetInstance, (NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::InsertTargetInstanceRequest const& request), (override));
-
+              InsertTargetInstance,
+              (NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                               InsertTargetInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, InsertTargetInstance(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetInstance(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  InsertTargetInstance, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              InsertTargetInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetInstance>),
-  ListTargetInstances,
-  (google::cloud::cpp::compute::target_instances::v1::ListTargetInstancesRequest request), (override));
+              ListTargetInstances,
+              (google::cloud::cpp::compute::target_instances::v1::
+                   ListTargetInstancesRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetSecurityPolicy(Matcher<google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetSecurityPolicy(Matcher<google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetSecurityPolicy,
-  (google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request), (override));
-
+              SetSecurityPolicy,
+              (google::cloud::cpp::compute::target_instances::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -145,20 +171,24 @@ class MockTargetInstancesConnection : public compute_target_instances_v1::Target
   /// EXPECT_CALL(*mock, SetSecurityPolicy(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetSecurityPolicy, (NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::SetSecurityPolicyRequest const& request), (override));
-
+              SetSecurityPolicy,
+              (NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                               SetSecurityPolicyRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SetSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// SetSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  SetSecurityPolicy, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              SetSecurityPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

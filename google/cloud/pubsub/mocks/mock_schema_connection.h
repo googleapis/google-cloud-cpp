@@ -46,57 +46,59 @@ class MockSchemaServiceConnection : public pubsub::SchemaServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>,
-  CreateSchema,
-  (google::pubsub::v1::CreateSchemaRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, CreateSchema,
+              (google::pubsub::v1::CreateSchemaRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>,
-  GetSchema,
-  (google::pubsub::v1::GetSchemaRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, GetSchema,
+              (google::pubsub::v1::GetSchemaRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::pubsub::v1::Schema>),
-  ListSchemas,
-  (google::pubsub::v1::ListSchemasRequest request), (override));
+  MOCK_METHOD((StreamRange<google::pubsub::v1::Schema>), ListSchemas,
+              (google::pubsub::v1::ListSchemasRequest request), (override));
 
-  MOCK_METHOD((StreamRange<google::pubsub::v1::Schema>),
-  ListSchemaRevisions,
-  (google::pubsub::v1::ListSchemaRevisionsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::pubsub::v1::Schema>), ListSchemaRevisions,
+              (google::pubsub::v1::ListSchemaRevisionsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>,
-  CommitSchema,
-  (google::pubsub::v1::CommitSchemaRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, CommitSchema,
+              (google::pubsub::v1::CommitSchemaRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>,
-  RollbackSchema,
-  (google::pubsub::v1::RollbackSchemaRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, RollbackSchema,
+              (google::pubsub::v1::RollbackSchemaRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>,
-  DeleteSchemaRevision,
-  (google::pubsub::v1::DeleteSchemaRevisionRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, DeleteSchemaRevision,
+              (google::pubsub::v1::DeleteSchemaRevisionRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteSchema,
-  (google::pubsub::v1::DeleteSchemaRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteSchema,
+              (google::pubsub::v1::DeleteSchemaRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::pubsub::v1::ValidateSchemaResponse>,
-  ValidateSchema,
-  (google::pubsub::v1::ValidateSchemaRequest const& request), (override));
+              ValidateSchema,
+              (google::pubsub::v1::ValidateSchemaRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::pubsub::v1::ValidateMessageResponse>,
-  ValidateMessage,
-  (google::pubsub::v1::ValidateMessageRequest const& request), (override));
+              ValidateMessage,
+              (google::pubsub::v1::ValidateMessageRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

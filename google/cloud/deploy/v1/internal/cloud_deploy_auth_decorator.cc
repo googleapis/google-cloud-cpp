@@ -31,18 +31,18 @@ CloudDeployAuth::CloudDeployAuth(
     std::shared_ptr<CloudDeployStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse> CloudDeployAuth::ListDeliveryPipelines(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
+CloudDeployAuth::ListDeliveryPipelines(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListDeliveryPipelinesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDeliveryPipelines(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::DeliveryPipeline> CloudDeployAuth::GetDeliveryPipeline(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
+CloudDeployAuth::GetDeliveryPipeline(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +51,28 @@ StatusOr<google::cloud::deploy::v1::DeliveryPipeline> CloudDeployAuth::GetDelive
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncCreateDeliveryPipeline(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDeliveryPipeline(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDeliveryPipeline(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudDeployAuth::CreateDeliveryPipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDeliveryPipeline(context, options, request);
@@ -80,28 +80,28 @@ CloudDeployAuth::CreateDeliveryPipeline(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateDeliveryPipeline(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDeliveryPipeline(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateDeliveryPipeline(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudDeployAuth::UpdateDeliveryPipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDeliveryPipeline(context, options, request);
@@ -109,45 +109,45 @@ CloudDeployAuth::UpdateDeliveryPipeline(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteDeliveryPipeline(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDeliveryPipeline(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDeliveryPipeline(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudDeployAuth::DeleteDeliveryPipeline(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDeliveryPipeline(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ListTargetsResponse> CloudDeployAuth::ListTargets(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListTargetsResponse>
+CloudDeployAuth::ListTargets(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListTargetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListTargets(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::RollbackTargetResponse> CloudDeployAuth::RollbackTarget(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+CloudDeployAuth::RollbackTarget(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::RollbackTargetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -155,8 +155,7 @@ StatusOr<google::cloud::deploy::v1::RollbackTargetResponse> CloudDeployAuth::Rol
 }
 
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployAuth::GetTarget(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -165,28 +164,27 @@ StatusOr<google::cloud::deploy::v1::Target> CloudDeployAuth::GetTarget(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncCreateTarget(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::CreateTargetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateTargetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateTarget(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateTarget(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::CreateTarget(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::CreateTargetRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateTarget(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateTargetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateTarget(context, options, request);
@@ -194,28 +192,27 @@ CloudDeployAuth::CreateTarget(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateTarget(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::UpdateTargetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateTarget(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateTarget(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::UpdateTarget(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::UpdateTargetRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::UpdateTarget(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateTarget(context, options, request);
@@ -223,45 +220,44 @@ CloudDeployAuth::UpdateTarget(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteTarget(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::DeleteTargetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteTarget(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteTarget(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::DeleteTarget(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::DeleteTargetRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::DeleteTarget(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTarget(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse> CloudDeployAuth::ListCustomTargetTypes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
+CloudDeployAuth::ListCustomTargetTypes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListCustomTargetTypes(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::CustomTargetType> CloudDeployAuth::GetCustomTargetType(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::CustomTargetType>
+CloudDeployAuth::GetCustomTargetType(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -270,28 +266,28 @@ StatusOr<google::cloud::deploy::v1::CustomTargetType> CloudDeployAuth::GetCustom
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncCreateCustomTargetType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCustomTargetType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateCustomTargetType(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudDeployAuth::CreateCustomTargetType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCustomTargetType(context, options, request);
@@ -299,28 +295,28 @@ CloudDeployAuth::CreateCustomTargetType(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateCustomTargetType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateCustomTargetType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateCustomTargetType(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudDeployAuth::UpdateCustomTargetType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateCustomTargetType(context, options, request);
@@ -328,36 +324,36 @@ CloudDeployAuth::UpdateCustomTargetType(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteCustomTargetType(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteCustomTargetType(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteCustomTargetType(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 CloudDeployAuth::DeleteCustomTargetType(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCustomTargetType(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ListReleasesResponse> CloudDeployAuth::ListReleases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
+CloudDeployAuth::ListReleases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListReleasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -365,8 +361,7 @@ StatusOr<google::cloud::deploy::v1::ListReleasesResponse> CloudDeployAuth::ListR
 }
 
 StatusOr<google::cloud::deploy::v1::Release> CloudDeployAuth::GetRelease(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetReleaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -375,36 +370,35 @@ StatusOr<google::cloud::deploy::v1::Release> CloudDeployAuth::GetRelease(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncCreateRelease(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::CreateReleaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateRelease(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateRelease(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::CreateRelease(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::CreateReleaseRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateRelease(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateRelease(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> CloudDeployAuth::AbandonRelease(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
+CloudDeployAuth::AbandonRelease(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::AbandonReleaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -413,28 +407,27 @@ StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> CloudDeployAuth::Aba
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncCreateDeployPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDeployPolicy(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateDeployPolicy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::CreateDeployPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateDeployPolicy(context, options, request);
@@ -442,28 +435,27 @@ CloudDeployAuth::CreateDeployPolicy(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateDeployPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDeployPolicy(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateDeployPolicy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::UpdateDeployPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::UpdateDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateDeployPolicy(context, options, request);
@@ -471,81 +463,80 @@ CloudDeployAuth::UpdateDeployPolicy(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteDeployPolicy(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteDeployPolicy(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteDeployPolicy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::DeleteDeployPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::DeleteDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteDeployPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse> CloudDeployAuth::ListDeployPolicies(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse>
+CloudDeployAuth::ListDeployPolicies(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListDeployPoliciesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDeployPolicies(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::DeployPolicy> CloudDeployAuth::GetDeployPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployAuth::GetDeployPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetDeployPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetDeployPolicy(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> CloudDeployAuth::ApproveRollout(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
+CloudDeployAuth::ApproveRollout(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ApproveRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ApproveRollout(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> CloudDeployAuth::AdvanceRollout(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployAuth::AdvanceRollout(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AdvanceRollout(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CloudDeployAuth::CancelRollout(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployAuth::CancelRollout(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::CancelRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelRollout(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ListRolloutsResponse> CloudDeployAuth::ListRollouts(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
+CloudDeployAuth::ListRollouts(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListRolloutsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -553,8 +544,7 @@ StatusOr<google::cloud::deploy::v1::ListRolloutsResponse> CloudDeployAuth::ListR
 }
 
 StatusOr<google::cloud::deploy::v1::Rollout> CloudDeployAuth::GetRollout(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -563,36 +553,35 @@ StatusOr<google::cloud::deploy::v1::Rollout> CloudDeployAuth::GetRollout(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncCreateRollout(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::CreateRolloutRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateRollout(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateRollout(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::CreateRollout(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::CreateRolloutRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateRollout(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateRollout(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> CloudDeployAuth::IgnoreJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployAuth::IgnoreJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::IgnoreJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -600,17 +589,16 @@ StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> CloudDeployAuth::IgnoreJo
 }
 
 StatusOr<google::cloud::deploy::v1::RetryJobResponse> CloudDeployAuth::RetryJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::RetryJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RetryJob(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ListJobRunsResponse> CloudDeployAuth::ListJobRuns(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListJobRunsResponse>
+CloudDeployAuth::ListJobRuns(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListJobRunsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -618,17 +606,16 @@ StatusOr<google::cloud::deploy::v1::ListJobRunsResponse> CloudDeployAuth::ListJo
 }
 
 StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployAuth::GetJobRun(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetJobRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetJobRun(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> CloudDeployAuth::TerminateJobRun(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployAuth::TerminateJobRun(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -636,8 +623,7 @@ StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> CloudDeployAuth::Te
 }
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployAuth::GetConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -646,28 +632,27 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployAuth::GetConfig(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncCreateAutomation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateAutomationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAutomation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateAutomation(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::CreateAutomation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::CreateAutomation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateAutomationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAutomation(context, options, request);
@@ -675,28 +660,27 @@ CloudDeployAuth::CreateAutomation(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncUpdateAutomation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAutomation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateAutomation(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::UpdateAutomation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::UpdateAutomation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAutomation(context, options, request);
@@ -704,81 +688,79 @@ CloudDeployAuth::UpdateAutomation(
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployAuth::AsyncDeleteAutomation(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAutomation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteAutomation(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-CloudDeployAuth::DeleteAutomation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+StatusOr<google::longrunning::Operation> CloudDeployAuth::DeleteAutomation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAutomation(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Automation> CloudDeployAuth::GetAutomation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetAutomationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAutomation(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ListAutomationsResponse> CloudDeployAuth::ListAutomations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListAutomationsResponse>
+CloudDeployAuth::ListAutomations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListAutomationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAutomations(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::AutomationRun> CloudDeployAuth::GetAutomationRun(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::AutomationRun>
+CloudDeployAuth::GetAutomationRun(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAutomationRun(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse> CloudDeployAuth::ListAutomationRuns(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
+CloudDeployAuth::ListAutomationRuns(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListAutomationRunsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAutomationRuns(context, options, request);
 }
 
-StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse> CloudDeployAuth::CancelAutomationRun(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
+CloudDeployAuth::CancelAutomationRun(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::CancelAutomationRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelAutomationRun(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> CloudDeployAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+CloudDeployAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -786,8 +768,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> CloudDeployAuth::ListLo
 }
 
 StatusOr<google::cloud::location::Location> CloudDeployAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -795,8 +776,7 @@ StatusOr<google::cloud::location::Location> CloudDeployAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> CloudDeployAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -804,26 +784,25 @@ StatusOr<google::iam::v1::Policy> CloudDeployAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> CloudDeployAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> CloudDeployAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+CloudDeployAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> CloudDeployAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+CloudDeployAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -831,8 +810,7 @@ StatusOr<google::longrunning::ListOperationsResponse> CloudDeployAuth::ListOpera
 }
 
 StatusOr<google::longrunning::Operation> CloudDeployAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -840,8 +818,7 @@ StatusOr<google::longrunning::Operation> CloudDeployAuth::GetOperation(
 }
 
 Status CloudDeployAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -849,8 +826,7 @@ Status CloudDeployAuth::DeleteOperation(
 }
 
 Status CloudDeployAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -864,15 +840,16 @@ CloudDeployAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -881,13 +858,14 @@ future<Status> CloudDeployAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

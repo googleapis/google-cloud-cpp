@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_NETWORK_SERVICES_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_NETWORK_SERVICES_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/networkservices/v1/network_services_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NetworkServicesClient {
  public:
-  explicit NetworkServicesClient(std::shared_ptr<NetworkServicesConnection> connection, Options opts = {});
+  explicit NetworkServicesClient(
+      std::shared_ptr<NetworkServicesConnection> connection, Options opts = {});
   ~NetworkServicesClient();
 
   ///@{
@@ -77,10 +78,12 @@ class NetworkServicesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(NetworkServicesClient const& a, NetworkServicesClient const& b) {
+  friend bool operator==(NetworkServicesClient const& a,
+                         NetworkServicesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NetworkServicesClient const& a, NetworkServicesClient const& b) {
+  friend bool operator!=(NetworkServicesClient const& a,
+                         NetworkServicesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -157,7 +160,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::EndpointPolicy>
-  ListEndpointPolicies(google::cloud::networkservices::v1::ListEndpointPoliciesRequest request, Options opts = {});
+  ListEndpointPolicies(
+      google::cloud::networkservices::v1::ListEndpointPoliciesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -213,7 +218,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
-  GetEndpointPolicy(google::cloud::networkservices::v1::GetEndpointPolicyRequest const& request, Options opts = {});
+  GetEndpointPolicy(
+      google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -249,7 +257,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
-  CreateEndpointPolicy(std::string const& parent, google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy, std::string const& endpoint_policy_id, Options opts = {});
+  CreateEndpointPolicy(
+      std::string const& parent,
+      google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy,
+      std::string const& endpoint_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -262,8 +273,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEndpointPolicy(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy, std::string const& endpoint_policy_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEndpointPolicy(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy,
+      std::string const& endpoint_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -300,7 +313,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
-  CreateEndpointPolicy(google::cloud::networkservices::v1::CreateEndpointPolicyRequest const& request, Options opts = {});
+  CreateEndpointPolicy(
+      google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -313,8 +329,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateEndpointPolicy(NoAwaitTag, google::cloud::networkservices::v1::CreateEndpointPolicyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateEndpointPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -326,7 +345,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
-  CreateEndpointPolicy(google::longrunning::Operation const& operation, Options opts = {});
+  CreateEndpointPolicy(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -363,7 +383,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
-  UpdateEndpointPolicy(google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateEndpointPolicy(
+      google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -376,8 +398,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEndpointPolicy(NoAwaitTag, google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEndpointPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -414,7 +438,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
-  UpdateEndpointPolicy(google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const& request, Options opts = {});
+  UpdateEndpointPolicy(
+      google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -427,8 +454,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateEndpointPolicy(NoAwaitTag, google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateEndpointPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -440,7 +470,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
-  UpdateEndpointPolicy(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateEndpointPolicy(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -486,8 +517,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEndpointPolicy(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEndpointPolicy(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -524,7 +555,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteEndpointPolicy(google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const& request, Options opts = {});
+  DeleteEndpointPolicy(
+      google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -537,8 +571,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteEndpointPolicy(NoAwaitTag, google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteEndpointPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -550,7 +587,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteEndpointPolicy(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteEndpointPolicy(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -627,7 +665,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::WasmPluginVersion>
-  ListWasmPluginVersions(google::cloud::networkservices::v1::ListWasmPluginVersionsRequest request, Options opts = {});
+  ListWasmPluginVersions(
+      google::cloud::networkservices::v1::ListWasmPluginVersionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -684,7 +724,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>
-  GetWasmPluginVersion(google::cloud::networkservices::v1::GetWasmPluginVersionRequest const& request, Options opts = {});
+  GetWasmPluginVersion(
+      google::cloud::networkservices::v1::GetWasmPluginVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -722,7 +765,11 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
-  CreateWasmPluginVersion(std::string const& parent, google::cloud::networkservices::v1::WasmPluginVersion const& wasm_plugin_version, std::string const& wasm_plugin_version_id, Options opts = {});
+  CreateWasmPluginVersion(
+      std::string const& parent,
+      google::cloud::networkservices::v1::WasmPluginVersion const&
+          wasm_plugin_version,
+      std::string const& wasm_plugin_version_id, Options opts = {});
 
   // clang-format off
   ///
@@ -735,8 +782,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateWasmPluginVersion(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::WasmPluginVersion const& wasm_plugin_version, std::string const& wasm_plugin_version_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateWasmPluginVersion(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::WasmPluginVersion const&
+          wasm_plugin_version,
+      std::string const& wasm_plugin_version_id, Options opts = {});
 
   // clang-format off
   ///
@@ -774,7 +824,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
-  CreateWasmPluginVersion(google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const& request, Options opts = {});
+  CreateWasmPluginVersion(
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -787,8 +840,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateWasmPluginVersion(NoAwaitTag, google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateWasmPluginVersion(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateWasmPluginVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -800,7 +856,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPluginVersion>>
-  CreateWasmPluginVersion(google::longrunning::Operation const& operation, Options opts = {});
+  CreateWasmPluginVersion(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -847,8 +904,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteWasmPluginVersion(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteWasmPluginVersion(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -885,7 +942,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteWasmPluginVersion(google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const& request, Options opts = {});
+  DeleteWasmPluginVersion(
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -898,8 +958,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteWasmPluginVersion(NoAwaitTag, google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteWasmPluginVersion(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteWasmPluginVersionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -911,7 +974,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteWasmPluginVersion(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteWasmPluginVersion(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -947,8 +1011,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::WasmPlugin>
-  ListWasmPlugins(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::WasmPlugin> ListWasmPlugins(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -987,8 +1051,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::WasmPlugin>
-  ListWasmPlugins(google::cloud::networkservices::v1::ListWasmPluginsRequest request, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::WasmPlugin> ListWasmPlugins(
+      google::cloud::networkservices::v1::ListWasmPluginsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1013,8 +1078,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::WasmPlugin>
-  GetWasmPlugin(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::WasmPlugin> GetWasmPlugin(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1043,8 +1108,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.WasmPlugin]: @googleapis_reference_link{google/cloud/networkservices/v1/extensibility.proto#L48}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::WasmPlugin>
-  GetWasmPlugin(google::cloud::networkservices::v1::GetWasmPluginRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::WasmPlugin> GetWasmPlugin(
+      google::cloud::networkservices::v1::GetWasmPluginRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1080,7 +1146,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
-  CreateWasmPlugin(std::string const& parent, google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin, std::string const& wasm_plugin_id, Options opts = {});
+  CreateWasmPlugin(
+      std::string const& parent,
+      google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin,
+      std::string const& wasm_plugin_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1093,8 +1162,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateWasmPlugin(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin, std::string const& wasm_plugin_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateWasmPlugin(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin,
+      std::string const& wasm_plugin_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1132,7 +1203,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
-  CreateWasmPlugin(google::cloud::networkservices::v1::CreateWasmPluginRequest const& request, Options opts = {});
+  CreateWasmPlugin(
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1145,8 +1219,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateWasmPlugin(NoAwaitTag, google::cloud::networkservices::v1::CreateWasmPluginRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateWasmPluginRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1158,7 +1235,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
-  CreateWasmPlugin(google::longrunning::Operation const& operation, Options opts = {});
+  CreateWasmPlugin(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1200,7 +1278,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
-  UpdateWasmPlugin(google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateWasmPlugin(
+      google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1213,8 +1293,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateWasmPlugin(NoAwaitTag, google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::WasmPlugin const& wasm_plugin,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1251,7 +1333,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
-  UpdateWasmPlugin(google::cloud::networkservices::v1::UpdateWasmPluginRequest const& request, Options opts = {});
+  UpdateWasmPlugin(
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1264,8 +1349,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateWasmPlugin(NoAwaitTag, google::cloud::networkservices::v1::UpdateWasmPluginRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateWasmPluginRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1277,7 +1365,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::WasmPlugin>>
-  UpdateWasmPlugin(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateWasmPlugin(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1323,8 +1412,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteWasmPlugin(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteWasmPlugin(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1361,7 +1450,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteWasmPlugin(google::cloud::networkservices::v1::DeleteWasmPluginRequest const& request, Options opts = {});
+  DeleteWasmPlugin(
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1374,8 +1466,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteWasmPlugin(NoAwaitTag, google::cloud::networkservices::v1::DeleteWasmPluginRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteWasmPlugin(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteWasmPluginRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1387,7 +1482,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteWasmPlugin(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteWasmPlugin(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1421,8 +1517,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L241}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::Gateway>
-  ListGateways(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1460,8 +1556,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.ListGatewaysRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L241}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::Gateway>
-  ListGateways(google::cloud::networkservices::v1::ListGatewaysRequest request, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
+      google::cloud::networkservices::v1::ListGatewaysRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1486,8 +1583,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L275}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::Gateway>
-  GetGateway(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::Gateway> GetGateway(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1516,8 +1613,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.GetGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L275}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::Gateway>
-  GetGateway(google::cloud::networkservices::v1::GetGatewayRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::Gateway> GetGateway(
+      google::cloud::networkservices::v1::GetGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1551,8 +1649,10 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Gateway>>
-  CreateGateway(std::string const& parent, google::cloud::networkservices::v1::Gateway const& gateway, std::string const& gateway_id, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Gateway>> CreateGateway(
+      std::string const& parent,
+      google::cloud::networkservices::v1::Gateway const& gateway,
+      std::string const& gateway_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1565,8 +1665,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGateway(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::Gateway const& gateway, std::string const& gateway_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGateway(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::Gateway const& gateway,
+      std::string const& gateway_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1602,8 +1704,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.Gateway]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L60}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Gateway>>
-  CreateGateway(google::cloud::networkservices::v1::CreateGatewayRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Gateway>> CreateGateway(
+      google::cloud::networkservices::v1::CreateGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1616,8 +1719,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGateway(NoAwaitTag, google::cloud::networkservices::v1::CreateGatewayRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1628,8 +1733,8 @@ class NetworkServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Gateway>>
-  CreateGateway(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Gateway>> CreateGateway(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1665,8 +1770,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L305}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Gateway>>
-  UpdateGateway(google::cloud::networkservices::v1::Gateway const& gateway, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
+      google::cloud::networkservices::v1::Gateway const& gateway,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1679,8 +1785,9 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateGateway(NoAwaitTag, google::cloud::networkservices::v1::Gateway const& gateway, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateGateway(
+      NoAwaitTag, google::cloud::networkservices::v1::Gateway const& gateway,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1716,8 +1823,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.UpdateGatewayRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/gateway.proto#L305}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Gateway>>
-  UpdateGateway(google::cloud::networkservices::v1::UpdateGatewayRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
+      google::cloud::networkservices::v1::UpdateGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1730,8 +1838,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateGateway(NoAwaitTag, google::cloud::networkservices::v1::UpdateGatewayRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1742,8 +1852,8 @@ class NetworkServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Gateway>>
-  UpdateGateway(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1789,8 +1899,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGateway(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGateway(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1827,7 +1937,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteGateway(google::cloud::networkservices::v1::DeleteGatewayRequest const& request, Options opts = {});
+  DeleteGateway(
+      google::cloud::networkservices::v1::DeleteGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1840,8 +1952,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGateway(NoAwaitTag, google::cloud::networkservices::v1::DeleteGatewayRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGateway(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteGatewayRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1853,7 +1967,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteGateway(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteGateway(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1887,8 +2002,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L380}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::GrpcRoute>
-  ListGrpcRoutes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::GrpcRoute> ListGrpcRoutes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1926,8 +2041,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.ListGrpcRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L380}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::GrpcRoute>
-  ListGrpcRoutes(google::cloud::networkservices::v1::ListGrpcRoutesRequest request, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::GrpcRoute> ListGrpcRoutes(
+      google::cloud::networkservices::v1::ListGrpcRoutesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1952,8 +2068,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::GrpcRoute>
-  GetGrpcRoute(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::GrpcRoute> GetGrpcRoute(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1982,8 +2098,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.GrpcRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/grpc_route.proto#L42}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::GrpcRoute>
-  GetGrpcRoute(google::cloud::networkservices::v1::GetGrpcRouteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::GrpcRoute> GetGrpcRoute(
+      google::cloud::networkservices::v1::GetGrpcRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2018,7 +2135,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
-  CreateGrpcRoute(std::string const& parent, google::cloud::networkservices::v1::GrpcRoute const& grpc_route, std::string const& grpc_route_id, Options opts = {});
+  CreateGrpcRoute(
+      std::string const& parent,
+      google::cloud::networkservices::v1::GrpcRoute const& grpc_route,
+      std::string const& grpc_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2031,8 +2151,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGrpcRoute(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::GrpcRoute const& grpc_route, std::string const& grpc_route_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGrpcRoute(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::GrpcRoute const& grpc_route,
+      std::string const& grpc_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2069,7 +2191,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
-  CreateGrpcRoute(google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request, Options opts = {});
+  CreateGrpcRoute(
+      google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2082,8 +2206,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateGrpcRoute(NoAwaitTag, google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateGrpcRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2095,7 +2221,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
-  CreateGrpcRoute(google::longrunning::Operation const& operation, Options opts = {});
+  CreateGrpcRoute(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -2132,7 +2259,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
-  UpdateGrpcRoute(google::cloud::networkservices::v1::GrpcRoute const& grpc_route, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateGrpcRoute(
+      google::cloud::networkservices::v1::GrpcRoute const& grpc_route,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2145,8 +2274,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateGrpcRoute(NoAwaitTag, google::cloud::networkservices::v1::GrpcRoute const& grpc_route, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateGrpcRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::GrpcRoute const& grpc_route,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2183,7 +2314,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
-  UpdateGrpcRoute(google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request, Options opts = {});
+  UpdateGrpcRoute(
+      google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2196,8 +2329,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateGrpcRoute(NoAwaitTag, google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateGrpcRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2209,7 +2344,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
-  UpdateGrpcRoute(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateGrpcRoute(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -2255,8 +2391,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGrpcRoute(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGrpcRoute(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2293,7 +2429,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteGrpcRoute(google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request, Options opts = {});
+  DeleteGrpcRoute(
+      google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2306,8 +2444,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteGrpcRoute(NoAwaitTag, google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteGrpcRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2319,7 +2459,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteGrpcRoute(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteGrpcRoute(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -2353,8 +2494,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L614}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::HttpRoute>
-  ListHttpRoutes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::HttpRoute> ListHttpRoutes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2392,8 +2533,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.ListHttpRoutesRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L614}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::HttpRoute>
-  ListHttpRoutes(google::cloud::networkservices::v1::ListHttpRoutesRequest request, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::HttpRoute> ListHttpRoutes(
+      google::cloud::networkservices::v1::ListHttpRoutesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2418,8 +2560,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::HttpRoute>
-  GetHttpRoute(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::HttpRoute> GetHttpRoute(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2448,8 +2590,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.HttpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/http_route.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::HttpRoute>
-  GetHttpRoute(google::cloud::networkservices::v1::GetHttpRouteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::HttpRoute> GetHttpRoute(
+      google::cloud::networkservices::v1::GetHttpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2484,7 +2627,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
-  CreateHttpRoute(std::string const& parent, google::cloud::networkservices::v1::HttpRoute const& http_route, std::string const& http_route_id, Options opts = {});
+  CreateHttpRoute(
+      std::string const& parent,
+      google::cloud::networkservices::v1::HttpRoute const& http_route,
+      std::string const& http_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2497,8 +2643,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateHttpRoute(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::HttpRoute const& http_route, std::string const& http_route_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateHttpRoute(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::HttpRoute const& http_route,
+      std::string const& http_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2535,7 +2683,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
-  CreateHttpRoute(google::cloud::networkservices::v1::CreateHttpRouteRequest const& request, Options opts = {});
+  CreateHttpRoute(
+      google::cloud::networkservices::v1::CreateHttpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2548,8 +2698,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateHttpRoute(NoAwaitTag, google::cloud::networkservices::v1::CreateHttpRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateHttpRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateHttpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2561,7 +2713,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
-  CreateHttpRoute(google::longrunning::Operation const& operation, Options opts = {});
+  CreateHttpRoute(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -2598,7 +2751,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
-  UpdateHttpRoute(google::cloud::networkservices::v1::HttpRoute const& http_route, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateHttpRoute(
+      google::cloud::networkservices::v1::HttpRoute const& http_route,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2611,8 +2766,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateHttpRoute(NoAwaitTag, google::cloud::networkservices::v1::HttpRoute const& http_route, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateHttpRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::HttpRoute const& http_route,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2649,7 +2806,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
-  UpdateHttpRoute(google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request, Options opts = {});
+  UpdateHttpRoute(
+      google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2662,8 +2821,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateHttpRoute(NoAwaitTag, google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateHttpRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2675,7 +2836,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
-  UpdateHttpRoute(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateHttpRoute(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -2721,8 +2883,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteHttpRoute(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteHttpRoute(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2759,7 +2921,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteHttpRoute(google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request, Options opts = {});
+  DeleteHttpRoute(
+      google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2772,8 +2936,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteHttpRoute(NoAwaitTag, google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteHttpRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2785,7 +2951,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteHttpRoute(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteHttpRoute(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -2819,8 +2986,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::TcpRoute>
-  ListTcpRoutes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::TcpRoute> ListTcpRoutes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2858,8 +3025,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::TcpRoute>
-  ListTcpRoutes(google::cloud::networkservices::v1::ListTcpRoutesRequest request, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::TcpRoute> ListTcpRoutes(
+      google::cloud::networkservices::v1::ListTcpRoutesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2884,8 +3052,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::TcpRoute>
-  GetTcpRoute(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::TcpRoute> GetTcpRoute(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2914,8 +3082,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::TcpRoute>
-  GetTcpRoute(google::cloud::networkservices::v1::GetTcpRouteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::TcpRoute> GetTcpRoute(
+      google::cloud::networkservices::v1::GetTcpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2949,8 +3118,10 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
-  CreateTcpRoute(std::string const& parent, google::cloud::networkservices::v1::TcpRoute const& tcp_route, std::string const& tcp_route_id, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> CreateTcpRoute(
+      std::string const& parent,
+      google::cloud::networkservices::v1::TcpRoute const& tcp_route,
+      std::string const& tcp_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2963,8 +3134,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTcpRoute(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::TcpRoute const& tcp_route, std::string const& tcp_route_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTcpRoute(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::TcpRoute const& tcp_route,
+      std::string const& tcp_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3000,8 +3173,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TcpRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
-  CreateTcpRoute(google::cloud::networkservices::v1::CreateTcpRouteRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> CreateTcpRoute(
+      google::cloud::networkservices::v1::CreateTcpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3014,8 +3188,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTcpRoute(NoAwaitTag, google::cloud::networkservices::v1::CreateTcpRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTcpRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateTcpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3026,8 +3202,8 @@ class NetworkServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
-  CreateTcpRoute(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> CreateTcpRoute(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3063,8 +3239,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.UpdateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L248}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
-  UpdateTcpRoute(google::cloud::networkservices::v1::TcpRoute const& tcp_route, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> UpdateTcpRoute(
+      google::cloud::networkservices::v1::TcpRoute const& tcp_route,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3077,8 +3254,9 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateTcpRoute(NoAwaitTag, google::cloud::networkservices::v1::TcpRoute const& tcp_route, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateTcpRoute(
+      NoAwaitTag, google::cloud::networkservices::v1::TcpRoute const& tcp_route,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3114,8 +3292,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.UpdateTcpRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tcp_route.proto#L248}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
-  UpdateTcpRoute(google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> UpdateTcpRoute(
+      google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3128,8 +3307,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateTcpRoute(NoAwaitTag, google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateTcpRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3140,8 +3321,8 @@ class NetworkServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
-  UpdateTcpRoute(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> UpdateTcpRoute(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3187,8 +3368,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTcpRoute(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTcpRoute(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3225,7 +3406,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteTcpRoute(google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request, Options opts = {});
+  DeleteTcpRoute(
+      google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3238,8 +3421,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTcpRoute(NoAwaitTag, google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTcpRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3251,7 +3436,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteTcpRoute(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteTcpRoute(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -3285,8 +3471,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::TlsRoute>
-  ListTlsRoutes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::TlsRoute> ListTlsRoutes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3324,8 +3510,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::TlsRoute>
-  ListTlsRoutes(google::cloud::networkservices::v1::ListTlsRoutesRequest request, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::TlsRoute> ListTlsRoutes(
+      google::cloud::networkservices::v1::ListTlsRoutesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3350,8 +3537,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::TlsRoute>
-  GetTlsRoute(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::TlsRoute> GetTlsRoute(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3380,8 +3567,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::TlsRoute>
-  GetTlsRoute(google::cloud::networkservices::v1::GetTlsRouteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::TlsRoute> GetTlsRoute(
+      google::cloud::networkservices::v1::GetTlsRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3415,8 +3603,10 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
-  CreateTlsRoute(std::string const& parent, google::cloud::networkservices::v1::TlsRoute const& tls_route, std::string const& tls_route_id, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> CreateTlsRoute(
+      std::string const& parent,
+      google::cloud::networkservices::v1::TlsRoute const& tls_route,
+      std::string const& tls_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3429,8 +3619,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTlsRoute(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::TlsRoute const& tls_route, std::string const& tls_route_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTlsRoute(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::TlsRoute const& tls_route,
+      std::string const& tls_route_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3466,8 +3658,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.TlsRoute]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
-  CreateTlsRoute(google::cloud::networkservices::v1::CreateTlsRouteRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> CreateTlsRoute(
+      google::cloud::networkservices::v1::CreateTlsRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3480,8 +3673,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTlsRoute(NoAwaitTag, google::cloud::networkservices::v1::CreateTlsRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTlsRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateTlsRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3492,8 +3687,8 @@ class NetworkServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
-  CreateTlsRoute(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> CreateTlsRoute(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3529,8 +3724,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L233}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
-  UpdateTlsRoute(google::cloud::networkservices::v1::TlsRoute const& tls_route, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
+      google::cloud::networkservices::v1::TlsRoute const& tls_route,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3543,8 +3739,9 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateTlsRoute(NoAwaitTag, google::cloud::networkservices::v1::TlsRoute const& tls_route, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateTlsRoute(
+      NoAwaitTag, google::cloud::networkservices::v1::TlsRoute const& tls_route,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3580,8 +3777,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.UpdateTlsRouteRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/tls_route.proto#L233}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
-  UpdateTlsRoute(google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
+      google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3594,8 +3792,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateTlsRoute(NoAwaitTag, google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateTlsRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3606,8 +3806,8 @@ class NetworkServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
-  UpdateTlsRoute(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3653,8 +3853,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTlsRoute(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTlsRoute(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3691,7 +3891,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteTlsRoute(google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request, Options opts = {});
+  DeleteTlsRoute(
+      google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3704,8 +3906,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTlsRoute(NoAwaitTag, google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTlsRoute(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3717,7 +3921,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteTlsRoute(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteTlsRoute(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -3791,7 +3996,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::ServiceBinding>
-  ListServiceBindings(google::cloud::networkservices::v1::ListServiceBindingsRequest request, Options opts = {});
+  ListServiceBindings(
+      google::cloud::networkservices::v1::ListServiceBindingsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3847,7 +4054,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::ServiceBinding>
-  GetServiceBinding(google::cloud::networkservices::v1::GetServiceBindingRequest const& request, Options opts = {});
+  GetServiceBinding(
+      google::cloud::networkservices::v1::GetServiceBindingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3882,7 +4092,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
-  CreateServiceBinding(std::string const& parent, google::cloud::networkservices::v1::ServiceBinding const& service_binding, std::string const& service_binding_id, Options opts = {});
+  CreateServiceBinding(
+      std::string const& parent,
+      google::cloud::networkservices::v1::ServiceBinding const& service_binding,
+      std::string const& service_binding_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3895,8 +4108,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateServiceBinding(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::ServiceBinding const& service_binding, std::string const& service_binding_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateServiceBinding(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::ServiceBinding const& service_binding,
+      std::string const& service_binding_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3933,7 +4148,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
-  CreateServiceBinding(google::cloud::networkservices::v1::CreateServiceBindingRequest const& request, Options opts = {});
+  CreateServiceBinding(
+      google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3946,8 +4164,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateServiceBinding(NoAwaitTag, google::cloud::networkservices::v1::CreateServiceBindingRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateServiceBinding(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3959,7 +4180,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
-  CreateServiceBinding(google::longrunning::Operation const& operation, Options opts = {});
+  CreateServiceBinding(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -3996,7 +4218,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
-  UpdateServiceBinding(google::cloud::networkservices::v1::ServiceBinding const& service_binding, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateServiceBinding(
+      google::cloud::networkservices::v1::ServiceBinding const& service_binding,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4009,8 +4233,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateServiceBinding(NoAwaitTag, google::cloud::networkservices::v1::ServiceBinding const& service_binding, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateServiceBinding(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::ServiceBinding const& service_binding,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4047,7 +4273,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
-  UpdateServiceBinding(google::cloud::networkservices::v1::UpdateServiceBindingRequest const& request, Options opts = {});
+  UpdateServiceBinding(
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4060,8 +4289,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateServiceBinding(NoAwaitTag, google::cloud::networkservices::v1::UpdateServiceBindingRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateServiceBinding(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateServiceBindingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4073,7 +4305,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
-  UpdateServiceBinding(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateServiceBinding(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -4119,8 +4352,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteServiceBinding(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteServiceBinding(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4157,7 +4390,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteServiceBinding(google::cloud::networkservices::v1::DeleteServiceBindingRequest const& request, Options opts = {});
+  DeleteServiceBinding(
+      google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4170,8 +4406,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteServiceBinding(NoAwaitTag, google::cloud::networkservices::v1::DeleteServiceBindingRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteServiceBinding(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4183,7 +4422,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteServiceBinding(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteServiceBinding(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -4217,8 +4457,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::Mesh>
-  ListMeshes(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::Mesh> ListMeshes(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -4256,8 +4496,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkservices::v1::Mesh>
-  ListMeshes(google::cloud::networkservices::v1::ListMeshesRequest request, Options opts = {});
+  StreamRange<google::cloud::networkservices::v1::Mesh> ListMeshes(
+      google::cloud::networkservices::v1::ListMeshesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4282,8 +4523,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::Mesh>
-  GetMesh(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::Mesh> GetMesh(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4312,8 +4553,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::Mesh>
-  GetMesh(google::cloud::networkservices::v1::GetMeshRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::Mesh> GetMesh(
+      google::cloud::networkservices::v1::GetMeshRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4347,8 +4589,10 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Mesh>>
-  CreateMesh(std::string const& parent, google::cloud::networkservices::v1::Mesh const& mesh, std::string const& mesh_id, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Mesh>> CreateMesh(
+      std::string const& parent,
+      google::cloud::networkservices::v1::Mesh const& mesh,
+      std::string const& mesh_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4361,8 +4605,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMesh(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::Mesh const& mesh, std::string const& mesh_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMesh(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::Mesh const& mesh,
+      std::string const& mesh_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4398,8 +4644,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.Mesh]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L40}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Mesh>>
-  CreateMesh(google::cloud::networkservices::v1::CreateMeshRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Mesh>> CreateMesh(
+      google::cloud::networkservices::v1::CreateMeshRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4412,8 +4659,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateMesh(NoAwaitTag, google::cloud::networkservices::v1::CreateMeshRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateMesh(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateMeshRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4424,8 +4673,8 @@ class NetworkServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Mesh>>
-  CreateMesh(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Mesh>> CreateMesh(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4461,8 +4710,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L155}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Mesh>>
-  UpdateMesh(google::cloud::networkservices::v1::Mesh const& mesh, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
+      google::cloud::networkservices::v1::Mesh const& mesh,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4475,8 +4725,9 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateMesh(NoAwaitTag, google::cloud::networkservices::v1::Mesh const& mesh, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateMesh(
+      NoAwaitTag, google::cloud::networkservices::v1::Mesh const& mesh,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4512,8 +4763,9 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.UpdateMeshRequest]: @googleapis_reference_link{google/cloud/networkservices/v1/mesh.proto#L155}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Mesh>>
-  UpdateMesh(google::cloud::networkservices::v1::UpdateMeshRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
+      google::cloud::networkservices::v1::UpdateMeshRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4526,8 +4778,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateMesh(NoAwaitTag, google::cloud::networkservices::v1::UpdateMeshRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateMesh(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateMeshRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4538,8 +4792,8 @@ class NetworkServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkservices::v1::Mesh>>
-  UpdateMesh(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4585,8 +4839,9 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteMesh(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteMesh(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -4623,7 +4878,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteMesh(google::cloud::networkservices::v1::DeleteMeshRequest const& request, Options opts = {});
+  DeleteMesh(
+      google::cloud::networkservices::v1::DeleteMeshRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4636,8 +4893,10 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteMesh(NoAwaitTag, google::cloud::networkservices::v1::DeleteMeshRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteMesh(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteMeshRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4649,7 +4908,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteMesh(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteMesh(google::longrunning::Operation const& operation,
+             Options opts = {});
 
   // clang-format off
   ///
@@ -4724,7 +4984,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::ServiceLbPolicy>
-  ListServiceLbPolicies(google::cloud::networkservices::v1::ListServiceLbPoliciesRequest request, Options opts = {});
+  ListServiceLbPolicies(
+      google::cloud::networkservices::v1::ListServiceLbPoliciesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4780,7 +5042,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>
-  GetServiceLbPolicy(google::cloud::networkservices::v1::GetServiceLbPolicyRequest const& request, Options opts = {});
+  GetServiceLbPolicy(
+      google::cloud::networkservices::v1::GetServiceLbPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4818,7 +5083,11 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
-  CreateServiceLbPolicy(std::string const& parent, google::cloud::networkservices::v1::ServiceLbPolicy const& service_lb_policy, std::string const& service_lb_policy_id, Options opts = {});
+  CreateServiceLbPolicy(
+      std::string const& parent,
+      google::cloud::networkservices::v1::ServiceLbPolicy const&
+          service_lb_policy,
+      std::string const& service_lb_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4831,8 +5100,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateServiceLbPolicy(NoAwaitTag, std::string const& parent, google::cloud::networkservices::v1::ServiceLbPolicy const& service_lb_policy, std::string const& service_lb_policy_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateServiceLbPolicy(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::ServiceLbPolicy const&
+          service_lb_policy,
+      std::string const& service_lb_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -4869,7 +5141,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
-  CreateServiceLbPolicy(google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const& request, Options opts = {});
+  CreateServiceLbPolicy(
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4882,8 +5157,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateServiceLbPolicy(NoAwaitTag, google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::CreateServiceLbPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4895,7 +5173,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
-  CreateServiceLbPolicy(google::longrunning::Operation const& operation, Options opts = {});
+  CreateServiceLbPolicy(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -4932,7 +5211,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
-  UpdateServiceLbPolicy(google::cloud::networkservices::v1::ServiceLbPolicy const& service_lb_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateServiceLbPolicy(
+      google::cloud::networkservices::v1::ServiceLbPolicy const&
+          service_lb_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4945,8 +5227,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateServiceLbPolicy(NoAwaitTag, google::cloud::networkservices::v1::ServiceLbPolicy const& service_lb_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::ServiceLbPolicy const&
+          service_lb_policy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -4983,7 +5268,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
-  UpdateServiceLbPolicy(google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const& request, Options opts = {});
+  UpdateServiceLbPolicy(
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4996,8 +5284,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateServiceLbPolicy(NoAwaitTag, google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateServiceLbPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5009,7 +5300,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceLbPolicy>>
-  UpdateServiceLbPolicy(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateServiceLbPolicy(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -5055,8 +5347,8 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteServiceLbPolicy(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteServiceLbPolicy(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -5093,7 +5385,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteServiceLbPolicy(google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const& request, Options opts = {});
+  DeleteServiceLbPolicy(
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5106,8 +5401,11 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteServiceLbPolicy(NoAwaitTag, google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteServiceLbPolicy(
+      NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteServiceLbPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5119,7 +5417,8 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteServiceLbPolicy(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteServiceLbPolicy(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -5176,7 +5475,10 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::networkservices::v1::GatewayRouteView>
-  GetGatewayRouteView(google::cloud::networkservices::v1::GetGatewayRouteViewRequest const& request, Options opts = {});
+  GetGatewayRouteView(
+      google::cloud::networkservices::v1::GetGatewayRouteViewRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5202,8 +5504,8 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.MeshRouteView]: @googleapis_reference_link{google/cloud/networkservices/v1/route_view.proto#L61}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::MeshRouteView>
-  GetMeshRouteView(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::MeshRouteView> GetMeshRouteView(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -5232,8 +5534,10 @@ class NetworkServicesClient {
   /// [google.cloud.networkservices.v1.MeshRouteView]: @googleapis_reference_link{google/cloud/networkservices/v1/route_view.proto#L61}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkservices::v1::MeshRouteView>
-  GetMeshRouteView(google::cloud::networkservices::v1::GetMeshRouteViewRequest const& request, Options opts = {});
+  StatusOr<google::cloud::networkservices::v1::MeshRouteView> GetMeshRouteView(
+      google::cloud::networkservices::v1::GetMeshRouteViewRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5308,7 +5612,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::GatewayRouteView>
-  ListGatewayRouteViews(google::cloud::networkservices::v1::ListGatewayRouteViewsRequest request, Options opts = {});
+  ListGatewayRouteViews(
+      google::cloud::networkservices::v1::ListGatewayRouteViewsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5383,7 +5689,9 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkservices::v1::MeshRouteView>
-  ListMeshRouteViews(google::cloud::networkservices::v1::ListMeshRouteViewsRequest request, Options opts = {});
+  ListMeshRouteViews(
+      google::cloud::networkservices::v1::ListMeshRouteViewsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5421,8 +5729,8 @@ class NetworkServicesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -5451,8 +5759,9 @@ class NetworkServicesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5484,8 +5793,8 @@ class NetworkServicesClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5516,8 +5825,8 @@ class NetworkServicesClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -5552,8 +5861,9 @@ class NetworkServicesClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5588,8 +5898,8 @@ class NetworkServicesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -5628,8 +5938,8 @@ class NetworkServicesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -5655,8 +5965,8 @@ class NetworkServicesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -5687,8 +5997,9 @@ class NetworkServicesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5712,8 +6023,7 @@ class NetworkServicesClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -5742,8 +6052,9 @@ class NetworkServicesClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5777,8 +6088,7 @@ class NetworkServicesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -5817,8 +6127,9 @@ class NetworkServicesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<NetworkServicesConnection> connection_;

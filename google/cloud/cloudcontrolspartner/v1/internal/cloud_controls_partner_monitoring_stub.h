@@ -35,35 +35,44 @@ class CloudControlsPartnerMonitoringStub {
  public:
   virtual ~CloudControlsPartnerMonitoringStub() = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse> ListViolations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
+  ListViolations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
+  GetViolation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
+          request) = 0;
 };
 
-class DefaultCloudControlsPartnerMonitoringStub : public CloudControlsPartnerMonitoringStub {
+class DefaultCloudControlsPartnerMonitoringStub
+    : public CloudControlsPartnerMonitoringStub {
  public:
   explicit DefaultCloudControlsPartnerMonitoringStub(
-      std::unique_ptr<google::cloud::cloudcontrolspartner::v1::CloudControlsPartnerMonitoring::StubInterface> grpc_stub)
+      std::unique_ptr<google::cloud::cloudcontrolspartner::v1::
+                          CloudControlsPartnerMonitoring::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse> ListViolations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::ListViolationsResponse>
+  ListViolations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Violation> GetViolation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<google::cloud::cloudcontrolspartner::v1::CloudControlsPartnerMonitoring::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::cloudcontrolspartner::v1::
+                      CloudControlsPartnerMonitoring::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

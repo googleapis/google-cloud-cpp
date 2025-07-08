@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/profiler/v2/internal/profiler_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -40,23 +40,22 @@ class ProfilerServiceMetadata : public ProfilerServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
+          request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
+      override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

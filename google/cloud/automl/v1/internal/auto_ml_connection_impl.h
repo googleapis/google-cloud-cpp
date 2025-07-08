@@ -40,143 +40,134 @@ namespace cloud {
 namespace automl_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AutoMlConnectionImpl
-    : public automl_v1::AutoMlConnection {
+class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
  public:
   ~AutoMlConnectionImpl() override = default;
 
   AutoMlConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<automl_v1_internal::AutoMlStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<automl_v1_internal::AutoMlStub> stub, Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::cloud::automl::v1::Dataset>>
-  CreateDataset(google::cloud::automl::v1::CreateDatasetRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::Dataset>>
-  CreateDataset(
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag,
+      google::cloud::automl::v1::CreateDatasetRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::automl::v1::Dataset>
-  GetDataset(google::cloud::automl::v1::GetDatasetRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
+      google::cloud::automl::v1::GetDatasetRequest const& request) override;
 
-  StreamRange<google::cloud::automl::v1::Dataset>
-  ListDatasets(google::cloud::automl::v1::ListDatasetsRequest request) override;
+  StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
+      google::cloud::automl::v1::ListDatasetsRequest request) override;
 
-  StatusOr<google::cloud::automl::v1::Dataset>
-  UpdateDataset(google::cloud::automl::v1::UpdateDatasetRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
+      google::cloud::automl::v1::UpdateDatasetRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteDataset(google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteDataset(
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag,
+      google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ImportData(google::cloud::automl::v1::ImportDataRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       google::cloud::automl::v1::ImportDataRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ImportData(
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag,
+      google::cloud::automl::v1::ImportDataRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportData(google::cloud::automl::v1::ExportDataRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       google::cloud::automl::v1::ExportDataRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportData(
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag,
+      google::cloud::automl::v1::ExportDataRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::automl::v1::AnnotationSpec>
-  GetAnnotationSpec(google::cloud::automl::v1::GetAnnotationSpecRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
+      google::cloud::automl::v1::GetAnnotationSpecRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::automl::v1::Model>>
-  CreateModel(google::cloud::automl::v1::CreateModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateModel(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       google::cloud::automl::v1::CreateModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::Model>>
-  CreateModel(
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag,
+      google::cloud::automl::v1::CreateModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::automl::v1::Model>
-  GetModel(google::cloud::automl::v1::GetModelRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::Model> GetModel(
+      google::cloud::automl::v1::GetModelRequest const& request) override;
 
-  StreamRange<google::cloud::automl::v1::Model>
-  ListModels(google::cloud::automl::v1::ListModelsRequest request) override;
+  StreamRange<google::cloud::automl::v1::Model> ListModels(
+      google::cloud::automl::v1::ListModelsRequest request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteModel(google::cloud::automl::v1::DeleteModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteModel(
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag,
+      google::cloud::automl::v1::DeleteModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::automl::v1::Model>
-  UpdateModel(google::cloud::automl::v1::UpdateModelRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::Model> UpdateModel(
+      google::cloud::automl::v1::UpdateModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeployModel(google::cloud::automl::v1::DeployModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeployModel(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       google::cloud::automl::v1::DeployModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeployModel(
+  StatusOr<google::longrunning::Operation> DeployModel(
+      NoAwaitTag,
+      google::cloud::automl::v1::DeployModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  UndeployModel(google::cloud::automl::v1::UndeployModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UndeployModel(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       google::cloud::automl::v1::UndeployModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  UndeployModel(
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      NoAwaitTag,
+      google::cloud::automl::v1::UndeployModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportModel(google::cloud::automl::v1::ExportModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ExportModel(NoAwaitTag,
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       google::cloud::automl::v1::ExportModelRequest const& request) override;
 
-  future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportModel(
+  StatusOr<google::longrunning::Operation> ExportModel(
+      NoAwaitTag,
+      google::cloud::automl::v1::ExportModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::automl::v1::ModelEvaluation>
-  GetModelEvaluation(google::cloud::automl::v1::GetModelEvaluationRequest const& request) override;
+  StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
+      google::cloud::automl::v1::GetModelEvaluationRequest const& request)
+      override;
 
-  StreamRange<google::cloud::automl::v1::ModelEvaluation>
-  ListModelEvaluations(google::cloud::automl::v1::ListModelEvaluationsRequest request) override;
+  StreamRange<google::cloud::automl::v1::ModelEvaluation> ListModelEvaluations(
+      google::cloud::automl::v1::ListModelEvaluationsRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

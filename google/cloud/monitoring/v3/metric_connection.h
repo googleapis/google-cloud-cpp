@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_METRIC_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_METRIC_CONNECTION_H
 
+#include "google/cloud/monitoring/v3/internal/metric_retry_traits.h"
+#include "google/cloud/monitoring/v3/metric_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
-#include "google/cloud/monitoring/v3/internal/metric_retry_traits.h"
-#include "google/cloud/monitoring/v3/metric_connection_idempotency_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -53,7 +53,8 @@ class MetricServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class MetricServiceLimitedErrorCountRetryPolicy : public MetricServiceRetryPolicy {
+class MetricServiceLimitedErrorCountRetryPolicy
+    : public MetricServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,14 @@ class MetricServiceLimitedErrorCountRetryPolicy : public MetricServiceRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit MetricServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   MetricServiceLimitedErrorCountRetryPolicy(
       MetricServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : MetricServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MetricServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   MetricServiceLimitedErrorCountRetryPolicy(
       MetricServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : MetricServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : MetricServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +91,9 @@ class MetricServiceLimitedErrorCountRetryPolicy : public MetricServiceRetryPolic
   using BaseType = MetricServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<monitoring_v3_internal::MetricServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      monitoring_v3_internal::MetricServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +131,14 @@ class MetricServiceLimitedTimeRetryPolicy : public MetricServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit MetricServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  MetricServiceLimitedTimeRetryPolicy(MetricServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : MetricServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  MetricServiceLimitedTimeRetryPolicy(MetricServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : MetricServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetricServiceLimitedTimeRetryPolicy(
+      MetricServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : MetricServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  MetricServiceLimitedTimeRetryPolicy(
+      MetricServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : MetricServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,7 +160,9 @@ class MetricServiceLimitedTimeRetryPolicy : public MetricServiceRetryPolicy {
   using BaseType = MetricServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<monitoring_v3_internal::MetricServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      monitoring_v3_internal::MetricServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -177,34 +184,37 @@ class MetricServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request);
+  ListMonitoredResourceDescriptors(
+      google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request);
 
   virtual StatusOr<google::api::MonitoredResourceDescriptor>
-  GetMonitoredResourceDescriptor(google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request);
+  GetMonitoredResourceDescriptor(
+      google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
+          request);
 
-  virtual StreamRange<google::api::MetricDescriptor>
-  ListMetricDescriptors(google::monitoring::v3::ListMetricDescriptorsRequest request);
+  virtual StreamRange<google::api::MetricDescriptor> ListMetricDescriptors(
+      google::monitoring::v3::ListMetricDescriptorsRequest request);
 
-  virtual StatusOr<google::api::MetricDescriptor>
-  GetMetricDescriptor(google::monitoring::v3::GetMetricDescriptorRequest const& request);
+  virtual StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
+      google::monitoring::v3::GetMetricDescriptorRequest const& request);
 
-  virtual StatusOr<google::api::MetricDescriptor>
-  CreateMetricDescriptor(google::monitoring::v3::CreateMetricDescriptorRequest const& request);
+  virtual StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
+      google::monitoring::v3::CreateMetricDescriptorRequest const& request);
 
-  virtual Status
-  DeleteMetricDescriptor(google::monitoring::v3::DeleteMetricDescriptorRequest const& request);
+  virtual Status DeleteMetricDescriptor(
+      google::monitoring::v3::DeleteMetricDescriptorRequest const& request);
 
-  virtual StreamRange<google::monitoring::v3::TimeSeries>
-  ListTimeSeries(google::monitoring::v3::ListTimeSeriesRequest request);
+  virtual StreamRange<google::monitoring::v3::TimeSeries> ListTimeSeries(
+      google::monitoring::v3::ListTimeSeriesRequest request);
 
-  virtual Status
-  CreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request);
+  virtual Status CreateTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request);
 
-  virtual Status
-  CreateServiceTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request);
+  virtual Status CreateServiceTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request);
 
-  virtual future<Status>
-  AsyncCreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request);
+  virtual future<Status> AsyncCreateTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request);
 };
 
 /**

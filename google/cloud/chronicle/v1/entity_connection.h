@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_ENTITY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHRONICLE_V1_ENTITY_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/chronicle/v1/entity_connection_idempotency_policy.h"
 #include "google/cloud/chronicle/v1/internal/entity_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class EntityServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EntityServiceLimitedErrorCountRetryPolicy : public EntityServiceRetryPolicy {
+class EntityServiceLimitedErrorCountRetryPolicy
+    : public EntityServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class EntityServiceLimitedErrorCountRetryPolicy : public EntityServiceRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit EntityServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   EntityServiceLimitedErrorCountRetryPolicy(
       EntityServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EntityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EntityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EntityServiceLimitedErrorCountRetryPolicy(
       EntityServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EntityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EntityServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class EntityServiceLimitedErrorCountRetryPolicy : public EntityServiceRetryPolic
   using BaseType = EntityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<chronicle_v1_internal::EntityServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      chronicle_v1_internal::EntityServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class EntityServiceLimitedTimeRetryPolicy : public EntityServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EntityServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EntityServiceLimitedTimeRetryPolicy(EntityServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : EntityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EntityServiceLimitedTimeRetryPolicy(EntityServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : EntityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EntityServiceLimitedTimeRetryPolicy(
+      EntityServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : EntityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EntityServiceLimitedTimeRetryPolicy(
+      EntityServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : EntityServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class EntityServiceLimitedTimeRetryPolicy : public EntityServiceRetryPolicy {
   using BaseType = EntityServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<chronicle_v1_internal::EntityServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      chronicle_v1_internal::EntityServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,32 +182,32 @@ class EntityServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::chronicle::v1::Watchlist>
-  GetWatchlist(google::cloud::chronicle::v1::GetWatchlistRequest const& request);
+  virtual StatusOr<google::cloud::chronicle::v1::Watchlist> GetWatchlist(
+      google::cloud::chronicle::v1::GetWatchlistRequest const& request);
 
-  virtual StreamRange<google::cloud::chronicle::v1::Watchlist>
-  ListWatchlists(google::cloud::chronicle::v1::ListWatchlistsRequest request);
+  virtual StreamRange<google::cloud::chronicle::v1::Watchlist> ListWatchlists(
+      google::cloud::chronicle::v1::ListWatchlistsRequest request);
 
-  virtual StatusOr<google::cloud::chronicle::v1::Watchlist>
-  CreateWatchlist(google::cloud::chronicle::v1::CreateWatchlistRequest const& request);
+  virtual StatusOr<google::cloud::chronicle::v1::Watchlist> CreateWatchlist(
+      google::cloud::chronicle::v1::CreateWatchlistRequest const& request);
 
-  virtual StatusOr<google::cloud::chronicle::v1::Watchlist>
-  UpdateWatchlist(google::cloud::chronicle::v1::UpdateWatchlistRequest const& request);
+  virtual StatusOr<google::cloud::chronicle::v1::Watchlist> UpdateWatchlist(
+      google::cloud::chronicle::v1::UpdateWatchlistRequest const& request);
 
-  virtual Status
-  DeleteWatchlist(google::cloud::chronicle::v1::DeleteWatchlistRequest const& request);
+  virtual Status DeleteWatchlist(
+      google::cloud::chronicle::v1::DeleteWatchlistRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

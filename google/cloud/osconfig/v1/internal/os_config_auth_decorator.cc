@@ -31,72 +31,73 @@ OsConfigServiceAuth::OsConfigServiceAuth(
     std::shared_ptr<OsConfigServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::osconfig::v1::PatchJob> OsConfigServiceAuth::ExecutePatchJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchJob>
+OsConfigServiceAuth::ExecutePatchJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExecutePatchJob(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchJob> OsConfigServiceAuth::GetPatchJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchJob>
+OsConfigServiceAuth::GetPatchJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPatchJob(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchJob> OsConfigServiceAuth::CancelPatchJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchJob>
+OsConfigServiceAuth::CancelPatchJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CancelPatchJob(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse> OsConfigServiceAuth::ListPatchJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>
+OsConfigServiceAuth::ListPatchJobs(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPatchJobs(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse> OsConfigServiceAuth::ListPatchJobInstanceDetails(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const& request) {
+StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>
+OsConfigServiceAuth::ListPatchJobInstanceDetails(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPatchJobInstanceDetails(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceAuth::CreatePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceAuth::CreatePatchDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreatePatchDeployment(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceAuth::GetPatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceAuth::GetPatchDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPatchDeployment(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse> OsConfigServiceAuth::ListPatchDeployments(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse>
+OsConfigServiceAuth::ListPatchDeployments(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,35 +105,34 @@ StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse> OsConfigServ
 }
 
 Status OsConfigServiceAuth::DeletePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePatchDeployment(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceAuth::UpdatePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceAuth::UpdatePatchDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdatePatchDeployment(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceAuth::PausePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceAuth::PausePatchDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PausePatchDeployment(context, options, request);
 }
 
-StatusOr<google::cloud::osconfig::v1::PatchDeployment> OsConfigServiceAuth::ResumePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceAuth::ResumePatchDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

@@ -35,28 +35,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options CloudDeployDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_DEPLOY_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CLOUD_DEPLOY_AUTHORITY",
-      "clouddeploy.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_DEPLOY_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_DEPLOY_AUTHORITY", "clouddeploy.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<deploy_v1::CloudDeployRetryPolicyOption>()) {
     options.set<deploy_v1::CloudDeployRetryPolicyOption>(
-        deploy_v1::CloudDeployLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+        deploy_v1::CloudDeployLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<deploy_v1::CloudDeployBackoffPolicyOption>()) {
     options.set<deploy_v1::CloudDeployBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<deploy_v1::CloudDeployPollingPolicyOption>()) {
     options.set<deploy_v1::CloudDeployPollingPolicyOption>(
-        GenericPollingPolicy<
-            deploy_v1::CloudDeployRetryPolicyOption::Type,
-            deploy_v1::CloudDeployBackoffPolicyOption::Type>(
+        GenericPollingPolicy<deploy_v1::CloudDeployRetryPolicyOption::Type,
+                             deploy_v1::CloudDeployBackoffPolicyOption::Type>(
             options.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
   if (!options.has<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()) {
     options.set<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>(

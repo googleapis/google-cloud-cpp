@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_PROFILER_TRACING_STUB_H
 
+#include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,26 +36,28 @@ class ProfilerServiceTracingStub : public ProfilerServiceStub {
  public:
   ~ProfilerServiceTracingStub() override = default;
 
-  explicit ProfilerServiceTracingStub(std::shared_ptr<ProfilerServiceStub> child);
+  explicit ProfilerServiceTracingStub(
+      std::shared_ptr<ProfilerServiceStub> child);
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
+      override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
+          request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
+      override;
 
  private:
   std::shared_ptr<ProfilerServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -29,94 +29,124 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-AutoscalingPolicyServiceTracingConnection::AutoscalingPolicyServiceTracingConnection(
-    std::shared_ptr<dataproc_v1::AutoscalingPolicyServiceConnection> child)
+AutoscalingPolicyServiceTracingConnection::
+    AutoscalingPolicyServiceTracingConnection(
+        std::shared_ptr<dataproc_v1::AutoscalingPolicyServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceTracingConnection::CreateAutoscalingPolicy(google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::CreateAutoscalingPolicy");
+AutoscalingPolicyServiceTracingConnection::CreateAutoscalingPolicy(
+    google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::"
+      "CreateAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateAutoscalingPolicy(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceTracingConnection::UpdateAutoscalingPolicy(google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::UpdateAutoscalingPolicy");
+AutoscalingPolicyServiceTracingConnection::UpdateAutoscalingPolicy(
+    google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::"
+      "UpdateAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateAutoscalingPolicy(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceTracingConnection::GetAutoscalingPolicy(google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::GetAutoscalingPolicy");
+AutoscalingPolicyServiceTracingConnection::GetAutoscalingPolicy(
+    google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::GetAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAutoscalingPolicy(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
-AutoscalingPolicyServiceTracingConnection::ListAutoscalingPolicies(google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::ListAutoscalingPolicies");
+AutoscalingPolicyServiceTracingConnection::ListAutoscalingPolicies(
+    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::"
+      "ListAutoscalingPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListAutoscalingPolicies(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataproc::v1::AutoscalingPolicy>(std::move(span),
+                                                      std::move(sr));
 }
 
-Status
-AutoscalingPolicyServiceTracingConnection::DeleteAutoscalingPolicy(google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::DeleteAutoscalingPolicy");
+Status AutoscalingPolicyServiceTracingConnection::DeleteAutoscalingPolicy(
+    google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::"
+      "DeleteAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteAutoscalingPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-AutoscalingPolicyServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::SetIamPolicy");
+AutoscalingPolicyServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-AutoscalingPolicyServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::GetIamPolicy");
+AutoscalingPolicyServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AutoscalingPolicyServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::TestIamPermissions");
+AutoscalingPolicyServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-AutoscalingPolicyServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::ListOperations");
+AutoscalingPolicyServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-AutoscalingPolicyServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::GetOperation");
+AutoscalingPolicyServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-AutoscalingPolicyServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::DeleteOperation");
+Status AutoscalingPolicyServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-AutoscalingPolicyServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("dataproc_v1::AutoscalingPolicyServiceConnection::CancelOperation");
+Status AutoscalingPolicyServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::AutoscalingPolicyServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }
@@ -128,7 +158,8 @@ MakeAutoscalingPolicyServiceTracingConnection(
     std::shared_ptr<dataproc_v1::AutoscalingPolicyServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<AutoscalingPolicyServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<AutoscalingPolicyServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

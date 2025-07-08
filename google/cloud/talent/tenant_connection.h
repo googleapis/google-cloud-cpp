@@ -33,7 +33,8 @@ using ::google::cloud::talent_v4::MakeTenantServiceConnection;
 /// @deprecated Use talent_v4::TenantServiceConnection directly.
 using ::google::cloud::talent_v4::TenantServiceConnection;
 
-/// @deprecated Use talent_v4::TenantServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use talent_v4::TenantServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::talent_v4::TenantServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use talent_v4::TenantServiceLimitedTimeRetryPolicy directly.

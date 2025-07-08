@@ -34,38 +34,48 @@ class ResourcePoliciesConnectionIdempotencyPolicy {
   virtual ~ResourcePoliciesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ResourcePoliciesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ResourcePoliciesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::AggregatedListResourcePoliciesRequest request);
+  virtual google::cloud::Idempotency AggregatedListResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          AggregatedListResourcePoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest const& request);
+  virtual google::cloud::Idempotency DeleteResourcePolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          DeleteResourcePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::GetResourcePolicyRequest const& request);
+  virtual google::cloud::Idempotency GetResourcePolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          GetResourcePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest const& request);
+  virtual google::cloud::Idempotency InsertResourcePolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          InsertResourcePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::ListResourcePoliciesRequest request);
+  virtual google::cloud::Idempotency ListResourcePolicies(
+      google::cloud::cpp::compute::resource_policies::v1::
+          ListResourcePoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest const& request);
+  virtual google::cloud::Idempotency PatchResourcePolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::resource_policies::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::resource_policies::v1::
+          SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::resource_policies::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::resource_policies::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<ResourcePoliciesConnectionIdempotencyPolicy>
-    MakeDefaultResourcePoliciesConnectionIdempotencyPolicy();
+MakeDefaultResourcePoliciesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_resource_policies_v1

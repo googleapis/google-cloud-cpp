@@ -39,117 +39,123 @@ class AppHubConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AppHubConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  LookupServiceProjectAttachment(google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request);
+  virtual google::cloud::Idempotency LookupServiceProjectAttachment(
+      google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListServiceProjectAttachments(google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request);
+  virtual google::cloud::Idempotency ListServiceProjectAttachments(
+      google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateServiceProjectAttachment(google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request);
+  virtual google::cloud::Idempotency CreateServiceProjectAttachment(
+      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetServiceProjectAttachment(google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request);
+  virtual google::cloud::Idempotency GetServiceProjectAttachment(
+      google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteServiceProjectAttachment(google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request);
+  virtual google::cloud::Idempotency DeleteServiceProjectAttachment(
+      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DetachServiceProjectAttachment(google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request);
+  virtual google::cloud::Idempotency DetachServiceProjectAttachment(
+      google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDiscoveredServices(google::cloud::apphub::v1::ListDiscoveredServicesRequest request);
+  virtual google::cloud::Idempotency ListDiscoveredServices(
+      google::cloud::apphub::v1::ListDiscoveredServicesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDiscoveredService(google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request);
+  virtual google::cloud::Idempotency GetDiscoveredService(
+      google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LookupDiscoveredService(google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request);
+  virtual google::cloud::Idempotency LookupDiscoveredService(
+      google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListServices(google::cloud::apphub::v1::ListServicesRequest request);
+  virtual google::cloud::Idempotency ListServices(
+      google::cloud::apphub::v1::ListServicesRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateService(google::cloud::apphub::v1::CreateServiceRequest const& request);
+  virtual google::cloud::Idempotency CreateService(
+      google::cloud::apphub::v1::CreateServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetService(google::cloud::apphub::v1::GetServiceRequest const& request);
+  virtual google::cloud::Idempotency GetService(
+      google::cloud::apphub::v1::GetServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateService(google::cloud::apphub::v1::UpdateServiceRequest const& request);
+  virtual google::cloud::Idempotency UpdateService(
+      google::cloud::apphub::v1::UpdateServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteService(google::cloud::apphub::v1::DeleteServiceRequest const& request);
+  virtual google::cloud::Idempotency DeleteService(
+      google::cloud::apphub::v1::DeleteServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListDiscoveredWorkloads(google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request);
+  virtual google::cloud::Idempotency ListDiscoveredWorkloads(
+      google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDiscoveredWorkload(google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request);
+  virtual google::cloud::Idempotency GetDiscoveredWorkload(
+      google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request);
 
-  virtual google::cloud::Idempotency
-  LookupDiscoveredWorkload(google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request);
+  virtual google::cloud::Idempotency LookupDiscoveredWorkload(
+      google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListWorkloads(google::cloud::apphub::v1::ListWorkloadsRequest request);
+  virtual google::cloud::Idempotency ListWorkloads(
+      google::cloud::apphub::v1::ListWorkloadsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateWorkload(google::cloud::apphub::v1::CreateWorkloadRequest const& request);
+  virtual google::cloud::Idempotency CreateWorkload(
+      google::cloud::apphub::v1::CreateWorkloadRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetWorkload(google::cloud::apphub::v1::GetWorkloadRequest const& request);
+  virtual google::cloud::Idempotency GetWorkload(
+      google::cloud::apphub::v1::GetWorkloadRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateWorkload(google::cloud::apphub::v1::UpdateWorkloadRequest const& request);
+  virtual google::cloud::Idempotency UpdateWorkload(
+      google::cloud::apphub::v1::UpdateWorkloadRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteWorkload(google::cloud::apphub::v1::DeleteWorkloadRequest const& request);
+  virtual google::cloud::Idempotency DeleteWorkload(
+      google::cloud::apphub::v1::DeleteWorkloadRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListApplications(google::cloud::apphub::v1::ListApplicationsRequest request);
+  virtual google::cloud::Idempotency ListApplications(
+      google::cloud::apphub::v1::ListApplicationsRequest request);
 
-  virtual google::cloud::Idempotency
-  CreateApplication(google::cloud::apphub::v1::CreateApplicationRequest const& request);
+  virtual google::cloud::Idempotency CreateApplication(
+      google::cloud::apphub::v1::CreateApplicationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetApplication(google::cloud::apphub::v1::GetApplicationRequest const& request);
+  virtual google::cloud::Idempotency GetApplication(
+      google::cloud::apphub::v1::GetApplicationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateApplication(google::cloud::apphub::v1::UpdateApplicationRequest const& request);
+  virtual google::cloud::Idempotency UpdateApplication(
+      google::cloud::apphub::v1::UpdateApplicationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteApplication(google::cloud::apphub::v1::DeleteApplicationRequest const& request);
+  virtual google::cloud::Idempotency DeleteApplication(
+      google::cloud::apphub::v1::DeleteApplicationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<AppHubConnectionIdempotencyPolicy>
-    MakeDefaultAppHubConnectionIdempotencyPolicy();
+MakeDefaultAppHubConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apphub_v1

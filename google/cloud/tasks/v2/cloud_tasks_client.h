@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_CLOUD_TASKS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_CLOUD_TASKS_CLIENT_H
 
+#include "google/cloud/tasks/v2/cloud_tasks_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/tasks/v2/cloud_tasks_connection.h"
 #include "google/cloud/version.h"
-#include "google/cloud/iam_updater.h"
 #include <map>
 #include <memory>
 #include <string>
@@ -65,7 +65,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudTasksClient {
  public:
-  explicit CloudTasksClient(std::shared_ptr<CloudTasksConnection> connection, Options opts = {});
+  explicit CloudTasksClient(std::shared_ptr<CloudTasksConnection> connection,
+                            Options opts = {});
   ~CloudTasksClient();
 
   ///@{
@@ -120,8 +121,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::tasks::v2::Queue>
-  ListQueues(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -161,8 +162,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
-  StreamRange<google::cloud::tasks::v2::Queue>
-  ListQueues(google::cloud::tasks::v2::ListQueuesRequest request, Options opts = {});
+  StreamRange<google::cloud::tasks::v2::Queue> ListQueues(
+      google::cloud::tasks::v2::ListQueuesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -187,8 +188,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  GetQueue(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> GetQueue(std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -217,8 +218,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  GetQueue(google::cloud::tasks::v2::GetQueueRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
+      google::cloud::tasks::v2::GetQueueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -264,8 +266,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue.name]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  CreateQueue(std::string const& parent, google::cloud::tasks::v2::Queue const& queue, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
+      std::string const& parent, google::cloud::tasks::v2::Queue const& queue,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -305,8 +308,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  CreateQueue(google::cloud::tasks::v2::CreateQueueRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
+      google::cloud::tasks::v2::CreateQueueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -354,8 +358,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L416}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  UpdateQueue(google::cloud::tasks::v2::Queue const& queue, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
+      google::cloud::tasks::v2::Queue const& queue,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -398,8 +403,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.UpdateQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L416}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  UpdateQueue(google::cloud::tasks::v2::UpdateQueueRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
+      google::cloud::tasks::v2::UpdateQueueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -433,8 +439,7 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L434}
   ///
   // clang-format on
-  Status
-  DeleteQueue(std::string const& name, Options opts = {});
+  Status DeleteQueue(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -472,8 +477,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.DeleteQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L434}
   ///
   // clang-format on
-  Status
-  DeleteQueue(google::cloud::tasks::v2::DeleteQueueRequest const& request, Options opts = {});
+  Status DeleteQueue(
+      google::cloud::tasks::v2::DeleteQueueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -503,8 +509,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  PurgeQueue(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -538,8 +544,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  PurgeQueue(google::cloud::tasks::v2::PurgeQueueRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
+      google::cloud::tasks::v2::PurgeQueueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -574,8 +581,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  PauseQueue(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -614,8 +621,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue.state]: @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L160}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  PauseQueue(google::cloud::tasks::v2::PauseQueueRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
+      google::cloud::tasks::v2::PauseQueueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -657,8 +665,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L473}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  ResumeQueue(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -704,8 +712,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.ResumeQueueRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L473}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Queue>
-  ResumeQueue(google::cloud::tasks::v2::ResumeQueueRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
+      google::cloud::tasks::v2::ResumeQueueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -739,8 +748,8 @@ class CloudTasksClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -778,8 +787,8 @@ class CloudTasksClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -819,8 +828,9 @@ class CloudTasksClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -842,8 +852,9 @@ class CloudTasksClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -883,8 +894,8 @@ class CloudTasksClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -921,8 +932,9 @@ class CloudTasksClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -959,8 +971,9 @@ class CloudTasksClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1004,8 +1017,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L57}
   ///
   // clang-format on
-  StreamRange<google::cloud::tasks::v2::Task>
-  ListTasks(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::tasks::v2::Task> ListTasks(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1053,8 +1066,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task.View.BASIC]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L57}
   ///
   // clang-format on
-  StreamRange<google::cloud::tasks::v2::Task>
-  ListTasks(google::cloud::tasks::v2::ListTasksRequest request, Options opts = {});
+  StreamRange<google::cloud::tasks::v2::Task> ListTasks(
+      google::cloud::tasks::v2::ListTasksRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1079,8 +1092,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Task>
-  GetTask(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Task> GetTask(std::string const& name,
+                                                   Options opts = {});
 
   // clang-format off
   ///
@@ -1109,8 +1122,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Task>
-  GetTask(google::cloud::tasks::v2::GetTaskRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Task> GetTask(
+      google::cloud::tasks::v2::GetTaskRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1144,8 +1158,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Task>
-  CreateTask(std::string const& parent, google::cloud::tasks::v2::Task const& task, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Task> CreateTask(
+      std::string const& parent, google::cloud::tasks::v2::Task const& task,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1178,8 +1193,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L31}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Task>
-  CreateTask(google::cloud::tasks::v2::CreateTaskRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Task> CreateTask(
+      google::cloud::tasks::v2::CreateTaskRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1205,8 +1221,7 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L639}
   ///
   // clang-format on
-  Status
-  DeleteTask(std::string const& name, Options opts = {});
+  Status DeleteTask(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1236,8 +1251,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.DeleteTaskRequest]: @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L639}
   ///
   // clang-format on
-  Status
-  DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request, Options opts = {});
+  Status DeleteTask(google::cloud::tasks::v2::DeleteTaskRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -1292,8 +1307,8 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L108}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Task>
-  RunTask(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name,
+                                                   Options opts = {});
 
   // clang-format off
   ///
@@ -1352,8 +1367,9 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Task.schedule_time]: @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L108}
   ///
   // clang-format on
-  StatusOr<google::cloud::tasks::v2::Task>
-  RunTask(google::cloud::tasks::v2::RunTaskRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tasks::v2::Task> RunTask(
+      google::cloud::tasks::v2::RunTaskRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1391,8 +1407,8 @@ class CloudTasksClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1421,8 +1437,9 @@ class CloudTasksClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudTasksConnection> connection_;

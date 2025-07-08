@@ -29,8 +29,8 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RowAccessPolicyServiceRestStub> CreateDefaultRowAccessPolicyServiceRestStub(
-    Options const& options);
+std::shared_ptr<RowAccessPolicyServiceRestStub>
+CreateDefaultRowAccessPolicyServiceRestStub(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2_internal

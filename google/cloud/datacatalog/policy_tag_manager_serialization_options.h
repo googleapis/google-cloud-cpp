@@ -28,17 +28,26 @@ namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption directly.
-using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption;
+/// @deprecated Use
+/// datacatalog_v1::PolicyTagManagerSerializationBackoffPolicyOption directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerSerializationBackoffPolicyOption;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerSerializationConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationPolicyOptionList directly.
-using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationPolicyOptionList;
+/// @deprecated Use
+/// datacatalog_v1::PolicyTagManagerSerializationPolicyOptionList directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerSerializationPolicyOptionList;
 
-/// @deprecated Use datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption directly.
-using ::google::cloud::datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption;
+/// @deprecated Use
+/// datacatalog_v1::PolicyTagManagerSerializationRetryPolicyOption directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerSerializationRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog

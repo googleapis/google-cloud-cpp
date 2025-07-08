@@ -36,18 +36,24 @@ class PublisherTracingConnection
   ~PublisherTracingConnection() override = default;
 
   explicit PublisherTracingConnection(
-    std::shared_ptr<eventarc_publishing_v1::PublisherConnection> child);
+      std::shared_ptr<eventarc_publishing_v1::PublisherConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
-  PublishChannelConnectionEvents(google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) override;
+  StatusOr<google::cloud::eventarc::publishing::v1::
+               PublishChannelConnectionEventsResponse>
+  PublishChannelConnectionEvents(
+      google::cloud::eventarc::publishing::v1::
+          PublishChannelConnectionEventsRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-  PublishEvents(google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) override;
+  PublishEvents(
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
-  Publish(google::cloud::eventarc::publishing::v1::PublishRequest const& request) override;
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> Publish(
+      google::cloud::eventarc::publishing::v1::PublishRequest const& request)
+      override;
 
  private:
   std::shared_ptr<eventarc_publishing_v1::PublisherConnection> child_;

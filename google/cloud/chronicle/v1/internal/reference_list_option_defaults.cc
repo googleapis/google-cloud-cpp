@@ -42,16 +42,23 @@ Options ReferenceListServiceDefaultOptions(Options options) {
   if (!options.has<chronicle_v1::ReferenceListServiceRetryPolicyOption>()) {
     options.set<chronicle_v1::ReferenceListServiceRetryPolicyOption>(
         chronicle_v1::ReferenceListServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<chronicle_v1::ReferenceListServiceBackoffPolicyOption>()) {
     options.set<chronicle_v1::ReferenceListServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<chronicle_v1::ReferenceListServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<chronicle_v1::ReferenceListServiceConnectionIdempotencyPolicyOption>(
-        chronicle_v1::MakeDefaultReferenceListServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<chronicle_v1::
+                    ReferenceListServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        chronicle_v1::ReferenceListServiceConnectionIdempotencyPolicyOption>(
+        chronicle_v1::
+            MakeDefaultReferenceListServiceConnectionIdempotencyPolicy());
   }
 
   return options;

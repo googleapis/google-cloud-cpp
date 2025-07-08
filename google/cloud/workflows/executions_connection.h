@@ -33,11 +33,15 @@ using ::google::cloud::workflows_executions_v1::MakeExecutionsConnection;
 /// @deprecated Use workflows_executions_v1::ExecutionsConnection directly.
 using ::google::cloud::workflows_executions_v1::ExecutionsConnection;
 
-/// @deprecated Use workflows_executions_v1::ExecutionsLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::workflows_executions_v1::ExecutionsLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// workflows_executions_v1::ExecutionsLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::workflows_executions_v1::
+    ExecutionsLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use workflows_executions_v1::ExecutionsLimitedTimeRetryPolicy directly.
-using ::google::cloud::workflows_executions_v1::ExecutionsLimitedTimeRetryPolicy;
+/// @deprecated Use workflows_executions_v1::ExecutionsLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::workflows_executions_v1::
+    ExecutionsLimitedTimeRetryPolicy;
 
 /// @deprecated Use workflows_executions_v1::ExecutionsRetryPolicy directly.
 using ::google::cloud::workflows_executions_v1::ExecutionsRetryPolicy;

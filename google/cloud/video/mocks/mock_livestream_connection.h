@@ -30,8 +30,10 @@ namespace cloud {
 namespace video_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use video_livestream_v1_mocks::MockLivestreamServiceConnection directly.
-using ::google::cloud::video_livestream_v1_mocks::MockLivestreamServiceConnection;
+/// @deprecated Use video_livestream_v1_mocks::MockLivestreamServiceConnection
+/// directly.
+using ::google::cloud::video_livestream_v1_mocks::
+    MockLivestreamServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_mocks

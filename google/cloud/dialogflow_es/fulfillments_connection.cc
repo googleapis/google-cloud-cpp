@@ -17,14 +17,14 @@
 // source: google/cloud/dialogflow/v2/fulfillment.proto
 
 #include "google/cloud/dialogflow_es/fulfillments_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dialogflow_es/fulfillments_options.h"
 #include "google/cloud/dialogflow_es/internal/fulfillments_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/fulfillments_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/fulfillments_stub_factory.h"
 #include "google/cloud/dialogflow_es/internal/fulfillments_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -50,32 +50,33 @@ FulfillmentsConnection::UpdateFulfillment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> FulfillmentsConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+FulfillmentsConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
 
-StatusOr<google::cloud::location::Location>
-FulfillmentsConnection::GetLocation(
+StatusOr<google::cloud::location::Location> FulfillmentsConnection::GetLocation(
     google::cloud::location::GetLocationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> FulfillmentsConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+FulfillmentsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-FulfillmentsConnection::GetOperation(
+StatusOr<google::longrunning::Operation> FulfillmentsConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-FulfillmentsConnection::CancelOperation(
+Status FulfillmentsConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -83,17 +84,18 @@ FulfillmentsConnection::CancelOperation(
 std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      FulfillmentsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 FulfillmentsPolicyOptionList>(options,
+                                                               __func__);
   options = dialogflow_es_internal::FulfillmentsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dialogflow_es_internal::CreateDefaultFulfillmentsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dialogflow_es_internal::MakeFulfillmentsTracingConnection(
       std::make_shared<dialogflow_es_internal::FulfillmentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(

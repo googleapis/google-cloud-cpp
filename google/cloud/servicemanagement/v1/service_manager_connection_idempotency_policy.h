@@ -36,62 +36,70 @@ class ServiceManagerConnectionIdempotencyPolicy {
   virtual ~ServiceManagerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListServices(google::api::servicemanagement::v1::ListServicesRequest request);
+  virtual google::cloud::Idempotency ListServices(
+      google::api::servicemanagement::v1::ListServicesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetService(google::api::servicemanagement::v1::GetServiceRequest const& request);
+  virtual google::cloud::Idempotency GetService(
+      google::api::servicemanagement::v1::GetServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateService(google::api::servicemanagement::v1::CreateServiceRequest const& request);
+  virtual google::cloud::Idempotency CreateService(
+      google::api::servicemanagement::v1::CreateServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteService(google::api::servicemanagement::v1::DeleteServiceRequest const& request);
+  virtual google::cloud::Idempotency DeleteService(
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UndeleteService(google::api::servicemanagement::v1::UndeleteServiceRequest const& request);
+  virtual google::cloud::Idempotency UndeleteService(
+      google::api::servicemanagement::v1::UndeleteServiceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListServiceConfigs(google::api::servicemanagement::v1::ListServiceConfigsRequest request);
+  virtual google::cloud::Idempotency ListServiceConfigs(
+      google::api::servicemanagement::v1::ListServiceConfigsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetServiceConfig(google::api::servicemanagement::v1::GetServiceConfigRequest const& request);
+  virtual google::cloud::Idempotency GetServiceConfig(
+      google::api::servicemanagement::v1::GetServiceConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateServiceConfig(google::api::servicemanagement::v1::CreateServiceConfigRequest const& request);
+  virtual google::cloud::Idempotency CreateServiceConfig(
+      google::api::servicemanagement::v1::CreateServiceConfigRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SubmitConfigSource(google::api::servicemanagement::v1::SubmitConfigSourceRequest const& request);
+  virtual google::cloud::Idempotency SubmitConfigSource(
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListServiceRollouts(google::api::servicemanagement::v1::ListServiceRolloutsRequest request);
+  virtual google::cloud::Idempotency ListServiceRollouts(
+      google::api::servicemanagement::v1::ListServiceRolloutsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetServiceRollout(google::api::servicemanagement::v1::GetServiceRolloutRequest const& request);
+  virtual google::cloud::Idempotency GetServiceRollout(
+      google::api::servicemanagement::v1::GetServiceRolloutRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateServiceRollout(google::api::servicemanagement::v1::CreateServiceRolloutRequest const& request);
+  virtual google::cloud::Idempotency CreateServiceRollout(
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GenerateConfigReport(google::api::servicemanagement::v1::GenerateConfigReportRequest const& request);
+  virtual google::cloud::Idempotency GenerateConfigReport(
+      google::api::servicemanagement::v1::GenerateConfigReportRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 };
 
 std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy>
-    MakeDefaultServiceManagerConnectionIdempotencyPolicy();
+MakeDefaultServiceManagerConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_v1

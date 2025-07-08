@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_CATALOG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_CATALOG_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/v1/cloud_catalog_connection_idempotency_policy.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class CloudCatalogRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CloudCatalogLimitedErrorCountRetryPolicy : public CloudCatalogRetryPolicy {
+class CloudCatalogLimitedErrorCountRetryPolicy
+    : public CloudCatalogRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class CloudCatalogLimitedErrorCountRetryPolicy : public CloudCatalogRetryPolicy 
    *     @p maximum_failures == 0.
    */
   explicit CloudCatalogLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   CloudCatalogLimitedErrorCountRetryPolicy(
       CloudCatalogLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : CloudCatalogLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CloudCatalogLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CloudCatalogLimitedErrorCountRetryPolicy(
       CloudCatalogLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : CloudCatalogLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CloudCatalogLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class CloudCatalogLimitedErrorCountRetryPolicy : public CloudCatalogRetryPolicy 
   using BaseType = CloudCatalogRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<billing_v1_internal::CloudCatalogRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      billing_v1_internal::CloudCatalogRetryTraits>
+      impl_;
 };
 
 /**
@@ -127,12 +130,14 @@ class CloudCatalogLimitedTimeRetryPolicy : public CloudCatalogRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CloudCatalogLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  CloudCatalogLimitedTimeRetryPolicy(CloudCatalogLimitedTimeRetryPolicy&& rhs) noexcept
-    : CloudCatalogLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CloudCatalogLimitedTimeRetryPolicy(CloudCatalogLimitedTimeRetryPolicy const& rhs) noexcept
-    : CloudCatalogLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudCatalogLimitedTimeRetryPolicy(
+      CloudCatalogLimitedTimeRetryPolicy&& rhs) noexcept
+      : CloudCatalogLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CloudCatalogLimitedTimeRetryPolicy(
+      CloudCatalogLimitedTimeRetryPolicy const& rhs) noexcept
+      : CloudCatalogLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +159,9 @@ class CloudCatalogLimitedTimeRetryPolicy : public CloudCatalogRetryPolicy {
   using BaseType = CloudCatalogRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<billing_v1_internal::CloudCatalogRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      billing_v1_internal::CloudCatalogRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,11 +182,11 @@ class CloudCatalogConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::billing::v1::Service>
-  ListServices(google::cloud::billing::v1::ListServicesRequest request);
+  virtual StreamRange<google::cloud::billing::v1::Service> ListServices(
+      google::cloud::billing::v1::ListServicesRequest request);
 
-  virtual StreamRange<google::cloud::billing::v1::Sku>
-  ListSkus(google::cloud::billing::v1::ListSkusRequest request);
+  virtual StreamRange<google::cloud::billing::v1::Sku> ListSkus(
+      google::cloud::billing::v1::ListSkusRequest request);
 };
 
 /**

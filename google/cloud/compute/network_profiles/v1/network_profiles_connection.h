@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_PROFILES_V1_NETWORK_PROFILES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_PROFILES_V1_NETWORK_PROFILES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_retry_traits.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -52,7 +52,8 @@ class NetworkProfilesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NetworkProfilesLimitedErrorCountRetryPolicy : public NetworkProfilesRetryPolicy {
+class NetworkProfilesLimitedErrorCountRetryPolicy
+    : public NetworkProfilesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class NetworkProfilesLimitedErrorCountRetryPolicy : public NetworkProfilesRetryP
    *     @p maximum_failures == 0.
    */
   explicit NetworkProfilesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   NetworkProfilesLimitedErrorCountRetryPolicy(
       NetworkProfilesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : NetworkProfilesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : NetworkProfilesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   NetworkProfilesLimitedErrorCountRetryPolicy(
       NetworkProfilesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : NetworkProfilesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : NetworkProfilesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class NetworkProfilesLimitedErrorCountRetryPolicy : public NetworkProfilesRetryP
   using BaseType = NetworkProfilesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_network_profiles_v1_internal::NetworkProfilesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_network_profiles_v1_internal::NetworkProfilesRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class NetworkProfilesLimitedErrorCountRetryPolicy : public NetworkProfilesRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NetworkProfilesLimitedTimeRetryPolicy : public NetworkProfilesRetryPolicy {
+class NetworkProfilesLimitedTimeRetryPolicy
+    : public NetworkProfilesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class NetworkProfilesLimitedTimeRetryPolicy : public NetworkProfilesRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit NetworkProfilesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  NetworkProfilesLimitedTimeRetryPolicy(NetworkProfilesLimitedTimeRetryPolicy&& rhs) noexcept
-    : NetworkProfilesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  NetworkProfilesLimitedTimeRetryPolicy(NetworkProfilesLimitedTimeRetryPolicy const& rhs) noexcept
-    : NetworkProfilesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NetworkProfilesLimitedTimeRetryPolicy(
+      NetworkProfilesLimitedTimeRetryPolicy&& rhs) noexcept
+      : NetworkProfilesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NetworkProfilesLimitedTimeRetryPolicy(
+      NetworkProfilesLimitedTimeRetryPolicy const& rhs) noexcept
+      : NetworkProfilesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class NetworkProfilesLimitedTimeRetryPolicy : public NetworkProfilesRetryPolicy 
   using BaseType = NetworkProfilesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_network_profiles_v1_internal::NetworkProfilesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_network_profiles_v1_internal::NetworkProfilesRetryTraits>
+      impl_;
 };
 
 /**
@@ -167,7 +175,8 @@ class NetworkProfilesLimitedTimeRetryPolicy : public NetworkProfilesRetryPolicy 
  *
  * To create a concrete instance, see `MakeNetworkProfilesConnection()`.
  *
- * For mocking, see `compute_network_profiles_v1_mocks::MockNetworkProfilesConnection`.
+ * For mocking, see
+ * `compute_network_profiles_v1_mocks::MockNetworkProfilesConnection`.
  */
 class NetworkProfilesConnection {
  public:
@@ -176,10 +185,12 @@ class NetworkProfilesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkProfile>
-  GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::GetNetworkProfileRequest const& request);
+  GetNetworkProfile(google::cloud::cpp::compute::network_profiles::v1::
+                        GetNetworkProfileRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NetworkProfile>
-  ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::ListNetworkProfilesRequest request);
+  ListNetworkProfiles(google::cloud::cpp::compute::network_profiles::v1::
+                          ListNetworkProfilesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,39 +36,48 @@ class SessionEntityTypesTracingConnection
   ~SessionEntityTypesTracingConnection() override = default;
 
   explicit SessionEntityTypesTracingConnection(
-    std::shared_ptr<dialogflow_cx::SessionEntityTypesConnection> child);
+      std::shared_ptr<dialogflow_cx::SessionEntityTypesConnection> child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  ListSessionEntityTypes(google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request) override;
+  ListSessionEntityTypes(
+      google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request)
+      override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  GetSessionEntityType(google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const& request) override;
+  GetSessionEntityType(
+      google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
+          request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  CreateSessionEntityType(google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const& request) override;
+  CreateSessionEntityType(
+      google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
+          request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  UpdateSessionEntityType(google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const& request) override;
+  UpdateSessionEntityType(
+      google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
+          request) override;
 
-  Status
-  DeleteSessionEntityType(google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const& request) override;
+  Status DeleteSessionEntityType(
+      google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
+          request) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::SessionEntityTypesConnection> child_;

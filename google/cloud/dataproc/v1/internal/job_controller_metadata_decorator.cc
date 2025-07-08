@@ -44,12 +44,13 @@ JobControllerMetadata::JobControllerMetadata(
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-StatusOr<google::cloud::dataproc::v1::Job>
-JobControllerMetadata::SubmitJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::SubmitJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","region=", internal::UrlEncode(request.region())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region())));
   return child_->SubmitJob(context, options, request);
 }
 
@@ -59,125 +60,138 @@ JobControllerMetadata::AsyncSubmitJobAsOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","region=", internal::UrlEncode(request.region())));
-  return child_->AsyncSubmitJobAsOperation(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region())));
+  return child_->AsyncSubmitJobAsOperation(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 JobControllerMetadata::SubmitJobAsOperation(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","region=", internal::UrlEncode(request.region())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region())));
   return child_->SubmitJobAsOperation(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::Job>
-JobControllerMetadata::GetJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::GetJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","region=", internal::UrlEncode(request.region()), "&","job_id=", internal::UrlEncode(request.job_id())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region()), "&",
+                   "job_id=", internal::UrlEncode(request.job_id())));
   return child_->GetJob(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListJobsResponse>
 JobControllerMetadata::ListJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListJobsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","region=", internal::UrlEncode(request.region())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region())));
   return child_->ListJobs(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::Job>
-JobControllerMetadata::UpdateJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::UpdateJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","region=", internal::UrlEncode(request.region()), "&","job_id=", internal::UrlEncode(request.job_id())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region()), "&",
+                   "job_id=", internal::UrlEncode(request.job_id())));
   return child_->UpdateJob(context, options, request);
 }
 
-StatusOr<google::cloud::dataproc::v1::Job>
-JobControllerMetadata::CancelJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::CancelJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CancelJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","region=", internal::UrlEncode(request.region()), "&","job_id=", internal::UrlEncode(request.job_id())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region()), "&",
+                   "job_id=", internal::UrlEncode(request.job_id())));
   return child_->CancelJob(context, options, request);
 }
 
-Status
-JobControllerMetadata::DeleteJob(
-    grpc::ClientContext& context,
-    Options const& options,
+Status JobControllerMetadata::DeleteJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("project_id=", internal::UrlEncode(request.project_id()), "&","region=", internal::UrlEncode(request.region()), "&","job_id=", internal::UrlEncode(request.job_id())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "region=", internal::UrlEncode(request.region()), "&",
+                   "job_id=", internal::UrlEncode(request.job_id())));
   return child_->DeleteJob(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-JobControllerMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> JobControllerMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-JobControllerMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> JobControllerMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 JobControllerMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 JobControllerMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-JobControllerMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> JobControllerMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-JobControllerMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status JobControllerMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-JobControllerMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status JobControllerMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -189,8 +203,8 @@ JobControllerMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> JobControllerMetadata::AsyncCancelOperation(
@@ -200,8 +214,8 @@ future<Status> JobControllerMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void JobControllerMetadata::SetMetadata(grpc::ClientContext& context,
@@ -213,8 +227,8 @@ void JobControllerMetadata::SetMetadata(grpc::ClientContext& context,
 
 void JobControllerMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

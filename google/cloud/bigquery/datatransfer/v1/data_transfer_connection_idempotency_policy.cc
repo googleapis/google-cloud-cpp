@@ -26,87 +26,125 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DataTransferServiceConnectionIdempotencyPolicy::~DataTransferServiceConnectionIdempotencyPolicy() = default;
+DataTransferServiceConnectionIdempotencyPolicy::
+    ~DataTransferServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
 DataTransferServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetDataSource(google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetDataSource(
+    google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListDataSources(google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListDataSources(
+    google::cloud::bigquery::datatransfer::v1::
+        ListDataSourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest const&) {
+Idempotency
+DataTransferServiceConnectionIdempotencyPolicy::CreateTransferConfig(
+    google::cloud::bigquery::datatransfer::v1::
+        CreateTransferConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest const&) {
+Idempotency
+DataTransferServiceConnectionIdempotencyPolicy::UpdateTransferConfig(
+    google::cloud::bigquery::datatransfer::v1::
+        UpdateTransferConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest const&) {
+Idempotency
+DataTransferServiceConnectionIdempotencyPolicy::DeleteTransferConfig(
+    google::cloud::bigquery::datatransfer::v1::
+        DeleteTransferConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetTransferConfig(google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetTransferConfig(
+    google::cloud::bigquery::datatransfer::v1::
+        GetTransferConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferConfigs(google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferConfigs(
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest const&) {
+Idempotency
+DataTransferServiceConnectionIdempotencyPolicy::ScheduleTransferRuns(
+    google::cloud::bigquery::datatransfer::v1::
+        ScheduleTransferRunsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::StartManualTransferRuns(google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest const&) {
+Idempotency
+DataTransferServiceConnectionIdempotencyPolicy::StartManualTransferRuns(
+    google::cloud::bigquery::datatransfer::v1::
+        StartManualTransferRunsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetTransferRun(google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetTransferRun(
+    google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteTransferRun(google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::DeleteTransferRun(
+    google::cloud::bigquery::datatransfer::v1::
+        DeleteTransferRunRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferRuns(google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferRuns(
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferRunsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferLogs(google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListTransferLogs(
+    google::cloud::bigquery::datatransfer::v1::
+        ListTransferLogsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::CheckValidCreds(google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::CheckValidCreds(
+    google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::EnrollDataSources(google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::EnrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::
+        EnrollDataSourcesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::UnenrollDataSources(google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::UnenrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::
+        UnenrollDataSourcesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
-    MakeDefaultDataTransferServiceConnectionIdempotencyPolicy() {
+MakeDefaultDataTransferServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>();
 }
 

@@ -26,10 +26,13 @@ namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use talent_v4::MakeDefaultTenantServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::talent_v4::MakeDefaultTenantServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// talent_v4::MakeDefaultTenantServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::talent_v4::
+    MakeDefaultTenantServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use talent_v4::TenantServiceConnectionIdempotencyPolicy directly.
+/// @deprecated Use talent_v4::TenantServiceConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::talent_v4::TenantServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

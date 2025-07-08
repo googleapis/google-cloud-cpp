@@ -34,12 +34,15 @@ ExportServiceTracingConnection::ExportServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::devtools::cloudprofiler::v2::Profile>
-ExportServiceTracingConnection::ListProfiles(google::devtools::cloudprofiler::v2::ListProfilesRequest request) {
-  auto span = internal::MakeSpan("profiler_v2::ExportServiceConnection::ListProfiles");
+ExportServiceTracingConnection::ListProfiles(
+    google::devtools::cloudprofiler::v2::ListProfilesRequest request) {
+  auto span =
+      internal::MakeSpan("profiler_v2::ExportServiceConnection::ListProfiles");
   internal::OTelScope scope(span);
   auto sr = child_->ListProfiles(std::move(request));
-  return internal::MakeTracedStreamRange<google::devtools::cloudprofiler::v2::Profile>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::devtools::cloudprofiler::v2::Profile>(std::move(span),
+                                                    std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

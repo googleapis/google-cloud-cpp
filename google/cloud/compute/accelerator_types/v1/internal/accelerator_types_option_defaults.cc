@@ -35,23 +35,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AcceleratorTypesDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ACCELERATOR_TYPES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ACCELERATOR_TYPES_AUTHORITY",
-      "compute.googleapis.com");
+      std::move(options), "GOOGLE_CLOUD_CPP_ACCELERATOR_TYPES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ACCELERATOR_TYPES_AUTHORITY", "compute.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>()) {
-    options.set<compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>(
+  if (!options.has<
+          compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>()) {
+    options.set<
+        compute_accelerator_types_v1::AcceleratorTypesRetryPolicyOption>(
         compute_accelerator_types_v1::AcceleratorTypesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_accelerator_types_v1::AcceleratorTypesBackoffPolicyOption>()) {
-    options.set<compute_accelerator_types_v1::AcceleratorTypesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<compute_accelerator_types_v1::
+                       AcceleratorTypesBackoffPolicyOption>()) {
+    options
+        .set<compute_accelerator_types_v1::AcceleratorTypesBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<compute_accelerator_types_v1::AcceleratorTypesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_accelerator_types_v1::AcceleratorTypesConnectionIdempotencyPolicyOption>(
-        compute_accelerator_types_v1::MakeDefaultAcceleratorTypesConnectionIdempotencyPolicy());
+  if (!options.has<compute_accelerator_types_v1::
+                       AcceleratorTypesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_accelerator_types_v1::
+                    AcceleratorTypesConnectionIdempotencyPolicyOption>(
+        compute_accelerator_types_v1::
+            MakeDefaultAcceleratorTypesConnectionIdempotencyPolicy());
   }
 
   return options;

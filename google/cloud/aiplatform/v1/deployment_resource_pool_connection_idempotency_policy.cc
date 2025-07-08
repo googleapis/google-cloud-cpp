@@ -26,78 +26,114 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DeploymentResourcePoolServiceConnectionIdempotencyPolicy::~DeploymentResourcePoolServiceConnectionIdempotencyPolicy() = default;
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
+    ~DeploymentResourcePoolServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DeploymentResourcePoolServiceConnectionIdempotencyPolicy>
 DeploymentResourcePoolServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DeploymentResourcePoolServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<
+      DeploymentResourcePoolServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::CreateDeploymentResourcePool(google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&) {
+Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
+    CreateDeploymentResourcePool(
+        google::cloud::aiplatform::v1::
+            CreateDeploymentResourcePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::GetDeploymentResourcePool(google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&) {
+Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
+    GetDeploymentResourcePool(google::cloud::aiplatform::v1::
+                                  GetDeploymentResourcePoolRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::ListDeploymentResourcePools(google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest) {  // NOLINT
+Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
+    ListDeploymentResourcePools(
+        google::cloud::aiplatform::v1::
+            ListDeploymentResourcePoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::UpdateDeploymentResourcePool(google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&) {
+Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
+    UpdateDeploymentResourcePool(
+        google::cloud::aiplatform::v1::
+            UpdateDeploymentResourcePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::DeleteDeploymentResourcePool(google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&) {
+Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
+    DeleteDeploymentResourcePool(
+        google::cloud::aiplatform::v1::
+            DeleteDeploymentResourcePoolRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::SetIamPolicy(
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
   return request.policy().etag().empty() ? Idempotency::kNonIdempotent
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::WaitOperation(google::longrunning::WaitOperationRequest const&) {
+Idempotency
+DeploymentResourcePoolServiceConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DeploymentResourcePoolServiceConnectionIdempotencyPolicy>
-    MakeDefaultDeploymentResourcePoolServiceConnectionIdempotencyPolicy() {
-  return std::make_unique<DeploymentResourcePoolServiceConnectionIdempotencyPolicy>();
+MakeDefaultDeploymentResourcePoolServiceConnectionIdempotencyPolicy() {
+  return std::make_unique<
+      DeploymentResourcePoolServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

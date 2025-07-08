@@ -35,13 +35,14 @@ class AuthorizedDomainsLogging : public AuthorizedDomainsStub {
  public:
   ~AuthorizedDomainsLogging() override = default;
   AuthorizedDomainsLogging(std::shared_ptr<AuthorizedDomainsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                           TracingOptions tracing_options,
+                           std::set<std::string> const& components);
 
-  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse> ListAuthorizedDomains(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::appengine::v1::ListAuthorizedDomainsRequest const& request) override;
+  StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
+  ListAuthorizedDomains(
+      grpc::ClientContext& context, Options const& options,
+      google::appengine::v1::ListAuthorizedDomainsRequest const& request)
+      override;
 
  private:
   std::shared_ptr<AuthorizedDomainsStub> child_;

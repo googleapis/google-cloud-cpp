@@ -36,11 +36,11 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
  public:
   ~PredictionServiceTracingStub() override = default;
 
-  explicit PredictionServiceTracingStub(std::shared_ptr<PredictionServiceStub> child);
+  explicit PredictionServiceTracingStub(
+      std::shared_ptr<PredictionServiceStub> child);
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::PredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchPredict(
@@ -50,8 +50,7 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchPredict(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -68,7 +67,8 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
 
  private:
   std::shared_ptr<PredictionServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

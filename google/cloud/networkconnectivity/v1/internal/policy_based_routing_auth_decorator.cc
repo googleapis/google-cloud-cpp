@@ -31,19 +31,21 @@ PolicyBasedRoutingServiceAuth::PolicyBasedRoutingServiceAuth(
     std::shared_ptr<PolicyBasedRoutingServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse> PolicyBasedRoutingServiceAuth::ListPolicyBasedRoutes(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse>
+PolicyBasedRoutingServiceAuth::ListPolicyBasedRoutes(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListPolicyBasedRoutes(context, options, request);
 }
 
-StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute> PolicyBasedRoutingServiceAuth::GetPolicyBasedRoute(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) {
+StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
+PolicyBasedRoutingServiceAuth::GetPolicyBasedRoute(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetPolicyBasedRoute(context, options, request);
@@ -51,28 +53,30 @@ StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute> PolicyBasedRo
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceAuth::AsyncCreatePolicyBasedRoute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreatePolicyBasedRoute(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreatePolicyBasedRoute(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceAuth::CreatePolicyBasedRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreatePolicyBasedRoute(context, options, request);
@@ -80,45 +84,47 @@ PolicyBasedRoutingServiceAuth::CreatePolicyBasedRoute(
 
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceAuth::AsyncDeletePolicyBasedRoute(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeletePolicyBasedRoute(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeletePolicyBasedRoute(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceAuth::DeletePolicyBasedRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeletePolicyBasedRoute(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> PolicyBasedRoutingServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+PolicyBasedRoutingServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> PolicyBasedRoutingServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+PolicyBasedRoutingServiceAuth::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -126,8 +132,7 @@ StatusOr<google::cloud::location::Location> PolicyBasedRoutingServiceAuth::GetLo
 }
 
 StatusOr<google::iam::v1::Policy> PolicyBasedRoutingServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -135,35 +140,34 @@ StatusOr<google::iam::v1::Policy> PolicyBasedRoutingServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> PolicyBasedRoutingServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> PolicyBasedRoutingServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+PolicyBasedRoutingServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> PolicyBasedRoutingServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+PolicyBasedRoutingServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> PolicyBasedRoutingServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -171,8 +175,7 @@ StatusOr<google::longrunning::Operation> PolicyBasedRoutingServiceAuth::GetOpera
 }
 
 Status PolicyBasedRoutingServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -180,8 +183,7 @@ Status PolicyBasedRoutingServiceAuth::DeleteOperation(
 }
 
 Status PolicyBasedRoutingServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -195,15 +197,16 @@ PolicyBasedRoutingServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -212,13 +215,14 @@ future<Status> PolicyBasedRoutingServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

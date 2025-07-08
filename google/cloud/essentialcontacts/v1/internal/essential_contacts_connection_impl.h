@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_INTERNAL_ESSENTIAL_CONTACTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ESSENTIALCONTACTS_V1_INTERNAL_ESSENTIAL_CONTACTS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection_idempotency_policy.h"
 #include "google/cloud/essentialcontacts/v1/essential_contacts_options.h"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_retry_traits.h"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,36 +43,46 @@ class EssentialContactsServiceConnectionImpl
   ~EssentialContactsServiceConnectionImpl() override = default;
 
   EssentialContactsServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<essentialcontacts_v1_internal::EssentialContactsServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          essentialcontacts_v1_internal::EssentialContactsServiceStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  CreateContact(google::cloud::essentialcontacts::v1::CreateContactRequest const& request) override;
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
+      google::cloud::essentialcontacts::v1::CreateContactRequest const& request)
+      override;
 
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  UpdateContact(google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) override;
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
+      google::cloud::essentialcontacts::v1::UpdateContactRequest const& request)
+      override;
 
-  StreamRange<google::cloud::essentialcontacts::v1::Contact>
-  ListContacts(google::cloud::essentialcontacts::v1::ListContactsRequest request) override;
+  StreamRange<google::cloud::essentialcontacts::v1::Contact> ListContacts(
+      google::cloud::essentialcontacts::v1::ListContactsRequest request)
+      override;
 
-  StatusOr<google::cloud::essentialcontacts::v1::Contact>
-  GetContact(google::cloud::essentialcontacts::v1::GetContactRequest const& request) override;
+  StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
+      google::cloud::essentialcontacts::v1::GetContactRequest const& request)
+      override;
 
-  Status
-  DeleteContact(google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) override;
+  Status DeleteContact(
+      google::cloud::essentialcontacts::v1::DeleteContactRequest const& request)
+      override;
 
-  StreamRange<google::cloud::essentialcontacts::v1::Contact>
-  ComputeContacts(google::cloud::essentialcontacts::v1::ComputeContactsRequest request) override;
+  StreamRange<google::cloud::essentialcontacts::v1::Contact> ComputeContacts(
+      google::cloud::essentialcontacts::v1::ComputeContactsRequest request)
+      override;
 
-  Status
-  SendTestMessage(google::cloud::essentialcontacts::v1::SendTestMessageRequest const& request) override;
+  Status SendTestMessage(
+      google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<essentialcontacts_v1_internal::EssentialContactsServiceStub> stub_;
+  std::shared_ptr<essentialcontacts_v1_internal::EssentialContactsServiceStub>
+      stub_;
   Options options_;
 };
 

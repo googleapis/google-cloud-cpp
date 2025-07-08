@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTERS_V1_ROUTERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTERS_V1_ROUTERS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/routers/v1/internal/routers_retry_traits.h"
 #include "google/cloud/compute/routers/v1/routers_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -65,14 +65,14 @@ class RoutersLimitedErrorCountRetryPolicy : public RoutersRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RoutersLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RoutersLimitedErrorCountRetryPolicy(
       RoutersLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RoutersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RoutersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RoutersLimitedErrorCountRetryPolicy(
       RoutersLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RoutersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RoutersLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +92,9 @@ class RoutersLimitedErrorCountRetryPolicy : public RoutersRetryPolicy {
   using BaseType = RoutersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_routers_v1_internal::RoutersRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_routers_v1_internal::RoutersRetryTraits>
+      impl_;
 };
 
 /**
@@ -130,12 +132,13 @@ class RoutersLimitedTimeRetryPolicy : public RoutersRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RoutersLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   RoutersLimitedTimeRetryPolicy(RoutersLimitedTimeRetryPolicy&& rhs) noexcept
-    : RoutersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RoutersLimitedTimeRetryPolicy(RoutersLimitedTimeRetryPolicy const& rhs) noexcept
-    : RoutersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : RoutersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RoutersLimitedTimeRetryPolicy(
+      RoutersLimitedTimeRetryPolicy const& rhs) noexcept
+      : RoutersLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -149,15 +152,16 @@ class RoutersLimitedTimeRetryPolicy : public RoutersRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<RoutersRetryPolicy> clone() const override {
-    return std::make_unique<RoutersLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<RoutersLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = RoutersRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_routers_v1_internal::RoutersRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_routers_v1_internal::RoutersRetryTraits>
+      impl_;
 };
 
 /**
@@ -178,98 +182,148 @@ class RoutersConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
-  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
+  AggregatedListRouters(
+      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRouter(google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const& request);
+  DeleteRouter(
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRouter(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRouter(NoAwaitTag, google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const& request);
+  DeleteRoutePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRouter( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteRoutePolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRoutePolicy(google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRoutePolicy(NoAwaitTag, google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRoutePolicy( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Router>
-  GetRouter(google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
+      google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
-  GetNatIpInfo(google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const& request);
+  GetNatIpInfo(
+      google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-  GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request);
+  GetNatMappingInfo(
+      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
-  GetRoutePolicy(google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
+  GetRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-  GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request);
+  GetRouterStatus(
+      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRouter(google::cloud::cpp::compute::routers::v1::InsertRouterRequest const& request);
+  InsertRouter(
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRouter(NoAwaitTag, google::cloud::cpp::compute::routers::v1::InsertRouterRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRouter( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertRouter(google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Router>
-  ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
+      google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes>
-  ListBgpRoutes(google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const& request);
+  ListBgpRoutes(
+      google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
-  ListRoutePolicies(google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const& request);
+  ListRoutePolicies(
+      google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRouter(google::cloud::cpp::compute::routers::v1::PatchRouterRequest const& request);
+  PatchRouter(
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRouter(NoAwaitTag, google::cloud::cpp::compute::routers::v1::PatchRouterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRouter( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRoutePolicy(google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRoutePolicy(NoAwaitTag, google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRoutePolicy( google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchRouter(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRoutePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRoutePolicy(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
-  Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request);
+  Preview(
+      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRouter(google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const& request);
+  UpdateRouter(
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRouter(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRouter(NoAwaitTag, google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const& request);
+  UpdateRoutePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRouter( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRoutePolicy(google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRoutePolicy(NoAwaitTag, google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRoutePolicy( google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateRoutePolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

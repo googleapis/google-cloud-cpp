@@ -26,11 +26,16 @@ namespace cloud {
 namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use filestore_v1::MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::filestore_v1::MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// filestore_v1::MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::filestore_v1::
+    MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy;
 
-/// @deprecated Use filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicy directly.
+using ::google::cloud::filestore_v1::
+    CloudFilestoreManagerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore

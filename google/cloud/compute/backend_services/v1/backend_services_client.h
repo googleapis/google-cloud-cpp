@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BackendServicesClient {
  public:
-  explicit BackendServicesClient(std::shared_ptr<BackendServicesConnection> connection, Options opts = {});
+  explicit BackendServicesClient(
+      std::shared_ptr<BackendServicesConnection> connection, Options opts = {});
   ~BackendServicesClient();
 
   ///@{
@@ -77,10 +78,12 @@ class BackendServicesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BackendServicesClient const& a, BackendServicesClient const& b) {
+  friend bool operator==(BackendServicesClient const& a,
+                         BackendServicesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BackendServicesClient const& a, BackendServicesClient const& b) {
+  friend bool operator!=(BackendServicesClient const& a,
+                         BackendServicesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,8 +121,11 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L250}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddSignedUrlKey(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SignedUrlKey const& signed_url_key_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
+      std::string const& project, std::string const& backend_service,
+      google::cloud::cpp::compute::v1::SignedUrlKey const&
+          signed_url_key_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -132,8 +138,12 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddSignedUrlKey(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SignedUrlKey const& signed_url_key_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
+      NoAwaitTag, std::string const& project,
+      std::string const& backend_service,
+      google::cloud::cpp::compute::v1::SignedUrlKey const&
+          signed_url_key_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -170,8 +180,10 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.backend_services.v1.AddSignedUrlKeyRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L250}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
+      google::cloud::cpp::compute::backend_services::v1::
+          AddSignedUrlKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -184,8 +196,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddSignedUrlKey(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::AddSignedUrlKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          AddSignedUrlKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -196,8 +211,9 @@ class BackendServicesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddSignedUrlKey(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -233,7 +249,8 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.BackendServicesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L137}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
   AggregatedListBackendServices(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -275,8 +292,12 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.BackendServicesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L137}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
-  AggregatedListBackendServices(google::cloud::cpp::compute::backend_services::v1::AggregatedListBackendServicesRequest request, Options opts = {});
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
+  AggregatedListBackendServices(
+      google::cloud::cpp::compute::backend_services::v1::
+          AggregatedListBackendServicesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -309,7 +330,8 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendService(std::string const& project, std::string const& backend_service, Options opts = {});
+  DeleteBackendService(std::string const& project,
+                       std::string const& backend_service, Options opts = {});
 
   // clang-format off
   ///
@@ -322,8 +344,9 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteBackendService(NoAwaitTag, std::string const& project, std::string const& backend_service, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
+      NoAwaitTag, std::string const& project,
+      std::string const& backend_service, Options opts = {});
 
   // clang-format off
   ///
@@ -360,7 +383,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request, Options opts = {});
+  DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           DeleteBackendServiceRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +398,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteBackendServiceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
+      NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteBackendServiceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -386,7 +414,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteBackendService(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  DeleteBackendService(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -422,7 +452,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSignedUrlKey(std::string const& project, std::string const& backend_service, std::string const& key_name, Options opts = {});
+  DeleteSignedUrlKey(std::string const& project,
+                     std::string const& backend_service,
+                     std::string const& key_name, Options opts = {});
 
   // clang-format off
   ///
@@ -435,8 +467,10 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSignedUrlKey(NoAwaitTag, std::string const& project, std::string const& backend_service, std::string const& key_name, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
+      NoAwaitTag, std::string const& project,
+      std::string const& backend_service, std::string const& key_name,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -474,7 +508,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request, Options opts = {});
+  DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::
+                         DeleteSignedUrlKeyRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -487,8 +523,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSignedUrlKey(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::DeleteSignedUrlKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteSignedUrlKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -500,7 +539,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSignedUrlKey(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  DeleteSignedUrlKey(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -526,8 +567,9 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L187}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetBackendService(std::string const& project, std::string const& backend_service, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
+      std::string const& project, std::string const& backend_service,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -557,8 +599,10 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L187}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::BackendService>
-  GetBackendService(google::cloud::cpp::compute::backend_services::v1::GetBackendServiceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
+      google::cloud::cpp::compute::backend_services::v1::
+          GetBackendServiceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -567,7 +611,7 @@ class BackendServicesClient {
   /// "/zones/us-east1-b/instanceGroups/lb-backend-example" }
   /// https://cloud.google.com/compute/docs/reference/rest/v1/backendServices/getHealth
   ///
-  /// @param project 
+  /// @param project
   /// @param backend_service  Name of the BackendService resource to which the queried instance belongs.
   /// @param resource_group_reference_resource  The ResourceGroupReference for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -588,7 +632,10 @@ class BackendServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-  GetHealth(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::ResourceGroupReference const& resource_group_reference_resource, Options opts = {});
+  GetHealth(std::string const& project, std::string const& backend_service,
+            google::cloud::cpp::compute::v1::ResourceGroupReference const&
+                resource_group_reference_resource,
+            Options opts = {});
 
   // clang-format off
   ///
@@ -621,7 +668,10 @@ class BackendServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-  GetHealth(google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const& request, Options opts = {});
+  GetHealth(
+      google::cloud::cpp::compute::backend_services::v1::GetHealthRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -648,8 +698,9 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -680,8 +731,10 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::backend_services::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -716,7 +769,10 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendService(std::string const& project, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts = {});
+  InsertBackendService(std::string const& project,
+                       google::cloud::cpp::compute::v1::BackendService const&
+                           backend_service_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -729,8 +785,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertBackendService(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
+      NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::BackendService const&
+          backend_service_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -769,7 +828,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendService(google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request, Options opts = {});
+  InsertBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           InsertBackendServiceRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -782,8 +843,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::InsertBackendServiceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
+      NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          InsertBackendServiceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -795,7 +859,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertBackendService(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  InsertBackendService(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -872,7 +938,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
-  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::ListBackendServicesRequest request, Options opts = {});
+  ListBackendServices(google::cloud::cpp::compute::backend_services::v1::
+                          ListBackendServicesRequest request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -906,8 +974,8 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L187}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::BackendService>
-  ListUsable(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::BackendService> ListUsable(
+      std::string const& project, Options opts = {});
 
   // clang-format off
   ///
@@ -946,8 +1014,10 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L187}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::BackendService>
-  ListUsable(google::cloud::cpp::compute::backend_services::v1::ListUsableRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::BackendService> ListUsable(
+      google::cloud::cpp::compute::backend_services::v1::ListUsableRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -984,7 +1054,11 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendService(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts = {});
+  PatchBackendService(std::string const& project,
+                      std::string const& backend_service,
+                      google::cloud::cpp::compute::v1::BackendService const&
+                          backend_service_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -997,8 +1071,12 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchBackendService(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
+      NoAwaitTag, std::string const& project,
+      std::string const& backend_service,
+      google::cloud::cpp::compute::v1::BackendService const&
+          backend_service_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1038,7 +1116,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendService(google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request, Options opts = {});
+  PatchBackendService(google::cloud::cpp::compute::backend_services::v1::
+                          PatchBackendServiceRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1051,8 +1131,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::PatchBackendServiceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
+      NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          PatchBackendServiceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1064,7 +1147,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchBackendService(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  PatchBackendService(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1099,7 +1184,11 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetEdgeSecurityPolicy(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts = {});
+  SetEdgeSecurityPolicy(
+      std::string const& project, std::string const& backend_service,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1112,8 +1201,12 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetEdgeSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
+      NoAwaitTag, std::string const& project,
+      std::string const& backend_service,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1150,7 +1243,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request, Options opts = {});
+  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
+                            SetEdgeSecurityPolicyRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -1163,8 +1258,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetEdgeSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetEdgeSecurityPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          SetEdgeSecurityPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1176,7 +1274,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetEdgeSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetEdgeSecurityPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1204,8 +1304,11 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1236,8 +1339,10 @@ class BackendServicesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::backend_services::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::backend_services::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1273,7 +1378,11 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts = {});
+  SetSecurityPolicy(
+      std::string const& project, std::string const& backend_service,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1286,8 +1395,12 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::SecurityPolicyReference const& security_policy_reference_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag, std::string const& project,
+      std::string const& backend_service,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1325,7 +1438,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request, Options opts = {});
+  SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
+                        SetSecurityPolicyRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -1338,8 +1453,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::SetSecurityPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          SetSecurityPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1351,7 +1469,8 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -1379,7 +1498,11 @@ class BackendServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1410,7 +1533,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1445,7 +1570,11 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendService(std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts = {});
+  UpdateBackendService(std::string const& project,
+                       std::string const& backend_service,
+                       google::cloud::cpp::compute::v1::BackendService const&
+                           backend_service_resource,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -1458,8 +1587,12 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateBackendService(NoAwaitTag, std::string const& project, std::string const& backend_service, google::cloud::cpp::compute::v1::BackendService const& backend_service_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
+      NoAwaitTag, std::string const& project,
+      std::string const& backend_service,
+      google::cloud::cpp::compute::v1::BackendService const&
+          backend_service_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1497,7 +1630,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request, Options opts = {});
+  UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::
+                           UpdateBackendServiceRequest const& request,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -1510,8 +1645,11 @@ class BackendServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateBackendService(NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::UpdateBackendServiceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
+      NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          UpdateBackendServiceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1523,7 +1661,9 @@ class BackendServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateBackendService(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  UpdateBackendService(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<BackendServicesConnection> connection_;

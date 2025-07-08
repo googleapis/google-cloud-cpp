@@ -26,31 +26,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CompletionServiceConnectionIdempotencyPolicy::~CompletionServiceConnectionIdempotencyPolicy() = default;
+CompletionServiceConnectionIdempotencyPolicy::
+    ~CompletionServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
 CompletionServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CompletionServiceConnectionIdempotencyPolicy::CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::CompleteQuery(
+    google::cloud::retail::v2::CompleteQueryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CompletionServiceConnectionIdempotencyPolicy::ImportCompletionData(google::cloud::retail::v2::ImportCompletionDataRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::ImportCompletionData(
+    google::cloud::retail::v2::ImportCompletionDataRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CompletionServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency CompletionServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CompletionServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency CompletionServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
-    MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
+MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>();
 }
 

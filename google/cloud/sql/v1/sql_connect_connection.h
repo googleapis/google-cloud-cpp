@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_CONNECT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_CONNECT_CONNECTION_H
 
+#include "google/cloud/sql/v1/internal/sql_connect_retry_traits.h"
+#include "google/cloud/sql/v1/sql_connect_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/sql/v1/internal/sql_connect_retry_traits.h"
-#include "google/cloud/sql/v1/sql_connect_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_connect.pb.h>
@@ -51,7 +51,8 @@ class SqlConnectServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlConnectServiceLimitedErrorCountRetryPolicy : public SqlConnectServiceRetryPolicy {
+class SqlConnectServiceLimitedErrorCountRetryPolicy
+    : public SqlConnectServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class SqlConnectServiceLimitedErrorCountRetryPolicy : public SqlConnectServiceRe
    *     @p maximum_failures == 0.
    */
   explicit SqlConnectServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SqlConnectServiceLimitedErrorCountRetryPolicy(
       SqlConnectServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SqlConnectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlConnectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SqlConnectServiceLimitedErrorCountRetryPolicy(
       SqlConnectServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SqlConnectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlConnectServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class SqlConnectServiceLimitedErrorCountRetryPolicy : public SqlConnectServiceRe
   using BaseType = SqlConnectServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlConnectServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      sql_v1_internal::SqlConnectServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -101,7 +104,8 @@ class SqlConnectServiceLimitedErrorCountRetryPolicy : public SqlConnectServiceRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlConnectServiceLimitedTimeRetryPolicy : public SqlConnectServiceRetryPolicy {
+class SqlConnectServiceLimitedTimeRetryPolicy
+    : public SqlConnectServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +130,14 @@ class SqlConnectServiceLimitedTimeRetryPolicy : public SqlConnectServiceRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlConnectServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SqlConnectServiceLimitedTimeRetryPolicy(SqlConnectServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SqlConnectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlConnectServiceLimitedTimeRetryPolicy(SqlConnectServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SqlConnectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlConnectServiceLimitedTimeRetryPolicy(
+      SqlConnectServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SqlConnectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlConnectServiceLimitedTimeRetryPolicy(
+      SqlConnectServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SqlConnectServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,16 +159,18 @@ class SqlConnectServiceLimitedTimeRetryPolicy : public SqlConnectServiceRetryPol
   using BaseType = SqlConnectServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlConnectServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      sql_v1_internal::SqlConnectServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `SqlConnectServiceConnection` object for `SqlConnectServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `SqlConnectServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `SqlConnectServiceClient`.
+ * sets in `SqlConnectServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `SqlConnectServiceClient`.
  *
  * To create a concrete instance, see `MakeSqlConnectServiceConnection()`.
  *
@@ -174,11 +182,12 @@ class SqlConnectServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::sql::v1::ConnectSettings>
-  GetConnectSettings(google::cloud::sql::v1::GetConnectSettingsRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
+      google::cloud::sql::v1::GetConnectSettingsRequest const& request);
 
   virtual StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-  GenerateEphemeralCert(google::cloud::sql::v1::GenerateEphemeralCertRequest const& request);
+  GenerateEphemeralCert(
+      google::cloud::sql::v1::GenerateEphemeralCertRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

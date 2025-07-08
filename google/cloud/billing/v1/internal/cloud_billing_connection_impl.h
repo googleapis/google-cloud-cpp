@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_BILLING_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_BILLING_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/billing/v1/cloud_billing_connection.h"
 #include "google/cloud/billing/v1/cloud_billing_connection_idempotency_policy.h"
 #include "google/cloud/billing/v1/cloud_billing_options.h"
 #include "google/cloud/billing/v1/internal/cloud_billing_retry_traits.h"
 #include "google/cloud/billing/v1/internal/cloud_billing_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,50 +37,59 @@ namespace cloud {
 namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudBillingConnectionImpl
-    : public billing_v1::CloudBillingConnection {
+class CloudBillingConnectionImpl : public billing_v1::CloudBillingConnection {
  public:
   ~CloudBillingConnectionImpl() override = default;
 
   CloudBillingConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<billing_v1_internal::CloudBillingStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<billing_v1_internal::CloudBillingStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::billing::v1::BillingAccount>
-  GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const& request) override;
+  StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
+      google::cloud::billing::v1::GetBillingAccountRequest const& request)
+      override;
 
-  StreamRange<google::cloud::billing::v1::BillingAccount>
-  ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest request) override;
+  StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
+      google::cloud::billing::v1::ListBillingAccountsRequest request) override;
 
-  StatusOr<google::cloud::billing::v1::BillingAccount>
-  UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const& request) override;
+  StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
+      google::cloud::billing::v1::UpdateBillingAccountRequest const& request)
+      override;
 
-  StatusOr<google::cloud::billing::v1::BillingAccount>
-  CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const& request) override;
+  StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
+      google::cloud::billing::v1::CreateBillingAccountRequest const& request)
+      override;
 
   StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-  ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest request) override;
+  ListProjectBillingInfo(
+      google::cloud::billing::v1::ListProjectBillingInfoRequest request)
+      override;
 
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) override;
+  GetProjectBillingInfo(
+      google::cloud::billing::v1::GetProjectBillingInfoRequest const& request)
+      override;
 
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-  UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request) override;
+  UpdateProjectBillingInfo(
+      google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
+          request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::cloud::billing::v1::BillingAccount>
-  MoveBillingAccount(google::cloud::billing::v1::MoveBillingAccountRequest const& request) override;
+  StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
+      google::cloud::billing::v1::MoveBillingAccountRequest const& request)
+      override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -60,11 +60,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
+/// [google.cloud.dialogflow.cx.v3.Webhook]:
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
 ///
 class WebhooksClient {
  public:
-  explicit WebhooksClient(std::shared_ptr<WebhooksConnection> connection, Options opts = {});
+  explicit WebhooksClient(std::shared_ptr<WebhooksConnection> connection,
+                          Options opts = {});
   ~WebhooksClient();
 
   ///@{
@@ -117,8 +119,8 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
-  ListWebhooks(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Webhook> ListWebhooks(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -156,8 +158,9 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
-  ListWebhooks(google::cloud::dialogflow::cx::v3::ListWebhooksRequest request, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Webhook> ListWebhooks(
+      google::cloud::dialogflow::cx::v3::ListWebhooksRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -183,8 +186,8 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  GetWebhook(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +216,9 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  GetWebhook(google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
+      google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -240,8 +244,10 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  CreateWebhook(std::string const& parent, google::cloud::dialogflow::cx::v3::Webhook const& webhook, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
+      std::string const& parent,
+      google::cloud::dialogflow::cx::v3::Webhook const& webhook,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -270,8 +276,9 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  CreateWebhook(google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
+      google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -297,8 +304,9 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  UpdateWebhook(google::cloud::dialogflow::cx::v3::Webhook const& webhook, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
+      google::cloud::dialogflow::cx::v3::Webhook const& webhook,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -327,8 +335,9 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
-  UpdateWebhook(google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
+      google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -351,8 +360,7 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L368}
   ///
   // clang-format on
-  Status
-  DeleteWebhook(std::string const& name, Options opts = {});
+  Status DeleteWebhook(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -378,8 +386,9 @@ class WebhooksClient {
   /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L368}
   ///
   // clang-format on
-  Status
-  DeleteWebhook(google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request, Options opts = {});
+  Status DeleteWebhook(
+      google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -417,8 +426,8 @@ class WebhooksClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -447,8 +456,9 @@ class WebhooksClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -483,8 +493,8 @@ class WebhooksClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -523,8 +533,8 @@ class WebhooksClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -550,8 +560,8 @@ class WebhooksClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -582,8 +592,9 @@ class WebhooksClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -617,8 +628,7 @@ class WebhooksClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -657,8 +667,9 @@ class WebhooksClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<WebhooksConnection> connection_;

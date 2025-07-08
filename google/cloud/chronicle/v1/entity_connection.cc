@@ -17,12 +17,12 @@
 // source: google/cloud/chronicle/v1/entity.proto
 
 #include "google/cloud/chronicle/v1/entity_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/chronicle/v1/entity_options.h"
 #include "google/cloud/chronicle/v1/internal/entity_connection_impl.h"
 #include "google/cloud/chronicle/v1/internal/entity_option_defaults.h"
 #include "google/cloud/chronicle/v1/internal/entity_stub_factory.h"
 #include "google/cloud/chronicle/v1/internal/entity_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -44,8 +44,10 @@ EntityServiceConnection::GetWatchlist(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::chronicle::v1::Watchlist> EntityServiceConnection::ListWatchlists(
-    google::cloud::chronicle::v1::ListWatchlistsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::chronicle::v1::Watchlist>
+EntityServiceConnection::ListWatchlists(
+    google::cloud::chronicle::v1::
+        ListWatchlistsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::chronicle::v1::Watchlist>>();
 }
@@ -62,32 +64,30 @@ EntityServiceConnection::UpdateWatchlist(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-EntityServiceConnection::DeleteWatchlist(
+Status EntityServiceConnection::DeleteWatchlist(
     google::cloud::chronicle::v1::DeleteWatchlistRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> EntityServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+EntityServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
-StatusOr<google::longrunning::Operation>
-EntityServiceConnection::GetOperation(
+StatusOr<google::longrunning::Operation> EntityServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-EntityServiceConnection::DeleteOperation(
+Status EntityServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-EntityServiceConnection::CancelOperation(
+Status EntityServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -95,17 +95,18 @@ EntityServiceConnection::CancelOperation(
 std::shared_ptr<EntityServiceConnection> MakeEntityServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      EntityServicePolicyOptionList>(options, __func__);
-  options = chronicle_v1_internal::EntityServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 EntityServicePolicyOptionList>(options,
+                                                                __func__);
+  options =
+      chronicle_v1_internal::EntityServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = chronicle_v1_internal::CreateDefaultEntityServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return chronicle_v1_internal::MakeEntityServiceTracingConnection(
       std::make_shared<chronicle_v1_internal::EntityServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

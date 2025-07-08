@@ -46,25 +46,25 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD((StreamRange<google::appengine::v1::Version>),
-  ListVersions,
-  (google::appengine::v1::ListVersionsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::appengine::v1::Version>), ListVersions,
+              (google::appengine::v1::ListVersionsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::appengine::v1::Version>,
-  GetVersion,
-  (google::appengine::v1::GetVersionRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::appengine::v1::Version>, GetVersion,
+              (google::appengine::v1::GetVersionRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateVersion(Matcher<google::appengine::v1::CreateVersionRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateVersion(Matcher<google::appengine::v1::CreateVersionRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>,
-  CreateVersion,
-  (google::appengine::v1::CreateVersionRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, CreateVersion,
+              (google::appengine::v1::CreateVersionRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -72,33 +72,34 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateVersion(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateVersion, (NoAwaitTag,
-    google::appengine::v1::CreateVersionRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateVersion(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>,
-  CreateVersion, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateVersion,
+              (NoAwaitTag,
+               google::appengine::v1::CreateVersionRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateVersion(Matcher<google::appengine::v1::UpdateVersionRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateVersion(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>,
-  UpdateVersion,
-  (google::appengine::v1::UpdateVersionRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, CreateVersion,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateVersion(Matcher<google::appengine::v1::UpdateVersionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, UpdateVersion,
+              (google::appengine::v1::UpdateVersionRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +107,35 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateVersion(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateVersion, (NoAwaitTag,
-    google::appengine::v1::UpdateVersionRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateVersion,
+              (NoAwaitTag,
+               google::appengine::v1::UpdateVersionRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateVersion(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateVersion(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>,
-  UpdateVersion, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, UpdateVersion,
+              (google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteVersion(Matcher<google::appengine::v1::DeleteVersionRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteVersion(Matcher<google::appengine::v1::DeleteVersionRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-  DeleteVersion,
-  (google::appengine::v1::DeleteVersionRequest const& request), (override));
-
+              DeleteVersion,
+              (google::appengine::v1::DeleteVersionRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,21 +143,22 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteVersion(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteVersion, (NoAwaitTag,
-    google::appengine::v1::DeleteVersionRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteVersion,
+              (NoAwaitTag,
+               google::appengine::v1::DeleteVersionRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteVersion(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteVersion(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-  DeleteVersion, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteVersion, (google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

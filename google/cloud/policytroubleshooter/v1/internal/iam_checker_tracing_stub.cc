@@ -32,15 +32,18 @@ IamCheckerTracingStub::IamCheckerTracingStub(
     std::shared_ptr<IamCheckerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse> IamCheckerTracingStub::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.policytroubleshooter.v1.IamChecker", "TroubleshootIamPolicy");
+StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
+IamCheckerTracingStub::TroubleshootIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.policytroubleshooter.v1.IamChecker",
+                             "TroubleshootIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TroubleshootIamPolicy(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TroubleshootIamPolicy(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

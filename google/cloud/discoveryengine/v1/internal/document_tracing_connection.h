@@ -36,58 +36,70 @@ class DocumentServiceTracingConnection
   ~DocumentServiceTracingConnection() override = default;
 
   explicit DocumentServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::DocumentServiceConnection> child);
+      std::shared_ptr<discoveryengine_v1::DocumentServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::discoveryengine::v1::Document>
-  GetDocument(google::cloud::discoveryengine::v1::GetDocumentRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
+      google::cloud::discoveryengine::v1::GetDocumentRequest const& request)
+      override;
 
-  StreamRange<google::cloud::discoveryengine::v1::Document>
-  ListDocuments(google::cloud::discoveryengine::v1::ListDocumentsRequest request) override;
+  StreamRange<google::cloud::discoveryengine::v1::Document> ListDocuments(
+      google::cloud::discoveryengine::v1::ListDocumentsRequest request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Document>
-  CreateDocument(google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
+      google::cloud::discoveryengine::v1::CreateDocumentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::Document>
-  UpdateDocument(google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
+      google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request)
+      override;
 
-  Status
-  DeleteDocument(google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) override;
-
-  future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  ImportDocuments(NoAwaitTag,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) override;
+  Status DeleteDocument(
+      google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
   ImportDocuments(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportDocuments(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  PurgeDocuments(NoAwaitTag,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+  ImportDocuments(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
   PurgeDocuments(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
-  BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> PurgeDocuments(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
+      override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+  PurgeDocuments(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::DocumentServiceConnection> child_;

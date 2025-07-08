@@ -26,174 +26,216 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-EventarcConnectionIdempotencyPolicy::~EventarcConnectionIdempotencyPolicy() = default;
+EventarcConnectionIdempotencyPolicy::~EventarcConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>
 EventarcConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<EventarcConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetTrigger(google::cloud::eventarc::v1::GetTriggerRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetTrigger(
+    google::cloud::eventarc::v1::GetTriggerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListTriggers(google::cloud::eventarc::v1::ListTriggersRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListTriggers(
+    google::cloud::eventarc::v1::ListTriggersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::CreateTrigger(google::cloud::eventarc::v1::CreateTriggerRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::CreateTrigger(
+    google::cloud::eventarc::v1::CreateTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::UpdateTrigger(google::cloud::eventarc::v1::UpdateTriggerRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateTrigger(
+    google::cloud::eventarc::v1::UpdateTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::DeleteTrigger(google::cloud::eventarc::v1::DeleteTriggerRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteTrigger(
+    google::cloud::eventarc::v1::DeleteTriggerRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetChannel(google::cloud::eventarc::v1::GetChannelRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetChannel(
+    google::cloud::eventarc::v1::GetChannelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListChannels(google::cloud::eventarc::v1::ListChannelsRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListChannels(
+    google::cloud::eventarc::v1::ListChannelsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::CreateChannel(google::cloud::eventarc::v1::CreateChannelRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::CreateChannel(
+    google::cloud::eventarc::v1::CreateChannelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::UpdateChannel(google::cloud::eventarc::v1::UpdateChannelRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateChannel(
+    google::cloud::eventarc::v1::UpdateChannelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::DeleteChannel(google::cloud::eventarc::v1::DeleteChannelRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteChannel(
+    google::cloud::eventarc::v1::DeleteChannelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetProvider(google::cloud::eventarc::v1::GetProviderRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetProvider(
+    google::cloud::eventarc::v1::GetProviderRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListProviders(google::cloud::eventarc::v1::ListProvidersRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListProviders(
+    google::cloud::eventarc::v1::ListProvidersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetChannelConnection(google::cloud::eventarc::v1::GetChannelConnectionRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetChannelConnection(
+    google::cloud::eventarc::v1::GetChannelConnectionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListChannelConnections(google::cloud::eventarc::v1::ListChannelConnectionsRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListChannelConnections(
+    google::cloud::eventarc::v1::ListChannelConnectionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::CreateChannelConnection(google::cloud::eventarc::v1::CreateChannelConnectionRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::CreateChannelConnection(
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::DeleteChannelConnection(google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteChannelConnection(
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetGoogleChannelConfig(google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetGoogleChannelConfig(
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::UpdateGoogleChannelConfig(google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateGoogleChannelConfig(
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetMessageBus(google::cloud::eventarc::v1::GetMessageBusRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetMessageBus(
+    google::cloud::eventarc::v1::GetMessageBusRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListMessageBuses(google::cloud::eventarc::v1::ListMessageBusesRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListMessageBuses(
+    google::cloud::eventarc::v1::ListMessageBusesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListMessageBusEnrollments(google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::ListMessageBusEnrollments(
+    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::CreateMessageBus(google::cloud::eventarc::v1::CreateMessageBusRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::CreateMessageBus(
+    google::cloud::eventarc::v1::CreateMessageBusRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::UpdateMessageBus(google::cloud::eventarc::v1::UpdateMessageBusRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateMessageBus(
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::DeleteMessageBus(google::cloud::eventarc::v1::DeleteMessageBusRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteMessageBus(
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetEnrollment(google::cloud::eventarc::v1::GetEnrollmentRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetEnrollment(
+    google::cloud::eventarc::v1::GetEnrollmentRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListEnrollments(google::cloud::eventarc::v1::ListEnrollmentsRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListEnrollments(
+    google::cloud::eventarc::v1::ListEnrollmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::CreateEnrollment(google::cloud::eventarc::v1::CreateEnrollmentRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::CreateEnrollment(
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::UpdateEnrollment(google::cloud::eventarc::v1::UpdateEnrollmentRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateEnrollment(
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::DeleteEnrollment(google::cloud::eventarc::v1::DeleteEnrollmentRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteEnrollment(
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetPipeline(google::cloud::eventarc::v1::GetPipelineRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetPipeline(
+    google::cloud::eventarc::v1::GetPipelineRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListPipelines(google::cloud::eventarc::v1::ListPipelinesRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListPipelines(
+    google::cloud::eventarc::v1::ListPipelinesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::CreatePipeline(google::cloud::eventarc::v1::CreatePipelineRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::CreatePipeline(
+    google::cloud::eventarc::v1::CreatePipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::UpdatePipeline(google::cloud::eventarc::v1::UpdatePipelineRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::UpdatePipeline(
+    google::cloud::eventarc::v1::UpdatePipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::DeletePipeline(google::cloud::eventarc::v1::DeletePipelineRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::DeletePipeline(
+    google::cloud::eventarc::v1::DeletePipelineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetGoogleApiSource(google::cloud::eventarc::v1::GetGoogleApiSourceRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetGoogleApiSource(
+    google::cloud::eventarc::v1::GetGoogleApiSourceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListGoogleApiSources(google::cloud::eventarc::v1::ListGoogleApiSourcesRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListGoogleApiSources(
+    google::cloud::eventarc::v1::ListGoogleApiSourcesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::CreateGoogleApiSource(google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::CreateGoogleApiSource(
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::UpdateGoogleApiSource(google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateGoogleApiSource(
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::DeleteGoogleApiSource(google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteGoogleApiSource(
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -203,32 +245,38 @@ Idempotency EventarcConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency EventarcConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency EventarcConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency EventarcConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>
-    MakeDefaultEventarcConnectionIdempotencyPolicy() {
+MakeDefaultEventarcConnectionIdempotencyPolicy() {
   return std::make_unique<EventarcConnectionIdempotencyPolicy>();
 }
 

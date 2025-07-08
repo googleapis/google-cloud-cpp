@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_NOTIFICATION_CHANNEL_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_NOTIFICATION_CHANNEL_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/monitoring/v3/internal/notification_channel_retry_traits.h"
 #include "google/cloud/monitoring/v3/notification_channel_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -36,14 +36,17 @@ namespace monitoring_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `NotificationChannelServiceConnection`.
-class NotificationChannelServiceRetryPolicy : public ::google::cloud::RetryPolicy {
+class NotificationChannelServiceRetryPolicy
+    : public ::google::cloud::RetryPolicy {
  public:
   /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<NotificationChannelServiceRetryPolicy> clone() const = 0;
+  virtual std::unique_ptr<NotificationChannelServiceRetryPolicy> clone()
+      const = 0;
 };
 
 /**
- * A retry policy for `NotificationChannelServiceConnection` based on counting errors.
+ * A retry policy for `NotificationChannelServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +55,8 @@ class NotificationChannelServiceRetryPolicy : public ::google::cloud::RetryPolic
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NotificationChannelServiceLimitedErrorCountRetryPolicy : public NotificationChannelServiceRetryPolicy {
+class NotificationChannelServiceLimitedErrorCountRetryPolicy
+    : public NotificationChannelServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +65,19 @@ class NotificationChannelServiceLimitedErrorCountRetryPolicy : public Notificati
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit NotificationChannelServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit NotificationChannelServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   NotificationChannelServiceLimitedErrorCountRetryPolicy(
       NotificationChannelServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : NotificationChannelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : NotificationChannelServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   NotificationChannelServiceLimitedErrorCountRetryPolicy(
-      NotificationChannelServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : NotificationChannelServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      NotificationChannelServiceLimitedErrorCountRetryPolicy const&
+          rhs) noexcept
+      : NotificationChannelServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -80,8 +88,10 @@ class NotificationChannelServiceLimitedErrorCountRetryPolicy : public Notificati
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NotificationChannelServiceRetryPolicy> clone() const override {
-    return std::make_unique<NotificationChannelServiceLimitedErrorCountRetryPolicy>(
+  std::unique_ptr<NotificationChannelServiceRetryPolicy> clone()
+      const override {
+    return std::make_unique<
+        NotificationChannelServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -89,11 +99,14 @@ class NotificationChannelServiceLimitedErrorCountRetryPolicy : public Notificati
   using BaseType = NotificationChannelServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<monitoring_v3_internal::NotificationChannelServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      monitoring_v3_internal::NotificationChannelServiceRetryTraits>
+      impl_;
 };
 
 /**
- * A retry policy for `NotificationChannelServiceConnection` based on elapsed time.
+ * A retry policy for `NotificationChannelServiceConnection` based on elapsed
+ * time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -102,7 +115,8 @@ class NotificationChannelServiceLimitedErrorCountRetryPolicy : public Notificati
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class NotificationChannelServiceLimitedTimeRetryPolicy : public NotificationChannelServiceRetryPolicy {
+class NotificationChannelServiceLimitedTimeRetryPolicy
+    : public NotificationChannelServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +141,16 @@ class NotificationChannelServiceLimitedTimeRetryPolicy : public NotificationChan
   template <typename DurationRep, typename DurationPeriod>
   explicit NotificationChannelServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  NotificationChannelServiceLimitedTimeRetryPolicy(NotificationChannelServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : NotificationChannelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  NotificationChannelServiceLimitedTimeRetryPolicy(NotificationChannelServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : NotificationChannelServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  NotificationChannelServiceLimitedTimeRetryPolicy(
+      NotificationChannelServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : NotificationChannelServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
+  NotificationChannelServiceLimitedTimeRetryPolicy(
+      NotificationChannelServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : NotificationChannelServiceLimitedTimeRetryPolicy(
+            rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,7 +163,8 @@ class NotificationChannelServiceLimitedTimeRetryPolicy : public NotificationChan
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NotificationChannelServiceRetryPolicy> clone() const override {
+  std::unique_ptr<NotificationChannelServiceRetryPolicy> clone()
+      const override {
     return std::make_unique<NotificationChannelServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
@@ -154,20 +173,25 @@ class NotificationChannelServiceLimitedTimeRetryPolicy : public NotificationChan
   using BaseType = NotificationChannelServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<monitoring_v3_internal::NotificationChannelServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      monitoring_v3_internal::NotificationChannelServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `NotificationChannelServiceConnection` object for `NotificationChannelServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `NotificationChannelServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * The `NotificationChannelServiceConnection` object for
  * `NotificationChannelServiceClient`.
  *
- * To create a concrete instance, see `MakeNotificationChannelServiceConnection()`.
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `NotificationChannelServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `NotificationChannelServiceClient`.
  *
- * For mocking, see `monitoring_v3_mocks::MockNotificationChannelServiceConnection`.
+ * To create a concrete instance, see
+ * `MakeNotificationChannelServiceConnection()`.
+ *
+ * For mocking, see
+ * `monitoring_v3_mocks::MockNotificationChannelServiceConnection`.
  */
 class NotificationChannelServiceConnection {
  public:
@@ -176,45 +200,60 @@ class NotificationChannelServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
-  ListNotificationChannelDescriptors(google::monitoring::v3::ListNotificationChannelDescriptorsRequest request);
+  ListNotificationChannelDescriptors(
+      google::monitoring::v3::ListNotificationChannelDescriptorsRequest
+          request);
 
   virtual StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
-  GetNotificationChannelDescriptor(google::monitoring::v3::GetNotificationChannelDescriptorRequest const& request);
+  GetNotificationChannelDescriptor(
+      google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
+          request);
 
   virtual StreamRange<google::monitoring::v3::NotificationChannel>
-  ListNotificationChannels(google::monitoring::v3::ListNotificationChannelsRequest request);
+  ListNotificationChannels(
+      google::monitoring::v3::ListNotificationChannelsRequest request);
 
   virtual StatusOr<google::monitoring::v3::NotificationChannel>
-  GetNotificationChannel(google::monitoring::v3::GetNotificationChannelRequest const& request);
+  GetNotificationChannel(
+      google::monitoring::v3::GetNotificationChannelRequest const& request);
 
   virtual StatusOr<google::monitoring::v3::NotificationChannel>
-  CreateNotificationChannel(google::monitoring::v3::CreateNotificationChannelRequest const& request);
+  CreateNotificationChannel(
+      google::monitoring::v3::CreateNotificationChannelRequest const& request);
 
   virtual StatusOr<google::monitoring::v3::NotificationChannel>
-  UpdateNotificationChannel(google::monitoring::v3::UpdateNotificationChannelRequest const& request);
+  UpdateNotificationChannel(
+      google::monitoring::v3::UpdateNotificationChannelRequest const& request);
 
-  virtual Status
-  DeleteNotificationChannel(google::monitoring::v3::DeleteNotificationChannelRequest const& request);
+  virtual Status DeleteNotificationChannel(
+      google::monitoring::v3::DeleteNotificationChannelRequest const& request);
 
-  virtual Status
-  SendNotificationChannelVerificationCode(google::monitoring::v3::SendNotificationChannelVerificationCodeRequest const& request);
+  virtual Status SendNotificationChannelVerificationCode(
+      google::monitoring::v3::
+          SendNotificationChannelVerificationCodeRequest const& request);
 
-  virtual StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
-  GetNotificationChannelVerificationCode(google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const& request);
+  virtual StatusOr<
+      google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
+  GetNotificationChannelVerificationCode(
+      google::monitoring::v3::
+          GetNotificationChannelVerificationCodeRequest const& request);
 
   virtual StatusOr<google::monitoring::v3::NotificationChannel>
-  VerifyNotificationChannel(google::monitoring::v3::VerifyNotificationChannelRequest const& request);
+  VerifyNotificationChannel(
+      google::monitoring::v3::VerifyNotificationChannelRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `NotificationChannelServiceConnection`.
+ * A factory function to construct an object of type
+ * `NotificationChannelServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of NotificationChannelServiceClient.
+ * should be passed as an argument to the constructor of
+ * NotificationChannelServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `NotificationChannelServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `NotificationChannelServiceConnection`. Expected options are any of
+ * the types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -224,11 +263,11 @@ class NotificationChannelServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `NotificationChannelServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the
+ * `NotificationChannelServiceConnection` created by this function.
  */
-std::shared_ptr<NotificationChannelServiceConnection> MakeNotificationChannelServiceConnection(
-    Options options = {});
+std::shared_ptr<NotificationChannelServiceConnection>
+MakeNotificationChannelServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3

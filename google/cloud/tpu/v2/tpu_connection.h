@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V2_TPU_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V2_TPU_CONNECTION_H
 
+#include "google/cloud/tpu/v2/internal/tpu_retry_traits.h"
+#include "google/cloud/tpu/v2/tpu_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,8 +29,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
-#include "google/cloud/tpu/v2/internal/tpu_retry_traits.h"
-#include "google/cloud/tpu/v2/tpu_connection_idempotency_policy.h"
 #include "google/cloud/version.h"
 #include <google/cloud/tpu/v2/cloud_tpu.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -66,14 +66,14 @@ class TpuLimitedErrorCountRetryPolicy : public TpuRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit TpuLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TpuLimitedErrorCountRetryPolicy(
       TpuLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TpuLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TpuLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TpuLimitedErrorCountRetryPolicy(
       TpuLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TpuLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TpuLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class TpuLimitedErrorCountRetryPolicy : public TpuRetryPolicy {
   using BaseType = TpuRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<tpu_v2_internal::TpuRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      tpu_v2_internal::TpuRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,12 @@ class TpuLimitedTimeRetryPolicy : public TpuRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TpuLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   TpuLimitedTimeRetryPolicy(TpuLimitedTimeRetryPolicy&& rhs) noexcept
-    : TpuLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : TpuLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   TpuLimitedTimeRetryPolicy(TpuLimitedTimeRetryPolicy const& rhs) noexcept
-    : TpuLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : TpuLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -150,15 +152,16 @@ class TpuLimitedTimeRetryPolicy : public TpuRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<TpuRetryPolicy> clone() const override {
-    return std::make_unique<TpuLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<TpuLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = TpuRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<tpu_v2_internal::TpuRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      tpu_v2_internal::TpuRetryTraits>
+      impl_;
 };
 
 /**
@@ -179,125 +182,136 @@ class TpuConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::tpu::v2::Node>
-  ListNodes(google::cloud::tpu::v2::ListNodesRequest request);
+  virtual StreamRange<google::cloud::tpu::v2::Node> ListNodes(
+      google::cloud::tpu::v2::ListNodesRequest request);
 
-  virtual StatusOr<google::cloud::tpu::v2::Node>
-  GetNode(google::cloud::tpu::v2::GetNodeRequest const& request);
+  virtual StatusOr<google::cloud::tpu::v2::Node> GetNode(
+      google::cloud::tpu::v2::GetNodeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::tpu::v2::Node>>
-  CreateNode(google::cloud::tpu::v2::CreateNodeRequest const& request);
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
+      google::cloud::tpu::v2::CreateNodeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateNode(NoAwaitTag, google::cloud::tpu::v2::CreateNodeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateNode(
+      NoAwaitTag, google::cloud::tpu::v2::CreateNodeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::tpu::v2::Node>>
-  CreateNode( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
   DeleteNode(google::cloud::tpu::v2::DeleteNodeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteNode(NoAwaitTag, google::cloud::tpu::v2::DeleteNodeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteNode(
+      NoAwaitTag, google::cloud::tpu::v2::DeleteNodeRequest const& request);
 
   virtual future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
-  DeleteNode( google::longrunning::Operation const& operation);
+  DeleteNode(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::tpu::v2::Node>>
-  StopNode(google::cloud::tpu::v2::StopNodeRequest const& request);
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
+      google::cloud::tpu::v2::StopNodeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  StopNode(NoAwaitTag, google::cloud::tpu::v2::StopNodeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> StopNode(
+      NoAwaitTag, google::cloud::tpu::v2::StopNodeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::tpu::v2::Node>>
-  StopNode( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::tpu::v2::Node>>
-  StartNode(google::cloud::tpu::v2::StartNodeRequest const& request);
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
+      google::cloud::tpu::v2::StartNodeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  StartNode(NoAwaitTag, google::cloud::tpu::v2::StartNodeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> StartNode(
+      NoAwaitTag, google::cloud::tpu::v2::StartNodeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::tpu::v2::Node>>
-  StartNode( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::tpu::v2::Node>>
-  UpdateNode(google::cloud::tpu::v2::UpdateNodeRequest const& request);
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
+      google::cloud::tpu::v2::UpdateNodeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateNode(NoAwaitTag, google::cloud::tpu::v2::UpdateNodeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> UpdateNode(
+      NoAwaitTag, google::cloud::tpu::v2::UpdateNodeRequest const& request);
 
-  virtual future<StatusOr<google::cloud::tpu::v2::Node>>
-  UpdateNode( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
+      google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::tpu::v2::QueuedResource>
-  ListQueuedResources(google::cloud::tpu::v2::ListQueuedResourcesRequest request);
+  ListQueuedResources(
+      google::cloud::tpu::v2::ListQueuedResourcesRequest request);
 
-  virtual StatusOr<google::cloud::tpu::v2::QueuedResource>
-  GetQueuedResource(google::cloud::tpu::v2::GetQueuedResourceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
-  CreateQueuedResource(google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateQueuedResource(NoAwaitTag, google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
+  virtual StatusOr<google::cloud::tpu::v2::QueuedResource> GetQueuedResource(
+      google::cloud::tpu::v2::GetQueuedResourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
-  CreateQueuedResource( google::longrunning::Operation const& operation);
+  CreateQueuedResource(
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+  CreateQueuedResource(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
-  DeleteQueuedResource(google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
+  DeleteQueuedResource(
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteQueuedResource(NoAwaitTag, google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
-  DeleteQueuedResource( google::longrunning::Operation const& operation);
+  DeleteQueuedResource(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
-  ResetQueuedResource(google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
+  ResetQueuedResource(
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ResetQueuedResource(NoAwaitTag, google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ResetQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
 
   virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
-  ResetQueuedResource( google::longrunning::Operation const& operation);
+  ResetQueuedResource(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
-  GenerateServiceIdentity(google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request);
+  GenerateServiceIdentity(
+      google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request);
 
   virtual StreamRange<google::cloud::tpu::v2::AcceleratorType>
-  ListAcceleratorTypes(google::cloud::tpu::v2::ListAcceleratorTypesRequest request);
+  ListAcceleratorTypes(
+      google::cloud::tpu::v2::ListAcceleratorTypesRequest request);
 
-  virtual StatusOr<google::cloud::tpu::v2::AcceleratorType>
-  GetAcceleratorType(google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request);
+  virtual StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
+      google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request);
 
   virtual StreamRange<google::cloud::tpu::v2::RuntimeVersion>
-  ListRuntimeVersions(google::cloud::tpu::v2::ListRuntimeVersionsRequest request);
+  ListRuntimeVersions(
+      google::cloud::tpu::v2::ListRuntimeVersionsRequest request);
 
-  virtual StatusOr<google::cloud::tpu::v2::RuntimeVersion>
-  GetRuntimeVersion(google::cloud::tpu::v2::GetRuntimeVersionRequest const& request);
+  virtual StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
+      google::cloud::tpu::v2::GetRuntimeVersionRequest const& request);
 
   virtual StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
-  GetGuestAttributes(google::cloud::tpu::v2::GetGuestAttributesRequest const& request);
+  GetGuestAttributes(
+      google::cloud::tpu::v2::GetGuestAttributesRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -321,8 +335,7 @@ class TpuConnection {
  * @param options (optional) Configure the `TpuConnection` created by
  * this function.
  */
-std::shared_ptr<TpuConnection> MakeTpuConnection(
-    Options options = {});
+std::shared_ptr<TpuConnection> MakeTpuConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_v2

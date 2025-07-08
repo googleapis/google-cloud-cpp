@@ -24,10 +24,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/aiplatform/v1/vizier_service.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/aiplatform/v1/vizier_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -41,28 +41,24 @@ class VizierServiceStub {
   virtual ~VizierServiceStub() = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateStudyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Study> GetStudy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetStudyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse> ListStudies(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse>
+  ListStudies(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListStudiesRequest const& request) = 0;
 
   virtual Status DeleteStudy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::DeleteStudyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Study> LookupStudy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::LookupStudyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncSuggestTrials(
@@ -72,115 +68,104 @@ class VizierServiceStub {
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> SuggestTrials(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateTrialRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Trial> GetTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetTrialRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse> ListTrials(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse>
+  ListTrials(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListTrialsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Trial> AddTrialMeasurement(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Trial> CompleteTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CompleteTrialRequest const& request) = 0;
 
   virtual Status DeleteTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::DeleteTrialRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCheckTrialEarlyStoppingState(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCheckTrialEarlyStoppingState(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) = 0;
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::StopTrialRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse> ListOptimalTrials(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
+  ListOptimalTrials(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -193,150 +178,142 @@ class VizierServiceStub {
 class DefaultVizierServiceStub : public VizierServiceStub {
  public:
   DefaultVizierServiceStub(
-      std::unique_ptr<google::cloud::aiplatform::v1::VizierService::StubInterface> grpc_stub,
+      std::unique_ptr<
+          google::cloud::aiplatform::v1::VizierService::StubInterface>
+          grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateStudyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateStudyRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Study> GetStudy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetStudyRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse> ListStudies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListStudiesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListStudiesRequest const& request)
+      override;
 
-  Status DeleteStudy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::DeleteStudyRequest const& request) override;
+  Status DeleteStudy(grpc::ClientContext& context, Options const& options,
+                     google::cloud::aiplatform::v1::DeleteStudyRequest const&
+                         request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Study> LookupStudy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::LookupStudyRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::LookupStudyRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSuggestTrials(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) override;
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> SuggestTrials(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CreateTrialRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CreateTrialRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> GetTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetTrialRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse> ListTrials(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListTrialsRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> AddTrialMeasurement(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request)
+      override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> CompleteTrial(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::CompleteTrialRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::CompleteTrialRequest const& request)
+      override;
 
-  Status DeleteTrial(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::DeleteTrialRequest const& request) override;
+  Status DeleteTrial(grpc::ClientContext& context, Options const& options,
+                     google::cloud::aiplatform::v1::DeleteTrialRequest const&
+                         request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCheckTrialEarlyStoppingState(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCheckTrialEarlyStoppingState(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) override;
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::StopTrialRequest const& request) override;
 
-  StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse> ListOptimalTrials(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) override;
+  StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
+  ListOptimalTrials(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> WaitOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::WaitOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -352,10 +329,13 @@ class DefaultVizierServiceStub : public VizierServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::aiplatform::v1::VizierService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::aiplatform::v1::VizierService::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

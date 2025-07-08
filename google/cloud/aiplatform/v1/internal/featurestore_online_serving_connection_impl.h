@@ -47,54 +47,63 @@ class FeaturestoreOnlineServingServiceConnectionImpl
   ~FeaturestoreOnlineServingServiceConnectionImpl() override = default;
 
   FeaturestoreOnlineServingServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  ReadFeatureValues(google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) override;
+  ReadFeatureValues(
+      google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request)
+      override;
 
   StreamRange<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
-  StreamingReadFeatureValues(google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const& request) override;
+  StreamingReadFeatureValues(
+      google::cloud::aiplatform::v1::StreamingReadFeatureValuesRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
-  WriteFeatureValues(google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) override;
+  WriteFeatureValues(
+      google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub> stub_;
+  std::shared_ptr<aiplatform_v1_internal::FeaturestoreOnlineServingServiceStub>
+      stub_;
   Options options_;
 };
 

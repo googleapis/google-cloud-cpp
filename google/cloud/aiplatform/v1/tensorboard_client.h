@@ -64,23 +64,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TensorboardServiceClient {
  public:
-  explicit TensorboardServiceClient(std::shared_ptr<TensorboardServiceConnection> connection, Options opts = {});
+  explicit TensorboardServiceClient(
+      std::shared_ptr<TensorboardServiceConnection> connection,
+      Options opts = {});
   ~TensorboardServiceClient();
 
   ///@{
   /// @name Copy and move support
   TensorboardServiceClient(TensorboardServiceClient const&) = default;
-  TensorboardServiceClient& operator=(TensorboardServiceClient const&) = default;
+  TensorboardServiceClient& operator=(TensorboardServiceClient const&) =
+      default;
   TensorboardServiceClient(TensorboardServiceClient&&) = default;
   TensorboardServiceClient& operator=(TensorboardServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(TensorboardServiceClient const& a, TensorboardServiceClient const& b) {
+  friend bool operator==(TensorboardServiceClient const& a,
+                         TensorboardServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TensorboardServiceClient const& a, TensorboardServiceClient const& b) {
+  friend bool operator!=(TensorboardServiceClient const& a,
+                         TensorboardServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,7 +122,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  CreateTensorboard(std::string const& parent, google::cloud::aiplatform::v1::Tensorboard const& tensorboard, Options opts = {});
+  CreateTensorboard(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -130,8 +138,10 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTensorboard(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::Tensorboard const& tensorboard, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTensorboard(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -168,7 +178,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  CreateTensorboard(google::cloud::aiplatform::v1::CreateTensorboardRequest const& request, Options opts = {});
+  CreateTensorboard(
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -181,8 +193,10 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTensorboard(NoAwaitTag, google::cloud::aiplatform::v1::CreateTensorboardRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTensorboard(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -194,7 +208,8 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  CreateTensorboard(google::longrunning::Operation const& operation, Options opts = {});
+  CreateTensorboard(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -220,8 +235,8 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.Tensorboard]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Tensorboard>
-  GetTensorboard(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -250,8 +265,9 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.Tensorboard]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Tensorboard>
-  GetTensorboard(google::cloud::aiplatform::v1::GetTensorboardRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
+      google::cloud::aiplatform::v1::GetTensorboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -291,7 +307,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  UpdateTensorboard(google::cloud::aiplatform::v1::Tensorboard const& tensorboard, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateTensorboard(
+      google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +322,9 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateTensorboard(NoAwaitTag, google::cloud::aiplatform::v1::Tensorboard const& tensorboard, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateTensorboard(
+      NoAwaitTag, google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -342,7 +361,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  UpdateTensorboard(google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request, Options opts = {});
+  UpdateTensorboard(
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -355,8 +376,10 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateTensorboard(NoAwaitTag, google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateTensorboard(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -368,7 +391,8 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  UpdateTensorboard(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateTensorboard(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -403,8 +427,8 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.Tensorboard]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Tensorboard>
-  ListTensorboards(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Tensorboard> ListTensorboards(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -442,8 +466,9 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.Tensorboard]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Tensorboard>
-  ListTensorboards(google::cloud::aiplatform::v1::ListTensorboardsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Tensorboard> ListTensorboards(
+      google::cloud::aiplatform::v1::ListTensorboardsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -490,8 +515,8 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTensorboard(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTensorboard(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -528,7 +553,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboard(google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request, Options opts = {});
+  DeleteTensorboard(
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -541,8 +568,10 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTensorboard(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTensorboard(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -554,7 +583,8 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboard(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteTensorboard(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -611,7 +641,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
-  ReadTensorboardUsage(google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request, Options opts = {});
+  ReadTensorboardUsage(
+      google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -668,7 +700,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
-  ReadTensorboardSize(google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request, Options opts = {});
+  ReadTensorboardSize(
+      google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -701,7 +735,11 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-  CreateTensorboardExperiment(std::string const& parent, google::cloud::aiplatform::v1::TensorboardExperiment const& tensorboard_experiment, std::string const& tensorboard_experiment_id, Options opts = {});
+  CreateTensorboardExperiment(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::TensorboardExperiment const&
+          tensorboard_experiment,
+      std::string const& tensorboard_experiment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -731,7 +769,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-  CreateTensorboardExperiment(google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const& request, Options opts = {});
+  CreateTensorboardExperiment(
+      google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -788,7 +829,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-  GetTensorboardExperiment(google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const& request, Options opts = {});
+  GetTensorboardExperiment(
+      google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -821,7 +865,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-  UpdateTensorboardExperiment(google::cloud::aiplatform::v1::TensorboardExperiment const& tensorboard_experiment, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateTensorboardExperiment(
+      google::cloud::aiplatform::v1::TensorboardExperiment const&
+          tensorboard_experiment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -851,7 +898,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
-  UpdateTensorboardExperiment(google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const& request, Options opts = {});
+  UpdateTensorboardExperiment(
+      google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -926,7 +976,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::TensorboardExperiment>
-  ListTensorboardExperiments(google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request, Options opts = {});
+  ListTensorboardExperiments(
+      google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -973,8 +1025,8 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTensorboardExperiment(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1011,7 +1063,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardExperiment(google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request, Options opts = {});
+  DeleteTensorboardExperiment(
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1024,8 +1079,11 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTensorboardExperiment(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1037,7 +1095,8 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardExperiment(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteTensorboardExperiment(google::longrunning::Operation const& operation,
+                              Options opts = {});
 
   // clang-format off
   ///
@@ -1069,8 +1128,10 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  CreateTensorboardRun(std::string const& parent, google::cloud::aiplatform::v1::TensorboardRun const& tensorboard_run, std::string const& tensorboard_run_id, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TensorboardRun> CreateTensorboardRun(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::TensorboardRun const& tensorboard_run,
+      std::string const& tensorboard_run_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1099,8 +1160,9 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  CreateTensorboardRun(google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TensorboardRun> CreateTensorboardRun(
+      google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1131,7 +1193,12 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
-  BatchCreateTensorboardRuns(std::string const& parent, std::vector<google::cloud::aiplatform::v1::CreateTensorboardRunRequest> const& requests, Options opts = {});
+  BatchCreateTensorboardRuns(
+      std::string const& parent,
+      std::vector<
+          google::cloud::aiplatform::v1::CreateTensorboardRunRequest> const&
+          requests,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1161,7 +1228,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
-  BatchCreateTensorboardRuns(google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const& request, Options opts = {});
+  BatchCreateTensorboardRuns(
+      google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1187,8 +1257,8 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  GetTensorboardRun(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TensorboardRun> GetTensorboardRun(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1217,8 +1287,9 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.TensorboardRun]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_run.proto#L33}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  GetTensorboardRun(google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TensorboardRun> GetTensorboardRun(
+      google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1250,8 +1321,9 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L808}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  UpdateTensorboardRun(google::cloud::aiplatform::v1::TensorboardRun const& tensorboard_run, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TensorboardRun> UpdateTensorboardRun(
+      google::cloud::aiplatform::v1::TensorboardRun const& tensorboard_run,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1280,8 +1352,9 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateTensorboardRunRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L808}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
-  UpdateTensorboardRun(google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::TensorboardRun> UpdateTensorboardRun(
+      google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1356,7 +1429,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::TensorboardRun>
-  ListTensorboardRuns(google::cloud::aiplatform::v1::ListTensorboardRunsRequest request, Options opts = {});
+  ListTensorboardRuns(
+      google::cloud::aiplatform::v1::ListTensorboardRunsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1403,8 +1478,8 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTensorboardRun(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1441,7 +1516,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardRun(google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request, Options opts = {});
+  DeleteTensorboardRun(
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1454,8 +1531,10 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTensorboardRun(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1467,7 +1546,8 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardRun(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteTensorboardRun(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -1499,8 +1579,13 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L863}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
-  BatchCreateTensorboardTimeSeries(std::string const& parent, std::vector<google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest> const& requests, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
+  BatchCreateTensorboardTimeSeries(
+      std::string const& parent,
+      std::vector<google::cloud::aiplatform::v1::
+                      CreateTensorboardTimeSeriesRequest> const& requests,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1529,8 +1614,12 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.BatchCreateTensorboardTimeSeriesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L863}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
-  BatchCreateTensorboardTimeSeries(google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
+  BatchCreateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::
+          BatchCreateTensorboardTimeSeriesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1559,7 +1648,11 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  CreateTensorboardTimeSeries(std::string const& parent, google::cloud::aiplatform::v1::TensorboardTimeSeries const& tensorboard_time_series, Options opts = {});
+  CreateTensorboardTimeSeries(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::TensorboardTimeSeries const&
+          tensorboard_time_series,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1589,7 +1682,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  CreateTensorboardTimeSeries(google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const& request, Options opts = {});
+  CreateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1646,7 +1742,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  GetTensorboardTimeSeries(google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const& request, Options opts = {});
+  GetTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1680,7 +1779,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  UpdateTensorboardTimeSeries(google::cloud::aiplatform::v1::TensorboardTimeSeries const& tensorboard_time_series, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::TensorboardTimeSeries const&
+          tensorboard_time_series,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1710,7 +1812,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  UpdateTensorboardTimeSeries(google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const& request, Options opts = {});
+  UpdateTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1785,7 +1890,9 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::TensorboardTimeSeries>
-  ListTensorboardTimeSeries(google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request, Options opts = {});
+  ListTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1832,8 +1939,8 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTensorboardTimeSeries(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1870,7 +1977,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardTimeSeries(google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request, Options opts = {});
+  DeleteTensorboardTimeSeries(
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1883,8 +1993,11 @@ class TensorboardServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTensorboardTimeSeries(NoAwaitTag, google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1896,7 +2009,8 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardTimeSeries(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteTensorboardTimeSeries(google::longrunning::Operation const& operation,
+                              Options opts = {});
 
   // clang-format off
   ///
@@ -1930,8 +2044,10 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1022}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
-  BatchReadTensorboardTimeSeriesData(std::string const& tensorboard, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
+  BatchReadTensorboardTimeSeriesData(std::string const& tensorboard,
+                                     Options opts = {});
 
   // clang-format off
   ///
@@ -1964,8 +2080,12 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.BatchReadTensorboardTimeSeriesDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1022}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
-  BatchReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
+  BatchReadTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::
+          BatchReadTensorboardTimeSeriesDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1996,7 +2116,8 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
-  ReadTensorboardTimeSeriesData(std::string const& tensorboard_time_series, Options opts = {});
+  ReadTensorboardTimeSeriesData(std::string const& tensorboard_time_series,
+                                Options opts = {});
 
   // clang-format off
   ///
@@ -2030,7 +2151,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
-  ReadTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const& request, Options opts = {});
+  ReadTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2093,7 +2217,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ReadTensorboardBlobDataResponse>
-  ReadTensorboardBlobData(google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const& request, Options opts = {});
+  ReadTensorboardBlobData(
+      google::cloud::aiplatform::v1::ReadTensorboardBlobDataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2121,8 +2248,14 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1077}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
-  WriteTensorboardExperimentData(std::string const& tensorboard_experiment, std::vector<google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest> const& write_run_data_requests, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
+  WriteTensorboardExperimentData(
+      std::string const& tensorboard_experiment,
+      std::vector<
+          google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest> const&
+          write_run_data_requests,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2152,8 +2285,12 @@ class TensorboardServiceClient {
   /// [google.cloud.aiplatform.v1.WriteTensorboardExperimentDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/tensorboard_service.proto#L1077}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
-  WriteTensorboardExperimentData(google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
+  WriteTensorboardExperimentData(
+      google::cloud::aiplatform::v1::
+          WriteTensorboardExperimentDataRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2186,7 +2323,11 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
-  WriteTensorboardRunData(std::string const& tensorboard_run, std::vector<google::cloud::aiplatform::v1::TimeSeriesData> const& time_series_data, Options opts = {});
+  WriteTensorboardRunData(
+      std::string const& tensorboard_run,
+      std::vector<google::cloud::aiplatform::v1::TimeSeriesData> const&
+          time_series_data,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2217,7 +2358,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
-  WriteTensorboardRunData(google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const& request, Options opts = {});
+  WriteTensorboardRunData(
+      google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2254,7 +2398,8 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>
-  ExportTensorboardTimeSeriesData(std::string const& tensorboard_time_series, Options opts = {});
+  ExportTensorboardTimeSeriesData(std::string const& tensorboard_time_series,
+                                  Options opts = {});
 
   // clang-format off
   ///
@@ -2294,7 +2439,10 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::TimeSeriesDataPoint>
-  ExportTensorboardTimeSeriesData(google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest request, Options opts = {});
+  ExportTensorboardTimeSeriesData(
+      google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2332,8 +2480,8 @@ class TensorboardServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2362,8 +2510,9 @@ class TensorboardServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2395,8 +2544,8 @@ class TensorboardServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2427,8 +2576,8 @@ class TensorboardServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2463,8 +2612,9 @@ class TensorboardServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2499,8 +2649,8 @@ class TensorboardServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2539,8 +2689,8 @@ class TensorboardServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2566,8 +2716,8 @@ class TensorboardServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2598,8 +2748,9 @@ class TensorboardServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2623,8 +2774,7 @@ class TensorboardServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2653,8 +2803,9 @@ class TensorboardServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2688,8 +2839,7 @@ class TensorboardServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2728,8 +2878,9 @@ class TensorboardServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2766,8 +2917,9 @@ class TensorboardServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TensorboardServiceConnection> connection_;

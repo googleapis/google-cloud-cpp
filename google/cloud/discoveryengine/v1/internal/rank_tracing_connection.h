@@ -36,21 +36,21 @@ class RankServiceTracingConnection
   ~RankServiceTracingConnection() override = default;
 
   explicit RankServiceTracingConnection(
-    std::shared_ptr<discoveryengine_v1::RankServiceConnection> child);
+      std::shared_ptr<discoveryengine_v1::RankServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::discoveryengine::v1::RankResponse>
-  Rank(google::cloud::discoveryengine::v1::RankRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::RankResponse> Rank(
+      google::cloud::discoveryengine::v1::RankRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::RankServiceConnection> child_;

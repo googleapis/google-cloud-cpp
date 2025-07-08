@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_PAGES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_PAGES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/pages_retry_traits.h"
 #include "google/cloud/dialogflow_cx/pages_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -63,14 +63,14 @@ class PagesLimitedErrorCountRetryPolicy : public PagesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit PagesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   PagesLimitedErrorCountRetryPolicy(
       PagesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : PagesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : PagesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   PagesLimitedErrorCountRetryPolicy(
       PagesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : PagesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : PagesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +90,9 @@ class PagesLimitedErrorCountRetryPolicy : public PagesRetryPolicy {
   using BaseType = PagesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::PagesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_cx_internal::PagesRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +130,12 @@ class PagesLimitedTimeRetryPolicy : public PagesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit PagesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   PagesLimitedTimeRetryPolicy(PagesLimitedTimeRetryPolicy&& rhs) noexcept
-    : PagesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : PagesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   PagesLimitedTimeRetryPolicy(PagesLimitedTimeRetryPolicy const& rhs) noexcept
-    : PagesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : PagesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -147,15 +149,16 @@ class PagesLimitedTimeRetryPolicy : public PagesRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<PagesRetryPolicy> clone() const override {
-    return std::make_unique<PagesLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<PagesLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = PagesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::PagesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_cx_internal::PagesRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,35 +179,35 @@ class PagesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::cx::v3::Page>
-  ListPages(google::cloud::dialogflow::cx::v3::ListPagesRequest request);
+  virtual StreamRange<google::cloud::dialogflow::cx::v3::Page> ListPages(
+      google::cloud::dialogflow::cx::v3::ListPagesRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Page>
-  GetPage(google::cloud::dialogflow::cx::v3::GetPageRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Page> GetPage(
+      google::cloud::dialogflow::cx::v3::GetPageRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Page>
-  CreatePage(google::cloud::dialogflow::cx::v3::CreatePageRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Page> CreatePage(
+      google::cloud::dialogflow::cx::v3::CreatePageRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Page>
-  UpdatePage(google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
+      google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request);
 
-  virtual Status
-  DeletePage(google::cloud::dialogflow::cx::v3::DeletePageRequest const& request);
+  virtual Status DeletePage(
+      google::cloud::dialogflow::cx::v3::DeletePageRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
@@ -239,8 +242,7 @@ std::shared_ptr<PagesConnection> MakePagesConnection(
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<PagesConnection> MakePagesConnection(
-    Options options = {});
+std::shared_ptr<PagesConnection> MakePagesConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

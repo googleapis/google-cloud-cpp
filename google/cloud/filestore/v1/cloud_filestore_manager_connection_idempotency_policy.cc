@@ -26,111 +26,137 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudFilestoreManagerConnectionIdempotencyPolicy::~CloudFilestoreManagerConnectionIdempotencyPolicy() = default;
+CloudFilestoreManagerConnectionIdempotencyPolicy::
+    ~CloudFilestoreManagerConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudFilestoreManagerConnectionIdempotencyPolicy>
 CloudFilestoreManagerConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<CloudFilestoreManagerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudFilestoreManagerConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListInstances(google::cloud::filestore::v1::ListInstancesRequest) {  // NOLINT
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListInstances(
+    google::cloud::filestore::v1::ListInstancesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetInstance(google::cloud::filestore::v1::GetInstanceRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetInstance(
+    google::cloud::filestore::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CreateInstance(google::cloud::filestore::v1::CreateInstanceRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CreateInstance(
+    google::cloud::filestore::v1::CreateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateInstance(google::cloud::filestore::v1::UpdateInstanceRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateInstance(
+    google::cloud::filestore::v1::UpdateInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::RestoreInstance(google::cloud::filestore::v1::RestoreInstanceRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::RestoreInstance(
+    google::cloud::filestore::v1::RestoreInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::RevertInstance(google::cloud::filestore::v1::RevertInstanceRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::RevertInstance(
+    google::cloud::filestore::v1::RevertInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteInstance(google::cloud::filestore::v1::DeleteInstanceRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteInstance(
+    google::cloud::filestore::v1::DeleteInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListSnapshots(google::cloud::filestore::v1::ListSnapshotsRequest) {  // NOLINT
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListSnapshots(
+    google::cloud::filestore::v1::ListSnapshotsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetSnapshot(google::cloud::filestore::v1::GetSnapshotRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetSnapshot(
+    google::cloud::filestore::v1::GetSnapshotRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CreateSnapshot(google::cloud::filestore::v1::CreateSnapshotRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CreateSnapshot(
+    google::cloud::filestore::v1::CreateSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteSnapshot(google::cloud::filestore::v1::DeleteSnapshotRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteSnapshot(
+    google::cloud::filestore::v1::DeleteSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateSnapshot(google::cloud::filestore::v1::UpdateSnapshotRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateSnapshot(
+    google::cloud::filestore::v1::UpdateSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListBackups(google::cloud::filestore::v1::ListBackupsRequest) {  // NOLINT
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListBackups(
+    google::cloud::filestore::v1::ListBackupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetBackup(google::cloud::filestore::v1::GetBackupRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetBackup(
+    google::cloud::filestore::v1::GetBackupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CreateBackup(google::cloud::filestore::v1::CreateBackupRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CreateBackup(
+    google::cloud::filestore::v1::CreateBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteBackup(google::cloud::filestore::v1::DeleteBackupRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteBackup(
+    google::cloud::filestore::v1::DeleteBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateBackup(google::cloud::filestore::v1::UpdateBackupRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateBackup(
+    google::cloud::filestore::v1::UpdateBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::PromoteReplica(google::cloud::filestore::v1::PromoteReplicaRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::PromoteReplica(
+    google::cloud::filestore::v1::PromoteReplicaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<CloudFilestoreManagerConnectionIdempotencyPolicy>
-    MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy() {
+MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy() {
   return std::make_unique<CloudFilestoreManagerConnectionIdempotencyPolicy>();
 }
 

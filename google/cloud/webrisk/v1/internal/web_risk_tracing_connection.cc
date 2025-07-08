@@ -34,37 +34,46 @@ WebRiskServiceTracingConnection::WebRiskServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-WebRiskServiceTracingConnection::ComputeThreatListDiff(google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
-  auto span = internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::ComputeThreatListDiff");
+WebRiskServiceTracingConnection::ComputeThreatListDiff(
+    google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
+  auto span = internal::MakeSpan(
+      "webrisk_v1::WebRiskServiceConnection::ComputeThreatListDiff");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ComputeThreatListDiff(request));
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
-WebRiskServiceTracingConnection::SearchUris(google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-  auto span = internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SearchUris");
+WebRiskServiceTracingConnection::SearchUris(
+    google::cloud::webrisk::v1::SearchUrisRequest const& request) {
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SearchUris");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SearchUris(request));
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
-WebRiskServiceTracingConnection::SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-  auto span = internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SearchHashes");
+WebRiskServiceTracingConnection::SearchHashes(
+    google::cloud::webrisk::v1::SearchHashesRequest const& request) {
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SearchHashes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SearchHashes(request));
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
-WebRiskServiceTracingConnection::CreateSubmission(google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
-  auto span = internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::CreateSubmission");
+WebRiskServiceTracingConnection::CreateSubmission(
+    google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "webrisk_v1::WebRiskServiceConnection::CreateSubmission");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSubmission(request));
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
-WebRiskServiceTracingConnection::SubmitUri(google::cloud::webrisk::v1::SubmitUriRequest const& request) {
-  auto span = internal::MakeSpan(
-      "webrisk_v1::WebRiskServiceConnection::SubmitUri");
+WebRiskServiceTracingConnection::SubmitUri(
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SubmitUri");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SubmitUri(request));
 }
@@ -72,49 +81,53 @@ WebRiskServiceTracingConnection::SubmitUri(google::cloud::webrisk::v1::SubmitUri
 StatusOr<google::longrunning::Operation>
 WebRiskServiceTracingConnection::SubmitUri(
     NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const& request) {
-  auto span = internal::MakeSpan(
-      "webrisk_v1::WebRiskServiceConnection::SubmitUri");
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SubmitUri");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SubmitUri(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SubmitUri(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
 WebRiskServiceTracingConnection::SubmitUri(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "webrisk_v1::WebRiskServiceConnection::SubmitUri");
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SubmitUri");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->SubmitUri(operation));
+  return internal::EndSpan(std::move(span), child_->SubmitUri(operation));
 }
 
 StreamRange<google::longrunning::Operation>
-WebRiskServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::ListOperations");
+WebRiskServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "webrisk_v1::WebRiskServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-WebRiskServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::GetOperation");
+WebRiskServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-WebRiskServiceTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::DeleteOperation");
+Status WebRiskServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "webrisk_v1::WebRiskServiceConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-WebRiskServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::CancelOperation");
+Status WebRiskServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "webrisk_v1::WebRiskServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

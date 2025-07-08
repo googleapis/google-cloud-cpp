@@ -46,105 +46,98 @@ CloudSchedulerMetadata::CloudSchedulerMetadata(
 
 StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
 CloudSchedulerMetadata::ListJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::ListJobsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListJobs(context, options, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::GetJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::GetJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::GetJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetJob(context, options, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::CreateJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::CreateJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::CreateJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateJob(context, options, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::UpdateJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::UpdateJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::UpdateJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("job.name=", internal::UrlEncode(request.job().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("job.name=", internal::UrlEncode(request.job().name())));
   return child_->UpdateJob(context, options, request);
 }
 
-Status
-CloudSchedulerMetadata::DeleteJob(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CloudSchedulerMetadata::DeleteJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::DeleteJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteJob(context, options, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::PauseJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::PauseJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::PauseJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->PauseJob(context, options, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::ResumeJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::ResumeJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::ResumeJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResumeJob(context, options, request);
 }
 
-StatusOr<google::cloud::scheduler::v1::Job>
-CloudSchedulerMetadata::RunJob(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerMetadata::RunJob(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::RunJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RunJob(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudSchedulerMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location>
-CloudSchedulerMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> CloudSchedulerMetadata::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 void CloudSchedulerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CloudSchedulerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

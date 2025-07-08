@@ -19,6 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_INTERNAL_VIDEO_INTELLIGENCE_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_INTERNAL_VIDEO_INTELLIGENCE_CONNECTION_IMPL_H
 
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_retry_traits.h"
+#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
+#include "google/cloud/videointelligence/v1/video_intelligence_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -26,11 +31,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_retry_traits.h"
-#include "google/cloud/videointelligence/v1/internal/video_intelligence_stub.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
-#include "google/cloud/videointelligence/v1/video_intelligence_options.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
@@ -45,26 +45,31 @@ class VideoIntelligenceServiceConnectionImpl
   ~VideoIntelligenceServiceConnectionImpl() override = default;
 
   VideoIntelligenceServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<videointelligence_v1_internal::VideoIntelligenceServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          videointelligence_v1_internal::VideoIntelligenceServiceStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
+  AnnotateVideo(
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  AnnotateVideo(NoAwaitTag,
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) override;
+  StatusOr<google::longrunning::Operation> AnnotateVideo(
+      NoAwaitTag,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(
-      google::longrunning::Operation const& operation) override;
+  AnnotateVideo(google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<videointelligence_v1_internal::VideoIntelligenceServiceStub> stub_;
+  std::shared_ptr<videointelligence_v1_internal::VideoIntelligenceServiceStub>
+      stub_;
   Options options_;
 };
 

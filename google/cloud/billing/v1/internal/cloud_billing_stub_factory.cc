@@ -37,28 +37,25 @@ namespace cloud {
 namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CloudBillingStub>
-CreateDefaultCloudBillingStub(
+std::shared_ptr<CloudBillingStub> CreateDefaultCloudBillingStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::billing::v1::CloudBilling::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::billing::v1::CloudBilling::NewStub(channel);
   std::shared_ptr<CloudBillingStub> stub =
-    std::make_shared<DefaultCloudBillingStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultCloudBillingStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<CloudBillingAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<CloudBillingAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<CloudBillingMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<CloudBillingLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

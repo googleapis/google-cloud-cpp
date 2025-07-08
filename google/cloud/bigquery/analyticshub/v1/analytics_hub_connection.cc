@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/analyticshub/v1/analyticshub.proto
 
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_options.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_connection_impl.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_option_defaults.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_stub_factory.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -38,14 +38,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AnalyticsHubServiceConnection::~AnalyticsHubServiceConnection() = default;
 
-StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange> AnalyticsHubServiceConnection::ListDataExchanges(
-    google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
+AnalyticsHubServiceConnection::ListDataExchanges(
+    google::cloud::bigquery::analyticshub::v1::
+        ListDataExchangesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>();
 }
 
-StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange> AnalyticsHubServiceConnection::ListOrgDataExchanges(
-    google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
+AnalyticsHubServiceConnection::ListOrgDataExchanges(
+    google::cloud::bigquery::analyticshub::v1::
+        ListOrgDataExchangesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>();
 }
@@ -58,24 +62,28 @@ AnalyticsHubServiceConnection::GetDataExchange(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceConnection::CreateDataExchange(
-    google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&) {
+    google::cloud::bigquery::analyticshub::v1::
+        CreateDataExchangeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceConnection::UpdateDataExchange(
-    google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&) {
+    google::cloud::bigquery::analyticshub::v1::
+        UpdateDataExchangeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AnalyticsHubServiceConnection::DeleteDataExchange(
-    google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&) {
+Status AnalyticsHubServiceConnection::DeleteDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        DeleteDataExchangeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::analyticshub::v1::Listing> AnalyticsHubServiceConnection::ListListings(
-    google::cloud::bigquery::analyticshub::v1::ListListingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
+AnalyticsHubServiceConnection::ListListings(
+    google::cloud::bigquery::analyticshub::v1::
+        ListListingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>>();
 }
@@ -98,8 +106,7 @@ AnalyticsHubServiceConnection::UpdateListing(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AnalyticsHubServiceConnection::DeleteListing(
+Status AnalyticsHubServiceConnection::DeleteListing(
     google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -110,52 +117,60 @@ AnalyticsHubServiceConnection::SubscribeListing(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
 AnalyticsHubServiceConnection::SubscribeDataExchange(
-    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const&) {
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::bigquery::analyticshub::v1::
+                   SubscribeDataExchangeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnection::SubscribeDataExchange(
-    NoAwaitTag,
-    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const&) {
+    NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                    SubscribeDataExchangeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
 AnalyticsHubServiceConnection::SubscribeDataExchange(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::bigquery::analyticshub::v1::
+                   SubscribeDataExchangeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceConnection::RefreshSubscription(
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+    google::cloud::bigquery::analyticshub::v1::
+        RefreshSubscriptionRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnection::RefreshSubscription(
-    NoAwaitTag,
-    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&) {
+    NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                    RefreshSubscriptionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceConnection::RefreshSubscription(
     google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -164,56 +179,60 @@ AnalyticsHubServiceConnection::GetSubscription(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription> AnalyticsHubServiceConnection::ListSubscriptions(
-    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceConnection::ListSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>();
 }
 
-StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription> AnalyticsHubServiceConnection::ListSharedResourceSubscriptions(
-    google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
+AnalyticsHubServiceConnection::ListSharedResourceSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>();
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
 AnalyticsHubServiceConnection::RevokeSubscription(
-    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&) {
+    google::cloud::bigquery::analyticshub::v1::
+        RevokeSubscriptionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
 AnalyticsHubServiceConnection::DeleteSubscription(
-    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&) {
+    google::cloud::bigquery::analyticshub::v1::
+        DeleteSubscriptionRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnection::DeleteSubscription(
-    NoAwaitTag,
-    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&) {
+    NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                    DeleteSubscriptionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
 AnalyticsHubServiceConnection::DeleteSubscription(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::iam::v1::Policy>
-AnalyticsHubServiceConnection::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> AnalyticsHubServiceConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::iam::v1::Policy>
-AnalyticsHubServiceConnection::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> AnalyticsHubServiceConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -224,20 +243,25 @@ AnalyticsHubServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AnalyticsHubServiceConnection> MakeAnalyticsHubServiceConnection(
-    Options options) {
+std::shared_ptr<AnalyticsHubServiceConnection>
+MakeAnalyticsHubServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AnalyticsHubServicePolicyOptionList>(options, __func__);
-  options = bigquery_analyticshub_v1_internal::AnalyticsHubServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 AnalyticsHubServicePolicyOptionList>(options,
+                                                                      __func__);
+  options =
+      bigquery_analyticshub_v1_internal::AnalyticsHubServiceDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = bigquery_analyticshub_v1_internal::CreateDefaultAnalyticsHubServiceStub(
-    std::move(auth), options);
-  return bigquery_analyticshub_v1_internal::MakeAnalyticsHubServiceTracingConnection(
-      std::make_shared<bigquery_analyticshub_v1_internal::AnalyticsHubServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      bigquery_analyticshub_v1_internal::CreateDefaultAnalyticsHubServiceStub(
+          std::move(auth), options);
+  return bigquery_analyticshub_v1_internal::
+      MakeAnalyticsHubServiceTracingConnection(
+          std::make_shared<bigquery_analyticshub_v1_internal::
+                               AnalyticsHubServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,15 +17,15 @@
 // source: google/cloud/ids/v1/ids.proto
 
 #include "google/cloud/ids/v1/ids_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/ids/v1/ids_options.h"
 #include "google/cloud/ids/v1/internal/ids_connection_impl.h"
 #include "google/cloud/ids/v1/internal/ids_option_defaults.h"
 #include "google/cloud/ids/v1/internal/ids_stub_factory.h"
 #include "google/cloud/ids/v1/internal/ids_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
@@ -39,13 +39,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IDSConnection::~IDSConnection() = default;
 
 StreamRange<google::cloud::ids::v1::Endpoint> IDSConnection::ListEndpoints(
-    google::cloud::ids::v1::ListEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::ids::v1::
+        ListEndpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::ids::v1::Endpoint>>();
 }
 
-StatusOr<google::cloud::ids::v1::Endpoint>
-IDSConnection::GetEndpoint(
+StatusOr<google::cloud::ids::v1::Endpoint> IDSConnection::GetEndpoint(
     google::cloud::ids::v1::GetEndpointRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -54,64 +54,55 @@ future<StatusOr<google::cloud::ids::v1::Endpoint>>
 IDSConnection::CreateEndpoint(
     google::cloud::ids::v1::CreateEndpointRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::ids::v1::Endpoint>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::ids::v1::Endpoint>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-IDSConnection::CreateEndpoint(
-    NoAwaitTag,
-    google::cloud::ids::v1::CreateEndpointRequest const&) {
+StatusOr<google::longrunning::Operation> IDSConnection::CreateEndpoint(
+    NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>>
-IDSConnection::CreateEndpoint(
-    google::longrunning::Operation const&) {
+IDSConnection::CreateEndpoint(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::ids::v1::Endpoint>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::ids::v1::Endpoint>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSConnection::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::ids::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::ids::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::longrunning::Operation>
-IDSConnection::DeleteEndpoint(
-    NoAwaitTag,
-    google::cloud::ids::v1::DeleteEndpointRequest const&) {
+StatusOr<google::longrunning::Operation> IDSConnection::DeleteEndpoint(
+    NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-IDSConnection::DeleteEndpoint(
-    google::longrunning::Operation const&) {
+IDSConnection::DeleteEndpoint(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::ids::v1::OperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::ids::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<IDSConnection> MakeIDSConnection(
-    Options options) {
+std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      IDSPolicyOptionList>(options, __func__);
-  options = ids_v1_internal::IDSDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 IDSPolicyOptionList>(options, __func__);
+  options = ids_v1_internal::IDSDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = ids_v1_internal::CreateDefaultIDSStub(
-    std::move(auth), options);
+  auto stub = ids_v1_internal::CreateDefaultIDSStub(std::move(auth), options);
   return ids_v1_internal::MakeIDSTracingConnection(
       std::make_shared<ids_v1_internal::IDSConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,10 +26,14 @@ namespace cloud {
 namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use texttospeech_v1::MakeDefaultTextToSpeechConnectionIdempotencyPolicy directly.
-using ::google::cloud::texttospeech_v1::MakeDefaultTextToSpeechConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// texttospeech_v1::MakeDefaultTextToSpeechConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::texttospeech_v1::
+    MakeDefaultTextToSpeechConnectionIdempotencyPolicy;
 
-/// @deprecated Use texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy directly.
+/// @deprecated Use texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,11 +32,13 @@ SystemPolicyV1TracingStub::SystemPolicyV1TracingStub(
     std::shared_ptr<SystemPolicyV1Stub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::binaryauthorization::v1::Policy> SystemPolicyV1TracingStub::GetSystemPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.binaryauthorization.v1.SystemPolicyV1", "GetSystemPolicy");
+StatusOr<google::cloud::binaryauthorization::v1::Policy>
+SystemPolicyV1TracingStub::GetSystemPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.SystemPolicyV1", "GetSystemPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

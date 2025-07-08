@@ -35,75 +35,80 @@ class UptimeCheckServiceStub {
  public:
   virtual ~UptimeCheckServiceStub() = 0;
 
-  virtual StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse> ListUptimeCheckConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
+  ListUptimeCheckConfigs(
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) = 0;
 
-  virtual StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  GetUptimeCheckConfig(
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetUptimeCheckConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) = 0;
+  virtual StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  CreateUptimeCheckConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::CreateUptimeCheckConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) = 0;
+  virtual StatusOr<google::monitoring::v3::UptimeCheckConfig>
+  UpdateUptimeCheckConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::UpdateUptimeCheckConfigRequest const&
+          request) = 0;
 
   virtual Status DeleteUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::DeleteUptimeCheckConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse> ListUptimeCheckIps(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
+  ListUptimeCheckIps(
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListUptimeCheckIpsRequest const& request) = 0;
 };
 
 class DefaultUptimeCheckServiceStub : public UptimeCheckServiceStub {
  public:
   explicit DefaultUptimeCheckServiceStub(
-      std::unique_ptr<google::monitoring::v3::UptimeCheckService::StubInterface> grpc_stub)
+      std::unique_ptr<google::monitoring::v3::UptimeCheckService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse> ListUptimeCheckConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) override;
+  StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
+  ListUptimeCheckConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::ListUptimeCheckConfigsRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> GetUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::GetUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::GetUptimeCheckConfigRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> CreateUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request)
+      override;
 
   StatusOr<google::monitoring::v3::UptimeCheckConfig> UpdateUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request)
+      override;
 
   Status DeleteUptimeCheckConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request)
+      override;
 
-  StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse> ListUptimeCheckIps(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::monitoring::v3::ListUptimeCheckIpsRequest const& request) override;
+  StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
+  ListUptimeCheckIps(grpc::ClientContext& context, Options const& options,
+                     google::monitoring::v3::ListUptimeCheckIpsRequest const&
+                         request) override;
 
  private:
-  std::unique_ptr<google::monitoring::v3::UptimeCheckService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::monitoring::v3::UptimeCheckService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

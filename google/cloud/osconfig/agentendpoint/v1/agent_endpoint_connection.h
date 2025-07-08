@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_AGENT_ENDPOINT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_AGENT_ENDPOINT_CONNECTION_H
 
+#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.h"
+#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.h"
-#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_retry_traits.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -52,7 +52,8 @@ class AgentEndpointServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AgentEndpointServiceLimitedErrorCountRetryPolicy : public AgentEndpointServiceRetryPolicy {
+class AgentEndpointServiceLimitedErrorCountRetryPolicy
+    : public AgentEndpointServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +62,18 @@ class AgentEndpointServiceLimitedErrorCountRetryPolicy : public AgentEndpointSer
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit AgentEndpointServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit AgentEndpointServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   AgentEndpointServiceLimitedErrorCountRetryPolicy(
       AgentEndpointServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AgentEndpointServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AgentEndpointServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   AgentEndpointServiceLimitedErrorCountRetryPolicy(
       AgentEndpointServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AgentEndpointServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AgentEndpointServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +93,9 @@ class AgentEndpointServiceLimitedErrorCountRetryPolicy : public AgentEndpointSer
   using BaseType = AgentEndpointServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<osconfig_agentendpoint_v1_internal::AgentEndpointServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      osconfig_agentendpoint_v1_internal::AgentEndpointServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +108,8 @@ class AgentEndpointServiceLimitedErrorCountRetryPolicy : public AgentEndpointSer
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AgentEndpointServiceLimitedTimeRetryPolicy : public AgentEndpointServiceRetryPolicy {
+class AgentEndpointServiceLimitedTimeRetryPolicy
+    : public AgentEndpointServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +134,14 @@ class AgentEndpointServiceLimitedTimeRetryPolicy : public AgentEndpointServiceRe
   template <typename DurationRep, typename DurationPeriod>
   explicit AgentEndpointServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AgentEndpointServiceLimitedTimeRetryPolicy(AgentEndpointServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : AgentEndpointServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AgentEndpointServiceLimitedTimeRetryPolicy(AgentEndpointServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : AgentEndpointServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AgentEndpointServiceLimitedTimeRetryPolicy(
+      AgentEndpointServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : AgentEndpointServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AgentEndpointServiceLimitedTimeRetryPolicy(
+      AgentEndpointServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : AgentEndpointServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +163,23 @@ class AgentEndpointServiceLimitedTimeRetryPolicy : public AgentEndpointServiceRe
   using BaseType = AgentEndpointServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<osconfig_agentendpoint_v1_internal::AgentEndpointServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      osconfig_agentendpoint_v1_internal::AgentEndpointServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `AgentEndpointServiceConnection` object for `AgentEndpointServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `AgentEndpointServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `AgentEndpointServiceClient`.
+ * sets in `AgentEndpointServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AgentEndpointServiceClient`.
  *
  * To create a concrete instance, see `MakeAgentEndpointServiceConnection()`.
  *
- * For mocking, see `osconfig_agentendpoint_v1_mocks::MockAgentEndpointServiceConnection`.
+ * For mocking, see
+ * `osconfig_agentendpoint_v1_mocks::MockAgentEndpointServiceConnection`.
  */
 class AgentEndpointServiceConnection {
  public:
@@ -175,48 +187,66 @@ class AgentEndpointServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse>
-  ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest const& request);
+  virtual StreamRange<google::cloud::osconfig::agentendpoint::v1::
+                          ReceiveTaskNotificationResponse>
+  ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::
+                              ReceiveTaskNotificationRequest const& request);
 
-  virtual StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
-  StartNextTask(google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const& request);
+  virtual StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
+  StartNextTask(
+      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
-  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const& request);
+  virtual StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
+  ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::
+                         ReportTaskProgressRequest const& request);
 
-  virtual StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
-  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const& request);
+  virtual StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
+  ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::
+                         ReportTaskCompleteRequest const& request);
 
-  virtual StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
-  RegisterAgent(google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const& request);
+  virtual StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
+  RegisterAgent(
+      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
-  ReportInventory(google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const& request);
+  virtual StatusOr<
+      google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
+  ReportInventory(
+      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
+          request);
 };
 
 /**
- * A factory function to construct an object of type `AgentEndpointServiceConnection`.
+ * A factory function to construct an object of type
+ * `AgentEndpointServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AgentEndpointServiceClient.
+ * should be passed as an argument to the constructor of
+ * AgentEndpointServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AgentEndpointServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `AgentEndpointServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::osconfig_agentendpoint_v1::AgentEndpointServicePolicyOptionList`
+ * -
+ * `google::cloud::osconfig_agentendpoint_v1::AgentEndpointServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AgentEndpointServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `AgentEndpointServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<AgentEndpointServiceConnection> MakeAgentEndpointServiceConnection(
-    Options options = {});
+std::shared_ptr<AgentEndpointServiceConnection>
+MakeAgentEndpointServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_agentendpoint_v1

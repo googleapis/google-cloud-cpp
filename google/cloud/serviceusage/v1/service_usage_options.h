@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_SERVICE_USAGE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_SERVICE_USAGE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/serviceusage/v1/service_usage_connection.h"
 #include "google/cloud/serviceusage/v1/service_usage_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -74,8 +74,7 @@ struct ServiceUsagePollingPolicyOption {
  * @ingroup google-cloud-serviceusage-options
  */
 using ServiceUsagePolicyOptionList =
-    OptionList<ServiceUsageRetryPolicyOption,
-               ServiceUsageBackoffPolicyOption,
+    OptionList<ServiceUsageRetryPolicyOption, ServiceUsageBackoffPolicyOption,
                ServiceUsagePollingPolicyOption,
                ServiceUsageConnectionIdempotencyPolicyOption>;
 

@@ -30,7 +30,8 @@ namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_v3_mocks::MockUptimeCheckServiceConnection directly.
+/// @deprecated Use monitoring_v3_mocks::MockUptimeCheckServiceConnection
+/// directly.
 using ::google::cloud::monitoring_v3_mocks::MockUptimeCheckServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

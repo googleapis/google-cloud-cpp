@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_IAM_POLICIES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_IAM_POLICIES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/sql_iam_policies_connection.h"
 #include "google/cloud/sql/v1/sql_iam_policies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,7 +55,8 @@ struct SqlIamPoliciesServiceBackoffPolicyOption {
  * @ingroup google-cloud-sql-options
  */
 struct SqlIamPoliciesServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<SqlIamPoliciesServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<SqlIamPoliciesServiceConnectionIdempotencyPolicy>;
 };
 
 /**

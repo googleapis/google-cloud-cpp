@@ -30,8 +30,10 @@ namespace cloud {
 namespace privateca_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use privateca_v1_mocks::MockCertificateAuthorityServiceConnection directly.
-using ::google::cloud::privateca_v1_mocks::MockCertificateAuthorityServiceConnection;
+/// @deprecated Use
+/// privateca_v1_mocks::MockCertificateAuthorityServiceConnection directly.
+using ::google::cloud::privateca_v1_mocks::
+    MockCertificateAuthorityServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_mocks

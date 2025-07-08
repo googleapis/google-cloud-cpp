@@ -17,17 +17,17 @@
 // source: google/monitoring/v3/uptime_service.proto
 
 #include "google/cloud/monitoring/v3/uptime_check_connection.h"
+#include "google/cloud/monitoring/v3/internal/uptime_check_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/uptime_check_option_defaults.h"
+#include "google/cloud/monitoring/v3/internal/uptime_check_stub_factory.h"
+#include "google/cloud/monitoring/v3/internal/uptime_check_tracing_connection.h"
+#include "google/cloud/monitoring/v3/uptime_check_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/monitoring/v3/internal/uptime_check_connection_impl.h"
-#include "google/cloud/monitoring/v3/internal/uptime_check_option_defaults.h"
-#include "google/cloud/monitoring/v3/internal/uptime_check_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/uptime_check_tracing_connection.h"
-#include "google/cloud/monitoring/v3/uptime_check_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 UptimeCheckServiceConnection::~UptimeCheckServiceConnection() = default;
 
-StreamRange<google::monitoring::v3::UptimeCheckConfig> UptimeCheckServiceConnection::ListUptimeCheckConfigs(
-    google::monitoring::v3::ListUptimeCheckConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::UptimeCheckConfig>
+UptimeCheckServiceConnection::ListUptimeCheckConfigs(
+    google::monitoring::v3::
+        ListUptimeCheckConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckConfig>>();
 }
@@ -62,14 +64,15 @@ UptimeCheckServiceConnection::UpdateUptimeCheckConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-UptimeCheckServiceConnection::DeleteUptimeCheckConfig(
+Status UptimeCheckServiceConnection::DeleteUptimeCheckConfig(
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::monitoring::v3::UptimeCheckIp> UptimeCheckServiceConnection::ListUptimeCheckIps(
-    google::monitoring::v3::ListUptimeCheckIpsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::UptimeCheckIp>
+UptimeCheckServiceConnection::ListUptimeCheckIps(
+    google::monitoring::v3::
+        ListUptimeCheckIpsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::UptimeCheckIp>>();
 }
@@ -77,17 +80,19 @@ StreamRange<google::monitoring::v3::UptimeCheckIp> UptimeCheckServiceConnection:
 std::shared_ptr<UptimeCheckServiceConnection> MakeUptimeCheckServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      UptimeCheckServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 UptimeCheckServicePolicyOptionList>(options,
+                                                                     __func__);
   options = monitoring_v3_internal::UptimeCheckServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = monitoring_v3_internal::CreateDefaultUptimeCheckServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return monitoring_v3_internal::MakeUptimeCheckServiceTracingConnection(
-      std::make_shared<monitoring_v3_internal::UptimeCheckServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          monitoring_v3_internal::UptimeCheckServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_cx/internal/deployments_option_defaults.h"
 #include "google/cloud/dialogflow_cx/deployments_connection.h"
 #include "google/cloud/dialogflow_cx/deployments_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,23 +34,29 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options DeploymentsDefaultOptions(std::string const& location, Options options) {
+Options DeploymentsDefaultOptions(std::string const& location,
+                                  Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_DEPLOYMENTS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_DEPLOYMENTS_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_DEPLOYMENTS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_DEPLOYMENTS_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_cx::DeploymentsRetryPolicyOption>()) {
     options.set<dialogflow_cx::DeploymentsRetryPolicyOption>(
         dialogflow_cx::DeploymentsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dialogflow_cx::DeploymentsBackoffPolicyOption>()) {
     options.set<dialogflow_cx::DeploymentsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>()) {
     options.set<dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>(
         dialogflow_cx::MakeDefaultDeploymentsConnectionIdempotencyPolicy());
   }

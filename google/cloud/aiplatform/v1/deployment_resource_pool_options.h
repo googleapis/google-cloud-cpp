@@ -55,7 +55,8 @@ struct DeploymentResourcePoolServiceBackoffPolicyOption {
  * @ingroup google-cloud-aiplatform-options
  */
 struct DeploymentResourcePoolServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DeploymentResourcePoolServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<DeploymentResourcePoolServiceConnectionIdempotencyPolicy>;
 };
 
 /**

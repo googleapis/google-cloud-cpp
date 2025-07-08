@@ -34,23 +34,29 @@ ConnectorsTracingConnection::ConnectorsTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::connectors::v1::Connection>
-ConnectorsTracingConnection::ListConnections(google::cloud::connectors::v1::ListConnectionsRequest request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::ListConnections");
+ConnectorsTracingConnection::ListConnections(
+    google::cloud::connectors::v1::ListConnectionsRequest request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::ListConnections");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnections(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::connectors::v1::Connection>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::connectors::v1::Connection>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::connectors::v1::Connection>
-ConnectorsTracingConnection::GetConnection(google::cloud::connectors::v1::GetConnectionRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetConnection");
+ConnectorsTracingConnection::GetConnection(
+    google::cloud::connectors::v1::GetConnectionRequest const& request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnection(request));
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsTracingConnection::CreateConnection(google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+ConnectorsTracingConnection::CreateConnection(
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::CreateConnection");
   internal::OTelScope scope(span);
@@ -59,12 +65,13 @@ ConnectorsTracingConnection::CreateConnection(google::cloud::connectors::v1::Cre
 
 StatusOr<google::longrunning::Operation>
 ConnectorsTracingConnection::CreateConnection(
-    NoAwaitTag, google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::CreateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateConnection(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
@@ -74,11 +81,12 @@ ConnectorsTracingConnection::CreateConnection(
       "connectors_v1::ConnectorsConnection::CreateConnection");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateConnection(operation));
+                           child_->CreateConnection(operation));
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
-ConnectorsTracingConnection::UpdateConnection(google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+ConnectorsTracingConnection::UpdateConnection(
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::UpdateConnection");
   internal::OTelScope scope(span);
@@ -87,12 +95,13 @@ ConnectorsTracingConnection::UpdateConnection(google::cloud::connectors::v1::Upd
 
 StatusOr<google::longrunning::Operation>
 ConnectorsTracingConnection::UpdateConnection(
-    NoAwaitTag, google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::UpdateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateConnection(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
@@ -102,11 +111,12 @@ ConnectorsTracingConnection::UpdateConnection(
       "connectors_v1::ConnectorsConnection::UpdateConnection");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateConnection(operation));
+                           child_->UpdateConnection(operation));
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-ConnectorsTracingConnection::DeleteConnection(google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+ConnectorsTracingConnection::DeleteConnection(
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::DeleteConnection");
   internal::OTelScope scope(span);
@@ -115,12 +125,13 @@ ConnectorsTracingConnection::DeleteConnection(google::cloud::connectors::v1::Del
 
 StatusOr<google::longrunning::Operation>
 ConnectorsTracingConnection::DeleteConnection(
-    NoAwaitTag, google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::DeleteConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteConnection(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
@@ -130,80 +141,101 @@ ConnectorsTracingConnection::DeleteConnection(
       "connectors_v1::ConnectorsConnection::DeleteConnection");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteConnection(operation));
+                           child_->DeleteConnection(operation));
 }
 
 StreamRange<google::cloud::connectors::v1::Provider>
-ConnectorsTracingConnection::ListProviders(google::cloud::connectors::v1::ListProvidersRequest request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::ListProviders");
+ConnectorsTracingConnection::ListProviders(
+    google::cloud::connectors::v1::ListProvidersRequest request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::ListProviders");
   internal::OTelScope scope(span);
   auto sr = child_->ListProviders(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::connectors::v1::Provider>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::connectors::v1::Provider>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::connectors::v1::Provider>
-ConnectorsTracingConnection::GetProvider(google::cloud::connectors::v1::GetProviderRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetProvider");
+ConnectorsTracingConnection::GetProvider(
+    google::cloud::connectors::v1::GetProviderRequest const& request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetProvider");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProvider(request));
 }
 
 StreamRange<google::cloud::connectors::v1::Connector>
-ConnectorsTracingConnection::ListConnectors(google::cloud::connectors::v1::ListConnectorsRequest request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::ListConnectors");
+ConnectorsTracingConnection::ListConnectors(
+    google::cloud::connectors::v1::ListConnectorsRequest request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::ListConnectors");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnectors(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::connectors::v1::Connector>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::connectors::v1::Connector>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::connectors::v1::Connector>
-ConnectorsTracingConnection::GetConnector(google::cloud::connectors::v1::GetConnectorRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetConnector");
+ConnectorsTracingConnection::GetConnector(
+    google::cloud::connectors::v1::GetConnectorRequest const& request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetConnector");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnector(request));
 }
 
 StreamRange<google::cloud::connectors::v1::ConnectorVersion>
-ConnectorsTracingConnection::ListConnectorVersions(google::cloud::connectors::v1::ListConnectorVersionsRequest request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::ListConnectorVersions");
+ConnectorsTracingConnection::ListConnectorVersions(
+    google::cloud::connectors::v1::ListConnectorVersionsRequest request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::ListConnectorVersions");
   internal::OTelScope scope(span);
   auto sr = child_->ListConnectorVersions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::connectors::v1::ConnectorVersion>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::connectors::v1::ConnectorVersion>(std::move(span),
+                                                       std::move(sr));
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
-ConnectorsTracingConnection::GetConnectorVersion(google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetConnectorVersion");
+ConnectorsTracingConnection::GetConnectorVersion(
+    google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::GetConnectorVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnectorVersion(request));
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
-ConnectorsTracingConnection::GetConnectionSchemaMetadata(google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetConnectionSchemaMetadata");
+ConnectorsTracingConnection::GetConnectionSchemaMetadata(
+    google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::GetConnectionSchemaMetadata");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnectionSchemaMetadata(request));
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
-ConnectorsTracingConnection::RefreshConnectionSchemaMetadata(google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) {
+ConnectorsTracingConnection::RefreshConnectionSchemaMetadata(
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::RefreshConnectionSchemaMetadata");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RefreshConnectionSchemaMetadata(request));
+  return internal::EndSpan(std::move(span),
+                           child_->RefreshConnectionSchemaMetadata(request));
 }
 
 StatusOr<google::longrunning::Operation>
 ConnectorsTracingConnection::RefreshConnectionSchemaMetadata(
-    NoAwaitTag, google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const& request) {
+    NoAwaitTag,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::RefreshConnectionSchemaMetadata");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RefreshConnectionSchemaMetadata(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->RefreshConnectionSchemaMetadata(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
@@ -213,104 +245,128 @@ ConnectorsTracingConnection::RefreshConnectionSchemaMetadata(
       "connectors_v1::ConnectorsConnection::RefreshConnectionSchemaMetadata");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->RefreshConnectionSchemaMetadata(operation));
+                           child_->RefreshConnectionSchemaMetadata(operation));
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
-ConnectorsTracingConnection::ListRuntimeEntitySchemas(google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::ListRuntimeEntitySchemas");
+ConnectorsTracingConnection::ListRuntimeEntitySchemas(
+    google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::ListRuntimeEntitySchemas");
   internal::OTelScope scope(span);
   auto sr = child_->ListRuntimeEntitySchemas(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::connectors::v1::RuntimeEntitySchema>(std::move(span),
+                                                          std::move(sr));
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
-ConnectorsTracingConnection::ListRuntimeActionSchemas(google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::ListRuntimeActionSchemas");
+ConnectorsTracingConnection::ListRuntimeActionSchemas(
+    google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::ListRuntimeActionSchemas");
   internal::OTelScope scope(span);
   auto sr = child_->ListRuntimeActionSchemas(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::connectors::v1::RuntimeActionSchema>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::connectors::v1::RuntimeActionSchema>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
-ConnectorsTracingConnection::GetRuntimeConfig(google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetRuntimeConfig");
+ConnectorsTracingConnection::GetRuntimeConfig(
+    google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::GetRuntimeConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRuntimeConfig(request));
 }
 
 StatusOr<google::cloud::connectors::v1::Settings>
-ConnectorsTracingConnection::GetGlobalSettings(google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetGlobalSettings");
+ConnectorsTracingConnection::GetGlobalSettings(
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::GetGlobalSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetGlobalSettings(request));
 }
 
 StreamRange<google::cloud::location::Location>
-ConnectorsTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::ListLocations");
+ConnectorsTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ConnectorsTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetLocation");
+ConnectorsTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectorsTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::SetIamPolicy");
+StatusOr<google::iam::v1::Policy> ConnectorsTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
-StatusOr<google::iam::v1::Policy>
-ConnectorsTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetIamPolicy");
+StatusOr<google::iam::v1::Policy> ConnectorsTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ConnectorsTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::TestIamPermissions");
+ConnectorsTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ConnectorsTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::ListOperations");
+ConnectorsTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ConnectorsTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::GetOperation");
+ConnectorsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ConnectorsTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::DeleteOperation");
+Status ConnectorsTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-ConnectorsTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("connectors_v1::ConnectorsConnection::CancelOperation");
+Status ConnectorsTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

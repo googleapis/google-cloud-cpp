@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `CloudFilestoreManagerConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudFilestoreManagerClient`. To do so,
- * construct an object of type `CloudFilestoreManagerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `CloudFilestoreManagerClient`. To do
+ * so, construct an object of type `CloudFilestoreManagerClient` with an
+ * instance of this class. Then use the Google Test framework functions to
+ * program the behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,29 +42,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreManagerConnection {
+class MockCloudFilestoreManagerConnection
+    : public filestore_v1::CloudFilestoreManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Instance>),
-  ListInstances,
-  (google::cloud::filestore::v1::ListInstancesRequest request), (override));
+              ListInstances,
+              (google::cloud::filestore::v1::ListInstancesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Instance>,
-  GetInstance,
-  (google::cloud::filestore::v1::GetInstanceRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Instance>, GetInstance,
+              (google::cloud::filestore::v1::GetInstanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::cloud::filestore::v1::CreateInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateInstance(Matcher<google::cloud::filestore::v1::CreateInstanceRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  CreateInstance,
-  (google::cloud::filestore::v1::CreateInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Instance>>, CreateInstance,
+      (google::cloud::filestore::v1::CreateInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -72,33 +76,37 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateInstance, (NoAwaitTag,
-    google::cloud::filestore::v1::CreateInstanceRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  CreateInstance, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::CreateInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::cloud::filestore::v1::UpdateInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  UpdateInstance,
-  (google::cloud::filestore::v1::UpdateInstanceRequest const& request), (override));
+              CreateInstance, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateInstance(Matcher<google::cloud::filestore::v1::UpdateInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Instance>>, UpdateInstance,
+      (google::cloud::filestore::v1::UpdateInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,33 +114,37 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateInstance, (NoAwaitTag,
-    google::cloud::filestore::v1::UpdateInstanceRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  UpdateInstance, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstance,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::UpdateInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreInstance(Matcher<google::cloud::filestore::v1::RestoreInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  RestoreInstance,
-  (google::cloud::filestore::v1::RestoreInstanceRequest const& request), (override));
+              UpdateInstance, (google::longrunning::Operation const& operation),
+              (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreInstance(Matcher<google::cloud::filestore::v1::RestoreInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Instance>>, RestoreInstance,
+      (google::cloud::filestore::v1::RestoreInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -140,33 +152,37 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RestoreInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RestoreInstance, (NoAwaitTag,
-    google::cloud::filestore::v1::RestoreInstanceRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreInstance(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  RestoreInstance, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RestoreInstance,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::RestoreInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RevertInstance(Matcher<google::cloud::filestore::v1::RevertInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock, RestoreInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  RevertInstance,
-  (google::cloud::filestore::v1::RevertInstanceRequest const& request), (override));
+              RestoreInstance,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RevertInstance(Matcher<google::cloud::filestore::v1::RevertInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Instance>>, RevertInstance,
+      (google::cloud::filestore::v1::RevertInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -174,33 +190,38 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RevertInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RevertInstance, (NoAwaitTag,
-    google::cloud::filestore::v1::RevertInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RevertInstance,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::RevertInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RevertInstance(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, RevertInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  RevertInstance, (
-    google::longrunning::Operation const& operation), (override));
+              RevertInstance, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::cloud::filestore::v1::DeleteInstanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstance(Matcher<google::cloud::filestore::v1::DeleteInstanceRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
-  DeleteInstance,
-  (google::cloud::filestore::v1::DeleteInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::common::OperationMetadata>>,
+      DeleteInstance,
+      (google::cloud::filestore::v1::DeleteInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -208,41 +229,46 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteInstance(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteInstance, (NoAwaitTag,
-    google::cloud::filestore::v1::DeleteInstanceRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteInstance,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::DeleteInstanceRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
-  DeleteInstance, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteInstance, (google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Snapshot>),
-  ListSnapshots,
-  (google::cloud::filestore::v1::ListSnapshotsRequest request), (override));
+              ListSnapshots,
+              (google::cloud::filestore::v1::ListSnapshotsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Snapshot>,
-  GetSnapshot,
-  (google::cloud::filestore::v1::GetSnapshotRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Snapshot>, GetSnapshot,
+              (google::cloud::filestore::v1::GetSnapshotRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSnapshot(Matcher<google::cloud::filestore::v1::CreateSnapshotRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateSnapshot(Matcher<google::cloud::filestore::v1::CreateSnapshotRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Snapshot>>,
-  CreateSnapshot,
-  (google::cloud::filestore::v1::CreateSnapshotRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Snapshot>>, CreateSnapshot,
+      (google::cloud::filestore::v1::CreateSnapshotRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -250,33 +276,38 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateSnapshot(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateSnapshot, (NoAwaitTag,
-    google::cloud::filestore::v1::CreateSnapshotRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateSnapshot,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::CreateSnapshotRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSnapshot(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateSnapshot(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Snapshot>>,
-  CreateSnapshot, (
-    google::longrunning::Operation const& operation), (override));
+              CreateSnapshot, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSnapshot(Matcher<google::cloud::filestore::v1::DeleteSnapshotRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteSnapshot(Matcher<google::cloud::filestore::v1::DeleteSnapshotRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
-  DeleteSnapshot,
-  (google::cloud::filestore::v1::DeleteSnapshotRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::common::OperationMetadata>>,
+      DeleteSnapshot,
+      (google::cloud::filestore::v1::DeleteSnapshotRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -284,33 +315,37 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSnapshot(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteSnapshot, (NoAwaitTag,
-    google::cloud::filestore::v1::DeleteSnapshotRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSnapshot,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::DeleteSnapshotRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSnapshot(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteSnapshot(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
-  DeleteSnapshot, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteSnapshot, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateSnapshot(Matcher<google::cloud::filestore::v1::UpdateSnapshotRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateSnapshot(Matcher<google::cloud::filestore::v1::UpdateSnapshotRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Snapshot>>,
-  UpdateSnapshot,
-  (google::cloud::filestore::v1::UpdateSnapshotRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Snapshot>>, UpdateSnapshot,
+      (google::cloud::filestore::v1::UpdateSnapshotRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -318,41 +353,45 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateSnapshot(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateSnapshot, (NoAwaitTag,
-    google::cloud::filestore::v1::UpdateSnapshotRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateSnapshot,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::UpdateSnapshotRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateSnapshot(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateSnapshot(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Snapshot>>,
-  UpdateSnapshot, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateSnapshot, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Backup>),
-  ListBackups,
-  (google::cloud::filestore::v1::ListBackupsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Backup>), ListBackups,
+              (google::cloud::filestore::v1::ListBackupsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Backup>,
-  GetBackup,
-  (google::cloud::filestore::v1::GetBackupRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Backup>, GetBackup,
+              (google::cloud::filestore::v1::GetBackupRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateBackup(Matcher<google::cloud::filestore::v1::CreateBackupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateBackup(Matcher<google::cloud::filestore::v1::CreateBackupRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Backup>>,
-  CreateBackup,
-  (google::cloud::filestore::v1::CreateBackupRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Backup>>, CreateBackup,
+      (google::cloud::filestore::v1::CreateBackupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -360,33 +399,37 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateBackup, (NoAwaitTag,
-    google::cloud::filestore::v1::CreateBackupRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateBackup,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::CreateBackupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateBackup(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, CreateBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Backup>>,
-  CreateBackup, (
-    google::longrunning::Operation const& operation), (override));
+              CreateBackup, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::cloud::filestore::v1::DeleteBackupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackup(Matcher<google::cloud::filestore::v1::DeleteBackupRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
-  DeleteBackup,
-  (google::cloud::filestore::v1::DeleteBackupRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::common::OperationMetadata>>, DeleteBackup,
+      (google::cloud::filestore::v1::DeleteBackupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -394,33 +437,37 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  DeleteBackup, (NoAwaitTag,
-    google::cloud::filestore::v1::DeleteBackupRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteBackup,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::DeleteBackupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
-  DeleteBackup, (
-    google::longrunning::Operation const& operation), (override));
+              DeleteBackup, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::cloud::filestore::v1::UpdateBackupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackup(Matcher<google::cloud::filestore::v1::UpdateBackupRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Backup>>,
-  UpdateBackup,
-  (google::cloud::filestore::v1::UpdateBackupRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Backup>>, UpdateBackup,
+      (google::cloud::filestore::v1::UpdateBackupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -428,33 +475,37 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateBackup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  UpdateBackup, (NoAwaitTag,
-    google::cloud::filestore::v1::UpdateBackupRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateBackup,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::UpdateBackupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Backup>>,
-  UpdateBackup, (
-    google::longrunning::Operation const& operation), (override));
+              UpdateBackup, (google::longrunning::Operation const& operation),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PromoteReplica(Matcher<google::cloud::filestore::v1::PromoteReplicaRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PromoteReplica(Matcher<google::cloud::filestore::v1::PromoteReplicaRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  PromoteReplica,
-  (google::cloud::filestore::v1::PromoteReplicaRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::filestore::v1::Instance>>, PromoteReplica,
+      (google::cloud::filestore::v1::PromoteReplicaRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -462,45 +513,46 @@ class MockCloudFilestoreManagerConnection : public filestore_v1::CloudFilestoreM
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PromoteReplica(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  PromoteReplica, (NoAwaitTag,
-    google::cloud::filestore::v1::PromoteReplicaRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, PromoteReplica,
+      (NoAwaitTag,
+       google::cloud::filestore::v1::PromoteReplicaRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PromoteReplica(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, PromoteReplica(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
-  PromoteReplica, (
-    google::longrunning::Operation const& operation), (override));
+              PromoteReplica, (google::longrunning::Operation const& operation),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

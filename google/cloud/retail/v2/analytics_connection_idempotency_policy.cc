@@ -26,27 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-AnalyticsServiceConnectionIdempotencyPolicy::~AnalyticsServiceConnectionIdempotencyPolicy() = default;
+AnalyticsServiceConnectionIdempotencyPolicy::
+    ~AnalyticsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<AnalyticsServiceConnectionIdempotencyPolicy>
 AnalyticsServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<AnalyticsServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency AnalyticsServiceConnectionIdempotencyPolicy::ExportAnalyticsMetrics(google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&) {
+Idempotency AnalyticsServiceConnectionIdempotencyPolicy::ExportAnalyticsMetrics(
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency AnalyticsServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency AnalyticsServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency AnalyticsServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency AnalyticsServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AnalyticsServiceConnectionIdempotencyPolicy>
-    MakeDefaultAnalyticsServiceConnectionIdempotencyPolicy() {
+MakeDefaultAnalyticsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AnalyticsServiceConnectionIdempotencyPolicy>();
 }
 

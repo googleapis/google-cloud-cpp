@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_BINDINGS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_INTERNAL_TAG_BINDINGS_TRACING_STUB_H
 
+#include "google/cloud/resourcemanager/v3/internal/tag_bindings_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/v3/internal/tag_bindings_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -38,41 +38,44 @@ class TagBindingsTracingStub : public TagBindingsStub {
 
   explicit TagBindingsTracingStub(std::shared_ptr<TagBindingsStub> child);
 
-  StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse> ListTagBindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
+  ListTagBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTagBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) override;
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateTagBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) override;
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request) override;
 
-  StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse> ListEffectiveTags(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const& request) override;
+  StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
+  ListEffectiveTags(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -89,7 +92,8 @@ class TagBindingsTracingStub : public TagBindingsStub {
 
  private:
   std::shared_ptr<TagBindingsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

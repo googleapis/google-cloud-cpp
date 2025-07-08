@@ -34,8 +34,10 @@ using ::google::cloud::vpcaccess_v1::VpcAccessServicePollingPolicyOption;
 /// @deprecated Use vpcaccess_v1::VpcAccessServiceBackoffPolicyOption directly.
 using ::google::cloud::vpcaccess_v1::VpcAccessServiceBackoffPolicyOption;
 
-/// @deprecated Use vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::vpcaccess_v1::
+    VpcAccessServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use vpcaccess_v1::VpcAccessServicePolicyOptionList directly.
 using ::google::cloud::vpcaccess_v1::VpcAccessServicePolicyOptionList;

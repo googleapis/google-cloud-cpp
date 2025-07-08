@@ -36,24 +36,24 @@ class AlertPolicyServiceTracingConnection
   ~AlertPolicyServiceTracingConnection() override = default;
 
   explicit AlertPolicyServiceTracingConnection(
-    std::shared_ptr<monitoring_v3::AlertPolicyServiceConnection> child);
+      std::shared_ptr<monitoring_v3::AlertPolicyServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::monitoring::v3::AlertPolicy>
-  ListAlertPolicies(google::monitoring::v3::ListAlertPoliciesRequest request) override;
+  StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
+      google::monitoring::v3::ListAlertPoliciesRequest request) override;
 
-  StatusOr<google::monitoring::v3::AlertPolicy>
-  GetAlertPolicy(google::monitoring::v3::GetAlertPolicyRequest const& request) override;
+  StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
+      google::monitoring::v3::GetAlertPolicyRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::AlertPolicy>
-  CreateAlertPolicy(google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
+  StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
+      google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
 
-  Status
-  DeleteAlertPolicy(google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
+  Status DeleteAlertPolicy(
+      google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::AlertPolicy>
-  UpdateAlertPolicy(google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
+  StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
+      google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<monitoring_v3::AlertPolicyServiceConnection> child_;

@@ -17,12 +17,12 @@
 // source: google/cloud/speech/v1/cloud_speech_adaptation.proto
 
 #include "google/cloud/speech/v1/internal/adaptation_connection_impl.h"
+#include "google/cloud/speech/v1/internal/adaptation_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/speech/v1/internal/adaptation_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,34 +32,34 @@ namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<speech_v1::AdaptationRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<speech_v1::AdaptationRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<speech_v1::AdaptationRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<speech_v1::AdaptationBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<speech_v1::AdaptationConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<speech_v1::AdaptationConnectionIdempotencyPolicyOption>()->clone();
+  return options.get<speech_v1::AdaptationConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 AdaptationConnectionImpl::AdaptationConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<speech_v1_internal::AdaptationStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AdaptationConnection::options())) {}
+    std::shared_ptr<speech_v1_internal::AdaptationStub> stub, Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      AdaptationConnection::options())) {}
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationConnectionImpl::CreatePhraseSet(google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
+AdaptationConnectionImpl::CreatePhraseSet(
+    google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -72,7 +72,8 @@ AdaptationConnectionImpl::CreatePhraseSet(google::cloud::speech::v1::CreatePhras
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationConnectionImpl::GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRequest const& request) {
+AdaptationConnectionImpl::GetPhraseSet(
+    google::cloud::speech::v1::GetPhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -85,27 +86,33 @@ AdaptationConnectionImpl::GetPhraseSet(google::cloud::speech::v1::GetPhraseSetRe
 }
 
 StreamRange<google::cloud::speech::v1::PhraseSet>
-AdaptationConnectionImpl::ListPhraseSet(google::cloud::speech::v1::ListPhraseSetRequest request) {
+AdaptationConnectionImpl::ListPhraseSet(
+    google::cloud::speech::v1::ListPhraseSetRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListPhraseSet(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::speech::v1::PhraseSet>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::speech::v1::PhraseSet>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::speech::v1::ListPhraseSetRequest const& r) {
+          Options const& options,
+          google::cloud::speech::v1::ListPhraseSetRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::speech::v1::ListPhraseSetRequest const& request) {
+                   google::cloud::speech::v1::ListPhraseSetRequest const&
+                       request) {
               return stub->ListPhraseSet(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::speech::v1::ListPhraseSetResponse r) {
-        std::vector<google::cloud::speech::v1::PhraseSet> result(r.phrase_sets().size());
+        std::vector<google::cloud::speech::v1::PhraseSet> result(
+            r.phrase_sets().size());
         auto& messages = *r.mutable_phrase_sets();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -113,7 +120,8 @@ AdaptationConnectionImpl::ListPhraseSet(google::cloud::speech::v1::ListPhraseSet
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
-AdaptationConnectionImpl::UpdatePhraseSet(google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
+AdaptationConnectionImpl::UpdatePhraseSet(
+    google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -125,8 +133,8 @@ AdaptationConnectionImpl::UpdatePhraseSet(google::cloud::speech::v1::UpdatePhras
       *current, request, __func__);
 }
 
-Status
-AdaptationConnectionImpl::DeletePhraseSet(google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
+Status AdaptationConnectionImpl::DeletePhraseSet(
+    google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -139,20 +147,23 @@ AdaptationConnectionImpl::DeletePhraseSet(google::cloud::speech::v1::DeletePhras
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationConnectionImpl::CreateCustomClass(google::cloud::speech::v1::CreateCustomClassRequest const& request) {
+AdaptationConnectionImpl::CreateCustomClass(
+    google::cloud::speech::v1::CreateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCustomClass(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::speech::v1::CreateCustomClassRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v1::CreateCustomClassRequest const& request) {
         return stub_->CreateCustomClass(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationConnectionImpl::GetCustomClass(google::cloud::speech::v1::GetCustomClassRequest const& request) {
+AdaptationConnectionImpl::GetCustomClass(
+    google::cloud::speech::v1::GetCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -165,27 +176,33 @@ AdaptationConnectionImpl::GetCustomClass(google::cloud::speech::v1::GetCustomCla
 }
 
 StreamRange<google::cloud::speech::v1::CustomClass>
-AdaptationConnectionImpl::ListCustomClasses(google::cloud::speech::v1::ListCustomClassesRequest request) {
+AdaptationConnectionImpl::ListCustomClasses(
+    google::cloud::speech::v1::ListCustomClassesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListCustomClasses(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::speech::v1::CustomClass>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::speech::v1::CustomClass>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::speech::v1::ListCustomClassesRequest const& r) {
+          Options const& options,
+          google::cloud::speech::v1::ListCustomClassesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::speech::v1::ListCustomClassesRequest const& request) {
+                   google::cloud::speech::v1::ListCustomClassesRequest const&
+                       request) {
               return stub->ListCustomClasses(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::speech::v1::ListCustomClassesResponse r) {
-        std::vector<google::cloud::speech::v1::CustomClass> result(r.custom_classes().size());
+        std::vector<google::cloud::speech::v1::CustomClass> result(
+            r.custom_classes().size());
         auto& messages = *r.mutable_custom_classes();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -193,43 +210,50 @@ AdaptationConnectionImpl::ListCustomClasses(google::cloud::speech::v1::ListCusto
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
-AdaptationConnectionImpl::UpdateCustomClass(google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
+AdaptationConnectionImpl::UpdateCustomClass(
+    google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCustomClass(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
         return stub_->UpdateCustomClass(context, options, request);
       },
       *current, request, __func__);
 }
 
-Status
-AdaptationConnectionImpl::DeleteCustomClass(google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
+Status AdaptationConnectionImpl::DeleteCustomClass(
+    google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCustomClass(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
         return stub_->DeleteCustomClass(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::longrunning::Operation>
-AdaptationConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+AdaptationConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<speech_v1::AdaptationRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -239,15 +263,16 @@ AdaptationConnectionImpl::ListOperations(google::longrunning::ListOperationsRequ
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AdaptationConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+StatusOr<google::longrunning::Operation> AdaptationConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

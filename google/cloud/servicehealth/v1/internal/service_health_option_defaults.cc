@@ -17,10 +17,10 @@
 // source: google/cloud/servicehealth/v1/event_service.proto
 
 #include "google/cloud/servicehealth/v1/internal/service_health_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/servicehealth/v1/service_health_connection.h"
 #include "google/cloud/servicehealth/v1/service_health_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ServiceHealthDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_HEALTH_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SERVICE_HEALTH_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_SERVICE_HEALTH_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SERVICE_HEALTH_AUTHORITY",
       "servicehealth.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<servicehealth_v1::ServiceHealthRetryPolicyOption>()) {
     options.set<servicehealth_v1::ServiceHealthRetryPolicyOption>(
         servicehealth_v1::ServiceHealthLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<servicehealth_v1::ServiceHealthBackoffPolicyOption>()) {
     options.set<servicehealth_v1::ServiceHealthBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<servicehealth_v1::ServiceHealthConnectionIdempotencyPolicyOption>()) {
-    options.set<servicehealth_v1::ServiceHealthConnectionIdempotencyPolicyOption>(
-        servicehealth_v1::MakeDefaultServiceHealthConnectionIdempotencyPolicy());
+  if (!options.has<
+          servicehealth_v1::ServiceHealthConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<servicehealth_v1::ServiceHealthConnectionIdempotencyPolicyOption>(
+            servicehealth_v1::
+                MakeDefaultServiceHealthConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -17,10 +17,10 @@
 // source: google/cloud/notebooks/v1/service.proto
 
 #include "google/cloud/notebooks/v1/internal/notebook_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/notebooks/v1/notebook_connection.h"
 #include "google/cloud/notebooks/v1/notebook_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,37 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options NotebookServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_NOTEBOOK_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_NOTEBOOK_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_NOTEBOOK_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_NOTEBOOK_SERVICE_AUTHORITY",
       "notebooks.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<notebooks_v1::NotebookServiceRetryPolicyOption>()) {
     options.set<notebooks_v1::NotebookServiceRetryPolicyOption>(
         notebooks_v1::NotebookServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<notebooks_v1::NotebookServiceBackoffPolicyOption>()) {
     options.set<notebooks_v1::NotebookServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<notebooks_v1::NotebookServicePollingPolicyOption>()) {
     options.set<notebooks_v1::NotebookServicePollingPolicyOption>(
         GenericPollingPolicy<
             notebooks_v1::NotebookServiceRetryPolicyOption::Type,
             notebooks_v1::NotebookServiceBackoffPolicyOption::Type>(
-            options.get<notebooks_v1::NotebookServiceRetryPolicyOption>()->clone(),
+            options.get<notebooks_v1::NotebookServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<notebooks_v1::NotebookServiceConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          notebooks_v1::NotebookServiceConnectionIdempotencyPolicyOption>()) {
     options.set<notebooks_v1::NotebookServiceConnectionIdempotencyPolicyOption>(
         notebooks_v1::MakeDefaultNotebookServiceConnectionIdempotencyPolicy());
   }

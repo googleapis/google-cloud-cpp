@@ -26,95 +26,116 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-StorageInsightsConnectionIdempotencyPolicy::~StorageInsightsConnectionIdempotencyPolicy() = default;
+StorageInsightsConnectionIdempotencyPolicy::
+    ~StorageInsightsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<StorageInsightsConnectionIdempotencyPolicy>
 StorageInsightsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<StorageInsightsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest) {  // NOLINT
+Idempotency StorageInsightsConnectionIdempotencyPolicy::ListReportConfigs(
+    google::cloud::storageinsights::v1::ListReportConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::GetReportConfig(google::cloud::storageinsights::v1::GetReportConfigRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::GetReportConfig(
+    google::cloud::storageinsights::v1::GetReportConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::CreateReportConfig(google::cloud::storageinsights::v1::CreateReportConfigRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::CreateReportConfig(
+    google::cloud::storageinsights::v1::CreateReportConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::UpdateReportConfig(google::cloud::storageinsights::v1::UpdateReportConfigRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::UpdateReportConfig(
+    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::DeleteReportConfig(google::cloud::storageinsights::v1::DeleteReportConfigRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::DeleteReportConfig(
+    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest) {  // NOLINT
+Idempotency StorageInsightsConnectionIdempotencyPolicy::ListReportDetails(
+    google::cloud::storageinsights::v1::ListReportDetailsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::GetReportDetail(google::cloud::storageinsights::v1::GetReportDetailRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::GetReportDetail(
+    google::cloud::storageinsights::v1::GetReportDetailRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::ListDatasetConfigs(google::cloud::storageinsights::v1::ListDatasetConfigsRequest) {  // NOLINT
+Idempotency StorageInsightsConnectionIdempotencyPolicy::ListDatasetConfigs(
+    google::cloud::storageinsights::v1::ListDatasetConfigsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::GetDatasetConfig(google::cloud::storageinsights::v1::GetDatasetConfigRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::GetDatasetConfig(
+    google::cloud::storageinsights::v1::GetDatasetConfigRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::CreateDatasetConfig(google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::CreateDatasetConfig(
+    google::cloud::storageinsights::v1::CreateDatasetConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::UpdateDatasetConfig(google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::UpdateDatasetConfig(
+    google::cloud::storageinsights::v1::UpdateDatasetConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::DeleteDatasetConfig(google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::DeleteDatasetConfig(
+    google::cloud::storageinsights::v1::DeleteDatasetConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::LinkDataset(google::cloud::storageinsights::v1::LinkDatasetRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::LinkDataset(
+    google::cloud::storageinsights::v1::LinkDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::UnlinkDataset(google::cloud::storageinsights::v1::UnlinkDatasetRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::UnlinkDataset(
+    google::cloud::storageinsights::v1::UnlinkDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency StorageInsightsConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency StorageInsightsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageInsightsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency StorageInsightsConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<StorageInsightsConnectionIdempotencyPolicy>
-    MakeDefaultStorageInsightsConnectionIdempotencyPolicy() {
+MakeDefaultStorageInsightsConnectionIdempotencyPolicy() {
   return std::make_unique<StorageInsightsConnectionIdempotencyPolicy>();
 }
 

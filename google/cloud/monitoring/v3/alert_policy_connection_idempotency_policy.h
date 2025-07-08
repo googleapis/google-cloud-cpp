@@ -34,26 +34,27 @@ class AlertPolicyServiceConnectionIdempotencyPolicy {
   virtual ~AlertPolicyServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  ListAlertPolicies(google::monitoring::v3::ListAlertPoliciesRequest request);
+  virtual google::cloud::Idempotency ListAlertPolicies(
+      google::monitoring::v3::ListAlertPoliciesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetAlertPolicy(google::monitoring::v3::GetAlertPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetAlertPolicy(
+      google::monitoring::v3::GetAlertPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateAlertPolicy(google::monitoring::v3::CreateAlertPolicyRequest const& request);
+  virtual google::cloud::Idempotency CreateAlertPolicy(
+      google::monitoring::v3::CreateAlertPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteAlertPolicy(google::monitoring::v3::DeleteAlertPolicyRequest const& request);
+  virtual google::cloud::Idempotency DeleteAlertPolicy(
+      google::monitoring::v3::DeleteAlertPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateAlertPolicy(google::monitoring::v3::UpdateAlertPolicyRequest const& request);
+  virtual google::cloud::Idempotency UpdateAlertPolicy(
+      google::monitoring::v3::UpdateAlertPolicyRequest const& request);
 };
 
 std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>
-    MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy();
+MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_v3

@@ -26,47 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CaseServiceConnectionIdempotencyPolicy::~CaseServiceConnectionIdempotencyPolicy() = default;
+CaseServiceConnectionIdempotencyPolicy::
+    ~CaseServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CaseServiceConnectionIdempotencyPolicy>
 CaseServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<CaseServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CaseServiceConnectionIdempotencyPolicy::GetCase(google::cloud::support::v2::GetCaseRequest const&) {
+Idempotency CaseServiceConnectionIdempotencyPolicy::GetCase(
+    google::cloud::support::v2::GetCaseRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CaseServiceConnectionIdempotencyPolicy::ListCases(google::cloud::support::v2::ListCasesRequest) {  // NOLINT
+Idempotency CaseServiceConnectionIdempotencyPolicy::ListCases(
+    google::cloud::support::v2::ListCasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CaseServiceConnectionIdempotencyPolicy::SearchCases(google::cloud::support::v2::SearchCasesRequest) {  // NOLINT
+Idempotency CaseServiceConnectionIdempotencyPolicy::SearchCases(
+    google::cloud::support::v2::SearchCasesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CaseServiceConnectionIdempotencyPolicy::CreateCase(google::cloud::support::v2::CreateCaseRequest const&) {
+Idempotency CaseServiceConnectionIdempotencyPolicy::CreateCase(
+    google::cloud::support::v2::CreateCaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CaseServiceConnectionIdempotencyPolicy::UpdateCase(google::cloud::support::v2::UpdateCaseRequest const&) {
+Idempotency CaseServiceConnectionIdempotencyPolicy::UpdateCase(
+    google::cloud::support::v2::UpdateCaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CaseServiceConnectionIdempotencyPolicy::EscalateCase(google::cloud::support::v2::EscalateCaseRequest const&) {
+Idempotency CaseServiceConnectionIdempotencyPolicy::EscalateCase(
+    google::cloud::support::v2::EscalateCaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CaseServiceConnectionIdempotencyPolicy::CloseCase(google::cloud::support::v2::CloseCaseRequest const&) {
+Idempotency CaseServiceConnectionIdempotencyPolicy::CloseCase(
+    google::cloud::support::v2::CloseCaseRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency CaseServiceConnectionIdempotencyPolicy::SearchCaseClassifications(google::cloud::support::v2::SearchCaseClassificationsRequest) {  // NOLINT
+Idempotency CaseServiceConnectionIdempotencyPolicy::SearchCaseClassifications(
+    google::cloud::support::v2::SearchCaseClassificationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CaseServiceConnectionIdempotencyPolicy>
-    MakeDefaultCaseServiceConnectionIdempotencyPolicy() {
+MakeDefaultCaseServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CaseServiceConnectionIdempotencyPolicy>();
 }
 

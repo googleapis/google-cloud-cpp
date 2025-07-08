@@ -33,137 +33,132 @@ JobServiceStub::~JobServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 DefaultJobServiceStub::CreateCustomJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
-    google::cloud::aiplatform::v1::CustomJob response;
-    auto status =
-        grpc_stub_->CreateCustomJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
+  google::cloud::aiplatform::v1::CustomJob response;
+  auto status = grpc_stub_->CreateCustomJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 DefaultJobServiceStub::GetCustomJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
-    google::cloud::aiplatform::v1::CustomJob response;
-    auto status =
-        grpc_stub_->GetCustomJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
+  google::cloud::aiplatform::v1::CustomJob response;
+  auto status = grpc_stub_->GetCustomJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
 DefaultJobServiceStub::ListCustomJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
-    google::cloud::aiplatform::v1::ListCustomJobsResponse response;
-    auto status =
-        grpc_stub_->ListCustomJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
+  google::cloud::aiplatform::v1::ListCustomJobsResponse response;
+  auto status = grpc_stub_->ListCustomJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteCustomJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteCustomJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteCustomJobRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteCustomJob(context, request, cq);
       },
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultJobServiceStub::DeleteCustomJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteCustomJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::DeleteCustomJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCustomJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultJobServiceStub::CancelCustomJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->CancelCustomJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::CancelCustomJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->CancelCustomJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 DefaultJobServiceStub::CreateDataLabelingJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const& request) {
-    google::cloud::aiplatform::v1::DataLabelingJob response;
-    auto status =
-        grpc_stub_->CreateDataLabelingJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
+        request) {
+  google::cloud::aiplatform::v1::DataLabelingJob response;
+  auto status = grpc_stub_->CreateDataLabelingJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 DefaultJobServiceStub::GetDataLabelingJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
-    google::cloud::aiplatform::v1::DataLabelingJob response;
-    auto status =
-        grpc_stub_->GetDataLabelingJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
+  google::cloud::aiplatform::v1::DataLabelingJob response;
+  auto status = grpc_stub_->GetDataLabelingJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
 DefaultJobServiceStub::ListDataLabelingJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
-    google::cloud::aiplatform::v1::ListDataLabelingJobsResponse response;
-    auto status =
-        grpc_stub_->ListDataLabelingJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
+  google::cloud::aiplatform::v1::ListDataLabelingJobsResponse response;
+  auto status = grpc_stub_->ListDataLabelingJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteDataLabelingJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request,
+             google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+                 request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteDataLabelingJob(context, request, cq);
       },
@@ -172,161 +167,164 @@ DefaultJobServiceStub::AsyncDeleteDataLabelingJob(
 
 StatusOr<google::longrunning::Operation>
 DefaultJobServiceStub::DeleteDataLabelingJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteDataLabelingJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataLabelingJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultJobServiceStub::CancelDataLabelingJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->CancelDataLabelingJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::CancelDataLabelingJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->CancelDataLabelingJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 DefaultJobServiceStub::CreateHyperparameterTuningJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const& request) {
-    google::cloud::aiplatform::v1::HyperparameterTuningJob response;
-    auto status =
-        grpc_stub_->CreateHyperparameterTuningJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
+        request) {
+  google::cloud::aiplatform::v1::HyperparameterTuningJob response;
+  auto status =
+      grpc_stub_->CreateHyperparameterTuningJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 DefaultJobServiceStub::GetHyperparameterTuningJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const& request) {
-    google::cloud::aiplatform::v1::HyperparameterTuningJob response;
-    auto status =
-        grpc_stub_->GetHyperparameterTuningJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
+        request) {
+  google::cloud::aiplatform::v1::HyperparameterTuningJob response;
+  auto status =
+      grpc_stub_->GetHyperparameterTuningJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
 DefaultJobServiceStub::ListHyperparameterTuningJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const& request) {
-    google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse response;
-    auto status =
-        grpc_stub_->ListHyperparameterTuningJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
+        request) {
+  google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse response;
+  auto status =
+      grpc_stub_->ListHyperparameterTuningJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteHyperparameterTuningJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request,
+             google::cloud::aiplatform::v1::
+                 DeleteHyperparameterTuningJobRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteHyperparameterTuningJob(context, request, cq);
+        return grpc_stub_->AsyncDeleteHyperparameterTuningJob(context, request,
+                                                              cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultJobServiceStub::DeleteHyperparameterTuningJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteHyperparameterTuningJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteHyperparameterTuningJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultJobServiceStub::CancelHyperparameterTuningJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->CancelHyperparameterTuningJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::CancelHyperparameterTuningJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->CancelHyperparameterTuningJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
 DefaultJobServiceStub::CreateNasJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
-    google::cloud::aiplatform::v1::NasJob response;
-    auto status =
-        grpc_stub_->CreateNasJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
+  google::cloud::aiplatform::v1::NasJob response;
+  auto status = grpc_stub_->CreateNasJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob>
 DefaultJobServiceStub::GetNasJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
-    google::cloud::aiplatform::v1::NasJob response;
-    auto status =
-        grpc_stub_->GetNasJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
+  google::cloud::aiplatform::v1::NasJob response;
+  auto status = grpc_stub_->GetNasJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse>
 DefaultJobServiceStub::ListNasJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
-    google::cloud::aiplatform::v1::ListNasJobsResponse response;
-    auto status =
-        grpc_stub_->ListNasJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
+  google::cloud::aiplatform::v1::ListNasJobsResponse response;
+  auto status = grpc_stub_->ListNasJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteNasJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteNasJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteNasJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::aiplatform::v1::DeleteNasJobRequest const& request,
@@ -336,110 +334,109 @@ DefaultJobServiceStub::AsyncDeleteNasJob(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultJobServiceStub::DeleteNasJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteNasJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::DeleteNasJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNasJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultJobServiceStub::CancelNasJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->CancelNasJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::CancelNasJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->CancelNasJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
 DefaultJobServiceStub::GetNasTrialDetail(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
-    google::cloud::aiplatform::v1::NasTrialDetail response;
-    auto status =
-        grpc_stub_->GetNasTrialDetail(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
+  google::cloud::aiplatform::v1::NasTrialDetail response;
+  auto status = grpc_stub_->GetNasTrialDetail(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
 DefaultJobServiceStub::ListNasTrialDetails(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
-    google::cloud::aiplatform::v1::ListNasTrialDetailsResponse response;
-    auto status =
-        grpc_stub_->ListNasTrialDetails(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
+  google::cloud::aiplatform::v1::ListNasTrialDetailsResponse response;
+  auto status = grpc_stub_->ListNasTrialDetails(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 DefaultJobServiceStub::CreateBatchPredictionJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const& request) {
-    google::cloud::aiplatform::v1::BatchPredictionJob response;
-    auto status =
-        grpc_stub_->CreateBatchPredictionJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
+        request) {
+  google::cloud::aiplatform::v1::BatchPredictionJob response;
+  auto status =
+      grpc_stub_->CreateBatchPredictionJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 DefaultJobServiceStub::GetBatchPredictionJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const& request) {
-    google::cloud::aiplatform::v1::BatchPredictionJob response;
-    auto status =
-        grpc_stub_->GetBatchPredictionJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
+        request) {
+  google::cloud::aiplatform::v1::BatchPredictionJob response;
+  auto status = grpc_stub_->GetBatchPredictionJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
 DefaultJobServiceStub::ListBatchPredictionJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const& request) {
-    google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse response;
-    auto status =
-        grpc_stub_->ListBatchPredictionJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
+        request) {
+  google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse response;
+  auto status =
+      grpc_stub_->ListBatchPredictionJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteBatchPredictionJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest,
+      google::longrunning::Operation>(
       cq,
-      [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request,
-             grpc::CompletionQueue* cq) {
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteBatchPredictionJob(context, request, cq);
       },
       request, std::move(context));
@@ -447,299 +444,299 @@ DefaultJobServiceStub::AsyncDeleteBatchPredictionJob(
 
 StatusOr<google::longrunning::Operation>
 DefaultJobServiceStub::DeleteBatchPredictionJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteBatchPredictionJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteBatchPredictionJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultJobServiceStub::CancelBatchPredictionJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->CancelBatchPredictionJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::CancelBatchPredictionJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->CancelBatchPredictionJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 DefaultJobServiceStub::CreateModelDeploymentMonitoringJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::CreateModelDeploymentMonitoringJobRequest const& request) {
-    google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob response;
-    auto status =
-        grpc_stub_->CreateModelDeploymentMonitoringJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::
+        CreateModelDeploymentMonitoringJobRequest const& request) {
+  google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob response;
+  auto status = grpc_stub_->CreateModelDeploymentMonitoringJob(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesResponse>
+StatusOr<google::cloud::aiplatform::v1::
+             SearchModelDeploymentMonitoringStatsAnomaliesResponse>
 DefaultJobServiceStub::SearchModelDeploymentMonitoringStatsAnomalies(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
-    google::cloud::aiplatform::v1::SearchModelDeploymentMonitoringStatsAnomaliesResponse response;
-    auto status =
-        grpc_stub_->SearchModelDeploymentMonitoringStatsAnomalies(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::
+        SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
+  google::cloud::aiplatform::v1::
+      SearchModelDeploymentMonitoringStatsAnomaliesResponse response;
+  auto status = grpc_stub_->SearchModelDeploymentMonitoringStatsAnomalies(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 DefaultJobServiceStub::GetModelDeploymentMonitoringJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const& request) {
-    google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob response;
-    auto status =
-        grpc_stub_->GetModelDeploymentMonitoringJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
+        request) {
+  google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob response;
+  auto status =
+      grpc_stub_->GetModelDeploymentMonitoringJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
+StatusOr<
+    google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
 DefaultJobServiceStub::ListModelDeploymentMonitoringJobs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsRequest const& request) {
-    google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse response;
-    auto status =
-        grpc_stub_->ListModelDeploymentMonitoringJobs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::
+        ListModelDeploymentMonitoringJobsRequest const& request) {
+  google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse
+      response;
+  auto status = grpc_stub_->ListModelDeploymentMonitoringJobs(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncUpdateModelDeploymentMonitoringJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request,
+             google::cloud::aiplatform::v1::
+                 UpdateModelDeploymentMonitoringJobRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncUpdateModelDeploymentMonitoringJob(context, request, cq);
+        return grpc_stub_->AsyncUpdateModelDeploymentMonitoringJob(context,
+                                                                   request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultJobServiceStub::UpdateModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->UpdateModelDeploymentMonitoringJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateModelDeploymentMonitoringJob(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncDeleteModelDeploymentMonitoringJob(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
-             google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request,
+             google::cloud::aiplatform::v1::
+                 DeleteModelDeploymentMonitoringJobRequest const& request,
              grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDeleteModelDeploymentMonitoringJob(context, request, cq);
+        return grpc_stub_->AsyncDeleteModelDeploymentMonitoringJob(context,
+                                                                   request, cq);
       },
       request, std::move(context));
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultJobServiceStub::DeleteModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteModelDeploymentMonitoringJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteModelDeploymentMonitoringJob(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultJobServiceStub::PauseModelDeploymentMonitoringJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::PauseModelDeploymentMonitoringJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->PauseModelDeploymentMonitoringJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::PauseModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::
+        PauseModelDeploymentMonitoringJobRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->PauseModelDeploymentMonitoringJob(&context, request,
+                                                              &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultJobServiceStub::ResumeModelDeploymentMonitoringJob(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::aiplatform::v1::ResumeModelDeploymentMonitoringJobRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->ResumeModelDeploymentMonitoringJob(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::ResumeModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::
+        ResumeModelDeploymentMonitoringJobRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->ResumeModelDeploymentMonitoringJob(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultJobServiceStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::location::Location>
-DefaultJobServiceStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::location::Location> DefaultJobServiceStub::GetLocation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultJobServiceStub::SetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::SetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->SetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultJobServiceStub::SetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->SetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::iam::v1::Policy>
-DefaultJobServiceStub::GetIamPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::GetIamPolicyRequest const& request) {
-    google::iam::v1::Policy response;
-    auto status =
-        iampolicy_stub_->GetIamPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::iam::v1::Policy> DefaultJobServiceStub::GetIamPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = iampolicy_stub_->GetIamPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultJobServiceStub::TestIamPermissions(
-  grpc::ClientContext& context, Options const&,
-  google::iam::v1::TestIamPermissionsRequest const& request) {
-    google::iam::v1::TestIamPermissionsResponse response;
-    auto status =
-        iampolicy_stub_->TestIamPermissions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      iampolicy_stub_->TestIamPermissions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultJobServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultJobServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultJobServiceStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultJobServiceStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultJobServiceStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultJobServiceStub::WaitOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::WaitOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->WaitOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::WaitOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::WaitOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->WaitOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -768,13 +765,14 @@ future<Status> DefaultJobServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

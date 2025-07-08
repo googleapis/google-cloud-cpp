@@ -31,19 +31,22 @@ AppConnectorsServiceAuth::AppConnectorsServiceAuth(
     std::shared_ptr<AppConnectorsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse> AppConnectorsServiceAuth::ListAppConnectors(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest const& request) {
+StatusOr<
+    google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
+AppConnectorsServiceAuth::ListAppConnectors(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ListAppConnectorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAppConnectors(context, options, request);
 }
 
-StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector> AppConnectorsServiceAuth::GetAppConnector(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const& request) {
+StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
+AppConnectorsServiceAuth::GetAppConnector(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAppConnector(context, options, request);
@@ -51,28 +54,30 @@ StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector> AppConnecto
 
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceAuth::AsyncCreateAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAppConnector(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateAppConnector(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceAuth::CreateAppConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appconnectors::v1::CreateAppConnectorRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateAppConnector(context, options, request);
@@ -80,28 +85,30 @@ AppConnectorsServiceAuth::CreateAppConnector(
 
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceAuth::AsyncUpdateAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAppConnector(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateAppConnector(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceAuth::UpdateAppConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appconnectors::v1::UpdateAppConnectorRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateAppConnector(context, options, request);
@@ -109,28 +116,30 @@ AppConnectorsServiceAuth::UpdateAppConnector(
 
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceAuth::AsyncDeleteAppConnector(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAppConnector(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteAppConnector(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceAuth::DeleteAppConnector(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteAppConnector(context, options, request);
@@ -138,45 +147,46 @@ AppConnectorsServiceAuth::DeleteAppConnector(
 
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceAuth::AsyncReportStatus(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncReportStatus(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncReportStatus(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AppConnectorsServiceAuth::ReportStatus(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const& request) {
+StatusOr<google::longrunning::Operation> AppConnectorsServiceAuth::ReportStatus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ReportStatus(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> AppConnectorsServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+AppConnectorsServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLocations(context, options, request);
 }
 
-StatusOr<google::cloud::location::Location> AppConnectorsServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+AppConnectorsServiceAuth::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -184,8 +194,7 @@ StatusOr<google::cloud::location::Location> AppConnectorsServiceAuth::GetLocatio
 }
 
 StatusOr<google::iam::v1::Policy> AppConnectorsServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -193,26 +202,25 @@ StatusOr<google::iam::v1::Policy> AppConnectorsServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> AppConnectorsServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> AppConnectorsServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AppConnectorsServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> AppConnectorsServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+AppConnectorsServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -220,8 +228,7 @@ StatusOr<google::longrunning::ListOperationsResponse> AppConnectorsServiceAuth::
 }
 
 StatusOr<google::longrunning::Operation> AppConnectorsServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -229,8 +236,7 @@ StatusOr<google::longrunning::Operation> AppConnectorsServiceAuth::GetOperation(
 }
 
 Status AppConnectorsServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -238,8 +244,7 @@ Status AppConnectorsServiceAuth::DeleteOperation(
 }
 
 Status AppConnectorsServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -253,15 +258,16 @@ AppConnectorsServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -270,13 +276,14 @@ future<Status> AppConnectorsServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

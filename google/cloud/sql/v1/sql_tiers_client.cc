@@ -28,12 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SqlTiersServiceClient::SqlTiersServiceClient(
     std::shared_ptr<SqlTiersServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SqlTiersServiceClient::~SqlTiersServiceClient() = default;
 
-StatusOr<google::cloud::sql::v1::TiersListResponse>
-SqlTiersServiceClient::List(google::cloud::sql::v1::SqlTiersListRequest const& request, Options opts) {
+StatusOr<google::cloud::sql::v1::TiersListResponse> SqlTiersServiceClient::List(
+    google::cloud::sql::v1::SqlTiersListRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->List(request);
 }

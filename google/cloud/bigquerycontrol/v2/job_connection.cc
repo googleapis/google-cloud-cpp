@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/v2/job.proto
 
 #include "google/cloud/bigquerycontrol/v2/job_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquerycontrol/v2/internal/job_option_defaults.h"
 #include "google/cloud/bigquerycontrol/v2/internal/job_tracing_connection.h"
 #include "google/cloud/bigquerycontrol/v2/job_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -42,26 +42,25 @@ JobServiceConnection::CancelJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::bigquery::v2::Job>
-JobServiceConnection::GetJob(
+StatusOr<google::cloud::bigquery::v2::Job> JobServiceConnection::GetJob(
     google::cloud::bigquery::v2::GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::bigquery::v2::Job>
-JobServiceConnection::InsertJob(
+StatusOr<google::cloud::bigquery::v2::Job> JobServiceConnection::InsertJob(
     google::cloud::bigquery::v2::InsertJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-JobServiceConnection::DeleteJob(
+Status JobServiceConnection::DeleteJob(
     google::cloud::bigquery::v2::DeleteJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::v2::ListFormatJob> JobServiceConnection::ListJobs(
-    google::cloud::bigquery::v2::ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::v2::ListFormatJob>
+JobServiceConnection::ListJobs(
+    google::cloud::bigquery::v2::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::v2::ListFormatJob>>();
 }

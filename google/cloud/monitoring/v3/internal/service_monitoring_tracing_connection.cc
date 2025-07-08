@@ -29,80 +29,106 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-ServiceMonitoringServiceTracingConnection::ServiceMonitoringServiceTracingConnection(
-    std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection> child)
+ServiceMonitoringServiceTracingConnection::
+    ServiceMonitoringServiceTracingConnection(
+        std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StatusOr<google::monitoring::v3::Service>
-ServiceMonitoringServiceTracingConnection::CreateService(google::monitoring::v3::CreateServiceRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::CreateService");
+ServiceMonitoringServiceTracingConnection::CreateService(
+    google::monitoring::v3::CreateServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::CreateService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateService(request));
 }
 
 StatusOr<google::monitoring::v3::Service>
-ServiceMonitoringServiceTracingConnection::GetService(google::monitoring::v3::GetServiceRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::GetService");
+ServiceMonitoringServiceTracingConnection::GetService(
+    google::monitoring::v3::GetServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::GetService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetService(request));
 }
 
 StreamRange<google::monitoring::v3::Service>
-ServiceMonitoringServiceTracingConnection::ListServices(google::monitoring::v3::ListServicesRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::ListServices");
+ServiceMonitoringServiceTracingConnection::ListServices(
+    google::monitoring::v3::ListServicesRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::ListServices");
   internal::OTelScope scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::Service>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::Service>
-ServiceMonitoringServiceTracingConnection::UpdateService(google::monitoring::v3::UpdateServiceRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::UpdateService");
+ServiceMonitoringServiceTracingConnection::UpdateService(
+    google::monitoring::v3::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::UpdateService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateService(request));
 }
 
-Status
-ServiceMonitoringServiceTracingConnection::DeleteService(google::monitoring::v3::DeleteServiceRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::DeleteService");
+Status ServiceMonitoringServiceTracingConnection::DeleteService(
+    google::monitoring::v3::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::DeleteService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteService(request));
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
-ServiceMonitoringServiceTracingConnection::CreateServiceLevelObjective(google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::CreateServiceLevelObjective");
+ServiceMonitoringServiceTracingConnection::CreateServiceLevelObjective(
+    google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::"
+      "CreateServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateServiceLevelObjective(request));
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
-ServiceMonitoringServiceTracingConnection::GetServiceLevelObjective(google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::GetServiceLevelObjective");
+ServiceMonitoringServiceTracingConnection::GetServiceLevelObjective(
+    google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::"
+      "GetServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetServiceLevelObjective(request));
 }
 
 StreamRange<google::monitoring::v3::ServiceLevelObjective>
-ServiceMonitoringServiceTracingConnection::ListServiceLevelObjectives(google::monitoring::v3::ListServiceLevelObjectivesRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::ListServiceLevelObjectives");
+ServiceMonitoringServiceTracingConnection::ListServiceLevelObjectives(
+    google::monitoring::v3::ListServiceLevelObjectivesRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::"
+      "ListServiceLevelObjectives");
   internal::OTelScope scope(span);
   auto sr = child_->ListServiceLevelObjectives(std::move(request));
-  return internal::MakeTracedStreamRange<google::monitoring::v3::ServiceLevelObjective>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::v3::ServiceLevelObjective>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
-ServiceMonitoringServiceTracingConnection::UpdateServiceLevelObjective(google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::UpdateServiceLevelObjective");
+ServiceMonitoringServiceTracingConnection::UpdateServiceLevelObjective(
+    google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::"
+      "UpdateServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateServiceLevelObjective(request));
 }
 
-Status
-ServiceMonitoringServiceTracingConnection::DeleteServiceLevelObjective(google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::ServiceMonitoringServiceConnection::DeleteServiceLevelObjective");
+Status ServiceMonitoringServiceTracingConnection::DeleteServiceLevelObjective(
+    google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::ServiceMonitoringServiceConnection::"
+      "DeleteServiceLevelObjective");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteServiceLevelObjective(request));
 }
@@ -114,7 +140,8 @@ MakeServiceMonitoringServiceTracingConnection(
     std::shared_ptr<monitoring_v3::ServiceMonitoringServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ServiceMonitoringServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<ServiceMonitoringServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

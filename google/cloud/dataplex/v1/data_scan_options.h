@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_SCAN_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_SCAN_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/data_scan_connection.h"
 #include "google/cloud/dataplex/v1/data_scan_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

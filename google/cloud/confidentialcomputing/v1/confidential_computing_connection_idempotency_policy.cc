@@ -26,31 +26,37 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ConfidentialComputingConnectionIdempotencyPolicy::~ConfidentialComputingConnectionIdempotencyPolicy() = default;
+ConfidentialComputingConnectionIdempotencyPolicy::
+    ~ConfidentialComputingConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ConfidentialComputingConnectionIdempotencyPolicy>
 ConfidentialComputingConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ConfidentialComputingConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ConfidentialComputingConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency ConfidentialComputingConnectionIdempotencyPolicy::CreateChallenge(google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&) {
+Idempotency ConfidentialComputingConnectionIdempotencyPolicy::CreateChallenge(
+    google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConfidentialComputingConnectionIdempotencyPolicy::VerifyAttestation(google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&) {
+Idempotency ConfidentialComputingConnectionIdempotencyPolicy::VerifyAttestation(
+    google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ConfidentialComputingConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ConfidentialComputingConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ConfidentialComputingConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency ConfidentialComputingConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ConfidentialComputingConnectionIdempotencyPolicy>
-    MakeDefaultConfidentialComputingConnectionIdempotencyPolicy() {
+MakeDefaultConfidentialComputingConnectionIdempotencyPolicy() {
   return std::make_unique<ConfidentialComputingConnectionIdempotencyPolicy>();
 }
 

@@ -68,7 +68,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudQuotasClient {
  public:
-  explicit CloudQuotasClient(std::shared_ptr<CloudQuotasConnection> connection, Options opts = {});
+  explicit CloudQuotasClient(std::shared_ptr<CloudQuotasConnection> connection,
+                             Options opts = {});
   ~CloudQuotasClient();
 
   ///@{
@@ -81,10 +82,12 @@ class CloudQuotasClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudQuotasClient const& a, CloudQuotasClient const& b) {
+  friend bool operator==(CloudQuotasClient const& a,
+                         CloudQuotasClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudQuotasClient const& a, CloudQuotasClient const& b) {
+  friend bool operator!=(CloudQuotasClient const& a,
+                         CloudQuotasClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -127,8 +130,8 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaInfo]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L48}
   ///
   // clang-format on
-  StreamRange<google::api::cloudquotas::v1::QuotaInfo>
-  ListQuotaInfos(std::string const& parent, Options opts = {});
+  StreamRange<google::api::cloudquotas::v1::QuotaInfo> ListQuotaInfos(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -166,8 +169,9 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaInfo]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L48}
   ///
   // clang-format on
-  StreamRange<google::api::cloudquotas::v1::QuotaInfo>
-  ListQuotaInfos(google::api::cloudquotas::v1::ListQuotaInfosRequest request, Options opts = {});
+  StreamRange<google::api::cloudquotas::v1::QuotaInfo> ListQuotaInfos(
+      google::api::cloudquotas::v1::ListQuotaInfosRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -194,8 +198,8 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaInfo]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L48}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaInfo>
-  GetQuotaInfo(std::string const& name, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaInfo> GetQuotaInfo(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -224,8 +228,9 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaInfo]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L48}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaInfo>
-  GetQuotaInfo(google::api::cloudquotas::v1::GetQuotaInfoRequest const& request, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaInfo> GetQuotaInfo(
+      google::api::cloudquotas::v1::GetQuotaInfoRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -307,7 +312,9 @@ class CloudQuotasClient {
   ///
   // clang-format on
   StreamRange<google::api::cloudquotas::v1::QuotaPreference>
-  ListQuotaPreferences(google::api::cloudquotas::v1::ListQuotaPreferencesRequest request, Options opts = {});
+  ListQuotaPreferences(
+      google::api::cloudquotas::v1::ListQuotaPreferencesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -334,8 +341,8 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  GetQuotaPreference(std::string const& name, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> GetQuotaPreference(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -364,8 +371,9 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  GetQuotaPreference(google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> GetQuotaPreference(
+      google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -395,8 +403,10 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  CreateQuotaPreference(std::string const& parent, google::api::cloudquotas::v1::QuotaPreference const& quota_preference, std::string const& quota_preference_id, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> CreateQuotaPreference(
+      std::string const& parent,
+      google::api::cloudquotas::v1::QuotaPreference const& quota_preference,
+      std::string const& quota_preference_id, Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +434,10 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  CreateQuotaPreference(std::string const& parent, google::api::cloudquotas::v1::QuotaPreference const& quota_preference, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> CreateQuotaPreference(
+      std::string const& parent,
+      google::api::cloudquotas::v1::QuotaPreference const& quota_preference,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -454,8 +466,9 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.QuotaPreference]: @googleapis_reference_link{google/api/cloudquotas/v1/resources.proto#L168}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  CreateQuotaPreference(google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> CreateQuotaPreference(
+      google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -485,8 +498,9 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.UpdateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L299}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  UpdateQuotaPreference(google::api::cloudquotas::v1::QuotaPreference const& quota_preference, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> UpdateQuotaPreference(
+      google::api::cloudquotas::v1::QuotaPreference const& quota_preference,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -516,8 +530,9 @@ class CloudQuotasClient {
   /// [google.api.cloudquotas.v1.UpdateQuotaPreferenceRequest]: @googleapis_reference_link{google/api/cloudquotas/v1/cloudquotas.proto#L299}
   ///
   // clang-format on
-  StatusOr<google::api::cloudquotas::v1::QuotaPreference>
-  UpdateQuotaPreference(google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request, Options opts = {});
+  StatusOr<google::api::cloudquotas::v1::QuotaPreference> UpdateQuotaPreference(
+      google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudQuotasConnection> connection_;

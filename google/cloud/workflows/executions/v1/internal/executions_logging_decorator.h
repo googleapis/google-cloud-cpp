@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_INTERNAL_EXECUTIONS_LOGGING_DECORATOR_H
 
+#include "google/cloud/workflows/executions/v1/internal/executions_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/workflows/executions/v1/internal/executions_stub.h"
 #include <memory>
 #include <set>
 #include <string>
@@ -35,28 +35,29 @@ class ExecutionsLogging : public ExecutionsStub {
  public:
   ~ExecutionsLogging() override = default;
   ExecutionsLogging(std::shared_ptr<ExecutionsStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                    TracingOptions tracing_options,
+                    std::set<std::string> const& components);
 
-  StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse> ListExecutions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) override;
+  StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
+  ListExecutions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::ListExecutionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+          request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::GetExecutionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::GetExecutionRequest const&
+          request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+          request) override;
 
  private:
   std::shared_ptr<ExecutionsStub> child_;

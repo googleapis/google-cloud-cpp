@@ -35,125 +35,145 @@ class CloudControlsPartnerCoreStub {
  public:
   virtual ~CloudControlsPartnerCoreStub() = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Workload> GetWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
+  GetWorkload(grpc::ClientContext& context, Options const& options,
+              google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
+                  request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse> ListWorkloads(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse>
+  ListWorkloads(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  GetCustomer(grpc::ClientContext& context, Options const& options,
+              google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
+                  request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse> ListCustomers(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::cloudcontrolspartner::v1::ListCustomersResponse>
+  ListCustomers(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections> GetEkmConnections(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
+  GetEkmConnections(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions> GetPartnerPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
+  GetPartnerPermissions(grpc::ClientContext& context, Options const& options,
+                        google::cloud::cloudcontrolspartner::v1::
+                            GetPartnerPermissionsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse> ListAccessApprovalRequests(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::
+                       ListAccessApprovalRequestsResponse>
+  ListAccessApprovalRequests(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::
+          ListAccessApprovalRequestsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> GetPartner(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  CreateCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
+  UpdateCustomer(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request) = 0;
 
   virtual Status DeleteCustomer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request) = 0;
 };
 
-class DefaultCloudControlsPartnerCoreStub : public CloudControlsPartnerCoreStub {
+class DefaultCloudControlsPartnerCoreStub
+    : public CloudControlsPartnerCoreStub {
  public:
   explicit DefaultCloudControlsPartnerCoreStub(
-      std::unique_ptr<google::cloud::cloudcontrolspartner::v1::CloudControlsPartnerCore::StubInterface> grpc_stub)
+      std::unique_ptr<google::cloud::cloudcontrolspartner::v1::
+                          CloudControlsPartnerCore::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Workload> GetWorkload(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse> ListWorkloads(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::ListWorkloadsResponse>
+  ListWorkloads(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse> ListCustomers(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::ListCustomersResponse>
+  ListCustomers(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections> GetEkmConnections(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
+  GetEkmConnections(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions> GetPartnerPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
+  GetPartnerPermissions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::
+          GetPartnerPermissionsRequest const& request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsResponse> ListAccessApprovalRequests(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::
+               ListAccessApprovalRequestsResponse>
+  ListAccessApprovalRequests(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::
+          ListAccessApprovalRequestsRequest const& request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> GetPartner(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request)
+      override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> CreateCustomer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::CreateCustomerRequest const&
+          request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> UpdateCustomer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::UpdateCustomerRequest const&
+          request) override;
 
   Status DeleteCustomer(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::cloudcontrolspartner::v1::DeleteCustomerRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<google::cloud::cloudcontrolspartner::v1::CloudControlsPartnerCore::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::cloudcontrolspartner::v1::
+                      CloudControlsPartnerCore::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

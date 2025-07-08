@@ -17,10 +17,10 @@
 // source: google/cloud/osconfig/v1/osconfig_zonal_service.proto
 
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/osconfig/v1/os_config_zonal_connection.h"
 #include "google/cloud/osconfig/v1/os_config_zonal_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,25 +42,35 @@ Options OsConfigZonalServiceDefaultOptions(Options options) {
   if (!options.has<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()) {
     options.set<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>(
         osconfig_v1::OsConfigZonalServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<osconfig_v1::OsConfigZonalServiceBackoffPolicyOption>()) {
     options.set<osconfig_v1::OsConfigZonalServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<osconfig_v1::OsConfigZonalServicePollingPolicyOption>()) {
     options.set<osconfig_v1::OsConfigZonalServicePollingPolicyOption>(
         GenericPollingPolicy<
             osconfig_v1::OsConfigZonalServiceRetryPolicyOption::Type,
             osconfig_v1::OsConfigZonalServiceBackoffPolicyOption::Type>(
-            options.get<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()->clone(),
+            options.get<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<osconfig_v1::OsConfigZonalServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<osconfig_v1::OsConfigZonalServiceConnectionIdempotencyPolicyOption>(
-        osconfig_v1::MakeDefaultOsConfigZonalServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<osconfig_v1::
+                    OsConfigZonalServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        osconfig_v1::OsConfigZonalServiceConnectionIdempotencyPolicyOption>(
+        osconfig_v1::
+            MakeDefaultOsConfigZonalServiceConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/snapshot_settings/v1/snapshot_settings.proto
 
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -41,27 +41,30 @@ SnapshotSettingsRestMetadata::SnapshotSettingsRestMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
 SnapshotSettingsRestMetadata::GetSnapshotSettings(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        GetSnapshotSettingsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetSnapshotSettings(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsRestMetadata::AsyncPatchSnapshotSettings(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncPatchSnapshotSettings(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncPatchSnapshotSettings(cq, std::move(rest_context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotSettingsRestMetadata::PatchSnapshotSettings(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->PatchSnapshotSettings(rest_context, options, request);
 }
@@ -71,28 +74,29 @@ SnapshotSettingsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncGetOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
-future<Status>
-SnapshotSettingsRestMetadata::AsyncCancelOperation(
+future<Status> SnapshotSettingsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteOperationRequest const& request) {
   SetMetadata(*rest_context, *options);
-  return child_->AsyncCancelOperation(
-      cq, std::move(rest_context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void SnapshotSettingsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

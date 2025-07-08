@@ -35,41 +35,42 @@ class ModelServiceConnectionIdempotencyPolicy {
   virtual ~ModelServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ModelServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ModelServiceConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  CreateModel(google::cloud::retail::v2::CreateModelRequest const& request);
+  virtual google::cloud::Idempotency CreateModel(
+      google::cloud::retail::v2::CreateModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetModel(google::cloud::retail::v2::GetModelRequest const& request);
+  virtual google::cloud::Idempotency GetModel(
+      google::cloud::retail::v2::GetModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  PauseModel(google::cloud::retail::v2::PauseModelRequest const& request);
+  virtual google::cloud::Idempotency PauseModel(
+      google::cloud::retail::v2::PauseModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ResumeModel(google::cloud::retail::v2::ResumeModelRequest const& request);
+  virtual google::cloud::Idempotency ResumeModel(
+      google::cloud::retail::v2::ResumeModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteModel(google::cloud::retail::v2::DeleteModelRequest const& request);
+  virtual google::cloud::Idempotency DeleteModel(
+      google::cloud::retail::v2::DeleteModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListModels(google::cloud::retail::v2::ListModelsRequest request);
+  virtual google::cloud::Idempotency ListModels(
+      google::cloud::retail::v2::ListModelsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateModel(google::cloud::retail::v2::UpdateModelRequest const& request);
+  virtual google::cloud::Idempotency UpdateModel(
+      google::cloud::retail::v2::UpdateModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TuneModel(google::cloud::retail::v2::TuneModelRequest const& request);
+  virtual google::cloud::Idempotency TuneModel(
+      google::cloud::retail::v2::TuneModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
-    MakeDefaultModelServiceConnectionIdempotencyPolicy();
+MakeDefaultModelServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2

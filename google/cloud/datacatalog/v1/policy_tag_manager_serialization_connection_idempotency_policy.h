@@ -35,32 +35,34 @@ class PolicyTagManagerSerializationConnectionIdempotencyPolicy {
   virtual ~PolicyTagManagerSerializationConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<
+      PolicyTagManagerSerializationConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  ReplaceTaxonomy(google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request);
+  virtual google::cloud::Idempotency ReplaceTaxonomy(
+      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ImportTaxonomies(google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request);
+  virtual google::cloud::Idempotency ImportTaxonomies(
+      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ExportTaxonomies(google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request);
+  virtual google::cloud::Idempotency ExportTaxonomies(
+      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
-    MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy();
+MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_v1

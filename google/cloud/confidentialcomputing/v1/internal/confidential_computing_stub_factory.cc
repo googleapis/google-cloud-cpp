@@ -17,12 +17,12 @@
 // source: google/cloud/confidentialcomputing/v1/service.proto
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_auth_decorator.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_logging_decorator.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_metadata_decorator.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_stub.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -42,25 +42,27 @@ std::shared_ptr<ConfidentialComputingStub>
 CreateDefaultConfidentialComputingStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::confidentialcomputing::v1::ConfidentialComputing::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::confidentialcomputing::v1::ConfidentialComputing::NewStub(
+          channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ConfidentialComputingStub> stub =
-    std::make_shared<DefaultConfidentialComputingStub>(std::move(service_grpc_stub), std::move(service_locations_stub));
+      std::make_shared<DefaultConfidentialComputingStub>(
+          std::move(service_grpc_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ConfidentialComputingAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ConfidentialComputingAuth>(std::move(auth),
+                                                       std::move(stub));
   }
   stub = std::make_shared<ConfidentialComputingMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ConfidentialComputingLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

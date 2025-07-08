@@ -35,85 +35,81 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PolicyBasedRoutingServiceLogging : public PolicyBasedRoutingServiceStub {
  public:
   ~PolicyBasedRoutingServiceLogging() override = default;
-  PolicyBasedRoutingServiceLogging(std::shared_ptr<PolicyBasedRoutingServiceStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+  PolicyBasedRoutingServiceLogging(
+      std::shared_ptr<PolicyBasedRoutingServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> const& components);
 
-  StatusOr<google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse> ListPolicyBasedRoutes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesRequest const& request) override;
+  StatusOr<
+      google::cloud::networkconnectivity::v1::ListPolicyBasedRoutesResponse>
+  ListPolicyBasedRoutes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::
+          ListPolicyBasedRoutesRequest const& request) override;
 
-  StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute> GetPolicyBasedRoute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const& request) override;
+  StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>
+  GetPolicyBasedRoute(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::GetPolicyBasedRouteRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePolicyBasedRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) override;
+      google::cloud::networkconnectivity::v1::
+          CreatePolicyBasedRouteRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          CreatePolicyBasedRouteRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePolicyBasedRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) override;
+      google::cloud::networkconnectivity::v1::
+          DeletePolicyBasedRouteRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::
+          DeletePolicyBasedRouteRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

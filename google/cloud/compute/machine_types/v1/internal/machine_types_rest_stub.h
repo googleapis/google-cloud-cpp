@@ -36,17 +36,24 @@ class MachineTypesRestStub {
  public:
   virtual ~MachineTypesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList> AggregatedListMachineTypes(
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+  AggregatedListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::machine_types::v1::
+          AggregatedListMachineTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::compute::machine_types::v1::
+          GetMachineTypeRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineTypeList> ListMachineTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineTypeList>
+  ListMachineTypes(google::cloud::rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::cpp::compute::machine_types::v1::
+                       ListMachineTypesRequest const& request) = 0;
 };
 
 class DefaultMachineTypesRestStub : public MachineTypesRestStub {
@@ -55,20 +62,26 @@ class DefaultMachineTypesRestStub : public MachineTypesRestStub {
 
   explicit DefaultMachineTypesRestStub(Options options);
   DefaultMachineTypesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList> AggregatedListMachineTypes(
+  StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+  AggregatedListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::machine_types::v1::
+          AggregatedListMachineTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::machine_types::v1::
+          GetMachineTypeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeList> ListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::machine_types::v1::
+          ListMachineTypesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

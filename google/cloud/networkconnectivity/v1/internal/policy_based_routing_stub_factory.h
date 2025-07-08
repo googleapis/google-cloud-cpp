@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_POLICY_BASED_ROUTING_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_POLICY_BASED_ROUTING_STUB_FACTORY_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -30,7 +30,8 @@ namespace cloud {
 namespace networkconnectivity_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<PolicyBasedRoutingServiceStub> CreateDefaultPolicyBasedRoutingServiceStub(
+std::shared_ptr<PolicyBasedRoutingServiceStub>
+CreateDefaultPolicyBasedRoutingServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options);
 

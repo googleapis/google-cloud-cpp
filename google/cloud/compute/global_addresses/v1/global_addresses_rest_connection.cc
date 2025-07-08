@@ -17,12 +17,12 @@
 // source: google/cloud/compute/global_addresses/v1/global_addresses.proto
 
 #include "google/cloud/compute/global_addresses/v1/global_addresses_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/global_addresses/v1/global_addresses_options.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_option_defaults.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_rest_connection_impl.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_rest_stub_factory.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_tracing_connection.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,19 +36,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GlobalAddressesConnection> MakeGlobalAddressesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      GlobalAddressesPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, GlobalAddressesPolicyOptionList>(
+      options, __func__);
   options = compute_global_addresses_v1_internal::GlobalAddressesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_global_addresses_v1_internal::CreateDefaultGlobalAddressesRestStub(
-      options);
-  return compute_global_addresses_v1_internal::MakeGlobalAddressesTracingConnection(
-      std::make_shared<
-          compute_global_addresses_v1_internal::GlobalAddressesRestConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_global_addresses_v1_internal::
+      CreateDefaultGlobalAddressesRestStub(options);
+  return compute_global_addresses_v1_internal::
+      MakeGlobalAddressesTracingConnection(
+          std::make_shared<compute_global_addresses_v1_internal::
+                               GlobalAddressesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

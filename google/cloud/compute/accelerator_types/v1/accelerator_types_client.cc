@@ -28,28 +28,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AcceleratorTypesClient::AcceleratorTypesClient(
     std::shared_ptr<AcceleratorTypesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AcceleratorTypesClient::~AcceleratorTypesClient() = default;
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
-AcceleratorTypesClient::AggregatedListAcceleratorTypes(std::string const& project, Options opts) {
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
+AcceleratorTypesClient::AggregatedListAcceleratorTypes(
+    std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest request;
+  google::cloud::cpp::compute::accelerator_types::v1::
+      AggregatedListAcceleratorTypesRequest request;
   request.set_project(project);
   return connection_->AggregatedListAcceleratorTypes(request);
 }
 
-StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
-AcceleratorTypesClient::AggregatedListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::AggregatedListAcceleratorTypesRequest request, Options opts) {
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::AcceleratorTypesScopedList>>
+AcceleratorTypesClient::AggregatedListAcceleratorTypes(
+    google::cloud::cpp::compute::accelerator_types::v1::
+        AggregatedListAcceleratorTypesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListAcceleratorTypes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesClient::GetAcceleratorType(std::string const& project, std::string const& zone, std::string const& accelerator_type, Options opts) {
+AcceleratorTypesClient::GetAcceleratorType(std::string const& project,
+                                           std::string const& zone,
+                                           std::string const& accelerator_type,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest request;
+  google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest
+      request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_accelerator_type(accelerator_type);
@@ -57,22 +68,31 @@ AcceleratorTypesClient::GetAcceleratorType(std::string const& project, std::stri
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesClient::GetAcceleratorType(google::cloud::cpp::compute::accelerator_types::v1::GetAcceleratorTypeRequest const& request, Options opts) {
+AcceleratorTypesClient::GetAcceleratorType(
+    google::cloud::cpp::compute::accelerator_types::v1::
+        GetAcceleratorTypeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAcceleratorType(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesClient::ListAcceleratorTypes(std::string const& project, std::string const& zone, Options opts) {
+AcceleratorTypesClient::ListAcceleratorTypes(std::string const& project,
+                                             std::string const& zone,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest request;
+  google::cloud::cpp::compute::accelerator_types::v1::
+      ListAcceleratorTypesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   return connection_->ListAcceleratorTypes(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesClient::ListAcceleratorTypes(google::cloud::cpp::compute::accelerator_types::v1::ListAcceleratorTypesRequest request, Options opts) {
+AcceleratorTypesClient::ListAcceleratorTypes(
+    google::cloud::cpp::compute::accelerator_types::v1::
+        ListAcceleratorTypesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAcceleratorTypes(std::move(request));
 }

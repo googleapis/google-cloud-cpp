@@ -17,12 +17,12 @@
 // source: google/cloud/channel/v1/reports_service.proto
 
 #include "google/cloud/channel/v1/cloud_channel_reports_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/channel/v1/cloud_channel_reports_options.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_connection_impl.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_option_defaults.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_stub_factory.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -36,46 +36,52 @@ namespace cloud {
 namespace channel_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-CloudChannelReportsServiceConnection::~CloudChannelReportsServiceConnection() = default;
+CloudChannelReportsServiceConnection::~CloudChannelReportsServiceConnection() =
+    default;
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
 CloudChannelReportsServiceConnection::RunReportJob(
     google::cloud::channel::v1::RunReportJobRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::channel::v1::RunReportJobResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::channel::v1::RunReportJobResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 CloudChannelReportsServiceConnection::RunReportJob(
-    NoAwaitTag,
-    google::cloud::channel::v1::RunReportJobRequest const&) {
+    NoAwaitTag, google::cloud::channel::v1::RunReportJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
 CloudChannelReportsServiceConnection::RunReportJob(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::channel::v1::RunReportJobResponse>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::channel::v1::RunReportJobResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::channel::v1::Row> CloudChannelReportsServiceConnection::FetchReportResults(
-    google::cloud::channel::v1::FetchReportResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::channel::v1::Row>
+CloudChannelReportsServiceConnection::FetchReportResults(
+    google::cloud::channel::v1::
+        FetchReportResultsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::Row>>();
 }
 
-StreamRange<google::cloud::channel::v1::Report> CloudChannelReportsServiceConnection::ListReports(
-    google::cloud::channel::v1::ListReportsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::channel::v1::Report>
+CloudChannelReportsServiceConnection::ListReports(
+    google::cloud::channel::v1::
+        ListReportsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::channel::v1::Report>>();
 }
 
-StreamRange<google::longrunning::Operation> CloudChannelReportsServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+CloudChannelReportsServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -86,32 +92,32 @@ CloudChannelReportsServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-CloudChannelReportsServiceConnection::DeleteOperation(
+Status CloudChannelReportsServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-CloudChannelReportsServiceConnection::CancelOperation(
+Status CloudChannelReportsServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<CloudChannelReportsServiceConnection> MakeCloudChannelReportsServiceConnection(
-    Options options) {
+std::shared_ptr<CloudChannelReportsServiceConnection>
+MakeCloudChannelReportsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      CloudChannelReportsServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 CloudChannelReportsServicePolicyOptionList>(
+      options, __func__);
   options = channel_v1_internal::CloudChannelReportsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = channel_v1_internal::CreateDefaultCloudChannelReportsServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return channel_v1_internal::MakeCloudChannelReportsServiceTracingConnection(
-      std::make_shared<channel_v1_internal::CloudChannelReportsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          channel_v1_internal::CloudChannelReportsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

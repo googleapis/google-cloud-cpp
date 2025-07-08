@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_PUBLISHER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_PUBLISHER_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/eventarc/publishing/v1/publisher_connection.h"
 #include "google/cloud/eventarc/publishing/v1/publisher_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct PublisherConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-eventarc-options
  */
 using PublisherPolicyOptionList =
-    OptionList<PublisherRetryPolicyOption,
-               PublisherBackoffPolicyOption,
+    OptionList<PublisherRetryPolicyOption, PublisherBackoffPolicyOption,
                PublisherConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

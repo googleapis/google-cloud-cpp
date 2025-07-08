@@ -61,7 +61,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConnectionServiceClient {
  public:
-  explicit ConnectionServiceClient(std::shared_ptr<ConnectionServiceConnection> connection, Options opts = {});
+  explicit ConnectionServiceClient(
+      std::shared_ptr<ConnectionServiceConnection> connection,
+      Options opts = {});
   ~ConnectionServiceClient();
 
   ///@{
@@ -74,10 +76,12 @@ class ConnectionServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConnectionServiceClient const& a, ConnectionServiceClient const& b) {
+  friend bool operator==(ConnectionServiceClient const& a,
+                         ConnectionServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConnectionServiceClient const& a, ConnectionServiceClient const& b) {
+  friend bool operator!=(ConnectionServiceClient const& a,
+                         ConnectionServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -108,7 +112,10 @@ class ConnectionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  CreateConnection(std::string const& parent, google::cloud::bigquery::connection::v1::Connection const& connection, std::string const& connection_id, Options opts = {});
+  CreateConnection(
+      std::string const& parent,
+      google::cloud::bigquery::connection::v1::Connection const& connection,
+      std::string const& connection_id, Options opts = {});
 
   // clang-format off
   ///
@@ -138,7 +145,10 @@ class ConnectionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  CreateConnection(google::cloud::bigquery::connection::v1::CreateConnectionRequest const& request, Options opts = {});
+  CreateConnection(
+      google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -163,8 +173,8 @@ class ConnectionServiceClient {
   /// [google.cloud.bigquery.connection.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L157}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  GetConnection(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -193,8 +203,10 @@ class ConnectionServiceClient {
   /// [google.cloud.bigquery.connection.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L157}
   ///
   // clang-format on
-  StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  GetConnection(google::cloud::bigquery::connection::v1::GetConnectionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
+      google::cloud::bigquery::connection::v1::GetConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -268,7 +280,9 @@ class ConnectionServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::connection::v1::Connection>
-  ListConnections(google::cloud::bigquery::connection::v1::ListConnectionsRequest request, Options opts = {});
+  ListConnections(
+      google::cloud::bigquery::connection::v1::ListConnectionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -297,7 +311,10 @@ class ConnectionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  UpdateConnection(std::string const& name, google::cloud::bigquery::connection::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateConnection(
+      std::string const& name,
+      google::cloud::bigquery::connection::v1::Connection const& connection,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -328,7 +345,10 @@ class ConnectionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  UpdateConnection(google::cloud::bigquery::connection::v1::UpdateConnectionRequest const& request, Options opts = {});
+  UpdateConnection(
+      google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -350,8 +370,7 @@ class ConnectionServiceClient {
   /// [google.cloud.bigquery.connection.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L218}
   ///
   // clang-format on
-  Status
-  DeleteConnection(std::string const& name, Options opts = {});
+  Status DeleteConnection(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -377,8 +396,10 @@ class ConnectionServiceClient {
   /// [google.cloud.bigquery.connection.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L218}
   ///
   // clang-format on
-  Status
-  DeleteConnection(google::cloud::bigquery::connection::v1::DeleteConnectionRequest const& request, Options opts = {});
+  Status DeleteConnection(
+      google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -407,8 +428,9 @@ class ConnectionServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, google::iam::v1::GetPolicyOptions const& options, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      std::string const& resource,
+      google::iam::v1::GetPolicyOptions const& options, Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +461,8 @@ class ConnectionServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -472,8 +494,9 @@ class ConnectionServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -505,8 +528,8 @@ class ConnectionServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -541,8 +564,9 @@ class ConnectionServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -577,8 +601,9 @@ class ConnectionServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConnectionServiceConnection> connection_;

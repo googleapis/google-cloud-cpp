@@ -35,21 +35,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class DiskTypesRestMetadata : public DiskTypesRestStub {
  public:
   ~DiskTypesRestMetadata() override = default;
-  explicit DiskTypesRestMetadata(
-      std::shared_ptr<DiskTypesRestStub> child,
-      std::string api_client_header = "");
+  explicit DiskTypesRestMetadata(std::shared_ptr<DiskTypesRestStub> child,
+                                 std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList> AggregatedListDiskTypes(
+  StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
+  AggregatedListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::disk_types::v1::
+          AggregatedListDiskTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskType(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeList> ListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

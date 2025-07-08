@@ -26,43 +26,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-UserEventServiceConnectionIdempotencyPolicy::~UserEventServiceConnectionIdempotencyPolicy() = default;
+UserEventServiceConnectionIdempotencyPolicy::
+    ~UserEventServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
 UserEventServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<UserEventServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency UserEventServiceConnectionIdempotencyPolicy::WriteUserEvent(google::cloud::discoveryengine::v1::WriteUserEventRequest const&) {
+Idempotency UserEventServiceConnectionIdempotencyPolicy::WriteUserEvent(
+    google::cloud::discoveryengine::v1::WriteUserEventRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UserEventServiceConnectionIdempotencyPolicy::CollectUserEvent(google::cloud::discoveryengine::v1::CollectUserEventRequest const&) {
+Idempotency UserEventServiceConnectionIdempotencyPolicy::CollectUserEvent(
+    google::cloud::discoveryengine::v1::CollectUserEventRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency UserEventServiceConnectionIdempotencyPolicy::PurgeUserEvents(google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
+Idempotency UserEventServiceConnectionIdempotencyPolicy::PurgeUserEvents(
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UserEventServiceConnectionIdempotencyPolicy::ImportUserEvents(google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {
+Idempotency UserEventServiceConnectionIdempotencyPolicy::ImportUserEvents(
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency UserEventServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency UserEventServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency UserEventServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency UserEventServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency UserEventServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency UserEventServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
-    MakeDefaultUserEventServiceConnectionIdempotencyPolicy() {
+MakeDefaultUserEventServiceConnectionIdempotencyPolicy() {
   return std::make_unique<UserEventServiceConnectionIdempotencyPolicy>();
 }
 

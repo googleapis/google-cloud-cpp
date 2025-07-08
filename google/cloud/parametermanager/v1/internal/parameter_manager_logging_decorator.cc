@@ -31,21 +31,18 @@ namespace parametermanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ParameterManagerLogging::ParameterManagerLogging(
-    std::shared_ptr<ParameterManagerStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ParameterManagerStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::parametermanager::v1::ListParametersResponse>
 ParameterManagerLogging::ListParameters(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parametermanager::v1::ListParametersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::ListParametersRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::ListParametersRequest const&
+                 request) {
         return child_->ListParameters(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ ParameterManagerLogging::ListParameters(
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 ParameterManagerLogging::GetParameter(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parametermanager::v1::GetParameterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::GetParameterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::GetParameterRequest const&
+                 request) {
         return child_->GetParameter(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,13 @@ ParameterManagerLogging::GetParameter(
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 ParameterManagerLogging::CreateParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::CreateParameterRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateParameterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::CreateParameterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::CreateParameterRequest const&
+                 request) {
         return child_->CreateParameter(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,27 +77,26 @@ ParameterManagerLogging::CreateParameter(
 
 StatusOr<google::cloud::parametermanager::v1::Parameter>
 ParameterManagerLogging::UpdateParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::UpdateParameterRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateParameterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::UpdateParameterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::UpdateParameterRequest const&
+                 request) {
         return child_->UpdateParameter(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ParameterManagerLogging::DeleteParameter(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::DeleteParameterRequest const& request) {
+Status ParameterManagerLogging::DeleteParameter(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteParameterRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::DeleteParameterRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::DeleteParameterRequest const&
+                 request) {
         return child_->DeleteParameter(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +104,13 @@ ParameterManagerLogging::DeleteParameter(
 
 StatusOr<google::cloud::parametermanager::v1::ListParameterVersionsResponse>
 ParameterManagerLogging::ListParameterVersions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::ListParameterVersionsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::ListParameterVersionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::ListParameterVersionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 ListParameterVersionsRequest const& request) {
         return child_->ListParameterVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,13 +118,14 @@ ParameterManagerLogging::ListParameterVersions(
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 ParameterManagerLogging::GetParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::GetParameterVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::GetParameterVersionRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::parametermanager::v1::GetParameterVersionRequest const&
+              request) {
         return child_->GetParameterVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,13 +133,13 @@ ParameterManagerLogging::GetParameterVersion(
 
 StatusOr<google::cloud::parametermanager::v1::RenderParameterVersionResponse>
 ParameterManagerLogging::RenderParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::RenderParameterVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::RenderParameterVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 RenderParameterVersionRequest const& request) {
         return child_->RenderParameterVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,13 +147,13 @@ ParameterManagerLogging::RenderParameterVersion(
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 ParameterManagerLogging::CreateParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::CreateParameterVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::CreateParameterVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 CreateParameterVersionRequest const& request) {
         return child_->CreateParameterVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -165,27 +161,26 @@ ParameterManagerLogging::CreateParameterVersion(
 
 StatusOr<google::cloud::parametermanager::v1::ParameterVersion>
 ParameterManagerLogging::UpdateParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::UpdateParameterVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::UpdateParameterVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 UpdateParameterVersionRequest const& request) {
         return child_->UpdateParameterVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ParameterManagerLogging::DeleteParameterVersion(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) {
+Status ParameterManagerLogging::DeleteParameterVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::parametermanager::v1::DeleteParameterVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::parametermanager::v1::
+                 DeleteParameterVersionRequest const& request) {
         return child_->DeleteParameterVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -193,12 +188,10 @@ ParameterManagerLogging::DeleteParameterVersion(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ParameterManagerLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
@@ -207,12 +200,10 @@ ParameterManagerLogging::ListLocations(
 
 StatusOr<google::cloud::location::Location>
 ParameterManagerLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },

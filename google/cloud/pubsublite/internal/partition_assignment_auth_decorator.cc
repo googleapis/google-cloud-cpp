@@ -40,28 +40,29 @@ PartitionAssignmentServiceAuth::AsyncAssignPartitions(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
-    google::cloud::pubsublite::v1::PartitionAssignmentRequest, google::cloud::pubsublite::v1::PartitionAssignment>;
+      google::cloud::pubsublite::v1::PartitionAssignmentRequest,
+      google::cloud::pubsublite::v1::PartitionAssignment>;
 
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncAssignPartitions(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
-    std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> PartitionAssignmentServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+PartitionAssignmentServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> PartitionAssignmentServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+PartitionAssignmentServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -69,8 +70,7 @@ StatusOr<google::longrunning::Operation> PartitionAssignmentServiceAuth::GetOper
 }
 
 Status PartitionAssignmentServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -78,8 +78,7 @@ Status PartitionAssignmentServiceAuth::DeleteOperation(
 }
 
 Status PartitionAssignmentServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

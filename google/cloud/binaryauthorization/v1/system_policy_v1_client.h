@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SystemPolicyV1Client {
  public:
-  explicit SystemPolicyV1Client(std::shared_ptr<SystemPolicyV1Connection> connection, Options opts = {});
+  explicit SystemPolicyV1Client(
+      std::shared_ptr<SystemPolicyV1Connection> connection, Options opts = {});
   ~SystemPolicyV1Client();
 
   ///@{
@@ -75,10 +76,12 @@ class SystemPolicyV1Client {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SystemPolicyV1Client const& a, SystemPolicyV1Client const& b) {
+  friend bool operator==(SystemPolicyV1Client const& a,
+                         SystemPolicyV1Client const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SystemPolicyV1Client const& a, SystemPolicyV1Client const& b) {
+  friend bool operator!=(SystemPolicyV1Client const& a,
+                         SystemPolicyV1Client const& b) {
     return !(a == b);
   }
   ///@}
@@ -106,8 +109,8 @@ class SystemPolicyV1Client {
   /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Policy>
-  GetSystemPolicy(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -136,8 +139,10 @@ class SystemPolicyV1Client {
   /// [google.cloud.binaryauthorization.v1.Policy]: @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
   // clang-format on
-  StatusOr<google::cloud::binaryauthorization::v1::Policy>
-  GetSystemPolicy(google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
+      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SystemPolicyV1Connection> connection_;

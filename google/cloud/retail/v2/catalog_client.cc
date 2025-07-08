@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CatalogServiceClient::CatalogServiceClient(
     std::shared_ptr<CatalogServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CatalogServiceClient::~CatalogServiceClient() = default;
 
 StreamRange<google::cloud::retail::v2::Catalog>
@@ -41,13 +41,16 @@ CatalogServiceClient::ListCatalogs(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::retail::v2::Catalog>
-CatalogServiceClient::ListCatalogs(google::cloud::retail::v2::ListCatalogsRequest request, Options opts) {
+CatalogServiceClient::ListCatalogs(
+    google::cloud::retail::v2::ListCatalogsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListCatalogs(std::move(request));
 }
 
 StatusOr<google::cloud::retail::v2::Catalog>
-CatalogServiceClient::UpdateCatalog(google::cloud::retail::v2::Catalog const& catalog, google::protobuf::FieldMask const& update_mask, Options opts) {
+CatalogServiceClient::UpdateCatalog(
+    google::cloud::retail::v2::Catalog const& catalog,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateCatalogRequest request;
   *request.mutable_catalog() = catalog;
@@ -56,27 +59,31 @@ CatalogServiceClient::UpdateCatalog(google::cloud::retail::v2::Catalog const& ca
 }
 
 StatusOr<google::cloud::retail::v2::Catalog>
-CatalogServiceClient::UpdateCatalog(google::cloud::retail::v2::UpdateCatalogRequest const& request, Options opts) {
+CatalogServiceClient::UpdateCatalog(
+    google::cloud::retail::v2::UpdateCatalogRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCatalog(request);
 }
 
-Status
-CatalogServiceClient::SetDefaultBranch(std::string const& catalog, Options opts) {
+Status CatalogServiceClient::SetDefaultBranch(std::string const& catalog,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::SetDefaultBranchRequest request;
   request.set_catalog(catalog);
   return connection_->SetDefaultBranch(request);
 }
 
-Status
-CatalogServiceClient::SetDefaultBranch(google::cloud::retail::v2::SetDefaultBranchRequest const& request, Options opts) {
+Status CatalogServiceClient::SetDefaultBranch(
+    google::cloud::retail::v2::SetDefaultBranchRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetDefaultBranch(request);
 }
 
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-CatalogServiceClient::GetDefaultBranch(std::string const& catalog, Options opts) {
+CatalogServiceClient::GetDefaultBranch(std::string const& catalog,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetDefaultBranchRequest request;
   request.set_catalog(catalog);
@@ -84,13 +91,16 @@ CatalogServiceClient::GetDefaultBranch(std::string const& catalog, Options opts)
 }
 
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-CatalogServiceClient::GetDefaultBranch(google::cloud::retail::v2::GetDefaultBranchRequest const& request, Options opts) {
+CatalogServiceClient::GetDefaultBranch(
+    google::cloud::retail::v2::GetDefaultBranchRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetDefaultBranch(request);
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
-CatalogServiceClient::GetCompletionConfig(std::string const& name, Options opts) {
+CatalogServiceClient::GetCompletionConfig(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetCompletionConfigRequest request;
   request.set_name(name);
@@ -98,13 +108,17 @@ CatalogServiceClient::GetCompletionConfig(std::string const& name, Options opts)
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
-CatalogServiceClient::GetCompletionConfig(google::cloud::retail::v2::GetCompletionConfigRequest const& request, Options opts) {
+CatalogServiceClient::GetCompletionConfig(
+    google::cloud::retail::v2::GetCompletionConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetCompletionConfig(request);
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
-CatalogServiceClient::UpdateCompletionConfig(google::cloud::retail::v2::CompletionConfig const& completion_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+CatalogServiceClient::UpdateCompletionConfig(
+    google::cloud::retail::v2::CompletionConfig const& completion_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateCompletionConfigRequest request;
   *request.mutable_completion_config() = completion_config;
@@ -113,13 +127,16 @@ CatalogServiceClient::UpdateCompletionConfig(google::cloud::retail::v2::Completi
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
-CatalogServiceClient::UpdateCompletionConfig(google::cloud::retail::v2::UpdateCompletionConfigRequest const& request, Options opts) {
+CatalogServiceClient::UpdateCompletionConfig(
+    google::cloud::retail::v2::UpdateCompletionConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCompletionConfig(request);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceClient::GetAttributesConfig(std::string const& name, Options opts) {
+CatalogServiceClient::GetAttributesConfig(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::GetAttributesConfigRequest request;
   request.set_name(name);
@@ -127,13 +144,17 @@ CatalogServiceClient::GetAttributesConfig(std::string const& name, Options opts)
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceClient::GetAttributesConfig(google::cloud::retail::v2::GetAttributesConfigRequest const& request, Options opts) {
+CatalogServiceClient::GetAttributesConfig(
+    google::cloud::retail::v2::GetAttributesConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAttributesConfig(request);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceClient::UpdateAttributesConfig(google::cloud::retail::v2::AttributesConfig const& attributes_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+CatalogServiceClient::UpdateAttributesConfig(
+    google::cloud::retail::v2::AttributesConfig const& attributes_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::UpdateAttributesConfigRequest request;
   *request.mutable_attributes_config() = attributes_config;
@@ -142,31 +163,40 @@ CatalogServiceClient::UpdateAttributesConfig(google::cloud::retail::v2::Attribut
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceClient::UpdateAttributesConfig(google::cloud::retail::v2::UpdateAttributesConfigRequest const& request, Options opts) {
+CatalogServiceClient::UpdateAttributesConfig(
+    google::cloud::retail::v2::UpdateAttributesConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAttributesConfig(request);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceClient::AddCatalogAttribute(google::cloud::retail::v2::AddCatalogAttributeRequest const& request, Options opts) {
+CatalogServiceClient::AddCatalogAttribute(
+    google::cloud::retail::v2::AddCatalogAttributeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddCatalogAttribute(request);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceClient::RemoveCatalogAttribute(google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request, Options opts) {
+CatalogServiceClient::RemoveCatalogAttribute(
+    google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveCatalogAttribute(request);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
-CatalogServiceClient::ReplaceCatalogAttribute(google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request, Options opts) {
+CatalogServiceClient::ReplaceCatalogAttribute(
+    google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReplaceCatalogAttribute(request);
 }
 
 StreamRange<google::longrunning::Operation>
-CatalogServiceClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+CatalogServiceClient::ListOperations(std::string const& name,
+                                     std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -175,21 +205,22 @@ CatalogServiceClient::ListOperations(std::string const& name, std::string const&
 }
 
 StreamRange<google::longrunning::Operation>
-CatalogServiceClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+CatalogServiceClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> CatalogServiceClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-CatalogServiceClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> CatalogServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

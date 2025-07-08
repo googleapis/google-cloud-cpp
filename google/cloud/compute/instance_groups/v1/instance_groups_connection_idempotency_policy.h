@@ -34,38 +34,48 @@ class InstanceGroupsConnectionIdempotencyPolicy {
   virtual ~InstanceGroupsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<InstanceGroupsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<InstanceGroupsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AddInstances(google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const& request);
+  virtual google::cloud::Idempotency AddInstances(
+      google::cloud::cpp::compute::instance_groups::v1::
+          AddInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  AggregatedListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::AggregatedListInstanceGroupsRequest request);
+  virtual google::cloud::Idempotency AggregatedListInstanceGroups(
+      google::cloud::cpp::compute::instance_groups::v1::
+          AggregatedListInstanceGroupsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::DeleteInstanceGroupRequest const& request);
+  virtual google::cloud::Idempotency DeleteInstanceGroup(
+      google::cloud::cpp::compute::instance_groups::v1::
+          DeleteInstanceGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::GetInstanceGroupRequest const& request);
+  virtual google::cloud::Idempotency GetInstanceGroup(
+      google::cloud::cpp::compute::instance_groups::v1::
+          GetInstanceGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::InsertInstanceGroupRequest const& request);
+  virtual google::cloud::Idempotency InsertInstanceGroup(
+      google::cloud::cpp::compute::instance_groups::v1::
+          InsertInstanceGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListInstanceGroups(google::cloud::cpp::compute::instance_groups::v1::ListInstanceGroupsRequest request);
+  virtual google::cloud::Idempotency ListInstanceGroups(
+      google::cloud::cpp::compute::instance_groups::v1::
+          ListInstanceGroupsRequest request);
 
-  virtual google::cloud::Idempotency
-  ListInstances(google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest request);
+  virtual google::cloud::Idempotency ListInstances(
+      google::cloud::cpp::compute::instance_groups::v1::ListInstancesRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  RemoveInstances(google::cloud::cpp::compute::instance_groups::v1::RemoveInstancesRequest const& request);
+  virtual google::cloud::Idempotency RemoveInstances(
+      google::cloud::cpp::compute::instance_groups::v1::
+          RemoveInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetNamedPorts(google::cloud::cpp::compute::instance_groups::v1::SetNamedPortsRequest const& request);
+  virtual google::cloud::Idempotency SetNamedPorts(
+      google::cloud::cpp::compute::instance_groups::v1::
+          SetNamedPortsRequest const& request);
 };
 
 std::unique_ptr<InstanceGroupsConnectionIdempotencyPolicy>
-    MakeDefaultInstanceGroupsConnectionIdempotencyPolicy();
+MakeDefaultInstanceGroupsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_groups_v1

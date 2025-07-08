@@ -40,76 +40,70 @@ namespace cloud {
 namespace apikeys_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ApiKeysConnectionImpl
-    : public apikeys_v2::ApiKeysConnection {
+class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
  public:
   ~ApiKeysConnectionImpl() override = default;
 
   ApiKeysConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<apikeys_v2_internal::ApiKeysStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<apikeys_v2_internal::ApiKeysStub> stub, Options options);
 
   Options options() override { return options_; }
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  CreateKey(google::api::apikeys::v2::CreateKeyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateKey(NoAwaitTag,
+  future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  CreateKey(
+  StatusOr<google::longrunning::Operation> CreateKey(
+      NoAwaitTag,
+      google::api::apikeys::v2::CreateKeyRequest const& request) override;
+
+  future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::api::apikeys::v2::Key>
-  ListKeys(google::api::apikeys::v2::ListKeysRequest request) override;
+  StreamRange<google::api::apikeys::v2::Key> ListKeys(
+      google::api::apikeys::v2::ListKeysRequest request) override;
 
-  StatusOr<google::api::apikeys::v2::Key>
-  GetKey(google::api::apikeys::v2::GetKeyRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::Key> GetKey(
+      google::api::apikeys::v2::GetKeyRequest const& request) override;
 
-  StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
-  GetKeyString(google::api::apikeys::v2::GetKeyStringRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
+      google::api::apikeys::v2::GetKeyStringRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UpdateKey(google::api::apikeys::v2::UpdateKeyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateKey(NoAwaitTag,
+  future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UpdateKey(
+  StatusOr<google::longrunning::Operation> UpdateKey(
+      NoAwaitTag,
+      google::api::apikeys::v2::UpdateKeyRequest const& request) override;
+
+  future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  DeleteKey(google::api::apikeys::v2::DeleteKeyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteKey(NoAwaitTag,
+  future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  DeleteKey(
+  StatusOr<google::longrunning::Operation> DeleteKey(
+      NoAwaitTag,
+      google::api::apikeys::v2::DeleteKeyRequest const& request) override;
+
+  future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UndeleteKey(google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UndeleteKey(NoAwaitTag,
+  future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
-  future<StatusOr<google::api::apikeys::v2::Key>>
-  UndeleteKey(
+  StatusOr<google::longrunning::Operation> UndeleteKey(
+      NoAwaitTag,
+      google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
+
+  future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::api::apikeys::v2::LookupKeyResponse>
-  LookupKey(google::api::apikeys::v2::LookupKeyRequest const& request) override;
+  StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
+      google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

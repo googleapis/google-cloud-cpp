@@ -34,20 +34,24 @@ class MachineTypesConnectionIdempotencyPolicy {
   virtual ~MachineTypesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<MachineTypesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<MachineTypesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListMachineTypes(google::cloud::cpp::compute::machine_types::v1::AggregatedListMachineTypesRequest request);
+  virtual google::cloud::Idempotency AggregatedListMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::
+          AggregatedListMachineTypesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetMachineType(google::cloud::cpp::compute::machine_types::v1::GetMachineTypeRequest const& request);
+  virtual google::cloud::Idempotency GetMachineType(
+      google::cloud::cpp::compute::machine_types::v1::
+          GetMachineTypeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListMachineTypes(google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest request);
+  virtual google::cloud::Idempotency ListMachineTypes(
+      google::cloud::cpp::compute::machine_types::v1::ListMachineTypesRequest
+          request);
 };
 
 std::unique_ptr<MachineTypesConnectionIdempotencyPolicy>
-    MakeDefaultMachineTypesConnectionIdempotencyPolicy();
+MakeDefaultMachineTypesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_machine_types_v1

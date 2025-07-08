@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_ENGINE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_ENGINE_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/engine_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/engine_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class EngineServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class EngineServiceLimitedErrorCountRetryPolicy : public EngineServiceRetryPolicy {
+class EngineServiceLimitedErrorCountRetryPolicy
+    : public EngineServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class EngineServiceLimitedErrorCountRetryPolicy : public EngineServiceRetryPolic
    *     @p maximum_failures == 0.
    */
   explicit EngineServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   EngineServiceLimitedErrorCountRetryPolicy(
       EngineServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : EngineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EngineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   EngineServiceLimitedErrorCountRetryPolicy(
       EngineServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : EngineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : EngineServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class EngineServiceLimitedErrorCountRetryPolicy : public EngineServiceRetryPolic
   using BaseType = EngineServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<discoveryengine_v1_internal::EngineServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      discoveryengine_v1_internal::EngineServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class EngineServiceLimitedTimeRetryPolicy : public EngineServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit EngineServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  EngineServiceLimitedTimeRetryPolicy(EngineServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : EngineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  EngineServiceLimitedTimeRetryPolicy(EngineServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : EngineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EngineServiceLimitedTimeRetryPolicy(
+      EngineServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : EngineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  EngineServiceLimitedTimeRetryPolicy(
+      EngineServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : EngineServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class EngineServiceLimitedTimeRetryPolicy : public EngineServiceRetryPolicy {
   using BaseType = EngineServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<discoveryengine_v1_internal::EngineServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      discoveryengine_v1_internal::EngineServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,40 +187,46 @@ class EngineServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-  CreateEngine(google::cloud::discoveryengine::v1::CreateEngineRequest const& request);
+  CreateEngine(
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateEngine(NoAwaitTag, google::cloud::discoveryengine::v1::CreateEngineRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateEngine(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-  CreateEngine( google::longrunning::Operation const& operation);
+  CreateEngine(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine(google::cloud::discoveryengine::v1::DeleteEngineRequest const& request);
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
+  DeleteEngine(
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteEngine(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteEngineRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteEngine(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request);
 
-  virtual future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine( google::longrunning::Operation const& operation);
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
+  DeleteEngine(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Engine>
-  UpdateEngine(google::cloud::discoveryengine::v1::UpdateEngineRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(
+      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request);
 
-  virtual StatusOr<google::cloud::discoveryengine::v1::Engine>
-  GetEngine(google::cloud::discoveryengine::v1::GetEngineRequest const& request);
+  virtual StatusOr<google::cloud::discoveryengine::v1::Engine> GetEngine(
+      google::cloud::discoveryengine::v1::GetEngineRequest const& request);
 
-  virtual StreamRange<google::cloud::discoveryengine::v1::Engine>
-  ListEngines(google::cloud::discoveryengine::v1::ListEnginesRequest request);
+  virtual StreamRange<google::cloud::discoveryengine::v1::Engine> ListEngines(
+      google::cloud::discoveryengine::v1::ListEnginesRequest request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

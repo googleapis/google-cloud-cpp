@@ -40,31 +40,40 @@ class InstanceSettingsRestMetadata : public InstanceSettingsRestStub {
       std::shared_ptr<InstanceSettingsRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceSettings> GetInstanceSettings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
+  GetInstanceSettings(google::cloud::rest_internal::RestContext& rest_context,
+                      Options const& options,
+                      google::cloud::cpp::compute::instance_settings::v1::
+                          GetInstanceSettingsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchInstanceSettings(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchInstanceSettings(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) override;
+      google::cloud::cpp::compute::instance_settings::v1::
+          PatchInstanceSettingsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::compute::instance_settings::v1::
+          PatchInstanceSettingsRequest const& request) override;
 
-  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncGetOperation(
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::zone_operations::v1::DeleteOperationRequest const& request) override;
+      google::cloud::cpp::compute::zone_operations::v1::
+          DeleteOperationRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

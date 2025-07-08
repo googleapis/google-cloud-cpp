@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `ReservationBlocksClient`. To do so,
- * construct an object of type `ReservationBlocksClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `ReservationBlocksClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,29 +42,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockReservationBlocksConnection : public compute_reservation_blocks_v1::ReservationBlocksConnection {
+class MockReservationBlocksConnection
+    : public compute_reservation_blocks_v1::ReservationBlocksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>,
-  GetReservationBlocksGetResponse,
-  (google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>,
+      GetReservationBlocksGetResponse,
+      (google::cloud::cpp::compute::reservation_blocks::v1::
+           GetReservationBlocksGetResponseRequest const& request),
+      (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>),
-  ListReservationBlocks,
-  (google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request), (override));
+              ListReservationBlocks,
+              (google::cloud::cpp::compute::reservation_blocks::v1::
+                   ListReservationBlocksRequest request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PerformMaintenance(Matcher<google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PerformMaintenance(Matcher<google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PerformMaintenance,
-  (google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request), (override));
-
+              PerformMaintenance,
+              (google::cloud::cpp::compute::reservation_blocks::v1::
+                   PerformMaintenanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -73,20 +82,24 @@ class MockReservationBlocksConnection : public compute_reservation_blocks_v1::Re
   /// EXPECT_CALL(*mock, PerformMaintenance(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PerformMaintenance, (NoAwaitTag,
-    google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request), (override));
-
+              PerformMaintenance,
+              (NoAwaitTag, google::cloud::cpp::compute::reservation_blocks::v1::
+                               PerformMaintenanceRequest const& request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PerformMaintenance(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// PerformMaintenance(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-  PerformMaintenance, (
-    google::cloud::cpp::compute::v1::Operation const& operation), (override));
+              PerformMaintenance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,10 +17,10 @@
 // source: google/cloud/kms/inventory/v1/key_tracking_service.proto
 
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/kms/inventory/v1/key_tracking_connection.h"
 #include "google/cloud/kms/inventory/v1/key_tracking_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options KeyTrackingServiceDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_KEY_TRACKING_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_KEY_TRACKING_SERVICE_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_KEY_TRACKING_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_KEY_TRACKING_SERVICE_AUTHORITY",
       "kmsinventory.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>()) {
     options.set<kms_inventory_v1::KeyTrackingServiceRetryPolicyOption>(
         kms_inventory_v1::KeyTrackingServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>()) {
     options.set<kms_inventory_v1::KeyTrackingServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<kms_inventory_v1::KeyTrackingServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<kms_inventory_v1::KeyTrackingServiceConnectionIdempotencyPolicyOption>(
-        kms_inventory_v1::MakeDefaultKeyTrackingServiceConnectionIdempotencyPolicy());
+  if (!options.has<kms_inventory_v1::
+                       KeyTrackingServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        kms_inventory_v1::KeyTrackingServiceConnectionIdempotencyPolicyOption>(
+        kms_inventory_v1::
+            MakeDefaultKeyTrackingServiceConnectionIdempotencyPolicy());
   }
 
   return options;

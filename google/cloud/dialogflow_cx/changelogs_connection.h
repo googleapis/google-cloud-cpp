@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_CHANGELOGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_CHANGELOGS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/changelogs_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -63,14 +63,14 @@ class ChangelogsLimitedErrorCountRetryPolicy : public ChangelogsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ChangelogsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ChangelogsLimitedErrorCountRetryPolicy(
       ChangelogsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ChangelogsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ChangelogsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ChangelogsLimitedErrorCountRetryPolicy(
       ChangelogsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ChangelogsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ChangelogsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +90,9 @@ class ChangelogsLimitedErrorCountRetryPolicy : public ChangelogsRetryPolicy {
   using BaseType = ChangelogsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::ChangelogsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_cx_internal::ChangelogsRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +130,14 @@ class ChangelogsLimitedTimeRetryPolicy : public ChangelogsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ChangelogsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ChangelogsLimitedTimeRetryPolicy(ChangelogsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ChangelogsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ChangelogsLimitedTimeRetryPolicy(ChangelogsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ChangelogsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ChangelogsLimitedTimeRetryPolicy(
+      ChangelogsLimitedTimeRetryPolicy&& rhs) noexcept
+      : ChangelogsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ChangelogsLimitedTimeRetryPolicy(
+      ChangelogsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ChangelogsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,7 +159,9 @@ class ChangelogsLimitedTimeRetryPolicy : public ChangelogsRetryPolicy {
   using BaseType = ChangelogsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::ChangelogsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_cx_internal::ChangelogsRetryTraits>
+      impl_;
 };
 
 /**
@@ -177,25 +183,26 @@ class ChangelogsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::Changelog>
-  ListChangelogs(google::cloud::dialogflow::cx::v3::ListChangelogsRequest request);
+  ListChangelogs(
+      google::cloud::dialogflow::cx::v3::ListChangelogsRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
-  GetChangelog(google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
+      google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

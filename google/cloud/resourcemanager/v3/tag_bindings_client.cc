@@ -28,8 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TagBindingsClient::TagBindingsClient(
     std::shared_ptr<TagBindingsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TagBindingsClient::~TagBindingsClient() = default;
 
 StreamRange<google::cloud::resourcemanager::v3::TagBinding>
@@ -41,21 +41,27 @@ TagBindingsClient::ListTagBindings(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::resourcemanager::v3::TagBinding>
-TagBindingsClient::ListTagBindings(google::cloud::resourcemanager::v3::ListTagBindingsRequest request, Options opts) {
+TagBindingsClient::ListTagBindings(
+    google::cloud::resourcemanager::v3::ListTagBindingsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTagBindings(std::move(request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-TagBindingsClient::CreateTagBinding(google::cloud::resourcemanager::v3::TagBinding const& tag_binding, Options opts) {
+TagBindingsClient::CreateTagBinding(
+    google::cloud::resourcemanager::v3::TagBinding const& tag_binding,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::CreateTagBindingRequest request;
   *request.mutable_tag_binding() = tag_binding;
   return connection_->CreateTagBinding(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsClient::CreateTagBinding(NoAwaitTag, google::cloud::resourcemanager::v3::TagBinding const& tag_binding, Options opts) {
+StatusOr<google::longrunning::Operation> TagBindingsClient::CreateTagBinding(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::TagBinding const& tag_binding,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::CreateTagBindingRequest request;
   *request.mutable_tag_binding() = tag_binding;
@@ -63,19 +69,24 @@ TagBindingsClient::CreateTagBinding(NoAwaitTag, google::cloud::resourcemanager::
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-TagBindingsClient::CreateTagBinding(google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request, Options opts) {
+TagBindingsClient::CreateTagBinding(
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTagBinding(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsClient::CreateTagBinding(NoAwaitTag, google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TagBindingsClient::CreateTagBinding(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTagBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-TagBindingsClient::CreateTagBinding(google::longrunning::Operation const& operation, Options opts) {
+TagBindingsClient::CreateTagBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTagBinding(operation);
 }
@@ -88,8 +99,8 @@ TagBindingsClient::DeleteTagBinding(std::string const& name, Options opts) {
   return connection_->DeleteTagBinding(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsClient::DeleteTagBinding(NoAwaitTag, std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> TagBindingsClient::DeleteTagBinding(
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::DeleteTagBindingRequest request;
   request.set_name(name);
@@ -97,19 +108,24 @@ TagBindingsClient::DeleteTagBinding(NoAwaitTag, std::string const& name, Options
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-TagBindingsClient::DeleteTagBinding(google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request, Options opts) {
+TagBindingsClient::DeleteTagBinding(
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTagBinding(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsClient::DeleteTagBinding(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TagBindingsClient::DeleteTagBinding(
+    NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTagBinding(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-TagBindingsClient::DeleteTagBinding(google::longrunning::Operation const& operation, Options opts) {
+TagBindingsClient::DeleteTagBinding(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTagBinding(operation);
 }
@@ -123,21 +139,23 @@ TagBindingsClient::ListEffectiveTags(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>
-TagBindingsClient::ListEffectiveTags(google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request, Options opts) {
+TagBindingsClient::ListEffectiveTags(
+    google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEffectiveTags(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> TagBindingsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-TagBindingsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> TagBindingsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }

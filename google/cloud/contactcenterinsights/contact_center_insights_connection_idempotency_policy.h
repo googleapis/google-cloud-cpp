@@ -26,11 +26,17 @@ namespace cloud {
 namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use contactcenterinsights_v1::MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy directly.
-using ::google::cloud::contactcenterinsights_v1::MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// contactcenterinsights_v1::MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::contactcenterinsights_v1::
+    MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy;
 
-/// @deprecated Use contactcenterinsights_v1::ContactCenterInsightsConnectionIdempotencyPolicy directly.
-using ::google::cloud::contactcenterinsights_v1::ContactCenterInsightsConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// contactcenterinsights_v1::ContactCenterInsightsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::contactcenterinsights_v1::
+    ContactCenterInsightsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights

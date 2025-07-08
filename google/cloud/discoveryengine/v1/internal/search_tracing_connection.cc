@@ -34,42 +34,53 @@ SearchServiceTracingConnection::SearchServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
-SearchServiceTracingConnection::Search(google::cloud::discoveryengine::v1::SearchRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SearchServiceConnection::Search");
+SearchServiceTracingConnection::Search(
+    google::cloud::discoveryengine::v1::SearchRequest request) {
+  auto span =
+      internal::MakeSpan("discoveryengine_v1::SearchServiceConnection::Search");
   internal::OTelScope scope(span);
   auto sr = child_->Search(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::SearchResponse::SearchResult>(
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
-SearchServiceTracingConnection::SearchLite(google::cloud::discoveryengine::v1::SearchRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SearchServiceConnection::SearchLite");
+SearchServiceTracingConnection::SearchLite(
+    google::cloud::discoveryengine::v1::SearchRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SearchServiceConnection::SearchLite");
   internal::OTelScope scope(span);
   auto sr = child_->SearchLite(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::SearchResponse::SearchResult>(
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
-SearchServiceTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SearchServiceConnection::ListOperations");
+SearchServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SearchServiceConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-SearchServiceTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SearchServiceConnection::GetOperation");
+SearchServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SearchServiceConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-SearchServiceTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("discoveryengine_v1::SearchServiceConnection::CancelOperation");
+Status SearchServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SearchServiceConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

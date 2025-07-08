@@ -17,16 +17,16 @@
 // source: google/api/servicecontrol/v1/service_controller.proto
 
 #include "google/cloud/servicecontrol/v1/service_controller_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/servicecontrol/v1/internal/service_controller_connection_impl.h"
 #include "google/cloud/servicecontrol/v1/internal/service_controller_option_defaults.h"
 #include "google/cloud/servicecontrol/v1/internal/service_controller_stub_factory.h"
 #include "google/cloud/servicecontrol/v1/internal/service_controller_tracing_connection.h"
 #include "google/cloud/servicecontrol/v1/service_controller_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
 
@@ -52,17 +52,19 @@ ServiceControllerConnection::Report(
 std::shared_ptr<ServiceControllerConnection> MakeServiceControllerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ServiceControllerPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ServiceControllerPolicyOptionList>(options,
+                                                                    __func__);
   options = servicecontrol_v1_internal::ServiceControllerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = servicecontrol_v1_internal::CreateDefaultServiceControllerStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return servicecontrol_v1_internal::MakeServiceControllerTracingConnection(
-      std::make_shared<servicecontrol_v1_internal::ServiceControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          servicecontrol_v1_internal::ServiceControllerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

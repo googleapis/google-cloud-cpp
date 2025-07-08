@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_INTERNAL_SIMULATOR_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_INTERNAL_SIMULATOR_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/policysimulator/v1/internal/simulator_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -35,40 +35,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SimulatorMetadata : public SimulatorStub {
  public:
   ~SimulatorMetadata() override = default;
-  SimulatorMetadata(
-      std::shared_ptr<SimulatorStub> child,
-      std::multimap<std::string, std::string> fixed_metadata,
-      std::string api_client_header = "");
+  SimulatorMetadata(std::shared_ptr<SimulatorStub> child,
+                    std::multimap<std::string, std::string> fixed_metadata,
+                    std::string api_client_header = "");
 
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::policysimulator::v1::GetReplayRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::policysimulator::v1::GetReplayRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReplay(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request) override;
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateReplay(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::policysimulator::v1::CreateReplayRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
+      override;
 
-  StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse> ListReplayResults(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::policysimulator::v1::ListReplayResultsRequest const& request) override;
+  StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
+  ListReplayResults(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::policysimulator::v1::ListReplayResultsRequest const&
+          request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -84,8 +83,7 @@ class SimulatorMetadata : public SimulatorStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

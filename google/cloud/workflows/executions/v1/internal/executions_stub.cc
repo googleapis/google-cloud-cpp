@@ -32,54 +32,54 @@ ExecutionsStub::~ExecutionsStub() = default;
 
 StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
 DefaultExecutionsStub::ListExecutions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) {
-    google::cloud::workflows::executions::v1::ListExecutionsResponse response;
-    auto status =
-        grpc_stub_->ListExecutions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workflows::executions::v1::ListExecutionsRequest const&
+        request) {
+  google::cloud::workflows::executions::v1::ListExecutionsResponse response;
+  auto status = grpc_stub_->ListExecutions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::CreateExecution(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) {
-    google::cloud::workflows::executions::v1::Execution response;
-    auto status =
-        grpc_stub_->CreateExecution(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+        request) {
+  google::cloud::workflows::executions::v1::Execution response;
+  auto status = grpc_stub_->CreateExecution(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::GetExecution(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workflows::executions::v1::GetExecutionRequest const& request) {
-    google::cloud::workflows::executions::v1::Execution response;
-    auto status =
-        grpc_stub_->GetExecution(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workflows::executions::v1::GetExecutionRequest const&
+        request) {
+  google::cloud::workflows::executions::v1::Execution response;
+  auto status = grpc_stub_->GetExecution(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::CancelExecution(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) {
-    google::cloud::workflows::executions::v1::Execution response;
-    auto status =
-        grpc_stub_->CancelExecution(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+        request) {
+  google::cloud::workflows::executions::v1::Execution response;
+  auto status = grpc_stub_->CancelExecution(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

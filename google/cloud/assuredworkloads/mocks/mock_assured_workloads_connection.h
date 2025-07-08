@@ -30,8 +30,10 @@ namespace cloud {
 namespace assuredworkloads_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use assuredworkloads_v1_mocks::MockAssuredWorkloadsServiceConnection directly.
-using ::google::cloud::assuredworkloads_v1_mocks::MockAssuredWorkloadsServiceConnection;
+/// @deprecated Use
+/// assuredworkloads_v1_mocks::MockAssuredWorkloadsServiceConnection directly.
+using ::google::cloud::assuredworkloads_v1_mocks::
+    MockAssuredWorkloadsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_mocks

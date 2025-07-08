@@ -26,47 +26,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ServiceUsageConnectionIdempotencyPolicy::~ServiceUsageConnectionIdempotencyPolicy() = default;
+ServiceUsageConnectionIdempotencyPolicy::
+    ~ServiceUsageConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ServiceUsageConnectionIdempotencyPolicy>
 ServiceUsageConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ServiceUsageConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ServiceUsageConnectionIdempotencyPolicy::EnableService(google::api::serviceusage::v1::EnableServiceRequest const&) {
+Idempotency ServiceUsageConnectionIdempotencyPolicy::EnableService(
+    google::api::serviceusage::v1::EnableServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceUsageConnectionIdempotencyPolicy::DisableService(google::api::serviceusage::v1::DisableServiceRequest const&) {
+Idempotency ServiceUsageConnectionIdempotencyPolicy::DisableService(
+    google::api::serviceusage::v1::DisableServiceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceUsageConnectionIdempotencyPolicy::GetService(google::api::serviceusage::v1::GetServiceRequest const&) {
+Idempotency ServiceUsageConnectionIdempotencyPolicy::GetService(
+    google::api::serviceusage::v1::GetServiceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceUsageConnectionIdempotencyPolicy::ListServices(google::api::serviceusage::v1::ListServicesRequest) {  // NOLINT
+Idempotency ServiceUsageConnectionIdempotencyPolicy::ListServices(
+    google::api::serviceusage::v1::ListServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceUsageConnectionIdempotencyPolicy::BatchEnableServices(google::api::serviceusage::v1::BatchEnableServicesRequest const&) {
+Idempotency ServiceUsageConnectionIdempotencyPolicy::BatchEnableServices(
+    google::api::serviceusage::v1::BatchEnableServicesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceUsageConnectionIdempotencyPolicy::BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const&) {
+Idempotency ServiceUsageConnectionIdempotencyPolicy::BatchGetServices(
+    google::api::serviceusage::v1::BatchGetServicesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceUsageConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ServiceUsageConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceUsageConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency ServiceUsageConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ServiceUsageConnectionIdempotencyPolicy>
-    MakeDefaultServiceUsageConnectionIdempotencyPolicy() {
+MakeDefaultServiceUsageConnectionIdempotencyPolicy() {
   return std::make_unique<ServiceUsageConnectionIdempotencyPolicy>();
 }
 

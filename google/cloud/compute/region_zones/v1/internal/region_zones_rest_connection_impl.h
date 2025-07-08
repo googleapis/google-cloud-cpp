@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_ZONES_V1_INTERNAL_REGION_ZONES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_ZONES_V1_INTERNAL_REGION_ZONES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_rest_stub.h"
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_retry_traits.h"
 #include "google/cloud/compute/region_zones/v1/region_zones_connection.h"
 #include "google/cloud/compute/region_zones/v1/region_zones_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_zones/v1/region_zones_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,28 +43,37 @@ class RegionZonesRestConnectionImpl
   ~RegionZonesRestConnectionImpl() override = default;
 
   RegionZonesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_zones_v1_internal::RegionZonesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_region_zones_v1_internal::RegionZonesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListRegionZones(google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Zone> ListRegionZones(
+      google::cloud::cpp::compute::region_zones::v1::ListRegionZonesRequest
+          request) override;
 
  private:
   static std::unique_ptr<compute_region_zones_v1::RegionZonesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_region_zones_v1::RegionZonesRetryPolicyOption>()->clone();
+    return options.get<compute_region_zones_v1::RegionZonesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_region_zones_v1::RegionZonesBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_region_zones_v1::RegionZonesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_region_zones_v1::RegionZonesConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_region_zones_v1::RegionZonesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_region_zones_v1::RegionZonesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_region_zones_v1::
+                 RegionZonesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

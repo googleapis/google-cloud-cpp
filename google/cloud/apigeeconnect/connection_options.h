@@ -28,16 +28,22 @@ namespace cloud {
 namespace apigeeconnect {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apigeeconnect_v1::ConnectionServiceBackoffPolicyOption directly.
+/// @deprecated Use apigeeconnect_v1::ConnectionServiceBackoffPolicyOption
+/// directly.
 using ::google::cloud::apigeeconnect_v1::ConnectionServiceBackoffPolicyOption;
 
-/// @deprecated Use apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::apigeeconnect_v1::
+    ConnectionServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use apigeeconnect_v1::ConnectionServicePolicyOptionList directly.
+/// @deprecated Use apigeeconnect_v1::ConnectionServicePolicyOptionList
+/// directly.
 using ::google::cloud::apigeeconnect_v1::ConnectionServicePolicyOptionList;
 
-/// @deprecated Use apigeeconnect_v1::ConnectionServiceRetryPolicyOption directly.
+/// @deprecated Use apigeeconnect_v1::ConnectionServiceRetryPolicyOption
+/// directly.
 using ::google::cloud::apigeeconnect_v1::ConnectionServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

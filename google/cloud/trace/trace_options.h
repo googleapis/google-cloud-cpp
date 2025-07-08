@@ -31,7 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use trace_v2::TraceServiceBackoffPolicyOption directly.
 using ::google::cloud::trace_v2::TraceServiceBackoffPolicyOption;
 
-/// @deprecated Use trace_v2::TraceServiceConnectionIdempotencyPolicyOption directly.
+/// @deprecated Use trace_v2::TraceServiceConnectionIdempotencyPolicyOption
+/// directly.
 using ::google::cloud::trace_v2::TraceServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use trace_v2::TraceServicePolicyOptionList directly.

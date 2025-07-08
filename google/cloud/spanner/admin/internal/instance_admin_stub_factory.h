@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INTERNAL_INSTANCE_ADMIN_STUB_FACTORY_H
 
+#include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
-#include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -35,7 +35,7 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
     Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

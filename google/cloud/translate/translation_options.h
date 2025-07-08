@@ -28,14 +28,18 @@ namespace cloud {
 namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use translate_v3::TranslationServicePollingPolicyOption directly.
+/// @deprecated Use translate_v3::TranslationServicePollingPolicyOption
+/// directly.
 using ::google::cloud::translate_v3::TranslationServicePollingPolicyOption;
 
-/// @deprecated Use translate_v3::TranslationServiceBackoffPolicyOption directly.
+/// @deprecated Use translate_v3::TranslationServiceBackoffPolicyOption
+/// directly.
 using ::google::cloud::translate_v3::TranslationServiceBackoffPolicyOption;
 
-/// @deprecated Use translate_v3::TranslationServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::translate_v3::TranslationServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// translate_v3::TranslationServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::translate_v3::
+    TranslationServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use translate_v3::TranslationServicePolicyOptionList directly.
 using ::google::cloud::translate_v3::TranslationServicePolicyOptionList;

@@ -19,9 +19,9 @@
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_option_defaults.h"
 #include "google/cloud/dataproc/v1/autoscaling_policy_connection.h"
 #include "google/cloud/dataproc/v1/autoscaling_policy_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,25 +34,36 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options AutoscalingPolicyServiceDefaultOptions(std::string const& location, Options options) {
+Options AutoscalingPolicyServiceDefaultOptions(std::string const& location,
+                                               Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dataproc.googleapis.com"));
+      std::move(options),
+      "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_AUTOSCALING_POLICY_SERVICE_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dataproc.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>()) {
     options.set<dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption>(
         dataproc_v1::AutoscalingPolicyServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>()) {
+  if (!options
+           .has<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>()) {
     options.set<dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>(
-        dataproc_v1::MakeDefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          dataproc_v1::
+              AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>(
+        dataproc_v1::
+            MakeDefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy());
   }
 
   return options;

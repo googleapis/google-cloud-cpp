@@ -32,132 +32,120 @@ KnowledgeBasesStub::~KnowledgeBasesStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 DefaultKnowledgeBasesStub::ListKnowledgeBases(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
-    google::cloud::dialogflow::v2::ListKnowledgeBasesResponse response;
-    auto status =
-        grpc_stub_->ListKnowledgeBases(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
+  google::cloud::dialogflow::v2::ListKnowledgeBasesResponse response;
+  auto status = grpc_stub_->ListKnowledgeBases(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::GetKnowledgeBase(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
-    google::cloud::dialogflow::v2::KnowledgeBase response;
-    auto status =
-        grpc_stub_->GetKnowledgeBase(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
+  google::cloud::dialogflow::v2::KnowledgeBase response;
+  auto status = grpc_stub_->GetKnowledgeBase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::CreateKnowledgeBase(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
-    google::cloud::dialogflow::v2::KnowledgeBase response;
-    auto status =
-        grpc_stub_->CreateKnowledgeBase(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
+  google::cloud::dialogflow::v2::KnowledgeBase response;
+  auto status = grpc_stub_->CreateKnowledgeBase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultKnowledgeBasesStub::DeleteKnowledgeBase(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteKnowledgeBase(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultKnowledgeBasesStub::DeleteKnowledgeBase(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteKnowledgeBase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::UpdateKnowledgeBase(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
-    google::cloud::dialogflow::v2::KnowledgeBase response;
-    auto status =
-        grpc_stub_->UpdateKnowledgeBase(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
+  google::cloud::dialogflow::v2::KnowledgeBase response;
+  auto status = grpc_stub_->UpdateKnowledgeBase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultKnowledgeBasesStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultKnowledgeBasesStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultKnowledgeBasesStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultKnowledgeBasesStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultKnowledgeBasesStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultKnowledgeBasesStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

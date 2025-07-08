@@ -36,14 +36,15 @@ namespace cloud {
 namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DeploymentResourcePoolServiceConnection::~DeploymentResourcePoolServiceConnection() = default;
+DeploymentResourcePoolServiceConnection::
+    ~DeploymentResourcePoolServiceConnection() = default;
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
 DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -51,15 +52,15 @@ DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
     NoAwaitTag,
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
 DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
@@ -68,8 +69,10 @@ DeploymentResourcePoolServiceConnection::GetDeploymentResourcePool(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool> DeploymentResourcePoolServiceConnection::ListDeploymentResourcePools(
-    google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
+DeploymentResourcePoolServiceConnection::ListDeploymentResourcePools(
+    google::cloud::aiplatform::v1::
+        ListDeploymentResourcePoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>>();
 }
@@ -78,8 +81,8 @@ future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
 DeploymentResourcePoolServiceConnection::UpdateDeploymentResourcePool(
     google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -87,23 +90,23 @@ DeploymentResourcePoolServiceConnection::UpdateDeploymentResourcePool(
     NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
 DeploymentResourcePoolServiceConnection::UpdateDeploymentResourcePool(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
@@ -111,19 +114,21 @@ DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
     NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<google::cloud::location::Location> DeploymentResourcePoolServiceConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+DeploymentResourcePoolServiceConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -152,8 +157,10 @@ DeploymentResourcePoolServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> DeploymentResourcePoolServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+DeploymentResourcePoolServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -164,14 +171,12 @@ DeploymentResourcePoolServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DeploymentResourcePoolServiceConnection::DeleteOperation(
+Status DeploymentResourcePoolServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DeploymentResourcePoolServiceConnection::CancelOperation(
+Status DeploymentResourcePoolServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -182,20 +187,25 @@ DeploymentResourcePoolServiceConnection::WaitOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<DeploymentResourcePoolServiceConnection> MakeDeploymentResourcePoolServiceConnection(
-    std::string const& location, Options options) {
+std::shared_ptr<DeploymentResourcePoolServiceConnection>
+MakeDeploymentResourcePoolServiceConnection(std::string const& location,
+                                            Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DeploymentResourcePoolServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 DeploymentResourcePoolServicePolicyOptionList>(
+      options, __func__);
   options = aiplatform_v1_internal::DeploymentResourcePoolServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = aiplatform_v1_internal::CreateDefaultDeploymentResourcePoolServiceStub(
-    std::move(auth), options);
-  return aiplatform_v1_internal::MakeDeploymentResourcePoolServiceTracingConnection(
-      std::make_shared<aiplatform_v1_internal::DeploymentResourcePoolServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      aiplatform_v1_internal::CreateDefaultDeploymentResourcePoolServiceStub(
+          std::move(auth), options);
+  return aiplatform_v1_internal::
+      MakeDeploymentResourcePoolServiceTracingConnection(
+          std::make_shared<aiplatform_v1_internal::
+                               DeploymentResourcePoolServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

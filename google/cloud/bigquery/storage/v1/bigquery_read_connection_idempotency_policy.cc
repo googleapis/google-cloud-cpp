@@ -26,23 +26,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BigQueryReadConnectionIdempotencyPolicy::~BigQueryReadConnectionIdempotencyPolicy() = default;
+BigQueryReadConnectionIdempotencyPolicy::
+    ~BigQueryReadConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
 BigQueryReadConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BigQueryReadConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BigQueryReadConnectionIdempotencyPolicy::CreateReadSession(google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&) {
+Idempotency BigQueryReadConnectionIdempotencyPolicy::CreateReadSession(
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BigQueryReadConnectionIdempotencyPolicy::SplitReadStream(google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&) {
+Idempotency BigQueryReadConnectionIdempotencyPolicy::SplitReadStream(
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
-    MakeDefaultBigQueryReadConnectionIdempotencyPolicy() {
+MakeDefaultBigQueryReadConnectionIdempotencyPolicy() {
   return std::make_unique<BigQueryReadConnectionIdempotencyPolicy>();
 }
 

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_USERS_CONNECTION_H
 
+#include "google/cloud/sql/v1/internal/sql_users_retry_traits.h"
+#include "google/cloud/sql/v1/sql_users_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/sql/v1/internal/sql_users_retry_traits.h"
-#include "google/cloud/sql/v1/sql_users_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_users.pb.h>
@@ -51,7 +51,8 @@ class SqlUsersServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlUsersServiceLimitedErrorCountRetryPolicy : public SqlUsersServiceRetryPolicy {
+class SqlUsersServiceLimitedErrorCountRetryPolicy
+    : public SqlUsersServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class SqlUsersServiceLimitedErrorCountRetryPolicy : public SqlUsersServiceRetryP
    *     @p maximum_failures == 0.
    */
   explicit SqlUsersServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   SqlUsersServiceLimitedErrorCountRetryPolicy(
       SqlUsersServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : SqlUsersServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlUsersServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   SqlUsersServiceLimitedErrorCountRetryPolicy(
       SqlUsersServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : SqlUsersServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : SqlUsersServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class SqlUsersServiceLimitedErrorCountRetryPolicy : public SqlUsersServiceRetryP
   using BaseType = SqlUsersServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<sql_v1_internal::SqlUsersServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      sql_v1_internal::SqlUsersServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -101,7 +104,8 @@ class SqlUsersServiceLimitedErrorCountRetryPolicy : public SqlUsersServiceRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class SqlUsersServiceLimitedTimeRetryPolicy : public SqlUsersServiceRetryPolicy {
+class SqlUsersServiceLimitedTimeRetryPolicy
+    : public SqlUsersServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +130,14 @@ class SqlUsersServiceLimitedTimeRetryPolicy : public SqlUsersServiceRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit SqlUsersServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  SqlUsersServiceLimitedTimeRetryPolicy(SqlUsersServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : SqlUsersServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  SqlUsersServiceLimitedTimeRetryPolicy(SqlUsersServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : SqlUsersServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlUsersServiceLimitedTimeRetryPolicy(
+      SqlUsersServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : SqlUsersServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  SqlUsersServiceLimitedTimeRetryPolicy(
+      SqlUsersServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : SqlUsersServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +159,9 @@ class SqlUsersServiceLimitedTimeRetryPolicy : public SqlUsersServiceRetryPolicy 
   using BaseType = SqlUsersServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<sql_v1_internal::SqlUsersServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      sql_v1_internal::SqlUsersServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -174,20 +182,20 @@ class SqlUsersServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Delete(google::cloud::sql::v1::SqlUsersDeleteRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Delete(
+      google::cloud::sql::v1::SqlUsersDeleteRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::User>
-  Get(google::cloud::sql::v1::SqlUsersGetRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::User> Get(
+      google::cloud::sql::v1::SqlUsersGetRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Insert(google::cloud::sql::v1::SqlUsersInsertRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Insert(
+      google::cloud::sql::v1::SqlUsersInsertRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::UsersListResponse>
-  List(google::cloud::sql::v1::SqlUsersListRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::UsersListResponse> List(
+      google::cloud::sql::v1::SqlUsersListRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::Operation>
-  Update(google::cloud::sql::v1::SqlUsersUpdateRequest const& request);
+  virtual StatusOr<google::cloud::sql::v1::Operation> Update(
+      google::cloud::sql::v1::SqlUsersUpdateRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

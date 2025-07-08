@@ -34,91 +34,117 @@ OrgPolicyTracingConnection::OrgPolicyTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
-OrgPolicyTracingConnection::ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::ListConstraints");
+OrgPolicyTracingConnection::ListConstraints(
+    google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
+  auto span =
+      internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::ListConstraints");
   internal::OTelScope scope(span);
   auto sr = child_->ListConstraints(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::orgpolicy::v2::Constraint>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::orgpolicy::v2::Constraint>(std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyTracingConnection::ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::ListPolicies");
+OrgPolicyTracingConnection::ListPolicies(
+    google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
+  auto span =
+      internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::ListPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListPolicies(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::orgpolicy::v2::Policy>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyTracingConnection::GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::GetPolicy");
+OrgPolicyTracingConnection::GetPolicy(
+    google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::GetPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetPolicy(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyTracingConnection::GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::GetEffectivePolicy");
+OrgPolicyTracingConnection::GetEffectivePolicy(
+    google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::GetEffectivePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEffectivePolicy(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyTracingConnection::CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::CreatePolicy");
+OrgPolicyTracingConnection::CreatePolicy(
+    google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::CreatePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreatePolicy(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyTracingConnection::UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::UpdatePolicy");
+OrgPolicyTracingConnection::UpdatePolicy(
+    google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::UpdatePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdatePolicy(request));
 }
 
-Status
-OrgPolicyTracingConnection::DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::DeletePolicy");
+Status OrgPolicyTracingConnection::DeletePolicy(
+    google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::DeletePolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeletePolicy(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyTracingConnection::CreateCustomConstraint(google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::CreateCustomConstraint");
+OrgPolicyTracingConnection::CreateCustomConstraint(
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::CreateCustomConstraint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateCustomConstraint(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyTracingConnection::UpdateCustomConstraint(google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::UpdateCustomConstraint");
+OrgPolicyTracingConnection::UpdateCustomConstraint(
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::UpdateCustomConstraint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateCustomConstraint(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyTracingConnection::GetCustomConstraint(google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::GetCustomConstraint");
+OrgPolicyTracingConnection::GetCustomConstraint(
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::GetCustomConstraint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCustomConstraint(request));
 }
 
 StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyTracingConnection::ListCustomConstraints(google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::ListCustomConstraints");
+OrgPolicyTracingConnection::ListCustomConstraints(
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::ListCustomConstraints");
   internal::OTelScope scope(span);
   auto sr = child_->ListCustomConstraints(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::orgpolicy::v2::CustomConstraint>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::orgpolicy::v2::CustomConstraint>(std::move(span),
+                                                      std::move(sr));
 }
 
-Status
-OrgPolicyTracingConnection::DeleteCustomConstraint(google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request) {
-  auto span = internal::MakeSpan("orgpolicy_v2::OrgPolicyConnection::DeleteCustomConstraint");
+Status OrgPolicyTracingConnection::DeleteCustomConstraint(
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "orgpolicy_v2::OrgPolicyConnection::DeleteCustomConstraint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteCustomConstraint(request));
 }

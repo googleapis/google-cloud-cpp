@@ -26,14 +26,17 @@ namespace binaryauthorization_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BinauthzManagementServiceV1Client::BinauthzManagementServiceV1Client(
-    std::shared_ptr<BinauthzManagementServiceV1Connection> connection, Options opts)
+    std::shared_ptr<BinauthzManagementServiceV1Connection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
-BinauthzManagementServiceV1Client::~BinauthzManagementServiceV1Client() = default;
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
+BinauthzManagementServiceV1Client::~BinauthzManagementServiceV1Client() =
+    default;
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
-BinauthzManagementServiceV1Client::GetPolicy(std::string const& name, Options opts) {
+BinauthzManagementServiceV1Client::GetPolicy(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::binaryauthorization::v1::GetPolicyRequest request;
   request.set_name(name);
@@ -41,13 +44,17 @@ BinauthzManagementServiceV1Client::GetPolicy(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
-BinauthzManagementServiceV1Client::GetPolicy(google::cloud::binaryauthorization::v1::GetPolicyRequest const& request, Options opts) {
+BinauthzManagementServiceV1Client::GetPolicy(
+    google::cloud::binaryauthorization::v1::GetPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetPolicy(request);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
-BinauthzManagementServiceV1Client::UpdatePolicy(google::cloud::binaryauthorization::v1::Policy const& policy, Options opts) {
+BinauthzManagementServiceV1Client::UpdatePolicy(
+    google::cloud::binaryauthorization::v1::Policy const& policy,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::binaryauthorization::v1::UpdatePolicyRequest request;
   *request.mutable_policy() = policy;
@@ -55,13 +62,18 @@ BinauthzManagementServiceV1Client::UpdatePolicy(google::cloud::binaryauthorizati
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
-BinauthzManagementServiceV1Client::UpdatePolicy(google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request, Options opts) {
+BinauthzManagementServiceV1Client::UpdatePolicy(
+    google::cloud::binaryauthorization::v1::UpdatePolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePolicy(request);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Client::CreateAttestor(std::string const& parent, std::string const& attestor_id, google::cloud::binaryauthorization::v1::Attestor const& attestor, Options opts) {
+BinauthzManagementServiceV1Client::CreateAttestor(
+    std::string const& parent, std::string const& attestor_id,
+    google::cloud::binaryauthorization::v1::Attestor const& attestor,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::binaryauthorization::v1::CreateAttestorRequest request;
   request.set_parent(parent);
@@ -71,13 +83,17 @@ BinauthzManagementServiceV1Client::CreateAttestor(std::string const& parent, std
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Client::CreateAttestor(google::cloud::binaryauthorization::v1::CreateAttestorRequest const& request, Options opts) {
+BinauthzManagementServiceV1Client::CreateAttestor(
+    google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAttestor(request);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Client::GetAttestor(std::string const& name, Options opts) {
+BinauthzManagementServiceV1Client::GetAttestor(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::binaryauthorization::v1::GetAttestorRequest request;
   request.set_name(name);
@@ -85,13 +101,17 @@ BinauthzManagementServiceV1Client::GetAttestor(std::string const& name, Options 
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Client::GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const& request, Options opts) {
+BinauthzManagementServiceV1Client::GetAttestor(
+    google::cloud::binaryauthorization::v1::GetAttestorRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAttestor(request);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Client::UpdateAttestor(google::cloud::binaryauthorization::v1::Attestor const& attestor, Options opts) {
+BinauthzManagementServiceV1Client::UpdateAttestor(
+    google::cloud::binaryauthorization::v1::Attestor const& attestor,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::binaryauthorization::v1::UpdateAttestorRequest request;
   *request.mutable_attestor() = attestor;
@@ -99,13 +119,17 @@ BinauthzManagementServiceV1Client::UpdateAttestor(google::cloud::binaryauthoriza
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Client::UpdateAttestor(google::cloud::binaryauthorization::v1::UpdateAttestorRequest const& request, Options opts) {
+BinauthzManagementServiceV1Client::UpdateAttestor(
+    google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAttestor(request);
 }
 
 StreamRange<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Client::ListAttestors(std::string const& parent, Options opts) {
+BinauthzManagementServiceV1Client::ListAttestors(std::string const& parent,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::binaryauthorization::v1::ListAttestorsRequest request;
   request.set_parent(parent);
@@ -113,21 +137,25 @@ BinauthzManagementServiceV1Client::ListAttestors(std::string const& parent, Opti
 }
 
 StreamRange<google::cloud::binaryauthorization::v1::Attestor>
-BinauthzManagementServiceV1Client::ListAttestors(google::cloud::binaryauthorization::v1::ListAttestorsRequest request, Options opts) {
+BinauthzManagementServiceV1Client::ListAttestors(
+    google::cloud::binaryauthorization::v1::ListAttestorsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAttestors(std::move(request));
 }
 
-Status
-BinauthzManagementServiceV1Client::DeleteAttestor(std::string const& name, Options opts) {
+Status BinauthzManagementServiceV1Client::DeleteAttestor(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::binaryauthorization::v1::DeleteAttestorRequest request;
   request.set_name(name);
   return connection_->DeleteAttestor(request);
 }
 
-Status
-BinauthzManagementServiceV1Client::DeleteAttestor(google::cloud::binaryauthorization::v1::DeleteAttestorRequest const& request, Options opts) {
+Status BinauthzManagementServiceV1Client::DeleteAttestor(
+    google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAttestor(request);
 }

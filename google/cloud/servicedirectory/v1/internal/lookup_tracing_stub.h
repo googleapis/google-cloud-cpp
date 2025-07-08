@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_TRACING_STUB_H
 
+#include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -38,24 +38,24 @@ class LookupServiceTracingStub : public LookupServiceStub {
 
   explicit LookupServiceTracingStub(std::shared_ptr<LookupServiceStub> child);
 
-  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse> ResolveService(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) override;
+  StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
+  ResolveService(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
  private:
   std::shared_ptr<LookupServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

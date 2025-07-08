@@ -17,17 +17,17 @@
 // source: google/monitoring/v3/service_service.proto
 
 #include "google/cloud/monitoring/v3/service_monitoring_connection.h"
+#include "google/cloud/monitoring/v3/internal/service_monitoring_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/service_monitoring_option_defaults.h"
+#include "google/cloud/monitoring/v3/internal/service_monitoring_stub_factory.h"
+#include "google/cloud/monitoring/v3/internal/service_monitoring_tracing_connection.h"
+#include "google/cloud/monitoring/v3/service_monitoring_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/monitoring/v3/internal/service_monitoring_connection_impl.h"
-#include "google/cloud/monitoring/v3/internal/service_monitoring_option_defaults.h"
-#include "google/cloud/monitoring/v3/internal/service_monitoring_stub_factory.h"
-#include "google/cloud/monitoring/v3/internal/service_monitoring_tracing_connection.h"
-#include "google/cloud/monitoring/v3/service_monitoring_options.h"
 #include <memory>
 #include <utility>
 
@@ -36,7 +36,8 @@ namespace cloud {
 namespace monitoring_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ServiceMonitoringServiceConnection::~ServiceMonitoringServiceConnection() = default;
+ServiceMonitoringServiceConnection::~ServiceMonitoringServiceConnection() =
+    default;
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceConnection::CreateService(
@@ -50,8 +51,10 @@ ServiceMonitoringServiceConnection::GetService(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::monitoring::v3::Service> ServiceMonitoringServiceConnection::ListServices(
-    google::monitoring::v3::ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::Service>
+ServiceMonitoringServiceConnection::ListServices(
+    google::monitoring::v3::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::Service>>();
 }
@@ -62,8 +65,7 @@ ServiceMonitoringServiceConnection::UpdateService(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ServiceMonitoringServiceConnection::DeleteService(
+Status ServiceMonitoringServiceConnection::DeleteService(
     google::monitoring::v3::DeleteServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -80,8 +82,10 @@ ServiceMonitoringServiceConnection::GetServiceLevelObjective(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::monitoring::v3::ServiceLevelObjective> ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
-    google::monitoring::v3::ListServiceLevelObjectivesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::monitoring::v3::ServiceLevelObjective>
+ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
+    google::monitoring::v3::
+        ListServiceLevelObjectivesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::ServiceLevelObjective>>();
 }
@@ -92,26 +96,27 @@ ServiceMonitoringServiceConnection::UpdateServiceLevelObjective(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ServiceMonitoringServiceConnection::DeleteServiceLevelObjective(
+Status ServiceMonitoringServiceConnection::DeleteServiceLevelObjective(
     google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ServiceMonitoringServiceConnection> MakeServiceMonitoringServiceConnection(
-    Options options) {
+std::shared_ptr<ServiceMonitoringServiceConnection>
+MakeServiceMonitoringServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ServiceMonitoringServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ServiceMonitoringServicePolicyOptionList>(
+      options, __func__);
   options = monitoring_v3_internal::ServiceMonitoringServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = monitoring_v3_internal::CreateDefaultServiceMonitoringServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return monitoring_v3_internal::MakeServiceMonitoringServiceTracingConnection(
-      std::make_shared<monitoring_v3_internal::ServiceMonitoringServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          monitoring_v3_internal::ServiceMonitoringServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

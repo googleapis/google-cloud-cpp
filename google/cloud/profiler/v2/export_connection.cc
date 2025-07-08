@@ -17,17 +17,17 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/v2/export_connection.h"
+#include "google/cloud/profiler/v2/export_options.h"
+#include "google/cloud/profiler/v2/internal/export_connection_impl.h"
+#include "google/cloud/profiler/v2/internal/export_option_defaults.h"
+#include "google/cloud/profiler/v2/internal/export_stub_factory.h"
+#include "google/cloud/profiler/v2/internal/export_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/profiler/v2/export_options.h"
-#include "google/cloud/profiler/v2/internal/export_connection_impl.h"
-#include "google/cloud/profiler/v2/internal/export_option_defaults.h"
-#include "google/cloud/profiler/v2/internal/export_stub_factory.h"
-#include "google/cloud/profiler/v2/internal/export_tracing_connection.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ExportServiceConnection::~ExportServiceConnection() = default;
 
-StreamRange<google::devtools::cloudprofiler::v2::Profile> ExportServiceConnection::ListProfiles(
-    google::devtools::cloudprofiler::v2::ListProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::devtools::cloudprofiler::v2::Profile>
+ExportServiceConnection::ListProfiles(
+    google::devtools::cloudprofiler::v2::
+        ListProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudprofiler::v2::Profile>>();
 }
@@ -47,17 +49,18 @@ StreamRange<google::devtools::cloudprofiler::v2::Profile> ExportServiceConnectio
 std::shared_ptr<ExportServiceConnection> MakeExportServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ExportServicePolicyOptionList>(options, __func__);
-  options = profiler_v2_internal::ExportServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ExportServicePolicyOptionList>(options,
+                                                                __func__);
+  options =
+      profiler_v2_internal::ExportServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = profiler_v2_internal::CreateDefaultExportServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return profiler_v2_internal::MakeExportServiceTracingConnection(
       std::make_shared<profiler_v2_internal::ExportServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

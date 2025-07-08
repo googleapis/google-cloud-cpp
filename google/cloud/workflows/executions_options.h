@@ -28,16 +28,22 @@ namespace cloud {
 namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use workflows_executions_v1::ExecutionsBackoffPolicyOption directly.
+/// @deprecated Use workflows_executions_v1::ExecutionsBackoffPolicyOption
+/// directly.
 using ::google::cloud::workflows_executions_v1::ExecutionsBackoffPolicyOption;
 
-/// @deprecated Use workflows_executions_v1::ExecutionsConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::workflows_executions_v1::ExecutionsConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// workflows_executions_v1::ExecutionsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::workflows_executions_v1::
+    ExecutionsConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use workflows_executions_v1::ExecutionsPolicyOptionList directly.
+/// @deprecated Use workflows_executions_v1::ExecutionsPolicyOptionList
+/// directly.
 using ::google::cloud::workflows_executions_v1::ExecutionsPolicyOptionList;
 
-/// @deprecated Use workflows_executions_v1::ExecutionsRetryPolicyOption directly.
+/// @deprecated Use workflows_executions_v1::ExecutionsRetryPolicyOption
+/// directly.
 using ::google::cloud::workflows_executions_v1::ExecutionsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

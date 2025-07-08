@@ -32,22 +32,24 @@ EnvironmentsTracingStub::EnvironmentsTracingStub(
     std::shared_ptr<EnvironmentsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse> EnvironmentsTracingStub::ListEnvironments(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
+EnvironmentsTracingStub::ListEnvironments(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "ListEnvironments");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "ListEnvironments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListEnvironments(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::Environment> EnvironmentsTracingStub::GetEnvironment(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::dialogflow::cx::v3::Environment>
+EnvironmentsTracingStub::GetEnvironment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "GetEnvironment");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,164 +58,187 @@ StatusOr<google::cloud::dialogflow::cx::v3::Environment> EnvironmentsTracingStub
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncCreateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "CreateEnvironment");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "CreateEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateEnvironment(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateEnvironment(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingStub::CreateEnvironment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "CreateEnvironment");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "CreateEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateEnvironment(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateEnvironment(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncUpdateEnvironment(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "UpdateEnvironment");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "UpdateEnvironment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateEnvironment(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateEnvironment(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingStub::UpdateEnvironment(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "UpdateEnvironment");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "UpdateEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateEnvironment(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateEnvironment(context, options, request));
 }
 
 Status EnvironmentsTracingStub::DeleteEnvironment(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "DeleteEnvironment");
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "DeleteEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteEnvironment(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteEnvironment(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse> EnvironmentsTracingStub::LookupEnvironmentHistory(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "LookupEnvironmentHistory");
+StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse>
+EnvironmentsTracingStub::LookupEnvironmentHistory(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "LookupEnvironmentHistory");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->LookupEnvironmentHistory(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->LookupEnvironmentHistory(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncRunContinuousTest(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "RunContinuousTest");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "RunContinuousTest");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRunContinuousTest(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncRunContinuousTest(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsTracingStub::RunContinuousTest(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "RunContinuousTest");
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "RunContinuousTest");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RunContinuousTest(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->RunContinuousTest(context, options, request));
 }
 
-StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse> EnvironmentsTracingStub::ListContinuousTestResults(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "ListContinuousTestResults");
+StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
+EnvironmentsTracingStub::ListContinuousTestResults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments",
+                             "ListContinuousTestResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListContinuousTestResults(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListContinuousTestResults(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncDeployFlow(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "DeployFlow");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "DeployFlow");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeployFlow(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-EnvironmentsTracingStub::DeployFlow(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "DeployFlow");
+StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::DeployFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "DeployFlow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeployFlow(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> EnvironmentsTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+EnvironmentsTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> EnvironmentsTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+EnvironmentsTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> EnvironmentsTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+EnvironmentsTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -221,10 +246,10 @@ StatusOr<google::longrunning::ListOperationsResponse> EnvironmentsTracingStub::L
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -232,10 +257,10 @@ StatusOr<google::longrunning::Operation> EnvironmentsTracingStub::GetOperation(
 }
 
 Status EnvironmentsTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -252,8 +277,7 @@ EnvironmentsTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -266,8 +290,8 @@ future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

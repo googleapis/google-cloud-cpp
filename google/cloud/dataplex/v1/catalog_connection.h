@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_CATALOG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_CATALOG_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dataplex/v1/catalog_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/catalog_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class CatalogServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class CatalogServiceLimitedErrorCountRetryPolicy : public CatalogServiceRetryPolicy {
+class CatalogServiceLimitedErrorCountRetryPolicy
+    : public CatalogServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class CatalogServiceLimitedErrorCountRetryPolicy : public CatalogServiceRetryPol
    *     @p maximum_failures == 0.
    */
   explicit CatalogServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   CatalogServiceLimitedErrorCountRetryPolicy(
       CatalogServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : CatalogServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CatalogServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   CatalogServiceLimitedErrorCountRetryPolicy(
       CatalogServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : CatalogServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : CatalogServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class CatalogServiceLimitedErrorCountRetryPolicy : public CatalogServiceRetryPol
   using BaseType = CatalogServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dataplex_v1_internal::CatalogServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dataplex_v1_internal::CatalogServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class CatalogServiceLimitedTimeRetryPolicy : public CatalogServiceRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit CatalogServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  CatalogServiceLimitedTimeRetryPolicy(CatalogServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : CatalogServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  CatalogServiceLimitedTimeRetryPolicy(CatalogServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : CatalogServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CatalogServiceLimitedTimeRetryPolicy(
+      CatalogServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : CatalogServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  CatalogServiceLimitedTimeRetryPolicy(
+      CatalogServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : CatalogServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class CatalogServiceLimitedTimeRetryPolicy : public CatalogServiceRetryPolicy {
   using BaseType = CatalogServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dataplex_v1_internal::CatalogServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dataplex_v1_internal::CatalogServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,169 +187,190 @@ class CatalogServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  CreateEntryType(google::cloud::dataplex::v1::CreateEntryTypeRequest const& request);
+  CreateEntryType(
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateEntryType(NoAwaitTag, google::cloud::dataplex::v1::CreateEntryTypeRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  CreateEntryType( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  UpdateEntryType(google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateEntryType(NoAwaitTag, google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  UpdateEntryType( google::longrunning::Operation const& operation);
+  CreateEntryType(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
+  UpdateEntryType(
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
+  UpdateEntryType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType(google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request);
+  DeleteEntryType(
+      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteEntryType(NoAwaitTag, google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteEntryType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType( google::longrunning::Operation const& operation);
+  DeleteEntryType(google::longrunning::Operation const& operation);
 
-  virtual StreamRange<google::cloud::dataplex::v1::EntryType>
-  ListEntryTypes(google::cloud::dataplex::v1::ListEntryTypesRequest request);
+  virtual StreamRange<google::cloud::dataplex::v1::EntryType> ListEntryTypes(
+      google::cloud::dataplex::v1::ListEntryTypesRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::EntryType>
-  GetEntryType(google::cloud::dataplex::v1::GetEntryTypeRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::EntryType> GetEntryType(
+      google::cloud::dataplex::v1::GetEntryTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  CreateAspectType(google::cloud::dataplex::v1::CreateAspectTypeRequest const& request);
+  CreateAspectType(
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateAspectType(NoAwaitTag, google::cloud::dataplex::v1::CreateAspectTypeRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  CreateAspectType( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  UpdateAspectType(google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateAspectType(NoAwaitTag, google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  UpdateAspectType( google::longrunning::Operation const& operation);
+  CreateAspectType(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
+  UpdateAspectType(
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
+  UpdateAspectType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType(google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request);
+  DeleteAspectType(
+      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteAspectType(NoAwaitTag, google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType( google::longrunning::Operation const& operation);
-
-  virtual StreamRange<google::cloud::dataplex::v1::AspectType>
-  ListAspectTypes(google::cloud::dataplex::v1::ListAspectTypesRequest request);
-
-  virtual StatusOr<google::cloud::dataplex::v1::AspectType>
-  GetAspectType(google::cloud::dataplex::v1::GetAspectTypeRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  CreateEntryGroup(google::cloud::dataplex::v1::CreateEntryGroupRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  CreateEntryGroup(NoAwaitTag, google::cloud::dataplex::v1::CreateEntryGroupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  CreateEntryGroup( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  UpdateEntryGroup(google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateEntryGroup(NoAwaitTag, google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  UpdateEntryGroup( google::longrunning::Operation const& operation);
+  virtual StatusOr<google::longrunning::Operation> DeleteAspectType(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup(google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request);
+  DeleteAspectType(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteEntryGroup(NoAwaitTag, google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request);
+  virtual StreamRange<google::cloud::dataplex::v1::AspectType> ListAspectTypes(
+      google::cloud::dataplex::v1::ListAspectTypesRequest request);
+
+  virtual StatusOr<google::cloud::dataplex::v1::AspectType> GetAspectType(
+      google::cloud::dataplex::v1::GetAspectTypeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
+  CreateEntryGroup(
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
+  CreateEntryGroup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
+  UpdateEntryGroup(
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
+  UpdateEntryGroup(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup( google::longrunning::Operation const& operation);
+  DeleteEntryGroup(
+      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::EntryGroup>
-  ListEntryGroups(google::cloud::dataplex::v1::ListEntryGroupsRequest request);
+  virtual StatusOr<google::longrunning::Operation> DeleteEntryGroup(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::EntryGroup>
-  GetEntryGroup(google::cloud::dataplex::v1::GetEntryGroupRequest const& request);
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteEntryGroup(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Entry>
-  CreateEntry(google::cloud::dataplex::v1::CreateEntryRequest const& request);
+  virtual StreamRange<google::cloud::dataplex::v1::EntryGroup> ListEntryGroups(
+      google::cloud::dataplex::v1::ListEntryGroupsRequest request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Entry>
-  UpdateEntry(google::cloud::dataplex::v1::UpdateEntryRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::EntryGroup> GetEntryGroup(
+      google::cloud::dataplex::v1::GetEntryGroupRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Entry>
-  DeleteEntry(google::cloud::dataplex::v1::DeleteEntryRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Entry> CreateEntry(
+      google::cloud::dataplex::v1::CreateEntryRequest const& request);
 
-  virtual StreamRange<google::cloud::dataplex::v1::Entry>
-  ListEntries(google::cloud::dataplex::v1::ListEntriesRequest request);
+  virtual StatusOr<google::cloud::dataplex::v1::Entry> UpdateEntry(
+      google::cloud::dataplex::v1::UpdateEntryRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Entry>
-  GetEntry(google::cloud::dataplex::v1::GetEntryRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::Entry> DeleteEntry(
+      google::cloud::dataplex::v1::DeleteEntryRequest const& request);
 
-  virtual StatusOr<google::cloud::dataplex::v1::Entry>
-  LookupEntry(google::cloud::dataplex::v1::LookupEntryRequest const& request);
+  virtual StreamRange<google::cloud::dataplex::v1::Entry> ListEntries(
+      google::cloud::dataplex::v1::ListEntriesRequest request);
+
+  virtual StatusOr<google::cloud::dataplex::v1::Entry> GetEntry(
+      google::cloud::dataplex::v1::GetEntryRequest const& request);
+
+  virtual StatusOr<google::cloud::dataplex::v1::Entry> LookupEntry(
+      google::cloud::dataplex::v1::LookupEntryRequest const& request);
 
   virtual StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
   SearchEntries(google::cloud::dataplex::v1::SearchEntriesRequest request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
-  CreateMetadataJob(google::cloud::dataplex::v1::CreateMetadataJobRequest const& request);
+  CreateMetadataJob(
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateMetadataJob(NoAwaitTag, google::cloud::dataplex::v1::CreateMetadataJobRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
-  CreateMetadataJob( google::longrunning::Operation const& operation);
+  CreateMetadataJob(google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::cloud::dataplex::v1::MetadataJob>
-  GetMetadataJob(google::cloud::dataplex::v1::GetMetadataJobRequest const& request);
+  virtual StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request);
 
   virtual StreamRange<google::cloud::dataplex::v1::MetadataJob>
-  ListMetadataJobs(google::cloud::dataplex::v1::ListMetadataJobsRequest request);
+  ListMetadataJobs(
+      google::cloud::dataplex::v1::ListMetadataJobsRequest request);
 
-  virtual Status
-  CancelMetadataJob(google::cloud::dataplex::v1::CancelMetadataJobRequest const& request);
+  virtual Status CancelMetadataJob(
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

@@ -29,48 +29,72 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-AdvisoryNotificationsServiceTracingConnection::AdvisoryNotificationsServiceTracingConnection(
-    std::shared_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceConnection> child)
+AdvisoryNotificationsServiceTracingConnection::
+    AdvisoryNotificationsServiceTracingConnection(
+        std::shared_ptr<
+            advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceTracingConnection::ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest request) {
-  auto span = internal::MakeSpan("advisorynotifications_v1::AdvisoryNotificationsServiceConnection::ListNotifications");
+AdvisoryNotificationsServiceTracingConnection::ListNotifications(
+    google::cloud::advisorynotifications::v1::ListNotificationsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "advisorynotifications_v1::AdvisoryNotificationsServiceConnection::"
+      "ListNotifications");
   internal::OTelScope scope(span);
   auto sr = child_->ListNotifications(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::advisorynotifications::v1::Notification>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::advisorynotifications::v1::Notification>(std::move(span),
+                                                              std::move(sr));
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceTracingConnection::GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) {
-  auto span = internal::MakeSpan("advisorynotifications_v1::AdvisoryNotificationsServiceConnection::GetNotification");
+AdvisoryNotificationsServiceTracingConnection::GetNotification(
+    google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "advisorynotifications_v1::AdvisoryNotificationsServiceConnection::"
+      "GetNotification");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNotification(request));
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
-AdvisoryNotificationsServiceTracingConnection::GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) {
-  auto span = internal::MakeSpan("advisorynotifications_v1::AdvisoryNotificationsServiceConnection::GetSettings");
+AdvisoryNotificationsServiceTracingConnection::GetSettings(
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "advisorynotifications_v1::AdvisoryNotificationsServiceConnection::"
+      "GetSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSettings(request));
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
-AdvisoryNotificationsServiceTracingConnection::UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) {
-  auto span = internal::MakeSpan("advisorynotifications_v1::AdvisoryNotificationsServiceConnection::UpdateSettings");
+AdvisoryNotificationsServiceTracingConnection::UpdateSettings(
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "advisorynotifications_v1::AdvisoryNotificationsServiceConnection::"
+      "UpdateSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSettings(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
+std::shared_ptr<
+    advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
 MakeAdvisoryNotificationsServiceTracingConnection(
-    std::shared_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceConnection> conn) {
+    std::shared_ptr<
+        advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<AdvisoryNotificationsServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<AdvisoryNotificationsServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

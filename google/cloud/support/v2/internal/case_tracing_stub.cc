@@ -33,32 +33,34 @@ CaseServiceTracingStub::CaseServiceTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::GetCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::GetCaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "GetCase");
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "GetCase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetCase(context, options, request));
 }
 
-StatusOr<google::cloud::support::v2::ListCasesResponse> CaseServiceTracingStub::ListCases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::support::v2::ListCasesResponse>
+CaseServiceTracingStub::ListCases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListCasesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "ListCases");
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
+                                     "ListCases");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListCases(context, options, request));
 }
 
-StatusOr<google::cloud::support::v2::SearchCasesResponse> CaseServiceTracingStub::SearchCases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::support::v2::SearchCasesResponse>
+CaseServiceTracingStub::SearchCases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::SearchCasesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "SearchCases");
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
+                                     "SearchCases");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -66,10 +68,10 @@ StatusOr<google::cloud::support::v2::SearchCasesResponse> CaseServiceTracingStub
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::CreateCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CreateCaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "CreateCase");
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
+                                     "CreateCase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -77,10 +79,10 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::CreateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::UpdateCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::UpdateCaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "UpdateCase");
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
+                                     "UpdateCase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -88,10 +90,10 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::UpdateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::EscalateCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::EscalateCaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "EscalateCase");
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
+                                     "EscalateCase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -99,25 +101,28 @@ StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::EscalateCase(
 }
 
 StatusOr<google::cloud::support::v2::Case> CaseServiceTracingStub::CloseCase(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CloseCaseRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "CloseCase");
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
+                                     "CloseCase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CloseCase(context, options, request));
 }
 
-StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse> CaseServiceTracingStub::SearchCaseClassifications(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::support::v2::SearchCaseClassificationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService", "SearchCaseClassifications");
+StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse>
+CaseServiceTracingStub::SearchCaseClassifications(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::support::v2::SearchCaseClassificationsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CaseService",
+                                     "SearchCaseClassifications");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SearchCaseClassifications(context, options, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->SearchCaseClassifications(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

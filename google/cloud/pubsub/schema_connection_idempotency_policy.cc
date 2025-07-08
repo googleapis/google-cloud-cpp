@@ -26,50 +26,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SchemaServiceConnectionIdempotencyPolicy::~SchemaServiceConnectionIdempotencyPolicy() = default;
+SchemaServiceConnectionIdempotencyPolicy::
+    ~SchemaServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SchemaServiceConnectionIdempotencyPolicy>
 SchemaServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SchemaServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::CreateSchema(google::pubsub::v1::CreateSchemaRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::CreateSchema(
+    google::pubsub::v1::CreateSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::GetSchema(google::pubsub::v1::GetSchemaRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::GetSchema(
+    google::pubsub::v1::GetSchemaRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::ListSchemas(google::pubsub::v1::ListSchemasRequest) {  // NOLINT
+Idempotency SchemaServiceConnectionIdempotencyPolicy::ListSchemas(
+    google::pubsub::v1::ListSchemasRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::ListSchemaRevisions(google::pubsub::v1::ListSchemaRevisionsRequest) {  // NOLINT
+Idempotency SchemaServiceConnectionIdempotencyPolicy::ListSchemaRevisions(
+    google::pubsub::v1::ListSchemaRevisionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::CommitSchema(google::pubsub::v1::CommitSchemaRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::CommitSchema(
+    google::pubsub::v1::CommitSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::RollbackSchema(google::pubsub::v1::RollbackSchemaRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::RollbackSchema(
+    google::pubsub::v1::RollbackSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::DeleteSchemaRevision(google::pubsub::v1::DeleteSchemaRevisionRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::DeleteSchemaRevision(
+    google::pubsub::v1::DeleteSchemaRevisionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::DeleteSchema(google::pubsub::v1::DeleteSchemaRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::DeleteSchema(
+    google::pubsub::v1::DeleteSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::ValidateSchema(google::pubsub::v1::ValidateSchemaRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::ValidateSchema(
+    google::pubsub::v1::ValidateSchemaRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::ValidateMessage(
+    google::pubsub::v1::ValidateMessageRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -79,16 +90,18 @@ Idempotency SchemaServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SchemaServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency SchemaServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<SchemaServiceConnectionIdempotencyPolicy>
-    MakeDefaultSchemaServiceConnectionIdempotencyPolicy() {
+MakeDefaultSchemaServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SchemaServiceConnectionIdempotencyPolicy>();
 }
 

@@ -31,9 +31,9 @@ IAMAuth::IAMAuth(
     std::shared_ptr<IAMStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::iam::admin::v1::ListServiceAccountsResponse> IAMAuth::ListServiceAccounts(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
+IAMAuth::ListServiceAccounts(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::ListServiceAccountsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::iam::admin::v1::ListServiceAccountsResponse> IAMAuth::ListServi
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount> IAMAuth::GetServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +49,7 @@ StatusOr<google::iam::admin::v1::ServiceAccount> IAMAuth::GetServiceAccount(
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount> IAMAuth::CreateServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +57,7 @@ StatusOr<google::iam::admin::v1::ServiceAccount> IAMAuth::CreateServiceAccount(
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount> IAMAuth::PatchServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::PatchServiceAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,17 +65,16 @@ StatusOr<google::iam::admin::v1::ServiceAccount> IAMAuth::PatchServiceAccount(
 }
 
 Status IAMAuth::DeleteServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteServiceAccount(context, options, request);
 }
 
-StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse> IAMAuth::UndeleteServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
+IAMAuth::UndeleteServiceAccount(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -86,8 +82,7 @@ StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse> IAMAuth::Undele
 }
 
 Status IAMAuth::EnableServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::EnableServiceAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -95,44 +90,43 @@ Status IAMAuth::EnableServiceAccount(
 }
 
 Status IAMAuth::DisableServiceAccount(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DisableServiceAccountRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DisableServiceAccount(context, options, request);
 }
 
-StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse> IAMAuth::ListServiceAccountKeys(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
+IAMAuth::ListServiceAccountKeys(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListServiceAccountKeys(context, options, request);
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccountKey> IAMAuth::GetServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+IAMAuth::GetServiceAccountKey(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetServiceAccountKey(context, options, request);
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccountKey> IAMAuth::CreateServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+IAMAuth::CreateServiceAccountKey(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateServiceAccountKey(context, options, request);
 }
 
-StatusOr<google::iam::admin::v1::ServiceAccountKey> IAMAuth::UploadServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+IAMAuth::UploadServiceAccountKey(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -140,8 +134,7 @@ StatusOr<google::iam::admin::v1::ServiceAccountKey> IAMAuth::UploadServiceAccoun
 }
 
 Status IAMAuth::DeleteServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -149,8 +142,7 @@ Status IAMAuth::DeleteServiceAccountKey(
 }
 
 Status IAMAuth::DisableServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -158,8 +150,7 @@ Status IAMAuth::DisableServiceAccountKey(
 }
 
 Status IAMAuth::EnableServiceAccountKey(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -167,8 +158,7 @@ Status IAMAuth::EnableServiceAccountKey(
 }
 
 StatusOr<google::iam::v1::Policy> IAMAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -176,26 +166,25 @@ StatusOr<google::iam::v1::Policy> IAMAuth::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> IAMAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> IAMAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+IAMAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse> IAMAuth::QueryGrantableRoles(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
+IAMAuth::QueryGrantableRoles(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -203,8 +192,7 @@ StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse> IAMAuth::QueryGran
 }
 
 StatusOr<google::iam::admin::v1::ListRolesResponse> IAMAuth::ListRoles(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::ListRolesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -212,8 +200,7 @@ StatusOr<google::iam::admin::v1::ListRolesResponse> IAMAuth::ListRoles(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMAuth::GetRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::GetRoleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -221,8 +208,7 @@ StatusOr<google::iam::admin::v1::Role> IAMAuth::GetRole(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMAuth::CreateRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::CreateRoleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -230,8 +216,7 @@ StatusOr<google::iam::admin::v1::Role> IAMAuth::CreateRole(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMAuth::UpdateRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::UpdateRoleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -239,8 +224,7 @@ StatusOr<google::iam::admin::v1::Role> IAMAuth::UpdateRole(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMAuth::DeleteRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::DeleteRoleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -248,26 +232,25 @@ StatusOr<google::iam::admin::v1::Role> IAMAuth::DeleteRole(
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMAuth::UndeleteRole(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::UndeleteRoleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UndeleteRole(context, options, request);
 }
 
-StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse> IAMAuth::QueryTestablePermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
+IAMAuth::QueryTestablePermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryTestablePermissions(context, options, request);
 }
 
-StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse> IAMAuth::QueryAuditableServices(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
+IAMAuth::QueryAuditableServices(
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -275,8 +258,7 @@ StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse> IAMAuth::QueryA
 }
 
 StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMAuth::LintPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::admin::v1::LintPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

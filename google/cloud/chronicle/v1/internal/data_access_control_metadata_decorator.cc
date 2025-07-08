@@ -46,141 +46,141 @@ DataAccessControlServiceMetadata::DataAccessControlServiceMetadata(
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DataAccessControlServiceMetadata::CreateDataAccessLabel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateDataAccessLabelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataAccessLabel(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DataAccessControlServiceMetadata::GetDataAccessLabel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetDataAccessLabelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataAccessLabel(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ListDataAccessLabelsResponse>
 DataAccessControlServiceMetadata::ListDataAccessLabels(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListDataAccessLabelsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataAccessLabels(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessLabel>
 DataAccessControlServiceMetadata::UpdateDataAccessLabel(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateDataAccessLabelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("data_access_label.name=", internal::UrlEncode(request.data_access_label().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("data_access_label.name=",
+                   internal::UrlEncode(request.data_access_label().name())));
   return child_->UpdateDataAccessLabel(context, options, request);
 }
 
-Status
-DataAccessControlServiceMetadata::DeleteDataAccessLabel(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataAccessControlServiceMetadata::DeleteDataAccessLabel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteDataAccessLabelRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataAccessLabel(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DataAccessControlServiceMetadata::CreateDataAccessScope(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::CreateDataAccessScopeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateDataAccessScope(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DataAccessControlServiceMetadata::GetDataAccessScope(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::GetDataAccessScopeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetDataAccessScope(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::ListDataAccessScopesResponse>
 DataAccessControlServiceMetadata::ListDataAccessScopes(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::ListDataAccessScopesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListDataAccessScopes(context, options, request);
 }
 
 StatusOr<google::cloud::chronicle::v1::DataAccessScope>
 DataAccessControlServiceMetadata::UpdateDataAccessScope(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::UpdateDataAccessScopeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("data_access_scope.name=", internal::UrlEncode(request.data_access_scope().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("data_access_scope.name=",
+                   internal::UrlEncode(request.data_access_scope().name())));
   return child_->UpdateDataAccessScope(context, options, request);
 }
 
-Status
-DataAccessControlServiceMetadata::DeleteDataAccessScope(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataAccessControlServiceMetadata::DeleteDataAccessScope(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::chronicle::v1::DeleteDataAccessScopeRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteDataAccessScope(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DataAccessControlServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 DataAccessControlServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-DataAccessControlServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataAccessControlServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-DataAccessControlServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DataAccessControlServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
-void DataAccessControlServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void DataAccessControlServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DataAccessControlServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                                   Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

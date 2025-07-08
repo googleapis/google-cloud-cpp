@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_HOLDS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_HOLDS_CLIENT_H
 
+#include "google/cloud/resourcemanager/v3/tag_holds_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/resourcemanager/v3/tag_holds_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -67,7 +67,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TagHoldsClient {
  public:
-  explicit TagHoldsClient(std::shared_ptr<TagHoldsConnection> connection, Options opts = {});
+  explicit TagHoldsClient(std::shared_ptr<TagHoldsConnection> connection,
+                          Options opts = {});
   ~TagHoldsClient();
 
   ///@{
@@ -120,8 +121,10 @@ class TagHoldsClient {
   /// [google.cloud.resourcemanager.v3.TagHold]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_holds.proto#L87}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
-  CreateTagHold(std::string const& parent, google::cloud::resourcemanager::v3::TagHold const& tag_hold, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
+      std::string const& parent,
+      google::cloud::resourcemanager::v3::TagHold const& tag_hold,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -134,8 +137,10 @@ class TagHoldsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTagHold(NoAwaitTag, std::string const& parent, google::cloud::resourcemanager::v3::TagHold const& tag_hold, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTagHold(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::resourcemanager::v3::TagHold const& tag_hold,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -172,8 +177,9 @@ class TagHoldsClient {
   /// [google.cloud.resourcemanager.v3.TagHold]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_holds.proto#L87}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
-  CreateTagHold(google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +192,10 @@ class TagHoldsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateTagHold(NoAwaitTag, google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateTagHold(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -198,8 +206,8 @@ class TagHoldsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
-  CreateTagHold(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -245,8 +253,8 @@ class TagHoldsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTagHold(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTagHold(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -283,7 +291,9 @@ class TagHoldsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request, Options opts = {});
+  DeleteTagHold(
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -296,8 +306,10 @@ class TagHoldsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteTagHold(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteTagHold(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -309,7 +321,8 @@ class TagHoldsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteTagHold(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -343,8 +356,8 @@ class TagHoldsClient {
   /// [google.cloud.resourcemanager.v3.TagHold]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_holds.proto#L87}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::TagHold>
-  ListTagHolds(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -382,8 +395,9 @@ class TagHoldsClient {
   /// [google.cloud.resourcemanager.v3.TagHold]: @googleapis_reference_link{google/cloud/resourcemanager/v3/tag_holds.proto#L87}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::TagHold>
-  ListTagHolds(google::cloud::resourcemanager::v3::ListTagHoldsRequest request, Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(
+      google::cloud::resourcemanager::v3::ListTagHoldsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -409,8 +423,8 @@ class TagHoldsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +455,9 @@ class TagHoldsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TagHoldsConnection> connection_;

@@ -26,55 +26,76 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TransitionRouteGroupsConnectionIdempotencyPolicy::~TransitionRouteGroupsConnectionIdempotencyPolicy() = default;
+TransitionRouteGroupsConnectionIdempotencyPolicy::
+    ~TransitionRouteGroupsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
 TransitionRouteGroupsConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<TransitionRouteGroupsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TransitionRouteGroupsConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::ListTransitionRouteGroups(google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest) {  // NOLINT
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::ListTransitionRouteGroups(
+    google::cloud::dialogflow::cx::v3::
+        ListTransitionRouteGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::GetTransitionRouteGroup(google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&) {
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::GetTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::CreateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&) {
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::CreateTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::
+        CreateTransitionRouteGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&) {
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::UpdateTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::
+        UpdateTransitionRouteGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::DeleteTransitionRouteGroup(google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&) {
+Idempotency
+TransitionRouteGroupsConnectionIdempotencyPolicy::DeleteTransitionRouteGroup(
+    google::cloud::dialogflow::cx::v3::
+        DeleteTransitionRouteGroupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency TransitionRouteGroupsConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
-    MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy() {
+MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy() {
   return std::make_unique<TransitionRouteGroupsConnectionIdempotencyPolicy>();
 }
 

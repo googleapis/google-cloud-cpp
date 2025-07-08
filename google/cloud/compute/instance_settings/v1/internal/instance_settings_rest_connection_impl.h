@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_SETTINGS_V1_INTERNAL_INSTANCE_SETTINGS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_SETTINGS_V1_INTERNAL_INSTANCE_SETTINGS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instance_settings/v1/instance_settings_connection.h"
 #include "google/cloud/compute/instance_settings/v1/instance_settings_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_settings/v1/instance_settings_options.h"
 #include "google/cloud/compute/instance_settings/v1/internal/instance_settings_rest_stub.h"
 #include "google/cloud/compute/instance_settings/v1/internal/instance_settings_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -43,47 +43,67 @@ class InstanceSettingsRestConnectionImpl
   ~InstanceSettingsRestConnectionImpl() override = default;
 
   InstanceSettingsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_instance_settings_v1_internal::InstanceSettingsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_instance_settings_v1_internal::InstanceSettingsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceSettings>
-  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::GetInstanceSettingsRequest const& request) override;
+  GetInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::
+                          GetInstanceSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInstanceSettings(google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) override;
+  PatchInstanceSettings(
+      google::cloud::cpp::compute::instance_settings::v1::
+          PatchInstanceSettingsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchInstanceSettings(NoAwaitTag,
-      google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
+      NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
+                      PatchInstanceSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInstanceSettings(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<compute_instance_settings_v1::InstanceSettingsRetryPolicy>
+  static std::unique_ptr<
+      compute_instance_settings_v1::InstanceSettingsRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>()->clone();
+    return options
+        .get<compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_instance_settings_v1::InstanceSettingsBackoffPolicyOption>()->clone();
+    return options
+        .get<
+            compute_instance_settings_v1::InstanceSettingsBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_instance_settings_v1::InstanceSettingsConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_instance_settings_v1::InstanceSettingsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_instance_settings_v1::InstanceSettingsConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_instance_settings_v1::
+                 InstanceSettingsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_instance_settings_v1::InstanceSettingsPollingPolicyOption>()->clone();
+    return options
+        .get<
+            compute_instance_settings_v1::InstanceSettingsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_instance_settings_v1_internal::InstanceSettingsRestStub> stub_;
+  std::shared_ptr<
+      compute_instance_settings_v1_internal::InstanceSettingsRestStub>
+      stub_;
   Options options_;
 };
 

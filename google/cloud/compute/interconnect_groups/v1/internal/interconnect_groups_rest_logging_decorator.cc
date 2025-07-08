@@ -29,24 +29,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InterconnectGroupsRestLogging::InterconnectGroupsRestLogging(
     std::shared_ptr<InterconnectGroupsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsRestLogging::AsyncCreateMembers(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        CreateMembersRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) {
-        return child_->AsyncCreateMembers(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 CreateMembersRequest const& request) {
+        return child_->AsyncCreateMembers(cq, std::move(rest_context),
+                                          std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -54,13 +56,13 @@ InterconnectGroupsRestLogging::AsyncCreateMembers(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsRestLogging::CreateMembers(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        CreateMembersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 CreateMembersRequest const& request) {
         return child_->CreateMembers(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -68,15 +70,17 @@ InterconnectGroupsRestLogging::CreateMembers(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsRestLogging::AsyncDeleteInterconnectGroup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        DeleteInterconnectGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) {
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 DeleteInterconnectGroupRequest const& request) {
         return child_->AsyncDeleteInterconnectGroup(
             cq, std::move(rest_context), std::move(options), request);
       },
@@ -86,13 +90,13 @@ InterconnectGroupsRestLogging::AsyncDeleteInterconnectGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsRestLogging::DeleteInterconnectGroup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        DeleteInterconnectGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 DeleteInterconnectGroupRequest const& request) {
         return child_->DeleteInterconnectGroup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -100,13 +104,13 @@ InterconnectGroupsRestLogging::DeleteInterconnectGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
 InterconnectGroupsRestLogging::GetInterconnectGroup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetInterconnectGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 GetInterconnectGroupRequest const& request) {
         return child_->GetInterconnectGroup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -114,27 +118,28 @@ InterconnectGroupsRestLogging::GetInterconnectGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InterconnectGroupsRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
+StatusOr<google::cloud::cpp::compute::v1::
+             InterconnectGroupsGetOperationalStatusResponse>
 InterconnectGroupsRestLogging::GetOperationalStatus(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetOperationalStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 GetOperationalStatusRequest const& request) {
         return child_->GetOperationalStatus(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -142,15 +147,17 @@ InterconnectGroupsRestLogging::GetOperationalStatus(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsRestLogging::AsyncInsertInterconnectGroup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        InsertInterconnectGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) {
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 InsertInterconnectGroupRequest const& request) {
         return child_->AsyncInsertInterconnectGroup(
             cq, std::move(rest_context), std::move(options), request);
       },
@@ -160,13 +167,13 @@ InterconnectGroupsRestLogging::AsyncInsertInterconnectGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsRestLogging::InsertInterconnectGroup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        InsertInterconnectGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 InsertInterconnectGroupRequest const& request) {
         return child_->InsertInterconnectGroup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -174,13 +181,13 @@ InterconnectGroupsRestLogging::InsertInterconnectGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsListResponse>
 InterconnectGroupsRestLogging::ListInterconnectGroups(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        ListInterconnectGroupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 ListInterconnectGroupsRequest const& request) {
         return child_->ListInterconnectGroups(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -188,17 +195,19 @@ InterconnectGroupsRestLogging::ListInterconnectGroups(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectGroupsRestLogging::AsyncPatchInterconnectGroup(
-      CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) {
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        PatchInterconnectGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) {
-        return child_->AsyncPatchInterconnectGroup(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 PatchInterconnectGroupRequest const& request) {
+        return child_->AsyncPatchInterconnectGroup(cq, std::move(rest_context),
+                                                   std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
@@ -206,13 +215,13 @@ InterconnectGroupsRestLogging::AsyncPatchInterconnectGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectGroupsRestLogging::PatchInterconnectGroup(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        PatchInterconnectGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 PatchInterconnectGroupRequest const& request) {
         return child_->PatchInterconnectGroup(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -220,13 +229,13 @@ InterconnectGroupsRestLogging::PatchInterconnectGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InterconnectGroupsRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -234,13 +243,13 @@ InterconnectGroupsRestLogging::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InterconnectGroupsRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::interconnect_groups::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -251,32 +260,35 @@ InterconnectGroupsRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                         std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-future<Status>
-InterconnectGroupsRestLogging::AsyncCancelOperation(
+future<Status> InterconnectGroupsRestLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
+    google::cloud::cpp::compute::global_operations::v1::
+        DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::cpp::compute::global_operations::v1::DeleteOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(rest_context), std::move(options), request);
+             google::cloud::cpp::compute::global_operations::v1::
+                 DeleteOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                            std::move(options), request);
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);

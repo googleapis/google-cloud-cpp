@@ -26,55 +26,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-WebhooksConnectionIdempotencyPolicy::~WebhooksConnectionIdempotencyPolicy() = default;
+WebhooksConnectionIdempotencyPolicy::~WebhooksConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
 WebhooksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<WebhooksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::ListWebhooks(google::cloud::dialogflow::cx::v3::ListWebhooksRequest) {  // NOLINT
+Idempotency WebhooksConnectionIdempotencyPolicy::ListWebhooks(
+    google::cloud::dialogflow::cx::v3::ListWebhooksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::GetWebhook(google::cloud::dialogflow::cx::v3::GetWebhookRequest const&) {
+Idempotency WebhooksConnectionIdempotencyPolicy::GetWebhook(
+    google::cloud::dialogflow::cx::v3::GetWebhookRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::CreateWebhook(google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&) {
+Idempotency WebhooksConnectionIdempotencyPolicy::CreateWebhook(
+    google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::UpdateWebhook(google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&) {
+Idempotency WebhooksConnectionIdempotencyPolicy::UpdateWebhook(
+    google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::DeleteWebhook(google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&) {
+Idempotency WebhooksConnectionIdempotencyPolicy::DeleteWebhook(
+    google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency WebhooksConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency WebhooksConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency WebhooksConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency WebhooksConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency WebhooksConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency WebhooksConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
-    MakeDefaultWebhooksConnectionIdempotencyPolicy() {
+MakeDefaultWebhooksConnectionIdempotencyPolicy() {
   return std::make_unique<WebhooksConnectionIdempotencyPolicy>();
 }
 

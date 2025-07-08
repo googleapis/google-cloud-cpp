@@ -25,8 +25,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/location/locations.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
 #include <google/cloud/oracledatabase/v1/oracledatabase.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,225 +39,263 @@ class OracleDatabaseStub {
  public:
   virtual ~OracleDatabaseStub() = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresResponse> ListCloudExadataInfrastructures(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest const& request) = 0;
+  virtual StatusOr<google::cloud::oracledatabase::v1::
+                       ListCloudExadataInfrastructuresResponse>
+  ListCloudExadataInfrastructures(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListCloudExadataInfrastructuresRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure> GetCloudExadataInfrastructure(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
+  GetCloudExadataInfrastructure(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          GetCloudExadataInfrastructureRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateCloudExadataInfrastructure(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateCloudExadataInfrastructure(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::
+          CreateCloudExadataInfrastructureRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> CreateCloudExadataInfrastructure(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCloudExadataInfrastructure(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          CreateCloudExadataInfrastructureRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteCloudExadataInfrastructure(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteCloudExadataInfrastructure(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::
+          DeleteCloudExadataInfrastructureRequest const& request) = 0;
 
-  virtual StatusOr<google::longrunning::Operation> DeleteCloudExadataInfrastructure(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) = 0;
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteCloudExadataInfrastructure(
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          DeleteCloudExadataInfrastructureRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse> ListCloudVmClusters(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
+  ListCloudVmClusters(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request) = 0;
+  virtual StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster>
+  GetCloudVmCluster(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateCloudVmCluster(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateCloudVmCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateCloudVmCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteCloudVmCluster(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteCloudVmCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteCloudVmCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse> ListEntitlements(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListEntitlementsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse>
+  ListEntitlements(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListEntitlementsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse> ListDbServers(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListDbServersRequest const& request) = 0;
+  virtual StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse>
+  ListDbServers(grpc::ClientContext& context, Options const& options,
+                google::cloud::oracledatabase::v1::ListDbServersRequest const&
+                    request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListDbNodesResponse> ListDbNodes(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::oracledatabase::v1::ListDbNodesResponse>
+  ListDbNodes(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oracledatabase::v1::ListDbNodesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse> ListGiVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListGiVersionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse>
+  ListGiVersions(grpc::ClientContext& context, Options const& options,
+                 google::cloud::oracledatabase::v1::ListGiVersionsRequest const&
+                     request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse> ListDbSystemShapes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::oracledatabase::v1::ListDbSystemShapesResponse>
+  ListDbSystemShapes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse> ListAutonomousDatabases(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse>
+  ListAutonomousDatabases(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase> GetAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request) = 0;
+  virtual StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
+  GetAutonomousDatabase(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAutonomousDatabase(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAutonomousDatabase(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreAutonomousDatabase(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRestoreAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RestoreAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse> GenerateAutonomousDatabaseWallet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request) = 0;
+  virtual StatusOr<google::cloud::oracledatabase::v1::
+                       GenerateAutonomousDatabaseWalletResponse>
+  GenerateAutonomousDatabaseWallet(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          GenerateAutonomousDatabaseWalletRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse> ListAutonomousDbVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse>
+  ListAutonomousDbVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsResponse> ListAutonomousDatabaseCharacterSets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::oracledatabase::v1::
+                       ListAutonomousDatabaseCharacterSetsResponse>
+  ListAutonomousDatabaseCharacterSets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListAutonomousDatabaseCharacterSetsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse> ListAutonomousDatabaseBackups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse>
+  ListAutonomousDatabaseBackups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListAutonomousDatabaseBackupsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncStopAutonomousDatabase(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncStopAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> StopAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncStartAutonomousDatabase(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncStartAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> StartAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncRestartAutonomousDatabase(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRestartAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) = 0;
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RestartAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -270,226 +308,255 @@ class OracleDatabaseStub {
 class DefaultOracleDatabaseStub : public OracleDatabaseStub {
  public:
   DefaultOracleDatabaseStub(
-      std::unique_ptr<google::cloud::oracledatabase::v1::OracleDatabase::StubInterface> grpc_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<
+          google::cloud::oracledatabase::v1::OracleDatabase::StubInterface>
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresResponse> ListCloudExadataInfrastructures(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListCloudExadataInfrastructuresRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::
+               ListCloudExadataInfrastructuresResponse>
+  ListCloudExadataInfrastructures(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListCloudExadataInfrastructuresRequest const& request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure> GetCloudExadataInfrastructure(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::GetCloudExadataInfrastructureRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::CloudExadataInfrastructure>
+  GetCloudExadataInfrastructure(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          GetCloudExadataInfrastructureRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateCloudExadataInfrastructure(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateCloudExadataInfrastructure(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) override;
+      google::cloud::oracledatabase::v1::
+          CreateCloudExadataInfrastructureRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCloudExadataInfrastructure(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateCloudExadataInfrastructureRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          CreateCloudExadataInfrastructureRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCloudExadataInfrastructure(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteCloudExadataInfrastructure(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) override;
+      google::cloud::oracledatabase::v1::
+          DeleteCloudExadataInfrastructureRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCloudExadataInfrastructure(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteCloudExadataInfrastructureRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::
+          DeleteCloudExadataInfrastructureRequest const& request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse> ListCloudVmClusters(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::ListCloudVmClustersResponse>
+  ListCloudVmClusters(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListCloudVmClustersRequest const&
+          request) override;
 
   StatusOr<google::cloud::oracledatabase::v1::CloudVmCluster> GetCloudVmCluster(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::GetCloudVmClusterRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCloudVmCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) override;
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateCloudVmCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::CreateCloudVmClusterRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCloudVmCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) override;
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCloudVmCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::DeleteCloudVmClusterRequest const&
+          request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse> ListEntitlements(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListEntitlementsRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::ListEntitlementsResponse>
+  ListEntitlements(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListEntitlementsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse> ListDbServers(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListDbServersRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::ListDbServersResponse>
+  ListDbServers(grpc::ClientContext& context, Options const& options,
+                google::cloud::oracledatabase::v1::ListDbServersRequest const&
+                    request) override;
 
   StatusOr<google::cloud::oracledatabase::v1::ListDbNodesResponse> ListDbNodes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListDbNodesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListDbNodesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse> ListGiVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListGiVersionsRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::ListGiVersionsResponse>
+  ListGiVersions(grpc::ClientContext& context, Options const& options,
+                 google::cloud::oracledatabase::v1::ListGiVersionsRequest const&
+                     request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse> ListDbSystemShapes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::ListDbSystemShapesResponse>
+  ListDbSystemShapes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListDbSystemShapesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse> ListAutonomousDatabases(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabasesResponse>
+  ListAutonomousDatabases(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListAutonomousDatabasesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase> GetAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::AutonomousDatabase>
+  GetAutonomousDatabase(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::GetAutonomousDatabaseRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateAutonomousDatabase(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) override;
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::CreateAutonomousDatabaseRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAutonomousDatabase(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) override;
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::DeleteAutonomousDatabaseRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncRestoreAutonomousDatabase(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRestoreAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) override;
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> RestoreAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::RestoreAutonomousDatabaseRequest const&
+          request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletResponse> GenerateAutonomousDatabaseWallet(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::GenerateAutonomousDatabaseWalletRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::
+               GenerateAutonomousDatabaseWalletResponse>
+  GenerateAutonomousDatabaseWallet(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          GenerateAutonomousDatabaseWalletRequest const& request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse> ListAutonomousDbVersions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDbVersionsResponse>
+  ListAutonomousDbVersions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::ListAutonomousDbVersionsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsResponse> ListAutonomousDatabaseCharacterSets(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListAutonomousDatabaseCharacterSetsRequest const& request) override;
+  StatusOr<google::cloud::oracledatabase::v1::
+               ListAutonomousDatabaseCharacterSetsResponse>
+  ListAutonomousDatabaseCharacterSets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListAutonomousDatabaseCharacterSetsRequest const& request) override;
 
-  StatusOr<google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse> ListAutonomousDatabaseBackups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsRequest const& request) override;
+  StatusOr<
+      google::cloud::oracledatabase::v1::ListAutonomousDatabaseBackupsResponse>
+  ListAutonomousDatabaseBackups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::oracledatabase::v1::
+          ListAutonomousDatabaseBackupsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) override;
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> StopAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::StopAutonomousDatabaseRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) override;
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> StartAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::StartAutonomousDatabaseRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncRestartAutonomousDatabase(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRestartAutonomousDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) override;
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> RestartAutonomousDatabase(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::oracledatabase::v1::RestartAutonomousDatabaseRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -505,9 +572,13 @@ class DefaultOracleDatabaseStub : public OracleDatabaseStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::oracledatabase::v1::OracleDatabase::StubInterface> grpc_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<
+      google::cloud::oracledatabase::v1::OracleDatabase::StubInterface>
+      grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

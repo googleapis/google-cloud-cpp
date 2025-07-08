@@ -30,232 +30,328 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AnalyticsHubServiceTracingConnection::AnalyticsHubServiceTracingConnection(
-    std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnection> child)
+    std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnection>
+        child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceTracingConnection::ListDataExchanges(google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::ListDataExchanges");
+AnalyticsHubServiceTracingConnection::ListDataExchanges(
+    google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "ListDataExchanges");
   internal::OTelScope scope(span);
   auto sr = child_->ListDataExchanges(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::DataExchange>(std::move(span),
+                                                               std::move(sr));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceTracingConnection::ListOrgDataExchanges(google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::ListOrgDataExchanges");
+AnalyticsHubServiceTracingConnection::ListOrgDataExchanges(
+    google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "ListOrgDataExchanges");
   internal::OTelScope scope(span);
   auto sr = child_->ListOrgDataExchanges(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::DataExchange>(std::move(span),
+                                                               std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceTracingConnection::GetDataExchange(google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::GetDataExchange");
+AnalyticsHubServiceTracingConnection::GetDataExchange(
+    google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "GetDataExchange");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataExchange(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceTracingConnection::CreateDataExchange(google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::CreateDataExchange");
+AnalyticsHubServiceTracingConnection::CreateDataExchange(
+    google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "CreateDataExchange");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateDataExchange(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-AnalyticsHubServiceTracingConnection::UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::UpdateDataExchange");
+AnalyticsHubServiceTracingConnection::UpdateDataExchange(
+    google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "UpdateDataExchange");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDataExchange(request));
 }
 
-Status
-AnalyticsHubServiceTracingConnection::DeleteDataExchange(google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::DeleteDataExchange");
+Status AnalyticsHubServiceTracingConnection::DeleteDataExchange(
+    google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "DeleteDataExchange");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDataExchange(request));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceTracingConnection::ListListings(google::cloud::bigquery::analyticshub::v1::ListListingsRequest request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::ListListings");
+AnalyticsHubServiceTracingConnection::ListListings(
+    google::cloud::bigquery::analyticshub::v1::ListListingsRequest request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::ListListings");
   internal::OTelScope scope(span);
   auto sr = child_->ListListings(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::bigquery::analyticshub::v1::Listing>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::Listing>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceTracingConnection::GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::GetListing");
+AnalyticsHubServiceTracingConnection::GetListing(
+    google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::GetListing");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetListing(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceTracingConnection::CreateListing(google::cloud::bigquery::analyticshub::v1::CreateListingRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::CreateListing");
+AnalyticsHubServiceTracingConnection::CreateListing(
+    google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::CreateListing");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateListing(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-AnalyticsHubServiceTracingConnection::UpdateListing(google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::UpdateListing");
+AnalyticsHubServiceTracingConnection::UpdateListing(
+    google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::UpdateListing");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateListing(request));
 }
 
-Status
-AnalyticsHubServiceTracingConnection::DeleteListing(google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::DeleteListing");
+Status AnalyticsHubServiceTracingConnection::DeleteListing(
+    google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::DeleteListing");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteListing(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-AnalyticsHubServiceTracingConnection::SubscribeListing(google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::SubscribeListing");
+AnalyticsHubServiceTracingConnection::SubscribeListing(
+    google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "SubscribeListing");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SubscribeListing(request));
 }
 
-future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-AnalyticsHubServiceTracingConnection::SubscribeDataExchange(google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) {
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::SubscribeDataExchange");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "SubscribeDataExchange");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->SubscribeDataExchange(request));
+  return internal::EndSpan(std::move(span),
+                           child_->SubscribeDataExchange(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
-    NoAwaitTag, google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest const& request) {
+    NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                    SubscribeDataExchangeRequest const& request) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::SubscribeDataExchange");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "SubscribeDataExchange");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SubscribeDataExchange(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->SubscribeDataExchange(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
 AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::SubscribeDataExchange");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "SubscribeDataExchange");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->SubscribeDataExchange(operation));
+                           child_->SubscribeDataExchange(operation));
 }
 
-future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-AnalyticsHubServiceTracingConnection::RefreshSubscription(google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) {
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceTracingConnection::RefreshSubscription(
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::RefreshSubscription");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "RefreshSubscription");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RefreshSubscription(request));
+  return internal::EndSpan(std::move(span),
+                           child_->RefreshSubscription(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceTracingConnection::RefreshSubscription(
-    NoAwaitTag, google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::RefreshSubscription");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "RefreshSubscription");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RefreshSubscription(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RefreshSubscription(NoAwaitTag{}, request));
 }
 
-future<StatusOr<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceTracingConnection::RefreshSubscription(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::RefreshSubscription");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "RefreshSubscription");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->RefreshSubscription(operation));
+                           child_->RefreshSubscription(operation));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceTracingConnection::GetSubscription(google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::GetSubscription");
+AnalyticsHubServiceTracingConnection::GetSubscription(
+    google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "GetSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSubscription(request));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceTracingConnection::ListSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::ListSubscriptions");
+AnalyticsHubServiceTracingConnection::ListSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "ListSubscriptions");
   internal::OTelScope scope(span);
   auto sr = child_->ListSubscriptions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::Subscription>(std::move(span),
+                                                               std::move(sr));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
-AnalyticsHubServiceTracingConnection::ListSharedResourceSubscriptions(google::cloud::bigquery::analyticshub::v1::ListSharedResourceSubscriptionsRequest request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::ListSharedResourceSubscriptions");
+AnalyticsHubServiceTracingConnection::ListSharedResourceSubscriptions(
+    google::cloud::bigquery::analyticshub::v1::
+        ListSharedResourceSubscriptionsRequest request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "ListSharedResourceSubscriptions");
   internal::OTelScope scope(span);
   auto sr = child_->ListSharedResourceSubscriptions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::Subscription>(std::move(span),
+                                                               std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
-AnalyticsHubServiceTracingConnection::RevokeSubscription(google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::RevokeSubscription");
+AnalyticsHubServiceTracingConnection::RevokeSubscription(
+    google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "RevokeSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RevokeSubscription(request));
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-AnalyticsHubServiceTracingConnection::DeleteSubscription(google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) {
+AnalyticsHubServiceTracingConnection::DeleteSubscription(
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::DeleteSubscription");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "DeleteSubscription");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteSubscription(request));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteSubscription(request));
 }
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceTracingConnection::DeleteSubscription(
-    NoAwaitTag, google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const& request) {
+    NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::DeleteSubscription");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "DeleteSubscription");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSubscription(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSubscription(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
 AnalyticsHubServiceTracingConnection::DeleteSubscription(
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::DeleteSubscription");
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "DeleteSubscription");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->DeleteSubscription(operation));
+                           child_->DeleteSubscription(operation));
 }
 
 StatusOr<google::iam::v1::Policy>
-AnalyticsHubServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::GetIamPolicy");
+AnalyticsHubServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-AnalyticsHubServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::SetIamPolicy");
+AnalyticsHubServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-AnalyticsHubServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_analyticshub_v1::AnalyticsHubServiceConnection::TestIamPermissions");
+AnalyticsHubServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -264,10 +360,12 @@ AnalyticsHubServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIa
 
 std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnection>
 MakeAnalyticsHubServiceTracingConnection(
-    std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnection> conn) {
+    std::shared_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<AnalyticsHubServiceTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<AnalyticsHubServiceTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

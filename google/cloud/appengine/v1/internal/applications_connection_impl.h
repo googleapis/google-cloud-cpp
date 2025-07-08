@@ -39,52 +39,48 @@ namespace cloud {
 namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ApplicationsConnectionImpl
-    : public appengine_v1::ApplicationsConnection {
+class ApplicationsConnectionImpl : public appengine_v1::ApplicationsConnection {
  public:
   ~ApplicationsConnectionImpl() override = default;
 
   ApplicationsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_v1_internal::ApplicationsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_v1_internal::ApplicationsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::appengine::v1::Application>
-  GetApplication(google::appengine::v1::GetApplicationRequest const& request) override;
+  StatusOr<google::appengine::v1::Application> GetApplication(
+      google::appengine::v1::GetApplicationRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  CreateApplication(google::appengine::v1::CreateApplicationRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateApplication(NoAwaitTag,
+  future<StatusOr<google::appengine::v1::Application>> CreateApplication(
       google::appengine::v1::CreateApplicationRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  CreateApplication(
+  StatusOr<google::longrunning::Operation> CreateApplication(
+      NoAwaitTag,
+      google::appengine::v1::CreateApplicationRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Application>> CreateApplication(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  UpdateApplication(google::appengine::v1::UpdateApplicationRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  UpdateApplication(NoAwaitTag,
+  future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       google::appengine::v1::UpdateApplicationRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  UpdateApplication(
+  StatusOr<google::longrunning::Operation> UpdateApplication(
+      NoAwaitTag,
+      google::appengine::v1::UpdateApplicationRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  RepairApplication(google::appengine::v1::RepairApplicationRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  RepairApplication(NoAwaitTag,
+  future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       google::appengine::v1::RepairApplicationRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::Application>>
-  RepairApplication(
+  StatusOr<google::longrunning::Operation> RepairApplication(
+      NoAwaitTag,
+      google::appengine::v1::RepairApplicationRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       google::longrunning::Operation const& operation) override;
 
  private:

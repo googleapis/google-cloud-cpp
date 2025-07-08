@@ -34,80 +34,99 @@ MetricServiceTracingConnection::MetricServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::api::MonitoredResourceDescriptor>
-MetricServiceTracingConnection::ListMonitoredResourceDescriptors(google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::ListMonitoredResourceDescriptors");
+MetricServiceTracingConnection::ListMonitoredResourceDescriptors(
+    google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::"
+      "ListMonitoredResourceDescriptors");
   internal::OTelScope scope(span);
   auto sr = child_->ListMonitoredResourceDescriptors(std::move(request));
-  return internal::MakeTracedStreamRange<google::api::MonitoredResourceDescriptor>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::api::MonitoredResourceDescriptor>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
-MetricServiceTracingConnection::GetMonitoredResourceDescriptor(google::monitoring::v3::GetMonitoredResourceDescriptorRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::GetMonitoredResourceDescriptor");
+MetricServiceTracingConnection::GetMonitoredResourceDescriptor(
+    google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::GetMonitoredResourceDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetMonitoredResourceDescriptor(request));
+  return internal::EndSpan(*span,
+                           child_->GetMonitoredResourceDescriptor(request));
 }
 
 StreamRange<google::api::MetricDescriptor>
-MetricServiceTracingConnection::ListMetricDescriptors(google::monitoring::v3::ListMetricDescriptorsRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::ListMetricDescriptors");
+MetricServiceTracingConnection::ListMetricDescriptors(
+    google::monitoring::v3::ListMetricDescriptorsRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::ListMetricDescriptors");
   internal::OTelScope scope(span);
   auto sr = child_->ListMetricDescriptors(std::move(request));
   return internal::MakeTracedStreamRange<google::api::MetricDescriptor>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::api::MetricDescriptor>
-MetricServiceTracingConnection::GetMetricDescriptor(google::monitoring::v3::GetMetricDescriptorRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::GetMetricDescriptor");
+MetricServiceTracingConnection::GetMetricDescriptor(
+    google::monitoring::v3::GetMetricDescriptorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::GetMetricDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetMetricDescriptor(request));
 }
 
 StatusOr<google::api::MetricDescriptor>
-MetricServiceTracingConnection::CreateMetricDescriptor(google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::CreateMetricDescriptor");
+MetricServiceTracingConnection::CreateMetricDescriptor(
+    google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::CreateMetricDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateMetricDescriptor(request));
 }
 
-Status
-MetricServiceTracingConnection::DeleteMetricDescriptor(google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::DeleteMetricDescriptor");
+Status MetricServiceTracingConnection::DeleteMetricDescriptor(
+    google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::DeleteMetricDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteMetricDescriptor(request));
 }
 
 StreamRange<google::monitoring::v3::TimeSeries>
-MetricServiceTracingConnection::ListTimeSeries(google::monitoring::v3::ListTimeSeriesRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::ListTimeSeries");
+MetricServiceTracingConnection::ListTimeSeries(
+    google::monitoring::v3::ListTimeSeriesRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::ListTimeSeries");
   internal::OTelScope scope(span);
   auto sr = child_->ListTimeSeries(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::TimeSeries>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-Status
-MetricServiceTracingConnection::CreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::CreateTimeSeries");
+Status MetricServiceTracingConnection::CreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::CreateTimeSeries");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTimeSeries(request));
 }
 
-Status
-MetricServiceTracingConnection::CreateServiceTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::MetricServiceConnection::CreateServiceTimeSeries");
+Status MetricServiceTracingConnection::CreateServiceTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::CreateServiceTimeSeries");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateServiceTimeSeries(request));
 }
 
-future<Status>
-MetricServiceTracingConnection::AsyncCreateTimeSeries(google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+future<Status> MetricServiceTracingConnection::AsyncCreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto span = internal::MakeSpan(
       "monitoring_v3::MetricServiceConnection::AsyncCreateTimeSeries");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AsyncCreateTimeSeries(request));
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncCreateTimeSeries(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

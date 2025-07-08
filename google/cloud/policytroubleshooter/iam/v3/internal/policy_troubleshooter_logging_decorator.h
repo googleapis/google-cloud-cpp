@@ -35,13 +35,15 @@ class PolicyTroubleshooterLogging : public PolicyTroubleshooterStub {
  public:
   ~PolicyTroubleshooterLogging() override = default;
   PolicyTroubleshooterLogging(std::shared_ptr<PolicyTroubleshooterStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> const& components);
+                              TracingOptions tracing_options,
+                              std::set<std::string> const& components);
 
-  StatusOr<google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse> TroubleshootIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::policytroubleshooter::iam::v3::
+               TroubleshootIamPolicyResponse>
+  TroubleshootIamPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::policytroubleshooter::iam::v3::
+          TroubleshootIamPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<PolicyTroubleshooterStub> child_;

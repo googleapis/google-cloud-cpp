@@ -17,17 +17,17 @@
 // source: google/cloud/retail/v2/product_service.proto
 
 #include "google/cloud/retail/v2/internal/product_stub_factory.h"
+#include "google/cloud/retail/v2/internal/product_auth_decorator.h"
+#include "google/cloud/retail/v2/internal/product_logging_decorator.h"
+#include "google/cloud/retail/v2/internal/product_metadata_decorator.h"
+#include "google/cloud/retail/v2/internal/product_stub.h"
+#include "google/cloud/retail/v2/internal/product_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/internal/product_auth_decorator.h"
-#include "google/cloud/retail/v2/internal/product_logging_decorator.h"
-#include "google/cloud/retail/v2/internal/product_metadata_decorator.h"
-#include "google/cloud/retail/v2/internal/product_stub.h"
-#include "google/cloud/retail/v2/internal/product_tracing_stub.h"
 #include <google/cloud/retail/v2/product_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -38,30 +38,28 @@ namespace cloud {
 namespace retail_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ProductServiceStub>
-CreateDefaultProductServiceStub(
+std::shared_ptr<ProductServiceStub> CreateDefaultProductServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::retail::v2::ProductService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::retail::v2::ProductService::NewStub(channel);
   std::shared_ptr<ProductServiceStub> stub =
-    std::make_shared<DefaultProductServiceStub>(
-      std::move(service_grpc_stub),
-      google::longrunning::Operations::NewStub(channel));
+      std::make_shared<DefaultProductServiceStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ProductServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub =
+        std::make_shared<ProductServiceAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<ProductServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ProductServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

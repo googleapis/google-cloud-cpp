@@ -32,54 +32,77 @@ namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>
+std::unique_ptr<
+    advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>
 retry_policy(Options const& options) {
-  return options.get<advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicyOption>()->clone();
+  return options
+      .get<advisorynotifications_v1::
+               AdvisoryNotificationsServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<advisorynotifications_v1::AdvisoryNotificationsServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<advisorynotifications_v1::
+               AdvisoryNotificationsServiceBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
+std::unique_ptr<advisorynotifications_v1::
+                    AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<advisorynotifications_v1::AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<advisorynotifications_v1::
+               AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
-AdvisoryNotificationsServiceConnectionImpl::AdvisoryNotificationsServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AdvisoryNotificationsServiceConnection::options())) {}
+AdvisoryNotificationsServiceConnectionImpl::
+    AdvisoryNotificationsServiceConnectionImpl(
+        std::unique_ptr<google::cloud::BackgroundThreads> background,
+        std::shared_ptr<
+            advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub>
+            stub,
+        Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options),
+          AdvisoryNotificationsServiceConnection::options())) {}
 
 StreamRange<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceConnectionImpl::ListNotifications(google::cloud::advisorynotifications::v1::ListNotificationsRequest request) {
+AdvisoryNotificationsServiceConnectionImpl::ListNotifications(
+    google::cloud::advisorynotifications::v1::ListNotificationsRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListNotifications(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::advisorynotifications::v1::Notification>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::advisorynotifications::v1::Notification>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::advisorynotifications::v1::ListNotificationsRequest const& r) {
+          Options const& options, google::cloud::advisorynotifications::v1::
+                                      ListNotificationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::advisorynotifications::v1::ListNotificationsRequest const& request) {
+                   google::cloud::advisorynotifications::v1::
+                       ListNotificationsRequest const& request) {
               return stub->ListNotifications(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::advisorynotifications::v1::ListNotificationsResponse r) {
-        std::vector<google::cloud::advisorynotifications::v1::Notification> result(r.notifications().size());
+      [](google::cloud::advisorynotifications::v1::ListNotificationsResponse
+             r) {
+        std::vector<google::cloud::advisorynotifications::v1::Notification>
+            result(r.notifications().size());
         auto& messages = *r.mutable_notifications();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -87,39 +110,49 @@ AdvisoryNotificationsServiceConnectionImpl::ListNotifications(google::cloud::adv
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceConnectionImpl::GetNotification(google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) {
+AdvisoryNotificationsServiceConnectionImpl::GetNotification(
+    google::cloud::advisorynotifications::v1::GetNotificationRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNotification(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::advisorynotifications::v1::GetNotificationRequest const& request) {
+             google::cloud::advisorynotifications::v1::
+                 GetNotificationRequest const& request) {
         return stub_->GetNotification(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
-AdvisoryNotificationsServiceConnectionImpl::GetSettings(google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) {
+AdvisoryNotificationsServiceConnectionImpl::GetSettings(
+    google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSettings(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::advisorynotifications::v1::GetSettingsRequest const& request) {
+             google::cloud::advisorynotifications::v1::GetSettingsRequest const&
+                 request) {
         return stub_->GetSettings(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
-AdvisoryNotificationsServiceConnectionImpl::UpdateSettings(google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) {
+AdvisoryNotificationsServiceConnectionImpl::UpdateSettings(
+    google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSettings(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::advisorynotifications::v1::UpdateSettingsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
+              request) {
         return stub_->UpdateSettings(context, options, request);
       },
       *current, request, __func__);

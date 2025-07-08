@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_OPTIONS_H
 
+#include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
+#include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
-#include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.h"
 #include <memory>
 
 namespace google {

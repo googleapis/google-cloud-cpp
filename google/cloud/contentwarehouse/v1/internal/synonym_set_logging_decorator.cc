@@ -32,20 +32,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SynonymSetServiceLogging::SynonymSetServiceLogging(
     std::shared_ptr<SynonymSetServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceLogging::CreateSynonymSet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
+                 request) {
         return child_->CreateSynonymSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +51,12 @@ SynonymSetServiceLogging::CreateSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceLogging::GetSynonymSet(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::GetSynonymSetRequest const&
+                 request) {
         return child_->GetSynonymSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,27 +64,26 @@ SynonymSetServiceLogging::GetSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceLogging::UpdateSynonymSet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
+                 request) {
         return child_->UpdateSynonymSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-SynonymSetServiceLogging::DeleteSynonymSet(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request) {
+Status SynonymSetServiceLogging::DeleteSynonymSet(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
+                 request) {
         return child_->DeleteSynonymSet(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,26 +91,23 @@ SynonymSetServiceLogging::DeleteSynonymSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
 SynonymSetServiceLogging::ListSynonymSets(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
+                 request) {
         return child_->ListSynonymSets(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-SynonymSetServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> SynonymSetServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },

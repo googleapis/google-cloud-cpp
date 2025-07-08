@@ -28,12 +28,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TraceServiceClient::TraceServiceClient(
     std::shared_ptr<TraceServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TraceServiceClient::~TraceServiceClient() = default;
 
-Status
-TraceServiceClient::BatchWriteSpans(std::string const& name, std::vector<google::devtools::cloudtrace::v2::Span> const& spans, Options opts) {
+Status TraceServiceClient::BatchWriteSpans(
+    std::string const& name,
+    std::vector<google::devtools::cloudtrace::v2::Span> const& spans,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudtrace::v2::BatchWriteSpansRequest request;
   request.set_name(name);
@@ -41,14 +43,15 @@ TraceServiceClient::BatchWriteSpans(std::string const& name, std::vector<google:
   return connection_->BatchWriteSpans(request);
 }
 
-Status
-TraceServiceClient::BatchWriteSpans(google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request, Options opts) {
+Status TraceServiceClient::BatchWriteSpans(
+    google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchWriteSpans(request);
 }
 
-StatusOr<google::devtools::cloudtrace::v2::Span>
-TraceServiceClient::CreateSpan(google::devtools::cloudtrace::v2::Span const& request, Options opts) {
+StatusOr<google::devtools::cloudtrace::v2::Span> TraceServiceClient::CreateSpan(
+    google::devtools::cloudtrace::v2::Span const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSpan(request);
 }

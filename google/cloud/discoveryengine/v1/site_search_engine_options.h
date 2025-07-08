@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_SITE_SEARCH_ENGINE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_SITE_SEARCH_ENGINE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct SiteSearchEngineServiceBackoffPolicyOption {
  * @ingroup google-cloud-discoveryengine-options
  */
 struct SiteSearchEngineServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<SiteSearchEngineServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<SiteSearchEngineServiceConnectionIdempotencyPolicy>;
 };
 
 /**

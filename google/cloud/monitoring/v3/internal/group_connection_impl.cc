@@ -17,12 +17,12 @@
 // source: google/monitoring/v3/group_service.proto
 
 #include "google/cloud/monitoring/v3/internal/group_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/group_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/monitoring/v3/internal/group_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,44 +32,49 @@ namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<monitoring_v3::GroupServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<monitoring_v3::GroupServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<monitoring_v3::GroupServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<monitoring_v3::GroupServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<monitoring_v3::GroupServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<monitoring_v3::GroupServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<monitoring_v3::GroupServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 GroupServiceConnectionImpl::GroupServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<monitoring_v3_internal::GroupServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        GroupServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      GroupServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::Group>
-GroupServiceConnectionImpl::ListGroups(google::monitoring::v3::ListGroupsRequest request) {
+GroupServiceConnectionImpl::ListGroups(
+    google::monitoring::v3::ListGroupsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListGroups(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::monitoring::v3::Group>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::monitoring::v3::Group>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<monitoring_v3::GroupServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<monitoring_v3::GroupServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::monitoring::v3::ListGroupsRequest const& r) {
+          Options const& options,
+          google::monitoring::v3::ListGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -86,8 +91,8 @@ GroupServiceConnectionImpl::ListGroups(google::monitoring::v3::ListGroupsRequest
       });
 }
 
-StatusOr<google::monitoring::v3::Group>
-GroupServiceConnectionImpl::GetGroup(google::monitoring::v3::GetGroupRequest const& request) {
+StatusOr<google::monitoring::v3::Group> GroupServiceConnectionImpl::GetGroup(
+    google::monitoring::v3::GetGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -99,8 +104,8 @@ GroupServiceConnectionImpl::GetGroup(google::monitoring::v3::GetGroupRequest con
       *current, request, __func__);
 }
 
-StatusOr<google::monitoring::v3::Group>
-GroupServiceConnectionImpl::CreateGroup(google::monitoring::v3::CreateGroupRequest const& request) {
+StatusOr<google::monitoring::v3::Group> GroupServiceConnectionImpl::CreateGroup(
+    google::monitoring::v3::CreateGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -112,8 +117,8 @@ GroupServiceConnectionImpl::CreateGroup(google::monitoring::v3::CreateGroupReque
       *current, request, __func__);
 }
 
-StatusOr<google::monitoring::v3::Group>
-GroupServiceConnectionImpl::UpdateGroup(google::monitoring::v3::UpdateGroupRequest const& request) {
+StatusOr<google::monitoring::v3::Group> GroupServiceConnectionImpl::UpdateGroup(
+    google::monitoring::v3::UpdateGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -125,8 +130,8 @@ GroupServiceConnectionImpl::UpdateGroup(google::monitoring::v3::UpdateGroupReque
       *current, request, __func__);
 }
 
-Status
-GroupServiceConnectionImpl::DeleteGroup(google::monitoring::v3::DeleteGroupRequest const& request) {
+Status GroupServiceConnectionImpl::DeleteGroup(
+    google::monitoring::v3::DeleteGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -139,21 +144,26 @@ GroupServiceConnectionImpl::DeleteGroup(google::monitoring::v3::DeleteGroupReque
 }
 
 StreamRange<google::api::MonitoredResource>
-GroupServiceConnectionImpl::ListGroupMembers(google::monitoring::v3::ListGroupMembersRequest request) {
+GroupServiceConnectionImpl::ListGroupMembers(
+    google::monitoring::v3::ListGroupMembersRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListGroupMembers(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::api::MonitoredResource>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::api::MonitoredResource>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<monitoring_v3::GroupServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<monitoring_v3::GroupServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::monitoring::v3::ListGroupMembersRequest const& r) {
+          Options const& options,
+          google::monitoring::v3::ListGroupMembersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::monitoring::v3::ListGroupMembersRequest const& request) {
+                   google::monitoring::v3::ListGroupMembersRequest const&
+                       request) {
               return stub->ListGroupMembers(context, options, request);
             },
             options, r, function_name);

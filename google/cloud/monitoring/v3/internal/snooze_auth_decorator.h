@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SNOOZE_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SNOOZE_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/monitoring/v3/internal/snooze_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -39,23 +39,19 @@ class SnoozeServiceAuth : public SnoozeServiceStub {
       std::shared_ptr<SnoozeServiceStub> child);
 
   StatusOr<google::monitoring::v3::Snooze> CreateSnooze(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListSnoozesResponse> ListSnoozes(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListSnoozesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> GetSnooze(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetSnoozeRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Snooze> UpdateSnooze(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateSnoozeRequest const& request) override;
 
  private:

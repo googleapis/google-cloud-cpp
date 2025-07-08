@@ -36,45 +36,52 @@ class ExperimentsTracingConnection
   ~ExperimentsTracingConnection() override = default;
 
   explicit ExperimentsTracingConnection(
-    std::shared_ptr<dialogflow_cx::ExperimentsConnection> child);
+      std::shared_ptr<dialogflow_cx::ExperimentsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::cx::v3::Experiment>
-  ListExperiments(google::cloud::dialogflow::cx::v3::ListExperimentsRequest request) override;
+  StreamRange<google::cloud::dialogflow::cx::v3::Experiment> ListExperiments(
+      google::cloud::dialogflow::cx::v3::ListExperimentsRequest request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  GetExperiment(google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
+      google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  CreateExperiment(google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> CreateExperiment(
+      google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  UpdateExperiment(google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> UpdateExperiment(
+      google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request)
+      override;
 
-  Status
-  DeleteExperiment(google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) override;
+  Status DeleteExperiment(
+      google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  StartExperiment(google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StartExperiment(
+      google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
-  StopExperiment(google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StopExperiment(
+      google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_cx::ExperimentsConnection> child_;

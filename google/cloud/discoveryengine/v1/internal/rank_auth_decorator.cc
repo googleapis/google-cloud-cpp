@@ -31,18 +31,18 @@ RankServiceAuth::RankServiceAuth(
     std::shared_ptr<RankServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::discoveryengine::v1::RankResponse> RankServiceAuth::Rank(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::RankResponse>
+RankServiceAuth::Rank(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::RankRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Rank(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> RankServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+RankServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +50,7 @@ StatusOr<google::longrunning::ListOperationsResponse> RankServiceAuth::ListOpera
 }
 
 StatusOr<google::longrunning::Operation> RankServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +58,7 @@ StatusOr<google::longrunning::Operation> RankServiceAuth::GetOperation(
 }
 
 Status RankServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

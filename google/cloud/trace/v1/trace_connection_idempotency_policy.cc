@@ -26,27 +26,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TraceServiceConnectionIdempotencyPolicy::~TraceServiceConnectionIdempotencyPolicy() = default;
+TraceServiceConnectionIdempotencyPolicy::
+    ~TraceServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
 TraceServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TraceServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TraceServiceConnectionIdempotencyPolicy::ListTraces(google::devtools::cloudtrace::v1::ListTracesRequest) {  // NOLINT
+Idempotency TraceServiceConnectionIdempotencyPolicy::ListTraces(
+    google::devtools::cloudtrace::v1::ListTracesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TraceServiceConnectionIdempotencyPolicy::GetTrace(google::devtools::cloudtrace::v1::GetTraceRequest const&) {
+Idempotency TraceServiceConnectionIdempotencyPolicy::GetTrace(
+    google::devtools::cloudtrace::v1::GetTraceRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TraceServiceConnectionIdempotencyPolicy::PatchTraces(google::devtools::cloudtrace::v1::PatchTracesRequest const&) {
+Idempotency TraceServiceConnectionIdempotencyPolicy::PatchTraces(
+    google::devtools::cloudtrace::v1::PatchTracesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
-    MakeDefaultTraceServiceConnectionIdempotencyPolicy() {
+MakeDefaultTraceServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TraceServiceConnectionIdempotencyPolicy>();
 }
 

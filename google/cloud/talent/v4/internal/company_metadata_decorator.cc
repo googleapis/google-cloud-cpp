@@ -46,69 +46,67 @@ CompanyServiceMetadata::CompanyServiceMetadata(
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceMetadata::CreateCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCompany(context, options, request);
 }
 
-StatusOr<google::cloud::talent::v4::Company>
-CompanyServiceMetadata::GetCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::talent::v4::Company> CompanyServiceMetadata::GetCompany(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCompany(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceMetadata::UpdateCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("company.name=", internal::UrlEncode(request.company().name())));
+  SetMetadata(context, options,
+              absl::StrCat("company.name=",
+                           internal::UrlEncode(request.company().name())));
   return child_->UpdateCompany(context, options, request);
 }
 
-Status
-CompanyServiceMetadata::DeleteCompany(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CompanyServiceMetadata::DeleteCompany(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteCompany(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 CompanyServiceMetadata::ListCompanies(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListCompanies(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-CompanyServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> CompanyServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
 void CompanyServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CompanyServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -36,18 +36,21 @@ class DiskTypesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DiskTypesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListDiskTypes(google::cloud::cpp::compute::disk_types::v1::AggregatedListDiskTypesRequest request);
+  virtual google::cloud::Idempotency AggregatedListDiskTypes(
+      google::cloud::cpp::compute::disk_types::v1::
+          AggregatedListDiskTypesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetDiskType(google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const& request);
+  virtual google::cloud::Idempotency GetDiskType(
+      google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDiskTypes(google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest request);
+  virtual google::cloud::Idempotency ListDiskTypes(
+      google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest
+          request);
 };
 
 std::unique_ptr<DiskTypesConnectionIdempotencyPolicy>
-    MakeDefaultDiskTypesConnectionIdempotencyPolicy();
+MakeDefaultDiskTypesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_disk_types_v1

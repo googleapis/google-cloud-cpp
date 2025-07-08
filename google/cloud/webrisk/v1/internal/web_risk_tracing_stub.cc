@@ -32,44 +32,48 @@ WebRiskServiceTracingStub::WebRiskServiceTracingStub(
     std::shared_ptr<WebRiskServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse> WebRiskServiceTracingStub::ComputeThreatListDiff(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
+WebRiskServiceTracingStub::ComputeThreatListDiff(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "ComputeThreatListDiff");
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "ComputeThreatListDiff");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ComputeThreatListDiff(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->ComputeThreatListDiff(context, options, request));
 }
 
-StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> WebRiskServiceTracingStub::SearchUris(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
+WebRiskServiceTracingStub::SearchUris(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "SearchUris");
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "SearchUris");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchUris(context, options, request));
 }
 
-StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> WebRiskServiceTracingStub::SearchHashes(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
+WebRiskServiceTracingStub::SearchHashes(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "SearchHashes");
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "SearchHashes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SearchHashes(context, options, request));
 }
 
-StatusOr<google::cloud::webrisk::v1::Submission> WebRiskServiceTracingStub::CreateSubmission(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::webrisk::v1::Submission>
+WebRiskServiceTracingStub::CreateSubmission(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "CreateSubmission");
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "CreateSubmission");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -78,45 +82,47 @@ StatusOr<google::cloud::webrisk::v1::Submission> WebRiskServiceTracingStub::Crea
 
 future<StatusOr<google::longrunning::Operation>>
 WebRiskServiceTracingStub::AsyncSubmitUri(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::webrisk::v1::SubmitUriRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "SubmitUri");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "SubmitUri");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncSubmitUri(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-WebRiskServiceTracingStub::SubmitUri(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::webrisk::v1::SubmitUriRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "SubmitUri");
+StatusOr<google::longrunning::Operation> WebRiskServiceTracingStub::SubmitUri(
+    grpc::ClientContext& context, Options options,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "SubmitUri");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SubmitUri(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> WebRiskServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+WebRiskServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> WebRiskServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+WebRiskServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -124,10 +130,10 @@ StatusOr<google::longrunning::Operation> WebRiskServiceTracingStub::GetOperation
 }
 
 Status WebRiskServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -135,10 +141,10 @@ Status WebRiskServiceTracingStub::DeleteOperation(
 }
 
 Status WebRiskServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.webrisk.v1.WebRiskService",
+                                     "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -155,8 +161,7 @@ WebRiskServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -169,8 +174,8 @@ future<Status> WebRiskServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

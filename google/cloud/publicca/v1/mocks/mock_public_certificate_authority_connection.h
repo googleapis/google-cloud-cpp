@@ -31,8 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `PublicCertificateAuthorityServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `PublicCertificateAuthorityServiceClient`. To do so,
- * construct an object of type `PublicCertificateAuthorityServiceClient` with an instance of this
+ * including errors, from an object of type
+ * `PublicCertificateAuthorityServiceClient`. To do so, construct an object of
+ * type `PublicCertificateAuthorityServiceClient` with an instance of this
  * class. Then use the Google Test framework functions to program the behavior
  * of this mock.
  *
@@ -42,13 +43,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockPublicCertificateAuthorityServiceConnection : public publicca_v1::PublicCertificateAuthorityServiceConnection {
+class MockPublicCertificateAuthorityServiceConnection
+    : public publicca_v1::PublicCertificateAuthorityServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>,
-  CreateExternalAccountKey,
-  (google::cloud::security::publicca::v1::CreateExternalAccountKeyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::security::publicca::v1::ExternalAccountKey>,
+      CreateExternalAccountKey,
+      (google::cloud::security::publicca::v1::
+           CreateExternalAccountKeyRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

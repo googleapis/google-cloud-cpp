@@ -33,7 +33,8 @@ using ::google::cloud::talent_v4::MakeCompanyServiceConnection;
 /// @deprecated Use talent_v4::CompanyServiceConnection directly.
 using ::google::cloud::talent_v4::CompanyServiceConnection;
 
-/// @deprecated Use talent_v4::CompanyServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use talent_v4::CompanyServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::talent_v4::CompanyServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use talent_v4::CompanyServiceLimitedTimeRetryPolicy directly.

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIBER_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIBER_TRACING_STUB_H
 
+#include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,33 +39,27 @@ class SubscriberTracingStub : public SubscriberStub {
   explicit SubscriberTracingStub(std::shared_ptr<SubscriberStub> child);
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::Subscription const& request) override;
 
   StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::UpdateSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSubscriptionsResponse> ListSubscriptions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSubscriptionsRequest const& request) override;
 
   Status DeleteSubscription(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::PullResponse> Pull(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::PullRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -77,53 +71,43 @@ class SubscriberTracingStub : public SubscriberStub {
       google::cloud::internal::ImmutableOptions options) override;
 
   Status ModifyPushConfig(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSnapshotsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::CreateSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::UpdateSnapshotRequest const& request) override;
 
   Status DeleteSnapshot(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::SeekRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<Status> AsyncModifyAckDeadline(
@@ -140,7 +124,8 @@ class SubscriberTracingStub : public SubscriberStub {
 
  private:
   std::shared_ptr<SubscriberStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

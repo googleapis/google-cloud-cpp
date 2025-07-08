@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_ZONAL_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_ZONAL_CONNECTION_H
 
+#include "google/cloud/osconfig/v1/internal/os_config_zonal_retry_traits.h"
+#include "google/cloud/osconfig/v1/os_config_zonal_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
-#include "google/cloud/osconfig/v1/internal/os_config_zonal_retry_traits.h"
-#include "google/cloud/osconfig/v1/os_config_zonal_connection_idempotency_policy.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -56,7 +56,8 @@ class OsConfigZonalServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class OsConfigZonalServiceLimitedErrorCountRetryPolicy : public OsConfigZonalServiceRetryPolicy {
+class OsConfigZonalServiceLimitedErrorCountRetryPolicy
+    : public OsConfigZonalServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,15 +66,18 @@ class OsConfigZonalServiceLimitedErrorCountRetryPolicy : public OsConfigZonalSer
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit OsConfigZonalServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit OsConfigZonalServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   OsConfigZonalServiceLimitedErrorCountRetryPolicy(
       OsConfigZonalServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : OsConfigZonalServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : OsConfigZonalServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   OsConfigZonalServiceLimitedErrorCountRetryPolicy(
       OsConfigZonalServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : OsConfigZonalServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : OsConfigZonalServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +97,9 @@ class OsConfigZonalServiceLimitedErrorCountRetryPolicy : public OsConfigZonalSer
   using BaseType = OsConfigZonalServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<osconfig_v1_internal::OsConfigZonalServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      osconfig_v1_internal::OsConfigZonalServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -106,7 +112,8 @@ class OsConfigZonalServiceLimitedErrorCountRetryPolicy : public OsConfigZonalSer
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class OsConfigZonalServiceLimitedTimeRetryPolicy : public OsConfigZonalServiceRetryPolicy {
+class OsConfigZonalServiceLimitedTimeRetryPolicy
+    : public OsConfigZonalServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -131,12 +138,14 @@ class OsConfigZonalServiceLimitedTimeRetryPolicy : public OsConfigZonalServiceRe
   template <typename DurationRep, typename DurationPeriod>
   explicit OsConfigZonalServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  OsConfigZonalServiceLimitedTimeRetryPolicy(OsConfigZonalServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : OsConfigZonalServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  OsConfigZonalServiceLimitedTimeRetryPolicy(OsConfigZonalServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : OsConfigZonalServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OsConfigZonalServiceLimitedTimeRetryPolicy(
+      OsConfigZonalServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : OsConfigZonalServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  OsConfigZonalServiceLimitedTimeRetryPolicy(
+      OsConfigZonalServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : OsConfigZonalServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,16 +167,18 @@ class OsConfigZonalServiceLimitedTimeRetryPolicy : public OsConfigZonalServiceRe
   using BaseType = OsConfigZonalServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<osconfig_v1_internal::OsConfigZonalServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      osconfig_v1_internal::OsConfigZonalServiceRetryTraits>
+      impl_;
 };
 
 /**
  * The `OsConfigZonalServiceConnection` object for `OsConfigZonalServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `OsConfigZonalServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `OsConfigZonalServiceClient`.
+ * sets in `OsConfigZonalServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `OsConfigZonalServiceClient`.
  *
  * To create a concrete instance, see `MakeOsConfigZonalServiceConnection()`.
  *
@@ -180,69 +191,96 @@ class OsConfigZonalServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  CreateOSPolicyAssignment(google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request);
+  CreateOSPolicyAssignment(
+      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateOSPolicyAssignment(NoAwaitTag, google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  CreateOSPolicyAssignment( google::longrunning::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  UpdateOSPolicyAssignment(google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateOSPolicyAssignment(NoAwaitTag, google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
+      NoAwaitTag,
+      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  UpdateOSPolicyAssignment( google::longrunning::Operation const& operation);
+  CreateOSPolicyAssignment(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+  UpdateOSPolicyAssignment(
+      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
+      NoAwaitTag,
+      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+  UpdateOSPolicyAssignment(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
-  GetOSPolicyAssignment(google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request);
+  GetOSPolicyAssignment(
+      google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request);
 
   virtual StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-  ListOSPolicyAssignments(google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request);
+  ListOSPolicyAssignments(
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest request);
 
   virtual StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
-  ListOSPolicyAssignmentRevisions(google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest request);
+  ListOSPolicyAssignmentRevisions(
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest
+          request);
 
-  virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-  DeleteOSPolicyAssignment(google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request);
+  virtual future<StatusOr<
+      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+  DeleteOSPolicyAssignment(
+      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+          request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteOSPolicyAssignment(NoAwaitTag, google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
+      NoAwaitTag,
+      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+          request);
 
-  virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-  DeleteOSPolicyAssignment( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<
+      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+  DeleteOSPolicyAssignment(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-  GetOSPolicyAssignmentReport(google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const& request);
+  GetOSPolicyAssignmentReport(
+      google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
+          request);
 
   virtual StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
-  ListOSPolicyAssignmentReports(google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest request);
+  ListOSPolicyAssignmentReports(
+      google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest
+          request);
 
-  virtual StatusOr<google::cloud::osconfig::v1::Inventory>
-  GetInventory(google::cloud::osconfig::v1::GetInventoryRequest const& request);
+  virtual StatusOr<google::cloud::osconfig::v1::Inventory> GetInventory(
+      google::cloud::osconfig::v1::GetInventoryRequest const& request);
 
-  virtual StreamRange<google::cloud::osconfig::v1::Inventory>
-  ListInventories(google::cloud::osconfig::v1::ListInventoriesRequest request);
+  virtual StreamRange<google::cloud::osconfig::v1::Inventory> ListInventories(
+      google::cloud::osconfig::v1::ListInventoriesRequest request);
 
   virtual StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
-  GetVulnerabilityReport(google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request);
+  GetVulnerabilityReport(
+      google::cloud::osconfig::v1::GetVulnerabilityReportRequest const&
+          request);
 
   virtual StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>
-  ListVulnerabilityReports(google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request);
+  ListVulnerabilityReports(
+      google::cloud::osconfig::v1::ListVulnerabilityReportsRequest request);
 };
 
 /**
- * A factory function to construct an object of type `OsConfigZonalServiceConnection`.
+ * A factory function to construct an object of type
+ * `OsConfigZonalServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of OsConfigZonalServiceClient.
+ * should be passed as an argument to the constructor of
+ * OsConfigZonalServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `OsConfigZonalServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `OsConfigZonalServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -252,11 +290,11 @@ class OsConfigZonalServiceConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `OsConfigZonalServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `OsConfigZonalServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<OsConfigZonalServiceConnection> MakeOsConfigZonalServiceConnection(
-    Options options = {});
+std::shared_ptr<OsConfigZonalServiceConnection>
+MakeOsConfigZonalServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_v1

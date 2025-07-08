@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/kms/v1/autokey_connection.h"
 #include "google/cloud/kms/v1/autokey_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -74,8 +74,7 @@ struct AutokeyPollingPolicyOption {
  * @ingroup google-cloud-kms-options
  */
 using AutokeyPolicyOptionList =
-    OptionList<AutokeyRetryPolicyOption,
-               AutokeyBackoffPolicyOption,
+    OptionList<AutokeyRetryPolicyOption, AutokeyBackoffPolicyOption,
                AutokeyPollingPolicyOption,
                AutokeyConnectionIdempotencyPolicyOption>;
 

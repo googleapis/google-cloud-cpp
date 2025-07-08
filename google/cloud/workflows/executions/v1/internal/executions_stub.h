@@ -35,55 +35,65 @@ class ExecutionsStub {
  public:
   virtual ~ExecutionsStub() = 0;
 
-  virtual StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse> ListExecutions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::workflows::executions::v1::ListExecutionsResponse>
+  ListExecutions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::ListExecutionsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) = 0;
+  virtual StatusOr<google::cloud::workflows::executions::v1::Execution>
+  CreateExecution(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::GetExecutionRequest const& request) = 0;
+  virtual StatusOr<google::cloud::workflows::executions::v1::Execution>
+  GetExecution(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::GetExecutionRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) = 0;
+  virtual StatusOr<google::cloud::workflows::executions::v1::Execution>
+  CancelExecution(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+          request) = 0;
 };
 
 class DefaultExecutionsStub : public ExecutionsStub {
  public:
   explicit DefaultExecutionsStub(
-      std::unique_ptr<google::cloud::workflows::executions::v1::Executions::StubInterface> grpc_stub)
+      std::unique_ptr<
+          google::cloud::workflows::executions::v1::Executions::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse> ListExecutions(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::ListExecutionsRequest const& request) override;
+  StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
+  ListExecutions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::ListExecutionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::CreateExecutionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
+          request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::GetExecutionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::GetExecutionRequest const&
+          request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workflows::executions::v1::CancelExecutionRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<google::cloud::workflows::executions::v1::Executions::StubInterface> grpc_stub_;
+  std::unique_ptr<
+      google::cloud::workflows::executions::v1::Executions::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

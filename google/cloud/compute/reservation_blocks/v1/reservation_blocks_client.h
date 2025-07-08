@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ReservationBlocksClient {
  public:
-  explicit ReservationBlocksClient(std::shared_ptr<ReservationBlocksConnection> connection, Options opts = {});
+  explicit ReservationBlocksClient(
+      std::shared_ptr<ReservationBlocksConnection> connection,
+      Options opts = {});
   ~ReservationBlocksClient();
 
   ///@{
@@ -76,10 +78,12 @@ class ReservationBlocksClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ReservationBlocksClient const& a, ReservationBlocksClient const& b) {
+  friend bool operator==(ReservationBlocksClient const& a,
+                         ReservationBlocksClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ReservationBlocksClient const& a, ReservationBlocksClient const& b) {
+  friend bool operator!=(ReservationBlocksClient const& a,
+                         ReservationBlocksClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,7 +117,11 @@ class ReservationBlocksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
-  GetReservationBlocksGetResponse(std::string const& project, std::string const& zone, std::string const& reservation, std::string const& reservation_block, Options opts = {});
+  GetReservationBlocksGetResponse(std::string const& project,
+                                  std::string const& zone,
+                                  std::string const& reservation,
+                                  std::string const& reservation_block,
+                                  Options opts = {});
 
   // clang-format off
   ///
@@ -144,7 +152,10 @@ class ReservationBlocksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
-  GetReservationBlocksGetResponse(google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request, Options opts = {});
+  GetReservationBlocksGetResponse(
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          GetReservationBlocksGetResponseRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -182,7 +193,8 @@ class ReservationBlocksClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
-  ListReservationBlocks(std::string const& project, std::string const& zone, std::string const& reservation, Options opts = {});
+  ListReservationBlocks(std::string const& project, std::string const& zone,
+                        std::string const& reservation, Options opts = {});
 
   // clang-format off
   ///
@@ -222,7 +234,9 @@ class ReservationBlocksClient {
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
-  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request, Options opts = {});
+  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::
+                            ListReservationBlocksRequest request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -260,7 +274,13 @@ class ReservationBlocksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(std::string const& project, std::string const& zone, std::string const& reservation, std::string const& reservation_block, google::cloud::cpp::compute::v1::ReservationsBlocksPerformMaintenanceRequest const& reservations_blocks_perform_maintenance_request_resource, Options opts = {});
+  PerformMaintenance(
+      std::string const& project, std::string const& zone,
+      std::string const& reservation, std::string const& reservation_block,
+      google::cloud::cpp::compute::v1::
+          ReservationsBlocksPerformMaintenanceRequest const&
+              reservations_blocks_perform_maintenance_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -273,8 +293,13 @@ class ReservationBlocksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PerformMaintenance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& reservation, std::string const& reservation_block, google::cloud::cpp::compute::v1::ReservationsBlocksPerformMaintenanceRequest const& reservations_blocks_perform_maintenance_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& reservation, std::string const& reservation_block,
+      google::cloud::cpp::compute::v1::
+          ReservationsBlocksPerformMaintenanceRequest const&
+              reservations_blocks_perform_maintenance_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -311,7 +336,9 @@ class ReservationBlocksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request, Options opts = {});
+  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::
+                         PerformMaintenanceRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -324,8 +351,11 @@ class ReservationBlocksClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PerformMaintenance(NoAwaitTag, google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          PerformMaintenanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -337,7 +367,9 @@ class ReservationBlocksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  PerformMaintenance(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<ReservationBlocksConnection> connection_;

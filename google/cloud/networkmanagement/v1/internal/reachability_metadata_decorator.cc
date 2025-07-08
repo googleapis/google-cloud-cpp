@@ -46,19 +46,21 @@ ReachabilityServiceMetadata::ReachabilityServiceMetadata(
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 ReachabilityServiceMetadata::ListConnectivityTests(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnectivityTests(context, options, request);
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceMetadata::GetConnectivityTest(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkmanagement::v1::GetConnectivityTestRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnectivityTest(context, options, request);
 }
 
@@ -67,18 +69,21 @@ ReachabilityServiceMetadata::AsyncCreateConnectivityTest(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateConnectivityTest(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateConnectivityTest(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceMetadata::CreateConnectivityTest(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConnectivityTest(context, options, request);
 }
 
@@ -87,18 +92,23 @@ ReachabilityServiceMetadata::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("resource.name=", internal::UrlEncode(request.resource().name())));
-  return child_->AsyncUpdateConnectivityTest(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("resource.name=",
+                           internal::UrlEncode(request.resource().name())));
+  return child_->AsyncUpdateConnectivityTest(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceMetadata::UpdateConnectivityTest(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource.name=", internal::UrlEncode(request.resource().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("resource.name=",
+                           internal::UrlEncode(request.resource().name())));
   return child_->UpdateConnectivityTest(context, options, request);
 }
 
@@ -107,18 +117,21 @@ ReachabilityServiceMetadata::AsyncRerunConnectivityTest(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRerunConnectivityTest(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRerunConnectivityTest(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceMetadata::RerunConnectivityTest(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->RerunConnectivityTest(context, options, request);
 }
 
@@ -127,99 +140,101 @@ ReachabilityServiceMetadata::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteConnectivityTest(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteConnectivityTest(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceMetadata::DeleteConnectivityTest(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConnectivityTest(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ReachabilityServiceMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 ReachabilityServiceMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ReachabilityServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ReachabilityServiceMetadata::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->SetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::Policy>
-ReachabilityServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ReachabilityServiceMetadata::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ReachabilityServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ReachabilityServiceMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-ReachabilityServiceMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ReachabilityServiceMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-ReachabilityServiceMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ReachabilityServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -231,8 +246,8 @@ ReachabilityServiceMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ReachabilityServiceMetadata::AsyncCancelOperation(
@@ -242,21 +257,21 @@ future<Status> ReachabilityServiceMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
-void ReachabilityServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void ReachabilityServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ReachabilityServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                              Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

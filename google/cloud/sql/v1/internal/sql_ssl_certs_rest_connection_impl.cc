@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_ssl_certs.proto
 
 #include "google/cloud/sql/v1/internal/sql_ssl_certs_rest_connection_impl.h"
+#include "google/cloud/sql/v1/internal/sql_ssl_certs_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
-#include "google/cloud/sql/v1/internal/sql_ssl_certs_rest_stub_factory.h"
 #include <memory>
 #include <utility>
 
@@ -34,58 +34,62 @@ SqlSslCertsServiceRestConnectionImpl::SqlSslCertsServiceRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<sql_v1_internal::SqlSslCertsServiceRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SqlSslCertsServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), SqlSslCertsServiceConnection::options())) {}
 
 StatusOr<google::cloud::sql::v1::Operation>
-SqlSslCertsServiceRestConnectionImpl::Delete(google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
+SqlSslCertsServiceRestConnectionImpl::Delete(
+    google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Delete(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
         return stub_->Delete(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::SslCert>
-SqlSslCertsServiceRestConnectionImpl::Get(google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
+SqlSslCertsServiceRestConnectionImpl::Get(
+    google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Get(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
         return stub_->Get(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
-SqlSslCertsServiceRestConnectionImpl::Insert(google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
+SqlSslCertsServiceRestConnectionImpl::Insert(
+    google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Insert(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
         return stub_->Insert(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
-SqlSslCertsServiceRestConnectionImpl::List(google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
+SqlSslCertsServiceRestConnectionImpl::List(
+    google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->List(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
         return stub_->List(rest_context, options, request);
       },
       *current, request, __func__);

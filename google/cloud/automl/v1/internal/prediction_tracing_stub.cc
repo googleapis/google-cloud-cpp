@@ -32,11 +32,12 @@ PredictionServiceTracingStub::PredictionServiceTracingStub(
     std::shared_ptr<PredictionServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::automl::v1::PredictResponse> PredictionServiceTracingStub::Predict(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::automl::v1::PredictResponse>
+PredictionServiceTracingStub::Predict(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::PredictRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService", "Predict");
+  auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService",
+                                     "Predict");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -45,11 +46,12 @@ StatusOr<google::cloud::automl::v1::PredictResponse> PredictionServiceTracingStu
 
 future<StatusOr<google::longrunning::Operation>>
 PredictionServiceTracingStub::AsyncBatchPredict(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::automl::v1::BatchPredictRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService", "BatchPredict");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::automl::v1::BatchPredictRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService",
+                                     "BatchPredict");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncBatchPredict(cq, context, std::move(options), request);
@@ -58,10 +60,10 @@ PredictionServiceTracingStub::AsyncBatchPredict(
 
 StatusOr<google::longrunning::Operation>
 PredictionServiceTracingStub::BatchPredict(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::automl::v1::BatchPredictRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService", "BatchPredict");
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::BatchPredictRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService",
+                                     "BatchPredict");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -78,8 +80,7 @@ PredictionServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -92,8 +93,8 @@ future<Status> PredictionServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -33,7 +33,8 @@ using ::google::cloud::retail_v2::MakePredictionServiceConnection;
 /// @deprecated Use retail_v2::PredictionServiceConnection directly.
 using ::google::cloud::retail_v2::PredictionServiceConnection;
 
-/// @deprecated Use retail_v2::PredictionServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use retail_v2::PredictionServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::retail_v2::PredictionServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use retail_v2::PredictionServiceLimitedTimeRetryPolicy directly.

@@ -17,10 +17,10 @@
 // source: google/cloud/optimization/v1/fleet_routing.proto
 
 #include "google/cloud/optimization/v1/internal/fleet_routing_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/optimization/v1/fleet_routing_connection.h"
 #include "google/cloud/optimization/v1/fleet_routing_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,30 +35,37 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options FleetRoutingDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FLEET_ROUTING_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FLEET_ROUTING_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_FLEET_ROUTING_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FLEET_ROUTING_AUTHORITY",
       "cloudoptimization.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<optimization_v1::FleetRoutingRetryPolicyOption>()) {
     options.set<optimization_v1::FleetRoutingRetryPolicyOption>(
         optimization_v1::FleetRoutingLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<optimization_v1::FleetRoutingBackoffPolicyOption>()) {
     options.set<optimization_v1::FleetRoutingBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<optimization_v1::FleetRoutingPollingPolicyOption>()) {
     options.set<optimization_v1::FleetRoutingPollingPolicyOption>(
         GenericPollingPolicy<
             optimization_v1::FleetRoutingRetryPolicyOption::Type,
             optimization_v1::FleetRoutingBackoffPolicyOption::Type>(
-            options.get<optimization_v1::FleetRoutingRetryPolicyOption>()->clone(),
+            options.get<optimization_v1::FleetRoutingRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<
+          optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption>()) {
     options.set<optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption>(
         optimization_v1::MakeDefaultFleetRoutingConnectionIdempotencyPolicy());
   }

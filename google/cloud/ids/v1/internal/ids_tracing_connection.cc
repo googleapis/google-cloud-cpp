@@ -34,81 +34,73 @@ IDSTracingConnection::IDSTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::ids::v1::Endpoint>
-IDSTracingConnection::ListEndpoints(google::cloud::ids::v1::ListEndpointsRequest request) {
+IDSTracingConnection::ListEndpoints(
+    google::cloud::ids::v1::ListEndpointsRequest request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::ListEndpoints");
   internal::OTelScope scope(span);
   auto sr = child_->ListEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::ids::v1::Endpoint>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
-StatusOr<google::cloud::ids::v1::Endpoint>
-IDSTracingConnection::GetEndpoint(google::cloud::ids::v1::GetEndpointRequest const& request) {
+StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingConnection::GetEndpoint(
+    google::cloud::ids::v1::GetEndpointRequest const& request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::GetEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEndpoint(request));
 }
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>>
-IDSTracingConnection::CreateEndpoint(google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  auto span = internal::MakeSpan(
-      "ids_v1::IDSConnection::CreateEndpoint");
+IDSTracingConnection::CreateEndpoint(
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateEndpoint(request));
 }
 
-StatusOr<google::longrunning::Operation>
-IDSTracingConnection::CreateEndpoint(
+StatusOr<google::longrunning::Operation> IDSTracingConnection::CreateEndpoint(
     NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  auto span = internal::MakeSpan(
-      "ids_v1::IDSConnection::CreateEndpoint");
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateEndpoint(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateEndpoint(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>>
 IDSTracingConnection::CreateEndpoint(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "ids_v1::IDSConnection::CreateEndpoint");
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateEndpoint(operation));
+  return internal::EndSpan(std::move(span), child_->CreateEndpoint(operation));
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-IDSTracingConnection::DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  auto span = internal::MakeSpan(
-      "ids_v1::IDSConnection::DeleteEndpoint");
+IDSTracingConnection::DeleteEndpoint(
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEndpoint(request));
 }
 
-StatusOr<google::longrunning::Operation>
-IDSTracingConnection::DeleteEndpoint(
+StatusOr<google::longrunning::Operation> IDSTracingConnection::DeleteEndpoint(
     NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  auto span = internal::MakeSpan(
-      "ids_v1::IDSConnection::DeleteEndpoint");
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteEndpoint(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteEndpoint(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSTracingConnection::DeleteEndpoint(
     google::longrunning::Operation const& operation) {
-  auto span = internal::MakeSpan(
-      "ids_v1::IDSConnection::DeleteEndpoint");
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteEndpoint(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteEndpoint(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<ids_v1::IDSConnection>
-MakeIDSTracingConnection(
+std::shared_ptr<ids_v1::IDSConnection> MakeIDSTracingConnection(
     std::shared_ptr<ids_v1::IDSConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

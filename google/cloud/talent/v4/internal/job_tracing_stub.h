@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_JOB_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_JOB_TRACING_STUB_H
 
+#include "google/cloud/talent/v4/internal/job_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/talent/v4/internal/job_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,76 +39,71 @@ class JobServiceTracingStub : public JobServiceStub {
   explicit JobServiceTracingStub(std::shared_ptr<JobServiceStub> child);
 
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateJobs(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::talent::v4::BatchCreateJobsRequest const& request) override;
+      google::cloud::talent::v4::BatchCreateJobsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::talent::v4::BatchCreateJobsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::talent::v4::BatchCreateJobsRequest const& request)
+      override;
 
   StatusOr<google::cloud::talent::v4::Job> GetJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchUpdateJobs(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::talent::v4::BatchUpdateJobsRequest const& request) override;
+      google::cloud::talent::v4::BatchUpdateJobsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::talent::v4::BatchUpdateJobsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::talent::v4::BatchUpdateJobsRequest const& request)
+      override;
 
   Status DeleteJob(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteJobs(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::talent::v4::BatchDeleteJobsRequest const& request) override;
+      google::cloud::talent::v4::BatchDeleteJobsRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::talent::v4::BatchDeleteJobsRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::talent::v4::BatchDeleteJobsRequest const& request)
+      override;
 
   StatusOr<google::cloud::talent::v4::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -125,7 +120,8 @@ class JobServiceTracingStub : public JobServiceStub {
 
  private:
   std::shared_ptr<JobServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

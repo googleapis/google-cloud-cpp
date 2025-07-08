@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_BACKUP_RUNS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_BACKUP_RUNS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/sql/v1/internal/sql_backup_runs_rest_stub.h"
 #include "google/cloud/sql/v1/internal/sql_backup_runs_retry_traits.h"
 #include "google/cloud/sql/v1/sql_backup_runs_connection.h"
 #include "google/cloud/sql/v1/sql_backup_runs_connection_idempotency_policy.h"
 #include "google/cloud/sql/v1/sql_backup_runs_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -42,37 +42,44 @@ class SqlBackupRunsServiceRestConnectionImpl
   ~SqlBackupRunsServiceRestConnectionImpl() override = default;
 
   SqlBackupRunsServiceRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<sql_v1_internal::SqlBackupRunsServiceRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<sql_v1_internal::SqlBackupRunsServiceRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Delete(google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Delete(
+      google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::BackupRun>
-  Get(google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::BackupRun> Get(
+      google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::Operation>
-  Insert(google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::Operation> Insert(
+      google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request)
+      override;
 
-  StatusOr<google::cloud::sql::v1::BackupRunsListResponse>
-  List(google::cloud::sql::v1::SqlBackupRunsListRequest const& request) override;
+  StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(
+      google::cloud::sql::v1::SqlBackupRunsListRequest const& request) override;
 
  private:
-  static std::unique_ptr<sql_v1::SqlBackupRunsServiceRetryPolicy>
-  retry_policy(Options const& options) {
-    return options.get<sql_v1::SqlBackupRunsServiceRetryPolicyOption>()->clone();
+  static std::unique_ptr<sql_v1::SqlBackupRunsServiceRetryPolicy> retry_policy(
+      Options const& options) {
+    return options.get<sql_v1::SqlBackupRunsServiceRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<sql_v1::SqlBackupRunsServiceBackoffPolicyOption>()->clone();
+    return options.get<sql_v1::SqlBackupRunsServiceBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<sql_v1::SqlBackupRunsServiceConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      sql_v1::SqlBackupRunsServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<sql_v1::SqlBackupRunsServiceConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<sql_v1::SqlBackupRunsServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

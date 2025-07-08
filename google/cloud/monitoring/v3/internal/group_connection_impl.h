@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_GROUP_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_GROUP_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/monitoring/v3/group_connection.h"
 #include "google/cloud/monitoring/v3/group_connection_idempotency_policy.h"
 #include "google/cloud/monitoring/v3/group_options.h"
 #include "google/cloud/monitoring/v3/internal/group_retry_traits.h"
 #include "google/cloud/monitoring/v3/internal/group_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,29 +43,29 @@ class GroupServiceConnectionImpl
   ~GroupServiceConnectionImpl() override = default;
 
   GroupServiceConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<monitoring_v3_internal::GroupServiceStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<monitoring_v3_internal::GroupServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::monitoring::v3::Group>
-  ListGroups(google::monitoring::v3::ListGroupsRequest request) override;
+  StreamRange<google::monitoring::v3::Group> ListGroups(
+      google::monitoring::v3::ListGroupsRequest request) override;
 
-  StatusOr<google::monitoring::v3::Group>
-  GetGroup(google::monitoring::v3::GetGroupRequest const& request) override;
+  StatusOr<google::monitoring::v3::Group> GetGroup(
+      google::monitoring::v3::GetGroupRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::Group>
-  CreateGroup(google::monitoring::v3::CreateGroupRequest const& request) override;
+  StatusOr<google::monitoring::v3::Group> CreateGroup(
+      google::monitoring::v3::CreateGroupRequest const& request) override;
 
-  StatusOr<google::monitoring::v3::Group>
-  UpdateGroup(google::monitoring::v3::UpdateGroupRequest const& request) override;
+  StatusOr<google::monitoring::v3::Group> UpdateGroup(
+      google::monitoring::v3::UpdateGroupRequest const& request) override;
 
-  Status
-  DeleteGroup(google::monitoring::v3::DeleteGroupRequest const& request) override;
+  Status DeleteGroup(
+      google::monitoring::v3::DeleteGroupRequest const& request) override;
 
-  StreamRange<google::api::MonitoredResource>
-  ListGroupMembers(google::monitoring::v3::ListGroupMembersRequest request) override;
+  StreamRange<google::api::MonitoredResource> ListGroupMembers(
+      google::monitoring::v3::ListGroupMembersRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

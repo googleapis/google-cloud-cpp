@@ -39,19 +39,28 @@ Options RowAccessPolicyServiceDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_ROW_ACCESS_POLICY_SERVICE_AUTHORITY",
       "bigquery.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<bigquerycontrol_v2::RowAccessPolicyServiceRetryPolicyOption>()) {
+  if (!options.has<
+          bigquerycontrol_v2::RowAccessPolicyServiceRetryPolicyOption>()) {
     options.set<bigquerycontrol_v2::RowAccessPolicyServiceRetryPolicyOption>(
         bigquerycontrol_v2::RowAccessPolicyServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<bigquerycontrol_v2::RowAccessPolicyServiceBackoffPolicyOption>()) {
+  if (!options.has<
+          bigquerycontrol_v2::RowAccessPolicyServiceBackoffPolicyOption>()) {
     options.set<bigquerycontrol_v2::RowAccessPolicyServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<bigquerycontrol_v2::RowAccessPolicyServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquerycontrol_v2::RowAccessPolicyServiceConnectionIdempotencyPolicyOption>(
-        bigquerycontrol_v2::MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          bigquerycontrol_v2::
+              RowAccessPolicyServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<bigquerycontrol_v2::
+                    RowAccessPolicyServiceConnectionIdempotencyPolicyOption>(
+        bigquerycontrol_v2::
+            MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy());
   }
 
   return options;

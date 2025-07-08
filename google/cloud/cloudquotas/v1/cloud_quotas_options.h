@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDQUOTAS_V1_CLOUD_QUOTAS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDQUOTAS_V1_CLOUD_QUOTAS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_connection.h"
 #include "google/cloud/cloudquotas/v1/cloud_quotas_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct CloudQuotasConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-cloudquotas-options
  */
 using CloudQuotasPolicyOptionList =
-    OptionList<CloudQuotasRetryPolicyOption,
-               CloudQuotasBackoffPolicyOption,
+    OptionList<CloudQuotasRetryPolicyOption, CloudQuotasBackoffPolicyOption,
                CloudQuotasConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

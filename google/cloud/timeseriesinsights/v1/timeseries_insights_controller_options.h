@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_TIMESERIES_INSIGHTS_CONTROLLER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TIMESERIESINSIGHTS_V1_TIMESERIES_INSIGHTS_CONTROLLER_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection.h"
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,7 +55,8 @@ struct TimeseriesInsightsControllerBackoffPolicyOption {
  * @ingroup google-cloud-timeseriesinsights-options
  */
 struct TimeseriesInsightsControllerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<TimeseriesInsightsControllerConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<TimeseriesInsightsControllerConnectionIdempotencyPolicy>;
 };
 
 /**

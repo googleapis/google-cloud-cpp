@@ -17,9 +17,9 @@
 // source: google/cloud/dataproc/v1/session_templates.proto
 
 #include "google/cloud/dataproc/v1/internal/session_template_controller_connection_impl.h"
+#include "google/cloud/dataproc/v1/internal/session_template_controller_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/dataproc/v1/internal/session_template_controller_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -32,114 +32,140 @@ namespace dataproc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataproc_v1::SessionTemplateControllerRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<dataproc_v1::SessionTemplateControllerRetryPolicyOption>()->clone();
+std::unique_ptr<dataproc_v1::SessionTemplateControllerRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<dataproc_v1::SessionTemplateControllerRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<dataproc_v1::SessionTemplateControllerBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<dataproc_v1::SessionTemplateControllerBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<dataproc_v1::SessionTemplateControllerConnectionIdempotencyPolicy>
+std::unique_ptr<
+    dataproc_v1::SessionTemplateControllerConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<dataproc_v1::SessionTemplateControllerConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<dataproc_v1::
+               SessionTemplateControllerConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
-SessionTemplateControllerConnectionImpl::SessionTemplateControllerConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dataproc_v1_internal::SessionTemplateControllerStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SessionTemplateControllerConnection::options())) {}
+SessionTemplateControllerConnectionImpl::
+    SessionTemplateControllerConnectionImpl(
+        std::unique_ptr<google::cloud::BackgroundThreads> background,
+        std::shared_ptr<dataproc_v1_internal::SessionTemplateControllerStub>
+            stub,
+        Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), SessionTemplateControllerConnection::options())) {
+}
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerConnectionImpl::CreateSessionTemplate(google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request) {
+SessionTemplateControllerConnectionImpl::CreateSessionTemplate(
+    google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSessionTemplate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::CreateSessionTemplateRequest const& request) {
+             google::cloud::dataproc::v1::CreateSessionTemplateRequest const&
+                 request) {
         return stub_->CreateSessionTemplate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerConnectionImpl::UpdateSessionTemplate(google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request) {
+SessionTemplateControllerConnectionImpl::UpdateSessionTemplate(
+    google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSessionTemplate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::UpdateSessionTemplateRequest const& request) {
+             google::cloud::dataproc::v1::UpdateSessionTemplateRequest const&
+                 request) {
         return stub_->UpdateSessionTemplate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerConnectionImpl::GetSessionTemplate(google::cloud::dataproc::v1::GetSessionTemplateRequest const& request) {
+SessionTemplateControllerConnectionImpl::GetSessionTemplate(
+    google::cloud::dataproc::v1::GetSessionTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSessionTemplate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::GetSessionTemplateRequest const& request) {
+             google::cloud::dataproc::v1::GetSessionTemplateRequest const&
+                 request) {
         return stub_->GetSessionTemplate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataproc::v1::SessionTemplate>
-SessionTemplateControllerConnectionImpl::ListSessionTemplates(google::cloud::dataproc::v1::ListSessionTemplatesRequest request) {
+SessionTemplateControllerConnectionImpl::ListSessionTemplates(
+    google::cloud::dataproc::v1::ListSessionTemplatesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListSessionTemplates(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListSessionTemplates(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::dataproc::v1::SessionTemplate>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::dataproc::v1::SessionTemplate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataproc_v1::SessionTemplateControllerRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<dataproc_v1::SessionTemplateControllerRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::dataproc::v1::ListSessionTemplatesRequest const& r) {
+          Options const& options,
+          google::cloud::dataproc::v1::ListSessionTemplatesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::dataproc::v1::ListSessionTemplatesRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::dataproc::v1::ListSessionTemplatesRequest const&
+                    request) {
               return stub->ListSessionTemplates(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::dataproc::v1::ListSessionTemplatesResponse r) {
-        std::vector<google::cloud::dataproc::v1::SessionTemplate> result(r.session_templates().size());
+        std::vector<google::cloud::dataproc::v1::SessionTemplate> result(
+            r.session_templates().size());
         auto& messages = *r.mutable_session_templates();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-Status
-SessionTemplateControllerConnectionImpl::DeleteSessionTemplate(google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request) {
+Status SessionTemplateControllerConnectionImpl::DeleteSessionTemplate(
+    google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSessionTemplate(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::dataproc::v1::DeleteSessionTemplateRequest const& request) {
+             google::cloud::dataproc::v1::DeleteSessionTemplateRequest const&
+                 request) {
         return stub_->DeleteSessionTemplate(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
-SessionTemplateControllerConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+SessionTemplateControllerConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -152,7 +178,8 @@ SessionTemplateControllerConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPol
 }
 
 StatusOr<google::iam::v1::Policy>
-SessionTemplateControllerConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+SessionTemplateControllerConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -165,7 +192,8 @@ SessionTemplateControllerConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPol
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SessionTemplateControllerConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+SessionTemplateControllerConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -178,17 +206,22 @@ SessionTemplateControllerConnectionImpl::TestIamPermissions(google::iam::v1::Tes
 }
 
 StreamRange<google::longrunning::Operation>
-SessionTemplateControllerConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+SessionTemplateControllerConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataproc_v1::SessionTemplateControllerRetryPolicy>(retry_policy(*current)),
+       retry =
+           std::shared_ptr<dataproc_v1::SessionTemplateControllerRetryPolicy>(
+               retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -198,7 +231,8 @@ SessionTemplateControllerConnectionImpl::ListOperations(google::longrunning::Lis
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -206,7 +240,8 @@ SessionTemplateControllerConnectionImpl::ListOperations(google::longrunning::Lis
 }
 
 StatusOr<google::longrunning::Operation>
-SessionTemplateControllerConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+SessionTemplateControllerConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -218,8 +253,8 @@ SessionTemplateControllerConnectionImpl::GetOperation(google::longrunning::GetOp
       *current, request, __func__);
 }
 
-Status
-SessionTemplateControllerConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status SessionTemplateControllerConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -231,8 +266,8 @@ SessionTemplateControllerConnectionImpl::DeleteOperation(google::longrunning::De
       *current, request, __func__);
 }
 
-Status
-SessionTemplateControllerConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status SessionTemplateControllerConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

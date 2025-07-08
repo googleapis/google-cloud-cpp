@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `NodeGroupControllerConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `NodeGroupControllerClient`. To do so,
- * construct an object of type `NodeGroupControllerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `NodeGroupControllerClient`. To do
+ * so, construct an object of type `NodeGroupControllerClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockNodeGroupControllerConnection : public dataproc_v1::NodeGroupControllerConnection {
+class MockNodeGroupControllerConnection
+    : public dataproc_v1::NodeGroupControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -51,12 +52,14 @@ class MockNodeGroupControllerConnection : public dataproc_v1::NodeGroupControlle
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateNodeGroup(Matcher<google::cloud::dataproc::v1::CreateNodeGroupRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// CreateNodeGroup(Matcher<google::cloud::dataproc::v1::CreateNodeGroupRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>,
-  CreateNodeGroup,
-  (google::cloud::dataproc::v1::CreateNodeGroupRequest const& request), (override));
-
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>, CreateNodeGroup,
+      (google::cloud::dataproc::v1::CreateNodeGroupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -64,33 +67,37 @@ class MockNodeGroupControllerConnection : public dataproc_v1::NodeGroupControlle
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateNodeGroup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  CreateNodeGroup, (NoAwaitTag,
-    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateNodeGroup(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>,
-  CreateNodeGroup, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateNodeGroup,
+      (NoAwaitTag,
+       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ResizeNodeGroup(Matcher<google::cloud::dataproc::v1::ResizeNodeGroupRequest const&>(_)))
+  /// EXPECT_CALL(*mock, CreateNodeGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>,
-  ResizeNodeGroup,
-  (google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request), (override));
+              CreateNodeGroup,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResizeNodeGroup(Matcher<google::cloud::dataproc::v1::ResizeNodeGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>, ResizeNodeGroup,
+      (google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -98,53 +105,55 @@ class MockNodeGroupControllerConnection : public dataproc_v1::NodeGroupControlle
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ResizeNodeGroup(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  ResizeNodeGroup, (NoAwaitTag,
-    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request), (override));
-
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ResizeNodeGroup,
+      (NoAwaitTag,
+       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ResizeNodeGroup(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock, ResizeNodeGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>,
-  ResizeNodeGroup, (
-    google::longrunning::Operation const& operation), (override));
+              ResizeNodeGroup,
+              (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::NodeGroup>,
-  GetNodeGroup,
-  (google::cloud::dataproc::v1::GetNodeGroupRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::NodeGroup>, GetNodeGroup,
+              (google::cloud::dataproc::v1::GetNodeGroupRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  SetIamPolicy,
-  (google::iam::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (google::iam::v1::SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>,
-  GetIamPolicy,
-  (google::iam::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (google::iam::v1::GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-  TestIamPermissions,
-  (google::iam::v1::TestIamPermissionsRequest const& request), (override));
+              TestIamPermissions,
+              (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  DeleteOperation,
-  (google::longrunning::DeleteOperationRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

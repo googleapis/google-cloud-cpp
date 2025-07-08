@@ -34,126 +34,164 @@ SecretManagerServiceTracingConnection::SecretManagerServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceTracingConnection::ListSecrets(google::cloud::secretmanager::v1::ListSecretsRequest request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::ListSecrets");
+SecretManagerServiceTracingConnection::ListSecrets(
+    google::cloud::secretmanager::v1::ListSecretsRequest request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::ListSecrets");
   internal::OTelScope scope(span);
   auto sr = child_->ListSecrets(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::secretmanager::v1::Secret>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::secretmanager::v1::Secret>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceTracingConnection::CreateSecret(google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::CreateSecret");
+SecretManagerServiceTracingConnection::CreateSecret(
+    google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::CreateSecret");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSecret(request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceTracingConnection::AddSecretVersion(google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::AddSecretVersion");
+SecretManagerServiceTracingConnection::AddSecretVersion(
+    google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::AddSecretVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddSecretVersion(request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceTracingConnection::GetSecret(google::cloud::secretmanager::v1::GetSecretRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::GetSecret");
+SecretManagerServiceTracingConnection::GetSecret(
+    google::cloud::secretmanager::v1::GetSecretRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::GetSecret");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSecret(request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
-SecretManagerServiceTracingConnection::UpdateSecret(google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::UpdateSecret");
+SecretManagerServiceTracingConnection::UpdateSecret(
+    google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::UpdateSecret");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSecret(request));
 }
 
-Status
-SecretManagerServiceTracingConnection::DeleteSecret(google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::DeleteSecret");
+Status SecretManagerServiceTracingConnection::DeleteSecret(
+    google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::DeleteSecret");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSecret(request));
 }
 
 StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceTracingConnection::ListSecretVersions(google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::ListSecretVersions");
+SecretManagerServiceTracingConnection::ListSecretVersions(
+    google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::ListSecretVersions");
   internal::OTelScope scope(span);
   auto sr = child_->ListSecretVersions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::secretmanager::v1::SecretVersion>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::secretmanager::v1::SecretVersion>(std::move(span),
+                                                       std::move(sr));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceTracingConnection::GetSecretVersion(google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::GetSecretVersion");
+SecretManagerServiceTracingConnection::GetSecretVersion(
+    google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::GetSecretVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSecretVersion(request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-SecretManagerServiceTracingConnection::AccessSecretVersion(google::cloud::secretmanager::v1::AccessSecretVersionRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::AccessSecretVersion");
+SecretManagerServiceTracingConnection::AccessSecretVersion(
+    google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::AccessSecretVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AccessSecretVersion(request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceTracingConnection::DisableSecretVersion(google::cloud::secretmanager::v1::DisableSecretVersionRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::DisableSecretVersion");
+SecretManagerServiceTracingConnection::DisableSecretVersion(
+    google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::DisableSecretVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DisableSecretVersion(request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceTracingConnection::EnableSecretVersion(google::cloud::secretmanager::v1::EnableSecretVersionRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::EnableSecretVersion");
+SecretManagerServiceTracingConnection::EnableSecretVersion(
+    google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::EnableSecretVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->EnableSecretVersion(request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-SecretManagerServiceTracingConnection::DestroySecretVersion(google::cloud::secretmanager::v1::DestroySecretVersionRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::DestroySecretVersion");
+SecretManagerServiceTracingConnection::DestroySecretVersion(
+    google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::DestroySecretVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DestroySecretVersion(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-SecretManagerServiceTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::SetIamPolicy");
+SecretManagerServiceTracingConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
-SecretManagerServiceTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::GetIamPolicy");
+SecretManagerServiceTracingConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-SecretManagerServiceTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::TestIamPermissions");
+SecretManagerServiceTracingConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::cloud::location::Location>
-SecretManagerServiceTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::ListLocations");
+SecretManagerServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-SecretManagerServiceTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("secretmanager_v1::SecretManagerServiceConnection::GetLocation");
+SecretManagerServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "secretmanager_v1::SecretManagerServiceConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
@@ -165,7 +203,8 @@ MakeSecretManagerServiceTracingConnection(
     std::shared_ptr<secretmanager_v1::SecretManagerServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<SecretManagerServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<SecretManagerServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -33,7 +33,8 @@ using ::google::cloud::kms_v1::MakeKeyManagementServiceConnection;
 /// @deprecated Use kms_v1::KeyManagementServiceConnection directly.
 using ::google::cloud::kms_v1::KeyManagementServiceConnection;
 
-/// @deprecated Use kms_v1::KeyManagementServiceLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use kms_v1::KeyManagementServiceLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::kms_v1::KeyManagementServiceLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use kms_v1::KeyManagementServiceLimitedTimeRetryPolicy directly.

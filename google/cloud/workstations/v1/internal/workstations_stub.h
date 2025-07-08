@@ -24,9 +24,9 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/workstations/v1/workstations.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/workstations/v1/workstations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -39,211 +39,238 @@ class WorkstationsStub {
  public:
   virtual ~WorkstationsStub() = 0;
 
-  virtual StatusOr<google::cloud::workstations::v1::WorkstationCluster> GetWorkstationCluster(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::GetWorkstationClusterRequest const& request) = 0;
+  virtual StatusOr<google::cloud::workstations::v1::WorkstationCluster>
+  GetWorkstationCluster(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::GetWorkstationClusterRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse> ListWorkstationClusters(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListWorkstationClustersRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::workstations::v1::ListWorkstationClustersResponse>
+  ListWorkstationClusters(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::ListWorkstationClustersRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkstationCluster(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateWorkstationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) = 0;
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkstationCluster(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateWorkstationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) = 0;
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkstationCluster(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteWorkstationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) = 0;
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workstations::v1::WorkstationConfig> GetWorkstationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::GetWorkstationConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::workstations::v1::WorkstationConfig>
+  GetWorkstationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::GetWorkstationConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse> ListWorkstationConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListWorkstationConfigsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::workstations::v1::ListWorkstationConfigsResponse>
+  ListWorkstationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse> ListUsableWorkstationConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
+  ListUsableWorkstationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::
+          ListUsableWorkstationConfigsRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkstationConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateWorkstationConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) = 0;
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkstationConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateWorkstationConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) = 0;
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkstationConfig(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteWorkstationConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) = 0;
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::GetWorkstationRequest const& request) = 0;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::GetWorkstationRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse> ListWorkstations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListWorkstationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
+  ListWorkstations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::ListWorkstationsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse> ListUsableWorkstations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListUsableWorkstationsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::workstations::v1::ListUsableWorkstationsResponse>
+  ListUsableWorkstations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkstation(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request) = 0;
+      google::cloud::workstations::v1::CreateWorkstationRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkstation(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) = 0;
+      google::cloud::workstations::v1::UpdateWorkstationRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkstation(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) = 0;
+      google::cloud::workstations::v1::DeleteWorkstationRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncStartWorkstation(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncStartWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request) = 0;
+      google::cloud::workstations::v1::StartWorkstationRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> StartWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::StartWorkstationRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStopWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request) = 0;
+      google::cloud::workstations::v1::StopWorkstationRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> StopWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::StopWorkstationRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse> GenerateAccessToken(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::GenerateAccessTokenRequest const& request) = 0;
+  virtual StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::GenerateAccessTokenRequest const&
+          request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -256,212 +283,231 @@ class WorkstationsStub {
 class DefaultWorkstationsStub : public WorkstationsStub {
  public:
   DefaultWorkstationsStub(
-      std::unique_ptr<google::cloud::workstations::v1::Workstations::StubInterface> grpc_stub,
+      std::unique_ptr<
+          google::cloud::workstations::v1::Workstations::StubInterface>
+          grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         operations_stub_(std::move(operations_stub)) {}
 
-  StatusOr<google::cloud::workstations::v1::WorkstationCluster> GetWorkstationCluster(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::GetWorkstationClusterRequest const& request) override;
+  StatusOr<google::cloud::workstations::v1::WorkstationCluster>
+  GetWorkstationCluster(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::GetWorkstationClusterRequest const&
+          request) override;
 
-  StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse> ListWorkstationClusters(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListWorkstationClustersRequest const& request) override;
+  StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
+  ListWorkstationClusters(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::ListWorkstationClustersRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkstationCluster(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateWorkstationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) override;
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkstationCluster(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateWorkstationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) override;
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkstationCluster(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteWorkstationCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) override;
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request) override;
 
-  StatusOr<google::cloud::workstations::v1::WorkstationConfig> GetWorkstationConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::GetWorkstationConfigRequest const& request) override;
+  StatusOr<google::cloud::workstations::v1::WorkstationConfig>
+  GetWorkstationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::GetWorkstationConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse> ListWorkstationConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListWorkstationConfigsRequest const& request) override;
+  StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
+  ListWorkstationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse> ListUsableWorkstationConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const& request) override;
+  StatusOr<
+      google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
+  ListUsableWorkstationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::
+          ListUsableWorkstationConfigsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkstationConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) override;
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkstationConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) override;
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkstationConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) override;
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::GetWorkstationRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::GetWorkstationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse> ListWorkstations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListWorkstationsRequest const& request) override;
+  StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
+  ListWorkstations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::ListWorkstationsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse> ListUsableWorkstations(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::ListUsableWorkstationsRequest const& request) override;
+  StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
+  ListUsableWorkstations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request) override;
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::CreateWorkstationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) override;
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::UpdateWorkstationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) override;
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::DeleteWorkstationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request) override;
+      google::cloud::workstations::v1::StartWorkstationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> StartWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::StartWorkstationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::StartWorkstationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopWorkstation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request) override;
+      google::cloud::workstations::v1::StopWorkstationRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> StopWorkstation(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::workstations::v1::StopWorkstationRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::workstations::v1::StopWorkstationRequest const& request)
+      override;
 
-  StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse> GenerateAccessToken(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::workstations::v1::GenerateAccessTokenRequest const& request) override;
+  StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workstations::v1::GenerateAccessTokenRequest const&
+          request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -477,9 +523,11 @@ class DefaultWorkstationsStub : public WorkstationsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::workstations::v1::Workstations::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::workstations::v1::Workstations::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

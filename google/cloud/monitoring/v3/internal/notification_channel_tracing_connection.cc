@@ -29,80 +29,120 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-NotificationChannelServiceTracingConnection::NotificationChannelServiceTracingConnection(
-    std::shared_ptr<monitoring_v3::NotificationChannelServiceConnection> child)
+NotificationChannelServiceTracingConnection::
+    NotificationChannelServiceTracingConnection(
+        std::shared_ptr<monitoring_v3::NotificationChannelServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
-NotificationChannelServiceTracingConnection::ListNotificationChannelDescriptors(google::monitoring::v3::ListNotificationChannelDescriptorsRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::ListNotificationChannelDescriptors");
+NotificationChannelServiceTracingConnection::ListNotificationChannelDescriptors(
+    google::monitoring::v3::ListNotificationChannelDescriptorsRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "ListNotificationChannelDescriptors");
   internal::OTelScope scope(span);
   auto sr = child_->ListNotificationChannelDescriptors(std::move(request));
-  return internal::MakeTracedStreamRange<google::monitoring::v3::NotificationChannelDescriptor>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::v3::NotificationChannelDescriptor>(std::move(span),
+                                                             std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
-NotificationChannelServiceTracingConnection::GetNotificationChannelDescriptor(google::monitoring::v3::GetNotificationChannelDescriptorRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::GetNotificationChannelDescriptor");
+NotificationChannelServiceTracingConnection::GetNotificationChannelDescriptor(
+    google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "GetNotificationChannelDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetNotificationChannelDescriptor(request));
+  return internal::EndSpan(*span,
+                           child_->GetNotificationChannelDescriptor(request));
 }
 
 StreamRange<google::monitoring::v3::NotificationChannel>
-NotificationChannelServiceTracingConnection::ListNotificationChannels(google::monitoring::v3::ListNotificationChannelsRequest request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::ListNotificationChannels");
+NotificationChannelServiceTracingConnection::ListNotificationChannels(
+    google::monitoring::v3::ListNotificationChannelsRequest request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "ListNotificationChannels");
   internal::OTelScope scope(span);
   auto sr = child_->ListNotificationChannels(std::move(request));
-  return internal::MakeTracedStreamRange<google::monitoring::v3::NotificationChannel>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::v3::NotificationChannel>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
-NotificationChannelServiceTracingConnection::GetNotificationChannel(google::monitoring::v3::GetNotificationChannelRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::GetNotificationChannel");
+NotificationChannelServiceTracingConnection::GetNotificationChannel(
+    google::monitoring::v3::GetNotificationChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "GetNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNotificationChannel(request));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
-NotificationChannelServiceTracingConnection::CreateNotificationChannel(google::monitoring::v3::CreateNotificationChannelRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::CreateNotificationChannel");
+NotificationChannelServiceTracingConnection::CreateNotificationChannel(
+    google::monitoring::v3::CreateNotificationChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "CreateNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateNotificationChannel(request));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
-NotificationChannelServiceTracingConnection::UpdateNotificationChannel(google::monitoring::v3::UpdateNotificationChannelRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::UpdateNotificationChannel");
+NotificationChannelServiceTracingConnection::UpdateNotificationChannel(
+    google::monitoring::v3::UpdateNotificationChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "UpdateNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateNotificationChannel(request));
 }
 
-Status
-NotificationChannelServiceTracingConnection::DeleteNotificationChannel(google::monitoring::v3::DeleteNotificationChannelRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::DeleteNotificationChannel");
+Status NotificationChannelServiceTracingConnection::DeleteNotificationChannel(
+    google::monitoring::v3::DeleteNotificationChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "DeleteNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteNotificationChannel(request));
 }
 
-Status
-NotificationChannelServiceTracingConnection::SendNotificationChannelVerificationCode(google::monitoring::v3::SendNotificationChannelVerificationCodeRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::SendNotificationChannelVerificationCode");
+Status NotificationChannelServiceTracingConnection::
+    SendNotificationChannelVerificationCode(
+        google::monitoring::v3::
+            SendNotificationChannelVerificationCodeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "SendNotificationChannelVerificationCode");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->SendNotificationChannelVerificationCode(request));
+  return internal::EndSpan(
+      *span, child_->SendNotificationChannelVerificationCode(request));
 }
 
 StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
-NotificationChannelServiceTracingConnection::GetNotificationChannelVerificationCode(google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::GetNotificationChannelVerificationCode");
+NotificationChannelServiceTracingConnection::
+    GetNotificationChannelVerificationCode(
+        google::monitoring::v3::
+            GetNotificationChannelVerificationCodeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "GetNotificationChannelVerificationCode");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->GetNotificationChannelVerificationCode(request));
+  return internal::EndSpan(
+      *span, child_->GetNotificationChannelVerificationCode(request));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
-NotificationChannelServiceTracingConnection::VerifyNotificationChannel(google::monitoring::v3::VerifyNotificationChannelRequest const& request) {
-  auto span = internal::MakeSpan("monitoring_v3::NotificationChannelServiceConnection::VerifyNotificationChannel");
+NotificationChannelServiceTracingConnection::VerifyNotificationChannel(
+    google::monitoring::v3::VerifyNotificationChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "monitoring_v3::NotificationChannelServiceConnection::"
+      "VerifyNotificationChannel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->VerifyNotificationChannel(request));
 }
@@ -114,7 +154,8 @@ MakeNotificationChannelServiceTracingConnection(
     std::shared_ptr<monitoring_v3::NotificationChannelServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<NotificationChannelServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<NotificationChannelServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

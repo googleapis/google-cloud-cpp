@@ -28,183 +28,269 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InterconnectGroupsClient::InterconnectGroupsClient(
     std::shared_ptr<InterconnectGroupsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 InterconnectGroupsClient::~InterconnectGroupsClient() = default;
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::CreateMembers(std::string const& project, std::string const& interconnect_group, google::cloud::cpp::compute::v1::InterconnectGroupsCreateMembersRequest const& interconnect_groups_create_members_request_resource, Options opts) {
+InterconnectGroupsClient::CreateMembers(
+    std::string const& project, std::string const& interconnect_group,
+    google::cloud::cpp::compute::v1::
+        InterconnectGroupsCreateMembersRequest const&
+            interconnect_groups_create_members_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest
+      request;
   request.set_project(project);
   request.set_interconnect_group(interconnect_group);
-  *request.mutable_interconnect_groups_create_members_request_resource() = interconnect_groups_create_members_request_resource;
+  *request.mutable_interconnect_groups_create_members_request_resource() =
+      interconnect_groups_create_members_request_resource;
   return connection_->CreateMembers(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectGroupsClient::CreateMembers(NoAwaitTag, std::string const& project, std::string const& interconnect_group, google::cloud::cpp::compute::v1::InterconnectGroupsCreateMembersRequest const& interconnect_groups_create_members_request_resource, Options opts) {
+InterconnectGroupsClient::CreateMembers(
+    NoAwaitTag, std::string const& project,
+    std::string const& interconnect_group,
+    google::cloud::cpp::compute::v1::
+        InterconnectGroupsCreateMembersRequest const&
+            interconnect_groups_create_members_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest
+      request;
   request.set_project(project);
   request.set_interconnect_group(interconnect_group);
-  *request.mutable_interconnect_groups_create_members_request_resource() = interconnect_groups_create_members_request_resource;
+  *request.mutable_interconnect_groups_create_members_request_resource() =
+      interconnect_groups_create_members_request_resource;
   return connection_->CreateMembers(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::CreateMembers(google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request, Options opts) {
+InterconnectGroupsClient::CreateMembers(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        CreateMembersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMembers(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectGroupsClient::CreateMembers(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::CreateMembersRequest const& request, Options opts) {
+InterconnectGroupsClient::CreateMembers(
+    NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        CreateMembersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMembers(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::CreateMembers(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InterconnectGroupsClient::CreateMembers(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMembers(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::DeleteInterconnectGroup(std::string const& project, std::string const& interconnect_group, Options opts) {
+InterconnectGroupsClient::DeleteInterconnectGroup(
+    std::string const& project, std::string const& interconnect_group,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      DeleteInterconnectGroupRequest request;
   request.set_project(project);
   request.set_interconnect_group(interconnect_group);
   return connection_->DeleteInterconnectGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectGroupsClient::DeleteInterconnectGroup(NoAwaitTag, std::string const& project, std::string const& interconnect_group, Options opts) {
+InterconnectGroupsClient::DeleteInterconnectGroup(
+    NoAwaitTag, std::string const& project,
+    std::string const& interconnect_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      DeleteInterconnectGroupRequest request;
   request.set_project(project);
   request.set_interconnect_group(interconnect_group);
   return connection_->DeleteInterconnectGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::DeleteInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request, Options opts) {
+InterconnectGroupsClient::DeleteInterconnectGroup(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        DeleteInterconnectGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnectGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectGroupsClient::DeleteInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::DeleteInterconnectGroupRequest const& request, Options opts) {
+InterconnectGroupsClient::DeleteInterconnectGroup(
+    NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        DeleteInterconnectGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnectGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::DeleteInterconnectGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InterconnectGroupsClient::DeleteInterconnectGroup(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInterconnectGroup(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
-InterconnectGroupsClient::GetInterconnectGroup(std::string const& project, std::string const& interconnect_group, Options opts) {
+InterconnectGroupsClient::GetInterconnectGroup(
+    std::string const& project, std::string const& interconnect_group,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      GetInterconnectGroupRequest request;
   request.set_project(project);
   request.set_interconnect_group(interconnect_group);
   return connection_->GetInterconnectGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectGroup>
-InterconnectGroupsClient::GetInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::GetInterconnectGroupRequest const& request, Options opts) {
+InterconnectGroupsClient::GetInterconnectGroup(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetInterconnectGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetInterconnectGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InterconnectGroupsClient::GetIamPolicy(std::string const& project, std::string const& resource, Options opts) {
+InterconnectGroupsClient::GetIamPolicy(std::string const& project,
+                                       std::string const& resource,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InterconnectGroupsClient::GetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::GetIamPolicyRequest const& request, Options opts) {
+InterconnectGroupsClient::GetIamPolicy(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetIamPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
-InterconnectGroupsClient::GetOperationalStatus(std::string const& project, std::string const& interconnect_group, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::
+             InterconnectGroupsGetOperationalStatusResponse>
+InterconnectGroupsClient::GetOperationalStatus(
+    std::string const& project, std::string const& interconnect_group,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      GetOperationalStatusRequest request;
   request.set_project(project);
   request.set_interconnect_group(interconnect_group);
   return connection_->GetOperationalStatus(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InterconnectGroupsGetOperationalStatusResponse>
-InterconnectGroupsClient::GetOperationalStatus(google::cloud::cpp::compute::interconnect_groups::v1::GetOperationalStatusRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::
+             InterconnectGroupsGetOperationalStatusResponse>
+InterconnectGroupsClient::GetOperationalStatus(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        GetOperationalStatusRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperationalStatus(request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::InsertInterconnectGroup(std::string const& project, google::cloud::cpp::compute::v1::InterconnectGroup const& interconnect_group_resource, Options opts) {
+InterconnectGroupsClient::InsertInterconnectGroup(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::InterconnectGroup const&
+        interconnect_group_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      InsertInterconnectGroupRequest request;
   request.set_project(project);
   *request.mutable_interconnect_group_resource() = interconnect_group_resource;
   return connection_->InsertInterconnectGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectGroupsClient::InsertInterconnectGroup(NoAwaitTag, std::string const& project, google::cloud::cpp::compute::v1::InterconnectGroup const& interconnect_group_resource, Options opts) {
+InterconnectGroupsClient::InsertInterconnectGroup(
+    NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::InterconnectGroup const&
+        interconnect_group_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      InsertInterconnectGroupRequest request;
   request.set_project(project);
   *request.mutable_interconnect_group_resource() = interconnect_group_resource;
   return connection_->InsertInterconnectGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::InsertInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request, Options opts) {
+InterconnectGroupsClient::InsertInterconnectGroup(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        InsertInterconnectGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInterconnectGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectGroupsClient::InsertInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::InsertInterconnectGroupRequest const& request, Options opts) {
+InterconnectGroupsClient::InsertInterconnectGroup(
+    NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        InsertInterconnectGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInterconnectGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::InsertInterconnectGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InterconnectGroupsClient::InsertInterconnectGroup(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertInterconnectGroup(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
-InterconnectGroupsClient::ListInterconnectGroups(std::string const& project, Options opts) {
+InterconnectGroupsClient::ListInterconnectGroups(std::string const& project,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      ListInterconnectGroupsRequest request;
   request.set_project(project);
   return connection_->ListInterconnectGroups(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectGroup>
-InterconnectGroupsClient::ListInterconnectGroups(google::cloud::cpp::compute::interconnect_groups::v1::ListInterconnectGroupsRequest request, Options opts) {
+InterconnectGroupsClient::ListInterconnectGroups(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        ListInterconnectGroupsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListInterconnectGroups(std::move(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::PatchInterconnectGroup(std::string const& project, std::string const& interconnect_group, std::string const& update_mask, google::cloud::cpp::compute::v1::InterconnectGroup const& interconnect_group_resource, Options opts) {
+InterconnectGroupsClient::PatchInterconnectGroup(
+    std::string const& project, std::string const& interconnect_group,
+    std::string const& update_mask,
+    google::cloud::cpp::compute::v1::InterconnectGroup const&
+        interconnect_group_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      PatchInterconnectGroupRequest request;
   request.set_project(project);
   request.set_interconnect_group(interconnect_group);
   request.set_update_mask(update_mask);
@@ -213,9 +299,15 @@ InterconnectGroupsClient::PatchInterconnectGroup(std::string const& project, std
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectGroupsClient::PatchInterconnectGroup(NoAwaitTag, std::string const& project, std::string const& interconnect_group, std::string const& update_mask, google::cloud::cpp::compute::v1::InterconnectGroup const& interconnect_group_resource, Options opts) {
+InterconnectGroupsClient::PatchInterconnectGroup(
+    NoAwaitTag, std::string const& project,
+    std::string const& interconnect_group, std::string const& update_mask,
+    google::cloud::cpp::compute::v1::InterconnectGroup const&
+        interconnect_group_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      PatchInterconnectGroupRequest request;
   request.set_project(project);
   request.set_interconnect_group(interconnect_group);
   request.set_update_mask(update_mask);
@@ -224,51 +316,77 @@ InterconnectGroupsClient::PatchInterconnectGroup(NoAwaitTag, std::string const& 
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::PatchInterconnectGroup(google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request, Options opts) {
+InterconnectGroupsClient::PatchInterconnectGroup(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        PatchInterconnectGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInterconnectGroup(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectGroupsClient::PatchInterconnectGroup(NoAwaitTag, google::cloud::cpp::compute::interconnect_groups::v1::PatchInterconnectGroupRequest const& request, Options opts) {
+InterconnectGroupsClient::PatchInterconnectGroup(
+    NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        PatchInterconnectGroupRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInterconnectGroup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InterconnectGroupsClient::PatchInterconnectGroup(google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+InterconnectGroupsClient::PatchInterconnectGroup(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchInterconnectGroup(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InterconnectGroupsClient::SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts) {
+InterconnectGroupsClient::SetIamPolicy(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+        global_set_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest
+      request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_global_set_policy_request_resource() = global_set_policy_request_resource;
+  *request.mutable_global_set_policy_request_resource() =
+      global_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-InterconnectGroupsClient::SetIamPolicy(google::cloud::cpp::compute::interconnect_groups::v1::SetIamPolicyRequest const& request, Options opts) {
+InterconnectGroupsClient::SetIamPolicy(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        SetIamPolicyRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-InterconnectGroupsClient::TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
+InterconnectGroupsClient::TestIamPermissions(
+    std::string const& project, std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest request;
+  google::cloud::cpp::compute::interconnect_groups::v1::
+      TestIamPermissionsRequest request;
   request.set_project(project);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-InterconnectGroupsClient::TestIamPermissions(google::cloud::cpp::compute::interconnect_groups::v1::TestIamPermissionsRequest const& request, Options opts) {
+InterconnectGroupsClient::TestIamPermissions(
+    google::cloud::cpp::compute::interconnect_groups::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

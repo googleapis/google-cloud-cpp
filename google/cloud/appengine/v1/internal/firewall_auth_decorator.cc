@@ -31,18 +31,18 @@ FirewallAuth::FirewallAuth(
     std::shared_ptr<FirewallStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::appengine::v1::ListIngressRulesResponse> FirewallAuth::ListIngressRules(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::ListIngressRulesResponse>
+FirewallAuth::ListIngressRules(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListIngressRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListIngressRules(context, options, request);
 }
 
-StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse> FirewallAuth::BatchUpdateIngressRules(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
+FirewallAuth::BatchUpdateIngressRules(
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -50,8 +50,7 @@ StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse> FirewallAuth::B
 }
 
 StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::CreateIngressRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -59,8 +58,7 @@ StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::CreateIngressRule(
 }
 
 StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::GetIngressRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetIngressRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -68,8 +66,7 @@ StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::GetIngressRule(
 }
 
 StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::UpdateIngressRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -77,8 +74,7 @@ StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::UpdateIngressRule(
 }
 
 Status FirewallAuth::DeleteIngressRule(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

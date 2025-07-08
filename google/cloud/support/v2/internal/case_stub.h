@@ -36,94 +36,85 @@ class CaseServiceStub {
   virtual ~CaseServiceStub() = 0;
 
   virtual StatusOr<google::cloud::support::v2::Case> GetCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::GetCaseRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::support::v2::ListCasesResponse> ListCases(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCasesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::support::v2::SearchCasesResponse> SearchCases(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::SearchCasesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::support::v2::Case> CreateCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCaseRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::UpdateCaseRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::support::v2::Case> EscalateCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::EscalateCaseRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::support::v2::Case> CloseCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CloseCaseRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse> SearchCaseClassifications(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::support::v2::SearchCaseClassificationsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::support::v2::SearchCaseClassificationsResponse>
+  SearchCaseClassifications(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::SearchCaseClassificationsRequest const&
+          request) = 0;
 };
 
 class DefaultCaseServiceStub : public CaseServiceStub {
  public:
   explicit DefaultCaseServiceStub(
-      std::unique_ptr<google::cloud::support::v2::CaseService::StubInterface> grpc_stub)
+      std::unique_ptr<google::cloud::support::v2::CaseService::StubInterface>
+          grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::support::v2::Case> GetCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::GetCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::ListCasesResponse> ListCases(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCasesRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::SearchCasesResponse> SearchCases(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::SearchCasesRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> CreateCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::UpdateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> EscalateCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::EscalateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> CloseCase(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CloseCaseRequest const& request) override;
 
-  StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse> SearchCaseClassifications(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::support::v2::SearchCaseClassificationsRequest const& request) override;
+  StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse>
+  SearchCaseClassifications(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::support::v2::SearchCaseClassificationsRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<google::cloud::support::v2::CaseService::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::support::v2::CaseService::StubInterface>
+      grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

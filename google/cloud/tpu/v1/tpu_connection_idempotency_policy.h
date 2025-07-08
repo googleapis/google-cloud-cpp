@@ -38,60 +38,60 @@ class TpuConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TpuConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListNodes(google::cloud::tpu::v1::ListNodesRequest request);
+  virtual google::cloud::Idempotency ListNodes(
+      google::cloud::tpu::v1::ListNodesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetNode(google::cloud::tpu::v1::GetNodeRequest const& request);
+  virtual google::cloud::Idempotency GetNode(
+      google::cloud::tpu::v1::GetNodeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateNode(google::cloud::tpu::v1::CreateNodeRequest const& request);
+  virtual google::cloud::Idempotency CreateNode(
+      google::cloud::tpu::v1::CreateNodeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteNode(google::cloud::tpu::v1::DeleteNodeRequest const& request);
+  virtual google::cloud::Idempotency DeleteNode(
+      google::cloud::tpu::v1::DeleteNodeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ReimageNode(google::cloud::tpu::v1::ReimageNodeRequest const& request);
+  virtual google::cloud::Idempotency ReimageNode(
+      google::cloud::tpu::v1::ReimageNodeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  StopNode(google::cloud::tpu::v1::StopNodeRequest const& request);
+  virtual google::cloud::Idempotency StopNode(
+      google::cloud::tpu::v1::StopNodeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  StartNode(google::cloud::tpu::v1::StartNodeRequest const& request);
+  virtual google::cloud::Idempotency StartNode(
+      google::cloud::tpu::v1::StartNodeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTensorFlowVersions(google::cloud::tpu::v1::ListTensorFlowVersionsRequest request);
+  virtual google::cloud::Idempotency ListTensorFlowVersions(
+      google::cloud::tpu::v1::ListTensorFlowVersionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetTensorFlowVersion(google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request);
+  virtual google::cloud::Idempotency GetTensorFlowVersion(
+      google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListAcceleratorTypes(google::cloud::tpu::v1::ListAcceleratorTypesRequest request);
+  virtual google::cloud::Idempotency ListAcceleratorTypes(
+      google::cloud::tpu::v1::ListAcceleratorTypesRequest request);
 
-  virtual google::cloud::Idempotency
-  GetAcceleratorType(google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request);
+  virtual google::cloud::Idempotency GetAcceleratorType(
+      google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<TpuConnectionIdempotencyPolicy>
-    MakeDefaultTpuConnectionIdempotencyPolicy();
+MakeDefaultTpuConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_v1

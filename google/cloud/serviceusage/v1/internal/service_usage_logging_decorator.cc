@@ -31,39 +31,36 @@ namespace serviceusage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ServiceUsageLogging::ServiceUsageLogging(
-    std::shared_ptr<ServiceUsageStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ServiceUsageStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageLogging::AsyncEnableService(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::api::serviceusage::v1::EnableServiceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::api::serviceusage::v1::EnableServiceRequest const& request) {
-        return child_->AsyncEnableService(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::api::serviceusage::v1::EnableServiceRequest const& request) {
+        return child_->AsyncEnableService(cq, std::move(context),
+                                          std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ServiceUsageLogging::EnableService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::serviceusage::v1::EnableServiceRequest const& request) {
+StatusOr<google::longrunning::Operation> ServiceUsageLogging::EnableService(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::serviceusage::v1::EnableServiceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::api::serviceusage::v1::EnableServiceRequest const& request) {
         return child_->EnableService(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -71,31 +68,30 @@ ServiceUsageLogging::EnableService(
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageLogging::AsyncDisableService(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::api::serviceusage::v1::DisableServiceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::api::serviceusage::v1::DisableServiceRequest const& request) {
-        return child_->AsyncDisableService(
-            cq, std::move(context), std::move(options), request);
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::api::serviceusage::v1::DisableServiceRequest const& request) {
+        return child_->AsyncDisableService(cq, std::move(context),
+                                           std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ServiceUsageLogging::DisableService(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::serviceusage::v1::DisableServiceRequest const& request) {
+StatusOr<google::longrunning::Operation> ServiceUsageLogging::DisableService(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::serviceusage::v1::DisableServiceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::api::serviceusage::v1::DisableServiceRequest const& request) {
         return child_->DisableService(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -103,12 +99,10 @@ ServiceUsageLogging::DisableService(
 
 StatusOr<google::api::serviceusage::v1::Service>
 ServiceUsageLogging::GetService(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::GetServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::serviceusage::v1::GetServiceRequest const& request) {
         return child_->GetService(context, options, request);
       },
@@ -117,13 +111,12 @@ ServiceUsageLogging::GetService(
 
 StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 ServiceUsageLogging::ListServices(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::ListServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::serviceusage::v1::ListServicesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::api::serviceusage::v1::ListServicesRequest const& request) {
         return child_->ListServices(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -131,17 +124,18 @@ ServiceUsageLogging::ListServices(
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageLogging::AsyncBatchEnableServices(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-        return child_->AsyncBatchEnableServices(
-            cq, std::move(context), std::move(options), request);
+             google::api::serviceusage::v1::BatchEnableServicesRequest const&
+                 request) {
+        return child_->AsyncBatchEnableServices(cq, std::move(context),
+                                                std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -149,13 +143,12 @@ ServiceUsageLogging::AsyncBatchEnableServices(
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageLogging::BatchEnableServices(
-      grpc::ClientContext& context,
-      Options options,
-      google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::serviceusage::v1::BatchEnableServicesRequest const&
+                 request) {
         return child_->BatchEnableServices(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -163,13 +156,12 @@ ServiceUsageLogging::BatchEnableServices(
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 ServiceUsageLogging::BatchGetServices(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::serviceusage::v1::BatchGetServicesRequest const&
+                 request) {
         return child_->BatchGetServices(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -177,26 +169,21 @@ ServiceUsageLogging::BatchGetServices(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ServiceUsageLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ServiceUsageLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ServiceUsageLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -214,8 +201,8 @@ ServiceUsageLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -231,8 +218,8 @@ future<Status> ServiceUsageLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

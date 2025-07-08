@@ -17,17 +17,17 @@
 // source: google/cloud/parametermanager/v1/service.proto
 
 #include "google/cloud/parametermanager/v1/parameter_manager_connection.h"
+#include "google/cloud/parametermanager/v1/internal/parameter_manager_connection_impl.h"
+#include "google/cloud/parametermanager/v1/internal/parameter_manager_option_defaults.h"
+#include "google/cloud/parametermanager/v1/internal/parameter_manager_stub_factory.h"
+#include "google/cloud/parametermanager/v1/internal/parameter_manager_tracing_connection.h"
+#include "google/cloud/parametermanager/v1/parameter_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
-#include "google/cloud/parametermanager/v1/internal/parameter_manager_connection_impl.h"
-#include "google/cloud/parametermanager/v1/internal/parameter_manager_option_defaults.h"
-#include "google/cloud/parametermanager/v1/internal/parameter_manager_stub_factory.h"
-#include "google/cloud/parametermanager/v1/internal/parameter_manager_tracing_connection.h"
-#include "google/cloud/parametermanager/v1/parameter_manager_options.h"
 #include <memory>
 #include <utility>
 
@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ParameterManagerConnection::~ParameterManagerConnection() = default;
 
-StreamRange<google::cloud::parametermanager::v1::Parameter> ParameterManagerConnection::ListParameters(
-    google::cloud::parametermanager::v1::ListParametersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::parametermanager::v1::Parameter>
+ParameterManagerConnection::ListParameters(
+    google::cloud::parametermanager::v1::
+        ListParametersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::parametermanager::v1::Parameter>>();
 }
@@ -62,14 +64,15 @@ ParameterManagerConnection::UpdateParameter(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ParameterManagerConnection::DeleteParameter(
+Status ParameterManagerConnection::DeleteParameter(
     google::cloud::parametermanager::v1::DeleteParameterRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::parametermanager::v1::ParameterVersion> ParameterManagerConnection::ListParameterVersions(
-    google::cloud::parametermanager::v1::ListParameterVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::parametermanager::v1::ParameterVersion>
+ParameterManagerConnection::ListParameterVersions(
+    google::cloud::parametermanager::v1::
+        ListParameterVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::parametermanager::v1::ParameterVersion>>();
 }
@@ -98,14 +101,15 @@ ParameterManagerConnection::UpdateParameterVersion(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ParameterManagerConnection::DeleteParameterVersion(
+Status ParameterManagerConnection::DeleteParameterVersion(
     google::cloud::parametermanager::v1::DeleteParameterVersionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::location::Location> ParameterManagerConnection::ListLocations(
-    google::cloud::location::ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::location::Location>
+ParameterManagerConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::location::Location>>();
 }
@@ -119,17 +123,19 @@ ParameterManagerConnection::GetLocation(
 std::shared_ptr<ParameterManagerConnection> MakeParameterManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ParameterManagerPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ParameterManagerPolicyOptionList>(options,
+                                                                   __func__);
   options = parametermanager_v1_internal::ParameterManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = parametermanager_v1_internal::CreateDefaultParameterManagerStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return parametermanager_v1_internal::MakeParameterManagerTracingConnection(
-      std::make_shared<parametermanager_v1_internal::ParameterManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          parametermanager_v1_internal::ParameterManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

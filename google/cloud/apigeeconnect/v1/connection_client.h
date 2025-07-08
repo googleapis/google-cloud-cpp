@@ -61,7 +61,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConnectionServiceClient {
  public:
-  explicit ConnectionServiceClient(std::shared_ptr<ConnectionServiceConnection> connection, Options opts = {});
+  explicit ConnectionServiceClient(
+      std::shared_ptr<ConnectionServiceConnection> connection,
+      Options opts = {});
   ~ConnectionServiceClient();
 
   ///@{
@@ -74,10 +76,12 @@ class ConnectionServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConnectionServiceClient const& a, ConnectionServiceClient const& b) {
+  friend bool operator==(ConnectionServiceClient const& a,
+                         ConnectionServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConnectionServiceClient const& a, ConnectionServiceClient const& b) {
+  friend bool operator!=(ConnectionServiceClient const& a,
+                         ConnectionServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -115,8 +119,8 @@ class ConnectionServiceClient {
   /// [google.cloud.apigeeconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L52}
   ///
   // clang-format on
-  StreamRange<google::cloud::apigeeconnect::v1::Connection>
-  ListConnections(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -155,8 +159,9 @@ class ConnectionServiceClient {
   /// [google.cloud.apigeeconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L52}
   ///
   // clang-format on
-  StreamRange<google::cloud::apigeeconnect::v1::Connection>
-  ListConnections(google::cloud::apigeeconnect::v1::ListConnectionsRequest request, Options opts = {});
+  StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
+      google::cloud::apigeeconnect::v1::ListConnectionsRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConnectionServiceConnection> connection_;

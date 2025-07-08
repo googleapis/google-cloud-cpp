@@ -31,8 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// @deprecated Use retail_v2::PredictionServiceBackoffPolicyOption directly.
 using ::google::cloud::retail_v2::PredictionServiceBackoffPolicyOption;
 
-/// @deprecated Use retail_v2::PredictionServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::retail_v2::PredictionServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// retail_v2::PredictionServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::retail_v2::
+    PredictionServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use retail_v2::PredictionServicePolicyOptionList directly.
 using ::google::cloud::retail_v2::PredictionServicePolicyOptionList;

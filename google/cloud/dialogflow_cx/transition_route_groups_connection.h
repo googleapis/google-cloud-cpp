@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TRANSITION_ROUTE_GROUPS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TRANSITION_ROUTE_GROUPS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_retry_traits.h"
 #include "google/cloud/dialogflow_cx/transition_route_groups_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -44,7 +44,8 @@ class TransitionRouteGroupsRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `TransitionRouteGroupsConnection` based on counting errors.
+ * A retry policy for `TransitionRouteGroupsConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -53,7 +54,8 @@ class TransitionRouteGroupsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TransitionRouteGroupsLimitedErrorCountRetryPolicy : public TransitionRouteGroupsRetryPolicy {
+class TransitionRouteGroupsLimitedErrorCountRetryPolicy
+    : public TransitionRouteGroupsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,15 +64,18 @@ class TransitionRouteGroupsLimitedErrorCountRetryPolicy : public TransitionRoute
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit TransitionRouteGroupsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit TransitionRouteGroupsLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   TransitionRouteGroupsLimitedErrorCountRetryPolicy(
       TransitionRouteGroupsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TransitionRouteGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TransitionRouteGroupsLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   TransitionRouteGroupsLimitedErrorCountRetryPolicy(
       TransitionRouteGroupsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TransitionRouteGroupsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TransitionRouteGroupsLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +95,9 @@ class TransitionRouteGroupsLimitedErrorCountRetryPolicy : public TransitionRoute
   using BaseType = TransitionRouteGroupsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_cx_internal::TransitionRouteGroupsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_cx_internal::TransitionRouteGroupsRetryTraits>
+      impl_;
 };
 
 /**
@@ -103,7 +110,8 @@ class TransitionRouteGroupsLimitedErrorCountRetryPolicy : public TransitionRoute
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class TransitionRouteGroupsLimitedTimeRetryPolicy : public TransitionRouteGroupsRetryPolicy {
+class TransitionRouteGroupsLimitedTimeRetryPolicy
+    : public TransitionRouteGroupsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -128,12 +136,14 @@ class TransitionRouteGroupsLimitedTimeRetryPolicy : public TransitionRouteGroups
   template <typename DurationRep, typename DurationPeriod>
   explicit TransitionRouteGroupsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TransitionRouteGroupsLimitedTimeRetryPolicy(TransitionRouteGroupsLimitedTimeRetryPolicy&& rhs) noexcept
-    : TransitionRouteGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TransitionRouteGroupsLimitedTimeRetryPolicy(TransitionRouteGroupsLimitedTimeRetryPolicy const& rhs) noexcept
-    : TransitionRouteGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TransitionRouteGroupsLimitedTimeRetryPolicy(
+      TransitionRouteGroupsLimitedTimeRetryPolicy&& rhs) noexcept
+      : TransitionRouteGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TransitionRouteGroupsLimitedTimeRetryPolicy(
+      TransitionRouteGroupsLimitedTimeRetryPolicy const& rhs) noexcept
+      : TransitionRouteGroupsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,16 +165,19 @@ class TransitionRouteGroupsLimitedTimeRetryPolicy : public TransitionRouteGroups
   using BaseType = TransitionRouteGroupsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_cx_internal::TransitionRouteGroupsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_cx_internal::TransitionRouteGroupsRetryTraits>
+      impl_;
 };
 
 /**
- * The `TransitionRouteGroupsConnection` object for `TransitionRouteGroupsClient`.
+ * The `TransitionRouteGroupsConnection` object for
+ * `TransitionRouteGroupsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TransitionRouteGroupsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TransitionRouteGroupsClient`.
+ * sets in `TransitionRouteGroupsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TransitionRouteGroupsClient`.
  *
  * To create a concrete instance, see `MakeTransitionRouteGroupsConnection()`.
  *
@@ -177,45 +190,56 @@ class TransitionRouteGroupsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  ListTransitionRouteGroups(google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest request);
+  ListTransitionRouteGroups(
+      google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
+          request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  GetTransitionRouteGroup(google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const& request);
+  GetTransitionRouteGroup(
+      google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
+          request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  CreateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const& request);
+  CreateTransitionRouteGroup(
+      google::cloud::dialogflow::cx::v3::
+          CreateTransitionRouteGroupRequest const& request);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
-  UpdateTransitionRouteGroup(google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const& request);
+  UpdateTransitionRouteGroup(
+      google::cloud::dialogflow::cx::v3::
+          UpdateTransitionRouteGroupRequest const& request);
 
-  virtual Status
-  DeleteTransitionRouteGroup(google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const& request);
+  virtual Status DeleteTransitionRouteGroup(
+      google::cloud::dialogflow::cx::v3::
+          DeleteTransitionRouteGroupRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `TransitionRouteGroupsConnection`.
+ * A factory function to construct an object of type
+ * `TransitionRouteGroupsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of TransitionRouteGroupsClient.
+ * should be passed as an argument to the constructor of
+ * TransitionRouteGroupsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `TransitionRouteGroupsConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `TransitionRouteGroupsConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -226,11 +250,12 @@ class TransitionRouteGroupsConnection {
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
  * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `TransitionRouteGroupsConnection` created by
- * this function.
+ * @param options (optional) Configure the `TransitionRouteGroupsConnection`
+ * created by this function.
  */
-std::shared_ptr<TransitionRouteGroupsConnection> MakeTransitionRouteGroupsConnection(
-    std::string const& location, Options options = {});
+std::shared_ptr<TransitionRouteGroupsConnection>
+MakeTransitionRouteGroupsConnection(std::string const& location,
+                                    Options options = {});
 
 /**
  * A backwards-compatible version of the previous factory function.  Unless
@@ -239,8 +264,8 @@ std::shared_ptr<TransitionRouteGroupsConnection> MakeTransitionRouteGroupsConnec
  *
  * @deprecated Please use the `location` overload instead.
  */
-std::shared_ptr<TransitionRouteGroupsConnection> MakeTransitionRouteGroupsConnection(
-    Options options = {});
+std::shared_ptr<TransitionRouteGroupsConnection>
+MakeTransitionRouteGroupsConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_connection_idempotency_policy.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class FirewallPoliciesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FirewallPoliciesLimitedErrorCountRetryPolicy : public FirewallPoliciesRetryPolicy {
+class FirewallPoliciesLimitedErrorCountRetryPolicy
+    : public FirewallPoliciesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class FirewallPoliciesLimitedErrorCountRetryPolicy : public FirewallPoliciesRetr
    *     @p maximum_failures == 0.
    */
   explicit FirewallPoliciesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   FirewallPoliciesLimitedErrorCountRetryPolicy(
       FirewallPoliciesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : FirewallPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FirewallPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   FirewallPoliciesLimitedErrorCountRetryPolicy(
       FirewallPoliciesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : FirewallPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : FirewallPoliciesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class FirewallPoliciesLimitedErrorCountRetryPolicy : public FirewallPoliciesRetr
   using BaseType = FirewallPoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class FirewallPoliciesLimitedErrorCountRetryPolicy : public FirewallPoliciesRetr
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class FirewallPoliciesLimitedTimeRetryPolicy : public FirewallPoliciesRetryPolicy {
+class FirewallPoliciesLimitedTimeRetryPolicy
+    : public FirewallPoliciesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class FirewallPoliciesLimitedTimeRetryPolicy : public FirewallPoliciesRetryPolic
   template <typename DurationRep, typename DurationPeriod>
   explicit FirewallPoliciesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  FirewallPoliciesLimitedTimeRetryPolicy(FirewallPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
-    : FirewallPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  FirewallPoliciesLimitedTimeRetryPolicy(FirewallPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
-    : FirewallPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FirewallPoliciesLimitedTimeRetryPolicy(
+      FirewallPoliciesLimitedTimeRetryPolicy&& rhs) noexcept
+      : FirewallPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  FirewallPoliciesLimitedTimeRetryPolicy(
+      FirewallPoliciesLimitedTimeRetryPolicy const& rhs) noexcept
+      : FirewallPoliciesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +163,9 @@ class FirewallPoliciesLimitedTimeRetryPolicy : public FirewallPoliciesRetryPolic
   using BaseType = FirewallPoliciesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_firewall_policies_v1_internal::FirewallPoliciesRetryTraits>
+      impl_;
 };
 
 /**
@@ -170,7 +178,8 @@ class FirewallPoliciesLimitedTimeRetryPolicy : public FirewallPoliciesRetryPolic
  *
  * To create a concrete instance, see `MakeFirewallPoliciesConnection()`.
  *
- * For mocking, see `compute_firewall_policies_v1_mocks::MockFirewallPoliciesConnection`.
+ * For mocking, see
+ * `compute_firewall_policies_v1_mocks::MockFirewallPoliciesConnection`.
  */
 class FirewallPoliciesConnection {
  public:
@@ -179,118 +188,157 @@ class FirewallPoliciesConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAssociation(google::cloud::cpp::compute::firewall_policies::v1::AddAssociationRequest const& request);
+  AddAssociation(google::cloud::cpp::compute::firewall_policies::v1::
+                     AddAssociationRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddAssociation(
+      NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                      AddAssociationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddAssociation(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      NoAwaitTag,
+      google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CloneRules(google::cloud::cpp::compute::firewall_policies::v1::
+                 CloneRulesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> CloneRules(
+      NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                      CloneRulesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CloneRules(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                           DeleteFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddAssociation(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::AddAssociationRequest const& request);
+  DeleteFirewallPolicy(NoAwaitTag,
+                       google::cloud::cpp::compute::firewall_policies::v1::
+                           DeleteFirewallPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAssociation( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddRule(google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddRule(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddRule( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CloneRules(google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  CloneRules(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CloneRules( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::DeleteFirewallPolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteFirewallPolicy(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::DeleteFirewallPolicyRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewallPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteFirewallPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-  GetFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::GetFirewallPolicyRequest const& request);
+  GetFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                        GetFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
-  GetAssociation(google::cloud::cpp::compute::firewall_policies::v1::GetAssociationRequest const& request);
+  GetAssociation(google::cloud::cpp::compute::firewall_policies::v1::
+                     GetAssociationRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::firewall_policies::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          GetIamPolicyRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
-  GetRule(google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule> GetRule(
+      google::cloud::cpp::compute::firewall_policies::v1::GetRuleRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::InsertFirewallPolicyRequest const& request);
+  InsertFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                           InsertFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertFirewallPolicy(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::InsertFirewallPolicyRequest const& request);
+  InsertFirewallPolicy(NoAwaitTag,
+                       google::cloud::cpp::compute::firewall_policies::v1::
+                           InsertFirewallPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewallPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertFirewallPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
-  ListFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::ListFirewallPoliciesRequest request);
+  ListFirewallPolicies(google::cloud::cpp::compute::firewall_policies::v1::
+                           ListFirewallPoliciesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
-  ListAssociations(google::cloud::cpp::compute::firewall_policies::v1::ListAssociationsRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+  ListAssociations(google::cloud::cpp::compute::firewall_policies::v1::
+                       ListAssociationsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      NoAwaitTag,
+      google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move(google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const& request);
+  PatchFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
+                          PatchFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Move(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const& request);
+  PatchFirewallPolicy(NoAwaitTag,
+                      google::cloud::cpp::compute::firewall_policies::v1::
+                          PatchFirewallPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Move( google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchFirewallPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::PatchFirewallPolicyRequest const& request);
+  PatchRule(google::cloud::cpp::compute::firewall_policies::v1::
+                PatchRuleRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                      PatchRuleRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRule(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveAssociation(google::cloud::cpp::compute::firewall_policies::v1::
+                        RemoveAssociationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchFirewallPolicy(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::PatchFirewallPolicyRequest const& request);
+  RemoveAssociation(NoAwaitTag,
+                    google::cloud::cpp::compute::firewall_policies::v1::
+                        RemoveAssociationRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewallPolicy( google::cloud::cpp::compute::v1::Operation const& operation);
+  RemoveAssociation(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRule(google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const& request);
+  RemoveRule(google::cloud::cpp::compute::firewall_policies::v1::
+                 RemoveRuleRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRule(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRule( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveAssociation(google::cloud::cpp::compute::firewall_policies::v1::RemoveAssociationRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveAssociation(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::RemoveAssociationRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                      RemoveRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveAssociation( google::cloud::cpp::compute::v1::Operation const& operation);
+  RemoveRule(google::cloud::cpp::compute::v1::Operation const& operation);
 
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveRule(google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveRule(NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveRule( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::firewall_policies::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::firewall_policies::v1::
+          SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::firewall_policies::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::firewall_policies::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

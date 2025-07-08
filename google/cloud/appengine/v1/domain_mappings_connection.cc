@@ -38,8 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DomainMappingsConnection::~DomainMappingsConnection() = default;
 
-StreamRange<google::appengine::v1::DomainMapping> DomainMappingsConnection::ListDomainMappings(
-    google::appengine::v1::ListDomainMappingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::appengine::v1::DomainMapping>
+DomainMappingsConnection::ListDomainMappings(
+    google::appengine::v1::
+        ListDomainMappingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::DomainMapping>>();
 }
@@ -54,88 +56,86 @@ future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnection::CreateDomainMapping(
     google::appengine::v1::CreateDomainMappingRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::DomainMapping>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::DomainMapping>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnection::CreateDomainMapping(
-    NoAwaitTag,
-    google::appengine::v1::CreateDomainMappingRequest const&) {
+    NoAwaitTag, google::appengine::v1::CreateDomainMappingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnection::CreateDomainMapping(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::DomainMapping>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::DomainMapping>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnection::UpdateDomainMapping(
     google::appengine::v1::UpdateDomainMappingRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::DomainMapping>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::DomainMapping>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnection::UpdateDomainMapping(
-    NoAwaitTag,
-    google::appengine::v1::UpdateDomainMappingRequest const&) {
+    NoAwaitTag, google::appengine::v1::UpdateDomainMappingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnection::UpdateDomainMapping(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::DomainMapping>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::DomainMapping>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsConnection::DeleteDomainMapping(
     google::appengine::v1::DeleteDomainMappingRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::OperationMetadataV1>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::OperationMetadataV1>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnection::DeleteDomainMapping(
-    NoAwaitTag,
-    google::appengine::v1::DeleteDomainMappingRequest const&) {
+    NoAwaitTag, google::appengine::v1::DeleteDomainMappingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsConnection::DeleteDomainMapping(
     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::appengine::v1::OperationMetadataV1>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::appengine::v1::OperationMetadataV1>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<DomainMappingsConnection> MakeDomainMappingsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DomainMappingsPolicyOptionList>(options, __func__);
-  options = appengine_v1_internal::DomainMappingsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 DomainMappingsPolicyOptionList>(options,
+                                                                 __func__);
+  options =
+      appengine_v1_internal::DomainMappingsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = appengine_v1_internal::CreateDefaultDomainMappingsStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return appengine_v1_internal::MakeDomainMappingsTracingConnection(
       std::make_shared<appengine_v1_internal::DomainMappingsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

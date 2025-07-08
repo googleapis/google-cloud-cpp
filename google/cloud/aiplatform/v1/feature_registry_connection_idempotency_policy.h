@@ -37,74 +37,75 @@ class FeatureRegistryServiceConnectionIdempotencyPolicy {
   virtual ~FeatureRegistryServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<FeatureRegistryServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<FeatureRegistryServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateFeatureGroup(google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request);
+  virtual google::cloud::Idempotency CreateFeatureGroup(
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetFeatureGroup(google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request);
+  virtual google::cloud::Idempotency GetFeatureGroup(
+      google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListFeatureGroups(google::cloud::aiplatform::v1::ListFeatureGroupsRequest request);
+  virtual google::cloud::Idempotency ListFeatureGroups(
+      google::cloud::aiplatform::v1::ListFeatureGroupsRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateFeatureGroup(google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request);
+  virtual google::cloud::Idempotency UpdateFeatureGroup(
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteFeatureGroup(google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request);
+  virtual google::cloud::Idempotency DeleteFeatureGroup(
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
+  virtual google::cloud::Idempotency CreateFeature(
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  BatchCreateFeatures(google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
+  virtual google::cloud::Idempotency BatchCreateFeatures(
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request);
+  virtual google::cloud::Idempotency GetFeature(
+      google::cloud::aiplatform::v1::GetFeatureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request);
+  virtual google::cloud::Idempotency ListFeatures(
+      google::cloud::aiplatform::v1::ListFeaturesRequest request);
 
-  virtual google::cloud::Idempotency
-  UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
+  virtual google::cloud::Idempotency UpdateFeature(
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
+  virtual google::cloud::Idempotency DeleteFeature(
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<FeatureRegistryServiceConnectionIdempotencyPolicy>
-    MakeDefaultFeatureRegistryServiceConnectionIdempotencyPolicy();
+MakeDefaultFeatureRegistryServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

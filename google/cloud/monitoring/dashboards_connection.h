@@ -27,19 +27,27 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use monitoring_dashboard_v1::MakeDashboardsServiceConnection directly.
+/// @deprecated Use monitoring_dashboard_v1::MakeDashboardsServiceConnection
+/// directly.
 using ::google::cloud::monitoring_dashboard_v1::MakeDashboardsServiceConnection;
 
-/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceConnection directly.
+/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceConnection
+/// directly.
 using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceConnection;
 
-/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// monitoring_dashboard_v1::DashboardsServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::monitoring_dashboard_v1::
+    DashboardsServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// monitoring_dashboard_v1::DashboardsServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::monitoring_dashboard_v1::
+    DashboardsServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceRetryPolicy directly.
+/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceRetryPolicy
+/// directly.
 using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,8 +30,10 @@ namespace cloud {
 namespace video_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use video_transcoder_v1_mocks::MockTranscoderServiceConnection directly.
-using ::google::cloud::video_transcoder_v1_mocks::MockTranscoderServiceConnection;
+/// @deprecated Use video_transcoder_v1_mocks::MockTranscoderServiceConnection
+/// directly.
+using ::google::cloud::video_transcoder_v1_mocks::
+    MockTranscoderServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_mocks

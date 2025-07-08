@@ -42,29 +42,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockImageAnnotatorConnection : public vision_v1::ImageAnnotatorConnection {
+class MockImageAnnotatorConnection
+    : public vision_v1::ImageAnnotatorConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>,
-  BatchAnnotateImages,
-  (google::cloud::vision::v1::BatchAnnotateImagesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>,
+      BatchAnnotateImages,
+      (google::cloud::vision::v1::BatchAnnotateImagesRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>,
-  BatchAnnotateFiles,
-  (google::cloud::vision::v1::BatchAnnotateFilesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>,
+      BatchAnnotateFiles,
+      (google::cloud::vision::v1::BatchAnnotateFilesRequest const& request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AsyncBatchAnnotateImages(Matcher<google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AsyncBatchAnnotateImages(Matcher<google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
-  AsyncBatchAnnotateImages,
-  (google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request), (override));
-
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
+              AsyncBatchAnnotateImages,
+              (google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
@@ -73,32 +82,42 @@ class MockImageAnnotatorConnection : public vision_v1::ImageAnnotatorConnection 
   /// EXPECT_CALL(*mock, AsyncBatchAnnotateImages(_, _))
   /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  AsyncBatchAnnotateImages, (NoAwaitTag,
-    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request), (override));
-
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AsyncBatchAnnotateImages(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
-  AsyncBatchAnnotateImages, (
-    google::longrunning::Operation const& operation), (override));
+              AsyncBatchAnnotateImages,
+              (NoAwaitTag,
+               google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AsyncBatchAnnotateFiles(Matcher<google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AsyncBatchAnnotateImages(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
-  AsyncBatchAnnotateFiles,
-  (google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request), (override));
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
+              AsyncBatchAnnotateImages,
+              (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AsyncBatchAnnotateFiles(Matcher<google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
+      AsyncBatchAnnotateFiles,
+      (google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+           request),
+      (override));
 
   /// To disambiguate calls, use:
   ///
@@ -106,25 +125,30 @@ class MockImageAnnotatorConnection : public vision_v1::ImageAnnotatorConnection 
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AsyncBatchAnnotateFiles(_, _))
   /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  AsyncBatchAnnotateFiles, (NoAwaitTag,
-    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request), (override));
-
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, AsyncBatchAnnotateFiles,
+              (NoAwaitTag,
+               google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+                   request),
+              (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AsyncBatchAnnotateFiles(Matcher<google::longrunning::Operation const&>(_)))
+  /// EXPECT_CALL(*mock,
+  /// AsyncBatchAnnotateFiles(Matcher<google::longrunning::Operation
+  /// const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
-  AsyncBatchAnnotateFiles, (
-    google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
+      AsyncBatchAnnotateFiles,
+      (google::longrunning::Operation const& operation), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

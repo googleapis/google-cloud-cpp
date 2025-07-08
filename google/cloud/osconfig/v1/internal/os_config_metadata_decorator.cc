@@ -46,123 +46,125 @@ OsConfigServiceMetadata::OsConfigServiceMetadata(
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceMetadata::ExecutePatchJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ExecutePatchJob(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceMetadata::GetPatchJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPatchJob(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceMetadata::CancelPatchJob(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelPatchJob(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>
 OsConfigServiceMetadata::ListPatchJobs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPatchJobs(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>
 OsConfigServiceMetadata::ListPatchJobInstanceDetails(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPatchJobInstanceDetails(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::CreatePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreatePatchDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::GetPatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetPatchDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse>
 OsConfigServiceMetadata::ListPatchDeployments(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListPatchDeployments(context, options, request);
 }
 
-Status
-OsConfigServiceMetadata::DeletePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+Status OsConfigServiceMetadata::DeletePatchDeployment(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeletePatchDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::UpdatePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("patch_deployment.name=", internal::UrlEncode(request.patch_deployment().name())));
+  SetMetadata(
+      context, options,
+      absl::StrCat("patch_deployment.name=",
+                   internal::UrlEncode(request.patch_deployment().name())));
   return child_->UpdatePatchDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::PausePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->PausePatchDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceMetadata::ResumePatchDeployment(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ResumePatchDeployment(context, options, request);
 }
 
 void OsConfigServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                          Options const& options,
+                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void OsConfigServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                          Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -38,24 +38,28 @@ class ModelServiceRestLogging : public ModelServiceRestStub {
  public:
   ~ModelServiceRestLogging() override = default;
   ModelServiceRestLogging(std::shared_ptr<ModelServiceRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                          TracingOptions tracing_options,
+                          std::set<std::string> components);
 
   StatusOr<google::cloud::bigquery::v2::Model> GetModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetModelRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::ListModelsResponse> ListModels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::ListModelsRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::ListModelsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::Model> PatchModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::PatchModelRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::PatchModelRequest const& request) override;
 
   Status DeleteModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::DeleteModelRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::DeleteModelRequest const& request) override;
 
  private:
   std::shared_ptr<ModelServiceRestStub> child_;

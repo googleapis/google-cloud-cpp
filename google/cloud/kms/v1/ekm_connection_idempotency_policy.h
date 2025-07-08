@@ -39,48 +39,48 @@ class EkmServiceConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<EkmServiceConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  ListEkmConnections(google::cloud::kms::v1::ListEkmConnectionsRequest request);
+  virtual google::cloud::Idempotency ListEkmConnections(
+      google::cloud::kms::v1::ListEkmConnectionsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetEkmConnection(google::cloud::kms::v1::GetEkmConnectionRequest const& request);
+  virtual google::cloud::Idempotency GetEkmConnection(
+      google::cloud::kms::v1::GetEkmConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CreateEkmConnection(google::cloud::kms::v1::CreateEkmConnectionRequest const& request);
+  virtual google::cloud::Idempotency CreateEkmConnection(
+      google::cloud::kms::v1::CreateEkmConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateEkmConnection(google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
+  virtual google::cloud::Idempotency UpdateEkmConnection(
+      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetEkmConfig(google::cloud::kms::v1::GetEkmConfigRequest const& request);
+  virtual google::cloud::Idempotency GetEkmConfig(
+      google::cloud::kms::v1::GetEkmConfigRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateEkmConfig(google::cloud::kms::v1::UpdateEkmConfigRequest const& request);
+  virtual google::cloud::Idempotency UpdateEkmConfig(
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request);
 
-  virtual google::cloud::Idempotency
-  VerifyConnectivity(google::cloud::kms::v1::VerifyConnectivityRequest const& request);
+  virtual google::cloud::Idempotency VerifyConnectivity(
+      google::cloud::kms::v1::VerifyConnectivityRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
-    MakeDefaultEkmServiceConnectionIdempotencyPolicy();
+MakeDefaultEkmServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_INTERNAL_STORAGE_POOLS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_INTERNAL_STORAGE_POOLS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/storage_pools/v1/internal/storage_pools_rest_stub.h"
 #include "google/cloud/compute/storage_pools/v1/internal/storage_pools_retry_traits.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection_idempotency_policy.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -44,61 +44,74 @@ class StoragePoolsRestConnectionImpl
   ~StoragePoolsRestConnectionImpl() override = default;
 
   StoragePoolsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_storage_pools_v1_internal::StoragePoolsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_storage_pools_v1_internal::StoragePoolsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
-  AggregatedListStoragePools(google::cloud::cpp::compute::storage_pools::v1::AggregatedListStoragePoolsRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::StoragePoolsScopedList>>
+  AggregatedListStoragePools(
+      google::cloud::cpp::compute::storage_pools::v1::
+          AggregatedListStoragePoolsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request) override;
+  DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        DeleteStoragePoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteStoragePool(NoAwaitTag,
-      google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
+      NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                      DeleteStoragePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteStoragePool(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::StoragePool>
-  GetStoragePool(google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
+      google::cloud::cpp::compute::storage_pools::v1::
+          GetStoragePoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request) override;
+  InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        InsertStoragePoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertStoragePool(NoAwaitTag,
-      google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
+      NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                      InsertStoragePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertStoragePool(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::StoragePool>
-  ListStoragePools(google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::StoragePool> ListStoragePools(
+      google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk>
-  ListDisks(google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk> ListDisks(
+      google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::storage_pools::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request) override;
+  UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::
+                        UpdateStoragePoolRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateStoragePool(NoAwaitTag,
-      google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
+      NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                      UpdateStoragePoolRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateStoragePool(
@@ -107,24 +120,35 @@ class StoragePoolsRestConnectionImpl
  private:
   static std::unique_ptr<compute_storage_pools_v1::StoragePoolsRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_storage_pools_v1::StoragePoolsRetryPolicyOption>()->clone();
+    return options
+        .get<compute_storage_pools_v1::StoragePoolsRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_storage_pools_v1::StoragePoolsBackoffPolicyOption>()->clone();
+    return options
+        .get<compute_storage_pools_v1::StoragePoolsBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_storage_pools_v1::StoragePoolsConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_storage_pools_v1::StoragePoolsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_storage_pools_v1::StoragePoolsConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<compute_storage_pools_v1::
+                 StoragePoolsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-    return options.get<compute_storage_pools_v1::StoragePoolsPollingPolicyOption>()->clone();
+    return options
+        .get<compute_storage_pools_v1::StoragePoolsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_storage_pools_v1_internal::StoragePoolsRestStub> stub_;
+  std::shared_ptr<compute_storage_pools_v1_internal::StoragePoolsRestStub>
+      stub_;
   Options options_;
 };
 

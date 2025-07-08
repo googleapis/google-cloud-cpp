@@ -36,63 +36,77 @@ class InstantSnapshotsTracingConnection
   ~InstantSnapshotsTracingConnection() override = default;
 
   explicit InstantSnapshotsTracingConnection(
-    std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection> child);
+      std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
-  AggregatedListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::AggregatedListInstantSnapshotsRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>
+  AggregatedListInstantSnapshots(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          AggregatedListInstantSnapshotsRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) override;
+  DeleteInstantSnapshot(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          DeleteInstantSnapshotRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstantSnapshot(NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::DeleteInstantSnapshotRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstantSnapshot(
+      NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                      DeleteInstantSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstantSnapshot(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot>
-  GetInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::GetInstantSnapshotRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          GetInstantSnapshotRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstantSnapshot(google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) override;
+  InsertInstantSnapshot(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          InsertInstantSnapshotRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstantSnapshot(NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::InsertInstantSnapshotRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstantSnapshot(
+      NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                      InsertInstantSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstantSnapshot(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
-  ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::ListInstantSnapshotsRequest request) override;
+  ListInstantSnapshots(google::cloud::cpp::compute::instant_snapshots::v1::
+                           ListInstantSnapshotsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instant_snapshots::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          SetIamPolicyRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) override;
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::instant_snapshots::v1::
+          SetLabelsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag,
-      google::cloud::cpp::compute::instant_snapshots::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag, google::cloud::cpp::compute::instant_snapshots::v1::
+                      SetLabelsRequest const& request) override;
 
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::instant_snapshots::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection> child_;
+  std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -105,7 +119,8 @@ class InstantSnapshotsTracingConnection
  */
 std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection>
 MakeInstantSnapshotsTracingConnection(
-    std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection> conn);
+    std::shared_ptr<compute_instant_snapshots_v1::InstantSnapshotsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instant_snapshots_v1_internal

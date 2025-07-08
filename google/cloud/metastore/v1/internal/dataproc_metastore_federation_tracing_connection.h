@@ -36,75 +36,80 @@ class DataprocMetastoreFederationTracingConnection
   ~DataprocMetastoreFederationTracingConnection() override = default;
 
   explicit DataprocMetastoreFederationTracingConnection(
-    std::shared_ptr<metastore_v1::DataprocMetastoreFederationConnection> child);
+      std::shared_ptr<metastore_v1::DataprocMetastoreFederationConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::metastore::v1::Federation>
-  ListFederations(google::cloud::metastore::v1::ListFederationsRequest request) override;
+  StreamRange<google::cloud::metastore::v1::Federation> ListFederations(
+      google::cloud::metastore::v1::ListFederationsRequest request) override;
 
-  StatusOr<google::cloud::metastore::v1::Federation>
-  GetFederation(google::cloud::metastore::v1::GetFederationRequest const& request) override;
+  StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
+      google::cloud::metastore::v1::GetFederationRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::Federation>>
-  CreateFederation(google::cloud::metastore::v1::CreateFederationRequest const& request) override;
+  future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
+      google::cloud::metastore::v1::CreateFederationRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateFederation(NoAwaitTag,
-      google::cloud::metastore::v1::CreateFederationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateFederation(
+      NoAwaitTag,
+      google::cloud::metastore::v1::CreateFederationRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::Federation>>
-  CreateFederation(
+  future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::metastore::v1::Federation>>
-  UpdateFederation(google::cloud::metastore::v1::UpdateFederationRequest const& request) override;
+  future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
+      google::cloud::metastore::v1::UpdateFederationRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateFederation(NoAwaitTag,
-      google::cloud::metastore::v1::UpdateFederationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateFederation(
+      NoAwaitTag,
+      google::cloud::metastore::v1::UpdateFederationRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::metastore::v1::Federation>>
-  UpdateFederation(
+  future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(google::cloud::metastore::v1::DeleteFederationRequest const& request) override;
+  DeleteFederation(google::cloud::metastore::v1::DeleteFederationRequest const&
+                       request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteFederation(NoAwaitTag,
-      google::cloud::metastore::v1::DeleteFederationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteFederation(
+      NoAwaitTag,
+      google::cloud::metastore::v1::DeleteFederationRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(
-      google::longrunning::Operation const& operation) override;
+  DeleteFederation(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<metastore_v1::DataprocMetastoreFederationConnection> child_;

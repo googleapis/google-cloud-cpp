@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_CONNECT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_CONNECT_CLIENT_H
 
+#include "google/cloud/sql/v1/sql_connect_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/sql/v1/sql_connect_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,7 +61,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlConnectServiceClient {
  public:
-  explicit SqlConnectServiceClient(std::shared_ptr<SqlConnectServiceConnection> connection, Options opts = {});
+  explicit SqlConnectServiceClient(
+      std::shared_ptr<SqlConnectServiceConnection> connection,
+      Options opts = {});
   ~SqlConnectServiceClient();
 
   ///@{
@@ -74,10 +76,12 @@ class SqlConnectServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlConnectServiceClient const& a, SqlConnectServiceClient const& b) {
+  friend bool operator==(SqlConnectServiceClient const& a,
+                         SqlConnectServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlConnectServiceClient const& a, SqlConnectServiceClient const& b) {
+  friend bool operator!=(SqlConnectServiceClient const& a,
+                         SqlConnectServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,8 +113,9 @@ class SqlConnectServiceClient {
   /// [google.cloud.sql.v1.GetConnectSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_connect.proto#L61}
   ///
   // clang-format on
-  StatusOr<google::cloud::sql::v1::ConnectSettings>
-  GetConnectSettings(google::cloud::sql::v1::GetConnectSettingsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::sql::v1::ConnectSettings> GetConnectSettings(
+      google::cloud::sql::v1::GetConnectSettingsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -143,7 +148,9 @@ class SqlConnectServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
-  GenerateEphemeralCert(google::cloud::sql::v1::GenerateEphemeralCertRequest const& request, Options opts = {});
+  GenerateEphemeralCert(
+      google::cloud::sql::v1::GenerateEphemeralCertRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SqlConnectServiceConnection> connection_;

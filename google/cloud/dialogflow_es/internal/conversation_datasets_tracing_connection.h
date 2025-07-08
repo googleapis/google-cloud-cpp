@@ -36,63 +36,80 @@ class ConversationDatasetsTracingConnection
   ~ConversationDatasetsTracingConnection() override = default;
 
   explicit ConversationDatasetsTracingConnection(
-    std::shared_ptr<dialogflow_es::ConversationDatasetsConnection> child);
+      std::shared_ptr<dialogflow_es::ConversationDatasetsConnection> child);
 
   Options options() override { return child_->options(); }
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-  CreateConversationDataset(google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request) override;
+  CreateConversationDataset(
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateConversationDataset(NoAwaitTag,
-      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateConversationDataset(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
-  GetConversationDataset(google::cloud::dialogflow::v2::GetConversationDatasetRequest const& request) override;
+  GetConversationDataset(
+      google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
+          request) override;
 
   StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
-  ListConversationDatasets(google::cloud::dialogflow::v2::ListConversationDatasetsRequest request) override;
+  ListConversationDatasets(
+      google::cloud::dialogflow::v2::ListConversationDatasetsRequest request)
+      override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
-  DeleteConversationDataset(google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request) override;
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      DeleteConversationDatasetOperationMetadata>>
+  DeleteConversationDataset(
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteConversationDataset(NoAwaitTag,
-      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteConversationDataset(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      DeleteConversationDatasetOperationMetadata>>
   DeleteConversationDataset(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-  ImportConversationData(google::cloud::dialogflow::v2::ImportConversationDataRequest const& request) override;
+  future<StatusOr<
+      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+  ImportConversationData(
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportConversationData(NoAwaitTag,
-      google::cloud::dialogflow::v2::ImportConversationDataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportConversationData(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request) override;
 
-  future<StatusOr<google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+  future<StatusOr<
+      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
   ImportConversationData(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::ConversationDatasetsConnection> child_;

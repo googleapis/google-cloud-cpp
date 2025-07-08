@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_QUOTA_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_QUOTA_CONTROLLER_CONNECTION_H
 
+#include "google/cloud/servicecontrol/v1/internal/quota_controller_retry_traits.h"
+#include "google/cloud/servicecontrol/v1/quota_controller_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/servicecontrol/v1/internal/quota_controller_retry_traits.h"
-#include "google/cloud/servicecontrol/v1/quota_controller_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/api/servicecontrol/v1/quota_controller.pb.h>
@@ -51,7 +51,8 @@ class QuotaControllerRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class QuotaControllerLimitedErrorCountRetryPolicy : public QuotaControllerRetryPolicy {
+class QuotaControllerLimitedErrorCountRetryPolicy
+    : public QuotaControllerRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,14 +62,14 @@ class QuotaControllerLimitedErrorCountRetryPolicy : public QuotaControllerRetryP
    *     @p maximum_failures == 0.
    */
   explicit QuotaControllerLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   QuotaControllerLimitedErrorCountRetryPolicy(
       QuotaControllerLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : QuotaControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : QuotaControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   QuotaControllerLimitedErrorCountRetryPolicy(
       QuotaControllerLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : QuotaControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : QuotaControllerLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +89,9 @@ class QuotaControllerLimitedErrorCountRetryPolicy : public QuotaControllerRetryP
   using BaseType = QuotaControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<servicecontrol_v1_internal::QuotaControllerRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      servicecontrol_v1_internal::QuotaControllerRetryTraits>
+      impl_;
 };
 
 /**
@@ -101,7 +104,8 @@ class QuotaControllerLimitedErrorCountRetryPolicy : public QuotaControllerRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class QuotaControllerLimitedTimeRetryPolicy : public QuotaControllerRetryPolicy {
+class QuotaControllerLimitedTimeRetryPolicy
+    : public QuotaControllerRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -126,12 +130,14 @@ class QuotaControllerLimitedTimeRetryPolicy : public QuotaControllerRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit QuotaControllerLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  QuotaControllerLimitedTimeRetryPolicy(QuotaControllerLimitedTimeRetryPolicy&& rhs) noexcept
-    : QuotaControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  QuotaControllerLimitedTimeRetryPolicy(QuotaControllerLimitedTimeRetryPolicy const& rhs) noexcept
-    : QuotaControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  QuotaControllerLimitedTimeRetryPolicy(
+      QuotaControllerLimitedTimeRetryPolicy&& rhs) noexcept
+      : QuotaControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  QuotaControllerLimitedTimeRetryPolicy(
+      QuotaControllerLimitedTimeRetryPolicy const& rhs) noexcept
+      : QuotaControllerLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +159,9 @@ class QuotaControllerLimitedTimeRetryPolicy : public QuotaControllerRetryPolicy 
   using BaseType = QuotaControllerRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<servicecontrol_v1_internal::QuotaControllerRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      servicecontrol_v1_internal::QuotaControllerRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,18 +183,20 @@ class QuotaControllerConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(google::api::servicecontrol::v1::AllocateQuotaRequest const& request);
+  AllocateQuota(
+      google::api::servicecontrol::v1::AllocateQuotaRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `QuotaControllerConnection`.
+ * A factory function to construct an object of type
+ * `QuotaControllerConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of QuotaControllerClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `QuotaControllerConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `QuotaControllerConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -196,8 +206,8 @@ class QuotaControllerConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `QuotaControllerConnection` created by
- * this function.
+ * @param options (optional) Configure the `QuotaControllerConnection` created
+ * by this function.
  */
 std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
     Options options = {});

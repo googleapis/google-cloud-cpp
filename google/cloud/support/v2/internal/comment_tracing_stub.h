@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_TRACING_STUB_H
 
+#include "google/cloud/support/v2/internal/comment_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/support/v2/internal/comment_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,18 +39,17 @@ class CommentServiceTracingStub : public CommentServiceStub {
   explicit CommentServiceTracingStub(std::shared_ptr<CommentServiceStub> child);
 
   StatusOr<google::cloud::support::v2::ListCommentsResponse> ListComments(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCommentsRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
  private:
   std::shared_ptr<CommentServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

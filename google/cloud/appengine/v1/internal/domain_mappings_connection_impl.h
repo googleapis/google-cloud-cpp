@@ -46,50 +46,53 @@ class DomainMappingsConnectionImpl
   ~DomainMappingsConnectionImpl() override = default;
 
   DomainMappingsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_v1_internal::DomainMappingsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<appengine_v1_internal::DomainMappingsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::appengine::v1::DomainMapping>
-  ListDomainMappings(google::appengine::v1::ListDomainMappingsRequest request) override;
+  StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
+      google::appengine::v1::ListDomainMappingsRequest request) override;
 
-  StatusOr<google::appengine::v1::DomainMapping>
-  GetDomainMapping(google::appengine::v1::GetDomainMappingRequest const& request) override;
+  StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
+      google::appengine::v1::GetDomainMappingRequest const& request) override;
 
-  future<StatusOr<google::appengine::v1::DomainMapping>>
-  CreateDomainMapping(google::appengine::v1::CreateDomainMappingRequest const& request) override;
+  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
+      google::appengine::v1::CreateDomainMappingRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDomainMapping(NoAwaitTag,
-      google::appengine::v1::CreateDomainMappingRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDomainMapping(
+      NoAwaitTag,
+      google::appengine::v1::CreateDomainMappingRequest const& request)
+      override;
 
-  future<StatusOr<google::appengine::v1::DomainMapping>>
-  CreateDomainMapping(
+  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::appengine::v1::DomainMapping>>
-  UpdateDomainMapping(google::appengine::v1::UpdateDomainMappingRequest const& request) override;
+  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
+      google::appengine::v1::UpdateDomainMappingRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateDomainMapping(NoAwaitTag,
-      google::appengine::v1::UpdateDomainMappingRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateDomainMapping(
+      NoAwaitTag,
+      google::appengine::v1::UpdateDomainMappingRequest const& request)
+      override;
 
-  future<StatusOr<google::appengine::v1::DomainMapping>>
-  UpdateDomainMapping(
+  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const& request) override;
+  DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const&
+                          request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteDomainMapping(NoAwaitTag,
-      google::appengine::v1::DeleteDomainMappingRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteDomainMapping(
+      NoAwaitTag,
+      google::appengine::v1::DeleteDomainMappingRequest const& request)
+      override;
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(
-      google::longrunning::Operation const& operation) override;
+  DeleteDomainMapping(google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

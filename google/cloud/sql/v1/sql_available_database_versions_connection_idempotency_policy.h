@@ -34,11 +34,13 @@ class SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy {
   virtual ~SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<
+      SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy>
+  clone() const;
 };
 
 std::unique_ptr<SqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy>
-    MakeDefaultSqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy();
+MakeDefaultSqlAvailableDatabaseVersionsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace sql_v1

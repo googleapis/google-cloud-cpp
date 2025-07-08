@@ -33,12 +33,13 @@ ModelServiceStub::~ModelServiceStub() = default;
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncCreateModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::retail::v2::CreateModelRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::retail::v2::CreateModelRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::retail::v2::CreateModelRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::retail::v2::CreateModelRequest const& request,
@@ -48,104 +49,90 @@ DefaultModelServiceStub::AsyncCreateModel(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultModelServiceStub::CreateModel(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::retail::v2::CreateModelRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->CreateModel(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultModelServiceStub::CreateModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-DefaultModelServiceStub::GetModel(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::GetModelRequest const& request) {
-    google::cloud::retail::v2::Model response;
-    auto status =
-        grpc_stub_->GetModel(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::GetModel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::GetModelRequest const& request) {
+  google::cloud::retail::v2::Model response;
+  auto status = grpc_stub_->GetModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-DefaultModelServiceStub::PauseModel(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::PauseModelRequest const& request) {
-    google::cloud::retail::v2::Model response;
-    auto status =
-        grpc_stub_->PauseModel(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::PauseModel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::PauseModelRequest const& request) {
+  google::cloud::retail::v2::Model response;
+  auto status = grpc_stub_->PauseModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-DefaultModelServiceStub::ResumeModel(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::ResumeModelRequest const& request) {
-    google::cloud::retail::v2::Model response;
-    auto status =
-        grpc_stub_->ResumeModel(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::ResumeModel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::ResumeModelRequest const& request) {
+  google::cloud::retail::v2::Model response;
+  auto status = grpc_stub_->ResumeModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultModelServiceStub::DeleteModel(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::DeleteModelRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteModel(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultModelServiceStub::DeleteModel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::DeleteModelRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::retail::v2::ListModelsResponse>
 DefaultModelServiceStub::ListModels(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::ListModelsRequest const& request) {
-    google::cloud::retail::v2::ListModelsResponse response;
-    auto status =
-        grpc_stub_->ListModels(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::ListModelsRequest const& request) {
+  google::cloud::retail::v2::ListModelsResponse response;
+  auto status = grpc_stub_->ListModels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::cloud::retail::v2::Model>
-DefaultModelServiceStub::UpdateModel(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::retail::v2::UpdateModelRequest const& request) {
-    google::cloud::retail::v2::Model response;
-    auto status =
-        grpc_stub_->UpdateModel(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::UpdateModel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::retail::v2::UpdateModelRequest const& request) {
+  google::cloud::retail::v2::Model response;
+  auto status = grpc_stub_->UpdateModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncTuneModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::retail::v2::TuneModelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::retail::v2::TuneModelRequest,
                                     google::longrunning::Operation>(
       cq,
@@ -157,44 +144,38 @@ DefaultModelServiceStub::AsyncTuneModel(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultModelServiceStub::TuneModel(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::retail::v2::TuneModelRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->TuneModel(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultModelServiceStub::TuneModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->TuneModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultModelServiceStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultModelServiceStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultModelServiceStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -223,13 +204,14 @@ future<Status> DefaultModelServiceStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

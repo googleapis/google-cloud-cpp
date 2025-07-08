@@ -30,36 +30,31 @@ namespace cloud {
 namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TagKeysLogging::TagKeysLogging(
-    std::shared_ptr<TagKeysStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+TagKeysLogging::TagKeysLogging(std::shared_ptr<TagKeysStub> child,
+                               TracingOptions tracing_options,
+                               std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 TagKeysLogging::ListTagKeys(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::ListTagKeysRequest const&
+                 request) {
         return child_->ListTagKeys(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::resourcemanager::v3::TagKey>
-TagKeysLogging::GetTagKey(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::resourcemanager::v3::TagKey> TagKeysLogging::GetTagKey(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
         return child_->GetTagKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +62,14 @@ TagKeysLogging::GetTagKey(
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 TagKeysLogging::GetNamespacedTagKey(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
+              request) {
         return child_->GetNamespacedTagKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,31 +77,30 @@ TagKeysLogging::GetNamespacedTagKey(
 
 future<StatusOr<google::longrunning::Operation>>
 TagKeysLogging::AsyncCreateTagKey(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
-        return child_->AsyncCreateTagKey(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::resourcemanager::v3::CreateTagKeyRequest const&
+                 request) {
+        return child_->AsyncCreateTagKey(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TagKeysLogging::CreateTagKey(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+StatusOr<google::longrunning::Operation> TagKeysLogging::CreateTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateTagKeyRequest const&
+                 request) {
         return child_->CreateTagKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -113,31 +108,30 @@ TagKeysLogging::CreateTagKey(
 
 future<StatusOr<google::longrunning::Operation>>
 TagKeysLogging::AsyncUpdateTagKey(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
-        return child_->AsyncUpdateTagKey(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&
+                 request) {
+        return child_->AsyncUpdateTagKey(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TagKeysLogging::UpdateTagKey(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+StatusOr<google::longrunning::Operation> TagKeysLogging::UpdateTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&
+                 request) {
         return child_->UpdateTagKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -145,58 +139,51 @@ TagKeysLogging::UpdateTagKey(
 
 future<StatusOr<google::longrunning::Operation>>
 TagKeysLogging::AsyncDeleteTagKey(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
-        return child_->AsyncDeleteTagKey(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&
+                 request) {
+        return child_->AsyncDeleteTagKey(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TagKeysLogging::DeleteTagKey(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+StatusOr<google::longrunning::Operation> TagKeysLogging::DeleteTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&
+                 request) {
         return child_->DeleteTagKey(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-TagKeysLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> TagKeysLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-TagKeysLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> TagKeysLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
@@ -205,26 +192,21 @@ TagKeysLogging::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagKeysLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-TagKeysLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> TagKeysLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
@@ -242,8 +224,8 @@ TagKeysLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -259,8 +241,8 @@ future<Status> TagKeysLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

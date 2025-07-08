@@ -30,7 +30,8 @@ namespace cloud {
 namespace securitycenter_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use securitycenter_v1_mocks::MockSecurityCenterConnection directly.
+/// @deprecated Use securitycenter_v1_mocks::MockSecurityCenterConnection
+/// directly.
 using ::google::cloud::securitycenter_v1_mocks::MockSecurityCenterConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

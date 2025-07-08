@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_STUB_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_STUB_FACTORY_H
 
+#include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
-#include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 

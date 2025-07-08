@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_PROJECTS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_PROJECTS_CLIENT_H
 
+#include "google/cloud/resourcemanager/v3/projects_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/resourcemanager/v3/projects_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ProjectsClient {
  public:
-  explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection, Options opts = {});
+  explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
+                          Options opts = {});
   ~ProjectsClient();
 
   ///@{
@@ -111,8 +112,8 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcemanager::v3::Project>
-  GetProject(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -145,8 +146,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcemanager::v3::Project>
-  GetProject(google::cloud::resourcemanager::v3::GetProjectRequest const& request, Options opts = {});
+  StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
+      google::cloud::resourcemanager::v3::GetProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -189,8 +191,8 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  ListProjects(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -233,8 +235,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  ListProjects(google::cloud::resourcemanager::v3::ListProjectsRequest request, Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
+      google::cloud::resourcemanager::v3::ListProjectsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -282,8 +285,8 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L457}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  SearchProjects(std::string const& query, Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
+      std::string const& query, Options opts = {});
 
   // clang-format off
   ///
@@ -331,8 +334,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L457}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcemanager::v3::Project>
-  SearchProjects(google::cloud::resourcemanager::v3::SearchProjectsRequest request, Options opts = {});
+  StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
+      google::cloud::resourcemanager::v3::SearchProjectsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -375,8 +379,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(google::cloud::resourcemanager::v3::Project const& project, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
+      google::cloud::resourcemanager::v3::Project const& project,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -389,8 +394,9 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateProject(NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateProject(
+      NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -430,8 +436,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(google::cloud::resourcemanager::v3::CreateProjectRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +451,10 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateProject(NoAwaitTag, google::cloud::resourcemanager::v3::CreateProjectRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateProject(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -456,8 +465,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -494,8 +503,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L569}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(google::cloud::resourcemanager::v3::Project const& project, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
+      google::cloud::resourcemanager::v3::Project const& project,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -508,8 +518,9 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateProject(NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateProject(
+      NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -550,8 +561,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L569}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(google::cloud::resourcemanager::v3::UpdateProjectRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -564,8 +576,10 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateProject(NoAwaitTag, google::cloud::resourcemanager::v3::UpdateProjectRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateProject(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -576,8 +590,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -624,8 +638,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(std::string const& name, std::string const& destination_parent, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
+      std::string const& name, std::string const& destination_parent,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -638,8 +653,9 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  MoveProject(NoAwaitTag, std::string const& name, std::string const& destination_parent, Options opts = {});
+  StatusOr<google::longrunning::Operation> MoveProject(
+      NoAwaitTag, std::string const& name,
+      std::string const& destination_parent, Options opts = {});
 
   // clang-format off
   ///
@@ -690,8 +706,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(google::cloud::resourcemanager::v3::MoveProjectRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -704,8 +721,10 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  MoveProject(NoAwaitTag, google::cloud::resourcemanager::v3::MoveProjectRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> MoveProject(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -716,8 +735,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -783,8 +802,8 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -797,8 +816,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteProject(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteProject(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -869,8 +888,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(google::cloud::resourcemanager::v3::DeleteProjectRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -883,8 +903,10 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteProject(NoAwaitTag, google::cloud::resourcemanager::v3::DeleteProjectRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteProject(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -895,8 +917,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -937,8 +959,8 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -951,8 +973,8 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeleteProject(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeleteProject(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -996,8 +1018,9 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1010,8 +1033,10 @@ class ProjectsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UndeleteProject(NoAwaitTag, google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UndeleteProject(
+      NoAwaitTag,
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1022,8 +1047,8 @@ class ProjectsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1050,8 +1075,8 @@ class ProjectsClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -1082,8 +1107,8 @@ class ProjectsClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1152,8 +1177,9 @@ class ProjectsClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1222,8 +1248,8 @@ class ProjectsClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1253,8 +1279,9 @@ class ProjectsClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1284,8 +1311,9 @@ class ProjectsClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1311,8 +1339,8 @@ class ProjectsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1343,8 +1371,9 @@ class ProjectsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ProjectsConnection> connection_;

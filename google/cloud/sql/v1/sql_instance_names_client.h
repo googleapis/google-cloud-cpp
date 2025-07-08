@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCE_NAMES_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_INSTANCE_NAMES_CLIENT_H
 
+#include "google/cloud/sql/v1/sql_instance_names_rest_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/sql/v1/sql_instance_names_rest_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,23 +61,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SqlInstanceNamesServiceClient {
  public:
-  explicit SqlInstanceNamesServiceClient(std::shared_ptr<SqlInstanceNamesServiceConnection> connection, Options opts = {});
+  explicit SqlInstanceNamesServiceClient(
+      std::shared_ptr<SqlInstanceNamesServiceConnection> connection,
+      Options opts = {});
   ~SqlInstanceNamesServiceClient();
 
   ///@{
   /// @name Copy and move support
   SqlInstanceNamesServiceClient(SqlInstanceNamesServiceClient const&) = default;
-  SqlInstanceNamesServiceClient& operator=(SqlInstanceNamesServiceClient const&) = default;
+  SqlInstanceNamesServiceClient& operator=(
+      SqlInstanceNamesServiceClient const&) = default;
   SqlInstanceNamesServiceClient(SqlInstanceNamesServiceClient&&) = default;
-  SqlInstanceNamesServiceClient& operator=(SqlInstanceNamesServiceClient&&) = default;
+  SqlInstanceNamesServiceClient& operator=(SqlInstanceNamesServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SqlInstanceNamesServiceClient const& a, SqlInstanceNamesServiceClient const& b) {
+  friend bool operator==(SqlInstanceNamesServiceClient const& a,
+                         SqlInstanceNamesServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SqlInstanceNamesServiceClient const& a, SqlInstanceNamesServiceClient const& b) {
+  friend bool operator!=(SqlInstanceNamesServiceClient const& a,
+                         SqlInstanceNamesServiceClient const& b) {
     return !(a == b);
   }
   ///@}

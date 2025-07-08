@@ -17,12 +17,12 @@
 // source: google/monitoring/v3/query_service.proto
 
 #include "google/cloud/monitoring/v3/internal/query_connection_impl.h"
+#include "google/cloud/monitoring/v3/internal/query_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/monitoring/v3/internal/query_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,54 +32,61 @@ namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<monitoring_v3::QueryServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<monitoring_v3::QueryServiceRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<monitoring_v3::QueryServiceRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<monitoring_v3::QueryServiceBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<monitoring_v3::QueryServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<monitoring_v3::QueryServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<monitoring_v3::QueryServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 QueryServiceConnectionImpl::QueryServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<monitoring_v3_internal::QueryServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        QueryServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      QueryServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::TimeSeriesData>
-QueryServiceConnectionImpl::QueryTimeSeries(google::monitoring::v3::QueryTimeSeriesRequest request) {
+QueryServiceConnectionImpl::QueryTimeSeries(
+    google::monitoring::v3::QueryTimeSeriesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->QueryTimeSeries(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::monitoring::v3::TimeSeriesData>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::monitoring::v3::TimeSeriesData>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<monitoring_v3::QueryServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<monitoring_v3::QueryServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::monitoring::v3::QueryTimeSeriesRequest const& r) {
+          Options const& options,
+          google::monitoring::v3::QueryTimeSeriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::monitoring::v3::QueryTimeSeriesRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::monitoring::v3::QueryTimeSeriesRequest const& request) {
               return stub->QueryTimeSeries(context, options, request);
             },
             options, r, function_name);
       },
       [](google::monitoring::v3::QueryTimeSeriesResponse r) {
-        std::vector<google::monitoring::v3::TimeSeriesData> result(r.time_series_data().size());
+        std::vector<google::monitoring::v3::TimeSeriesData> result(
+            r.time_series_data().size());
         auto& messages = *r.mutable_time_series_data();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

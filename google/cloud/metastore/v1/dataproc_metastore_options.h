@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/metastore/v1/dataproc_metastore_connection.h"
 #include "google/cloud/metastore/v1/dataproc_metastore_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>

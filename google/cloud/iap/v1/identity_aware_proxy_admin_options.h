@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_ADMIN_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_ADMIN_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection.h"
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -55,7 +55,8 @@ struct IdentityAwareProxyAdminServiceBackoffPolicyOption {
  * @ingroup google-cloud-iap-options
  */
 struct IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>;
+  using Type = std::shared_ptr<
+      IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>;
 };
 
 /**

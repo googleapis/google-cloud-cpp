@@ -27,8 +27,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/operation.pb.h>
 #include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <memory>
 
 namespace google {
@@ -53,7 +53,8 @@ class AuthorizedDomainsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AuthorizedDomainsLimitedErrorCountRetryPolicy : public AuthorizedDomainsRetryPolicy {
+class AuthorizedDomainsLimitedErrorCountRetryPolicy
+    : public AuthorizedDomainsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -63,14 +64,14 @@ class AuthorizedDomainsLimitedErrorCountRetryPolicy : public AuthorizedDomainsRe
    *     @p maximum_failures == 0.
    */
   explicit AuthorizedDomainsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   AuthorizedDomainsLimitedErrorCountRetryPolicy(
       AuthorizedDomainsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : AuthorizedDomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AuthorizedDomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   AuthorizedDomainsLimitedErrorCountRetryPolicy(
       AuthorizedDomainsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : AuthorizedDomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : AuthorizedDomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +91,9 @@ class AuthorizedDomainsLimitedErrorCountRetryPolicy : public AuthorizedDomainsRe
   using BaseType = AuthorizedDomainsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<appengine_v1_internal::AuthorizedDomainsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      appengine_v1_internal::AuthorizedDomainsRetryTraits>
+      impl_;
 };
 
 /**
@@ -103,7 +106,8 @@ class AuthorizedDomainsLimitedErrorCountRetryPolicy : public AuthorizedDomainsRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class AuthorizedDomainsLimitedTimeRetryPolicy : public AuthorizedDomainsRetryPolicy {
+class AuthorizedDomainsLimitedTimeRetryPolicy
+    : public AuthorizedDomainsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -128,12 +132,14 @@ class AuthorizedDomainsLimitedTimeRetryPolicy : public AuthorizedDomainsRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit AuthorizedDomainsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  AuthorizedDomainsLimitedTimeRetryPolicy(AuthorizedDomainsLimitedTimeRetryPolicy&& rhs) noexcept
-    : AuthorizedDomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  AuthorizedDomainsLimitedTimeRetryPolicy(AuthorizedDomainsLimitedTimeRetryPolicy const& rhs) noexcept
-    : AuthorizedDomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AuthorizedDomainsLimitedTimeRetryPolicy(
+      AuthorizedDomainsLimitedTimeRetryPolicy&& rhs) noexcept
+      : AuthorizedDomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  AuthorizedDomainsLimitedTimeRetryPolicy(
+      AuthorizedDomainsLimitedTimeRetryPolicy const& rhs) noexcept
+      : AuthorizedDomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -155,16 +161,18 @@ class AuthorizedDomainsLimitedTimeRetryPolicy : public AuthorizedDomainsRetryPol
   using BaseType = AuthorizedDomainsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<appengine_v1_internal::AuthorizedDomainsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      appengine_v1_internal::AuthorizedDomainsRetryTraits>
+      impl_;
 };
 
 /**
  * The `AuthorizedDomainsConnection` object for `AuthorizedDomainsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `AuthorizedDomainsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `AuthorizedDomainsClient`.
+ * sets in `AuthorizedDomainsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AuthorizedDomainsClient`.
  *
  * To create a concrete instance, see `MakeAuthorizedDomainsConnection()`.
  *
@@ -177,18 +185,21 @@ class AuthorizedDomainsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::appengine::v1::AuthorizedDomain>
-  ListAuthorizedDomains(google::appengine::v1::ListAuthorizedDomainsRequest request);
+  ListAuthorizedDomains(
+      google::appengine::v1::ListAuthorizedDomainsRequest request);
 };
 
 /**
- * A factory function to construct an object of type `AuthorizedDomainsConnection`.
+ * A factory function to construct an object of type
+ * `AuthorizedDomainsConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AuthorizedDomainsClient.
+ * should be passed as an argument to the constructor of
+ * AuthorizedDomainsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `AuthorizedDomainsConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `AuthorizedDomainsConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -198,8 +209,8 @@ class AuthorizedDomainsConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `AuthorizedDomainsConnection` created by
- * this function.
+ * @param options (optional) Configure the `AuthorizedDomainsConnection` created
+ * by this function.
  */
 std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
     Options options = {});

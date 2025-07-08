@@ -34,12 +34,14 @@ CaseAttachmentServiceTracingConnection::CaseAttachmentServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::support::v2::Attachment>
-CaseAttachmentServiceTracingConnection::ListAttachments(google::cloud::support::v2::ListAttachmentsRequest request) {
-  auto span = internal::MakeSpan("support_v2::CaseAttachmentServiceConnection::ListAttachments");
+CaseAttachmentServiceTracingConnection::ListAttachments(
+    google::cloud::support::v2::ListAttachmentsRequest request) {
+  auto span = internal::MakeSpan(
+      "support_v2::CaseAttachmentServiceConnection::ListAttachments");
   internal::OTelScope scope(span);
   auto sr = child_->ListAttachments(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::support::v2::Attachment>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::support::v2::Attachment>(std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -49,7 +51,8 @@ MakeCaseAttachmentServiceTracingConnection(
     std::shared_ptr<support_v2::CaseAttachmentServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<CaseAttachmentServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<CaseAttachmentServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

@@ -32,106 +32,96 @@ MetricsServiceV2Stub::~MetricsServiceV2Stub() = default;
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
 DefaultMetricsServiceV2Stub::ListLogMetrics(
-  grpc::ClientContext& context, Options const&,
-  google::logging::v2::ListLogMetricsRequest const& request) {
-    google::logging::v2::ListLogMetricsResponse response;
-    auto status =
-        grpc_stub_->ListLogMetrics(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::logging::v2::ListLogMetricsRequest const& request) {
+  google::logging::v2::ListLogMetricsResponse response;
+  auto status = grpc_stub_->ListLogMetrics(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::GetLogMetric(
-  grpc::ClientContext& context, Options const&,
-  google::logging::v2::GetLogMetricRequest const& request) {
-    google::logging::v2::LogMetric response;
-    auto status =
-        grpc_stub_->GetLogMetric(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::logging::v2::GetLogMetricRequest const& request) {
+  google::logging::v2::LogMetric response;
+  auto status = grpc_stub_->GetLogMetric(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::CreateLogMetric(
-  grpc::ClientContext& context, Options const&,
-  google::logging::v2::CreateLogMetricRequest const& request) {
-    google::logging::v2::LogMetric response;
-    auto status =
-        grpc_stub_->CreateLogMetric(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::logging::v2::CreateLogMetricRequest const& request) {
+  google::logging::v2::LogMetric response;
+  auto status = grpc_stub_->CreateLogMetric(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::UpdateLogMetric(
-  grpc::ClientContext& context, Options const&,
-  google::logging::v2::UpdateLogMetricRequest const& request) {
-    google::logging::v2::LogMetric response;
-    auto status =
-        grpc_stub_->UpdateLogMetric(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::logging::v2::UpdateLogMetricRequest const& request) {
+  google::logging::v2::LogMetric response;
+  auto status = grpc_stub_->UpdateLogMetric(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultMetricsServiceV2Stub::DeleteLogMetric(
-  grpc::ClientContext& context, Options const&,
-  google::logging::v2::DeleteLogMetricRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteLogMetric(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMetricsServiceV2Stub::DeleteLogMetric(
+    grpc::ClientContext& context, Options const&,
+    google::logging::v2::DeleteLogMetricRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteLogMetric(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultMetricsServiceV2Stub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultMetricsServiceV2Stub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultMetricsServiceV2Stub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultMetricsServiceV2Stub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/v2/table.proto
 
 #include "google/cloud/bigquerycontrol/v2/table_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquerycontrol/v2/internal/table_option_defaults.h"
 #include "google/cloud/bigquerycontrol/v2/internal/table_tracing_connection.h"
 #include "google/cloud/bigquerycontrol/v2/table_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -36,8 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TableServiceConnection::~TableServiceConnection() = default;
 
-StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceConnection::GetTable(
+StatusOr<google::cloud::bigquery::v2::Table> TableServiceConnection::GetTable(
     google::cloud::bigquery::v2::GetTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -48,8 +47,7 @@ TableServiceConnection::InsertTable(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::bigquery::v2::Table>
-TableServiceConnection::PatchTable(
+StatusOr<google::cloud::bigquery::v2::Table> TableServiceConnection::PatchTable(
     google::cloud::bigquery::v2::UpdateOrPatchTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -60,14 +58,15 @@ TableServiceConnection::UpdateTable(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-TableServiceConnection::DeleteTable(
+Status TableServiceConnection::DeleteTable(
     google::cloud::bigquery::v2::DeleteTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::bigquery::v2::ListFormatTable> TableServiceConnection::ListTables(
-    google::cloud::bigquery::v2::ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::bigquery::v2::ListFormatTable>
+TableServiceConnection::ListTables(
+    google::cloud::bigquery::v2::
+        ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::v2::ListFormatTable>>();
 }

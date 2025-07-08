@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONTEXTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONTEXTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/dialogflow_es/contexts_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/contexts_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -63,14 +63,14 @@ class ContextsLimitedErrorCountRetryPolicy : public ContextsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ContextsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ContextsLimitedErrorCountRetryPolicy(
       ContextsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ContextsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ContextsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ContextsLimitedErrorCountRetryPolicy(
       ContextsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ContextsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ContextsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -90,7 +90,9 @@ class ContextsLimitedErrorCountRetryPolicy : public ContextsRetryPolicy {
   using BaseType = ContextsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<dialogflow_es_internal::ContextsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      dialogflow_es_internal::ContextsRetryTraits>
+      impl_;
 };
 
 /**
@@ -128,12 +130,13 @@ class ContextsLimitedTimeRetryPolicy : public ContextsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ContextsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   ContextsLimitedTimeRetryPolicy(ContextsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ContextsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ContextsLimitedTimeRetryPolicy(ContextsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ContextsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ContextsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ContextsLimitedTimeRetryPolicy(
+      ContextsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ContextsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -147,15 +150,16 @@ class ContextsLimitedTimeRetryPolicy : public ContextsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ContextsRetryPolicy> clone() const override {
-    return std::make_unique<ContextsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<ContextsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ContextsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<dialogflow_es_internal::ContextsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      dialogflow_es_internal::ContextsRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,38 +180,38 @@ class ContextsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<google::cloud::dialogflow::v2::Context>
-  ListContexts(google::cloud::dialogflow::v2::ListContextsRequest request);
+  virtual StreamRange<google::cloud::dialogflow::v2::Context> ListContexts(
+      google::cloud::dialogflow::v2::ListContextsRequest request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Context>
-  GetContext(google::cloud::dialogflow::v2::GetContextRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
+      google::cloud::dialogflow::v2::GetContextRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Context>
-  CreateContext(google::cloud::dialogflow::v2::CreateContextRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
+      google::cloud::dialogflow::v2::CreateContextRequest const& request);
 
-  virtual StatusOr<google::cloud::dialogflow::v2::Context>
-  UpdateContext(google::cloud::dialogflow::v2::UpdateContextRequest const& request);
+  virtual StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
+      google::cloud::dialogflow::v2::UpdateContextRequest const& request);
 
-  virtual Status
-  DeleteContext(google::cloud::dialogflow::v2::DeleteContextRequest const& request);
+  virtual Status DeleteContext(
+      google::cloud::dialogflow::v2::DeleteContextRequest const& request);
 
-  virtual Status
-  DeleteAllContexts(google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request);
+  virtual Status DeleteAllContexts(
+      google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

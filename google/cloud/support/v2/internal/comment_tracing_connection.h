@@ -36,15 +36,15 @@ class CommentServiceTracingConnection
   ~CommentServiceTracingConnection() override = default;
 
   explicit CommentServiceTracingConnection(
-    std::shared_ptr<support_v2::CommentServiceConnection> child);
+      std::shared_ptr<support_v2::CommentServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::support::v2::Comment>
-  ListComments(google::cloud::support::v2::ListCommentsRequest request) override;
+  StreamRange<google::cloud::support::v2::Comment> ListComments(
+      google::cloud::support::v2::ListCommentsRequest request) override;
 
-  StatusOr<google::cloud::support::v2::Comment>
-  CreateComment(google::cloud::support::v2::CreateCommentRequest const& request) override;
+  StatusOr<google::cloud::support::v2::Comment> CreateComment(
+      google::cloud::support::v2::CreateCommentRequest const& request) override;
 
  private:
   std::shared_ptr<support_v2::CommentServiceConnection> child_;

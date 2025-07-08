@@ -36,49 +36,60 @@ class NodeTemplatesTracingConnection
   ~NodeTemplatesTracingConnection() override = default;
 
   explicit NodeTemplatesTracingConnection(
-    std::shared_ptr<compute_node_templates_v1::NodeTemplatesConnection> child);
+      std::shared_ptr<compute_node_templates_v1::NodeTemplatesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
-  AggregatedListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::AggregatedListNodeTemplatesRequest request) override;
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::NodeTemplatesScopedList>>
+  AggregatedListNodeTemplates(
+      google::cloud::cpp::compute::node_templates::v1::
+          AggregatedListNodeTemplatesRequest request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request) override;
+  DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         DeleteNodeTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeTemplate(NoAwaitTag,
-      google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
+      NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::
+                      DeleteNodeTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeTemplate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-  GetNodeTemplate(google::cloud::cpp::compute::node_templates::v1::GetNodeTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
+      google::cloud::cpp::compute::node_templates::v1::
+          GetNodeTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::node_templates::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::node_templates::v1::
+          GetIamPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request) override;
+  InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
+                         InsertNodeTemplateRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeTemplate(NoAwaitTag,
-      google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
+      NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::
+                      InsertNodeTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNodeTemplate(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-  ListNodeTemplates(google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
+      google::cloud::cpp::compute::node_templates::v1::ListNodeTemplatesRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::node_templates::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::node_templates::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::node_templates::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_node_templates_v1::NodeTemplatesConnection> child_;

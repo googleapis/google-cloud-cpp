@@ -17,8 +17,8 @@
 // source: google/cloud/billing/v1/cloud_billing.proto
 
 #include "google/cloud/billing/v1/cloud_billing_client.h"
-#include <memory>
 #include "google/cloud/billing/v1/cloud_billing_options.h"
+#include <memory>
 #include <thread>
 #include <utility>
 
@@ -30,8 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudBillingClient::CloudBillingClient(
     std::shared_ptr<CloudBillingConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudBillingClient::~CloudBillingClient() = default;
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
@@ -43,7 +43,9 @@ CloudBillingClient::GetBillingAccount(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::GetBillingAccount(google::cloud::billing::v1::GetBillingAccountRequest const& request, Options opts) {
+CloudBillingClient::GetBillingAccount(
+    google::cloud::billing::v1::GetBillingAccountRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetBillingAccount(request);
 }
@@ -56,7 +58,8 @@ CloudBillingClient::ListBillingAccounts(Options opts) {
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::ListBillingAccounts(std::string const& parent, Options opts) {
+CloudBillingClient::ListBillingAccounts(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::ListBillingAccountsRequest request;
   request.set_parent(parent);
@@ -64,13 +67,17 @@ CloudBillingClient::ListBillingAccounts(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::ListBillingAccounts(google::cloud::billing::v1::ListBillingAccountsRequest request, Options opts) {
+CloudBillingClient::ListBillingAccounts(
+    google::cloud::billing::v1::ListBillingAccountsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBillingAccounts(std::move(request));
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::UpdateBillingAccount(std::string const& name, google::cloud::billing::v1::BillingAccount const& account, Options opts) {
+CloudBillingClient::UpdateBillingAccount(
+    std::string const& name,
+    google::cloud::billing::v1::BillingAccount const& account, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::UpdateBillingAccountRequest request;
   request.set_name(name);
@@ -79,13 +86,17 @@ CloudBillingClient::UpdateBillingAccount(std::string const& name, google::cloud:
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::UpdateBillingAccount(google::cloud::billing::v1::UpdateBillingAccountRequest const& request, Options opts) {
+CloudBillingClient::UpdateBillingAccount(
+    google::cloud::billing::v1::UpdateBillingAccountRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBillingAccount(request);
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::CreateBillingAccount(google::cloud::billing::v1::BillingAccount const& billing_account, Options opts) {
+CloudBillingClient::CreateBillingAccount(
+    google::cloud::billing::v1::BillingAccount const& billing_account,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::CreateBillingAccountRequest request;
   *request.mutable_billing_account() = billing_account;
@@ -93,7 +104,9 @@ CloudBillingClient::CreateBillingAccount(google::cloud::billing::v1::BillingAcco
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::CreateBillingAccount(google::cloud::billing::v1::BillingAccount const& billing_account, std::string const& parent, Options opts) {
+CloudBillingClient::CreateBillingAccount(
+    google::cloud::billing::v1::BillingAccount const& billing_account,
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::CreateBillingAccountRequest request;
   *request.mutable_billing_account() = billing_account;
@@ -102,13 +115,16 @@ CloudBillingClient::CreateBillingAccount(google::cloud::billing::v1::BillingAcco
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::CreateBillingAccount(google::cloud::billing::v1::CreateBillingAccountRequest const& request, Options opts) {
+CloudBillingClient::CreateBillingAccount(
+    google::cloud::billing::v1::CreateBillingAccountRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBillingAccount(request);
 }
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingClient::ListProjectBillingInfo(std::string const& name, Options opts) {
+CloudBillingClient::ListProjectBillingInfo(std::string const& name,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::ListProjectBillingInfoRequest request;
   request.set_name(name);
@@ -116,13 +132,16 @@ CloudBillingClient::ListProjectBillingInfo(std::string const& name, Options opts
 }
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingClient::ListProjectBillingInfo(google::cloud::billing::v1::ListProjectBillingInfoRequest request, Options opts) {
+CloudBillingClient::ListProjectBillingInfo(
+    google::cloud::billing::v1::ListProjectBillingInfoRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProjectBillingInfo(std::move(request));
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingClient::GetProjectBillingInfo(std::string const& name, Options opts) {
+CloudBillingClient::GetProjectBillingInfo(std::string const& name,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::GetProjectBillingInfoRequest request;
   request.set_name(name);
@@ -130,13 +149,18 @@ CloudBillingClient::GetProjectBillingInfo(std::string const& name, Options opts)
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingClient::GetProjectBillingInfo(google::cloud::billing::v1::GetProjectBillingInfoRequest const& request, Options opts) {
+CloudBillingClient::GetProjectBillingInfo(
+    google::cloud::billing::v1::GetProjectBillingInfoRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetProjectBillingInfo(request);
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingClient::UpdateProjectBillingInfo(std::string const& name, google::cloud::billing::v1::ProjectBillingInfo const& project_billing_info, Options opts) {
+CloudBillingClient::UpdateProjectBillingInfo(
+    std::string const& name,
+    google::cloud::billing::v1::ProjectBillingInfo const& project_billing_info,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::billing::v1::UpdateProjectBillingInfoRequest request;
   request.set_name(name);
@@ -145,27 +169,30 @@ CloudBillingClient::UpdateProjectBillingInfo(std::string const& name, google::cl
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
-CloudBillingClient::UpdateProjectBillingInfo(google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request, Options opts) {
+CloudBillingClient::UpdateProjectBillingInfo(
+    google::cloud::billing::v1::UpdateProjectBillingInfoRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProjectBillingInfo(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingClient::GetIamPolicy(std::string const& resource, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudBillingClient::GetIamPolicy(
+    std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudBillingClient::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingClient::SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudBillingClient::SetIamPolicy(
+    std::string const& resource, google::iam::v1::Policy const& policy,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
@@ -173,15 +200,17 @@ CloudBillingClient::SetIamPolicy(std::string const& resource, google::iam::v1::P
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingClient::SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts) {
-  internal::CheckExpectedOptions<CloudBillingBackoffPolicyOption>(opts, __func__);
+StatusOr<google::iam::v1::Policy> CloudBillingClient::SetIamPolicy(
+    std::string const& resource, IamUpdater const& updater, Options opts) {
+  internal::CheckExpectedOptions<CloudBillingBackoffPolicyOption>(opts,
+                                                                  __func__);
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::GetIamPolicyRequest get_request;
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
-  auto backoff_policy = internal::CurrentOptions().get<CloudBillingBackoffPolicyOption>();
+  auto backoff_policy =
+      internal::CurrentOptions().get<CloudBillingBackoffPolicyOption>();
   if (backoff_policy != nullptr) {
     backoff_policy = backoff_policy->clone();
   }
@@ -198,8 +227,7 @@ CloudBillingClient::SetIamPolicy(std::string const& resource, IamUpdater const& 
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result ||
-        result.status().code() != StatusCode::kAborted ||
+    if (result || result.status().code() != StatusCode::kAborted ||
         backoff_policy == nullptr) {
       return result;
     }
@@ -207,14 +235,16 @@ CloudBillingClient::SetIamPolicy(std::string const& resource, IamUpdater const& 
   }
 }
 
-StatusOr<google::iam::v1::Policy>
-CloudBillingClient::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::iam::v1::Policy> CloudBillingClient::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudBillingClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts) {
+CloudBillingClient::TestIamPermissions(
+    std::string const& resource, std::vector<std::string> const& permissions,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
@@ -223,13 +253,16 @@ CloudBillingClient::TestIamPermissions(std::string const& resource, std::vector<
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-CloudBillingClient::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
+CloudBillingClient::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
-CloudBillingClient::MoveBillingAccount(google::cloud::billing::v1::MoveBillingAccountRequest const& request, Options opts) {
+CloudBillingClient::MoveBillingAccount(
+    google::cloud::billing::v1::MoveBillingAccountRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveBillingAccount(request);
 }

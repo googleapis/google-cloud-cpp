@@ -36,232 +36,278 @@ class TranslationServiceTracingConnection
   ~TranslationServiceTracingConnection() override = default;
 
   explicit TranslationServiceTracingConnection(
-    std::shared_ptr<translate_v3::TranslationServiceConnection> child);
+      std::shared_ptr<translate_v3::TranslationServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-  TranslateText(google::cloud::translation::v3::TranslateTextRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
+      google::cloud::translation::v3::TranslateTextRequest const& request)
+      override;
 
-  StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
-  RomanizeText(google::cloud::translation::v3::RomanizeTextRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::RomanizeTextResponse> RomanizeText(
+      google::cloud::translation::v3::RomanizeTextRequest const& request)
+      override;
 
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
-  DetectLanguage(google::cloud::translation::v3::DetectLanguageRequest const& request) override;
+  DetectLanguage(google::cloud::translation::v3::DetectLanguageRequest const&
+                     request) override;
 
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
-  GetSupportedLanguages(google::cloud::translation::v3::GetSupportedLanguagesRequest const& request) override;
+  GetSupportedLanguages(
+      google::cloud::translation::v3::GetSupportedLanguagesRequest const&
+          request) override;
 
   StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
-  TranslateDocument(google::cloud::translation::v3::TranslateDocumentRequest const& request) override;
-
-  future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-  BatchTranslateText(google::cloud::translation::v3::BatchTranslateTextRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  BatchTranslateText(NoAwaitTag,
-      google::cloud::translation::v3::BatchTranslateTextRequest const& request) override;
+  TranslateDocument(
+      google::cloud::translation::v3::TranslateDocumentRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
   BatchTranslateText(
-      google::longrunning::Operation const& operation) override;
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-  BatchTranslateDocument(google::cloud::translation::v3::BatchTranslateDocumentRequest const& request) override;
+  StatusOr<google::longrunning::Operation> BatchTranslateText(
+      NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  BatchTranslateDocument(NoAwaitTag,
-      google::cloud::translation::v3::BatchTranslateDocumentRequest const& request) override;
+  future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
+  BatchTranslateText(google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  BatchTranslateDocument(
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchTranslateDocument(
+      NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
   BatchTranslateDocument(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  CreateGlossary(google::cloud::translation::v3::CreateGlossaryRequest const& request) override;
+  future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
+      google::cloud::translation::v3::CreateGlossaryRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateGlossary(NoAwaitTag,
-      google::cloud::translation::v3::CreateGlossaryRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateGlossary(
+      NoAwaitTag,
+      google::cloud::translation::v3::CreateGlossaryRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  CreateGlossary(
+  future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  UpdateGlossary(google::cloud::translation::v3::UpdateGlossaryRequest const& request) override;
+  future<StatusOr<google::cloud::translation::v3::Glossary>> UpdateGlossary(
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateGlossary(NoAwaitTag,
-      google::cloud::translation::v3::UpdateGlossaryRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateGlossary(
+      NoAwaitTag,
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::translation::v3::Glossary>>
-  UpdateGlossary(
+  future<StatusOr<google::cloud::translation::v3::Glossary>> UpdateGlossary(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::translation::v3::Glossary>
-  ListGlossaries(google::cloud::translation::v3::ListGlossariesRequest request) override;
+  StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
+      google::cloud::translation::v3::ListGlossariesRequest request) override;
 
-  StatusOr<google::cloud::translation::v3::Glossary>
-  GetGlossary(google::cloud::translation::v3::GetGlossaryRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
+      google::cloud::translation::v3::GetGlossaryRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const& request) override;
+  DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteGlossary(NoAwaitTag,
-      google::cloud::translation::v3::DeleteGlossaryRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteGlossary(
+      NoAwaitTag,
+      google::cloud::translation::v3::DeleteGlossaryRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(
-      google::longrunning::Operation const& operation) override;
+  DeleteGlossary(google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  GetGlossaryEntry(google::cloud::translation::v3::GetGlossaryEntryRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> GetGlossaryEntry(
+      google::cloud::translation::v3::GetGlossaryEntryRequest const& request)
+      override;
 
   StreamRange<google::cloud::translation::v3::GlossaryEntry>
-  ListGlossaryEntries(google::cloud::translation::v3::ListGlossaryEntriesRequest request) override;
+  ListGlossaryEntries(google::cloud::translation::v3::ListGlossaryEntriesRequest
+                          request) override;
 
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  CreateGlossaryEntry(google::cloud::translation::v3::CreateGlossaryEntryRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> CreateGlossaryEntry(
+      google::cloud::translation::v3::CreateGlossaryEntryRequest const& request)
+      override;
 
-  StatusOr<google::cloud::translation::v3::GlossaryEntry>
-  UpdateGlossaryEntry(google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> UpdateGlossaryEntry(
+      google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request)
+      override;
 
-  Status
-  DeleteGlossaryEntry(google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request) override;
+  Status DeleteGlossaryEntry(
+      google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::translation::v3::Dataset>>
-  CreateDataset(google::cloud::translation::v3::CreateDatasetRequest const& request) override;
+  future<StatusOr<google::cloud::translation::v3::Dataset>> CreateDataset(
+      google::cloud::translation::v3::CreateDatasetRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateDataset(NoAwaitTag,
-      google::cloud::translation::v3::CreateDatasetRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag,
+      google::cloud::translation::v3::CreateDatasetRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::translation::v3::Dataset>>
-  CreateDataset(
+  future<StatusOr<google::cloud::translation::v3::Dataset>> CreateDataset(
       google::longrunning::Operation const& operation) override;
 
-  StatusOr<google::cloud::translation::v3::Dataset>
-  GetDataset(google::cloud::translation::v3::GetDatasetRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::Dataset> GetDataset(
+      google::cloud::translation::v3::GetDatasetRequest const& request)
+      override;
 
-  StreamRange<google::cloud::translation::v3::Dataset>
-  ListDatasets(google::cloud::translation::v3::ListDatasetsRequest request) override;
-
-  future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
-  DeleteDataset(google::cloud::translation::v3::DeleteDatasetRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteDataset(NoAwaitTag,
-      google::cloud::translation::v3::DeleteDatasetRequest const& request) override;
+  StreamRange<google::cloud::translation::v3::Dataset> ListDatasets(
+      google::cloud::translation::v3::ListDatasetsRequest request) override;
 
   future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
-  DeleteDataset(
-      google::longrunning::Operation const& operation) override;
+  DeleteDataset(google::cloud::translation::v3::DeleteDatasetRequest const&
+                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag,
+      google::cloud::translation::v3::DeleteDatasetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
+  DeleteDataset(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-  CreateAdaptiveMtDataset(google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const& request) override;
+  CreateAdaptiveMtDataset(
+      google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
+          request) override;
 
-  Status
-  DeleteAdaptiveMtDataset(google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const& request) override;
+  Status DeleteAdaptiveMtDataset(
+      google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
+          request) override;
 
   StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
-  GetAdaptiveMtDataset(google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const& request) override;
+  GetAdaptiveMtDataset(
+      google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
+          request) override;
 
   StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
-  ListAdaptiveMtDatasets(google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request) override;
+  ListAdaptiveMtDatasets(
+      google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest request)
+      override;
 
   StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
-  AdaptiveMtTranslate(google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) override;
+  AdaptiveMtTranslate(
+      google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request)
+      override;
 
-  StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
-  GetAdaptiveMtFile(google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
+      google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request)
+      override;
 
-  Status
-  DeleteAdaptiveMtFile(google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const& request) override;
+  Status DeleteAdaptiveMtFile(
+      google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
+          request) override;
 
   StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
-  ImportAdaptiveMtFile(google::cloud::translation::v3::ImportAdaptiveMtFileRequest const& request) override;
+  ImportAdaptiveMtFile(
+      google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
+          request) override;
 
   StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
-  ListAdaptiveMtFiles(google::cloud::translation::v3::ListAdaptiveMtFilesRequest request) override;
+  ListAdaptiveMtFiles(google::cloud::translation::v3::ListAdaptiveMtFilesRequest
+                          request) override;
 
   StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
-  ListAdaptiveMtSentences(google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request) override;
+  ListAdaptiveMtSentences(
+      google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
-  ImportData(google::cloud::translation::v3::ImportDataRequest const& request) override;
+  ImportData(google::cloud::translation::v3::ImportDataRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag,
-      google::cloud::translation::v3::ImportDataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag,
+      google::cloud::translation::v3::ImportDataRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
-  ImportData(
-      google::longrunning::Operation const& operation) override;
+  ImportData(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
-  ExportData(google::cloud::translation::v3::ExportDataRequest const& request) override;
+  ExportData(google::cloud::translation::v3::ExportDataRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag,
-      google::cloud::translation::v3::ExportDataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag,
+      google::cloud::translation::v3::ExportDataRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
-  ExportData(
+  ExportData(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::translation::v3::Example> ListExamples(
+      google::cloud::translation::v3::ListExamplesRequest request) override;
+
+  future<StatusOr<google::cloud::translation::v3::Model>> CreateModel(
+      google::cloud::translation::v3::CreateModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag,
+      google::cloud::translation::v3::CreateModelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::translation::v3::Model>> CreateModel(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::translation::v3::Example>
-  ListExamples(google::cloud::translation::v3::ListExamplesRequest request) override;
+  StreamRange<google::cloud::translation::v3::Model> ListModels(
+      google::cloud::translation::v3::ListModelsRequest request) override;
 
-  future<StatusOr<google::cloud::translation::v3::Model>>
-  CreateModel(google::cloud::translation::v3::CreateModelRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  CreateModel(NoAwaitTag,
-      google::cloud::translation::v3::CreateModelRequest const& request) override;
-
-  future<StatusOr<google::cloud::translation::v3::Model>>
-  CreateModel(
-      google::longrunning::Operation const& operation) override;
-
-  StreamRange<google::cloud::translation::v3::Model>
-  ListModels(google::cloud::translation::v3::ListModelsRequest request) override;
-
-  StatusOr<google::cloud::translation::v3::Model>
-  GetModel(google::cloud::translation::v3::GetModelRequest const& request) override;
+  StatusOr<google::cloud::translation::v3::Model> GetModel(
+      google::cloud::translation::v3::GetModelRequest const& request) override;
 
   future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
-  DeleteModel(google::cloud::translation::v3::DeleteModelRequest const& request) override;
+  DeleteModel(google::cloud::translation::v3::DeleteModelRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag,
-      google::cloud::translation::v3::DeleteModelRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag,
+      google::cloud::translation::v3::DeleteModelRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
-  DeleteModel(
-      google::longrunning::Operation const& operation) override;
+  DeleteModel(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::shared_ptr<translate_v3::TranslationServiceConnection> child_;

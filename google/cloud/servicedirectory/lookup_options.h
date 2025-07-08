@@ -28,16 +28,21 @@ namespace cloud {
 namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use servicedirectory_v1::LookupServiceBackoffPolicyOption directly.
+/// @deprecated Use servicedirectory_v1::LookupServiceBackoffPolicyOption
+/// directly.
 using ::google::cloud::servicedirectory_v1::LookupServiceBackoffPolicyOption;
 
-/// @deprecated Use servicedirectory_v1::LookupServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::servicedirectory_v1::LookupServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// servicedirectory_v1::LookupServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::servicedirectory_v1::
+    LookupServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use servicedirectory_v1::LookupServicePolicyOptionList directly.
 using ::google::cloud::servicedirectory_v1::LookupServicePolicyOptionList;
 
-/// @deprecated Use servicedirectory_v1::LookupServiceRetryPolicyOption directly.
+/// @deprecated Use servicedirectory_v1::LookupServiceRetryPolicyOption
+/// directly.
 using ::google::cloud::servicedirectory_v1::LookupServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

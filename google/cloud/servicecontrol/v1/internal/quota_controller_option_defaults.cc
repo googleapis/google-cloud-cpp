@@ -17,10 +17,10 @@
 // source: google/api/servicecontrol/v1/quota_controller.proto
 
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/servicecontrol/v1/quota_controller_connection.h"
 #include "google/cloud/servicecontrol/v1/quota_controller_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -35,23 +35,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options QuotaControllerDefaultOptions(Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_QUOTA_CONTROLLER_AUTHORITY",
       "servicecontrol.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<servicecontrol_v1::QuotaControllerRetryPolicyOption>()) {
     options.set<servicecontrol_v1::QuotaControllerRetryPolicyOption>(
         servicecontrol_v1::QuotaControllerLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<servicecontrol_v1::QuotaControllerBackoffPolicyOption>()) {
     options.set<servicecontrol_v1::QuotaControllerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicyOption>()) {
-    options.set<servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicyOption>(
-        servicecontrol_v1::MakeDefaultQuotaControllerConnectionIdempotencyPolicy());
+  if (!options.has<servicecontrol_v1::
+                       QuotaControllerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicyOption>(
+        servicecontrol_v1::
+            MakeDefaultQuotaControllerConnectionIdempotencyPolicy());
   }
 
   return options;

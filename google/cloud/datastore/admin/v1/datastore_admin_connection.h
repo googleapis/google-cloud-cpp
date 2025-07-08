@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_ADMIN_V1_DATASTORE_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_ADMIN_V1_DATASTORE_ADMIN_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection_idempotency_policy.h"
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -56,7 +56,8 @@ class DatastoreAdminRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class DatastoreAdminLimitedErrorCountRetryPolicy : public DatastoreAdminRetryPolicy {
+class DatastoreAdminLimitedErrorCountRetryPolicy
+    : public DatastoreAdminRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -66,14 +67,14 @@ class DatastoreAdminLimitedErrorCountRetryPolicy : public DatastoreAdminRetryPol
    *     @p maximum_failures == 0.
    */
   explicit DatastoreAdminLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DatastoreAdminLimitedErrorCountRetryPolicy(
       DatastoreAdminLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DatastoreAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DatastoreAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DatastoreAdminLimitedErrorCountRetryPolicy(
       DatastoreAdminLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DatastoreAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DatastoreAdminLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +94,9 @@ class DatastoreAdminLimitedErrorCountRetryPolicy : public DatastoreAdminRetryPol
   using BaseType = DatastoreAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<datastore_admin_v1_internal::DatastoreAdminRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      datastore_admin_v1_internal::DatastoreAdminRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +134,14 @@ class DatastoreAdminLimitedTimeRetryPolicy : public DatastoreAdminRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DatastoreAdminLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  DatastoreAdminLimitedTimeRetryPolicy(DatastoreAdminLimitedTimeRetryPolicy&& rhs) noexcept
-    : DatastoreAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DatastoreAdminLimitedTimeRetryPolicy(DatastoreAdminLimitedTimeRetryPolicy const& rhs) noexcept
-    : DatastoreAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatastoreAdminLimitedTimeRetryPolicy(
+      DatastoreAdminLimitedTimeRetryPolicy&& rhs) noexcept
+      : DatastoreAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatastoreAdminLimitedTimeRetryPolicy(
+      DatastoreAdminLimitedTimeRetryPolicy const& rhs) noexcept
+      : DatastoreAdminLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -158,7 +163,9 @@ class DatastoreAdminLimitedTimeRetryPolicy : public DatastoreAdminRetryPolicy {
   using BaseType = DatastoreAdminRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<datastore_admin_v1_internal::DatastoreAdminRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      datastore_admin_v1_internal::DatastoreAdminRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,58 +187,64 @@ class DatastoreAdminConnection {
   virtual Options options() { return Options{}; }
 
   virtual future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const& request);
+  ExportEntities(
+      google::datastore::admin::v1::ExportEntitiesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ExportEntities(NoAwaitTag, google::datastore::admin::v1::ExportEntitiesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ExportEntities(
+      NoAwaitTag,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities( google::longrunning::Operation const& operation);
+  ExportEntities(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const& request);
+  ImportEntities(
+      google::datastore::admin::v1::ImportEntitiesRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  ImportEntities(NoAwaitTag, google::datastore::admin::v1::ImportEntitiesRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> ImportEntities(
+      NoAwaitTag,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities( google::longrunning::Operation const& operation);
+  ImportEntities(google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::datastore::admin::v1::Index>>
-  CreateIndex(google::datastore::admin::v1::CreateIndexRequest const& request);
+  virtual future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
+      google::datastore::admin::v1::CreateIndexRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  CreateIndex(NoAwaitTag, google::datastore::admin::v1::CreateIndexRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> CreateIndex(
+      NoAwaitTag,
+      google::datastore::admin::v1::CreateIndexRequest const& request);
 
-  virtual future<StatusOr<google::datastore::admin::v1::Index>>
-  CreateIndex( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
+      google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<google::datastore::admin::v1::Index>>
-  DeleteIndex(google::datastore::admin::v1::DeleteIndexRequest const& request);
+  virtual future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
+      google::datastore::admin::v1::DeleteIndexRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteIndex(NoAwaitTag, google::datastore::admin::v1::DeleteIndexRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteIndex(
+      NoAwaitTag,
+      google::datastore::admin::v1::DeleteIndexRequest const& request);
 
-  virtual future<StatusOr<google::datastore::admin::v1::Index>>
-  DeleteIndex( google::longrunning::Operation const& operation);
+  virtual future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
+      google::longrunning::Operation const& operation);
 
-  virtual StatusOr<google::datastore::admin::v1::Index>
-  GetIndex(google::datastore::admin::v1::GetIndexRequest const& request);
+  virtual StatusOr<google::datastore::admin::v1::Index> GetIndex(
+      google::datastore::admin::v1::GetIndexRequest const& request);
 
-  virtual StreamRange<google::datastore::admin::v1::Index>
-  ListIndexes(google::datastore::admin::v1::ListIndexesRequest request);
+  virtual StreamRange<google::datastore::admin::v1::Index> ListIndexes(
+      google::datastore::admin::v1::ListIndexesRequest request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

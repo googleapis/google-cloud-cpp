@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_OPTIONS_H
 
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
-#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
 #include <memory>
 
 namespace google {

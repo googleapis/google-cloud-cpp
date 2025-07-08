@@ -33,7 +33,8 @@ using ::google::cloud::dataproc_v1::MakeJobControllerConnection;
 /// @deprecated Use dataproc_v1::JobControllerConnection directly.
 using ::google::cloud::dataproc_v1::JobControllerConnection;
 
-/// @deprecated Use dataproc_v1::JobControllerLimitedErrorCountRetryPolicy directly.
+/// @deprecated Use dataproc_v1::JobControllerLimitedErrorCountRetryPolicy
+/// directly.
 using ::google::cloud::dataproc_v1::JobControllerLimitedErrorCountRetryPolicy;
 
 /// @deprecated Use dataproc_v1::JobControllerLimitedTimeRetryPolicy directly.

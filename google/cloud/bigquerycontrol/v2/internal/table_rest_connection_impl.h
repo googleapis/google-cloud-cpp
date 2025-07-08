@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_TABLE_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_TABLE_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquerycontrol/v2/internal/table_rest_stub.h"
 #include "google/cloud/bigquerycontrol/v2/internal/table_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/table_connection.h"
 #include "google/cloud/bigquerycontrol/v2/table_connection_idempotency_policy.h"
 #include "google/cloud/bigquerycontrol/v2/table_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,43 +43,51 @@ class TableServiceRestConnectionImpl
   ~TableServiceRestConnectionImpl() override = default;
 
   TableServiceRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquerycontrol_v2_internal::TableServiceRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquerycontrol_v2_internal::TableServiceRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::bigquery::v2::Table>
-  GetTable(google::cloud::bigquery::v2::GetTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Table> GetTable(
+      google::cloud::bigquery::v2::GetTableRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Table>
-  InsertTable(google::cloud::bigquery::v2::InsertTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Table> InsertTable(
+      google::cloud::bigquery::v2::InsertTableRequest const& request) override;
 
-  StatusOr<google::cloud::bigquery::v2::Table>
-  PatchTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Table> PatchTable(
+      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request)
+      override;
 
-  StatusOr<google::cloud::bigquery::v2::Table>
-  UpdateTable(google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) override;
+  StatusOr<google::cloud::bigquery::v2::Table> UpdateTable(
+      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request)
+      override;
 
-  Status
-  DeleteTable(google::cloud::bigquery::v2::DeleteTableRequest const& request) override;
+  Status DeleteTable(
+      google::cloud::bigquery::v2::DeleteTableRequest const& request) override;
 
-  StreamRange<google::cloud::bigquery::v2::ListFormatTable>
-  ListTables(google::cloud::bigquery::v2::ListTablesRequest request) override;
+  StreamRange<google::cloud::bigquery::v2::ListFormatTable> ListTables(
+      google::cloud::bigquery::v2::ListTablesRequest request) override;
 
  private:
   static std::unique_ptr<bigquerycontrol_v2::TableServiceRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::TableServiceRetryPolicyOption>()->clone();
+    return options.get<bigquerycontrol_v2::TableServiceRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::TableServiceBackoffPolicyOption>()->clone();
+    return options.get<bigquerycontrol_v2::TableServiceBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<bigquerycontrol_v2::TableServiceConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      bigquerycontrol_v2::TableServiceConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<bigquerycontrol_v2::TableServiceConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<
+            bigquerycontrol_v2::TableServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

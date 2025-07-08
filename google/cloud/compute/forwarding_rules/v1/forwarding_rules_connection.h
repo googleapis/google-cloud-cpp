@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_FORWARDING_RULES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_FORWARDING_RULES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/forwarding_rules/v1/forwarding_rules_connection_idempotency_policy.h"
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class ForwardingRulesRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ForwardingRulesLimitedErrorCountRetryPolicy : public ForwardingRulesRetryPolicy {
+class ForwardingRulesLimitedErrorCountRetryPolicy
+    : public ForwardingRulesRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class ForwardingRulesLimitedErrorCountRetryPolicy : public ForwardingRulesRetryP
    *     @p maximum_failures == 0.
    */
   explicit ForwardingRulesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ForwardingRulesLimitedErrorCountRetryPolicy(
       ForwardingRulesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ForwardingRulesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ForwardingRulesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ForwardingRulesLimitedErrorCountRetryPolicy(
       ForwardingRulesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ForwardingRulesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ForwardingRulesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class ForwardingRulesLimitedErrorCountRetryPolicy : public ForwardingRulesRetryP
   using BaseType = ForwardingRulesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_forwarding_rules_v1_internal::ForwardingRulesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_forwarding_rules_v1_internal::ForwardingRulesRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class ForwardingRulesLimitedErrorCountRetryPolicy : public ForwardingRulesRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ForwardingRulesLimitedTimeRetryPolicy : public ForwardingRulesRetryPolicy {
+class ForwardingRulesLimitedTimeRetryPolicy
+    : public ForwardingRulesRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class ForwardingRulesLimitedTimeRetryPolicy : public ForwardingRulesRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit ForwardingRulesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ForwardingRulesLimitedTimeRetryPolicy(ForwardingRulesLimitedTimeRetryPolicy&& rhs) noexcept
-    : ForwardingRulesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ForwardingRulesLimitedTimeRetryPolicy(ForwardingRulesLimitedTimeRetryPolicy const& rhs) noexcept
-    : ForwardingRulesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ForwardingRulesLimitedTimeRetryPolicy(
+      ForwardingRulesLimitedTimeRetryPolicy&& rhs) noexcept
+      : ForwardingRulesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ForwardingRulesLimitedTimeRetryPolicy(
+      ForwardingRulesLimitedTimeRetryPolicy const& rhs) noexcept
+      : ForwardingRulesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,7 +163,9 @@ class ForwardingRulesLimitedTimeRetryPolicy : public ForwardingRulesRetryPolicy 
   using BaseType = ForwardingRulesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_forwarding_rules_v1_internal::ForwardingRulesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_forwarding_rules_v1_internal::ForwardingRulesRetryTraits>
+      impl_;
 };
 
 /**
@@ -170,7 +178,8 @@ class ForwardingRulesLimitedTimeRetryPolicy : public ForwardingRulesRetryPolicy 
  *
  * To create a concrete instance, see `MakeForwardingRulesConnection()`.
  *
- * For mocking, see `compute_forwarding_rules_v1_mocks::MockForwardingRulesConnection`.
+ * For mocking, see
+ * `compute_forwarding_rules_v1_mocks::MockForwardingRulesConnection`.
  */
 class ForwardingRulesConnection {
  public:
@@ -178,59 +187,84 @@ class ForwardingRulesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
-  AggregatedListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::AggregatedListForwardingRulesRequest request);
+  virtual StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::ForwardingRulesScopedList>>
+  AggregatedListForwardingRules(
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          AggregatedListForwardingRulesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const& request);
+  DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                           DeleteForwardingRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteForwardingRule(NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::DeleteForwardingRuleRequest const& request);
+  DeleteForwardingRule(NoAwaitTag,
+                       google::cloud::cpp::compute::forwarding_rules::v1::
+                           DeleteForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteForwardingRule( google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteForwardingRule(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::GetForwardingRuleRequest const& request);
+  GetForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                        GetForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const& request);
+  InsertForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                           InsertForwardingRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertForwardingRule(NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::InsertForwardingRuleRequest const& request);
+  InsertForwardingRule(NoAwaitTag,
+                       google::cloud::cpp::compute::forwarding_rules::v1::
+                           InsertForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertForwardingRule( google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertForwardingRule(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
-  ListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::ListForwardingRulesRequest request);
+  ListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
+                          ListForwardingRulesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const& request);
+  PatchForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
+                          PatchForwardingRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchForwardingRule(NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::PatchForwardingRuleRequest const& request);
+  PatchForwardingRule(NoAwaitTag,
+                      google::cloud::cpp::compute::forwarding_rules::v1::
+                          PatchForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchForwardingRule( google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchForwardingRule(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request);
+  SetLabels(
+      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels( google::cloud::cpp::compute::v1::Operation const& operation);
-
-  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTarget(google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetTarget(NoAwaitTag, google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTarget( google::cloud::cpp::compute::v1::Operation const& operation);
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetTarget(
+      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
+      NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetTarget(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

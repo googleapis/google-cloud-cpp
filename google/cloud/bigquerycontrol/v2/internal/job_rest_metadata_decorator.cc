@@ -17,11 +17,11 @@
 // source: google/cloud/bigquery/v2/job.proto
 
 #include "google/cloud/bigquerycontrol/v2/internal/job_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,8 +31,7 @@ namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 JobServiceRestMetadata::JobServiceRestMetadata(
-    std::shared_ptr<JobServiceRestStub> child,
-    std::string api_client_header)
+    std::shared_ptr<JobServiceRestStub> child, std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -41,65 +40,61 @@ JobServiceRestMetadata::JobServiceRestMetadata(
 
 StatusOr<google::cloud::bigquery::v2::JobCancelResponse>
 JobServiceRestMetadata::CancelJob(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::bigquery::v2::CancelJobRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::CancelJobRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->CancelJob(rest_context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::v2::Job>
-JobServiceRestMetadata::GetJob(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::bigquery::v2::GetJobRequest const& request) {
+StatusOr<google::cloud::bigquery::v2::Job> JobServiceRestMetadata::GetJob(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::GetJobRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetJob(rest_context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::v2::Job>
-JobServiceRestMetadata::InsertJob(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::bigquery::v2::InsertJobRequest const& request) {
+StatusOr<google::cloud::bigquery::v2::Job> JobServiceRestMetadata::InsertJob(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::InsertJobRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->InsertJob(rest_context, options, request);
 }
 
-Status
-JobServiceRestMetadata::DeleteJob(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::bigquery::v2::DeleteJobRequest const& request) {
+Status JobServiceRestMetadata::DeleteJob(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::DeleteJobRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->DeleteJob(rest_context, options, request);
 }
 
-StatusOr<google::cloud::bigquery::v2::JobList>
-JobServiceRestMetadata::ListJobs(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::bigquery::v2::ListJobsRequest const& request) {
+StatusOr<google::cloud::bigquery::v2::JobList> JobServiceRestMetadata::ListJobs(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::ListJobsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->ListJobs(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
 JobServiceRestMetadata::GetQueryResults(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetQueryResults(rest_context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::v2::QueryResponse>
 JobServiceRestMetadata::Query(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::bigquery::v2::PostQueryRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::PostQueryRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->Query(rest_context, options, request);
 }
 
 void JobServiceRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
-  google::cloud::rest_internal::SetMetadata(
-      rest_context, options, params, api_client_header_);
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

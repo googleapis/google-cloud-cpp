@@ -47,44 +47,48 @@ class MockWebhooksConnection : public dialogflow_cx::WebhooksConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dialogflow::cx::v3::Webhook>),
-  ListWebhooks,
-  (google::cloud::dialogflow::cx::v3::ListWebhooksRequest request), (override));
+              ListWebhooks,
+              (google::cloud::dialogflow::cx::v3::ListWebhooksRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Webhook>,
-  GetWebhook,
-  (google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::cx::v3::Webhook>, GetWebhook,
+      (google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Webhook>,
-  CreateWebhook,
-  (google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::cx::v3::Webhook>, CreateWebhook,
+      (google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::dialogflow::cx::v3::Webhook>,
-  UpdateWebhook,
-  (google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::cx::v3::Webhook>, UpdateWebhook,
+      (google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteWebhook,
-  (google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteWebhook,
+      (google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request),
+      (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
-  ListLocations,
-  (google::cloud::location::ListLocationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
-  GetLocation,
-  (google::cloud::location::GetLocationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
-  ListOperations,
-  (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  GetOperation,
-  (google::longrunning::GetOperationRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 
-  MOCK_METHOD(Status,
-  CancelOperation,
-  (google::longrunning::CancelOperationRequest const& request), (override));
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

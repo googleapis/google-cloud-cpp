@@ -34,52 +34,65 @@ JobServiceTracingConnection::JobServiceTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::bigquery::v2::JobCancelResponse>
-JobServiceTracingConnection::CancelJob(google::cloud::bigquery::v2::CancelJobRequest const& request) {
-  auto span = internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::CancelJob");
+JobServiceTracingConnection::CancelJob(
+    google::cloud::bigquery::v2::CancelJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::CancelJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelJob(request));
 }
 
-StatusOr<google::cloud::bigquery::v2::Job>
-JobServiceTracingConnection::GetJob(google::cloud::bigquery::v2::GetJobRequest const& request) {
-  auto span = internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::GetJob");
+StatusOr<google::cloud::bigquery::v2::Job> JobServiceTracingConnection::GetJob(
+    google::cloud::bigquery::v2::GetJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::Job>
-JobServiceTracingConnection::InsertJob(google::cloud::bigquery::v2::InsertJobRequest const& request) {
-  auto span = internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::InsertJob");
+JobServiceTracingConnection::InsertJob(
+    google::cloud::bigquery::v2::InsertJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::InsertJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertJob(request));
 }
 
-Status
-JobServiceTracingConnection::DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const& request) {
-  auto span = internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::DeleteJob");
+Status JobServiceTracingConnection::DeleteJob(
+    google::cloud::bigquery::v2::DeleteJobRequest const& request) {
+  auto span =
+      internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteJob(request));
 }
 
 StreamRange<google::cloud::bigquery::v2::ListFormatJob>
-JobServiceTracingConnection::ListJobs(google::cloud::bigquery::v2::ListJobsRequest request) {
-  auto span = internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::ListJobs");
+JobServiceTracingConnection::ListJobs(
+    google::cloud::bigquery::v2::ListJobsRequest request) {
+  auto span =
+      internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::ListJobs");
   internal::OTelScope scope(span);
   auto sr = child_->ListJobs(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::bigquery::v2::ListFormatJob>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::v2::ListFormatJob>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
-JobServiceTracingConnection::GetQueryResults(google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
-  auto span = internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::GetQueryResults");
+JobServiceTracingConnection::GetQueryResults(
+    google::cloud::bigquery::v2::GetQueryResultsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquerycontrol_v2::JobServiceConnection::GetQueryResults");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetQueryResults(request));
 }
 
 StatusOr<google::cloud::bigquery::v2::QueryResponse>
-JobServiceTracingConnection::Query(google::cloud::bigquery::v2::PostQueryRequest const& request) {
-  auto span = internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::Query");
+JobServiceTracingConnection::Query(
+    google::cloud::bigquery::v2::PostQueryRequest const& request) {
+  auto span =
+      internal::MakeSpan("bigquerycontrol_v2::JobServiceConnection::Query");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Query(request));
 }

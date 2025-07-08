@@ -17,12 +17,12 @@
 // source: google/cloud/compute/network_profiles/v1/network_profiles.proto
 
 #include "google/cloud/compute/network_profiles/v1/network_profiles_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_option_defaults.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_rest_connection_impl.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_rest_stub_factory.h"
 #include "google/cloud/compute/network_profiles/v1/internal/network_profiles_tracing_connection.h"
 #include "google/cloud/compute/network_profiles/v1/network_profiles_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
@@ -36,19 +36,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<NetworkProfilesConnection> MakeNetworkProfilesConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      NetworkProfilesPolicyOptionList>(options, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, NetworkProfilesPolicyOptionList>(
+      options, __func__);
   options = compute_network_profiles_v1_internal::NetworkProfilesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_network_profiles_v1_internal::CreateDefaultNetworkProfilesRestStub(
-      options);
-  return compute_network_profiles_v1_internal::MakeNetworkProfilesTracingConnection(
-      std::make_shared<
-          compute_network_profiles_v1_internal::NetworkProfilesRestConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+  auto stub = compute_network_profiles_v1_internal::
+      CreateDefaultNetworkProfilesRestStub(options);
+  return compute_network_profiles_v1_internal::
+      MakeNetworkProfilesTracingConnection(
+          std::make_shared<compute_network_profiles_v1_internal::
+                               NetworkProfilesRestConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

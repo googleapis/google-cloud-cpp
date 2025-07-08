@@ -31,85 +31,78 @@ PublisherRoundRobin::PublisherRoundRobin(
     : children_(std::move(children)) {}
 
 StatusOr<google::pubsub::v1::Topic> PublisherRoundRobin::CreateTopic(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::Topic const& request) {
   return Child()->CreateTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Topic> PublisherRoundRobin::UpdateTopic(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::UpdateTopicRequest const& request) {
   return Child()->UpdateTopic(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::PublishResponse> PublisherRoundRobin::Publish(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::PublishRequest const& request) {
   return Child()->Publish(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Topic> PublisherRoundRobin::GetTopic(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetTopicRequest const& request) {
   return Child()->GetTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicsResponse> PublisherRoundRobin::ListTopics(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::ListTopicsResponse>
+PublisherRoundRobin::ListTopics(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicsRequest const& request) {
   return Child()->ListTopics(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse> PublisherRoundRobin::ListTopicSubscriptions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
+PublisherRoundRobin::ListTopicSubscriptions(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
   return Child()->ListTopicSubscriptions(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse> PublisherRoundRobin::ListTopicSnapshots(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
+PublisherRoundRobin::ListTopicSnapshots(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
   return Child()->ListTopicSnapshots(context, options, request);
 }
 
 Status PublisherRoundRobin::DeleteTopic(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteTopicRequest const& request) {
   return Child()->DeleteTopic(context, options, request);
 }
 
-StatusOr<google::pubsub::v1::DetachSubscriptionResponse> PublisherRoundRobin::DetachSubscription(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
+PublisherRoundRobin::DetachSubscription(
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
   return Child()->DetachSubscription(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> PublisherRoundRobin::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return Child()->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> PublisherRoundRobin::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return Child()->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> PublisherRoundRobin::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+PublisherRoundRobin::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return Child()->TestIamPermissions(context, options, request);
 }
@@ -120,12 +113,11 @@ PublisherRoundRobin::AsyncPublish(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::PublishRequest const& request) {
-  return Child()->AsyncPublish(
-      cq, std::move(context), std::move(options), request);
+  return Child()->AsyncPublish(cq, std::move(context), std::move(options),
+                               request);
 }
 
-std::shared_ptr<PublisherStub>
-PublisherRoundRobin::Child() {
+std::shared_ptr<PublisherStub> PublisherRoundRobin::Child() {
   std::unique_lock<std::mutex> lk(mu_);
   auto const current = current_;
   if (++current_ == children_.size()) current_ = 0;

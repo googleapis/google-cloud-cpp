@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_BLOCKS_V1_RESERVATION_BLOCKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATION_BLOCKS_V1_RESERVATION_BLOCKS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/reservation_blocks/v1/internal/reservation_blocks_retry_traits.h"
 #include "google/cloud/compute/reservation_blocks/v1/reservation_blocks_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -55,7 +55,8 @@ class ReservationBlocksRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ReservationBlocksLimitedErrorCountRetryPolicy : public ReservationBlocksRetryPolicy {
+class ReservationBlocksLimitedErrorCountRetryPolicy
+    : public ReservationBlocksRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -65,14 +66,14 @@ class ReservationBlocksLimitedErrorCountRetryPolicy : public ReservationBlocksRe
    *     @p maximum_failures == 0.
    */
   explicit ReservationBlocksLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ReservationBlocksLimitedErrorCountRetryPolicy(
       ReservationBlocksLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ReservationBlocksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ReservationBlocksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ReservationBlocksLimitedErrorCountRetryPolicy(
       ReservationBlocksLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ReservationBlocksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ReservationBlocksLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -92,7 +93,9 @@ class ReservationBlocksLimitedErrorCountRetryPolicy : public ReservationBlocksRe
   using BaseType = ReservationBlocksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<compute_reservation_blocks_v1_internal::ReservationBlocksRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      compute_reservation_blocks_v1_internal::ReservationBlocksRetryTraits>
+      impl_;
 };
 
 /**
@@ -105,7 +108,8 @@ class ReservationBlocksLimitedErrorCountRetryPolicy : public ReservationBlocksRe
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ReservationBlocksLimitedTimeRetryPolicy : public ReservationBlocksRetryPolicy {
+class ReservationBlocksLimitedTimeRetryPolicy
+    : public ReservationBlocksRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -130,12 +134,14 @@ class ReservationBlocksLimitedTimeRetryPolicy : public ReservationBlocksRetryPol
   template <typename DurationRep, typename DurationPeriod>
   explicit ReservationBlocksLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ReservationBlocksLimitedTimeRetryPolicy(ReservationBlocksLimitedTimeRetryPolicy&& rhs) noexcept
-    : ReservationBlocksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ReservationBlocksLimitedTimeRetryPolicy(ReservationBlocksLimitedTimeRetryPolicy const& rhs) noexcept
-    : ReservationBlocksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReservationBlocksLimitedTimeRetryPolicy(
+      ReservationBlocksLimitedTimeRetryPolicy&& rhs) noexcept
+      : ReservationBlocksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ReservationBlocksLimitedTimeRetryPolicy(
+      ReservationBlocksLimitedTimeRetryPolicy const& rhs) noexcept
+      : ReservationBlocksLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -157,20 +163,23 @@ class ReservationBlocksLimitedTimeRetryPolicy : public ReservationBlocksRetryPol
   using BaseType = ReservationBlocksRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<compute_reservation_blocks_v1_internal::ReservationBlocksRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      compute_reservation_blocks_v1_internal::ReservationBlocksRetryTraits>
+      impl_;
 };
 
 /**
  * The `ReservationBlocksConnection` object for `ReservationBlocksClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ReservationBlocksClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ReservationBlocksClient`.
+ * sets in `ReservationBlocksClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ReservationBlocksClient`.
  *
  * To create a concrete instance, see `MakeReservationBlocksConnection()`.
  *
- * For mocking, see `compute_reservation_blocks_v1_mocks::MockReservationBlocksConnection`.
+ * For mocking, see
+ * `compute_reservation_blocks_v1_mocks::MockReservationBlocksConnection`.
  */
 class ReservationBlocksConnection {
  public:
@@ -178,20 +187,28 @@ class ReservationBlocksConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
-  GetReservationBlocksGetResponse(google::cloud::cpp::compute::reservation_blocks::v1::GetReservationBlocksGetResponseRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::ReservationBlocksGetResponse>
+  GetReservationBlocksGetResponse(
+      google::cloud::cpp::compute::reservation_blocks::v1::
+          GetReservationBlocksGetResponseRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ReservationBlock>
-  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::ListReservationBlocksRequest request);
+  ListReservationBlocks(google::cloud::cpp::compute::reservation_blocks::v1::
+                            ListReservationBlocksRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request);
+  PerformMaintenance(google::cloud::cpp::compute::reservation_blocks::v1::
+                         PerformMaintenanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PerformMaintenance(NoAwaitTag, google::cloud::cpp::compute::reservation_blocks::v1::PerformMaintenanceRequest const& request);
+  PerformMaintenance(NoAwaitTag,
+                     google::cloud::cpp::compute::reservation_blocks::v1::
+                         PerformMaintenanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance( google::cloud::cpp::compute::v1::Operation const& operation);
+  PerformMaintenance(
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

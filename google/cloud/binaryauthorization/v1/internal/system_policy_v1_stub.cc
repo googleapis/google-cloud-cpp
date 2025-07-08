@@ -32,15 +32,15 @@ SystemPolicyV1Stub::~SystemPolicyV1Stub() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 DefaultSystemPolicyV1Stub::GetSystemPolicy(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const& request) {
-    google::cloud::binaryauthorization::v1::Policy response;
-    auto status =
-        grpc_stub_->GetSystemPolicy(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
+        request) {
+  google::cloud::binaryauthorization::v1::Policy response;
+  auto status = grpc_stub_->GetSystemPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,11 +26,17 @@ namespace cloud {
 namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use osconfig_agentendpoint_v1::MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::osconfig_agentendpoint_v1::MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// osconfig_agentendpoint_v1::MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::osconfig_agentendpoint_v1::
+    MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// osconfig_agentendpoint_v1::AgentEndpointServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::osconfig_agentendpoint_v1::
+    AgentEndpointServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_INTERNAL_NODE_TYPES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_INTERNAL_NODE_TYPES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_stub.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_retry_traits.h"
 #include "google/cloud/compute/node_types/v1/node_types_connection.h"
 #include "google/cloud/compute/node_types/v1/node_types_connection_idempotency_policy.h"
 #include "google/cloud/compute/node_types/v1/node_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,34 +43,44 @@ class NodeTypesRestConnectionImpl
   ~NodeTypesRestConnectionImpl() override = default;
 
   NodeTypesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_node_types_v1_internal::NodeTypesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_node_types_v1_internal::NodeTypesRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::NodeTypesScopedList>>
-  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::AggregatedListNodeTypesRequest request) override;
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::NodeTypesScopedList>>
+  AggregatedListNodeTypes(google::cloud::cpp::compute::node_types::v1::
+                              AggregatedListNodeTypesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeType>
-  GetNodeType(google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeType(
+      google::cloud::cpp::compute::node_types::v1::GetNodeTypeRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::NodeType>
-  ListNodeTypes(google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
+      google::cloud::cpp::compute::node_types::v1::ListNodeTypesRequest request)
+      override;
 
  private:
   static std::unique_ptr<compute_node_types_v1::NodeTypesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<compute_node_types_v1::NodeTypesRetryPolicyOption>()->clone();
+    return options.get<compute_node_types_v1::NodeTypesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<compute_node_types_v1::NodeTypesBackoffPolicyOption>()->clone();
+    return options.get<compute_node_types_v1::NodeTypesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<compute_node_types_v1::NodeTypesConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      compute_node_types_v1::NodeTypesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<compute_node_types_v1::NodeTypesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<
+            compute_node_types_v1::NodeTypesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

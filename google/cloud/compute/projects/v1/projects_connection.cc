@@ -17,11 +17,11 @@
 // source: google/cloud/compute/projects/v1/projects.proto
 
 #include "google/cloud/compute/projects/v1/projects_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/projects/v1/internal/projects_option_defaults.h"
 #include "google/cloud/compute/projects/v1/internal/projects_tracing_connection.h"
 #include "google/cloud/compute/projects/v1/projects_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -40,8 +40,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::DisableXpnHost(
     google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -49,47 +49,48 @@ ProjectsConnection::DisableXpnHost(
     NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::DisableXpnHost(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::DisableXpnResource(
-    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&) {
+    google::cloud::cpp::compute::projects::v1::
+        DisableXpnResourceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::DisableXpnResource(
-    NoAwaitTag,
-    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                    DisableXpnResourceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::DisableXpnResource(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::EnableXpnHost(
     google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -97,39 +98,39 @@ ProjectsConnection::EnableXpnHost(
     NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::EnableXpnHost(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ProjectsConnection::EnableXpnResource(
-    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&) {
+ProjectsConnection::EnableXpnResource(google::cloud::cpp::compute::projects::
+                                          v1::EnableXpnResourceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsConnection::EnableXpnResource(
-    NoAwaitTag,
-    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&) {
+ProjectsConnection::EnableXpnResource(NoAwaitTag,
+                                      google::cloud::cpp::compute::projects::
+                                          v1::EnableXpnResourceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::EnableXpnResource(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
@@ -150,8 +151,10 @@ ProjectsConnection::GetXpnResources(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Project> ProjectsConnection::ListXpnHosts(
-    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Project>
+ProjectsConnection::ListXpnHosts(
+    google::cloud::cpp::compute::projects::v1::
+        ListXpnHostsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Project>>();
 }
@@ -160,8 +163,8 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::MoveDisk(
     google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -169,23 +172,23 @@ ProjectsConnection::MoveDisk(
     NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::MoveDisk(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::MoveInstance(
     google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
@@ -193,111 +196,114 @@ ProjectsConnection::MoveInstance(
     NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::MoveInstance(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsConnection::SetCloudArmorTier(google::cloud::cpp::compute::projects::
+                                          v1::SetCloudArmorTierRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsConnection::SetCloudArmorTier(NoAwaitTag,
+                                      google::cloud::cpp::compute::projects::
+                                          v1::SetCloudArmorTierRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetCloudArmorTier(
-    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&) {
-  return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
-}
-
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsConnection::SetCloudArmorTier(
-    NoAwaitTag,
-    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&) {
-  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
-}
-
-future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ProjectsConnection::SetCloudArmorTier(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetCommonInstanceMetadata(
-    google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const&) {
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetCommonInstanceMetadata(
-    NoAwaitTag,
-    google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                    SetCommonInstanceMetadataRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetCommonInstanceMetadata(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetDefaultNetworkTier(
-    google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const&) {
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetDefaultNetworkTier(
-    NoAwaitTag,
-    google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                    SetDefaultNetworkTierRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetDefaultNetworkTier(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetUsageExportBucket(
-    google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const&) {
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetUsageExportBucket(
-    NoAwaitTag,
-    google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                    SetUsageExportBucketRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetUsageExportBucket(
     google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
-    StatusOr<google::cloud::cpp::compute::v1::Operation>>(
-    Status(StatusCode::kUnimplemented, "not implemented"));
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

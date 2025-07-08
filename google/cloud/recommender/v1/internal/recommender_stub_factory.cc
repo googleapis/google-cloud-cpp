@@ -17,17 +17,17 @@
 // source: google/cloud/recommender/v1/recommender_service.proto
 
 #include "google/cloud/recommender/v1/internal/recommender_stub_factory.h"
+#include "google/cloud/recommender/v1/internal/recommender_auth_decorator.h"
+#include "google/cloud/recommender/v1/internal/recommender_logging_decorator.h"
+#include "google/cloud/recommender/v1/internal/recommender_metadata_decorator.h"
+#include "google/cloud/recommender/v1/internal/recommender_stub.h"
+#include "google/cloud/recommender/v1/internal/recommender_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/recommender/v1/internal/recommender_auth_decorator.h"
-#include "google/cloud/recommender/v1/internal/recommender_logging_decorator.h"
-#include "google/cloud/recommender/v1/internal/recommender_metadata_decorator.h"
-#include "google/cloud/recommender/v1/internal/recommender_stub.h"
-#include "google/cloud/recommender/v1/internal/recommender_tracing_stub.h"
 #include <google/cloud/recommender/v1/recommender_service.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -37,28 +37,25 @@ namespace cloud {
 namespace recommender_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<RecommenderStub>
-CreateDefaultRecommenderStub(
+std::shared_ptr<RecommenderStub> CreateDefaultRecommenderStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::recommender::v1::Recommender::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::recommender::v1::Recommender::NewStub(channel);
   std::shared_ptr<RecommenderStub> stub =
-    std::make_shared<DefaultRecommenderStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultRecommenderStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<RecommenderAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<RecommenderAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<RecommenderMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<RecommenderLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

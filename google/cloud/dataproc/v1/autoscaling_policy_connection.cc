@@ -17,14 +17,14 @@
 // source: google/cloud/dataproc/v1/autoscaling_policies.proto
 
 #include "google/cloud/dataproc/v1/autoscaling_policy_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/dataproc/v1/autoscaling_policy_options.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_connection_impl.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_option_defaults.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_stub_factory.h"
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -36,7 +36,8 @@ namespace cloud {
 namespace dataproc_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AutoscalingPolicyServiceConnection::~AutoscalingPolicyServiceConnection() = default;
+AutoscalingPolicyServiceConnection::~AutoscalingPolicyServiceConnection() =
+    default;
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceConnection::CreateAutoscalingPolicy(
@@ -56,14 +57,15 @@ AutoscalingPolicyServiceConnection::GetAutoscalingPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy> AutoscalingPolicyServiceConnection::ListAutoscalingPolicies(
-    google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
+AutoscalingPolicyServiceConnection::ListAutoscalingPolicies(
+    google::cloud::dataproc::v1::
+        ListAutoscalingPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>>();
 }
 
-Status
-AutoscalingPolicyServiceConnection::DeleteAutoscalingPolicy(
+Status AutoscalingPolicyServiceConnection::DeleteAutoscalingPolicy(
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -86,8 +88,10 @@ AutoscalingPolicyServiceConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::longrunning::Operation> AutoscalingPolicyServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+AutoscalingPolicyServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -98,37 +102,39 @@ AutoscalingPolicyServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AutoscalingPolicyServiceConnection::DeleteOperation(
+Status AutoscalingPolicyServiceConnection::DeleteOperation(
     google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-AutoscalingPolicyServiceConnection::CancelOperation(
+Status AutoscalingPolicyServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<AutoscalingPolicyServiceConnection> MakeAutoscalingPolicyServiceConnection(
-    std::string const& location, Options options) {
+std::shared_ptr<AutoscalingPolicyServiceConnection>
+MakeAutoscalingPolicyServiceConnection(std::string const& location,
+                                       Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      AutoscalingPolicyServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 AutoscalingPolicyServicePolicyOptionList>(
+      options, __func__);
   options = dataproc_v1_internal::AutoscalingPolicyServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = dataproc_v1_internal::CreateDefaultAutoscalingPolicyServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return dataproc_v1_internal::MakeAutoscalingPolicyServiceTracingConnection(
-      std::make_shared<dataproc_v1_internal::AutoscalingPolicyServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          dataproc_v1_internal::AutoscalingPolicyServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
-std::shared_ptr<AutoscalingPolicyServiceConnection> MakeAutoscalingPolicyServiceConnection(
-    Options options) {
-  return MakeAutoscalingPolicyServiceConnection(std::string{}, std::move(options));
+std::shared_ptr<AutoscalingPolicyServiceConnection>
+MakeAutoscalingPolicyServiceConnection(Options options) {
+  return MakeAutoscalingPolicyServiceConnection(std::string{},
+                                                std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -31,40 +31,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RevisionsStub::~RevisionsStub() = default;
 
-StatusOr<google::cloud::run::v2::Revision>
-DefaultRevisionsStub::GetRevision(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::run::v2::GetRevisionRequest const& request) {
-    google::cloud::run::v2::Revision response;
-    auto status =
-        grpc_stub_->GetRevision(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::cloud::run::v2::Revision> DefaultRevisionsStub::GetRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::run::v2::GetRevisionRequest const& request) {
+  google::cloud::run::v2::Revision response;
+  auto status = grpc_stub_->GetRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 DefaultRevisionsStub::ListRevisions(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::run::v2::ListRevisionsRequest const& request) {
-    google::cloud::run::v2::ListRevisionsResponse response;
-    auto status =
-        grpc_stub_->ListRevisions(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::run::v2::ListRevisionsRequest const& request) {
+  google::cloud::run::v2::ListRevisionsResponse response;
+  auto status = grpc_stub_->ListRevisions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultRevisionsStub::AsyncDeleteRevision(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions,
-      google::cloud::run::v2::DeleteRevisionRequest const& request) {
-  return internal::MakeUnaryRpcImpl<google::cloud::run::v2::DeleteRevisionRequest,
-                                    google::longrunning::Operation>(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::run::v2::DeleteRevisionRequest,
+      google::longrunning::Operation>(
       cq,
       [this](grpc::ClientContext* context,
              google::cloud::run::v2::DeleteRevisionRequest const& request,
@@ -74,70 +72,60 @@ DefaultRevisionsStub::AsyncDeleteRevision(
       request, std::move(context));
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultRevisionsStub::DeleteRevision(
-      grpc::ClientContext& context,
-      Options,
-      google::cloud::run::v2::DeleteRevisionRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        grpc_stub_->DeleteRevision(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultRevisionsStub::DeleteRevision(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultRevisionsStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultRevisionsStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultRevisionsStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultRevisionsStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultRevisionsStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-StatusOr<google::longrunning::Operation>
-DefaultRevisionsStub::WaitOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::WaitOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->WaitOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+StatusOr<google::longrunning::Operation> DefaultRevisionsStub::WaitOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::WaitOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->WaitOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -166,13 +154,14 @@ future<Status> DefaultRevisionsStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
-      cq,
-      [this](grpc::ClientContext* context,
-             google::longrunning::CancelOperationRequest const& request,
-             grpc::CompletionQueue* cq) {
-        return operations_stub_->AsyncCancelOperation(context, request, cq);
-      },
-      request, std::move(context))
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

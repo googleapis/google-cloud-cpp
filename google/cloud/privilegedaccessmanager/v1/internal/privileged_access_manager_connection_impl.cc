@@ -17,13 +17,13 @@
 // source: google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto
 
 #include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_connection_impl.h"
+#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -35,69 +35,96 @@ namespace {
 
 std::unique_ptr<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>
 retry_policy(Options const& options) {
-  return options.get<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicyOption>()->clone();
+  return options
+      .get<privilegedaccessmanager_v1::
+               PrivilegedAccessManagerRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<privilegedaccessmanager_v1::PrivilegedAccessManagerBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options
+      .get<privilegedaccessmanager_v1::
+               PrivilegedAccessManagerBackoffPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<privilegedaccessmanager_v1::PrivilegedAccessManagerConnectionIdempotencyPolicy>
+std::unique_ptr<privilegedaccessmanager_v1::
+                    PrivilegedAccessManagerConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<privilegedaccessmanager_v1::PrivilegedAccessManagerConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<privilegedaccessmanager_v1::
+               PrivilegedAccessManagerConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<PollingPolicy> polling_policy(Options const& options) {
-  return options.get<privilegedaccessmanager_v1::PrivilegedAccessManagerPollingPolicyOption>()->clone();
+  return options
+      .get<privilegedaccessmanager_v1::
+               PrivilegedAccessManagerPollingPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 PrivilegedAccessManagerConnectionImpl::PrivilegedAccessManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<privilegedaccessmanager_v1_internal::PrivilegedAccessManagerStub> stub,
+    std::shared_ptr<
+        privilegedaccessmanager_v1_internal::PrivilegedAccessManagerStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        PrivilegedAccessManagerConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), PrivilegedAccessManagerConnection::options())) {}
 
-StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
-PrivilegedAccessManagerConnectionImpl::CheckOnboardingStatus(google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) {
+StatusOr<
+    google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+PrivilegedAccessManagerConnectionImpl::CheckOnboardingStatus(
+    google::cloud::privilegedaccessmanager::v1::
+        CheckOnboardingStatusRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CheckOnboardingStatus(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request) {
+             google::cloud::privilegedaccessmanager::v1::
+                 CheckOnboardingStatusRequest const& request) {
         return stub_->CheckOnboardingStatus(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-PrivilegedAccessManagerConnectionImpl::ListEntitlements(google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest request) {
+PrivilegedAccessManagerConnectionImpl::ListEntitlements(
+    google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListEntitlements(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& r) {
+          Options const& options, google::cloud::privilegedaccessmanager::v1::
+                                      ListEntitlementsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest const& request) {
+                   google::cloud::privilegedaccessmanager::v1::
+                       ListEntitlementsRequest const& request) {
               return stub->ListEntitlements(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse r) {
-        std::vector<google::cloud::privilegedaccessmanager::v1::Entitlement> result(r.entitlements().size());
+      [](google::cloud::privilegedaccessmanager::v1::ListEntitlementsResponse
+             r) {
+        std::vector<google::cloud::privilegedaccessmanager::v1::Entitlement>
+            result(r.entitlements().size());
         auto& messages = *r.mutable_entitlements();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -105,27 +132,36 @@ PrivilegedAccessManagerConnectionImpl::ListEntitlements(google::cloud::privilege
 }
 
 StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-PrivilegedAccessManagerConnectionImpl::SearchEntitlements(google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest request) {
+PrivilegedAccessManagerConnectionImpl::SearchEntitlements(
+    google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest
+        request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->SearchEntitlements(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& r) {
+          Options const& options, google::cloud::privilegedaccessmanager::v1::
+                                      SearchEntitlementsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest const& request) {
+                   google::cloud::privilegedaccessmanager::v1::
+                       SearchEntitlementsRequest const& request) {
               return stub->SearchEntitlements(context, options, request);
             },
             options, r, function_name);
       },
-      [](google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse r) {
-        std::vector<google::cloud::privilegedaccessmanager::v1::Entitlement> result(r.entitlements().size());
+      [](google::cloud::privilegedaccessmanager::v1::SearchEntitlementsResponse
+             r) {
+        std::vector<google::cloud::privilegedaccessmanager::v1::Entitlement>
+            result(r.entitlements().size());
         auto& messages = *r.mutable_entitlements();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -133,62 +169,73 @@ PrivilegedAccessManagerConnectionImpl::SearchEntitlements(google::cloud::privile
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
-PrivilegedAccessManagerConnectionImpl::GetEntitlement(google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::GetEntitlement(
+    google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEntitlement(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request) {
+             google::cloud::privilegedaccessmanager::v1::
+                 GetEntitlementRequest const& request) {
         return stub_->GetEntitlement(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-PrivilegedAccessManagerConnectionImpl::CreateEntitlement(google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::CreateEntitlement(
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->CreateEntitlement(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::privilegedaccessmanager::v1::Entitlement>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
-     return stub->AsyncCreateEntitlement(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::privilegedaccessmanager::v1::Entitlement>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::privilegedaccessmanager::v1::Entitlement>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::privilegedaccessmanager::v1::
+                         CreateEntitlementRequest const& request) {
+        return stub->AsyncCreateEntitlement(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::privilegedaccessmanager::v1::Entitlement>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnectionImpl::CreateEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
+    NoAwaitTag,
+    google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEntitlement(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::privilegedaccessmanager::v1::
+                 CreateEntitlementRequest const& request) {
         return stub_->CreateEntitlement(context, options, request);
       },
       *current, request, __func__);
@@ -196,78 +243,94 @@ PrivilegedAccessManagerConnectionImpl::CreateEntitlement(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnectionImpl::CreateEntitlement(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::privilegedaccessmanager::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-        internal::InvalidArgumentError("operation does not correspond to CreateEntitlement",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::privilegedaccessmanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateEntitlement",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::privilegedaccessmanager::v1::Entitlement>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::privilegedaccessmanager::v1::Entitlement>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::privilegedaccessmanager::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::privilegedaccessmanager::v1::Entitlement>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->DeleteEntitlement(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::privilegedaccessmanager::v1::Entitlement>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
-     return stub->AsyncDeleteEntitlement(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::privilegedaccessmanager::v1::Entitlement>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::privilegedaccessmanager::v1::Entitlement>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::privilegedaccessmanager::v1::
+                         DeleteEntitlementRequest const& request) {
+        return stub->AsyncDeleteEntitlement(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::privilegedaccessmanager::v1::Entitlement>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
+    NoAwaitTag,
+    google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEntitlement(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::privilegedaccessmanager::v1::
+                 DeleteEntitlementRequest const& request) {
         return stub_->DeleteEntitlement(context, options, request);
       },
       *current, request, __func__);
@@ -275,78 +338,94 @@ PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::privilegedaccessmanager::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-        internal::InvalidArgumentError("operation does not correspond to DeleteEntitlement",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::privilegedaccessmanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteEntitlement",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::privilegedaccessmanager::v1::Entitlement>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::privilegedaccessmanager::v1::Entitlement>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::privilegedaccessmanager::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::privilegedaccessmanager::v1::Entitlement>,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->UpdateEntitlement(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::privilegedaccessmanager::v1::Entitlement>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
-     return stub->AsyncUpdateEntitlement(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::privilegedaccessmanager::v1::Entitlement>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::privilegedaccessmanager::v1::Entitlement>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::privilegedaccessmanager::v1::
+                         UpdateEntitlementRequest const& request) {
+        return stub->AsyncUpdateEntitlement(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::privilegedaccessmanager::v1::Entitlement>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
+    NoAwaitTag,
+    google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEntitlement(request),
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::privilegedaccessmanager::v1::
+                 UpdateEntitlementRequest const& request) {
         return stub_->UpdateEntitlement(context, options, request);
       },
       *current, request, __func__);
@@ -354,56 +433,72 @@ PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::privilegedaccessmanager::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
-        internal::InvalidArgumentError("operation does not correspond to UpdateEntitlement",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::privilegedaccessmanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateEntitlement",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::privilegedaccessmanager::v1::Entitlement>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::privilegedaccessmanager::v1::Entitlement>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::privilegedaccessmanager::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::privilegedaccessmanager::v1::Entitlement>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerConnectionImpl::ListGrants(google::cloud::privilegedaccessmanager::v1::ListGrantsRequest request) {
+PrivilegedAccessManagerConnectionImpl::ListGrants(
+    google::cloud::privilegedaccessmanager::v1::ListGrantsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListGrants(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& r) {
+          Options const& options,
+          google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::privilegedaccessmanager::v1::ListGrantsRequest const& request) {
+                   google::cloud::privilegedaccessmanager::v1::
+                       ListGrantsRequest const& request) {
               return stub->ListGrants(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::privilegedaccessmanager::v1::ListGrantsResponse r) {
-        std::vector<google::cloud::privilegedaccessmanager::v1::Grant> result(r.grants().size());
+        std::vector<google::cloud::privilegedaccessmanager::v1::Grant> result(
+            r.grants().size());
         auto& messages = *r.mutable_grants();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -411,27 +506,35 @@ PrivilegedAccessManagerConnectionImpl::ListGrants(google::cloud::privilegedacces
 }
 
 StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerConnectionImpl::SearchGrants(google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest request) {
+PrivilegedAccessManagerConnectionImpl::SearchGrants(
+    google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->SearchGrants(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& r) {
+          Options const& options,
+          google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const&
+              r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest const& request) {
+                   google::cloud::privilegedaccessmanager::v1::
+                       SearchGrantsRequest const& request) {
               return stub->SearchGrants(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::privilegedaccessmanager::v1::SearchGrantsResponse r) {
-        std::vector<google::cloud::privilegedaccessmanager::v1::Grant> result(r.grants().size());
+        std::vector<google::cloud::privilegedaccessmanager::v1::Grant> result(
+            r.grants().size());
         auto& messages = *r.mutable_grants();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -439,101 +542,125 @@ PrivilegedAccessManagerConnectionImpl::SearchGrants(google::cloud::privilegedacc
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerConnectionImpl::GetGrant(google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::GetGrant(
+    google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGrant(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request) {
+             google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
+                 request) {
         return stub_->GetGrant(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerConnectionImpl::CreateGrant(google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::CreateGrant(
+    google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateGrant(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
+              request) {
         return stub_->CreateGrant(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerConnectionImpl::ApproveGrant(google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::ApproveGrant(
+    google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApproveGrant(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
+              request) {
         return stub_->ApproveGrant(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
-PrivilegedAccessManagerConnectionImpl::DenyGrant(google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::DenyGrant(
+    google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DenyGrant(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request) {
+             google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
+                 request) {
         return stub_->DenyGrant(context, options, request);
       },
       *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
-PrivilegedAccessManagerConnectionImpl::RevokeGrant(google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::RevokeGrant(
+    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->RevokeGrant(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<google::cloud::privilegedaccessmanager::v1::Grant>(
-    background_->cq(), current, std::move(request_copy),
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
-     return stub->AsyncRevokeGrant(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::privilegedaccessmanager::v1::Grant>,
-    retry_policy(*current), backoff_policy(*current), idempotent,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::privilegedaccessmanager::v1::Grant>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+              request) {
+        return stub->AsyncRevokeGrant(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::privilegedaccessmanager::v1::Grant>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnectionImpl::RevokeGrant(
-      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
+    NoAwaitTag,
+    google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RevokeGrant(request),
       [this](
           grpc::ClientContext& context, Options const& options,
-          google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request) {
+          google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
+              request) {
         return stub_->RevokeGrant(context, options, request);
       },
       *current, request, __func__);
@@ -541,56 +668,71 @@ PrivilegedAccessManagerConnectionImpl::RevokeGrant(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
 PrivilegedAccessManagerConnectionImpl::RevokeGrant(
-      google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::privilegedaccessmanager::v1::OperationMetadata>()) {
-    return make_ready_future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>(
-        internal::InvalidArgumentError("operation does not correspond to RevokeGrant",
-                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  if (!operation.metadata()
+           .Is<typename google::cloud::privilegedaccessmanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RevokeGrant",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::cloud::privilegedaccessmanager::v1::Grant>(
-    background_->cq(), current, operation,
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::GetOperationRequest const& request) {
-     return stub->AsyncGetOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    [stub = stub_](google::cloud::CompletionQueue& cq,
-                   std::shared_ptr<grpc::ClientContext> context,
-                   google::cloud::internal::ImmutableOptions options,
-                   google::longrunning::CancelOperationRequest const& request) {
-     return stub->AsyncCancelOperation(
-         cq, std::move(context), std::move(options), request);
-    },
-    &google::cloud::internal::ExtractLongRunningResultResponse<google::cloud::privilegedaccessmanager::v1::Grant>,
-    polling_policy(*current), __func__);
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::privilegedaccessmanager::v1::Grant>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::privilegedaccessmanager::v1::Grant>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-PrivilegedAccessManagerConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+PrivilegedAccessManagerConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -598,7 +740,8 @@ PrivilegedAccessManagerConnectionImpl::ListLocations(google::cloud::location::Li
 }
 
 StatusOr<google::cloud::location::Location>
-PrivilegedAccessManagerConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -611,17 +754,22 @@ PrivilegedAccessManagerConnectionImpl::GetLocation(google::cloud::location::GetL
 }
 
 StreamRange<google::longrunning::Operation>
-PrivilegedAccessManagerConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+PrivilegedAccessManagerConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<
+           privilegedaccessmanager_v1::PrivilegedAccessManagerRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -631,7 +779,8 @@ PrivilegedAccessManagerConnectionImpl::ListOperations(google::longrunning::ListO
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -639,7 +788,8 @@ PrivilegedAccessManagerConnectionImpl::ListOperations(google::longrunning::ListO
 }
 
 StatusOr<google::longrunning::Operation>
-PrivilegedAccessManagerConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+PrivilegedAccessManagerConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -651,8 +801,8 @@ PrivilegedAccessManagerConnectionImpl::GetOperation(google::longrunning::GetOper
       *current, request, __func__);
 }
 
-Status
-PrivilegedAccessManagerConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status PrivilegedAccessManagerConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

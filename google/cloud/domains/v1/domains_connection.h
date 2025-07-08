@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOMAINS_V1_DOMAINS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOMAINS_V1_DOMAINS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/domains/v1/domains_connection_idempotency_policy.h"
 #include "google/cloud/domains/v1/internal/domains_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -66,14 +66,14 @@ class DomainsLimitedErrorCountRetryPolicy : public DomainsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DomainsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DomainsLimitedErrorCountRetryPolicy(
       DomainsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DomainsLimitedErrorCountRetryPolicy(
       DomainsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DomainsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -93,7 +93,9 @@ class DomainsLimitedErrorCountRetryPolicy : public DomainsRetryPolicy {
   using BaseType = DomainsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<domains_v1_internal::DomainsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      domains_v1_internal::DomainsRetryTraits>
+      impl_;
 };
 
 /**
@@ -131,12 +133,13 @@ class DomainsLimitedTimeRetryPolicy : public DomainsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DomainsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   DomainsLimitedTimeRetryPolicy(DomainsLimitedTimeRetryPolicy&& rhs) noexcept
-    : DomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DomainsLimitedTimeRetryPolicy(DomainsLimitedTimeRetryPolicy const& rhs) noexcept
-    : DomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : DomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DomainsLimitedTimeRetryPolicy(
+      DomainsLimitedTimeRetryPolicy const& rhs) noexcept
+      : DomainsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -150,15 +153,16 @@ class DomainsLimitedTimeRetryPolicy : public DomainsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<DomainsRetryPolicy> clone() const override {
-    return std::make_unique<DomainsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<DomainsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = DomainsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<domains_v1_internal::DomainsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      domains_v1_internal::DomainsRetryTraits>
+      impl_;
 };
 
 /**
@@ -180,97 +184,128 @@ class DomainsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
-  SearchDomains(google::cloud::domains::v1::SearchDomainsRequest const& request);
+  SearchDomains(
+      google::cloud::domains::v1::SearchDomainsRequest const& request);
 
-  virtual StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
-  RetrieveRegisterParameters(google::cloud::domains::v1::RetrieveRegisterParametersRequest const& request);
-
-  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  RegisterDomain(google::cloud::domains::v1::RegisterDomainRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  RegisterDomain(NoAwaitTag, google::cloud::domains::v1::RegisterDomainRequest const& request);
+  virtual StatusOr<
+      google::cloud::domains::v1::RetrieveRegisterParametersResponse>
+  RetrieveRegisterParameters(
+      google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  RegisterDomain( google::longrunning::Operation const& operation);
+  RegisterDomain(
+      google::cloud::domains::v1::RegisterDomainRequest const& request);
 
-  virtual StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
-  RetrieveTransferParameters(google::cloud::domains::v1::RetrieveTransferParametersRequest const& request);
-
-  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  TransferDomain(google::cloud::domains::v1::TransferDomainRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  TransferDomain(NoAwaitTag, google::cloud::domains::v1::TransferDomainRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> RegisterDomain(
+      NoAwaitTag,
+      google::cloud::domains::v1::RegisterDomainRequest const& request);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  TransferDomain( google::longrunning::Operation const& operation);
+  RegisterDomain(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<
+      google::cloud::domains::v1::RetrieveTransferParametersResponse>
+  RetrieveTransferParameters(
+      google::cloud::domains::v1::RetrieveTransferParametersRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  TransferDomain(
+      google::cloud::domains::v1::TransferDomainRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> TransferDomain(
+      NoAwaitTag,
+      google::cloud::domains::v1::TransferDomainRequest const& request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  TransferDomain(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::domains::v1::Registration>
-  ListRegistrations(google::cloud::domains::v1::ListRegistrationsRequest request);
+  ListRegistrations(
+      google::cloud::domains::v1::ListRegistrationsRequest request);
 
-  virtual StatusOr<google::cloud::domains::v1::Registration>
-  GetRegistration(google::cloud::domains::v1::GetRegistrationRequest const& request);
-
-  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  UpdateRegistration(google::cloud::domains::v1::UpdateRegistrationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  UpdateRegistration(NoAwaitTag, google::cloud::domains::v1::UpdateRegistrationRequest const& request);
+  virtual StatusOr<google::cloud::domains::v1::Registration> GetRegistration(
+      google::cloud::domains::v1::GetRegistrationRequest const& request);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  UpdateRegistration( google::longrunning::Operation const& operation);
+  UpdateRegistration(
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateRegistration(
+      NoAwaitTag,
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureManagementSettings(google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ConfigureManagementSettings(NoAwaitTag, google::cloud::domains::v1::ConfigureManagementSettingsRequest const& request);
+  UpdateRegistration(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureManagementSettings( google::longrunning::Operation const& operation);
+  ConfigureManagementSettings(
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
+      NoAwaitTag,
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureDnsSettings(google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ConfigureDnsSettings(NoAwaitTag, google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request);
+  ConfigureManagementSettings(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureDnsSettings( google::longrunning::Operation const& operation);
+  ConfigureDnsSettings(
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
+      NoAwaitTag,
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureContactSettings(google::cloud::domains::v1::ConfigureContactSettingsRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ConfigureContactSettings(NoAwaitTag, google::cloud::domains::v1::ConfigureContactSettingsRequest const& request);
+  ConfigureDnsSettings(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  ConfigureContactSettings( google::longrunning::Operation const& operation);
+  ConfigureContactSettings(
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> ConfigureContactSettings(
+      NoAwaitTag,
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+          request);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  ExportRegistration(google::cloud::domains::v1::ExportRegistrationRequest const& request);
-
-  virtual StatusOr<google::longrunning::Operation>
-  ExportRegistration(NoAwaitTag, google::cloud::domains::v1::ExportRegistrationRequest const& request);
+  ConfigureContactSettings(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
-  ExportRegistration( google::longrunning::Operation const& operation);
+  ExportRegistration(
+      google::cloud::domains::v1::ExportRegistrationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportRegistration(
+      NoAwaitTag,
+      google::cloud::domains::v1::ExportRegistrationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  ExportRegistration(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
-  DeleteRegistration(google::cloud::domains::v1::DeleteRegistrationRequest const& request);
+  DeleteRegistration(
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  DeleteRegistration(NoAwaitTag, google::cloud::domains::v1::DeleteRegistrationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> DeleteRegistration(
+      NoAwaitTag,
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request);
 
   virtual future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
-  DeleteRegistration( google::longrunning::Operation const& operation);
+  DeleteRegistration(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::domains::v1::AuthorizationCode>
-  RetrieveAuthorizationCode(google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const& request);
+  RetrieveAuthorizationCode(
+      google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
+          request);
 
   virtual StatusOr<google::cloud::domains::v1::AuthorizationCode>
-  ResetAuthorizationCode(google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request);
+  ResetAuthorizationCode(
+      google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request);
 };
 
 /**
@@ -294,8 +329,7 @@ class DomainsConnection {
  * @param options (optional) Configure the `DomainsConnection` created by
  * this function.
  */
-std::shared_ptr<DomainsConnection> MakeDomainsConnection(
-    Options options = {});
+std::shared_ptr<DomainsConnection> MakeDomainsConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace domains_v1

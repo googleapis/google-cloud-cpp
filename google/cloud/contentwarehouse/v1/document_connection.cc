@@ -17,13 +17,13 @@
 // source: google/cloud/contentwarehouse/v1/document_service.proto
 
 #include "google/cloud/contentwarehouse/v1/document_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/contentwarehouse/v1/document_options.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_connection_impl.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_option_defaults.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_stub_factory.h"
 #include "google/cloud/contentwarehouse/v1/internal/document_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -56,16 +56,19 @@ DocumentServiceConnection::UpdateDocument(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-DocumentServiceConnection::DeleteDocument(
+Status DocumentServiceConnection::DeleteDocument(
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument> DocumentServiceConnection::SearchDocuments(
-    google::cloud::contentwarehouse::v1::SearchDocumentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
+                MatchingDocument>
+DocumentServiceConnection::SearchDocuments(
+    google::cloud::contentwarehouse::v1::
+        SearchDocumentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
-      StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::MatchingDocument>>();
+      StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
+                      MatchingDocument>>();
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
@@ -95,17 +98,19 @@ DocumentServiceConnection::GetOperation(
 std::shared_ptr<DocumentServiceConnection> MakeDocumentServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      DocumentServicePolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 DocumentServicePolicyOptionList>(options,
+                                                                  __func__);
   options = contentwarehouse_v1_internal::DocumentServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = contentwarehouse_v1_internal::CreateDefaultDocumentServiceStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return contentwarehouse_v1_internal::MakeDocumentServiceTracingConnection(
-      std::make_shared<contentwarehouse_v1_internal::DocumentServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          contentwarehouse_v1_internal::DocumentServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

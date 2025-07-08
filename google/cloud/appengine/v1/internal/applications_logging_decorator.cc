@@ -31,20 +31,16 @@ namespace appengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ApplicationsLogging::ApplicationsLogging(
-    std::shared_ptr<ApplicationsStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ApplicationsStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::appengine::v1::Application>
 ApplicationsLogging::GetApplication(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetApplicationRequest const& request) {
         return child_->GetApplication(context, options, request);
       },
@@ -53,30 +49,27 @@ ApplicationsLogging::GetApplication(
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsLogging::AsyncCreateApplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::CreateApplicationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::CreateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::CreateApplicationRequest const& request) {
-        return child_->AsyncCreateApplication(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCreateApplication(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ApplicationsLogging::CreateApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::CreateApplicationRequest const& request) {
+StatusOr<google::longrunning::Operation> ApplicationsLogging::CreateApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::CreateApplicationRequest const& request) {
         return child_->CreateApplication(context, options, request);
       },
@@ -85,30 +78,27 @@ ApplicationsLogging::CreateApplication(
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsLogging::AsyncUpdateApplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::UpdateApplicationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::UpdateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::UpdateApplicationRequest const& request) {
-        return child_->AsyncUpdateApplication(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUpdateApplication(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ApplicationsLogging::UpdateApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::UpdateApplicationRequest const& request) {
+StatusOr<google::longrunning::Operation> ApplicationsLogging::UpdateApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::UpdateApplicationRequest const& request) {
         return child_->UpdateApplication(context, options, request);
       },
@@ -117,30 +107,27 @@ ApplicationsLogging::UpdateApplication(
 
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsLogging::AsyncRepairApplication(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::appengine::v1::RepairApplicationRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::appengine::v1::RepairApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::appengine::v1::RepairApplicationRequest const& request) {
-        return child_->AsyncRepairApplication(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncRepairApplication(cq, std::move(context),
+                                              std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ApplicationsLogging::RepairApplication(
-      grpc::ClientContext& context,
-      Options options,
-      google::appengine::v1::RepairApplicationRequest const& request) {
+StatusOr<google::longrunning::Operation> ApplicationsLogging::RepairApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::RepairApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::RepairApplicationRequest const& request) {
         return child_->RepairApplication(context, options, request);
       },
@@ -158,8 +145,8 @@ ApplicationsLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -175,8 +162,8 @@ future<Status> ApplicationsLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

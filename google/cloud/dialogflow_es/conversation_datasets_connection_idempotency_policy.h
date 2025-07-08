@@ -36,41 +36,46 @@ class ConversationDatasetsConnectionIdempotencyPolicy {
   virtual ~ConversationDatasetsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreateConversationDataset(google::cloud::dialogflow::v2::CreateConversationDatasetRequest const& request);
+  virtual google::cloud::Idempotency CreateConversationDataset(
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetConversationDataset(google::cloud::dialogflow::v2::GetConversationDatasetRequest const& request);
+  virtual google::cloud::Idempotency GetConversationDataset(
+      google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListConversationDatasets(google::cloud::dialogflow::v2::ListConversationDatasetsRequest request);
+  virtual google::cloud::Idempotency ListConversationDatasets(
+      google::cloud::dialogflow::v2::ListConversationDatasetsRequest request);
 
-  virtual google::cloud::Idempotency
-  DeleteConversationDataset(google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const& request);
+  virtual google::cloud::Idempotency DeleteConversationDataset(
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ImportConversationData(google::cloud::dialogflow::v2::ImportConversationDataRequest const& request);
+  virtual google::cloud::Idempotency ImportConversationData(
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ConversationDatasetsConnectionIdempotencyPolicy>
-    MakeDefaultConversationDatasetsConnectionIdempotencyPolicy();
+MakeDefaultConversationDatasetsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es

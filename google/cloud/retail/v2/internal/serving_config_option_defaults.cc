@@ -17,10 +17,10 @@
 // source: google/cloud/retail/v2/serving_config_service.proto
 
 #include "google/cloud/retail/v2/internal/serving_config_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/retail/v2/serving_config_connection.h"
 #include "google/cloud/retail/v2/serving_config_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,16 +42,22 @@ Options ServingConfigServiceDefaultOptions(Options options) {
   if (!options.has<retail_v2::ServingConfigServiceRetryPolicyOption>()) {
     options.set<retail_v2::ServingConfigServiceRetryPolicyOption>(
         retail_v2::ServingConfigServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<retail_v2::ServingConfigServiceBackoffPolicyOption>()) {
     options.set<retail_v2::ServingConfigServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<retail_v2::ServingConfigServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<retail_v2::ServingConfigServiceConnectionIdempotencyPolicyOption>(
-        retail_v2::MakeDefaultServingConfigServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          retail_v2::ServingConfigServiceConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<retail_v2::ServingConfigServiceConnectionIdempotencyPolicyOption>(
+            retail_v2::
+                MakeDefaultServingConfigServiceConnectionIdempotencyPolicy());
   }
 
   return options;

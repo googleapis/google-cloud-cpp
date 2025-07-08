@@ -39,43 +39,40 @@ class ControlServiceAuth : public ControlServiceStub {
       std::shared_ptr<ControlServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::Control> CreateControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::CreateControlRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::CreateControlRequest const& request)
+      override;
 
   Status DeleteControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::DeleteControlRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::DeleteControlRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Control> UpdateControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::UpdateControlRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::UpdateControlRequest const& request)
+      override;
 
   StatusOr<google::cloud::discoveryengine::v1::Control> GetControl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::GetControlRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GetControlRequest const& request)
+      override;
 
-  StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse> ListControls(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::discoveryengine::v1::ListControlsRequest const& request) override;
+  StatusOr<google::cloud::discoveryengine::v1::ListControlsResponse>
+  ListControls(grpc::ClientContext& context, Options const& options,
+               google::cloud::discoveryengine::v1::ListControlsRequest const&
+                   request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

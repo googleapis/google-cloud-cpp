@@ -17,12 +17,12 @@
 // source: google/cloud/dialogflow/cx/v3/session.proto
 
 #include "google/cloud/dialogflow_cx/internal/sessions_stub_factory.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_auth_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_stub.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_tracing_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -39,30 +39,30 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SessionsStub>
-CreateDefaultSessionsStub(
+std::shared_ptr<SessionsStub> CreateDefaultSessionsStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::dialogflow::cx::v3::Sessions::NewStub(channel);
-  auto service_operations_stub = google::longrunning::Operations::NewStub(channel);
-  auto service_locations_stub = google::cloud::location::Locations::NewStub(channel);
-  std::shared_ptr<SessionsStub> stub =
-    std::make_shared<DefaultSessionsStub>(std::move(service_grpc_stub), std::move(service_operations_stub), std::move(service_locations_stub));
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::dialogflow::cx::v3::Sessions::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
+  std::shared_ptr<SessionsStub> stub = std::make_shared<DefaultSessionsStub>(
+      std::move(service_grpc_stub), std::move(service_operations_stub),
+      std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<SessionsAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<SessionsAuth>(std::move(auth), std::move(stub));
   }
   stub = std::make_shared<SessionsMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SessionsLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_TRACING_STUB_H
 
+#include "google/cloud/profiler/v2/internal/export_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/profiler/v2/internal/export_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -38,14 +38,15 @@ class ExportServiceTracingStub : public ExportServiceStub {
 
   explicit ExportServiceTracingStub(std::shared_ptr<ExportServiceStub> child);
 
-  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse> ListProfiles(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) override;
+  StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
+  ListProfiles(grpc::ClientContext& context, Options const& options,
+               google::devtools::cloudprofiler::v2::ListProfilesRequest const&
+                   request) override;
 
  private:
   std::shared_ptr<ExportServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

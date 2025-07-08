@@ -74,8 +74,7 @@ struct ServicesPollingPolicyOption {
  * @ingroup google-cloud-appengine-options
  */
 using ServicesPolicyOptionList =
-    OptionList<ServicesRetryPolicyOption,
-               ServicesBackoffPolicyOption,
+    OptionList<ServicesRetryPolicyOption, ServicesBackoffPolicyOption,
                ServicesPollingPolicyOption,
                ServicesConnectionIdempotencyPolicyOption>;
 

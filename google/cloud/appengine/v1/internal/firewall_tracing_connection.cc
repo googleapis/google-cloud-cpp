@@ -34,53 +34,63 @@ FirewallTracingConnection::FirewallTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::appengine::v1::FirewallRule>
-FirewallTracingConnection::ListIngressRules(google::appengine::v1::ListIngressRulesRequest request) {
-  auto span = internal::MakeSpan("appengine_v1::FirewallConnection::ListIngressRules");
+FirewallTracingConnection::ListIngressRules(
+    google::appengine::v1::ListIngressRulesRequest request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::FirewallConnection::ListIngressRules");
   internal::OTelScope scope(span);
   auto sr = child_->ListIngressRules(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::FirewallRule>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
-FirewallTracingConnection::BatchUpdateIngressRules(google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
-  auto span = internal::MakeSpan("appengine_v1::FirewallConnection::BatchUpdateIngressRules");
+FirewallTracingConnection::BatchUpdateIngressRules(
+    google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::FirewallConnection::BatchUpdateIngressRules");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->BatchUpdateIngressRules(request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
-FirewallTracingConnection::CreateIngressRule(google::appengine::v1::CreateIngressRuleRequest const& request) {
-  auto span = internal::MakeSpan("appengine_v1::FirewallConnection::CreateIngressRule");
+FirewallTracingConnection::CreateIngressRule(
+    google::appengine::v1::CreateIngressRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::FirewallConnection::CreateIngressRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateIngressRule(request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
-FirewallTracingConnection::GetIngressRule(google::appengine::v1::GetIngressRuleRequest const& request) {
-  auto span = internal::MakeSpan("appengine_v1::FirewallConnection::GetIngressRule");
+FirewallTracingConnection::GetIngressRule(
+    google::appengine::v1::GetIngressRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::FirewallConnection::GetIngressRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIngressRule(request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
-FirewallTracingConnection::UpdateIngressRule(google::appengine::v1::UpdateIngressRuleRequest const& request) {
-  auto span = internal::MakeSpan("appengine_v1::FirewallConnection::UpdateIngressRule");
+FirewallTracingConnection::UpdateIngressRule(
+    google::appengine::v1::UpdateIngressRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::FirewallConnection::UpdateIngressRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateIngressRule(request));
 }
 
-Status
-FirewallTracingConnection::DeleteIngressRule(google::appengine::v1::DeleteIngressRuleRequest const& request) {
-  auto span = internal::MakeSpan("appengine_v1::FirewallConnection::DeleteIngressRule");
+Status FirewallTracingConnection::DeleteIngressRule(
+    google::appengine::v1::DeleteIngressRuleRequest const& request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::FirewallConnection::DeleteIngressRule");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteIngressRule(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<appengine_v1::FirewallConnection>
-MakeFirewallTracingConnection(
+std::shared_ptr<appengine_v1::FirewallConnection> MakeFirewallTracingConnection(
     std::shared_ptr<appengine_v1::FirewallConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

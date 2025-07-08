@@ -31,74 +31,78 @@ ConversationalSearchServiceAuth::ConversationalSearchServiceAuth(
     std::shared_ptr<ConversationalSearchServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse> ConversationalSearchServiceAuth::ConverseConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) {
+StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
+ConversationalSearchServiceAuth::ConverseConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ConverseConversation(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Conversation> ConversationalSearchServiceAuth::CreateConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::CreateConversationRequest const& request) {
+StatusOr<google::cloud::discoveryengine::v1::Conversation>
+ConversationalSearchServiceAuth::CreateConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::CreateConversationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateConversation(context, options, request);
 }
 
 Status ConversationalSearchServiceAuth::DeleteConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteConversation(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Conversation> ConversationalSearchServiceAuth::UpdateConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) {
+StatusOr<google::cloud::discoveryengine::v1::Conversation>
+ConversationalSearchServiceAuth::UpdateConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateConversation(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Conversation> ConversationalSearchServiceAuth::GetConversation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Conversation>
+ConversationalSearchServiceAuth::GetConversation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConversation(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse> ConversationalSearchServiceAuth::ListConversations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::ListConversationsRequest const& request) {
+StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
+ConversationalSearchServiceAuth::ListConversations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::ListConversationsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListConversations(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> ConversationalSearchServiceAuth::AnswerQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceAuth::AnswerQuery(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AnswerQuery(context, options, request);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::discoveryengine::v1::AnswerQueryResponse>>
 ConversationalSearchServiceAuth::StreamAnswerQuery(
-   std::shared_ptr<grpc::ClientContext> context,
-   Options const& options,
-   google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::cloud::discoveryengine::v1::AnswerQueryResponse>;
   auto status = auth_->ConfigureContext(*context);
@@ -106,18 +110,18 @@ ConversationalSearchServiceAuth::StreamAnswerQuery(
   return child_->StreamAnswerQuery(std::move(context), options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Answer> ConversationalSearchServiceAuth::GetAnswer(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Answer>
+ConversationalSearchServiceAuth::GetAnswer(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetAnswer(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Session> ConversationalSearchServiceAuth::CreateSession(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceAuth::CreateSession(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -125,53 +129,52 @@ StatusOr<google::cloud::discoveryengine::v1::Session> ConversationalSearchServic
 }
 
 Status ConversationalSearchServiceAuth::DeleteSession(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteSession(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Session> ConversationalSearchServiceAuth::UpdateSession(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceAuth::UpdateSession(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateSession(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::Session> ConversationalSearchServiceAuth::GetSession(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceAuth::GetSession(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSession(context, options, request);
 }
 
-StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse> ConversationalSearchServiceAuth::ListSessions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
+ConversationalSearchServiceAuth::ListSessions(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListSessionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSessions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ConversationalSearchServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ConversationalSearchServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation> ConversationalSearchServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+ConversationalSearchServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -179,8 +182,7 @@ StatusOr<google::longrunning::Operation> ConversationalSearchServiceAuth::GetOpe
 }
 
 Status ConversationalSearchServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

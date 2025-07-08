@@ -17,12 +17,12 @@
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
 #include "google/cloud/orgpolicy/v2/internal/org_policy_connection_impl.h"
+#include "google/cloud/orgpolicy/v2/internal/org_policy_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/orgpolicy/v2/internal/org_policy_option_defaults.h"
 #include <memory>
 #include <utility>
 
@@ -32,54 +32,60 @@ namespace orgpolicy_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<orgpolicy_v2::OrgPolicyRetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<orgpolicy_v2::OrgPolicyRetryPolicyOption>()->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
   return options.get<orgpolicy_v2::OrgPolicyBackoffPolicyOption>()->clone();
 }
 
 std::unique_ptr<orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 OrgPolicyConnectionImpl::OrgPolicyConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<orgpolicy_v2_internal::OrgPolicyStub> stub,
-    Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        OrgPolicyConnection::options())) {}
+    std::shared_ptr<orgpolicy_v2_internal::OrgPolicyStub> stub, Options options)
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      OrgPolicyConnection::options())) {}
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
-OrgPolicyConnectionImpl::ListConstraints(google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
+OrgPolicyConnectionImpl::ListConstraints(
+    google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListConstraints(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::orgpolicy::v2::Constraint>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::Constraint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::orgpolicy::v2::ListConstraintsRequest const& r) {
+          Options const& options,
+          google::cloud::orgpolicy::v2::ListConstraintsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
+                   google::cloud::orgpolicy::v2::ListConstraintsRequest const&
+                       request) {
               return stub->ListConstraints(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::orgpolicy::v2::ListConstraintsResponse r) {
-        std::vector<google::cloud::orgpolicy::v2::Constraint> result(r.constraints().size());
+        std::vector<google::cloud::orgpolicy::v2::Constraint> result(
+            r.constraints().size());
         auto& messages = *r.mutable_constraints();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -87,27 +93,33 @@ OrgPolicyConnectionImpl::ListConstraints(google::cloud::orgpolicy::v2::ListConst
 }
 
 StreamRange<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyConnectionImpl::ListPolicies(google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
+OrgPolicyConnectionImpl::ListPolicies(
+    google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::orgpolicy::v2::Policy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::Policy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::orgpolicy::v2::ListPoliciesRequest const& r) {
+          Options const& options,
+          google::cloud::orgpolicy::v2::ListPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
+                   google::cloud::orgpolicy::v2::ListPoliciesRequest const&
+                       request) {
               return stub->ListPolicies(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::orgpolicy::v2::ListPoliciesResponse r) {
-        std::vector<google::cloud::orgpolicy::v2::Policy> result(r.policies().size());
+        std::vector<google::cloud::orgpolicy::v2::Policy> result(
+            r.policies().size());
         auto& messages = *r.mutable_policies();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -115,7 +127,8 @@ OrgPolicyConnectionImpl::ListPolicies(google::cloud::orgpolicy::v2::ListPolicies
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyConnectionImpl::GetPolicy(google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
+OrgPolicyConnectionImpl::GetPolicy(
+    google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -128,20 +141,23 @@ OrgPolicyConnectionImpl::GetPolicy(google::cloud::orgpolicy::v2::GetPolicyReques
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyConnectionImpl::GetEffectivePolicy(google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
+OrgPolicyConnectionImpl::GetEffectivePolicy(
+    google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEffectivePolicy(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
+             google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const&
+                 request) {
         return stub_->GetEffectivePolicy(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyConnectionImpl::CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
+OrgPolicyConnectionImpl::CreatePolicy(
+    google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -154,7 +170,8 @@ OrgPolicyConnectionImpl::CreatePolicy(google::cloud::orgpolicy::v2::CreatePolicy
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
-OrgPolicyConnectionImpl::UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
+OrgPolicyConnectionImpl::UpdatePolicy(
+    google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -166,8 +183,8 @@ OrgPolicyConnectionImpl::UpdatePolicy(google::cloud::orgpolicy::v2::UpdatePolicy
       *current, request, __func__);
 }
 
-Status
-OrgPolicyConnectionImpl::DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
+Status OrgPolicyConnectionImpl::DeletePolicy(
+    google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -180,80 +197,97 @@ OrgPolicyConnectionImpl::DeletePolicy(google::cloud::orgpolicy::v2::DeletePolicy
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyConnectionImpl::CreateCustomConstraint(google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request) {
+OrgPolicyConnectionImpl::CreateCustomConstraint(
+    google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCustomConstraint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const& request) {
+             google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
+                 request) {
         return stub_->CreateCustomConstraint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyConnectionImpl::UpdateCustomConstraint(google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request) {
+OrgPolicyConnectionImpl::UpdateCustomConstraint(
+    google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCustomConstraint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const& request) {
+             google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
+                 request) {
         return stub_->UpdateCustomConstraint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyConnectionImpl::GetCustomConstraint(google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+OrgPolicyConnectionImpl::GetCustomConstraint(
+    google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCustomConstraint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
+             google::cloud::orgpolicy::v2::GetCustomConstraintRequest const&
+                 request) {
         return stub_->GetCustomConstraint(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>
-OrgPolicyConnectionImpl::ListCustomConstraints(google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request) {
+OrgPolicyConnectionImpl::ListCustomConstraints(
+    google::cloud::orgpolicy::v2::ListCustomConstraintsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto idempotency = idempotency_policy(*current)->ListCustomConstraints(request);
+  auto idempotency =
+      idempotency_policy(*current)->ListCustomConstraints(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& r) {
+          Options const& options,
+          google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
+                   google::cloud::orgpolicy::v2::
+                       ListCustomConstraintsRequest const& request) {
               return stub->ListCustomConstraints(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::orgpolicy::v2::ListCustomConstraintsResponse r) {
-        std::vector<google::cloud::orgpolicy::v2::CustomConstraint> result(r.custom_constraints().size());
+        std::vector<google::cloud::orgpolicy::v2::CustomConstraint> result(
+            r.custom_constraints().size());
         auto& messages = *r.mutable_custom_constraints();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-Status
-OrgPolicyConnectionImpl::DeleteCustomConstraint(google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request) {
+Status OrgPolicyConnectionImpl::DeleteCustomConstraint(
+    google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCustomConstraint(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const& request) {
+             google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
+                 request) {
         return stub_->DeleteCustomConstraint(context, options, request);
       },
       *current, request, __func__);

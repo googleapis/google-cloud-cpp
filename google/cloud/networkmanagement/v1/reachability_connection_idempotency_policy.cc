@@ -26,42 +26,61 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ReachabilityServiceConnectionIdempotencyPolicy::~ReachabilityServiceConnectionIdempotencyPolicy() = default;
+ReachabilityServiceConnectionIdempotencyPolicy::
+    ~ReachabilityServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
 ReachabilityServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::ListConnectivityTests(google::cloud::networkmanagement::v1::ListConnectivityTestsRequest) {  // NOLINT
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::ListConnectivityTests(
+    google::cloud::networkmanagement::v1::
+        ListConnectivityTestsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetConnectivityTest(google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&) {
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetConnectivityTest(
+    google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::CreateConnectivityTest(google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&) {
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::CreateConnectivityTest(
+    google::cloud::networkmanagement::v1::
+        CreateConnectivityTestRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::UpdateConnectivityTest(google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&) {
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::UpdateConnectivityTest(
+    google::cloud::networkmanagement::v1::
+        UpdateConnectivityTestRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::RerunConnectivityTest(google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&) {
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::RerunConnectivityTest(
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::DeleteConnectivityTest(google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&) {
+Idempotency
+ReachabilityServiceConnectionIdempotencyPolicy::DeleteConnectivityTest(
+    google::cloud::networkmanagement::v1::
+        DeleteConnectivityTestRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::ListLocations(google::cloud::location::ListLocationsRequest) {  // NOLINT
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
@@ -71,32 +90,38 @@ Idempotency ReachabilityServiceConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetOperation(google::longrunning::GetOperationRequest const&) {
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::DeleteOperation(google::longrunning::DeleteOperationRequest const&) {
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ReachabilityServiceConnectionIdempotencyPolicy::CancelOperation(google::longrunning::CancelOperationRequest const&) {
+Idempotency ReachabilityServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
-    MakeDefaultReachabilityServiceConnectionIdempotencyPolicy() {
+MakeDefaultReachabilityServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>();
 }
 

@@ -38,32 +38,40 @@ class TableServiceRestLogging : public TableServiceRestStub {
  public:
   ~TableServiceRestLogging() override = default;
   TableServiceRestLogging(std::shared_ptr<TableServiceRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                          TracingOptions tracing_options,
+                          std::set<std::string> components);
 
   StatusOr<google::cloud::bigquery::v2::Table> GetTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::GetTableRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::GetTableRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::Table> InsertTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::InsertTableRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::InsertTableRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::Table> PatchTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request)
+      override;
 
   StatusOr<google::cloud::bigquery::v2::Table> UpdateTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request)
+      override;
 
   Status DeleteTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::DeleteTableRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::DeleteTableRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::v2::TableList> ListTables(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::ListTablesRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::ListTablesRequest const& request) override;
 
  private:
   std::shared_ptr<TableServiceRestStub> child_;

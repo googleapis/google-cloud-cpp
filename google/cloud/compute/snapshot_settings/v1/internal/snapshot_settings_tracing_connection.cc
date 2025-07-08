@@ -29,49 +29,62 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SnapshotSettingsTracingConnection::SnapshotSettingsTracingConnection(
-    std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection> child)
+    std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
-SnapshotSettingsTracingConnection::GetSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::GetSnapshotSettingsRequest const& request) {
-  auto span = internal::MakeSpan("compute_snapshot_settings_v1::SnapshotSettingsConnection::GetSnapshotSettings");
+SnapshotSettingsTracingConnection::GetSnapshotSettings(
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        GetSnapshotSettingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
+      "GetSnapshotSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSnapshotSettings(request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-SnapshotSettingsTracingConnection::PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request) {
+SnapshotSettingsTracingConnection::PatchSnapshotSettings(
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_snapshot_settings_v1::SnapshotSettingsConnection::PatchSnapshotSettings");
+      "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
+      "PatchSnapshotSettings");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchSnapshotSettings(request));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchSnapshotSettings(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotSettingsTracingConnection::PatchSnapshotSettings(
-    NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::
+                    PatchSnapshotSettingsRequest const& request) {
   auto span = internal::MakeSpan(
-      "compute_snapshot_settings_v1::SnapshotSettingsConnection::PatchSnapshotSettings");
+      "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
+      "PatchSnapshotSettings");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PatchSnapshotSettings(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->PatchSnapshotSettings(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsTracingConnection::PatchSnapshotSettings(
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
-      "compute_snapshot_settings_v1::SnapshotSettingsConnection::PatchSnapshotSettings");
+      "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
+      "PatchSnapshotSettings");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->PatchSnapshotSettings(operation));
+                           child_->PatchSnapshotSettings(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection>
 MakeSnapshotSettingsTracingConnection(
-    std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection> conn) {
+    std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<SnapshotSettingsTracingConnection>(std::move(conn));

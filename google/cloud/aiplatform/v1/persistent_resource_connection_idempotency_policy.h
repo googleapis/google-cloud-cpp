@@ -37,59 +37,65 @@ class PersistentResourceServiceConnectionIdempotencyPolicy {
   virtual ~PersistentResourceServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<PersistentResourceServiceConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<PersistentResourceServiceConnectionIdempotencyPolicy>
+  clone() const;
 
-  virtual google::cloud::Idempotency
-  CreatePersistentResource(google::cloud::aiplatform::v1::CreatePersistentResourceRequest const& request);
+  virtual google::cloud::Idempotency CreatePersistentResource(
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetPersistentResource(google::cloud::aiplatform::v1::GetPersistentResourceRequest const& request);
+  virtual google::cloud::Idempotency GetPersistentResource(
+      google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListPersistentResources(google::cloud::aiplatform::v1::ListPersistentResourcesRequest request);
+  virtual google::cloud::Idempotency ListPersistentResources(
+      google::cloud::aiplatform::v1::ListPersistentResourcesRequest request);
 
-  virtual google::cloud::Idempotency
-  DeletePersistentResource(google::cloud::aiplatform::v1::DeletePersistentResourceRequest const& request);
+  virtual google::cloud::Idempotency DeletePersistentResource(
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdatePersistentResource(google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const& request);
+  virtual google::cloud::Idempotency UpdatePersistentResource(
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  RebootPersistentResource(google::cloud::aiplatform::v1::RebootPersistentResourceRequest const& request);
+  virtual google::cloud::Idempotency RebootPersistentResource(
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 
-  virtual google::cloud::Idempotency
-  WaitOperation(google::longrunning::WaitOperationRequest const& request);
+  virtual google::cloud::Idempotency WaitOperation(
+      google::longrunning::WaitOperationRequest const& request);
 };
 
 std::unique_ptr<PersistentResourceServiceConnectionIdempotencyPolicy>
-    MakeDefaultPersistentResourceServiceConnectionIdempotencyPolicy();
+MakeDefaultPersistentResourceServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1

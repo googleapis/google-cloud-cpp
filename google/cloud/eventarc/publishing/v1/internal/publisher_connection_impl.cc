@@ -17,9 +17,9 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_connection_impl.h"
+#include "google/cloud/eventarc/publishing/v1/internal/publisher_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/eventarc/publishing/v1/internal/publisher_option_defaults.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -31,68 +31,79 @@ namespace eventarc_publishing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<eventarc_publishing_v1::PublisherRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<eventarc_publishing_v1::PublisherRetryPolicyOption>()->clone();
+std::unique_ptr<eventarc_publishing_v1::PublisherRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<eventarc_publishing_v1::PublisherRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<eventarc_publishing_v1::PublisherBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<eventarc_publishing_v1::PublisherBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<eventarc_publishing_v1::PublisherConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<eventarc_publishing_v1::PublisherConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<eventarc_publishing_v1_internal::PublisherStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        PublisherConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      PublisherConnection::options())) {}
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
-PublisherConnectionImpl::PublishChannelConnectionEvents(google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
+StatusOr<google::cloud::eventarc::publishing::v1::
+             PublishChannelConnectionEventsResponse>
+PublisherConnectionImpl::PublishChannelConnectionEvents(
+    google::cloud::eventarc::publishing::v1::
+        PublishChannelConnectionEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PublishChannelConnectionEvents(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const& request) {
+             google::cloud::eventarc::publishing::v1::
+                 PublishChannelConnectionEventsRequest const& request) {
         return stub_->PublishChannelConnectionEvents(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-PublisherConnectionImpl::PublishEvents(google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) {
+PublisherConnectionImpl::PublishEvents(
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PublishEvents(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::eventarc::publishing::v1::PublishEventsRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+              request) {
         return stub_->PublishEvents(context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
-PublisherConnectionImpl::Publish(google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
+PublisherConnectionImpl::Publish(
+    google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Publish(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
-        return stub_->Publish(context, options, request);
-      },
+             google::cloud::eventarc::publishing::v1::PublishRequest const&
+                 request) { return stub_->Publish(context, options, request); },
       *current, request, __func__);
 }
 

@@ -40,44 +40,41 @@ class EncryptionSpecServiceAuth : public EncryptionSpecServiceStub {
       std::shared_ptr<EncryptionSpecServiceStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::EncryptionSpec> GetEncryptionSpec(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request)
+      override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncInitializeEncryptionSpec(
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncInitializeEncryptionSpec(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) override;
+      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

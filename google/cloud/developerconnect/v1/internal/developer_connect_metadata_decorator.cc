@@ -46,19 +46,20 @@ DeveloperConnectMetadata::DeveloperConnectMetadata(
 
 StatusOr<google::cloud::developerconnect::v1::ListConnectionsResponse>
 DeveloperConnectMetadata::ListConnections(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::ListConnectionsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListConnectionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListConnections(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::Connection>
 DeveloperConnectMetadata::GetConnection(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::GetConnectionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetConnection(context, options, request);
 }
 
@@ -67,18 +68,21 @@ DeveloperConnectMetadata::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateConnection(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectMetadata::CreateConnection(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::developerconnect::v1::CreateConnectionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateConnection(context, options, request);
 }
 
@@ -87,18 +91,23 @@ DeveloperConnectMetadata::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("connection.name=", internal::UrlEncode(request.connection().name())));
-  return child_->AsyncUpdateConnection(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("connection.name=",
+                           internal::UrlEncode(request.connection().name())));
+  return child_->AsyncUpdateConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectMetadata::UpdateConnection(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::developerconnect::v1::UpdateConnectionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("connection.name=", internal::UrlEncode(request.connection().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("connection.name=",
+                           internal::UrlEncode(request.connection().name())));
   return child_->UpdateConnection(context, options, request);
 }
 
@@ -107,18 +116,21 @@ DeveloperConnectMetadata::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteConnection(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteConnection(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectMetadata::DeleteConnection(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::developerconnect::v1::DeleteConnectionRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteConnection(context, options, request);
 }
 
@@ -127,18 +139,21 @@ DeveloperConnectMetadata::AsyncCreateGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateGitRepositoryLink(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateGitRepositoryLink(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectMetadata::CreateGitRepositoryLink(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateGitRepositoryLink(context, options, request);
 }
 
@@ -147,99 +162,115 @@ DeveloperConnectMetadata::AsyncDeleteGitRepositoryLink(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteGitRepositoryLink(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteGitRepositoryLink(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectMetadata::DeleteGitRepositoryLink(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteGitRepositoryLink(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListGitRepositoryLinksResponse>
 DeveloperConnectMetadata::ListGitRepositoryLinks(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGitRepositoryLinks(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
 DeveloperConnectMetadata::GetGitRepositoryLink(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetGitRepositoryLink(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
 DeveloperConnectMetadata::FetchReadWriteToken(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("git_repository_link=", internal::UrlEncode(request.git_repository_link())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("git_repository_link=",
+                           internal::UrlEncode(request.git_repository_link())));
   return child_->FetchReadWriteToken(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
 DeveloperConnectMetadata::FetchReadToken(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::FetchReadTokenRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("git_repository_link=", internal::UrlEncode(request.git_repository_link())));
+  SetMetadata(context, options,
+              absl::StrCat("git_repository_link=",
+                           internal::UrlEncode(request.git_repository_link())));
   return child_->FetchReadToken(context, options, request);
 }
 
-StatusOr<google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
+StatusOr<
+    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesResponse>
 DeveloperConnectMetadata::FetchLinkableGitRepositories(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("connection=", internal::UrlEncode(request.connection())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::
+        FetchLinkableGitRepositoriesRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("connection=", internal::UrlEncode(request.connection())));
   return child_->FetchLinkableGitRepositories(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
 DeveloperConnectMetadata::FetchGitHubInstallations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("connection=", internal::UrlEncode(request.connection())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("connection=", internal::UrlEncode(request.connection())));
   return child_->FetchGitHubInstallations(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchGitRefsResponse>
 DeveloperConnectMetadata::FetchGitRefs(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::FetchGitRefsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("git_repository_link=", internal::UrlEncode(request.git_repository_link())));
+  SetMetadata(context, options,
+              absl::StrCat("git_repository_link=",
+                           internal::UrlEncode(request.git_repository_link())));
   return child_->FetchGitRefs(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListAccountConnectorsResponse>
 DeveloperConnectMetadata::ListAccountConnectors(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::ListAccountConnectorsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAccountConnectors(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::AccountConnector>
 DeveloperConnectMetadata::GetAccountConnector(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::GetAccountConnectorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::GetAccountConnectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetAccountConnector(context, options, request);
 }
 
@@ -248,18 +279,21 @@ DeveloperConnectMetadata::AsyncCreateAccountConnector(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateAccountConnector(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAccountConnector(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectMetadata::CreateAccountConnector(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::CreateAccountConnectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateAccountConnector(context, options, request);
 }
 
@@ -268,18 +302,25 @@ DeveloperConnectMetadata::AsyncUpdateAccountConnector(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("account_connector.name=", internal::UrlEncode(request.account_connector().name())));
-  return child_->AsyncUpdateAccountConnector(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("account_connector.name=",
+                   internal::UrlEncode(request.account_connector().name())));
+  return child_->AsyncUpdateAccountConnector(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectMetadata::UpdateAccountConnector(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("account_connector.name=", internal::UrlEncode(request.account_connector().name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::UpdateAccountConnectorRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("account_connector.name=",
+                   internal::UrlEncode(request.account_connector().name())));
   return child_->UpdateAccountConnector(context, options, request);
 }
 
@@ -288,36 +329,41 @@ DeveloperConnectMetadata::AsyncDeleteAccountConnector(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteAccountConnector(
-      cq, std::move(context), std::move(options), request);
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAccountConnector(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectMetadata::DeleteAccountConnector(
-    grpc::ClientContext& context,
-    Options options,
-    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options options,
+    google::cloud::developerconnect::v1::DeleteAccountConnectorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteAccountConnector(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchAccessTokenResponse>
 DeveloperConnectMetadata::FetchAccessToken(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::developerconnect::v1::FetchAccessTokenRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("account_connector=", internal::UrlEncode(request.account_connector())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::developerconnect::v1::FetchAccessTokenRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("account_connector=",
+                           internal::UrlEncode(request.account_connector())));
   return child_->FetchAccessToken(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::ListUsersResponse>
 DeveloperConnectMetadata::ListUsers(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::ListUsersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListUsers(context, options, request);
 }
 
@@ -327,26 +373,26 @@ DeveloperConnectMetadata::AsyncDeleteUser(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteUser(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteUser(cq, std::move(context), std::move(options),
+                                 request);
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectMetadata::DeleteUser(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> DeveloperConnectMetadata::DeleteUser(
+    grpc::ClientContext& context, Options options,
     google::cloud::developerconnect::v1::DeleteUserRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteUser(context, options, request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::User>
 DeveloperConnectMetadata::FetchSelf(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::developerconnect::v1::FetchSelfRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->FetchSelf(context, options, request);
 }
 
@@ -356,71 +402,68 @@ DeveloperConnectMetadata::AsyncDeleteSelf(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSelf(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteSelf(cq, std::move(context), std::move(options),
+                                 request);
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectMetadata::DeleteSelf(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> DeveloperConnectMetadata::DeleteSelf(
+    grpc::ClientContext& context, Options options,
     google::cloud::developerconnect::v1::DeleteSelfRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteSelf(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DeveloperConnectMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 DeveloperConnectMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DeveloperConnectMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> DeveloperConnectMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-DeveloperConnectMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DeveloperConnectMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-DeveloperConnectMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status DeveloperConnectMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -432,8 +475,8 @@ DeveloperConnectMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> DeveloperConnectMetadata::AsyncCancelOperation(
@@ -443,21 +486,21 @@ future<Status> DeveloperConnectMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void DeveloperConnectMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                           Options const& options,
+                                           std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void DeveloperConnectMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                           Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

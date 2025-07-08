@@ -30,8 +30,10 @@ namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use bigquery_datatransfer_v1_mocks::MockDataTransferServiceConnection directly.
-using ::google::cloud::bigquery_datatransfer_v1_mocks::MockDataTransferServiceConnection;
+/// @deprecated Use
+/// bigquery_datatransfer_v1_mocks::MockDataTransferServiceConnection directly.
+using ::google::cloud::bigquery_datatransfer_v1_mocks::
+    MockDataTransferServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

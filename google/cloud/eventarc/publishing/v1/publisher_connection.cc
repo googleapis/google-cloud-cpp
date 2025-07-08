@@ -17,14 +17,14 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/publishing/v1/publisher_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_connection_impl.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_option_defaults.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_stub_factory.h"
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_tracing_connection.h"
 #include "google/cloud/eventarc/publishing/v1/publisher_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
@@ -37,9 +37,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PublisherConnection::~PublisherConnection() = default;
 
-StatusOr<google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsResponse>
+StatusOr<google::cloud::eventarc::publishing::v1::
+             PublishChannelConnectionEventsResponse>
 PublisherConnection::PublishChannelConnectionEvents(
-    google::cloud::eventarc::publishing::v1::PublishChannelConnectionEventsRequest const&) {
+    google::cloud::eventarc::publishing::v1::
+        PublishChannelConnectionEventsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -55,20 +57,20 @@ PublisherConnection::Publish(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    Options options) {
+std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      PublisherPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 PublisherPolicyOptionList>(options, __func__);
   options = eventarc_publishing_v1_internal::PublisherDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
   auto stub = eventarc_publishing_v1_internal::CreateDefaultPublisherStub(
-    std::move(auth), options);
+      std::move(auth), options);
   return eventarc_publishing_v1_internal::MakePublisherTracingConnection(
-      std::make_shared<eventarc_publishing_v1_internal::PublisherConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+      std::make_shared<
+          eventarc_publishing_v1_internal::PublisherConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

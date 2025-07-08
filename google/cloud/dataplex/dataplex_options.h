@@ -34,8 +34,10 @@ using ::google::cloud::dataplex_v1::DataplexServicePollingPolicyOption;
 /// @deprecated Use dataplex_v1::DataplexServiceBackoffPolicyOption directly.
 using ::google::cloud::dataplex_v1::DataplexServiceBackoffPolicyOption;
 
-/// @deprecated Use dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption directly.
-using ::google::cloud::dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use
+/// dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataplex_v1::
+    DataplexServiceConnectionIdempotencyPolicyOption;
 
 /// @deprecated Use dataplex_v1::DataplexServicePolicyOptionList directly.
 using ::google::cloud::dataplex_v1::DataplexServicePolicyOptionList;

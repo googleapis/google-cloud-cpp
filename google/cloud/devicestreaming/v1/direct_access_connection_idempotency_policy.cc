@@ -26,35 +26,42 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DirectAccessServiceConnectionIdempotencyPolicy::~DirectAccessServiceConnectionIdempotencyPolicy() = default;
+DirectAccessServiceConnectionIdempotencyPolicy::
+    ~DirectAccessServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<DirectAccessServiceConnectionIdempotencyPolicy>
 DirectAccessServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<DirectAccessServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DirectAccessServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency DirectAccessServiceConnectionIdempotencyPolicy::CreateDeviceSession(google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&) {
+Idempotency DirectAccessServiceConnectionIdempotencyPolicy::CreateDeviceSession(
+    google::cloud::devicestreaming::v1::CreateDeviceSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DirectAccessServiceConnectionIdempotencyPolicy::ListDeviceSessions(google::cloud::devicestreaming::v1::ListDeviceSessionsRequest) {  // NOLINT
+Idempotency DirectAccessServiceConnectionIdempotencyPolicy::ListDeviceSessions(
+    google::cloud::devicestreaming::v1::ListDeviceSessionsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DirectAccessServiceConnectionIdempotencyPolicy::GetDeviceSession(google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&) {
+Idempotency DirectAccessServiceConnectionIdempotencyPolicy::GetDeviceSession(
+    google::cloud::devicestreaming::v1::GetDeviceSessionRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DirectAccessServiceConnectionIdempotencyPolicy::CancelDeviceSession(google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&) {
+Idempotency DirectAccessServiceConnectionIdempotencyPolicy::CancelDeviceSession(
+    google::cloud::devicestreaming::v1::CancelDeviceSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DirectAccessServiceConnectionIdempotencyPolicy::UpdateDeviceSession(google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&) {
+Idempotency DirectAccessServiceConnectionIdempotencyPolicy::UpdateDeviceSession(
+    google::cloud::devicestreaming::v1::UpdateDeviceSessionRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DirectAccessServiceConnectionIdempotencyPolicy>
-    MakeDefaultDirectAccessServiceConnectionIdempotencyPolicy() {
+MakeDefaultDirectAccessServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DirectAccessServiceConnectionIdempotencyPolicy>();
 }
 

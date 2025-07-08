@@ -36,39 +36,44 @@ class KnowledgeBasesTracingConnection
   ~KnowledgeBasesTracingConnection() override = default;
 
   explicit KnowledgeBasesTracingConnection(
-    std::shared_ptr<dialogflow_es::KnowledgeBasesConnection> child);
+      std::shared_ptr<dialogflow_es::KnowledgeBasesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::dialogflow::v2::KnowledgeBase>
-  ListKnowledgeBases(google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request) override;
+  StreamRange<google::cloud::dialogflow::v2::KnowledgeBase> ListKnowledgeBases(
+      google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-  GetKnowledgeBase(google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> GetKnowledgeBase(
+      google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-  CreateKnowledgeBase(google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> CreateKnowledgeBase(
+      google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request)
+      override;
 
-  Status
-  DeleteKnowledgeBase(google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) override;
+  Status DeleteKnowledgeBase(
+      google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request)
+      override;
 
-  StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
-  UpdateKnowledgeBase(google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) override;
+  StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
+      google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request)
+      override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<dialogflow_es::KnowledgeBasesConnection> child_;

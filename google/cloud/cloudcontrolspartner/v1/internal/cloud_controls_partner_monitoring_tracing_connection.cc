@@ -29,34 +29,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-CloudControlsPartnerMonitoringTracingConnection::CloudControlsPartnerMonitoringTracingConnection(
-    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection> child)
+CloudControlsPartnerMonitoringTracingConnection::
+    CloudControlsPartnerMonitoringTracingConnection(
+        std::shared_ptr<
+            cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
+            child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>
-CloudControlsPartnerMonitoringTracingConnection::ListViolations(google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request) {
-  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection::ListViolations");
+CloudControlsPartnerMonitoringTracingConnection::ListViolations(
+    google::cloud::cloudcontrolspartner::v1::ListViolationsRequest request) {
+  auto span = internal::MakeSpan(
+      "cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection::"
+      "ListViolations");
   internal::OTelScope scope(span);
   auto sr = child_->ListViolations(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cloudcontrolspartner::v1::Violation>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cloudcontrolspartner::v1::Violation>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::cloudcontrolspartner::v1::Violation>
-CloudControlsPartnerMonitoringTracingConnection::GetViolation(google::cloud::cloudcontrolspartner::v1::GetViolationRequest const& request) {
-  auto span = internal::MakeSpan("cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection::GetViolation");
+CloudControlsPartnerMonitoringTracingConnection::GetViolation(
+    google::cloud::cloudcontrolspartner::v1::GetViolationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection::"
+      "GetViolation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetViolation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
+std::shared_ptr<
+    cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
 MakeCloudControlsPartnerMonitoringTracingConnection(
-    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection> conn) {
+    std::shared_ptr<
+        cloudcontrolspartner_v1::CloudControlsPartnerMonitoringConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<CloudControlsPartnerMonitoringTracingConnection>(std::move(conn));
+    conn = std::make_shared<CloudControlsPartnerMonitoringTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

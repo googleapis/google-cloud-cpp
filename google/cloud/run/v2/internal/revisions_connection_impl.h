@@ -19,16 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_REVISIONS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_INTERNAL_REVISIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/run/v2/internal/revisions_retry_traits.h"
 #include "google/cloud/run/v2/internal/revisions_stub.h"
 #include "google/cloud/run/v2/revisions_connection.h"
 #include "google/cloud/run/v2/revisions_connection_idempotency_policy.h"
 #include "google/cloud/run/v2/revisions_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -40,46 +40,43 @@ namespace cloud {
 namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RevisionsConnectionImpl
-    : public run_v2::RevisionsConnection {
+class RevisionsConnectionImpl : public run_v2::RevisionsConnection {
  public:
   ~RevisionsConnectionImpl() override = default;
 
   RevisionsConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<run_v2_internal::RevisionsStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<run_v2_internal::RevisionsStub> stub, Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::run::v2::Revision>
-  GetRevision(google::cloud::run::v2::GetRevisionRequest const& request) override;
+  StatusOr<google::cloud::run::v2::Revision> GetRevision(
+      google::cloud::run::v2::GetRevisionRequest const& request) override;
 
-  StreamRange<google::cloud::run::v2::Revision>
-  ListRevisions(google::cloud::run::v2::ListRevisionsRequest request) override;
+  StreamRange<google::cloud::run::v2::Revision> ListRevisions(
+      google::cloud::run::v2::ListRevisionsRequest request) override;
 
-  future<StatusOr<google::cloud::run::v2::Revision>>
-  DeleteRevision(google::cloud::run::v2::DeleteRevisionRequest const& request) override;
-
-  StatusOr<google::longrunning::Operation>
-  DeleteRevision(NoAwaitTag,
+  future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Revision>>
-  DeleteRevision(
+  StatusOr<google::longrunning::Operation> DeleteRevision(
+      NoAwaitTag,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

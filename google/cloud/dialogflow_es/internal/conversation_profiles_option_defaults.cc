@@ -19,9 +19,9 @@
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_option_defaults.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_connection.h"
 #include "google/cloud/dialogflow_es/conversation_profiles_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -34,34 +34,46 @@ namespace {
 auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
-Options ConversationProfilesDefaultOptions(std::string const& location, Options options) {
+Options ConversationProfilesDefaultOptions(std::string const& location,
+                                           Options options) {
   options = internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_CONVERSATION_PROFILES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_CONVERSATION_PROFILES_AUTHORITY",
-      absl::StrCat(location, location.empty() ? "" : "-", "dialogflow.googleapis.com"));
+      std::move(options), "GOOGLE_CLOUD_CPP_CONVERSATION_PROFILES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CONVERSATION_PROFILES_AUTHORITY",
+      absl::StrCat(location, location.empty() ? "" : "-",
+                   "dialogflow.googleapis.com"));
   options = internal::PopulateGrpcOptions(std::move(options));
   if (!options.has<dialogflow_es::ConversationProfilesRetryPolicyOption>()) {
     options.set<dialogflow_es::ConversationProfilesRetryPolicyOption>(
         dialogflow_es::ConversationProfilesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<dialogflow_es::ConversationProfilesBackoffPolicyOption>()) {
     options.set<dialogflow_es::ConversationProfilesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
   if (!options.has<dialogflow_es::ConversationProfilesPollingPolicyOption>()) {
     options.set<dialogflow_es::ConversationProfilesPollingPolicyOption>(
         GenericPollingPolicy<
             dialogflow_es::ConversationProfilesRetryPolicyOption::Type,
             dialogflow_es::ConversationProfilesBackoffPolicyOption::Type>(
-            options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()->clone(),
+            options.get<dialogflow_es::ConversationProfilesRetryPolicyOption>()
+                ->clone(),
             ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone()).clone());
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
   }
-  if (!options.has<dialogflow_es::ConversationProfilesConnectionIdempotencyPolicyOption>()) {
-    options.set<dialogflow_es::ConversationProfilesConnectionIdempotencyPolicyOption>(
-        dialogflow_es::MakeDefaultConversationProfilesConnectionIdempotencyPolicy());
+  if (!options
+           .has<dialogflow_es::
+                    ConversationProfilesConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        dialogflow_es::ConversationProfilesConnectionIdempotencyPolicyOption>(
+        dialogflow_es::
+            MakeDefaultConversationProfilesConnectionIdempotencyPolicy());
   }
 
   return options;

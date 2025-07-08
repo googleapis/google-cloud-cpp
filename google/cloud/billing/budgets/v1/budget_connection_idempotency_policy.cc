@@ -26,35 +26,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BudgetServiceConnectionIdempotencyPolicy::~BudgetServiceConnectionIdempotencyPolicy() = default;
+BudgetServiceConnectionIdempotencyPolicy::
+    ~BudgetServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>
 BudgetServiceConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BudgetServiceConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BudgetServiceConnectionIdempotencyPolicy::CreateBudget(google::cloud::billing::budgets::v1::CreateBudgetRequest const&) {
+Idempotency BudgetServiceConnectionIdempotencyPolicy::CreateBudget(
+    google::cloud::billing::budgets::v1::CreateBudgetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BudgetServiceConnectionIdempotencyPolicy::UpdateBudget(google::cloud::billing::budgets::v1::UpdateBudgetRequest const&) {
+Idempotency BudgetServiceConnectionIdempotencyPolicy::UpdateBudget(
+    google::cloud::billing::budgets::v1::UpdateBudgetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BudgetServiceConnectionIdempotencyPolicy::GetBudget(google::cloud::billing::budgets::v1::GetBudgetRequest const&) {
+Idempotency BudgetServiceConnectionIdempotencyPolicy::GetBudget(
+    google::cloud::billing::budgets::v1::GetBudgetRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BudgetServiceConnectionIdempotencyPolicy::ListBudgets(google::cloud::billing::budgets::v1::ListBudgetsRequest) {  // NOLINT
+Idempotency BudgetServiceConnectionIdempotencyPolicy::ListBudgets(
+    google::cloud::billing::budgets::v1::ListBudgetsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BudgetServiceConnectionIdempotencyPolicy::DeleteBudget(google::cloud::billing::budgets::v1::DeleteBudgetRequest const&) {
+Idempotency BudgetServiceConnectionIdempotencyPolicy::DeleteBudget(
+    google::cloud::billing::budgets::v1::DeleteBudgetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>
-    MakeDefaultBudgetServiceConnectionIdempotencyPolicy() {
+MakeDefaultBudgetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<BudgetServiceConnectionIdempotencyPolicy>();
 }
 
